@@ -1423,7 +1423,7 @@ let g:solarized_underline=0
 let g:solarized_termcolors=256
 let g:solarized_menu=0
 set background=dark
-colorscheme solarized "default setting 
+colorscheme PaperColor "default setting 
 
 
 "}}}
