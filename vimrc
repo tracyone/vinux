@@ -5,23 +5,14 @@
 "@github     https://github.com/tracyone/vim
 "@website    https://onetracy.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Encode {{{
-set encoding=utf-8
-set fileencoding=utf-8
-set termencoding=utf-8
-set fileencodings=ucs-bom,utf-8,cp936,gb1830,big5,euc-jp,euc-kr,gbk
-if v:lang=~? '^\(zh\)\|\(ja\)\|\(ko\)'
-    set ambiwidth=double
-endif
-source $VIMRUNTIME/delmenu.vim
-lan mes en_US.UTF-8
-"set langmenu=nl_NL.ISO_8859-1
-"}}}
 "System check{{{
 let s:is_unix  = ( has('mac') + has("unix") )
 let s:is_win   = has("win32") + has("win64")
 let s:is_nvim  = has('nvim')
 let s:is_gui   = has("gui_running") + has('gui_macvim')
+let s:has_python = has("python")
+let s:has_python3 = has("python3")
+let s:python_ver=s:has_python+s:has_python3
 
 set filetype=text
 if s:is_win
@@ -40,6 +31,19 @@ endif
 
 "}}}
 "Basic setting{{{
+
+"Encode {{{
+set encoding=utf-8
+set fileencoding=utf-8
+set termencoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936,gb1830,big5,euc-jp,euc-kr,gbk
+if v:lang=~? '^\(zh\)\|\(ja\)\|\(ko\)'
+    set ambiwidth=double
+endif
+source $VIMRUNTIME/delmenu.vim
+lan mes en_US.UTF-8
+"set langmenu=nl_NL.ISO_8859-1
+"}}}
 
 "{{{autocmd autogroup
 
@@ -617,8 +621,10 @@ endif
 call plug#begin($VIMFILES."/bundle")
 Plug 'vim-scripts/a.vim'
 if has('win64') || s:cpu_arch == "x86_64" || empty(glob($VIMFILES."/bundle/YouCompleteMe/third_party/ycmd/ycm_core.*")) == 0
-    Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive', 'on': [] }
-    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+    if s:python_ver
+        Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive', 'on': [] }
+        Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+    endif
     let s:complete_plugin=2
     let g:is_load_ycm = 0
 else
@@ -645,7 +651,9 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'KabbAmine/yowish.vim'
 "some productive plugins
 Plug 'terryma/vim-multiple-cursors'
-Plug 'ashisha/image.vim'
+if s:has_python
+    Plug 'ashisha/image.vim'
+endif
 Plug 'terryma/vim-expand-region'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
@@ -661,7 +669,7 @@ Plug 'Shougo/neomru.vim'
 Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': ['Ydc','Ydv']}
 if(!s:is_win)
-    Plug 'iamcco/markdown-preview.vim'
+    if s:python_ver | Plug 'iamcco/markdown-preview.vim' | endif
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'vim-scripts/sudo.vim'
     Plug 'nhooyr/neoman.vim'
@@ -1087,7 +1095,11 @@ let g:VEConf_systemEncoding = 'cp936'
 noremap <F11> :silent! VE .<cr>
 "}}}
 " UltiSnips -----------------------{{{
-let g:UltiSnipsUsePythonVersion = 2 "recommend to use python2.x
+if  s:has_python == 1
+    let g:UltiSnipsUsePythonVersion = 2
+else
+    let g:UltiSnipsUsePythonVersion = 3 
+endif
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets ="<c-tab>"
 let g:UltiSnipsJumpForwardTrigge="<c-j>"
