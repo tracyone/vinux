@@ -582,15 +582,17 @@ endfunction
 
 func! s:YcmGotoDef(open_type)
     let l:cur_word=expand("<cword>")."\s*\(.*[^;]$"
-    if g:is_load_ycm != 1
-        call s:EchoWarning("Loading ycm ...")
-        call plug#load('ultisnips','YouCompleteMe')
-        call delete(".ycm_extra_conf.pyc")  
-        call youcompleteme#Enable() 
-        let g:is_load_ycm = 1
-        autocmd! load_us_ycm 
-        sleep 1
-        call s:EchoWarning("ycm has been loaded!")
+    if s:complete_plugin == 2
+        if g:is_load_ycm != 1
+            call s:EchoWarning("Loading ycm ...")
+            call plug#load('ultisnips','YouCompleteMe')
+            call delete(".ycm_extra_conf.pyc")  
+            call youcompleteme#Enable() 
+            let g:is_load_ycm = 1
+            autocmd! load_us_ycm 
+            sleep 1
+            call s:EchoWarning("ycm has been loaded!")
+        endif
     endif
     let l:ret = s:TracyoneGetError(":YcmCompleter GoToDefinition","Runtime.*")
     if l:ret == -1
@@ -848,12 +850,21 @@ endfunction
 "generate .ycm_extra_conf.py for current directory
 
 " lazyload ultisnips and YouCompleteMe
-augroup load_us_ycm
-    autocmd!
-    autocmd InsertEnter * call plug#load('ultisnips','YouCompleteMe')
-                \| call delete(".ycm_extra_conf.pyc")  | call youcompleteme#Enable() 
-                \| let g:is_load_ycm = 1 |  autocmd! load_us_ycm
-augroup END
+if s:complete_plugin == 2
+    augroup load_us_ycm
+        autocmd!
+        autocmd InsertEnter * call plug#load('ultisnips','YouCompleteMe')
+                    \| call delete(".ycm_extra_conf.pyc")  | call youcompleteme#Enable() 
+                    \| let g:is_load_ycm = 1 |  autocmd! load_us_ycm
+    augroup END
+else
+    augroup load_us_ycm
+        autocmd!
+        autocmd InsertEnter * call plug#load('ultisnips')
+                    \| autocmd! load_us_ycm
+    augroup END
+
+endif
 
 if s:complete_plugin == 2
 function! GenYCM()
