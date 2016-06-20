@@ -633,6 +633,7 @@ else
     let s:complete_plugin=1
     Plug 'Shougo/neocomplete'
     Plug 'tracyone/dict'
+    Plug 'Konfekt/FastFold'
 endif
 
 Plug 'tracyone/hex2ascii.vim', { 'do': 'make' }
