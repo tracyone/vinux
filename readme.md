@@ -24,6 +24,8 @@ Open file `vimrc` with vim,it will be  folded automatically, you can press `za`(
 
 - Plugin setting:Plugins's setting
 
+- Function:Some useful vim function
+
 - Gui releate:gvim,macvim,font,mouse setting....
 
 # Key mapping and Functions description.
