@@ -1213,7 +1213,7 @@ else
 endif
 "}}}
 " Nerdcommander -------------------{{{
-let g:NERDMenuMode=1
+let g:NERDMenuMode=0
 "}}}
 " VimStartify ---------------------{{{
 if s:is_win
