@@ -729,7 +729,13 @@ let g:tagbar_compact = 1
 let g:tagbar_systemenc='cp936'
 "}}}
 " Cscope --------------------------{{{
-exec "silent! cs add cscope.out"
+if empty(glob(".project"))
+    exec "silent! cs add cscope.out"
+else
+    for s:line in readfile(".project", '')
+        exec "silent! cs add ".s:line."/cscope.out"
+    endfor
+endif
 if $CSCOPE_DB != "" "tpyically it is a include db 
     exec "silent! cs add $CSCOPE_DB"
 endif
@@ -774,51 +780,57 @@ nnoremap <C-\>e :split<CR>:cs find e <C-R>=expand("<cword>")<CR><CR>
 nnoremap <C-\>f :split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
 nnoremap <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
-nnoremap <leader>u :call Do_CsTag()<cr>
+nnoremap <leader>u :call TracyoneGenCsTag()<cr>
 nnoremap <leader>a :cs add cscope.out<cr>
 "kill the connection of current dir 
 nnoremap <leader>k :cs kill cscope.out<cr> 
-function! Do_CsTag()
-    let dir = getcwd()
+
+function! TracyoneGenCsTag()
+    if empty(glob(".project"))
+        :call Do_CsTag(getcwd())
+    else
+        for l:line in readfile(".project", '')
+            let l:ans=input("Generate cscope database in ".l:line." [y/n/a]?","y")
+            if l:ans =~# '\v^[yY]$'
+                call Do_CsTag(l:line)
+            endif
+        endfor
+    endif
+endfunction
+
+function! Do_CsTag(dir)
+    if(s:is_win)
+        let l:tagfile=a:dir."\\"."tags"
+        let l:cscopefiles=a:dir."\\"."cscope.files"
+        let l:cscopeout=a:dir."\\"."cscope.out"
+    else
+        let l:tagfile=a:dir."/tags"
+        let l:cscopefiles=a:dir."/cscope.files"
+        let l:cscopeout=a:dir."/cscope.out"
+    endif
     if filereadable("tags")
-        if(s:is_win)
-            let tagsdeleted=delete(dir."\\"."tags")
-        else
-            let tagsdeleted=delete("./"."tags")
-        endif
+        let tagsdeleted=delete(l:tagfile)
         if(tagsdeleted!=0)
             :call s:EchoWarning("Fail to do tags! I cannot delete the tags")
             return
         endif
     endif
-    if filereadable("cscope.files")
-        if(s:is_win)
-            let csfilesdeleted=delete(dir."\\"."cscope.files")
-        else
-            let csfilesdeleted=delete("./"."cscope.files")
-        endif
+    if filereadable(a:dir."/cscope.files")
+        let csfilesdeleted=delete(l:cscopefiles)
         if(csfilesdeleted!=0)
             :call s:EchoWarning("Fail to do cscope! I cannot delete the cscope.files")
             return
         endif
     endif
-    if filereadable("cscope.out")
-        if(s:is_win)
-            let csoutdeleted=delete(dir."\\"."cscope.out")
-        else
-            let csoutdeleted=delete("./"."cscope.out")
-        endif
+    if filereadable(a:dir."/cscope.out")
+        let csoutdeleted=delete(l:cscopeout)
         if(csoutdeleted!=0)
             :call s:EchoWarning("I cannot delete the cscope.out,try again")
             echo "kill the cscope connection"
-            if has("cscope") && filereadable("cscope.out")
-                silent! execute "cs kill cscope.out"
+            if has("cscope") && filereadable(l:cscopeout)
+                silent! execute "cs kill ".l:cscopeout
             endif
-            if(s:is_win)
-                let csoutdeleted=delete(dir."\\"."cscope.out")
-            else
-                let csoutdeleted=delete("./"."cscope.out")
-            endif
+            let csoutdeleted=delete(l:cscopeout)
         endif
         if(csoutdeleted!=0)
             :call s:EchoWarning("I still cannot delete the cscope.out,failed to do cscope")
@@ -831,15 +843,17 @@ function! Do_CsTag()
     "endif
     if(executable('cscope') && has("cscope") )
         if(!s:is_win)
-            silent! execute "!find $(pwd) -name \"*.[chsS]\" > ./cscope.files"
+            silent! execute "!find " .a:dir. " -name \"*.[chsS]\" > "  . a:dir."/cscope.files"
         else
-            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > cscope.files"
+            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > ".a:dir."\cscope.files"
         endif
-        silent! execute "!cscope -Rbkq -i cscope.files"
+        exec "cd ".a:dir
+        silent! execute "!cscope -Rbkq -i ".l:cscopefiles
+        cd -
         execute "normal :"
-        if filereadable("cscope.out")
-            silent! execute "cs kill cscope.out"
-            execute "cs add cscope.out"
+        if filereadable(l:cscopeout)
+            silent! execute "cs kill ".l:cscopeout
+            execute "cs add ".l:cscopeout
         else
             :call s:EchoWarning("No cscope.out")
         endif
