@@ -1461,7 +1461,11 @@ let g:solarized_underline=0
 let g:solarized_termcolors=256
 let g:solarized_menu=0
 set background=dark
-colorscheme PaperColor "default setting 
+try 
+    colorscheme PaperColor "default setting 
+catch /^Vim\%((\a\+)\)\=:E185/
+    colorscheme desert "default setting 
+endtry
 
 
 "}}}
