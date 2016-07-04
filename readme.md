@@ -30,12 +30,26 @@ Open file `vimrc` with vim,it will be  folded automatically, you can press `za`(
 
 # Key mapping and Functions description.
 
+`<leader>` in **t-vim** is comma : `,`. 
+
 ## Source code reading and GoToDefinition
 
 Function |  ShortCut Key
+ --------- | ------------
+Generate database | `<leader>u`
+add database under the cur dir | `<leader>a`,split view:`<C-\>a`
+GotoDefinition  under the cursor | `<leader>g`,split view:`<C-\>g`
+Find functions calling this function under the cursor | `<leader>c`,split view:`<C-\>c`
 
---------- | -------------
-Generate database | <leader>u,split view:<C-\>g
-add database in cur dir | <leader>a,split view:<C-\>a
-GotoDefinition  on cursor | <leader>g,split view:<C-\>g
-Find functions calling this function on cusor | <leader>c,split view:<C-\>c
+**t-vim** will automatically add cscope.out under the current directory.
+
+**t-vim** will add all cscope.out which path is specified by file `.project` under the current directory.
+
+File `.project` format:
+
+```
+/home/tracyone/work/ctest/
+/usr/inculde/
+```
+
+if file `.project` is exist at the current directory,when press `<leader>u` **t-vim** will ask whether Generate database for specified path in `.project`.
