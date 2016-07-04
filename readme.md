@@ -30,4 +30,12 @@ Open file `vimrc` with vim,it will be  folded automatically, you can press `za`(
 
 # Key mapping and Functions description.
 
-Todo ...
+## Source code reading and GoToDefinition
+
+Function |  ShortCut Key
+
+--------- | -------------
+Generate database | <leader>u,split view:<C-\>g
+add database in cur dir | <leader>a,split view:<C-\>a
+GotoDefinition  on cursor | <leader>g,split view:<C-\>g
+Find functions calling this function on cusor | <leader>c,split view:<C-\>c
