@@ -54,4 +54,4 @@ File `.project` format:
 
 if file `.project` is exist at the current directory,when press `<leader>u` **t-vim** will ask whether Generate database for specified path in `.project`.
 
-When press `<leader>g`,**t-vim** will try to use YouCompleteMe's the function of GoToDefinition,if it failed,then use cscope.
+When press `<leader>g`,**t-vim** will try to use the function of YouCompleteMe GoToDefinition,if it failed,then use cscope.
