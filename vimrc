@@ -741,13 +741,16 @@ let g:tagbar_compact = 1
 let g:tagbar_systemenc='cp936'
 "}}}
 " Cscope --------------------------{{{
-if empty(glob(".project"))
-    exec "silent! cs add cscope.out"
-else
-    for s:line in readfile(".project", '')
-        exec "silent! cs add ".s:line."/cscope.out"
-    endfor
-endif
+function! TracyoneAddCscopeOut()
+    if empty(glob(".project"))
+        exec "silent! cs add cscope.out"
+    else
+        for s:line in readfile(".project", '')
+            exec "silent! cs add ".s:line."/cscope.out"
+        endfor
+    endif
+endfunction
+:call TracyoneAddCscopeOut()
 if $CSCOPE_DB != "" "tpyically it is a include db 
     exec "silent! cs add $CSCOPE_DB"
 endif
@@ -793,7 +796,7 @@ nnoremap <C-\>f :split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
 nnoremap <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
 nnoremap <leader>u :call TracyoneGenCsTag()<cr>
-nnoremap <leader>a :cs add cscope.out<cr>
+nnoremap <leader>a :call TracyoneAddCscopeOut()<cr>
 "kill the connection of current dir 
 nnoremap <leader>k :cs kill cscope.out<cr> 
 
