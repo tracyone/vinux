@@ -22,7 +22,6 @@ if s:is_win
     if s:is_win == 2 | let s:cpu_arch = "x86_64" | endif
 else
     set keywordprg=""
-    set shell=zsh
     set path=.,/usr/include/
     let $VIMFILES = $HOME.'/.vim'
     let s:cpu_arch = system('uname -m')[:-2]
@@ -136,6 +135,7 @@ nnoremap <silent><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 "}}}
 
 "list candidate word in statusline
+set shell=$SHELL
 set wildmenu
 set wildmode=longest,full
 set wic
