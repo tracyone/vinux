@@ -683,8 +683,8 @@ Plug 'mhinz/vim-startify'
 Plug 'Shougo/neomru.vim'
 Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': ['Ydc','Ydv']}
+if s:python_ver | Plug 'iamcco/markdown-preview.vim' | endif
 if(!s:is_win)
-    if s:python_ver | Plug 'iamcco/markdown-preview.vim' | endif
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'vim-scripts/sudo.vim'
     Plug 'nhooyr/neoman.vim'
@@ -1316,6 +1316,8 @@ autocmd misc_group FileType gitcommit,qfreplace setlocal nofoldenable
 " Markdown ------------------------{{{
 if  s:is_unix == 2
     let g:mkdp_path_to_chrome = "open -a safari"
+elseif s:is_win
+    let g:mkdp_path_to_chrome = "start"
 else
     let g:mkdp_path_to_chrome = "chromium-browser"
 endif
