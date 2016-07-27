@@ -1317,7 +1317,7 @@ autocmd misc_group FileType gitcommit,qfreplace setlocal nofoldenable
 if  s:is_unix == 2
     let g:mkdp_path_to_chrome = "open -a safari"
 elseif s:is_win
-    let g:mkdp_path_to_chrome = "start"
+    let g:mkdp_path_to_chrome = "C:\\Program\ Files\ (x86)\\Google\\Chrome\\Application\\chrome.exe"
 else
     let g:mkdp_path_to_chrome = "chromium-browser"
 endif
