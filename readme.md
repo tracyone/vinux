@@ -32,6 +32,8 @@ Open file `vimrc` with vim,it will be  folded automatically, you can press `za`(
 
 `<leader>` in **t-vim** is comma : `,`. 
 
+normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<leader>so`即可让vimrc生效。
+
 ## Source code reading and GoToDefinition
 
 Function |  ShortCut Key
@@ -55,3 +57,39 @@ File `.project` format:
 if file `.project` is exist at the current directory,when press `<leader>u` **t-vim** will ask whether Generate database for specified path in `.project`.
 
 When press `<leader>g`,**t-vim** will try to use the function of YouCompleteMe GoToDefinition,if it failed,then use cscope.
+
+## Fuzzy files search & string search
+
+[ctrlpvim](https://github.com/ctrlpvim/ctrlp.vim)
+
+[ctrlp-funky](https://github.com/tacahiroy/ctrlp-funky)
+
+[ag.vim](https://github.com/rking/ag.vim)
+
+Function | mode | ShortCut Key
+--------- | ---------- | ---------------
+ `Ctrl-p` | normal  | fuzzy search files
+ `Ctrl-k` | normal  | fuzzy search functions for current file
+ `Ctrl-j` | normal  | fuzzy search buffers
+ `Ctrl-l` | normal  | fuzzy search recent open files(MRU)
+ `<leader>vv` | normal,visual | global search string under cursor
+ `<leader>vf` | normal | global search string c function under cursor
+ `<leader>vt` | normal | global search **TODO** or **FIXME**
+
+
+## FunctionKey
+
+Function | mode | ShortCut Key
+--------- | ---------- | ---------------
+`F1` | all | Open vim help
+`F2` | all | Open rename windows,use [renamer.vim](https://github.com/vim-scripts/renamer.vim)
+`F3` | all | Open Gstatus windows ,use [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
+`F4` | all | Open shell,use [vimshell.vim](https://github.com/Shougo/vimshell.vim)，or terminal emulator in [neovim](https://github.com/neovim/neovim)
+`F5` | all | Execute make then open quickfix,use [neomake](https://github.com/benekastah/neomake) when use [neovim](https://github.com/neovim/neovim)
+`F6` | normal,visual | execute current script [quckrun](https://github.com/thinca/vim-quickrun)
+`F7` | normal | perform dos2unix or unix2dos for current open file.
+`F8` | all | save current session ,use [mhinz/vim-startify](https://github.com/mhinz/vim-startify)
+`F9` | normal | open tagbar windows,use [tagbar](https://github.com/majutsushi/tagbar)
+`F10` | normal,visual | YouDao dict translate the word under the cursor,use  [vim-youdao-translater](https://github.com/ianva/vim-youdao-translater)
+`F11` | normal | Open vim file manager,use [VimExplorer](https://github.com/mbbill/VimExplorer)
+`F12` | normal,insert | open nerdtree,use [nerdtree](https://github.com/scrooloose/nerdtree)
