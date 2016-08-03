@@ -32,7 +32,8 @@ Open file `vimrc` with vim,it will be  folded automatically, you can press `za`(
 
 `<leader>` in **t-vim** is comma : `,`. 
 
-normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<leader>so`即可让vimrc生效。
+`<leader>vc`:edit vimrc，
+`<leader>so`:source vimrc
 
 ## Source code reading and GoToDefinition
 
