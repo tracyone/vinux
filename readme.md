@@ -78,6 +78,8 @@ normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<lead
  `<leader>vf` | normal | global 全局搜索当前光标下的C函数
  `<leader>vt` | normal | 全局搜索**TODO**或者**FIXME**
 
+ 为了加快搜索速度，非常推荐你安装[the silver searcher](https://github.com/ggreer/the_silver_searcher)。
+
 
 ## 功能按键
 

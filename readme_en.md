@@ -77,6 +77,7 @@ Function | mode | ShortCut Key
  `<leader>vf` | normal | global search string c function under cursor
  `<leader>vt` | normal | global search **TODO** or **FIXME**
 
+ For speed up the search process,recommand you install [the silver searcher](https://github.com/ggreer/the_silver_searcher).
 
 ## FunctionKey
 
