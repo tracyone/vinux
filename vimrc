@@ -135,7 +135,6 @@ nnoremap <silent><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 "}}}
 
 "list candidate word in statusline
-set shell=$SHELL
 set wildmenu
 set wildmode=longest,full
 set wic
