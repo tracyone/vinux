@@ -309,7 +309,7 @@ exec "inoremap ". s:alt_char['k']." <Up>"
 exec "inoremap " .s:alt_char["b"]." <S-left>"
 exec "inoremap " .s:alt_char["f"]." <S-right>"
 
-"move between windos
+"move between windows
 exec "nnoremap " s:alt_char['h']." <C-w>h" 
 exec "nnoremap " .s:alt_char['l']. " <C-w>l"
 exec "nnoremap " .s:alt_char['j']. " <C-w>j"
