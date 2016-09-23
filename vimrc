@@ -635,7 +635,7 @@ call plug#begin($VIMFILES."/bundle")
 Plug 'vim-scripts/a.vim'
 if has('win64') || s:cpu_arch == "x86_64" || empty(glob($VIMFILES."/bundle/YouCompleteMe/third_party/ycmd/ycm_core.*")) == 0
     if s:python_ver
-        Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive', 'on': [] }
+        Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive && ./install.py --clang-completer --tern-completer', 'on': [] }
         Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
     endif
     let s:complete_plugin=2
