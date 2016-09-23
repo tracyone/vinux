@@ -683,6 +683,7 @@ Plug 'Shougo/neomru.vim'
 Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': ['Ydc','Ydv']}
 if s:python_ver | Plug 'iamcco/markdown-preview.vim' | endif
+Plug 'mzlogin/vim-markdown-toc'
 if(!s:is_win)
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'vim-scripts/sudo.vim'
