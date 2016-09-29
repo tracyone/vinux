@@ -3,7 +3,7 @@
 "@date       2015-11-28/22:56:20
 "@author     tracyone,tracyone@live.cn,
 "@github     https://github.com/tracyone/t-vim
-"@website    https://onetracy.com
+"@website    http://onetracy.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "System check{{{
 let s:is_unix  = ( has('mac') + has("unix") )
