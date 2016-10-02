@@ -106,3 +106,47 @@ normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<lead
 `F11` | normal | 打开文件管理器，使用的是[VimExplorer](https://github.com/mbbill/VimExplorer)
 `F12` | normal,insert | 打开只读的文件管理器使用的是[nerdtree](https://github.com/scrooloose/nerdtree)
 
+## GUI相关
+
+在MacVim和gVim的情况下，你可以做以下调整：
+
+快捷键 | 模式 | 功能
+--------- | ---------- | ---------------
+`Alt+=` | normal | 放大字体
+`Alt+-` | normal | 缩小字体
+`Alt-o` | normal | 恢复默认配置的字体大小
+`Ctrl+F8` | normal | 菜单和工具栏显示或者隐藏（toggle）
+
+本配置主题有：
+
+- [sjl/badwolf](https://github.com/sjl/badwolf)
+- [altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
+- [tomasr/molokai](https://github.com/tomasr/molokai)
+- [morhetz/gruvbox](https://github.com/morhetz/gruvbox)
+- [NLKNguyen/papercolor-theme](https://github.com/NLKNguyen/papercolor-theme)
+- [KabbAmine/yowish.vim](https://github.com/KabbAmine/yowish.vim)
+
+修改字体大小或者字体类型主题类型之后，你只需要执行`:Love`就能保存你的配置了。
+
+## 编辑相关
+
+[terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
+
+快捷键 | 模式 | 功能
+--------- | ---------- | ---------------
+`Ctrl+n` | normal,visual | 同时编辑
+
+[easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion)
+
+快捷键 | 模式 | 功能
+--------- | ---------- | ---------------
+`W` | normal | 你懂的，按下你就知道
+`B` | normal | 你懂的，按下你就知道
+
+[terryma/vim-expand-region](https://github.com/terryma/vim-expand-region)
+
+快捷键 | 模式 | 功能
+--------- | ---------- | ---------------
+`+` | visual | 智能扩展选中区域
+
+
