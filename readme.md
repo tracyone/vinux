@@ -76,7 +76,7 @@ normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<lead
 
 [ag.vim](https://github.com/rking/ag.vim)
 
-功能 | 模式 | 快捷键
+快捷键 | 模式 | 功能 
 --------- | ---------- | ---------------
  `Ctrl-p` | normal  | fuzzy 搜索文件
  `Ctrl-k` | normal  | fuzzy 搜索当前文件的函数
@@ -91,7 +91,7 @@ normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<lead
 
 ## 功能按键
 
-功能 | 模式 | 快捷键
+快捷键 | 模式 | 功能
 --------- | ---------- | ---------------
 `F1` | all | 打开帮助
 `F2` | all | 打开重命名窗口，使用的是 [renamer.vim](https://github.com/vim-scripts/renamer.vim)
@@ -105,3 +105,4 @@ normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<lead
 `F10` | normal,visual | 翻译当前光标下的单词使用的是[vim-youdao-translater](https://github.com/ianva/vim-youdao-translater)
 `F11` | normal | 打开文件管理器，使用的是[VimExplorer](https://github.com/mbbill/VimExplorer)
 `F12` | normal,insert | 打开只读的文件管理器使用的是[nerdtree](https://github.com/scrooloose/nerdtree)
+
