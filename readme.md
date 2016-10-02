@@ -160,8 +160,8 @@ normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<lead
 
 快捷键 | 模式 | 功能
 --------- | ---------- | ---------------
-`Cltrl-j` | insert | 触发snippets的扩展和跳到下一个编辑区，YCM支持ultisnips的补全，在补全窗口中标有snip的就是。
-`Cltrl-k` | insert | 跳到上一个编辑区
+`Ctrl-j` | insert | 触发snippets的扩展和跳到下一个编辑区，YCM支持ultisnips的补全，在补全窗口中标有snip的就是。
+`Ctrl-k` | insert | 跳到上一个编辑区
 
 ## 查看图片(ASCII形式)
 
