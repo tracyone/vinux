@@ -1,5 +1,13 @@
 ![screenshot](https://cloud.githubusercontent.com/assets/4246425/15250970/dae5518e-1959-11e6-8dc5-bed1c23f7a02.png)
 
+
+* [安装](#安装)
+* [配置结构](#配置结构)
+* [按键映射和功能描述](#按键映射和功能描述)
+	* [源码阅读和跳转](#源码阅读和跳转)
+	* [文件Fuzzy搜索和字符串搜索](#文件fuzzy搜索和字符串搜索)
+	* [功能按键](#功能按键)
+
 #  安装
 
 English guide see [readme_en.md](./readme_en.md)
@@ -38,12 +46,12 @@ normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<lead
 
 ## 源码阅读和跳转
 
-功能  |  快捷键
- --------- | ------------
-生成数据库 | `<leader>u`
-添加当前路径下的数据库 | `<leader>a`,split view:`<C-\>a`
-跳转到当前光标下的定义 | `<leader>g`,split view:`<C-\>g`
-跳转下当前光标下函数的调用者 | `<leader>c`,split view:`<C-\>c`
+功能 | 模式 | 快捷键
+--------- | ---------- | ---------------
+生成数据库 | normal | `<leader>u`
+添加当前路径下的数据库 | normal | `<leader>a`,split view:`<C-\>a`
+跳转到当前光标下的定义  | normal | `<leader>g`,split view:`<C-\>g`
+跳转下当前光标下函数的调用者 | normal | `<leader>c`,split view:`<C-\>c`
 
 **t-vim** 在每次打开vim时会自动添加当前路径下的cscope数据库
 
