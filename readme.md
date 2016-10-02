@@ -8,7 +8,12 @@
 	* [文件Fuzzy搜索和字符串搜索](#文件fuzzy搜索和字符串搜索)
 	* [功能按键](#功能按键)
 	* [GUI相关](#gui相关)
-	* [编辑相关](#编辑相关)
+* [奇技淫巧](#奇技淫巧)
+	* [多光标编辑](#多光标编辑)
+	* [快速移动](#快速移动)
+	* [代码片段](#代码片段)
+	* [查看图片(ASCII形式)](#查看图片ascii形式)
+	* [Markdown预览](#markdown预览)
 
 #  安装
 
@@ -130,13 +135,17 @@ normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<lead
 
 修改字体大小或者字体类型主题类型之后，你只需要执行`:Love`就能保存你的配置了。
 
-## 编辑相关
+# 奇技淫巧
+
+## 多光标编辑
 
 [terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
 
 快捷键 | 模式 | 功能
 --------- | ---------- | ---------------
-`Ctrl+n` | normal,visual | 同时编辑
+`Ctrl-n` | normal,visual | 同时编辑
+
+## 快速移动
 
 [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion)
 
@@ -145,10 +154,23 @@ normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<lead
 `W` | normal | 你懂的，按下你就知道
 `B` | normal | 你懂的，按下你就知道
 
-[terryma/vim-expand-region](https://github.com/terryma/vim-expand-region)
+## 代码片段
+
+[SirVer/ultisnips](https://github.com/SirVer/ultisnips)
 
 快捷键 | 模式 | 功能
 --------- | ---------- | ---------------
-`+` | visual | 智能扩展选中区域
+`Cltrl-j` | insert | 触发snippets的扩展和跳到下一个编辑区，YCM支持ultisnips的补全，在补全窗口中标有snip的就是。
+`Cltrl-k` | insert | 跳到上一个编辑区
 
+## 查看图片(ASCII形式)
 
+[ashisha/image.vim](https://github.com/ashisha/image.vim)
+
+直接用vim打开jpg文件就行。
+
+## Markdown预览
+
+在编辑markdown文件的时候执行`:MarkdownPreview`就能调用浏览器实时预览markdown效果。
+
+执行`:GenTocGFM`就可以为当前编辑的markdown文件生成目录代码。
