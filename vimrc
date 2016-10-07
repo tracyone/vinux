@@ -659,6 +659,7 @@ if s:is_gui
 endif
 Plug 'sjl/badwolf'
 Plug 'altercation/vim-colors-solarized'
+Plug 'osyo-manga/vim-over'
 Plug 'tomasr/molokai'
 Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
