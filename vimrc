@@ -394,8 +394,6 @@ nnoremap <leader>o :call Open_url()<cr>
 
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
 
 "}}}
 "Function{{{
