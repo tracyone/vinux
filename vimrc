@@ -374,8 +374,8 @@ noremap <silent> <C-F12> :vertical resize +10<CR>
 
 
 "replace
-nnoremap <c-h> :%s/<C-R>=expand("<cword>")<cr>/
-vnoremap <c-h> :<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>/
+nnoremap <c-h> :OverCommandLine<cr>:%s/<C-R>=expand("<cword>")<cr>/
+vnoremap <c-h> :OverCommandLine<cr>:<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>/
 "delete the ^M
 nnoremap dm :%s/\r\(\n\)/\1/g<CR>
 
