@@ -392,8 +392,10 @@ vnoremap <silent> # :call VisualSelection('b')<CR>
 nnoremap <F7> :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
 nnoremap <leader>o :call Open_url()<cr>
 
-nnoremap n nzz
-
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
 
 "}}}
 "Function{{{
