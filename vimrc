@@ -715,7 +715,6 @@ if(!s:is_win)
     Plug 'nhooyr/neoman.vim'
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
     if s:is_unix == 2
-        Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
         Plug 'CodeFalling/fcitx-vim-osx',{'do': 'wget -c \"https://raw.githubusercontent.com/
                     \CodeFalling/fcitx-remote-for-osx/binary/fcitx-remote-sogou-pinyin\" && 
                     \chmod a+x fcitx* && mv fcitx* /usr/local/bin/fcitx-remote'}
@@ -1286,7 +1285,7 @@ if s:is_win
 else
     let g:startify_session_dir = $VIMFILES .'/sessions'
 endif
-let g:startify_list_order = ['files', 'bookmarks', 'sessions']
+let g:startify_list_order = ['sessions', 'files']
 let g:startify_change_to_dir = 1
 let g:startify_files_number = 5 
 let g:startify_change_to_vcs_root = 0
