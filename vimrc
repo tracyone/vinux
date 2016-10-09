@@ -1368,6 +1368,7 @@ vnoremap <leader>gL :Gitv! --all<cr>
 nnoremap <Leader>gb :Gblame<cr>
 nnoremap <Leader>gd :Gdiff<cr>
 nnoremap <Leader>gi :Gissue<cr>
+nnoremap <Leader>gp :Gpush origin master<cr>:cw<cr>
 "}}}
 " neomake -------------------------{{{
 let g:neomake_open_list=2
