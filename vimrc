@@ -1179,7 +1179,7 @@ let g:UltiSnipsListSnippets ="<c-tab>"
 let g:UltiSnipsJumpForwardTrigge="<c-j>"
 let g:UltiSnipsJumpBackwardTrigge="<c-k>"
 let g:UltiSnipsSnippetDirectories=["bundle/snippets"]
-let g:UltiSnipsSnippetsDir=$VIM."/vimfiles/bundle/snippets"
+let g:UltiSnipsSnippetsDir=$VIMFILES."/bundle/snippets"
 "}}}
 " FencView ------------------------{{{
 let g:fencview_autodetect=0 
