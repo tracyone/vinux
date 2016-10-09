@@ -692,7 +692,8 @@ if s:has_python
 endif
 Plug 'terryma/vim-expand-region'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tacahiroy/ctrlp-funky'
+Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
+Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'vim-scripts/delimitMate.vim'
@@ -708,6 +709,7 @@ if s:python_ver | Plug 'iamcco/markdown-preview.vim' | endif
 Plug 'mzlogin/vim-markdown-toc'
 if(!s:is_win)
     Plug 'christoomey/vim-tmux-navigator'
+    Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
     Plug 'vim-scripts/sudo.vim'
     Plug 'nhooyr/neoman.vim'
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
@@ -725,7 +727,7 @@ if s:is_nvim == 0
     Plug 'Shougo/vimshell.vim'
     Plug 'vim-scripts/YankRing.vim'
 else
-    Plug 'mattn/ctrlp-register'
+    Plug 'mattn/ctrlp-register',{'on': 'CtrlPRegister'}
 endif
 Plug 'benekastah/neomake'
 Plug 'vim-scripts/The-NERD-Commenter'
@@ -1156,6 +1158,9 @@ nnoremap <Leader>fr :CtrlPMRUFiles<cr>
 nnoremap <Leader>ff :CtrlP<cr>
 " narrow the list down with a word under cursor
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+nnoremap <Leader>pc :CtrlPCmdPalette<cr>
+nnoremap <Leader>pt :CtrlPTmux<cr>
+nnoremap <Leader>pk :CtrlPFunky<cr>
 "}}}
 " VimExplorer ---------------------{{{
 let g:VEConf_systemEncoding = 'cp936'
@@ -1420,6 +1425,8 @@ nnoremap <Leader>bk :bdelete<cr>
 nnoremap <Leader>fg :Ag 
 nnoremap <Leader>fs :call Tracyone_SaveFile()<cr>
 nnoremap <Leader>fS :wa<cr>
+nnoremap <Leader>fh :wa<cr>
+nnoremap <Leader>hm :call TracyoneFindMannel()<cr>
 " }}}
 filetype plugin indent on
 syntax on
