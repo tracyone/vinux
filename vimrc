@@ -310,7 +310,7 @@ exec "inoremap " .s:alt_char["b"]." <S-left>"
 exec "inoremap " .s:alt_char["f"]." <S-right>"
 
 "move between windows
-exec "nnoremap " s:alt_char['h']." <C-w>h" 
+exec "nnoremap " s:alt_char['h']."   <C-w>h" 
 exec "nnoremap " .s:alt_char['l']. " <C-w>l"
 exec "nnoremap " .s:alt_char['j']. " <C-w>j"
 exec "nnoremap " .s:alt_char['k']. " <C-w>k"
@@ -750,6 +750,7 @@ Plug 'tracyone/MyVimHelp'
 Plug 'tpope/vim-repeat' "repeat enhance
 Plug 'Shougo/vinarise.vim'
 Plug 'tracyone/love.vim'
+Plug 't9md/vim-choosewin'
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
 "}}}
@@ -1430,6 +1431,23 @@ nnoremap <Leader>fs :call Tracyone_SaveFile()<cr>
 nnoremap <Leader>fS :wa<cr>
 nnoremap <Leader>fh :wa<cr>
 nnoremap <Leader>hm :call TracyoneFindMannel()<cr>
+" }}}
+" Windows manger -----------------{{{
+nnoremap <Leader>wv :vsp<cr>
+nnoremap <Leader>wV :vsp<cr><C-w>l
+nnoremap <Leader>ws :sp<cr>
+nnoremap <Leader>wS :sp<cr><C-w>j
+nnoremap <Leader>wm :only<cr>
+nnoremap <Leader>wd :hide<cr>
+let g:choosewin_overlay_enable = 1
+nmap <Leader>w <Plug>(choosewin)
+nnoremap <Leader>wh <C-w>h
+nnoremap <Leader>wl <C-w>l
+nnoremap <Leader>wj <C-w>j
+nnoremap <Leader>wk <C-w>k
+" layout save and load
+nnoremap <Leader>ls :SSave<cr>
+nnoremap <Leader>ll :SLoad 
 " }}}
 filetype plugin indent on
 syntax on
