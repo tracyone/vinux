@@ -696,6 +696,7 @@ Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
 Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
 Plug 'vim-scripts/delimitMate.vim'
 Plug 'vim-scripts/genutils'
 Plug 'itchyny/calendar.vim', { 'on': 'Calendar'}
@@ -1366,6 +1367,7 @@ nnoremap <Leader>gL :Gitv! --all<cr>
 vnoremap <leader>gL :Gitv! --all<cr>
 nnoremap <Leader>gb :Gblame<cr>
 nnoremap <Leader>gd :Gdiff<cr>
+nnoremap <Leader>gi :Gissue<cr>
 "}}}
 " neomake -------------------------{{{
 let g:neomake_open_list=2
