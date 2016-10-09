@@ -1152,13 +1152,15 @@ nnoremap <c-k> :CtrlPFunky<Cr>
 nnoremap <c-j> :CtrlPBuffer<Cr>
 nnoremap <Leader>bl :CtrlPBuffer<Cr>
 nnoremap <c-l> :CtrlPMRUFiles<cr>
+nnoremap <Leader>fr :CtrlPMRUFiles<cr>
+nnoremap <Leader>ff :CtrlP<cr>
 " narrow the list down with a word under cursor
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 "}}}
 " VimExplorer ---------------------{{{
 let g:VEConf_systemEncoding = 'cp936'
 noremap <F11> :silent! VE .<cr>
-nnoremap <Leader>fd :silent! VE .<cr>
+nnoremap <Leader>fj :silent! VE .<cr>
 "}}}
 " UltiSnips -----------------------{{{
 if  s:has_python == 1
@@ -1192,6 +1194,7 @@ nnoremap <leader>ft :call FencToggle()<cr>
 " Renamer -------------------------{{{
 "rename multi file name
 noremap <F2> :Ren<cr>
+nnoremap <Leader>fR :Ren<cr>
 "}}}
 " Vimshell ------------------------{{{
 if(s:is_nvim== 0)
@@ -1357,6 +1360,7 @@ nnoremap <Leader>gl :Gitv --all<cr>
 nnoremap <Leader>gL :Gitv! --all<cr>
 vnoremap <leader>gL :Gitv! --all<cr>
 nnoremap <Leader>gb :Gblame<cr>
+nnoremap <Leader>gd :Gdiff<cr>
 "}}}
 " neomake -------------------------{{{
 let g:neomake_open_list=2
@@ -1413,6 +1417,9 @@ nnoremap <leader>au :UndotreeToggle<cr>
 nnoremap <Leader>bn :call TracyoneNext()<cr>
 nnoremap <Leader>bp :call TracyonePrev()<cr>
 nnoremap <Leader>bk :bdelete<cr>
+nnoremap <Leader>fg :Ag 
+nnoremap <Leader>fs :call Tracyone_SaveFile()<cr>
+nnoremap <Leader>fS :wa<cr>
 " }}}
 filetype plugin indent on
 syntax on
