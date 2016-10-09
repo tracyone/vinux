@@ -131,7 +131,7 @@ function! MyFoldText()
     return sub . info
 endfunction
 set foldtext=MyFoldText()
-nnoremap <silent><tab> @=(foldlevel('.')?'za':"\<tab>")<CR>
+nnoremap <silent><Space> @=(foldlevel('.')?'za':'\<Space>')<CR>
 "}}}
 
 "list candidate word in statusline
@@ -462,14 +462,14 @@ function! Tracyone_SaveFile()
 endfunction
 function! Do_Make()
     :wa
-    if s:is_nvim == 0
+    if s:is_nvim == 1 || v:version >= 800
+        call s:EchoWarning("Start Neomake! Please wait ...")
+        execute "Neomake!"
+    else
         execute "silent make"
         execute "normal :"
         execute "cw"
         execute "redraw!"
-    else
-        call s:EchoWarning("Start Neomake! Please wait ...")
-        execute "Neomake!"
     endif
 endfunction
 
@@ -623,6 +623,25 @@ func! s:YcmGotoDef(open_type)
     endif
     return 0
 endfunc
+
+function! TracyoneNext()
+    if exists( '*tabpagenr' ) && tabpagenr('$') != 1
+        " Tab support && tabs open
+        normal gt
+    else
+        " No tab support, or no tabs open
+        execute ":bnext"
+    endif
+endfunction
+function! TracyonePrev()
+    if exists( '*tabpagenr' ) && tabpagenr('$') != '1'
+        " Tab support && tabs open
+        normal gT
+    else
+        " No tab support, or no tabs open
+        execute ":bprev"
+    endif
+endfunction
 "}}}
 "Plugin setting{{{
 " Vim-plug ------------------------{{{
@@ -706,9 +725,9 @@ if s:is_nvim == 0
     Plug 'Shougo/vimshell.vim'
     Plug 'vim-scripts/YankRing.vim'
 else
-    Plug 'benekastah/neomake'
     Plug 'mattn/ctrlp-register'
 endif
+Plug 'benekastah/neomake'
 Plug 'vim-scripts/The-NERD-Commenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'kshenoy/vim-signature'
@@ -728,6 +747,7 @@ Plug 'tracyone/MyVimHelp'
 Plug 'tpope/vim-repeat' "repeat enhance
 Plug 'Shougo/vinarise.vim'
 Plug 'tracyone/love.vim'
+nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
 "}}}
 " Tohtml --------------------------{{{
@@ -780,14 +800,14 @@ if has("cscope")
 endif
 set cscopeverbose 
 " show msg when any other cscope db added
-nnoremap <Leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-nnoremap <Leader>g :call TracyoneGotoDef("")<cr>
-nnoremap <Leader>d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:cw 7<cr>
-nnoremap <Leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-nnoremap <Leader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-nnoremap <Leader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-"nnoremap <Leader>f :cs find f <C-R>=expand("<cfile>")<CR><CR>:cw 7<cr>
-nnoremap <Leader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:cw 7<cr>
+nnoremap ,s :cs find s <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+nnoremap ,g :call TracyoneGotoDef("")<cr>
+nnoremap ,d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:cw 7<cr>
+nnoremap ,c :cs find c <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+nnoremap ,t :cs find t <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+nnoremap ,e :cs find e <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+"nnoremap ,f :cs find f <C-R>=expand("<cfile>")<CR><CR>:cw 7<cr>
+nnoremap ,i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:cw 7<cr>
 
 nnoremap <C-\>s :split<CR>:cs find s <C-R>=expand("<cword>")<CR><CR>
 nnoremap <C-\>g :call TracyoneGotoDef("sp")<cr>
@@ -798,10 +818,10 @@ nnoremap <C-\>e :split<CR>:cs find e <C-R>=expand("<cword>")<CR><CR>
 nnoremap <C-\>f :split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
 nnoremap <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
-nnoremap <leader>u :call TracyoneGenCsTag()<cr>
-nnoremap <leader>a :call TracyoneAddCscopeOut()<cr>
+nnoremap ,u :call TracyoneGenCsTag()<cr>
+nnoremap ,a :call TracyoneAddCscopeOut()<cr>
 "kill the connection of current dir 
-nnoremap <leader>k :cs kill cscope.out<cr> 
+nnoremap ,k :cs kill cscope.out<cr> 
 
 function! TracyoneGenCsTag()
     if empty(glob(".project"))
@@ -1130,6 +1150,7 @@ let g:ctrlp_funky_syntax_highlight = 0
 let g:ctrlp_funky_matchtype = 'path'
 nnoremap <c-k> :CtrlPFunky<Cr>
 nnoremap <c-j> :CtrlPBuffer<Cr>
+nnoremap <Leader>bl :CtrlPBuffer<Cr>
 nnoremap <c-l> :CtrlPMRUFiles<cr>
 " narrow the list down with a word under cursor
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
@@ -1227,6 +1248,7 @@ function! TracyoneVimShellPop()
     if s:is_nvim | execute "terminal" | else | execute "VimShell" | endif
 endfunction
 noremap <F4> :call TracyoneVimShellPop()<cr>
+nnoremap <Leader>as :call TracyoneVimShellPop()<cr>
 "}}}
 " Myvimhelp -----------------------{{{
 let g:startupfile="first_statup.txt"
@@ -1287,6 +1309,7 @@ else
 endif
 
 noremap <F8> :SSave<cr>
+nnoremap <Leader>bh :Startify<cr>
 autocmd misc_group FileType startify setlocal buftype=
 "}}}
 " Eclim ---------------------------{{{
@@ -1327,6 +1350,12 @@ endif
 "}}}
 " Git releate ---------------------{{{
 nnoremap <F3> :Gstatus<cr>
+nnoremap <Leader>gs :Gstatus<cr>
+nnoremap <Leader>gh :Gbrowse<cr>
+nnoremap <Leader>gl :Gitv --all<cr>
+nnoremap <Leader>gL :Gitv! --all<cr>
+vnoremap <leader>gL :Gitv! --all<cr>
+nnoremap <Leader>gb :Gblame<cr>
 "}}}
 " neomake -------------------------{{{
 let g:neomake_open_list=2
@@ -1378,6 +1407,11 @@ exec "map " .s:alt_char['-'] ." <Plug>(fontzoom-smaller)"
 exec "map " .s:alt_char['='] ." <Plug>(fontzoom-larger)"
 nnoremap <F10> <esc>:Ydc<cr>
 vnoremap <F10> <esc>:Ydv<cr>
+nnoremap <Leader>ac :Crunch<cr>
+nnoremap <leader>au :UndotreeToggle<cr>
+nnoremap <Leader>bn :call TracyoneNext()<cr>
+nnoremap <Leader>bp :call TracyonePrev()<cr>
+nnoremap <Leader>bk :bdelete<cr>
 " }}}
 filetype plugin indent on
 syntax on
