@@ -131,7 +131,7 @@ function! MyFoldText()
     return sub . info
 endfunction
 set foldtext=MyFoldText()
-nnoremap <silent><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+nnoremap <silent><tab> @=(foldlevel('.')?'za':"\<tab>")<CR>
 "}}}
 
 "list candidate word in statusline
@@ -248,7 +248,7 @@ endif
 set winaltkeys=no
 
 "leader key
-let mapleader=","
+let mapleader="\<Space>"
 inoremap jj <c-[>
 
 vnoremap [p "0p
@@ -343,9 +343,9 @@ noremap! <expr> <SID>transpose "\<BS>\<Right>".matchstr(getcmdline()[0 : getcmdp
 cmap   <script> <C-T> <SID>transposition<SID>transpose
 
 "update the _vimrc
-noremap <leader>so :source $MYVIMRC<CR>
+nnoremap <leader>so :source $MYVIMRC<CR>
 "open the vimrc in tab
-noremap <leader>vc :tabedit $MYVIMRC<CR>
+nnoremap <leader>vc :tabedit $MYVIMRC<CR>
 
 "clear search result
 
@@ -634,7 +634,7 @@ if empty(glob($VIMFILES.'/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall
 endif
 call plug#begin($VIMFILES."/bundle")
-Plug 'vim-scripts/a.vim'
+Plug 'tracyone/a.vim'
 if has('win64') || s:cpu_arch == "x86_64" || empty(glob($VIMFILES."/bundle/YouCompleteMe/third_party/ycmd/ycm_core.*")) == 0
     if s:python_ver
         Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive && ./install.py --clang-completer --tern-completer', 'on': [] }
@@ -1061,7 +1061,7 @@ nnoremap <leader>ian :AN<cr>
 au FileType filetype_group verilog,c let b:delimitMate_matchpairs = "(:),[:],{:}"
 let delimitMate_nesting_quotes = ['"','`']
 let delimitMate_expand_cr = 1
-let delimitMate_expand_space = 1
+let delimitMate_expand_space = 0
 "}}}
 " yankring ------------------------{{{
 if s:is_nvim == 0
@@ -1165,7 +1165,7 @@ function! FencToggle()
         call s:EchoWarning("Current file encoding is ".&fenc)
     endif
 endfunction
-noremap <leader>ft :call FencToggle()<cr>
+nnoremap <leader>ft :call FencToggle()<cr>
 "}}}
 " Renamer -------------------------{{{
 "rename multi file name
@@ -1326,7 +1326,7 @@ else
 endif
 "}}}
 " Git releate ---------------------{{{
-noremap <F3> :Gstatus<cr>
+nnoremap <F3> :Gstatus<cr>
 "}}}
 " neomake -------------------------{{{
 let g:neomake_open_list=2
