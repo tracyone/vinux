@@ -1158,6 +1158,7 @@ nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 " VimExplorer ---------------------{{{
 let g:VEConf_systemEncoding = 'cp936'
 noremap <F11> :silent! VE .<cr>
+nnoremap <Leader>fd :silent! VE .<cr>
 "}}}
 " UltiSnips -----------------------{{{
 if  s:has_python == 1
