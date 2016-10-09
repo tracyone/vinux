@@ -323,6 +323,7 @@ exec "cnoremap " .s:alt_char["f"]." <S-right>"
 exec "cnoremap " s:alt_char['h']." <left>" 
 
 exec "nnoremap " s:alt_char["m"] " :call MouseToggle()<cr>"
+nnoremap <leader>tm :call MouseToggle()<cr>
 " }}}
 
 "home end move
@@ -759,6 +760,7 @@ let g:user_emmet_leader_key = '<c-e>'
 "}}}
 " Tagbar --------------------------{{{
 nnoremap <silent><F9> :TagbarToggle<CR>
+nnoremap <leader>tt :TagbarToggle<CR>
 let g:tagbar_left=0
 let g:tagbar_width=30
 let g:tagbar_sort=0
@@ -1055,6 +1057,7 @@ let NERDTreeWinPos='left'	"show nerdtree in the rigth side
 let NERDTreeShowBookmarks=1
 let NERDTreeChDirMode=2
 noremap <F12> :NERDTreeToggle .<CR> 
+nnoremap <leader>tn :NERDTreeToggle .<CR> 
 "map <2-LeftMouse>  *N "double click highlight the current cursor word 
 inoremap <F12> <ESC> :NERDTreeToggle<CR>
 "}}}
@@ -1195,7 +1198,7 @@ function! FencToggle()
         call s:EchoWarning("Current file encoding is ".&fenc)
     endif
 endfunction
-nnoremap <leader>ft :call FencToggle()<cr>
+nnoremap <leader>tf :call FencToggle()<cr>
 "}}}
 " Renamer -------------------------{{{
 "rename multi file name
@@ -1430,6 +1433,10 @@ nnoremap <Leader>fs :call Tracyone_SaveFile()<cr>
 nnoremap <Leader>fS :wa<cr>
 nnoremap <Leader>fh :wa<cr>
 nnoremap <Leader>hm :call TracyoneFindMannel()<cr>
+nnoremap <Leader>qq :qa<cr>
+nnoremap <Leader>qQ :qa!<cr>
+nnoremap <Leader>qs :wqa<cr>
+nnoremap <Leader>? :exec ":nmap \<leader\>"<cr>
 " }}}
 " Windows manger -----------------{{{
 nnoremap <Leader>wv :vsp<cr>
@@ -1481,6 +1488,7 @@ if s:is_gui
     endfunc
     :call MenuToggle()
     nnoremap <c-F8> :call MenuToggle()<cr>
+    nnoremap <Leader>tg :call MenuToggle()<cr>
     set cul
     "toolbar ----------------- {{{
     if has("toolbar")
