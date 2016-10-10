@@ -391,6 +391,7 @@ vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
 nnoremap <F7> :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
+nnoremap <Leader>td :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
 nnoremap <leader>o :call Open_url()<cr>
 
 nnoremap <silent> n nzz
@@ -751,6 +752,7 @@ Plug 'tpope/vim-repeat' "repeat enhance
 Plug 'Shougo/vinarise.vim'
 Plug 'tracyone/love.vim'
 Plug 't9md/vim-choosewin'
+Plug 'itchyny/vim-cursorword'
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
 "}}}
@@ -1421,6 +1423,18 @@ vnoremap <F6> :'<,'>QuickRun<cr>
 exec "map " .s:alt_char['o'] ." :Fontzoom!<cr>"
 exec "map " .s:alt_char['-'] ." <Plug>(fontzoom-smaller)"
 exec "map " .s:alt_char['='] ." <Plug>(fontzoom-larger)"
+
+func! CursorwordToggle()
+    if g:cursorword == 0
+        let g:cursorword=1
+    else
+        let g:cursorword=0
+    endif
+endfunc
+
+autocmd misc_group VimEnter * :let g:cursorword = 0
+
+nnoremap <leader>tu :call CursorwordToggle()<cr>
 nnoremap <F10> <esc>:Ydc<cr>
 vnoremap <F10> <esc>:Ydv<cr>
 nnoremap <Leader>ac :Crunch<cr>
@@ -1437,6 +1451,7 @@ nnoremap <Leader>qq :qa<cr>
 nnoremap <Leader>qQ :qa!<cr>
 nnoremap <Leader>qs :wqa<cr>
 nnoremap <Leader>? :exec ":nmap \<leader\>"<cr>
+nnoremap <Leader>at :Calendar<cr>
 " }}}
 " Windows manger -----------------{{{
 nnoremap <Leader>wv :vsp<cr>
