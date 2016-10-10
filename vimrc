@@ -758,6 +758,7 @@ Plug 'Shougo/vinarise.vim'
 Plug 'tracyone/love.vim'
 Plug 't9md/vim-choosewin'
 Plug 'itchyny/vim-cursorword'
+Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
 "}}}
@@ -1449,6 +1450,10 @@ nnoremap <leader>au :UndotreeToggle<cr>
 nnoremap <Leader>bn :call TracyoneNext()<cr>
 nnoremap <Leader>bp :call TracyonePrev()<cr>
 nnoremap <Leader>bk :bdelete<cr>
+nmap <Leader>bf gof
+nmap <Leader>bt got
+nmap <Leader>bF goF
+nmap <Leader>bT goT
 nnoremap <Leader>fg :Ag 
 nnoremap <Leader>fs :call Tracyone_SaveFile()<cr>
 nnoremap <Leader>fS :wa<cr>
