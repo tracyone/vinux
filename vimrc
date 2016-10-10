@@ -132,6 +132,7 @@ function! MyFoldText()
 endfunction
 set foldtext=MyFoldText()
 nnoremap <silent><Space> @=(foldlevel('.')?'za':'\<Space>')<CR>
+vnoremap <Space> zf
 "}}}
 
 "list candidate word in statusline
@@ -745,7 +746,7 @@ Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/L9'
 Plug 'mattn/emmet-vim',{'for': 'html'}
-Plug 'junegunn/vim-easy-align',{'on': '<Plug>(EasyAlign)'}
+Plug 'junegunn/vim-easy-align',{'on': [ '<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)' ]}
 Plug 'adah1972/fencview',{'on': 'FencManualEncoding'}
 Plug 'vim-scripts/DrawIt',{'on': 'DIstart'}
 Plug 'mbbill/VimExplorer',{'on': 'VE'}
@@ -1406,9 +1407,9 @@ endif
 " Algin ---------------------------{{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+xmap la <Plug>(LiveEasyAlign)
+nmap la <Plug>(LiveEasyAlign)
 if !exists('g:easy_align_delimiters')
     let g:easy_align_delimiters = {}
 endif
