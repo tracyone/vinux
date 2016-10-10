@@ -1451,10 +1451,10 @@ nnoremap <Leader>fs :call Tracyone_SaveFile()<cr>
 nnoremap <Leader>fS :wa<cr>
 nnoremap <Leader>fh :wa<cr>
 nnoremap <Leader>hm :call TracyoneFindMannel()<cr>
+nnoremap <Leader>hk :exec ":nmap \<leader\>"<cr>
 nnoremap <Leader>qq :qa<cr>
 nnoremap <Leader>qQ :qa!<cr>
 nnoremap <Leader>qs :wqa<cr>
-nnoremap <Leader>? :exec ":nmap \<leader\>"<cr>
 nnoremap <Leader>at :Calendar<cr>
 " }}}
 " Windows manger -----------------{{{
