@@ -388,6 +388,7 @@ nnoremap dm :%s/\r\(\n\)/\1/g<CR>
 nnoremap <silent> <c-F7> :call GotoCurFile()<cr> 
 "resize windows
 noremap <F5> :call Do_Make()<CR>
+nnoremap <leader>cC :call Do_Make()<cr>
 
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
@@ -1422,6 +1423,8 @@ let g:quickrun_config = {
 let g:quickrun_no_default_key_mappings = 1
 map <F6> <Plug>(quickrun)
 vnoremap <F6> :'<,'>QuickRun<cr>
+nmap <leader>yr <Plug>(quickrun)
+vnoremap <leader>yr :'<,'>QuickRun<cr>
 " }}}
 " Misc ---------------------------{{{
 exec "map " .s:alt_char['o'] ." :Fontzoom!<cr>"
