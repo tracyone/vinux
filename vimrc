@@ -324,6 +324,7 @@ exec "cnoremap " .s:alt_char["f"]." <S-right>"
 exec "cnoremap " s:alt_char['h']." <left>" 
 
 exec "nnoremap " s:alt_char["m"] " :call MouseToggle()<cr>"
+" Mouse mode toggle
 nnoremap <leader>tm :call MouseToggle()<cr>
 " }}}
 
@@ -373,9 +374,13 @@ noremap <silent> <C-F9> :vertical resize -10<CR>
 noremap <silent> <C-F10> :resize +10<CR>
 noremap <silent> <C-F11> :resize -10<CR>
 noremap <silent> <C-F12> :vertical resize +10<CR>
+" vertical increase window's size
 noremap <silent> <leader>w. :vertical resize +10<CR>
+" vertical decrease window's size
 noremap <silent> <leader>w, :vertical resize -10<CR>
+" horizontal decrease window's size
 noremap <silent> <leader>w- :resize -10<CR>
+" horizontal increase window's size
 noremap <silent> <leader>w= :resize +10<CR>
 
 
@@ -389,6 +394,7 @@ nnoremap dm :%s/\r\(\n\)/\1/g<CR>
 nnoremap <silent> <c-F7> :call GotoCurFile()<cr> 
 "resize windows
 noremap <F5> :call Do_Make()<CR>
+" make
 nnoremap <leader>cC :call Do_Make()<cr>
 
 " Visual mode pressing * or # searches for the current selection
@@ -397,7 +403,9 @@ vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
 nnoremap <F7> :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
+" dos to unix or unix to dos
 nnoremap <Leader>td :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
+" open url on cursor with default browser
 nnoremap <leader>o :call Open_url()<cr>
 
 nnoremap <silent> n nzz
@@ -760,6 +768,8 @@ Plug 'tracyone/love.vim'
 Plug 't9md/vim-choosewin'
 Plug 'itchyny/vim-cursorword'
 Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
+Plug 'ktonga/vim-follow-my-lead'
+" Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
 "}}}
@@ -769,6 +779,7 @@ let g:user_emmet_leader_key = '<c-e>'
 "}}}
 " Tagbar --------------------------{{{
 nnoremap <silent><F9> :TagbarToggle<CR>
+" Open tagbar
 nnoremap <leader>tt :TagbarToggle<CR>
 let g:tagbar_left=0
 let g:tagbar_width=30
@@ -946,6 +957,7 @@ function! GenYCM()
     endif
     exec ":cd ". l:cur_dir
 endfunction
+" jume to definition (YCM)
 nnoremap <leader>jl :YcmCompleter GoToDeclaration<CR>
 autocmd misc_group InsertLeave * if pumvisible() == 0|pclose|endif
 let g:ycm_confirm_extra_conf=0
@@ -1066,6 +1078,7 @@ let NERDTreeWinPos='left'	"show nerdtree in the rigth side
 let NERDTreeShowBookmarks=1
 let NERDTreeChDirMode=2
 noremap <F12> :NERDTreeToggle .<CR> 
+" Open nerd tree
 nnoremap <leader>tn :NERDTreeToggle .<CR> 
 "map <2-LeftMouse>  *N "double click highlight the current cursor word 
 inoremap <F12> <ESC> :NERDTreeToggle<CR>
@@ -1081,16 +1094,8 @@ inoremap <F12> <ESC> :NERDTreeToggle<CR>
 ":IHV vertical splits and switches
 ":IHT new tab and switches
 ":IHN cycles through matches
-nnoremap <leader>ih :IH<cr>
-nnoremap <leader>ihs :IHS<cr>
-nnoremap <leader>ihv :IHV<cr>
-nnoremap <leader>iht :IHT<cr>
-nnoremap <leader>ihn :IHN<cr>
-nnoremap <leader>ia :A<cr>
-nnoremap <leader>ias :AS<cr>
+" Open c family header in new tab
 nnoremap <leader>iav :AT<cr>
-nnoremap <leader>iat :AT<cr>
-nnoremap <leader>ian :AN<cr>
 "}}}
 " DelimitMate ---------------------{{{
 au FileType filetype_group verilog,c let b:delimitMate_matchpairs = "(:),[:],{:}"
@@ -1165,19 +1170,27 @@ let g:ctrlp_funky_syntax_highlight = 0
 let g:ctrlp_funky_matchtype = 'path'
 nnoremap <c-k> :CtrlPFunky<Cr>
 nnoremap <c-j> :CtrlPBuffer<Cr>
+" ctrlp buffer 
 nnoremap <Leader>bl :CtrlPBuffer<Cr>
 nnoremap <c-l> :CtrlPMRUFiles<cr>
+"CtrlP mru
 nnoremap <Leader>fr :CtrlPMRUFiles<cr>
+" CtrlP file
 nnoremap <Leader>ff :CtrlP<cr>
 " narrow the list down with a word under cursor
+" CtrlP function 
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+" CtrlP cmd
 nnoremap <Leader>pc :CtrlPCmdPalette<cr>
+"CtrlP tmux session
 nnoremap <Leader>pt :CtrlPTmux<cr>
+" CtrlP function
 nnoremap <Leader>pk :CtrlPFunky<cr>
 "}}}
 " VimExplorer ---------------------{{{
 let g:VEConf_systemEncoding = 'cp936'
 noremap <F11> :silent! VE .<cr>
+" Open Vim File Explorer
 nnoremap <Leader>fj :silent! VE .<cr>
 "}}}
 " UltiSnips -----------------------{{{
@@ -1207,11 +1220,12 @@ function! FencToggle()
         call s:EchoWarning("Current file encoding is ".&fenc)
     endif
 endfunction
+" Convert file's encode
 nnoremap <leader>tf :call FencToggle()<cr>
 "}}}
 " Renamer -------------------------{{{
-"rename multi file name
 noremap <F2> :Ren<cr>
+"rename multi file name
 nnoremap <Leader>fR :Ren<cr>
 "}}}
 " Vimshell ------------------------{{{
@@ -1270,6 +1284,7 @@ function! TracyoneVimShellPop()
     if s:is_nvim | execute "terminal" | else | execute "VimShell" | endif
 endfunction
 noremap <F4> :call TracyoneVimShellPop()<cr>
+" Open vimshell or neovim's emulator
 nnoremap <Leader>as :call TracyoneVimShellPop()<cr>
 "}}}
 " Myvimhelp -----------------------{{{
@@ -1331,6 +1346,7 @@ else
 endif
 
 noremap <F8> :SSave<cr>
+" Open startify windows
 nnoremap <Leader>bh :Startify<cr>
 autocmd misc_group FileType startify setlocal buftype=
 "}}}
@@ -1350,9 +1366,13 @@ if executable('ag')
     for dir in s:ag_ignored_directories
         let g:ag_prg .= " --ignore-dir=" . dir
     endfor
+    "ag search for the word on current curosr
     nnoremap <leader>vv :exec ":Ag '\\b" . expand("<cword>") . "\\b'" . " ."<cr>
+    "ag search for the word on current curosr
     vnoremap <leader>vv :<c-u>:exec ":Ag '" . getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1] . "'" . " ."<cr>
+    "ag search c family function
     nnoremap <leader>vf :exec ":Ag " ."'" . expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]" ."'" . " ."<cr>
+    "ag search :TODO or FIXME
     nnoremap <leader>vt :exec ":Ag -i ". "\"[/* ]+\(TODO\|FIXME\)\s*\""." ."<cr>
 
     set grepprg=ag\ --nogroup\ --nocolor
@@ -1372,14 +1392,23 @@ endif
 "}}}
 " Git releate ---------------------{{{
 nnoremap <F3> :Gstatus<cr>
+" Open git status window
 nnoremap <Leader>gs :Gstatus<cr>
+" Open github url
 nnoremap <Leader>gh :Gbrowse<cr>
+" Open git log( browser mode)
 nnoremap <Leader>gl :Gitv --all<cr>
+" Open git log(file mode)
 nnoremap <Leader>gL :Gitv! --all<cr>
+" Open git log(file mode)
 vnoremap <leader>gL :Gitv! --all<cr>
+" Open git blame windows
 nnoremap <Leader>gb :Gblame<cr>
+" git diff current file (vimdiff)
 nnoremap <Leader>gd :Gdiff<cr>
+" list git issue
 nnoremap <Leader>gi :Gissue<cr>
+" git push origin master
 nnoremap <Leader>gp :Gpush origin master<cr>:cw<cr>
 "}}}
 " neomake -------------------------{{{
@@ -1409,7 +1438,6 @@ endif
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 xmap la <Plug>(LiveEasyAlign)
-nmap la <Plug>(LiveEasyAlign)
 if !exists('g:easy_align_delimiters')
     let g:easy_align_delimiters = {}
 endif
@@ -1425,10 +1453,13 @@ let g:quickrun_config = {
 let g:quickrun_no_default_key_mappings = 1
 map <F6> <Plug>(quickrun)
 vnoremap <F6> :'<,'>QuickRun<cr>
+" run cunrrent file
 nmap <leader>yr <Plug>(quickrun)
+" run selection text
 vnoremap <leader>yr :'<,'>QuickRun<cr>
 " }}}
 " Misc ---------------------------{{{
+let g:fml_all_sources = 1
 exec "map " .s:alt_char['o'] ." :Fontzoom!<cr>"
 exec "map " .s:alt_char['-'] ." <Plug>(fontzoom-smaller)"
 exec "map " .s:alt_char['='] ." <Plug>(fontzoom-larger)"
@@ -1443,44 +1474,78 @@ endfunc
 
 autocmd misc_group VimEnter * :let g:cursorword = 0
 
+" realtime underline word toggle
 nnoremap <leader>tu :call CursorwordToggle()<cr>
+" YouDao translate
+nnoremap <Leader>yd <esc>:Ydc<cr>
+" YouDao translate (visual mode)
+vnoremap <Leader>yd <esc>:Ydv<cr>
 nnoremap <F10> <esc>:Ydc<cr>
 vnoremap <F10> <esc>:Ydv<cr>
+" vim calculator
 nnoremap <Leader>ac :Crunch<cr>
+" undo tree window toggle
 nnoremap <leader>au :UndotreeToggle<cr>
+" next buffer or tab
 nnoremap <Leader>bn :call TracyoneNext()<cr>
+" previous buffer or tab
 nnoremap <Leader>bp :call TracyonePrev()<cr>
+" delete buffer
 nnoremap <Leader>bk :bdelete<cr>
+" open current file's position with default file explorer
 nmap <Leader>bf gof
+" open current file's position with default terminal
 nmap <Leader>bt got
+" open project's(pwd) position with default file explorer
 nmap <Leader>bF goF
+" open project's(pwd) position with default terminal
 nmap <Leader>bT goT
+" run Ag command
 nnoremap <Leader>fg :Ag 
+" save file
 nnoremap <Leader>fs :call Tracyone_SaveFile()<cr>
+" save all
 nnoremap <Leader>fS :wa<cr>
-nnoremap <Leader>fh :wa<cr>
+" manpage or vimhelp on current curosr word
 nnoremap <Leader>hm :call TracyoneFindMannel()<cr>
-nnoremap <Leader>hk :exec ":nmap \<leader\>"<cr>
+" list leader's map
+nmap <Leader>hk <Plug>(FollowMyLead)
+" quit all
 nnoremap <Leader>qq :qa<cr>
+" quit all without save
 nnoremap <Leader>qQ :qa!<cr>
+" save and quit all
 nnoremap <Leader>qs :wqa<cr>
+" open calendat
 nnoremap <Leader>at :Calendar<cr>
 " }}}
 " Windows manger -----------------{{{
+" vertical open window
 nnoremap <Leader>wv :vsp<cr>
+" vertical open window then focus the new one
 nnoremap <Leader>wV :vsp<cr><C-w>l
+" horizontal open window 
 nnoremap <Leader>ws :sp<cr>
+" horizontal open window then focus the new one
 nnoremap <Leader>wS :sp<cr><C-w>j
+" maxsize of current windows
 nnoremap <Leader>wm :only<cr>
+" hide current windows
 nnoremap <Leader>wd :hide<cr>
 let g:choosewin_overlay_enable = 1
+" Choose windows
 nmap <Leader>w <Plug>(choosewin)
+" move to left win
 nnoremap <Leader>wh <C-w>h
+" move to right win
 nnoremap <Leader>wl <C-w>l
+" move down win
 nnoremap <Leader>wj <C-w>j
+" move up win
 nnoremap <Leader>wk <C-w>k
-" layout save and load
+" Session save 
 nnoremap <Leader>ls :SSave<cr>
+" Session load
 nnoremap <Leader>ll :SLoad 
 " }}}
 filetype plugin indent on
@@ -1516,6 +1581,7 @@ if s:is_gui
     endfunc
     :call MenuToggle()
     nnoremap <c-F8> :call MenuToggle()<cr>
+    " Menu and toolbar toggle(MacVIm and gvim)
     nnoremap <Leader>tg :call MenuToggle()<cr>
     set cul
     "toolbar ----------------- {{{
