@@ -1389,6 +1389,8 @@ elseif s:is_win
 else
     let g:mkdp_path_to_chrome = "chromium-browser"
 endif
+nnoremap <leader>mp :MarkdownPreview<cr>
+nnoremap <leader>mt :silent GenTocGFM<cr>
 "}}}
 " Git releate ---------------------{{{
 nnoremap <F3> :Gstatus<cr>
