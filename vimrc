@@ -1516,7 +1516,7 @@ nnoremap <Leader>qq :qa<cr>
 nnoremap <Leader>qQ :qa!<cr>
 " save and quit all
 nnoremap <Leader>qs :wqa<cr>
-" open calendat
+" open calendar
 nnoremap <Leader>at :Calendar<cr>
 " }}}
 " Windows manger -----------------{{{
