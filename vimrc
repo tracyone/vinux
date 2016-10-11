@@ -143,6 +143,10 @@ set wic
 set listchars=tab:\|\ ,trail:-  "Strings to use in 'list' mode and for the |:list| command
 au misc_group BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif "jump to last position last open in vim
 
+" Don't use Ex mode, use Q for formatting.
+" Revert with ":unmap Q".
+map Q gq
+
 "{{{backup
 set backup "generate a backupfile when open file
 set backupext=.bak  "backup file'a suffix
