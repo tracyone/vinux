@@ -1334,14 +1334,14 @@ if executable('ag')
     for dir in s:ag_ignored_directories
         let g:ag_prg .= " --ignore-dir=" . dir
     endfor
-    "ag search for the word on current curosr
-    nnoremap <leader>vv :exec ":Ag '\\b" . expand("<cword>") . "\\b'" . " ."<cr>
-    "ag search for the word on current curosr
-    vnoremap <leader>vv :<c-u>:exec ":Ag '" . getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1] . "'" . " ."<cr>
-    "ag search c family function
-    nnoremap <leader>vf :exec ":Ag " ."'" . expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]" ."'" . " ."<cr>
-    "ag search :TODO or FIXME
-    nnoremap <leader>vt :exec ":Ag -i ". "\"[/* ]+\(TODO\|FIXME\)\s*\""." ."<cr>
+"ag search for the word on current curosr
+nnoremap <leader>vv :exec ":Ag '\\b" . expand("<cword>") . "\\b'" . " ."<cr>
+"ag search for the word on current curosr
+vnoremap <leader>vv :<c-u>:exec ":Ag '" . getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1] . "'" . " ."<cr>
+"ag search c family function
+nnoremap <leader>vf :exec ":Ag " ."'" . expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]" ."'" . " ."<cr>
+"ag search :TODO or FIXME
+nnoremap <leader>vt :exec ":Ag -i ". "\"[/* ]+\(TODO\|FIXME\)\s*\""." ."<cr>
 
     set grepprg=ag\ --nogroup\ --nocolor
     set grepformat=%f:%l:%c%m
@@ -1391,14 +1391,14 @@ let g:neomake_open_list=2
 " Easymotion ----------------------{{{
 map W <Plug>(easymotion-lineforward)
 map B <Plug>(easymotion-linebackward)
-" 跨窗口全局 字模式 的easymotion
+" MultiWindow easymotion for word
 nmap <Leader>F <Plug>(easymotion-overwin-w)
-" 多字符easymotion
+" MultiChar easymotion
 nmap <Leader>es <Plug>(easymotion-sn)
 nmap <Leader>et <Plug>(easymotion-tn)
-" 跨窗口全局 行模式 的easymotion
+" MultiWindow easymotion for line
 nmap <Leader>el <Plug>(easymotion-overwin-line)
-" 跨窗口全局 字符模式 的easymotion
+" MultiWindow easymotion for char
 nmap <Leader>ef <Plug>(easymotion-overwin-f)
 
 let g:EasyMotion_startofline = 0
