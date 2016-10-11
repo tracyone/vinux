@@ -654,7 +654,8 @@ Plug 'tracyone/hex2ascii.vim', { 'do': 'make' }
 Plug 'rking/ag.vim',{'on': 'Ag'}
 Plug 'thinca/vim-qfreplace'
 Plug 'vim-scripts/verilog.vim'
-Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)','<Plug>(easymotion-linebackward)' ]}
+Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
+            \ '<Plug>(easymotion-linebackward)','<Plug>(easymotion-overwin-w)' ]}
 Plug 'thinca/vim-quickrun'
 "some awesome vim colour themes
 if s:is_gui
@@ -1426,7 +1427,7 @@ if !exists('g:easy_align_delimiters')
 endif
 let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
 " }}}
-" Quickrun -----------------------{{{
+" Quickrun ------------------------{{{
 let g:quickrun_config = {
             \   "_" : {
             \       "outputter" : "message",
@@ -1441,13 +1442,13 @@ nmap <leader>yr <Plug>(quickrun)
 " run selection text
 vnoremap <leader>yr :'<,'>QuickRun<cr>
 " }}}
-" {{{
+" Incsearch -----------------------{{{
 let g:incsearch#auto_nohlsearch = 1
 map n  <Plug>(incsearch-nohl-n)zz
 map N  <Plug>(incsearch-nohl-N)zz
-map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)zz
+map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
 map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
-map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)zz
+map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
 map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
 " }}}
 " Misc ---------------------------{{{
