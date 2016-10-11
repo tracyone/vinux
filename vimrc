@@ -1552,7 +1552,7 @@ nnoremap <Leader>fS :wa<cr>
 " manpage or vimhelp on current curosr word
 nnoremap <Leader>hm :call TracyoneFindMannel()<cr>
 " list leader's map
-nmap <Leader>hk <Plug>(FollowMyLead)
+nmap <Leader>hk <Plug>(FollowMyLead)<c-w>J
 " quit all
 nnoremap <Leader>qq :qa<cr>
 " quit all without save
