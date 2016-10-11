@@ -694,7 +694,6 @@ Plug 'itchyny/calendar.vim', { 'on': 'Calendar'}
 Plug 'arecarn/selection.vim' | Plug 'arecarn/crunch.vim'
 "Plug 'youjumpiwatch/vim-neoeclim'
 Plug 'mhinz/vim-startify'
-Plug 'Shougo/neomru.vim'
 Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': ['Ydc','Ydv']}
 if s:python_ver | Plug 'iamcco/markdown-preview.vim' | endif
