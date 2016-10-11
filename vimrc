@@ -750,10 +750,12 @@ Plug 'haya14busa/vim-asterisk'
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
 "}}}
+
 " Tohtml --------------------------{{{
 let html_use_css=1
 let g:user_emmet_leader_key = '<c-e>'
 "}}}
+
 " Tagbar --------------------------{{{
 nnoremap <silent><F9> :TagbarToggle<CR>
 " Open tagbar
@@ -765,6 +767,7 @@ let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
 let g:tagbar_systemenc='cp936'
 "}}}
+
 " Cscope --------------------------{{{
 function! TracyoneAddCscopeOut()
     if empty(glob(".project"))
@@ -901,6 +904,7 @@ function! Do_CsTag(dir)
     execute "redraw!"
 endfunction
     "}}}
+
 " Complete ------------------------{{{
 "generate .ycm_extra_conf.py for current directory
 
@@ -1040,6 +1044,7 @@ elseif s:complete_plugin == 1
      endfunction
 endif
 "}}}
+
 " Matchit.vim ---------------------{{{
 "extend %
 runtime macros/matchit.vim "important 
@@ -1048,6 +1053,7 @@ let b:match_ignorecase=1
 set mps+=<:>
 set mps+=":"
 "}}}
+
 " Nerdtree  -----------------------{{{
 let NERDTreeShowLineNumbers=0	"don't show line number
 let NERDTreeWinPos='left'	"show nerdtree in the rigth side
@@ -1060,6 +1066,7 @@ nnoremap <leader>tn :NERDTreeToggle .<CR>
 "map <2-LeftMouse>  *N "double click highlight the current cursor word 
 inoremap <F12> <ESC> :NERDTreeToggle<CR>
 "}}}
+
 " A.vim ---------------------------{{{
 ":A switches to the header file corresponding to the current file being  edited (or vise versa)
 ":AS splits and switches
@@ -1074,12 +1081,14 @@ inoremap <F12> <ESC> :NERDTreeToggle<CR>
 " Open c family header in new tab
 nnoremap <leader>iav :AT<cr>
 "}}}
+
 " DelimitMate ---------------------{{{
 au FileType filetype_group verilog,c let b:delimitMate_matchpairs = "(:),[:],{:}"
 let delimitMate_nesting_quotes = ['"','`']
 let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 0
 "}}}
+
 " yankring ------------------------{{{
 if s:is_nvim == 0
     nnoremap <c-y> :YRGetElem<CR>
@@ -1094,6 +1103,7 @@ let g:yankring_default_menu_mode = 0
 let g:yankring_replace_n_pkey = '<m-p>'
 let g:yankring_replace_n_nkey = '<m-n>'
 "}}}
+
 " CCtree --------------------------{{{
 let g:CCTreeKeyTraceForwardTree = '<C-\>>' "the symbol in current cursor's forward tree 
 let g:CCTreeKeyTraceReverseTree = '<C-\><'
@@ -1109,6 +1119,7 @@ let  g:CCTreeJoinProgOpts = ""
 "let g:CCTreeUseUTF8Symbols = 1
 "map <F7> :CCTreeLoadXRefDBFromDisk $CCTREE_DB<cr> 
 "}}}
+
 " Ctrlp ---------------------------{{{
 " Set Ctrl-P to show match at top of list instead of at bottom, which is so
 " stupid that it's not default
@@ -1164,12 +1175,14 @@ nnoremap <Leader>pt :CtrlPTmux<cr>
 " CtrlP function
 nnoremap <Leader>pk :CtrlPFunky<cr>
 "}}}
+
 " VimExplorer ---------------------{{{
 let g:VEConf_systemEncoding = 'cp936'
 noremap <F11> :silent! VE .<cr>
 " Open Vim File Explorer
 nnoremap <Leader>fj :silent! VE .<cr>
 "}}}
+
 " UltiSnips -----------------------{{{
 if  s:has_python == 1
     let g:UltiSnipsUsePythonVersion = 2
@@ -1183,6 +1196,7 @@ let g:UltiSnipsJumpBackwardTrigge="<c-k>"
 let g:UltiSnipsSnippetDirectories=["bundle/snippets"]
 let g:UltiSnipsSnippetsDir=$VIMFILES."/bundle/snippets"
 "}}}
+
 " FencView ------------------------{{{
 let g:fencview_autodetect=0 
 let g:fencview_auto_patterns='*.txt,*.htm{l\=},*.c,*.cpp,*.s,*.vim'
@@ -1200,11 +1214,13 @@ endfunction
 " Convert file's encode
 nnoremap <leader>tf :call FencToggle()<cr>
 "}}}
+
 " Renamer -------------------------{{{
 noremap <F2> :Ren<cr>
 "rename multi file name
 nnoremap <Leader>fR :Ren<cr>
 "}}}
+
 " Vimshell ------------------------{{{
 if(s:is_nvim== 0)
     let g:vimshell_user_prompt = '":: " . "(" . fnamemodify(getcwd(), ":~") . ")"'
@@ -1264,6 +1280,7 @@ noremap <F4> :call TracyoneVimShellPop()<cr>
 " Open vimshell or neovim's emulator
 nnoremap <Leader>as :call TracyoneVimShellPop()<cr>
 "}}}
+
 " Myvimhelp -----------------------{{{
 let g:startupfile="first_statup.txt"
 if s:is_win
@@ -1280,9 +1297,11 @@ else
     noremap <F1> :h MyVimHelp.txt<cr>
 endif
 "}}}
+
 " Nerdcommander -------------------{{{
 let g:NERDMenuMode=0
 "}}}
+
 " VimStartify ---------------------{{{
 if s:is_win
     let g:startify_session_dir = $VIMFILES .'\sessions'
@@ -1327,6 +1346,7 @@ noremap <F8> :SSave<cr>
 nnoremap <Leader>bh :Startify<cr>
 autocmd misc_group FileType startify setlocal buftype=
 "}}}
+
 " Eclim ---------------------------{{{
 let g:EclimCompletionMethod = 'omnifunc'
 if !exists('g:neocomplete#force_omni_input_patterns')
@@ -1335,6 +1355,7 @@ endif
 let g:neocomplete#force_omni_input_patterns.cpp =
             \ '[^. *\t]\.\w*\|\h\w*::'
 "}}}
+
 " GlobalSearch --------------------{{{
 if executable('ag')
     let g:ag_prg="ag"." --vimgrep --ignore 'cscope.*'"
@@ -1358,6 +1379,7 @@ endif
 autocmd misc_group FileType qf nnoremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>
 autocmd misc_group FileType gitcommit,qfreplace setlocal nofoldenable
 "}}}
+
 " Markdown ------------------------{{{
 if  s:is_unix == 2
     let g:mkdp_path_to_chrome = "open -a safari"
@@ -1371,6 +1393,7 @@ nnoremap <leader>mp :MarkdownPreview<cr>
 " generate markdown TOC
 nnoremap <leader>mt :silent GenTocGFM<cr>
 "}}}
+
 " Git releate ---------------------{{{
 nnoremap <F3> :Gstatus<cr>
 " Open git status window
@@ -1392,11 +1415,14 @@ nnoremap <Leader>gi :Gissue<cr>
 " git push origin master
 nnoremap <Leader>gp :exec "Gpush origin " . fugitive#head()<cr>
 "}}}
+
 " neomake -------------------------{{{
 let g:neomake_open_list=2
 "}}}
+
 " Vim-multiple-cursors ------------{{{
 " }}}
+
 " Easymotion ----------------------{{{
 map W <Plug>(easymotion-lineforward)
 map B <Plug>(easymotion-linebackward)
@@ -1414,6 +1440,7 @@ let g:EasyMotion_startofline = 0
 let g:EasyMotion_show_prompt = 0
 let g:EasyMotion_verbose = 0
 " }}}
+
 " Tmux-navigator ------------------{{{
 if !s:is_win
     let g:tmux_navigator_no_mappings = 1
@@ -1424,6 +1451,7 @@ if !s:is_win
     exec "nnoremap <silent> ".s:alt_char['w']. " :TmuxNavigatePrevious<cr>"
 endif
 " }}}
+
 " Algin ---------------------------{{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -1435,6 +1463,7 @@ if !exists('g:easy_align_delimiters')
 endif
 let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
 " }}}
+
 " Quickrun ------------------------{{{
 let g:quickrun_config = {
             \   "_" : {
@@ -1450,6 +1479,7 @@ nmap <leader>yr <Plug>(quickrun)
 " run selection text
 vnoremap <leader>yr :'<,'>QuickRun<cr>
 " }}}
+
 " Incsearch -----------------------{{{
 let g:incsearch#auto_nohlsearch = 1
 map n  <Plug>(incsearch-nohl-n)zz
@@ -1459,6 +1489,7 @@ map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
 map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
 map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
 " }}}
+
 " Misc ---------------------------{{{
 let g:fml_all_sources = 1
 exec "map " .s:alt_char['o'] ." :Fontzoom!<cr>"
@@ -1527,6 +1558,7 @@ nnoremap <Leader>qs :wqa<cr>
 " open calendar
 nnoremap <Leader>at :Calendar<cr>
 " }}}
+
 " Windows manger -----------------{{{
 " vertical open window
 nnoremap <Leader>wv :vsp<cr>
@@ -1558,6 +1590,7 @@ nnoremap <Leader>ll :SLoad
 " Save basic setting
 nnoremap <Leader>lo :Love<cr>
 " }}}
+
 filetype plugin indent on
 syntax on
 "}}}
