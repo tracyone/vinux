@@ -1382,7 +1382,7 @@ nnoremap <Leader>gd :Gdiff<cr>
 " list git issue
 nnoremap <Leader>gi :Gissue<cr>
 " git push origin master
-nnoremap <Leader>gp :Gpush origin master<cr>:cw<cr>
+nnoremap <Leader>gp :exec "Gpush origin " . fugitive#head()
 "}}}
 " neomake -------------------------{{{
 let g:neomake_open_list=2
