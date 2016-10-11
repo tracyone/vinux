@@ -624,6 +624,14 @@ function! TracyonePrev()
         execute ":bprev"
     endif
 endfunction
+
+function! TracyoneBgToggle()
+    if &bg == "dark"
+        set bg=light
+    else
+        set bg=dark
+    endif
+endfunction
 "}}}
 "Plugin setting{{{
 " Vim-plug ------------------------{{{
@@ -1660,6 +1668,7 @@ catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme desert "default setting 
 endtry
 
+nnoremap <leader>tb :call TracyoneBgToggle()<cr>
 
 "}}}
 "}}}
