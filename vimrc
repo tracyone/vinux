@@ -1484,6 +1484,8 @@ vnoremap <F10> <esc>:Ydv<cr>
 nnoremap <Leader>ac :Crunch<cr>
 " undo tree window toggle
 nnoremap <leader>au :UndotreeToggle<cr>
+"hex to ascii convert
+nnoremap <leader>ah :call Hex2asciiConvert()<cr>
 " next buffer or tab
 nnoremap <Leader>bn :call TracyoneNext()<cr>
 " previous buffer or tab
