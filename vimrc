@@ -749,6 +749,7 @@ Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
 Plug 'ktonga/vim-follow-my-lead'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
+Plug 'junegunn/goyo.vim',{'on': 'Goyo'}
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
@@ -1560,6 +1561,8 @@ nnoremap <Leader>qQ :qa!<cr>
 nnoremap <Leader>qs :wqa<cr>
 " open calendar
 nnoremap <Leader>at :Calendar<cr>
+" toggle free writing in vim (Goyo)
+nnoremap <Leader>to :Goyo<cr>
 " }}}
 
 " Windows manger -----------------{{{
