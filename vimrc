@@ -1419,7 +1419,8 @@ endif
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-xmap la <Plug>(LiveEasyAlign)
+xmap <leader>al <Plug>(LiveEasyAlign)
+nmap <leader>al <Plug>(LiveEasyAlign)
 if !exists('g:easy_align_delimiters')
     let g:easy_align_delimiters = {}
 endif
