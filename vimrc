@@ -397,19 +397,11 @@ noremap <F5> :call Do_Make()<CR>
 " make
 nnoremap <leader>cC :call Do_Make()<cr>
 
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
-
 nnoremap <F7> :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
 " dos to unix or unix to dos
 nnoremap <Leader>td :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
 " open url on cursor with default browser
 nnoremap <leader>o :call Open_url()<cr>
-
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
 
 "}}}
 "Function{{{
@@ -532,32 +524,6 @@ function! Open_url()
         endif
     endif
     unlet s:url
-endfunction
-
-function! VisualSelection(direction) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
-
-    let l:pattern = escape(@", '\\/.*$^~[]')
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-    if executable("ag")
-        let l:search_cmd="Ag ". "\"". l:pattern . "\" "
-    else
-        let l:search_cmd="vimgrep ". '/'. l:pattern . '/' . ' **/*.'
-    endif
-
-    if a:direction == 'b'
-        execute "normal ?" . l:pattern . "^M"
-    elseif a:direction == 'gv'
-        call s:CmdLine(l:search_cmd)
-    elseif a:direction == 'replace'
-        call s:CmdLine("%s" . '/'. l:pattern . '/')
-    elseif a:direction == 'f'
-        execute "normal /" . l:pattern . "^M"
-    endif
-
-    let @/ = l:pattern
-    let @" = l:saved_reg
 endfunction
 
 function! s:CmdLine(str)
@@ -769,6 +735,8 @@ Plug 't9md/vim-choosewin'
 Plug 'itchyny/vim-cursorword'
 Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
 Plug 'ktonga/vim-follow-my-lead'
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/vim-asterisk'
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
@@ -1423,6 +1391,16 @@ let g:neomake_open_list=2
 " Easymotion ----------------------{{{
 map W <Plug>(easymotion-lineforward)
 map B <Plug>(easymotion-linebackward)
+" 跨窗口全局 字模式 的easymotion
+nmap <Leader>F <Plug>(easymotion-overwin-w)
+" 多字符easymotion
+nmap <Leader>es <Plug>(easymotion-sn)
+nmap <Leader>et <Plug>(easymotion-tn)
+" 跨窗口全局 行模式 的easymotion
+nmap <Leader>el <Plug>(easymotion-overwin-line)
+" 跨窗口全局 字符模式 的easymotion
+nmap <Leader>ef <Plug>(easymotion-overwin-f)
+
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_show_prompt = 0
 let g:EasyMotion_verbose = 0
@@ -1462,6 +1440,15 @@ nmap <leader>yr <Plug>(quickrun)
 " run selection text
 vnoremap <leader>yr :'<,'>QuickRun<cr>
 " }}}
+" {{{
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)zz
+map N  <Plug>(incsearch-nohl-N)zz
+map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)zz
+map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
+map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)zz
+map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
+" }}}
 " Misc ---------------------------{{{
 let g:fml_all_sources = 1
 exec "map " .s:alt_char['o'] ." :Fontzoom!<cr>"
@@ -1477,6 +1464,11 @@ func! CursorwordToggle()
 endfunc
 
 autocmd misc_group VimEnter * :let g:cursorword = 0
+
+"remove mapping of * and # in mark.vim
+nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
+nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
+
 
 " realtime underline word toggle
 nnoremap <leader>tu :call CursorwordToggle()<cr>
