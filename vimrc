@@ -1547,6 +1547,8 @@ nnoremap <Leader>wk <C-w>k
 nnoremap <Leader>ls :SSave<cr>
 " Session load
 nnoremap <Leader>ll :SLoad 
+" Save basic setting
+nnoremap <Leader>lo :Love<cr>
 " }}}
 filetype plugin indent on
 syntax on
