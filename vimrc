@@ -1393,7 +1393,7 @@ if  s:is_unix == 2
 elseif s:is_win
     let g:mkdp_path_to_chrome = "C:\\Program\ Files\ (x86)\\Google\\Chrome\\Application\\chrome.exe"
 else
-    let g:mkdp_path_to_chrome = "chromium-browser"
+    let g:mkdp_path_to_chrome = "google-chrome"
 endif
 " Markdown preview in browser
 nnoremap <leader>mp :MarkdownPreview<cr>
