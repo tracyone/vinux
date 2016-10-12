@@ -277,10 +277,15 @@ n    | m    | mouse enable toggle
 # Awesome colorscheme
 
 [sjl/badwolf](https://github.com/sjl/badwolf)
+
 [altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
+
 [tomasr/molokai](https://github.com/tomasr/molokai)
+
 [morhetz/gruvbox](https://github.com/morhetz/gruvbox)
+
 [NLKNguyen/papercolor-theme](https://github.com/NLKNguyen/papercolor-theme) (default)
+
 [KabbAmine/yowish.vim](https://github.com/KabbAmine/yowish.vim)
 
 # Pluglist
