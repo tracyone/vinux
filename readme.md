@@ -220,10 +220,10 @@ Function | mode | ShortCut Key
 
 Function |  ShortCut Key
  --------- | ------------
-Generate database | `<leader>u`
-add database under the cur dir | `<leader>a`,split view:`<C-\>a`
-GotoDefinition  under the cursor | `<leader>g`,split view:`<C-\>g`
-Find functions calling this function under the cursor | `<leader>c`,split view:`<C-\>c`
+Generate database | `,u`
+add database under the cur dir | `,a`,split view:`<C-\>a`
+GotoDefinition  under the cursor | `,g`,split view:`<C-\>g`
+Find functions calling this function under the cursor | `,c`,split view:`<C-\>c`
 
 **t-vim** will automatically add cscope.out under the current directory.
 
@@ -236,9 +236,9 @@ File `.project` format:
 /usr/inculde/
 ```
 
-if file `.project` is exist at the current directory,when press `<leader>u` **t-vim** will ask whether Generate database for specified path in `.project`.
+if file `.project` is exist at the current directory,when press `,u` **t-vim** will ask whether Generate database for specified path in `.project`.
 
-When press `<leader>g`,**t-vim** will try to use the function of YouCompleteMe GoToDefinition,if it failed,then use cscope.
+When press `,g`,**t-vim** will try to use the function of YouCompleteMe GoToDefinition,if it failed,then use cscope.
 
 ## keymapping with alt prefix
 
