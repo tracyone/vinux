@@ -1302,15 +1302,15 @@ let g:startify_change_to_dir = 1
 let g:startify_files_number = 5 
 let g:startify_change_to_vcs_root = 0
 let g:startify_custom_header = [
-            \ '   __      ___            ',
-            \ '   \ \    / (_)           ',
-            \ '    \ \  / / _ _ __ ___   ',
-            \ '     \ \/ / | | ''_ ` _ \ ',
-            \ '      \  /  | | | | | | | ',
-            \ '       \/   |_|_| |_| |_| ',
-            \ '',
-            \ '    Press <space>hk for help ',
-            \ '    tracyone at live dot cn',
+            \ '       __             _         ',
+            \ '      / /_     _   __(_)___ ___ ',
+            \ '     / __/____| | / / / __ `__ \',
+            \ '    / /_/_____/ |/ / / / / / / /',
+            \ '    \__/      |___/_/_/ /_/ /_/ ',
+            \ '                                ',                            
+            \ '    <space>hk open keymap list',
+            \ '    <space>vc open vimrc in new tab',
+            \ '    author:tracyone at live dot cn',
             \ '',
             \ '',
             \ ]
