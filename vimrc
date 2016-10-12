@@ -695,7 +695,7 @@ Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
-Plug 'vim-scripts/delimitMate.vim'
+Plug 'Raimondi/delimitMate'
 Plug 'vim-scripts/genutils'
 Plug 'itchyny/calendar.vim', { 'on': 'Calendar'}
 Plug 'arecarn/selection.vim' | Plug 'arecarn/crunch.vim'
