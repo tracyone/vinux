@@ -1,81 +1,184 @@
-![screenshot](https://cloud.githubusercontent.com/assets/4246425/15250970/dae5518e-1959-11e6-8dc5-bed1c23f7a02.png)
+![screenshot](https://cloud.githubusercontent.com/assets/4246425/19301485/51a36b1c-9092-11e6-81c8-cacf51b2ad59.png)
 
 
-* [安装](#安装)
-* [配置结构](#配置结构)
-* [按键映射和功能描述](#按键映射和功能描述)
-	* [源码阅读和跳转](#源码阅读和跳转)
-	* [文件Fuzzy搜索和字符串搜索](#文件fuzzy搜索和字符串搜索)
-	* [功能按键](#功能按键)
-	* [GUI相关](#gui相关)
-* [奇技淫巧](#奇技淫巧)
-	* [多光标编辑](#多光标编辑)
-	* [快速移动](#快速移动)
-	* [代码片段](#代码片段)
-	* [查看图片(ASCII形式)](#查看图片ascii形式)
-	* [Markdown预览](#markdown预览)
+* [Installation](#installation)
+* [Keymapping](#keymapping)
+	* [keymapping with space prefix](#keymapping-with-space-prefix)
+	* [Fuzzy files search & string search](#fuzzy-files-search--string-search)
+	* [FunctionKey](#functionkey)
+	* [Source code reading and GoToDefinition](#source-code-reading-and-gotodefinition)
+	* [keymapping with alt prefix](#keymapping-with-alt-prefix)
+* [Awesome colorscheme](#awesome-colorscheme)
+* [Pluglist](#pluglist)
+* [Config Structure](#config-structure)
 
-#  安装
+#  Installation
 
-English guide see [readme_en.md](./readme_en.md)
+Dependency:
 
-确保你安装好`git`和`curl`，并确保它们可以在你系统的PATH变量中找到。
+- [git](https://git-scm.com/downloads)
+- [curl](https://curl.haxx.se/)
+- [the_silver_searcher](https://github.com/ggreer/the_silver_searcher)
+- [ctags](http://ctags.sourceforge.net/)
+- [cscope](http://cscope.sourceforge.net/)
+- [vim](http://www.vim.org/) with python2 support.
 
-执行以下脚本，然后启动vim，确保你的电脑是可以联网的，耐心等待所有东西就会自行安装好。
+Execute following shell script then start vim,it will install all stuff automatically.
+
 
 ```bash
+# for macOS and linux
 ./install.sh
 ```
 
-# 配置结构
+# Keymapping
 
-![structure](https://cloud.githubusercontent.com/assets/4246425/16357646/0b8c9814-3b2f-11e6-8f21-b6247e4e6e02.png)
+Leader key is `space`.
 
-用vim打开`vimrc`文件,你将会看到大部分内容被自动折叠起来，你可以使用`za`快捷键来打开或者关闭折叠。
+`<leader>hk` : show all the keybinding that with space prefix
+`<leader>vc` : open vimrc.
 
-- System Check:系统检测，vim支持的IO情况等。
+## keymapping with space prefix
 
-- Basic Setting:vim最基本的设定
+mode  | key      | description
+----  | ----     | -----------
+    n | tm       | Mouse mode toggle
+    n | **so**   | **update the _vimrc**
+    n | **vc**   | **open the vimrc in tab**
+      | w.       | :vertical resize +10<CR>
+      | w,       | :vertical resize -10<CR>
+      | w-       | :resize -10<CR>
+      | w=       | :resize +10<CR>
+    n | fc       | cd to current buffer's path
+    n | cC       | make
+    n | td       | dos to unix or unix to dos
+    n | o        | open url on cursor with default browser
+    n | ap       | Open plug status windows
+    n | tt       | Open tagbar
+    n | jl       | jume to definition (YCM)
+    n | tn       | Open nerd tree
+    n | iav      | Open c family header in new tab
+    n | bl       | ctrlp buffer
+    n | fr       | CtrlP mru
+    n | ff       | CtrlP file
+    n | fU       | CtrlP function
+    n | pt       | CtrlP tmux session
+    n | pk       | CtrlP function
+    n | fj       | Open Vim File Explorer
+    n | tf       | Convert file's encode
+    n | fR       | rename multi file name
+    n | as       | Open vimshell or neovim's emulator
+    n | bh       | Open startify windows
+    n | vv       | ag search for the word on current curosr
+    v | vv       | ag search for the word on current curosr
+    n | vf       | ag search c family function
+    n | vt       | ag search :TODO or FIXME
+    n | mp       | Markdown preview in browser
+    n | mt       | generate markdown TOC
+    n | gs       | Open git status window
+    n | gh       | Open github url
+    n | gl       | Open git log( browser mode)
+    n | gL       | Open git log(file mode)
+    v | gL       | Open git log(file mode)
+    n | gb       | Open git blame windows
+    n | gd       | git diff current file (vimdiff)
+    n | gi       | list git issue
+    n | gp       | git push origin master
+    n | F        | MultiWindow easymotion for word
+    n | es       | MultiChar easymotion
+    n | et       | <Plug>(easymotion-tn)
+    n | el       | MultiWindow easymotion for line
+    n | ef       | MultiWindow easymotion for char
+    x | al       | <Plug>(LiveEasyAlign)
+    n | al       | <Plug>(LiveEasyAlign)
+    n | yr       | run cunrrent file
+    v | yr       | run selection text
+    n | tu       | realtime underline word toggle
+    n | yd       | YouDao translate
+    v | yd       | YouDao translate (visual mode)
+    n | ac       | vim calculator
+    n | au       | undo tree window toggle
+    n | ah       | hex to ascii convert
+    n | bn       | next buffer or tab
+    n | bp       | previous buffer or tab
+    n | bk       | delete buffer
+    n | bf       | open current file's position with default file explorer
+    n | bt       | open current file's position with default terminal
+    n | bF       | open project's(pwd) position with default file explorer
+    n | bT       | open project's(pwd) position with default terminal
+    n | fg       | run Ag command
+    n | fs       | save file
+    n | fS       | save all
+    n | **hm**   | **manpage or vimhelp on current curosr word**
+    n | **hk**   | **list leader's map**
+    n | qq       | quit all
+    n | qQ       | quit all without save
+    n | qs       | save and quit all
+    n | at       | open calendar
+    n | to       | toggle free writing in vim (Goyo)
+    n | 1        | tab 1
+    n | 2        | tab 2
+    n | 3        | tab 3
+    n | 4        | tab 4
+    n | 5        | tab 5
+    n | 6        | tab 6
+    n | 7        | tab 7
+    n | 8        | tab 8
+    n | 9        | tab 9
+    n | wv       | vertical open window
+    n | wV       | vertical open window then focus the new one
+    n | ws       | horizontal open window
+    n | wS       | horizontal open window then focus the new one
+    n | wm       | maxsize of current windows
+    n | wd       | hide current windows
+    n | **w**        | **Choose windows**
+    n | wh       | move to left win
+    n | wl       | move to right win
+    n | wj       | move down win
+    n | wk       | move up win
+    n | **ls**       | **Session save**
+    n | **ll**       | **Session load**
+    n | **lo**       | **Save basic setting**
+    n | **tg**       | **menu and toolbar toogle**
+    n | **tb**       | **background dark or light toggle**
+    n | cc       | <Plug>NERDCommenterComment
+    v | cc       | <Plug>NERDCommenterComment
+    n | c<Space> | <Plug>NERDCommenterToggle
+    v | c<Space> | <Plug>NERDCommenterToggle
+    n | cm       | <Plug>NERDCommenterMinimal
+    v | cm       | <Plug>NERDCommenterMinimal
+    n | cs       | <Plug>NERDCommenterSexy
+    v | cs       | <Plug>NERDCommenterSexy
+    n | ci       | <Plug>NERDCommenterInvert
+    v | ci       | <Plug>NERDCommenterInvert
+    n | cy       | <Plug>NERDCommenterYank
+    v | cy       | <Plug>NERDCommenterYank
+    n | cl       | <Plug>NERDCommenterAlignLeft
+    v | cl       | <Plug>NERDCommenterAlignLeft
+    n | cb       | <Plug>NERDCommenterAlignBoth
+    v | cb       | <Plug>NERDCommenterAlignBoth
+    n | cn       | <Plug>NERDCommenterNest
+    v | cn       | <Plug>NERDCommenterNest
+    n | cu       | <Plug>NERDCommenterUncomment
+    v | cu       | <Plug>NERDCommenterUncomment
+    n | c$       | <Plug>NERDCommenterToEOL
+    v | c$       | <Plug>NERDCommenterToEOL
+    n | cA       | <Plug>NERDCommenterAppend
+    v | cA       | <Plug>NERDCommenterAppend
+    n | ca       | <Plug>NERDCommenterAltDelims
+    n | d        | :YcmShowDetailedDiagnostic<CR>
+    n | fml      | Open Leader mappings in new window
+    n | m        | <Plug>MarkSet
+    x | m        | <Plug>MarkSet
+    n | r        | <Plug>MarkRegex
+    x | r        | <Plug>MarkRegex
+    n | n        | <Plug>MarkClear
+    n | *        | <Plug>MarkSearchCurrentNext
+    n | #        | <Plug>MarkSearchCurrentPrev
+    n | /        | <Plug>MarkSearchAnyNext
+    n | ?        | <Plug>MarkSearchAnyPrev
 
-- Key mapping: vim基本的按键映射（不包括插件的按键映射）
-
-- Plugin setting:所有插件的设置
-
-- Function:自定义的viml函数
-
-- Gui releate:gvim，macvim等图形界面的设置。
-
-# 按键映射和功能描述
-
-在**t-vim**中的`<leader>`表示逗号`,`。
-
-normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<leader>so`即可让vimrc生效。
-
-## 源码阅读和跳转
-
-功能 | 模式 | 快捷键
---------- | ---------- | ---------------
-生成数据库 | normal | `<leader>u`
-添加当前路径下的数据库 | normal | `<leader>a`,split view:`<C-\>a`
-跳转到当前光标下的定义  | normal | `<leader>g`,split view:`<C-\>g`
-跳转下当前光标下函数的调用者 | normal | `<leader>c`,split view:`<C-\>c`
-
-**t-vim** 在每次打开vim时会自动添加当前路径下的cscope数据库
-
-**t-vim** 还可以根据当前路径下的`.project`文件添加不同路径下的cscope数据库。
-
-文件 `.project` 的格式是：
-
-```
-/home/tracyone/work/ctest/
-/usr/inculde/
-```
-
-如果文件`.project` 在当前路径存在的话，那么当你按下`<leader>u`的时候，**t-vim**将会询问是否为`.project`中指定路径生成对应的cscope数据库。
-
-当按下`<leader>g`，**t-vim**将会尝试使用YouCompleteMe的GoToDefinition功能，如果失败才会使用cscope的跳转功能。
-
-## 文件Fuzzy搜索和字符串搜索
+## Fuzzy files search & string search
 
 [ctrlpvim](https://github.com/ctrlpvim/ctrlp.vim)
 
@@ -83,94 +186,199 @@ normal模式下按`<leader>vc`即可编辑vimrc文件，编辑好之后按`<lead
 
 [ag.vim](https://github.com/rking/ag.vim)
 
-快捷键 | 模式 | 功能 
+Function | mode | ShortCut Key
 --------- | ---------- | ---------------
- `Ctrl-p` | normal  | fuzzy 搜索文件
- `Ctrl-k` | normal  | fuzzy 搜索当前文件的函数
- `Ctrl-j` | normal  | fuzzy 搜索buffers
- `Ctrl-l` | normal  | fuzzy 搜索最近打开的文件
- `<leader>vv` | normal,visual | 全局搜索当前光标下的字符串
- `<leader>vf` | normal | global 全局搜索当前光标下的C函数
- `<leader>vt` | normal | 全局搜索**TODO**或者**FIXME**
+ `Ctrl-p` | normal  | fuzzy search files
+ `Ctrl-k` | normal  | fuzzy search functions for current file
+ `Ctrl-j` | normal  | fuzzy search buffers
+ `Ctrl-l` | normal  | fuzzy search recent open files(MRU)
+ `<leader>vv` | normal,visual | global search string under cursor
+ `<leader>vf` | normal | global search string c function under cursor
+ `<leader>vt` | normal | global search **TODO** or **FIXME**
 
- 为了加快搜索速度，非常推荐你安装[the silver searcher](https://github.com/ggreer/the_silver_searcher)。
+ For speed up the search process,recommand you install [the silver searcher](https://github.com/ggreer/the_silver_searcher).
 
+## FunctionKey
 
-## 功能按键
-
-快捷键 | 模式 | 功能
+Function | mode | ShortCut Key
 --------- | ---------- | ---------------
-`F1` | all | 打开帮助
-`F2` | all | 打开重命名窗口，使用的是 [renamer.vim](https://github.com/vim-scripts/renamer.vim)
-`F3` | all | 打开Gstatus窗口，使用的是[tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
-`F4` | all | 打开shell，使用的是[vimshell.vim](https://github.com/Shougo/vimshell.vim)，如果使用[neovim](https://github.com/neovim/neovim)就使用自带终端模拟器
-`F5` | all | 执行Make并打开quickfix窗口，如果使用 [neovim](https://github.com/neovim/neovim)的话就使用[neomake](https://github.com/benekastah/neomake) 
-`F6` | normal,visual | 快速运行当前脚本文件，使用的是[quckrun](https://github.com/thinca/vim-quickrun)
-`F7` | normal | 为当前打开的文件执行dos2unix或者unix2dos
-`F8` | all | 保存当前session，使用的插件是[mhinz/vim-startify](https://github.com/mhinz/vim-startify)
-`F9` | normal | 打开tagbar窗口，使用的是[tagbar](https://github.com/majutsushi/tagbar)
-`F10` | normal,visual | 翻译当前光标下的单词使用的是[vim-youdao-translater](https://github.com/ianva/vim-youdao-translater)
-`F11` | normal | 打开文件管理器，使用的是[VimExplorer](https://github.com/mbbill/VimExplorer)
-`F12` | normal,insert | 打开只读的文件管理器使用的是[nerdtree](https://github.com/scrooloose/nerdtree)
+`F1` | all | Open vim help
+`F2` | all | Open rename windows
+`F3` | all | Open Gstatus windows
+`F4` | all | Open shell,or terminal emulator 
+`F5` | all | Execute make then open quickfix
+`F6` | normal,visual | execute current file or selection code 
+`F7` | normal | perform dos2unix or unix2dos for current open file.
+`F8` | all | save current session 
+`F9` | normal | open tagbar windows
+`F10` | normal,visual | YouDao dict translate the word under the cursor
+`F11` | normal | Open vim file manager
+`F12` | normal,insert | open nerdtree
 
-## GUI相关
+## Source code reading and GoToDefinition
 
-在MacVim和gVim的情况下，你可以做以下调整：
+Function |  ShortCut Key
+ --------- | ------------
+Generate database | `<leader>u`
+add database under the cur dir | `<leader>a`,split view:`<C-\>a`
+GotoDefinition  under the cursor | `<leader>g`,split view:`<C-\>g`
+Find functions calling this function under the cursor | `<leader>c`,split view:`<C-\>c`
 
-快捷键 | 模式 | 功能
---------- | ---------- | ---------------
-`Alt+=` | normal | 放大字体
-`Alt+-` | normal | 缩小字体
-`Alt-o` | normal | 恢复默认配置的字体大小
-`Ctrl+F8` | normal | 菜单和工具栏显示或者隐藏（toggle）
+**t-vim** will automatically add cscope.out under the current directory.
 
-本配置主题有：
+**t-vim** will add all cscope.out which path is specified by file `.project` under the current directory.
 
-- [sjl/badwolf](https://github.com/sjl/badwolf)
-- [altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
-- [tomasr/molokai](https://github.com/tomasr/molokai)
-- [morhetz/gruvbox](https://github.com/morhetz/gruvbox)
-- [NLKNguyen/papercolor-theme](https://github.com/NLKNguyen/papercolor-theme)
-- [KabbAmine/yowish.vim](https://github.com/KabbAmine/yowish.vim)
+File `.project` format:
 
-修改字体大小或者字体类型主题类型之后，你只需要执行`:Love`就能保存你的配置了。
+```
+/home/tracyone/work/ctest/
+/usr/inculde/
+```
 
-# 奇技淫巧
+if file `.project` is exist at the current directory,when press `<leader>u` **t-vim** will ask whether Generate database for specified path in `.project`.
 
-## 多光标编辑
+When press `<leader>g`,**t-vim** will try to use the function of YouCompleteMe GoToDefinition,if it failed,then use cscope.
 
-[terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
+## keymapping with alt prefix
 
-快捷键 | 模式 | 功能
---------- | ---------- | ---------------
-`Ctrl-n` | normal,visual | 同时编辑
+mode | key  | description
+---- | ---- | -----------
+n    | 1    | tab 1
+n    | 2    | tab 2
+n    | 3    | tab 3
+n    | 4    | tab 4
+n    | 5    | tab 5
+n    | 6    | tab 6
+n    | 7    | tab 7
+n    | 8    | tab 8
+n    | 9    | tab 9
+n    | t    | new tab
+n    | q    | nohls
+n    | a    | select all
+n    | =    | select all then align
+n    | h    | move to left win
+n    | l    | move to right win
+n    | j    | move to down win
+n    | k    | move to up win
+i    | h    | equal to `<left>` in insert mode
+i    | l    | equal to `<right>` in insert mode
+i    | j    | equal to `<down>` in insert mode
+i    | k    | equal to `<up>` in insert mode
+i    | b    | words backward.
+i    | f    | words forward.
+c    | h    | characters to the left.
+c    | l    | characters to the right.
+c    | j    | characters to the down.
+c    | k    | characters to the up.
+c    | b    | words backward.
+c    | f    | words forward.
+n    | m    | mouse enable toggle
 
-## 快速移动
+# Awesome colorscheme
 
+[sjl/badwolf](https://github.com/sjl/badwolf)
+[altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
+[tomasr/molokai](https://github.com/tomasr/molokai)
+[morhetz/gruvbox](https://github.com/morhetz/gruvbox)
+[NLKNguyen/papercolor-theme](https://github.com/NLKNguyen/papercolor-theme) (default)
+[KabbAmine/yowish.vim](https://github.com/KabbAmine/yowish.vim)
+
+# Pluglist
+
+[tracyone/a.vim](https://github.com/tracyone/a.vim)
+[Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+[rdnetto/YCM-Generator](https://github.com/rdnetto/YCM-Generator)
+[Shougo/neocomplete](https://github.com/Shougo/neocomplete)
+[tracyone/dict](https://github.com/tracyone/dict)
+[Konfekt/FastFold](https://github.com/Konfekt/FastFold)
+[tracyone/hex2ascii.vim](https://github.com/tracyone/hex2ascii.vim)
+[rking/ag.vim](https://github.com/rking/ag.vim)
+[thinca/vim-qfreplace](https://github.com/thinca/vim-qfreplace)
+[vim-scripts/verilog.vim](https://github.com/vim-scripts/verilog.vim)
 [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion)
-
-快捷键 | 模式 | 功能
---------- | ---------- | ---------------
-`W` | normal | 你懂的，按下你就知道
-`B` | normal | 你懂的，按下你就知道
-
-## 代码片段
-
-[SirVer/ultisnips](https://github.com/SirVer/ultisnips)
-
-快捷键 | 模式 | 功能
---------- | ---------- | ---------------
-`Ctrl-j` | insert | 触发snippets的扩展和跳到下一个编辑区，YCM支持ultisnips的补全，在补全窗口中标有snip的就是。
-`Ctrl-k` | insert | 跳到上一个编辑区
-
-## 查看图片(ASCII形式)
-
+[thinca/vim-quickrun](https://github.com/thinca/vim-quickrun)
+[thinca/vim-fontzoom](https://github.com/thinca/vim-fontzoom)
+[sjl/badwolf](https://github.com/sjl/badwolf)
+[altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
+[osyo-manga/vim-over](https://github.com/osyo-manga/vim-over)
+[tomasr/molokai](https://github.com/tomasr/molokai)
+[morhetz/gruvbox](https://github.com/morhetz/gruvbox)
+[NLKNguyen/papercolor-theme](https://github.com/NLKNguyen/papercolor-theme)
+[KabbAmine/yowish.vim](https://github.com/KabbAmine/yowish.vim)
+[terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
 [ashisha/image.vim](https://github.com/ashisha/image.vim)
+[terryma/vim-expand-region](https://github.com/terryma/vim-expand-region)
+[ctrlpvim/ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim)
+[tacahiroy/ctrlp-funky](https://github.com/tacahiroy/ctrlp-funky)
+[fisadev/vim-ctrlp-cmdpalette](https://github.com/fisadev/vim-ctrlp-cmdpalette)
+[tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
+[gregsexton/gitv](https://github.com/gregsexton/gitv)
+[jaxbot/github-issues.vim](https://github.com/jaxbot/github-issues.vim)
+[vim-scripts/delimitMate.vim](https://github.com/vim-scripts/delimitMate.vim)
+[vim-scripts/genutils](https://github.com/vim-scripts/genutils)
+[itchyny/calendar.vim](https://github.com/itchyny/calendar.vim)
+[arecarn/selection.vim' ](https://github.com/arecarn/selection.vim)
+[arecarn/crunch.vim](https://github.com/arecarn/crunch.vim)
+[youjumpiwatch/vim-neoeclim](https://github.com/youjumpiwatch/vim-neoeclim)
+[mhinz/vim-startify](https://github.com/mhinz/vim-startify)
+[SirVer/ultisnips](https://github.com/SirVer/ultisnips)
+[ianva/vim-youdao-translater](https://github.com/ianva/vim-youdao-translater)
+[iamcco/markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim)
+[mzlogin/vim-markdown-toc](https://github.com/mzlogin/vim-markdown-toc)
+[christoomey/vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator)
+[lucidstack/ctrlp-tmux.vim](https://github.com/lucidstack/ctrlp-tmux.vim)
+[vim-scripts/sudo.vim](https://github.com/vim-scripts/sudo.vim)
+[nhooyr/neoman.vim](https://github.com/nhooyr/neoman.vim)
+[tracyone/pyclewn_linux](https://github.com/tracyone/pyclewn_linux)
+[CodeFalling/fcitx-vim-osx](https://github.com/CodeFalling/fcitx-vim-osx)
+[CodeFalling/fcitx-vim-osx](https://github.com/CodeFalling/fcitx-vim-osx)
+[Shougo/vimproc.vim](https://github.com/Shougo/vimproc.vim)
+[Shougo/vimshell.vim](https://github.com/Shougo/vimshell.vim)
+[vim-scripts/YankRing.vim](https://github.com/vim-scripts/YankRing.vim)
+[mattn/ctrlp-register',{'on': 'CtrlPRegister'](https://github.com/mattn/ctrlp-register)
+[benekastah/neomake](https://github.com/benekastah/neomake)
+[vim-scripts/The-NERD-Commenter](https://github.com/vim-scripts/The-NERD-Commenter)
+[scrooloose/nerdtree](https://github.com/scrooloose/nerdtree)
+[kshenoy/vim-signature](https://github.com/kshenoy/vim-signature)
+[tpope/vim-surround](https://github.com/tpope/vim-surround)
+[majutsushi/tagbar](https://github.com/majutsushi/tagbar)
+[mbbill/undotree](https://github.com/mbbill/undotree)
+[vim-scripts/L9](https://github.com/vim-scripts/L9)
+[mattn/emmet-vim](https://github.com/mattn/emmet-vim)
+[junegunn/vim-easy-align](https://github.com/junegunn/vim-easy-align)
+[adah1972/fencview](https://github.com/adah1972/fencview)
+[vim-scripts/DrawIt](https://github.com/vim-scripts/DrawIt)
+[mbbill/VimExplorer](https://github.com/mbbill/VimExplorer)
+[vim-scripts/renamer.vim](https://github.com/vim-scripts/renamer.vim)
+[hari-rangarajan/CCTree](https://github.com/hari-rangarajan/CCTree)
+[tracyone/mark.vim](https://github.com/tracyone/mark.vim)
+[tracyone/MyVimHelp](https://github.com/tracyone/MyVimHelp)
+[tpope/vim-repeat](https://github.com/tpope/vim-repeat)
+[Shougo/vinarise.vim](https://github.com/Shougo/vinarise.vim)
+[tracyone/love.vim](https://github.com/tracyone/love.vim)
+[t9md/vim-choosewin](https://github.com/t9md/vim-choosewin)
+[itchyny/vim-cursorword](https://github.com/itchyny/vim-cursorword)
+[justinmk/vim-gtfo'](https://github.com/justinmk/vim-gtfo)
+[ktonga/vim-follow-my-lead](https://github.com/ktonga/vim-follow-my-lead)
+[haya14busa/incsearch.vim](https://github.com/haya14busa/incsearch.vim)
+[haya14busa/vim-asterisk](https://github.com/haya14busa/vim-asterisk)
+[junegunn/goyo.vim](https://github.com/junegunn/goyo.vim)
 
-直接用vim打开jpg文件就行。
+# Config Structure
 
-## Markdown预览
+![structure](https://cloud.githubusercontent.com/assets/4246425/16357646/0b8c9814-3b2f-11e6-8f21-b6247e4e6e02.png)
 
-在编辑markdown文件的时候执行`:MarkdownPreview`就能调用浏览器实时预览markdown效果。
+Open file `vimrc` with vim,it will be  folded automatically, you can press `za`(vim normal mode) to open or close fold.
 
-执行`:GenTocGFM`就可以为当前编辑的markdown文件生成目录代码。
+- System Check:OS,vim IO,vim type check
+
+- Basic Setting:vim basic setting like show line number,status line,backup file encode ...
+
+- Key mapping: vim basic key mapping( exclude plugins's keymapping )
+
+- Plugin setting:Plugins's setting
+
+- Function:Some useful vim function
+
+- Gui releate:gvim,macvim,font,mouse setting....
+
