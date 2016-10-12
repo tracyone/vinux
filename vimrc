@@ -131,7 +131,7 @@ function! MyFoldText()
     return sub . info
 endfunction
 set foldtext=MyFoldText()
-nnoremap <silent>sj  @=(foldlevel('.')?'za':'sj')<CR>
+nnoremap sj za
 vnoremap sf zf
 nnoremap sk zM
 nnoremap si zi
