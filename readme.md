@@ -36,6 +36,7 @@ Execute following shell script then start vim,it will install all stuff automati
 Leader key is `space`.
 
 `<leader>hk` : show all the keybinding that with space prefix
+
 `<leader>vc` : open vimrc.
 
 ## keymapping with space prefix
