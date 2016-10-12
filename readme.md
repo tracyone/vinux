@@ -187,42 +187,42 @@ mode  | key      | description
 
 [ag.vim](https://github.com/rking/ag.vim)
 
-Function | mode | ShortCut Key
---------- | ---------- | ---------------
- `Ctrl-p` | normal  | fuzzy search files
- `Ctrl-k` | normal  | fuzzy search functions for current file
- `Ctrl-j` | normal  | fuzzy search buffers
- `Ctrl-l` | normal  | fuzzy search recent open files(MRU)
+ShortCut Key  | mode          | Description
+---------     | ----------    | ---------------
+ `Ctrl-p`     | normal        | fuzzy search files
+ `Ctrl-k`     | normal        | fuzzy search functions for current file
+ `Ctrl-j`     | normal        | fuzzy search buffers
+ `Ctrl-l`     | normal        | fuzzy search recent open files(MRU)
  `<leader>vv` | normal,visual | global search string under cursor
- `<leader>vf` | normal | global search string c function under cursor
- `<leader>vt` | normal | global search **TODO** or **FIXME**
+ `<leader>vf` | normal        | global search string c function under cursor
+ `<leader>vt` | normal        | global search **TODO** or **FIXME**
 
  For speed up the search process,recommand you install [the silver searcher](https://github.com/ggreer/the_silver_searcher).
 
 ## FunctionKey
 
-Function | mode | ShortCut Key
---------- | ---------- | ---------------
-`F1` | all | Open vim help
-`F2` | all | Open rename windows
-`F3` | all | Open Gstatus windows
-`F4` | all | Open shell,or terminal emulator 
-`F5` | all | Execute make then open quickfix
-`F6` | normal,visual | execute current file or selection code 
-`F7` | normal | perform dos2unix or unix2dos for current open file.
-`F8` | all | save current session 
-`F9` | normal | open tagbar windows
-`F10` | normal,visual | YouDao dict translate the word under the cursor
-`F11` | normal | Open vim file manager
-`F12` | normal,insert | open nerdtree
+ShortCut Key | mode          | Description
+---------    | ----------    | ---------------
+`F1`         | all           | Open vim help
+`F2`         | all           | Open rename windows
+`F3`         | all           | Open Gstatus windows
+`F4`         | all           | Open shell,or terminal emulator
+`F5`         | all           | Execute make then open quickfix
+`F6`         | normal,visual | execute current file or selection code
+`F7`         | normal        | perform dos2unix or unix2dos for current open file.
+`F8`         | all           | save current session
+`F9`         | normal        | open tagbar windows
+`F10`        | normal,visual | YouDao dict translate the word under the cursor
+`F11`        | normal        | Open vim file manager
+`F12`        | normal,insert | open nerdtree
 
 ## Source code reading and GoToDefinition
 
-Function |  ShortCut Key
- --------- | ------------
-Generate database | `,u`
-add database under the cur dir | `,a`,split view:`<C-\>a`
-GotoDefinition  under the cursor | `,g`,split view:`<C-\>g`
+Function                                              | ShortCut Key
+ ---------                                            | ------------
+Generate database                                     | `,u`
+add database under the cur dir                        | `,a`,split view:`<C-\>a`
+GotoDefinition  under the cursor                      | `,g`,split view:`<C-\>g`
 Find functions calling this function under the cursor | `,c`,split view:`<C-\>c`
 
 **t-vim** will automatically add cscope.out under the current directory.
