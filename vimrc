@@ -742,7 +742,6 @@ Plug 'mbbill/VimExplorer',{'on': 'VE'}
 Plug 'vim-scripts/renamer.vim',{'on': 'Ren'}
 Plug  'hari-rangarajan/CCTree'
 Plug 'tracyone/mark.vim'
-Plug 'tracyone/MyVimHelp'
 Plug 'tpope/vim-repeat' "repeat enhance
 Plug 'Shougo/vinarise.vim'
 Plug 'tracyone/love.vim'
@@ -1288,23 +1287,6 @@ noremap <F4> :call TracyoneVimShellPop()<cr>
 nnoremap <Leader>as :call TracyoneVimShellPop()<cr>
 "}}}
 
-" Myvimhelp -----------------------{{{
-let g:startupfile="first_statup.txt"
-if s:is_win
-    let g:start_path=$VIMFILES.'/first_statup.txt'
-else
-    let g:start_path=$VIMFILES.'/.first_statup'
-endif
-if filereadable(g:start_path)
-    noremap <F1> :h MyVimHelp.txt<cr>
-else
-    execute writefile([g:startupfile], g:start_path)
-    execute "silent! h MyVimHelp.txt"
-    :only
-    noremap <F1> :h MyVimHelp.txt<cr>
-endif
-"}}}
-
 " Nerdcommander -------------------{{{
 let g:NERDMenuMode=0
 "}}}
@@ -1319,34 +1301,19 @@ let g:startify_list_order = ['sessions', 'files']
 let g:startify_change_to_dir = 1
 let g:startify_files_number = 5 
 let g:startify_change_to_vcs_root = 0
-if s:is_nvim
-    let g:startify_custom_header= [
-                \ '     _   _           _              ',             
-                \ '    | \ | | __   __ (_)  _ __ ___   ',  
-                \ '    |  \| | \ \ / / | | | ''_ ` _ \ ', 
-                \ '    | |\  |  \ V /  | | | | | | | | ',
-                \ '    |_| \_|   \_/   |_| |_| |_| |_| ',
-                \ '',
-                \ '    Press <F1> or :h MyVimHelp ',
-                \ '    tracyone at live dot cn',
-                \ '',
-                \ '',
-                \ ]
-else
-    let g:startify_custom_header = [
-                \ '   __      ___            ',
-                \ '   \ \    / (_)           ',
-                \ '    \ \  / / _ _ __ ___   ',
-                \ '     \ \/ / | | ''_ ` _ \ ',
-                \ '      \  /  | | | | | | | ',
-                \ '       \/   |_|_| |_| |_| ',
-                \ '',
-                \ '    Press <F1> or :h MyVimHelp ',
-                \ '    tracyone at live dot cn',
-                \ '',
-                \ '',
-                \ ]
-endif
+let g:startify_custom_header = [
+            \ '   __      ___            ',
+            \ '   \ \    / (_)           ',
+            \ '    \ \  / / _ _ __ ___   ',
+            \ '     \ \/ / | | ''_ ` _ \ ',
+            \ '      \  /  | | | | | | | ',
+            \ '       \/   |_|_| |_| |_| ',
+            \ '',
+            \ '    Press <space>hk for help ',
+            \ '    tracyone at live dot cn',
+            \ '',
+            \ '',
+            \ ]
 
 noremap <F8> :SSave<cr>
 " Open startify windows
