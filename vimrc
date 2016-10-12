@@ -131,8 +131,10 @@ function! MyFoldText()
     return sub . info
 endfunction
 set foldtext=MyFoldText()
-nnoremap <silent><Space> @=(foldlevel('.')?'za':'\<Space>')<CR>
-vnoremap <Space> zf
+nnoremap <silent>sj  @=(foldlevel('.')?'za':'sj')<CR>
+vnoremap sf zf
+nnoremap sk zM
+nnoremap si zi
 "}}}
 
 "list candidate word in statusline
