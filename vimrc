@@ -397,6 +397,7 @@ vnoremap <c-h> :OverCommandLine<cr>:<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-
 nnoremap dm :%s/\r\(\n\)/\1/g<CR>
 
 "cd to current buffer's path
+nnoremap <silent> <leader>fc :call GotoCurFile()<cr> 
 nnoremap <silent> <c-F7> :call GotoCurFile()<cr> 
 "resize windows
 noremap <F5> :call Do_Make()<CR>
