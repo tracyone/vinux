@@ -650,7 +650,7 @@ call plug#begin($VIMFILES."/bundle")
 Plug 'tracyone/a.vim'
 if has('win64') || s:cpu_arch == "x86_64" || empty(glob($VIMFILES."/bundle/YouCompleteMe/third_party/ycmd/ycm_core.*")) == 0
     if s:python_ver
-        Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive && ./install.py --clang-completer --tern-completer', 'on': [] }
+        Plug 'Valloric/YouCompleteMe', { 'on': [] }
         Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
     endif
     let s:complete_plugin=2
@@ -1563,6 +1563,24 @@ nnoremap <Leader>qs :wqa<cr>
 nnoremap <Leader>at :Calendar<cr>
 " toggle free writing in vim (Goyo)
 nnoremap <Leader>to :Goyo<cr>
+" tab 1
+nnoremap <leader>1 1gt
+" tab 2
+nnoremap <leader>2 2gt
+" tab 3
+nnoremap <leader>3 3gt
+" tab 4
+nnoremap <leader>4 4gt
+" tab 5
+nnoremap <leader>5 5gt
+" tab 6
+nnoremap <leader>6 6gt
+" tab 7
+nnoremap <leader>7 7gt
+" tab 8
+nnoremap <leader>8 8gt
+" tab 9
+nnoremap <leader>9 9gt
 " }}}
 
 " Windows manger -----------------{{{
