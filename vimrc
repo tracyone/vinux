@@ -678,7 +678,7 @@ if s:is_gui
 endif
 Plug 'sjl/badwolf'
 Plug 'altercation/vim-colors-solarized'
-Plug 'osyo-manga/vim-over'
+Plug 'cocopon/iceberg.vim'
 Plug 'tomasr/molokai'
 Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
@@ -752,6 +752,8 @@ Plug 'ktonga/vim-follow-my-lead'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/goyo.vim',{'on': 'Goyo'}
+Plug 'osyo-manga/vim-over'
+Plug 'rhysd/github-complete.vim'
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
