@@ -9,7 +9,7 @@
 	* [Source code reading and GoToDefinition](#source-code-reading-and-gotodefinition)
 	* [keymapping with alt prefix](#keymapping-with-alt-prefix)
 * [Awesome colorscheme](#awesome-colorscheme)
-* [Pluglist](#pluglist)
+* [Plugin list](#plugin-list)
 * [Config Structure](#config-structure)
 
 #  Installation
@@ -289,7 +289,7 @@ n    | m    | mouse enable toggle
 
 [KabbAmine/yowish.vim](https://github.com/KabbAmine/yowish.vim)
 
-# Pluglist
+# Plugin list
 
 [tracyone/a.vim](https://github.com/tracyone/a.vim)
 
