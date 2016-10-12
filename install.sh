@@ -12,6 +12,7 @@ ln -sf $(pwd)/vimrc ${HOME}/.vimrc
 
 if [[ ! -d "${HOME}/.vim/bundle/YouCompleteMe" ]]; then
     mkdir -p ${HOME}/.vim/bundle/YouCompleteMe
+	git clone https://github.com/Valloric/YouCompleteMe ${HOME}/.vim/bundle/ && exit 3
 fi
 
 if [[ -f "${HOME}/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.so" ]]; then
