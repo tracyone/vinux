@@ -8,6 +8,7 @@
 	* [FunctionKey](#functionkey)
 	* [Source code reading and GoToDefinition](#source-code-reading-and-gotodefinition)
 	* [keymapping with alt prefix](#keymapping-with-alt-prefix)
+	* [Other keymapping](#other-keymapping)
 * [Awesome colorscheme](#awesome-colorscheme)
 * [Plugin list](#plugin-list)
 * [Config Structure](#config-structure)
@@ -199,6 +200,10 @@ Function | mode | ShortCut Key
 
  For speed up the search process,recommand you install [the silver searcher](https://github.com/ggreer/the_silver_searcher).
 
+ You can substitute in the search result of ag.
+ 
+ Press **r** in the quickfix windows,it will enter to the **qfreplace** mode,press ctrl-n on the cursor word it will enter to the multi-cursor mode,modify then save.
+
 ## FunctionKey
 
 Function | mode | ShortCut Key
@@ -275,6 +280,20 @@ c    | b    | words backward.
 c    | f    | words forward.
 n    | m    | mouse enable toggle
 
+## Other keymapping
+
+mode | key  | description
+---- | ---- | -----------
+n,i    | C-y    | Yanking win or ctrlp-register
+n | C-h | substitute the cursor word
+n | C-n | Multicusor mode toggle
+i | C-j | ultisnips expand or jump forward to next selection in ultisnips
+i | C-k | jump backward to the  selection in ultisnips
+n | sj  | equal to za,toggle fold
+n | sk | equal to zM,fold all
+n | si | fold enable toggle
+
+
 # Awesome colorscheme
 
 [sjl/badwolf](https://github.com/sjl/badwolf)
@@ -291,9 +310,29 @@ n    | m    | mouse enable toggle
 
 # Plugin list
 
-[tracyone/a.vim](https://github.com/tracyone/a.vim)
+**Lifechanging plugins**
 
-[Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+- [Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+
+- [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion)
+
+- [terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
+
+- [ctrlpvim/ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim)
+
+- [SirVer/ultisnips](https://github.com/SirVer/ultisnips)
+
+- [junegunn/vim-easy-align](https://github.com/junegunn/vim-easy-align)
+
+- [rking/ag.vim](https://github.com/rking/ag.vim)
+
+- [thinca/vim-qfreplace](https://github.com/thinca/vim-qfreplace)
+
+- [Shougo/vimshell.vim](https://github.com/Shougo/vimshell.vim)
+
+** others **
+
+[tracyone/a.vim](https://github.com/tracyone/a.vim)
 
 [rdnetto/YCM-Generator](https://github.com/rdnetto/YCM-Generator)
 
@@ -305,13 +344,7 @@ n    | m    | mouse enable toggle
 
 [tracyone/hex2ascii.vim](https://github.com/tracyone/hex2ascii.vim)
 
-[rking/ag.vim](https://github.com/rking/ag.vim)
-
-[thinca/vim-qfreplace](https://github.com/thinca/vim-qfreplace)
-
 [vim-scripts/verilog.vim](https://github.com/vim-scripts/verilog.vim)
-
-[easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion)
 
 [thinca/vim-quickrun](https://github.com/thinca/vim-quickrun)
 
@@ -331,13 +364,9 @@ n    | m    | mouse enable toggle
 
 [KabbAmine/yowish.vim](https://github.com/KabbAmine/yowish.vim)
 
-[terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
-
 [ashisha/image.vim](https://github.com/ashisha/image.vim)
 
 [terryma/vim-expand-region](https://github.com/terryma/vim-expand-region)
-
-[ctrlpvim/ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim)
 
 [tacahiroy/ctrlp-funky](https://github.com/tacahiroy/ctrlp-funky)
 
@@ -363,8 +392,6 @@ n    | m    | mouse enable toggle
 
 [mhinz/vim-startify](https://github.com/mhinz/vim-startify)
 
-[SirVer/ultisnips](https://github.com/SirVer/ultisnips)
-
 [ianva/vim-youdao-translater](https://github.com/ianva/vim-youdao-translater)
 
 [iamcco/markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim)
@@ -383,15 +410,11 @@ n    | m    | mouse enable toggle
 
 [CodeFalling/fcitx-vim-osx](https://github.com/CodeFalling/fcitx-vim-osx)
 
-[CodeFalling/fcitx-vim-osx](https://github.com/CodeFalling/fcitx-vim-osx)
-
 [Shougo/vimproc.vim](https://github.com/Shougo/vimproc.vim)
-
-[Shougo/vimshell.vim](https://github.com/Shougo/vimshell.vim)
 
 [vim-scripts/YankRing.vim](https://github.com/vim-scripts/YankRing.vim)
 
-[mattn/ctrlp-register',{'on': 'CtrlPRegister'](https://github.com/mattn/ctrlp-register)
+[mattn/ctrlp-register](https://github.com/mattn/ctrlp-register)
 
 [benekastah/neomake](https://github.com/benekastah/neomake)
 
@@ -410,8 +433,6 @@ n    | m    | mouse enable toggle
 [vim-scripts/L9](https://github.com/vim-scripts/L9)
 
 [mattn/emmet-vim](https://github.com/mattn/emmet-vim)
-
-[junegunn/vim-easy-align](https://github.com/junegunn/vim-easy-align)
 
 [adah1972/fencview](https://github.com/adah1972/fencview)
 
