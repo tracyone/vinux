@@ -1101,9 +1101,11 @@ let delimitMate_expand_space = 0
 if s:is_nvim == 0
     nnoremap <c-y> :YRGetElem<CR>
     inoremap <c-y> <esc>:YRGetElem<CR>
+    nnoremap <Leader>yy :YRGetElem<CR>
 else
     nnoremap <c-y> :CtrlPRegister<cr>
     inoremap <c-y> <esc>:CtrlPRegister<cr>
+    nnoremap <Leader>yy :CtrlPRegister<cr>
 endif
 let yankring_history_dir = $VIMFILES
 let g:yankring_history_file = ".yank_history"
