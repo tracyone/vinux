@@ -292,6 +292,7 @@ i | C-k | jump backward to the  selection in ultisnips
 n | sj  | equal to za,toggle fold
 n | sk | equal to zM,fold all
 n | si | fold enable toggle
+n | k | find help on vim document or man page.
 
 
 # Awesome colorscheme
