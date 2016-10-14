@@ -336,7 +336,7 @@ n | k | find help on vim document or man page.
 
 - [tacahiroy/ctrlp-funky](https://github.com/tacahiroy/ctrlp-funky)
 
-** others **
+**others**
 
 [tracyone/a.vim](https://github.com/tracyone/a.vim)
 
