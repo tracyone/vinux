@@ -678,7 +678,7 @@ if s:is_gui
 endif
 Plug 'sjl/badwolf'
 Plug 'altercation/vim-colors-solarized'
-Plug 'osyo-manga/vim-over'
+Plug 'cocopon/iceberg.vim'
 Plug 'tomasr/molokai'
 Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
@@ -752,6 +752,8 @@ Plug 'ktonga/vim-follow-my-lead'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/goyo.vim',{'on': 'Goyo'}
+Plug 'osyo-manga/vim-over'
+Plug 'rhysd/github-complete.vim'
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
@@ -1099,9 +1101,11 @@ let delimitMate_expand_space = 0
 if s:is_nvim == 0
     nnoremap <c-y> :YRGetElem<CR>
     inoremap <c-y> <esc>:YRGetElem<CR>
+    nnoremap <Leader>yy :YRGetElem<CR>
 else
     nnoremap <c-y> :CtrlPRegister<cr>
     inoremap <c-y> <esc>:CtrlPRegister<cr>
+    nnoremap <Leader>yy :CtrlPRegister<cr>
 endif
 let yankring_history_dir = $VIMFILES
 let g:yankring_history_file = ".yank_history"
@@ -1564,8 +1568,10 @@ nnoremap <Leader>ws :sp<cr>
 nnoremap <Leader>wS :sp<cr><C-w>j
 " maxsize of current windows
 nnoremap <Leader>wm :only<cr>
-" hide current windows
-nnoremap <Leader>wd :hide<cr>
+" quit current windows
+nnoremap <Leader>wd :q<cr>
+" switch between two windows.
+nnoremap <Leader>ww <C-w><C-w>
 let g:choosewin_overlay_enable = 1
 " Choose windows
 nmap <Leader>w <Plug>(choosewin)
