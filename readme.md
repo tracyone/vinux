@@ -98,6 +98,7 @@ mode  | key      | description
     n | tu       | realtime underline word toggle
     n | yd       | YouDao translate
     v | yd       | YouDao translate (visual mode)
+    n | yy       | Open Yanking windows or ctrlp-register
     n | ac       | vim calculator
     n | au       | undo tree window toggle
     n | ah       | hex to ascii convert
@@ -133,6 +134,7 @@ mode  | key      | description
     n | wS       | horizontal open window then focus the new one
     n | wm       | maxsize of current windows
     n | wd       | hide current windows
+    n | ww       | switch between two windows
     n | **w**        | **Choose windows**
     n | wh       | move to left win
     n | wl       | move to right win
@@ -287,6 +289,7 @@ mode | key  | description
 n,i    | C-y    | Yanking win or ctrlp-register
 n | C-h | substitute the cursor word
 n | C-n | Multicusor mode toggle
+n | C-y | open yankring windows or ctrlp-register in neovim.
 i | C-j | ultisnips expand or jump forward to next selection in ultisnips
 i | C-k | jump backward to the  selection in ultisnips
 n | sj  | equal to za,toggle fold
@@ -331,6 +334,8 @@ n | k | find help on vim document or man page.
 
 - [Shougo/vimshell.vim](https://github.com/Shougo/vimshell.vim)
 
+- [tacahiroy/ctrlp-funky](https://github.com/tacahiroy/ctrlp-funky)
+
 ** others **
 
 [tracyone/a.vim](https://github.com/tracyone/a.vim)
@@ -368,8 +373,6 @@ n | k | find help on vim document or man page.
 [ashisha/image.vim](https://github.com/ashisha/image.vim)
 
 [terryma/vim-expand-region](https://github.com/terryma/vim-expand-region)
-
-[tacahiroy/ctrlp-funky](https://github.com/tacahiroy/ctrlp-funky)
 
 [fisadev/vim-ctrlp-cmdpalette](https://github.com/fisadev/vim-ctrlp-cmdpalette)
 
