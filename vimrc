@@ -1566,8 +1566,10 @@ nnoremap <Leader>ws :sp<cr>
 nnoremap <Leader>wS :sp<cr><C-w>j
 " maxsize of current windows
 nnoremap <Leader>wm :only<cr>
-" hide current windows
-nnoremap <Leader>wd :hide<cr>
+" quit current windows
+nnoremap <Leader>wd :q<cr>
+" switch between two windows.
+nnoremap <Leader>ww <C-w><C-w>
 let g:choosewin_overlay_enable = 1
 " Choose windows
 nmap <Leader>w <Plug>(choosewin)
