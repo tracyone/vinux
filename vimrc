@@ -475,17 +475,12 @@ function! Tracyone_SaveFile()
         endtry
     endtry
 endfunction
+
 function! Do_Make()
     :wa
-    if s:is_nvim == 1 || v:version >= 800
-        call s:EchoWarning("Start Neomake! Please wait ...")
-        execute "Neomake!"
-    else
-        execute "silent make"
-        execute "normal :"
-        execute "cw"
-        execute "redraw!"
-    endif
+    :Make
+    :copen
+    :exe "normal \<c-w>\<c-w>"
 endfunction
 
 function! s:Get_pattern_at_cursor(pat)
@@ -726,7 +721,6 @@ if s:is_nvim == 0
 else
     Plug 'mattn/ctrlp-register',{'on': 'CtrlPRegister'}
 endif
-Plug 'benekastah/neomake'
 Plug 'vim-scripts/The-NERD-Commenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'kshenoy/vim-signature'
