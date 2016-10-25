@@ -754,6 +754,7 @@ Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/goyo.vim',{'on': 'Goyo'}
 Plug 'osyo-manga/vim-over'
 Plug 'rhysd/github-complete.vim'
+Plug 'skywind3000/asyncrun.vim'
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
@@ -1470,9 +1471,15 @@ map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
 
 " Misc ---------------------------{{{
 let g:fml_all_sources = 1
+let g:asyncrun_bell=1
+command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 exec "map " .s:alt_char['o'] ." :Fontzoom!<cr>"
 exec "map " .s:alt_char['-'] ." <Plug>(fontzoom-smaller)"
 exec "map " .s:alt_char['='] ." <Plug>(fontzoom-larger)"
+augroup QuickfixStatus
+    au! BufWinEnter quickfix setlocal 
+        \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
+augroup END
 
 func! CursorwordToggle()
     if g:cursorword == 0
