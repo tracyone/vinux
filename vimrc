@@ -477,10 +477,9 @@ function! Tracyone_SaveFile()
 endfunction
 
 function! Do_Make()
+    :call s:EchoWarning("making ...")
     :wa
-    :Make
-    :copen
-    :exe "normal \<c-w>\<c-w>"
+    :AsyncRun -post=lw make
 endfunction
 
 function! s:Get_pattern_at_cursor(pat)
