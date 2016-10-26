@@ -1516,7 +1516,7 @@ nmap <Leader>bF goF
 " open project's(pwd) position with default terminal
 nmap <Leader>bT goT
 " run Ag command
-nnoremap <Leader>fg :Ag 
+nnoremap <Leader>fg :AsyncRun -post=cw ag 
 " save file
 nnoremap <Leader>fs :call Tracyone_SaveFile()<cr>
 " save all
