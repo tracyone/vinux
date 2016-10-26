@@ -480,7 +480,12 @@ endfunction
 function! Do_Make()
     :call s:EchoWarning("making ...")
     :wa
-    :AsyncRun -post=cw make
+    if empty(glob("makefile")) && empty(glob("Makefile"))
+        exec ":AsyncRun -post=!". "./\"%<\" gcc \"%\" -o \"%<\" "
+        exec ""
+    else
+        :AsyncRun -post=cw make
+    endif
 endfunction
 
 function! s:Get_pattern_at_cursor(pat)
