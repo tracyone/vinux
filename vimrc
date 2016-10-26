@@ -893,16 +893,15 @@ function! Do_CsTag(dir)
         else
             silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > ".a:dir."\cscope.files"
         endif
-        exec "cd ".a:dir
-        silent! execute "!cscope -Rbkq -i ".l:cscopefiles
-        cd -
-        execute "normal :"
         if filereadable(l:cscopeout)
             silent! execute "cs kill ".l:cscopeout
-            execute "cs add ".l:cscopeout
         else
             :call s:EchoWarning("No cscope.out")
         endif
+        exec "cd ".a:dir
+        silent! execute "AsyncRun -post=cs\\ add\\ ".l:cscopeout. " cscope -Rbkq -i ".l:cscopefiles
+        cd -
+        execute "normal :"
     endif
     execute "redraw!"
 endfunction
