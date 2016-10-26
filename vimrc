@@ -479,7 +479,7 @@ endfunction
 function! Do_Make()
     :call s:EchoWarning("making ...")
     :wa
-    :AsyncRun -post=lw make
+    :AsyncRun -post=cw make
 endfunction
 
 function! s:Get_pattern_at_cursor(pat)
