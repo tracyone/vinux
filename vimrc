@@ -208,6 +208,7 @@ else
     set statusline+=%=[%{(&fenc!=''?&fenc:&enc)}\|%{&ff}\|%Y][%l,%v][%p%%]
     set statusline+=[%{strftime(\"%m/%d\-\%H:%M\")}]
 endif
+set statusline+=[%{exists('g:asyncrun_status')?\ g:asyncrun_status\ :\ ''}]
 set guitablabel=%N\ %t  "do not show dir in tab
 "0, 1 or 2; when to use a status line for the last window
 set laststatus=2 "always show status
