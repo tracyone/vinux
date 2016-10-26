@@ -660,7 +660,6 @@ else
 endif
 
 Plug 'tracyone/hex2ascii.vim', { 'do': 'make' }
-Plug 'rking/ag.vim',{'on': 'Ag'}
 Plug 'thinca/vim-qfreplace'
 Plug 'vim-scripts/verilog.vim'
 Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
@@ -1336,13 +1335,13 @@ if executable('ag')
         let g:ag_prg .= " --ignore-dir=" . dir
     endfor
 "ag search for the word on current curosr
-nnoremap <leader>vv :exec ":Ag '\\b" . expand("<cword>") . "\\b'" . " ."<cr>
+nnoremap <leader>vv :exec ":AsyncRun -post=cw ag '\\b" . expand("<cword>") . "\\b'" . " ."<cr>
 "ag search for the word on current curosr
-vnoremap <leader>vv :<c-u>:exec ":Ag '" . getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1] . "'" . " ."<cr>
+vnoremap <leader>vv :<c-u>:exec ":AsyncRun -post=cw ag '" . getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1] . "'" . " ."<cr>
 "ag search c family function
-nnoremap <leader>vf :exec ":Ag " ."'" . expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]" ."'" . " ."<cr>
+nnoremap <leader>vf :exec ":AsyncRun -post=cw ag " ."'" . expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]" ."'" . " ."<cr>
 "ag search :TODO or FIXME
-nnoremap <leader>vt :exec ":Ag -i ". "\"[/* ]+\(TODO\|FIXME\)\s*\""." ."<cr>
+nnoremap <leader>vt :exec ":AsyncRun -post=cw ag -i ". "\"[/* ]+\(TODO\|FIXME\)\s*\""." ."<cr>
 
     set grepprg=ag\ --nogroup\ --nocolor
     set grepformat=%f:%l:%c%m
