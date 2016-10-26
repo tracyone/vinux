@@ -328,13 +328,13 @@ n | k | find help on vim document or man page.
 
 - [junegunn/vim-easy-align](https://github.com/junegunn/vim-easy-align)
 
-- [rking/ag.vim](https://github.com/rking/ag.vim)
-
 - [thinca/vim-qfreplace](https://github.com/thinca/vim-qfreplace)
 
 - [Shougo/vimshell.vim](https://github.com/Shougo/vimshell.vim)
 
 - [tacahiroy/ctrlp-funky](https://github.com/tacahiroy/ctrlp-funky)
+
+- [skywind3000/asyncrun.vim](https://github.com/skywind3000/asyncrun.vim)
 
 **others**
 
@@ -356,19 +356,7 @@ n | k | find help on vim document or man page.
 
 [thinca/vim-fontzoom](https://github.com/thinca/vim-fontzoom)
 
-[sjl/badwolf](https://github.com/sjl/badwolf)
-
-[altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
-
 [osyo-manga/vim-over](https://github.com/osyo-manga/vim-over)
-
-[tomasr/molokai](https://github.com/tomasr/molokai)
-
-[morhetz/gruvbox](https://github.com/morhetz/gruvbox)
-
-[NLKNguyen/papercolor-theme](https://github.com/NLKNguyen/papercolor-theme)
-
-[KabbAmine/yowish.vim](https://github.com/KabbAmine/yowish.vim)
 
 [ashisha/image.vim](https://github.com/ashisha/image.vim)
 
@@ -419,8 +407,6 @@ n | k | find help on vim document or man page.
 [vim-scripts/YankRing.vim](https://github.com/vim-scripts/YankRing.vim)
 
 [mattn/ctrlp-register](https://github.com/mattn/ctrlp-register)
-
-[benekastah/neomake](https://github.com/benekastah/neomake)
 
 [vim-scripts/The-NERD-Commenter](https://github.com/vim-scripts/The-NERD-Commenter)
 
