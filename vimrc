@@ -1167,20 +1167,20 @@ let g:ctrlp_funky_matchtype = 'path'
 nnoremap <c-k> :CtrlPFunky<Cr>
 nnoremap <c-j> :CtrlPBuffer<Cr>
 " ctrlp buffer 
-nnoremap <Leader>bl :CtrlPBuffer<Cr>
+nnoremap <Leader>pl :CtrlPBuffer<Cr>
 nnoremap <c-l> :CtrlPMRUFiles<cr>
 "CtrlP mru
-nnoremap <Leader>fr :CtrlPMRUFiles<cr>
-" CtrlP file
-nnoremap <Leader>ff :CtrlP<cr>
+nnoremap <Leader>pr :CtrlPMRUFiles<cr>
+"CtrlP file
+nnoremap <Leader>pp :CtrlP<cr>
 " narrow the list down with a word under cursor
-" CtrlP function 
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-" CtrlP cmd
+"CtrlP function 
+nnoremap <Leader>pU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+"CtrlP cmd
 nnoremap <Leader>pc :CtrlPCmdPalette<cr>
 "CtrlP tmux session
 nnoremap <Leader>pt :CtrlPTmux<cr>
-" CtrlP function
+"CtrlP function
 nnoremap <Leader>pk :CtrlPFunky<cr>
 "}}}
 
@@ -1504,7 +1504,7 @@ vnoremap <F10> <esc>:Ydv<cr>
 " vim calculator
 nnoremap <Leader>ac :Crunch<cr>
 " undo tree window toggle
-nnoremap <leader>au :UndotreeToggle<cr>
+nnoremap <leader>tt :UndotreeToggle<cr>
 "hex to ascii convert
 nnoremap <leader>ah :call Hex2asciiConvert()<cr>
 " next buffer or tab
