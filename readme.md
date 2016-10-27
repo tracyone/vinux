@@ -434,6 +434,8 @@ n | k | find help on vim document or man page.
 
 - [skywind3000/asyncrun.vim](https://github.com/skywind3000/asyncrun.vim)
 
+- [mhinz/vim-startify](https://github.com/mhinz/vim-startify)
+
 **others**
 
 [tracyone/a.vim](https://github.com/tracyone/a.vim)
@@ -479,8 +481,6 @@ n | k | find help on vim document or man page.
 [arecarn/crunch.vim](https://github.com/arecarn/crunch.vim)
 
 [youjumpiwatch/vim-neoeclim](https://github.com/youjumpiwatch/vim-neoeclim)
-
-[mhinz/vim-startify](https://github.com/mhinz/vim-startify)
 
 [ianva/vim-youdao-translater](https://github.com/ianva/vim-youdao-translater)
 
