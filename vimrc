@@ -484,7 +484,7 @@ function! Do_Make()
         exec ":AsyncRun -post=!". "./\"%<\" gcc \"%\" -o \"%<\" "
         exec ""
     else
-        :AsyncRun -post=cw make
+        :AsyncRun -post=cw make -s
     endif
 endfunction
 
