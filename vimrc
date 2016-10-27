@@ -1368,6 +1368,8 @@ endif
 nnoremap <leader>mp :MarkdownPreview<cr>
 " generate markdown TOC
 nnoremap <leader>mt :silent GenTocGFM<cr>
+" update markdown TOC
+nnoremap <leader>mu :silent UpdateToc<cr>
 "}}}
 
 " Git releate ---------------------{{{
