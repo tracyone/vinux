@@ -403,7 +403,7 @@ nnoremap <silent> <c-F7> :call GotoCurFile()<cr>
 "resize windows
 noremap <F5> :call Do_Make()<CR>
 " make
-nnoremap <leader>cC :call Do_Make()<cr>
+nnoremap <leader>am :call Do_Make()<cr>
 
 nnoremap <F7> :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
 " dos to unix or unix to dos
@@ -1496,9 +1496,9 @@ nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 " realtime underline word toggle
 nnoremap <leader>tu :call CursorwordToggle()<cr>
 " YouDao translate
-nnoremap <Leader>yd <esc>:Ydc<cr>
+nnoremap <Leader>ay <esc>:Ydc<cr>
 " YouDao translate (visual mode)
-vnoremap <Leader>yd <esc>:Ydv<cr>
+vnoremap <Leader>ay <esc>:Ydv<cr>
 nnoremap <F10> <esc>:Ydc<cr>
 vnoremap <F10> <esc>:Ydv<cr>
 " vim calculator
@@ -1514,13 +1514,13 @@ nnoremap <Leader>bp :call TracyonePrev()<cr>
 " delete buffer
 nnoremap <Leader>bk :bdelete<cr>
 " open current file's position with default file explorer
-nmap <Leader>bf gof
+nmap <Leader>af gof
 " open current file's position with default terminal
-nmap <Leader>bt got
+nmap <Leader>at got
 " open project's(pwd) position with default file explorer
-nmap <Leader>bF goF
+nmap <Leader>aF goF
 " open project's(pwd) position with default terminal
-nmap <Leader>bT goT
+nmap <Leader>aT goT
 " run Ag command
 nnoremap <Leader>fg :AsyncRun -post=cw ag 
 " save file
@@ -1538,7 +1538,7 @@ nnoremap <Leader>qQ :qa!<cr>
 " save and quit all
 nnoremap <Leader>qs :wqa<cr>
 " open calendar
-nnoremap <Leader>at :Calendar<cr>
+nnoremap <Leader>ad :Calendar<cr>
 " toggle free writing in vim (Goyo)
 nnoremap <Leader>to :Goyo<cr>
 " tab 1
