@@ -189,6 +189,7 @@ mode  |      key | description
 ----  |     ---- | -----------
     n |       mp | Markdown preview in browser
     n |       mt | generate markdown TOC
+    n |       mu | update markdown TOC
 
 ### Quit
 
