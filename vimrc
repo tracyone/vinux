@@ -704,6 +704,7 @@ Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': ['Ydc','Ydv']}
 if s:python_ver | Plug 'iamcco/markdown-preview.vim' | endif
 Plug 'mzlogin/vim-markdown-toc'
+Plug 'plasticboy/vim-markdown'
 if(!s:is_win)
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
@@ -1364,12 +1365,16 @@ elseif s:is_win
 else
     let g:mkdp_path_to_chrome = "google-chrome"
 endif
+let g:vim_markdown_toc_autofit = 1
+au filetype_group FileType MARKDOWN setlocal conceallevel=2
 " Markdown preview in browser
 nnoremap <leader>mp :MarkdownPreview<cr>
 " generate markdown TOC
 nnoremap <leader>mt :silent GenTocGFM<cr>
 " update markdown TOC
 nnoremap <leader>mu :silent UpdateToc<cr>
+" Show toc sidebar
+nnoremap <leader>ms :Toc<cr>
 "}}}
 
 " Git releate ---------------------{{{
