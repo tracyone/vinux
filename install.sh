@@ -10,6 +10,8 @@ ln -sf $(pwd)/vimrc ${HOME}/.config/nvim/init.vim
 echo -e "Create soft link for linux and mac\n"
 ln -sf $(pwd)/vimrc ${HOME}/.vimrc
 
+echo -e " ======= YouCompleteMe installation ======== \n"
+
 if [[ ! -d "${HOME}/.vim/bundle/YouCompleteMe" ]]; then
     mkdir -p ${HOME}/.vim/bundle/YouCompleteMe
 	git clone https://github.com/Valloric/YouCompleteMe ${HOME}/.vim/bundle/ && exit 3
