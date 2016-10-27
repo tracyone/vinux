@@ -1,9 +1,26 @@
 ![screenshot](https://cloud.githubusercontent.com/assets/4246425/19315778/a08cc216-90d1-11e6-92e5-8083851b3841.png)
 
 
+<!-- vim-markdown-toc GFM -->
 * [Installation](#installation)
 * [Keymapping](#keymapping)
-	* [keymapping with space prefix](#keymapping-with-space-prefix)
+	* [Keymapping with space prefix](#keymapping-with-space-prefix)
+		* [Application](#application)
+		* [Buffer](#buffer)
+		* [Comment operating](#comment-operating)
+		* [Easymotion mapping](#easymotion-mapping)
+		* [File releate](#file-releate)
+		* [Ctrlp](#ctrlp)
+		* [Git relate](#git-relate)
+		* [Help relate](#help-relate)
+		* [Session](#session)
+		* [Markdown](#markdown)
+		* [Quit](#quit)
+		* [Toggle something](#toggle-something)
+		* [Ag searcher](#ag-searcher)
+		* [Windows operatting](#windows-operatting)
+		* [Mark](#mark)
+		* [Others](#others)
 	* [Fuzzy files search & string search](#fuzzy-files-search--string-search)
 	* [FunctionKey](#functionkey)
 	* [Source code reading and GoToDefinition](#source-code-reading-and-gotodefinition)
@@ -12,6 +29,8 @@
 * [Awesome colorscheme](#awesome-colorscheme)
 * [Plugin list](#plugin-list)
 * [Config Structure](#config-structure)
+
+<!-- vim-markdown-toc -->
 
 #  Installation
 
@@ -40,9 +59,9 @@ Leader key is `space`.
 
 `<leader>vc` : open vimrc.
 
-## keymapping with space prefix
+## Keymapping with space prefix
 
-**application**
+### Application
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -62,7 +81,7 @@ mode  |      key | description
     v |       ay | YouDao translate (visual mode)
 
 
-**buffer**
+### Buffer
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -71,7 +90,7 @@ mode  |      key | description
     n |       bn | next buffer or tab
     n |       bp | previous buffer or tab
 
-**comment operating**
+### Comment operating
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -102,7 +121,7 @@ mode  |      key | description
     v |       cy | <Plug>NERDCommenterYank
 
 
-**easymotion mapping**
+### Easymotion mapping
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -112,7 +131,7 @@ mode  |      key | description
     n |       et | <Plug>(easymotion-tn)
     n |        F | MultiWindow easymotion for word
 
-**File releate**
+### File releate
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -124,7 +143,7 @@ mode  |      key | description
     n |       fs | save file
     n |       fU | CtrlP function
 
-** Ctrlp **
+###  Ctrlp 
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -135,7 +154,7 @@ mode  |      key | description
     n |       pr | CtrlP mru
     n |       pt | CtrlP tmux session
 
-**git relate**
+### Git relate
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -149,14 +168,14 @@ mode  |      key | description
     n |       gp | git push origin master
     n |       gs | Open git status window
 
-**help relate**
+### Help relate
 
 mode  |      key | description
 ----  |     ---- | -----------
     n |       hk | **list leader's map**
     n |       hm | **manpage or vimhelp on current curosr word**
 
-**session**
+### Session
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -164,14 +183,14 @@ mode  |      key | description
     n |       lo | **Save basic setting**
     n |       ls | **Session save**
 
-**markdown**
+### Markdown
 
 mode  |      key | description
 ----  |     ---- | -----------
     n |       mp | Markdown preview in browser
     n |       mt | generate markdown TOC
 
-**quit**
+### Quit
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -179,7 +198,7 @@ mode  |      key | description
     n |       qQ | quit all without save
     n |       qs | save and quit all
 
-**toggle somethin**
+### Toggle something
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -194,7 +213,7 @@ mode  |      key | description
     n |       tu | realtime underline word toggle
     n |       tt | undo tree window toggle
 
-**ag searcher**
+### Ag searcher
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -203,7 +222,7 @@ mode  |      key | description
     n |       vv | ag search for the word on current curosr
     v |       vv | ag search for the word on current curosr
 
-**windows operatting**
+### Windows operatting
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -234,7 +253,7 @@ mode  |      key | description
     n |       ww | switch between two windows
 
 
-** mark **
+### Mark 
 
 mode  |      key | description
 ----  |     ---- | -----------
@@ -248,7 +267,7 @@ mode  |      key | description
     n |        r | <Plug>MarkRegex
     x |        r | <Plug>MarkRegex
 
-** others **
+### Others 
 
 mode  |      key | description
 ----  |     ---- | -----------
