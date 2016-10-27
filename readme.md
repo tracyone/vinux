@@ -42,83 +42,171 @@ Leader key is `space`.
 
 ## keymapping with space prefix
 
+**application**
+
 mode  |      key | description
 ----  |     ---- | -----------
-    n |       tm | Mouse mode toggle
-    n |   **so** | **update the _vimrc**
-    n |   **vc** | **open the vimrc in tab**
-      |       w. | :vertical resize +10<CR>
-      |       w, | :vertical resize -10<CR>
-      |       w- | :resize -10<CR>
-      |       w= | :resize +10<CR>
-    n |       fc | cd to current buffer's path
-    n |       cC | make
-    n |       td | dos to unix or unix to dos
-    n |        o | open url on cursor with default browser
+    n |       ac | vim calculator
+    n |       ad | open calendar
+    n |       af | open current file's position with default file explorer
+    n |       aF | open project's(pwd) position with default file explorer
+    n |       ah | hex to ascii convert
+    n |       al | <Plug>(LiveEasyAlign)
+    x |       al | <Plug>(LiveEasyAlign)
+    n |       am | make
     n |       ap | Open plug status windows
-    n |       tt | Open tagbar
-    n |       jl | jume to definition (YCM)
-    n |       tn | Open nerd tree
-    n |      iav | Open c family header in new tab
-    n |       bl | ctrlp buffer
-    n |       fr | CtrlP mru
-    n |       ff | CtrlP file
-    n |       fU | CtrlP function
-    n |       pt | CtrlP tmux session
-    n |       pk | CtrlP function
-    n |       fj | Open Vim File Explorer
-    n |       tf | Convert file's encode
-    n |       fR | rename multi file name
     n |       as | Open vimshell or neovim's emulator
+    n |       at | open current file's position in default terminal
+    n |       aT | open project's(pwd) position in default terminal
+    n |       ay | YouDao translate
+    v |       ay | YouDao translate (visual mode)
+
+
+**buffer**
+
+mode  |      key | description
+----  |     ---- | -----------
     n |       bh | Open startify windows
-    n |       vv | ag search for the word on current curosr
-    v |       vv | ag search for the word on current curosr
-    n |       vf | ag search c family function
-    n |       vt | ag search :TODO or FIXME
-    n |       mp | Markdown preview in browser
-    n |       mt | generate markdown TOC
-    n |       gs | Open git status window
+    n |       bk | delete buffer
+    n |       bn | next buffer or tab
+    n |       bp | previous buffer or tab
+
+**comment operating**
+
+mode  |      key | description
+----  |     ---- | -----------
+    n |       ca | <Plug>NERDCommenterAltDelims
+    n |       cA | <Plug>NERDCommenterAppend
+    v |       cA | <Plug>NERDCommenterAppend
+    n |       cb | <Plug>NERDCommenterAlignBoth
+    v |       cb | <Plug>NERDCommenterAlignBoth
+    n |       cc | <Plug>NERDCommenterComment
+    v |       cc | <Plug>NERDCommenterComment
+    n |       ci | <Plug>NERDCommenterInvert
+    v |       ci | <Plug>NERDCommenterInvert
+    n |       cl | <Plug>NERDCommenterAlignLeft
+    v |       cl | <Plug>NERDCommenterAlignLeft
+    n |       cm | <Plug>NERDCommenterMinimal
+    v |       cm | <Plug>NERDCommenterMinimal
+    n |       cn | <Plug>NERDCommenterNest
+    v |       cn | <Plug>NERDCommenterNest
+    n |       c$ | <Plug>NERDCommenterToEOL
+    v |       c$ | <Plug>NERDCommenterToEOL
+    n | c<Space> | <Plug>NERDCommenterToggle
+    v | c<Space> | <Plug>NERDCommenterToggle
+    n |       cs | <Plug>NERDCommenterSexy
+    v |       cs | <Plug>NERDCommenterSexy
+    n |       cu | <Plug>NERDCommenterUncomment
+    v |       cu | <Plug>NERDCommenterUncomment
+    n |       cy | <Plug>NERDCommenterYank
+    v |       cy | <Plug>NERDCommenterYank
+
+
+**easymotion mapping**
+
+mode  |      key | description
+----  |     ---- | -----------
+    n |       ef | MultiWindow easymotion for char
+    n |       el | MultiWindow easymotion for line
+    n |       es | MultiChar easymotion
+    n |       et | <Plug>(easymotion-tn)
+    n |        F | MultiWindow easymotion for word
+
+**File releate**
+
+mode  |      key | description
+----  |     ---- | -----------
+    n |       fc | cd to current buffer's path
+    n |       fg | run Ag command
+    n |       fj | Open Vim File Explorer
+    n |       fR | rename multi file name
+    n |       fS | save all
+    n |       fs | save file
+    n |       fU | CtrlP function
+
+** Ctrlp **
+
+mode  |      key | description
+----  |     ---- | -----------
+    n |       pc | CtrlP cmd 
+    n |       pk | CtrlP function
+    n |       pl | ctrlp buffer
+    n |       pp | CtrlP file
+    n |       pr | CtrlP mru
+    n |       pt | CtrlP tmux session
+
+**git relate**
+
+mode  |      key | description
+----  |     ---- | -----------
+    n |       gb | Open git blame windows
+    n |       gd | git diff current file (vimdiff)
     n |       gh | Open github url
+    n |       gi | list git issue
     n |       gl | Open git log( browser mode)
     n |       gL | Open git log(file mode)
     v |       gL | Open git log(file mode)
-    n |       gb | Open git blame windows
-    n |       gd | git diff current file (vimdiff)
-    n |       gi | list git issue
     n |       gp | git push origin master
-    n |        F | MultiWindow easymotion for word
-    n |       es | MultiChar easymotion
-    n |       et | <Plug>(easymotion-tn)
-    n |       el | MultiWindow easymotion for line
-    n |       ef | MultiWindow easymotion for char
-    x |       al | <Plug>(LiveEasyAlign)
-    n |       al | <Plug>(LiveEasyAlign)
-    n |       yr | run cunrrent file
-    v |       yr | run selection text
-    n |       tu | realtime underline word toggle
-    n |       yd | YouDao translate
-    v |       yd | YouDao translate (visual mode)
-    n |       yy | Open Yanking windows or ctrlp-register
-    n |       ac | vim calculator
-    n |       au | undo tree window toggle
-    n |       ah | hex to ascii convert
-    n |       bn | next buffer or tab
-    n |       bp | previous buffer or tab
-    n |       bk | delete buffer
-    n |       bf | open current file's position with default file explorer
-    n |       bt | open current file's position with default terminal
-    n |       bF | open project's(pwd) position with default file explorer
-    n |       bT | open project's(pwd) position with default terminal
-    n |       fg | run Ag command
-    n |       fs | save file
-    n |       fS | save all
-    n |   **hm** | **manpage or vimhelp on current curosr word**
-    n |   **hk** | **list leader's map**
+    n |       gs | Open git status window
+
+**help relate**
+
+mode  |      key | description
+----  |     ---- | -----------
+    n |       hk | **list leader's map**
+    n |       hm | **manpage or vimhelp on current curosr word**
+
+**session**
+
+mode  |      key | description
+----  |     ---- | -----------
+    n |       ll | **Session load**
+    n |       lo | **Save basic setting**
+    n |       ls | **Session save**
+
+**markdown**
+
+mode  |      key | description
+----  |     ---- | -----------
+    n |       mp | Markdown preview in browser
+    n |       mt | generate markdown TOC
+
+**quit**
+
+mode  |      key | description
+----  |     ---- | -----------
     n |       qq | quit all
     n |       qQ | quit all without save
     n |       qs | save and quit all
-    n |       at | open calendar
+
+**toggle somethin**
+
+mode  |      key | description
+----  |     ---- | -----------
+    n |       tb | **background dark or light toggle**
+    n |       td | dos to unix or unix to dos
+    n |       tf | Convert file's encode
+    n |       tg | **menu and toolbar toogle**
+    n |       tm | Mouse mode toggle
+    n |       tn | Open nerd tree
     n |       to | toggle free writing in vim (Goyo)
+    n |       tt | Open tagbar
+    n |       tu | realtime underline word toggle
+    n |       tt | undo tree window toggle
+
+**ag searcher**
+
+mode  |      key | description
+----  |     ---- | -----------
+    n |       vf | ag search c family function
+    n |       vt | ag search :TODO or FIXME
+    n |       vv | ag search for the word on current curosr
+    v |       vv | ag search for the word on current curosr
+
+**windows operatting**
+
+mode  |      key | description
+----  |     ---- | -----------
     n |        1 | tab 1
     n |        2 | tab 2
     n |        3 | tab 3
@@ -128,67 +216,58 @@ mode  |      key | description
     n |        7 | tab 7
     n |        8 | tab 8
     n |        9 | tab 9
-    n |       wv | vertical open window
-    n |       wV | vertical open window then focus the new one
-    n |       ws | horizontal open window
-    n |       wS | horizontal open window then focus the new one
-    n |       wm | maxsize of current windows
+    n |        w | **Choose windows**
     n |       wd | hide current windows
-    n |       ww | switch between two windows
-    n |    **w** | **Choose windows**
     n |       wh | move to left win
-    n |       wl | move to right win
     n |       wj | move down win
     n |       wk | move up win
-    n |   **ls** | **Session save**
-    n |   **ll** | **Session load**
-    n |   **lo** | **Save basic setting**
-    n |   **tg** | **menu and toolbar toogle**
-    n |   **tb** | **background dark or light toggle**
-    n |       cc | <Plug>NERDCommenterComment
-    v |       cc | <Plug>NERDCommenterComment
-    n | c<Space> | <Plug>NERDCommenterToggle
-    v | c<Space> | <Plug>NERDCommenterToggle
-    n |       cm | <Plug>NERDCommenterMinimal
-    v |       cm | <Plug>NERDCommenterMinimal
-    n |       cs | <Plug>NERDCommenterSexy
-    v |       cs | <Plug>NERDCommenterSexy
-    n |       ci | <Plug>NERDCommenterInvert
-    v |       ci | <Plug>NERDCommenterInvert
-    n |       cy | <Plug>NERDCommenterYank
-    v |       cy | <Plug>NERDCommenterYank
-    n |       cl | <Plug>NERDCommenterAlignLeft
-    v |       cl | <Plug>NERDCommenterAlignLeft
-    n |       cb | <Plug>NERDCommenterAlignBoth
-    v |       cb | <Plug>NERDCommenterAlignBoth
-    n |       cn | <Plug>NERDCommenterNest
-    v |       cn | <Plug>NERDCommenterNest
-    n |       cu | <Plug>NERDCommenterUncomment
-    v |       cu | <Plug>NERDCommenterUncomment
-    n |       c$ | <Plug>NERDCommenterToEOL
-    v |       c$ | <Plug>NERDCommenterToEOL
-    n |       cA | <Plug>NERDCommenterAppend
-    v |       cA | <Plug>NERDCommenterAppend
-    n |       ca | <Plug>NERDCommenterAltDelims
-    n |        d | :YcmShowDetailedDiagnostic<CR>
-    n |      fml | Open Leader mappings in new window
+    n |       wl | move to right win
+    n |       wm | maxsize of current windows
+      |       w= | :resize +10<CR>
+      |       w- | :resize -10<CR>
+    n |       ws | horizontal open window
+    n |       wS | horizontal open window then focus the new one
+      |       w, | :vertical resize -10<CR>
+      |       w. | :vertical resize +10<CR>
+    n |       wv | vertical open window
+    n |       wV | vertical open window then focus the new one
+    n |       ww | switch between two windows
+
+
+** mark **
+
+mode  |      key | description
+----  |     ---- | -----------
     n |        m | <Plug>MarkSet
     x |        m | <Plug>MarkSet
-    n |        r | <Plug>MarkRegex
-    x |        r | <Plug>MarkRegex
     n |        n | <Plug>MarkClear
-    n |        * | <Plug>MarkSearchCurrentNext
-    n |        # | <Plug>MarkSearchCurrentPrev
     n |        / | <Plug>MarkSearchAnyNext
     n |        ? | <Plug>MarkSearchAnyPrev
+    n |        * | <Plug>MarkSearchCurrentNext
+    n |        # | <Plug>MarkSearchCurrentPrev
+    n |        r | <Plug>MarkRegex
+    x |        r | <Plug>MarkRegex
+
+** others **
+
+mode  |      key | description
+----  |     ---- | -----------
+    n |        d | :YcmShowDetailedDiagnostic<CR>
+    n |      iav | Open c family header in new tab
+    n |       jl | jume to definition (YCM)
+    n |        o | open url on cursor with default browser
+    n |       vc | **open the vimrc in tab**
+    n |       so | **update the _vimrc**
+    n |      fml | Open Leader mappings in new window
+    n |       yr | run cunrrent file
+    v |       yr | run selection text
+    n |       yy | Open Yanking windows or ctrlp-register
 
 ## Fuzzy files search & string search
 
 [ctrlpvim](https://github.com/ctrlpvim/ctrlp.vim)
 
 [ctrlp-funky](https://github.com/tacahiroy/ctrlp-funky)
-
-[ag.vim](https://github.com/rking/ag.vim)
 
 ShortCut Key  | mode          | Description
 ---------     | ----------    | ---------------
