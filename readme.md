@@ -212,8 +212,8 @@ mode  |      key | description
     n |       tn | Open nerd tree
     n |       to | toggle free writing in vim (Goyo)
     n |       tt | Open tagbar
-    n |       tu | realtime underline word toggle
-    n |       tt | undo tree window toggle
+    n |       th | realtime underline word toggle
+    n |       tu | undo tree window toggle
 
 ### Ag searcher
 

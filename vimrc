@@ -767,7 +767,7 @@ let g:user_emmet_leader_key = '<c-e>'
 " Tagbar --------------------------{{{
 nnoremap <silent><F9> :TagbarToggle<CR>
 " Open tagbar
-nnoremap <leader>tg :TagbarToggle<CR>
+nnoremap <leader>tt :TagbarToggle<CR>
 let g:tagbar_left=0
 let g:tagbar_width=30
 let g:tagbar_sort=0
@@ -1501,7 +1501,7 @@ nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 
 
 " realtime underline word toggle
-nnoremap <leader>tu :call CursorwordToggle()<cr>
+nnoremap <leader>th :call CursorwordToggle()<cr>
 " YouDao translate
 nnoremap <Leader>ay <esc>:Ydc<cr>
 " YouDao translate (visual mode)
@@ -1511,7 +1511,7 @@ vnoremap <F10> <esc>:Ydv<cr>
 " vim calculator
 nnoremap <Leader>ac :Crunch<cr>
 " undo tree window toggle
-nnoremap <leader>tt :UndotreeToggle<cr>
+nnoremap <leader>tu :UndotreeToggle<cr>
 "hex to ascii convert
 nnoremap <leader>ah :call Hex2asciiConvert()<cr>
 " next buffer or tab
