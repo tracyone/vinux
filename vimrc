@@ -217,7 +217,7 @@ set sessionoptions-=folds
 set sessionoptions-=options
 set ffs=unix,dos,mac
 au misc_group BufRead * if &ff=="dos" | setlocal ffs=dos,unix,mac | endif  
-
+au misc_group VimResized * wincmd = 
 
 if(s:is_nvim== 1)
     "terminal-emulator setting
@@ -767,7 +767,7 @@ let g:user_emmet_leader_key = '<c-e>'
 " Tagbar --------------------------{{{
 nnoremap <silent><F9> :TagbarToggle<CR>
 " Open tagbar
-nnoremap <leader>tt :TagbarToggle<CR>
+nnoremap <leader>tg :TagbarToggle<CR>
 let g:tagbar_left=0
 let g:tagbar_width=30
 let g:tagbar_sort=0
