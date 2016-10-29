@@ -209,7 +209,8 @@ mode  |      key | description
     n |       tf | Convert file's encode
     n |       tg | **menu and toolbar toogle**
     n |       tm | Mouse mode toggle
-    n |       tn | Open nerd tree
+    n |       te | Open nerd tree
+    n |       tn | toggle line number
     n |       to | toggle free writing in vim (Goyo)
     n |       tt | Open tagbar
     n |       th | realtime underline word toggle
