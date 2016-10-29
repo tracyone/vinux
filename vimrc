@@ -410,6 +410,8 @@ nnoremap <F7> :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
 nnoremap <Leader>td :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
 " open url on cursor with default browser
 nnoremap <leader>o :call Open_url()<cr>
+" linu number toggle
+nnoremap <Leader>tn :call TracyoneNuToggle()<cr>
 
 "}}}
 "Function{{{
@@ -637,6 +639,18 @@ function! TracyoneBgToggle()
         set bg=dark
     endif
 endfunction
+
+" line number toggle
+function! TracyoneNuToggle()
+    if &nu && &rnu
+        set nonu nornu
+    elseif &nu && !&rnu
+        set rnu
+    else
+        set nu
+    endif
+endfunction
+
 "}}}
 "Plugin setting{{{
 " Vim-plug ------------------------{{{
@@ -1073,7 +1087,7 @@ let NERDTreeShowBookmarks=1
 let NERDTreeChDirMode=2
 noremap <F12> :NERDTreeToggle .<CR> 
 " Open nerd tree
-nnoremap <leader>tn :NERDTreeToggle .<CR> 
+nnoremap <leader>te :NERDTreeToggle .<CR> 
 "map <2-LeftMouse>  *N "double click highlight the current cursor word 
 inoremap <F12> <ESC> :NERDTreeToggle<CR>
 "}}}
