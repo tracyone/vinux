@@ -718,7 +718,13 @@ if(!s:is_win)
     endif
 endif
 if s:is_nvim == 0
-    Plug 'Shougo/vimproc.vim', { 'do': 'make;mingw32-make.exe -f make_mingw64.mak' }
+    if s:is_unix == 2
+        Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
+    elseif s:is_unix == 1
+        Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+    else
+        Plug 'Shougo/vimproc.vim', { 'do': 'mingw32-make.exe -f make_mingw64.mak' }
+    endif
     Plug 'Shougo/vimshell.vim'
     Plug 'vim-scripts/YankRing.vim'
 else
@@ -1234,7 +1240,7 @@ if(s:is_nvim== 0)
     "let g:vimshell_right_prompt = 'vcs#info("(%s)-[%b]", "(%s)-[%b|%a]")'
     let g:vimshell_enable_smart_case = 1
     let g:vimshell_editor_command="gvim"
-    if has('win32') || has('win64')
+    if s:is_win
         " Display user name on Windows.
         let g:vimshell_prompt = $USERNAME."% "
     else
@@ -1258,6 +1264,7 @@ if(s:is_nvim== 0)
         au FileType vimshell :imap <buffer> <up> <Plug>(vimshell_history_unite)
         au FileType vimshell,neoman setlocal nonu nornu
         au FileType vimshell :imap <buffer> <c-d> <Plug>(vimshell_exit)
+        au FileType vimshell :imap <buffer> <c-j> <Plug>(vimshell_enter)
         au Filetype vimshell  setlocal completefunc=vimshell#complete#omnifunc omnifunc=vimshell#complete#omnifunc
         autocmd FileType vimshell
                     \ call vimshell#altercmd#define('g', 'git')
