@@ -19,6 +19,7 @@ fi
 
 if [[ -f "${HOME}/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.so" ]]; then
     echo -e "YouCompleteMe has already been installed.\n"
+    echo -e "Finish! Happy Vim hacking.\n"
     exit 0
 fi
 
