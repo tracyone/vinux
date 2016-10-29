@@ -552,16 +552,14 @@ func! s:EchoWarning(str)
     redraw!
     echohl WarningMsg | echo a:str | echohl None
 endfunc
-let s:MouseFlag=1
+
 func! MouseToggle()
-    if s:MouseFlag==0
-        :call s:EchoWarning("Mouse on")
-        set mouse=a
-        let s:MouseFlag=1
-    else
+    if &mouse == "a"
         :call s:EchoWarning("Mouse off")
         set mouse&
-        let s:MouseFlag=0
+    else
+        :call s:EchoWarning("Mouse on")
+        set mouse=a
     endif
 endfunc
 
