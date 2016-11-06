@@ -235,6 +235,14 @@ endif
 "}}}
 "Key mapping{{{
 
+" normal no remap function
+" maptype:type of keymap,nnoremap, map ie.
+" keycodes:such as <C-d>
+" action: map action.
+function! TracyoneKeyMap(maptype,keycodes,action)
+    execute a:maptype." ".a:keycodes." ".a:action
+endfunction
+
 "map jj to esc..
 "fuck the meta key...
 if s:is_nvim != 1
@@ -289,51 +297,51 @@ elseif s:is_gui || s:is_nvim "gvim or neovim
                 \,'o':"<m-o>",'-':"<m-->",'b':"<m-b>",'f':"<m-f>",'m':"<m-m>",'w':"<m-w>"}
 endif
 
-exec "noremap " .s:alt_char[1] . " <esc>1gt"
-exec "noremap ". s:alt_char[2]." <esc>2gt" 
-exec "noremap ". s:alt_char[3]." <esc>3gt" 
-exec "noremap ". s:alt_char[4]." <esc>4gt" 
-exec "noremap ". s:alt_char[5]." <esc>5gt"  
-exec "noremap ". s:alt_char[6]." <esc>6gt" 
-exec "noremap ". s:alt_char[7]." <esc>7gt" 
-exec "noremap ". s:alt_char[8]." <esc>8gt" 
-exec "noremap ". s:alt_char[9]." <esc>9gt" 
+call TracyoneKeyMap("noremap",s:alt_char[1],"<esc>1gt")
+call TracyoneKeyMap("noremap",s:alt_char[2],"<esc>2gt")
+call TracyoneKeyMap("noremap",s:alt_char[3],"<esc>3gt")
+call TracyoneKeyMap("noremap",s:alt_char[4],"<esc>4gt")
+call TracyoneKeyMap("noremap",s:alt_char[5],"<esc>5gt")
+call TracyoneKeyMap("noremap",s:alt_char[6],"<esc>6gt")
+call TracyoneKeyMap("noremap",s:alt_char[7],"<esc>7gt")
+call TracyoneKeyMap("noremap",s:alt_char[8],"<esc>8gt")
+call TracyoneKeyMap("noremap",s:alt_char[9],"<esc>9gt")
 "option+t
-exec "nnoremap ". s:alt_char['t']." :tabnew<cr>" 
-exec "inoremap ". s:alt_char['t']." <esc>:tabnew<cr>" 
+call TracyoneKeyMap("nnoremap",s:alt_char['t'],":tabnew<cr>")
+call TracyoneKeyMap("inoremap",s:alt_char['t'],"<esc>:tabnew<cr>")
 "option+q
-exec "noremap ".  s:alt_char['q']." :nohls<CR>:MarkClear<cr>:redraw!<cr>"  
+call TracyoneKeyMap("noremap",s:alt_char['q'],":nohls<CR>:MarkClear<cr>:redraw!<cr>")
 "select all
-exec "noremap ".  s:alt_char['a']." gggH<C-O>G"
-exec "inoremap ". s:alt_char['a']." <C-O>gg<C-O>gH<C-O>G" 
-exec "cnoremap ". s:alt_char['a']." <C-C>gggH<C-O>G" 
-exec "onoremap ". s:alt_char['a']." <C-C>gggH<C-O>G" 
-exec "snoremap ". s:alt_char['a']." <C-C>gggH<C-O>G" 
-exec "xnoremap ". s:alt_char['a']." <C-C>ggVG" 
+call TracyoneKeyMap("noremap",s:alt_char['a'],"gggH<C-O>G")
+call TracyoneKeyMap("inoremap",s:alt_char['a'],"<C-O>gg<C-O>gH<C-O>G")
+call TracyoneKeyMap("cnoremap",s:alt_char['a'],"<C-C>gggH<C-O>G")
+call TracyoneKeyMap("onoremap",s:alt_char['a'],"<C-C>gggH<C-O>G")
+call TracyoneKeyMap("snoremap",s:alt_char['a'],"<C-C>gggH<C-O>G")
+call TracyoneKeyMap("xnoremap",s:alt_char['a'],"<C-C>ggVG")
 "Alignment
-exec "nnoremap ". s:alt_char['=']."  <esc>ggVG=``" 
+call TracyoneKeyMap("nnoremap",s:alt_char['=']," <esc>ggVG=``")
 "move
-exec "inoremap ". s:alt_char['h']." <Left>" 
-exec "inoremap ". s:alt_char['l']." <Right>" 
-exec "inoremap ". s:alt_char['j']." <Down>" 
-exec "inoremap ". s:alt_char['k']." <Up>" 
-exec "inoremap " .s:alt_char["b"]." <S-left>"
-exec "inoremap " .s:alt_char["f"]." <S-right>"
+call TracyoneKeyMap("inoremap",s:alt_char['h'],"<Left>")
+call TracyoneKeyMap("inoremap",s:alt_char['l'],"<Right>")
+call TracyoneKeyMap("inoremap",s:alt_char['j'],"<Down>")
+call TracyoneKeyMap("inoremap",s:alt_char['k'],"<Up>")
+call TracyoneKeyMap("inoremap",s:alt_char["b"],"<S-left>")
+call TracyoneKeyMap("inoremap",s:alt_char["f"],"<S-right>")
 
 "move between windows
-exec "nnoremap " s:alt_char['h']."   <C-w>h" 
-exec "nnoremap " .s:alt_char['l']. " <C-w>l"
-exec "nnoremap " .s:alt_char['j']. " <C-w>j"
-exec "nnoremap " .s:alt_char['k']. " <C-w>k"
+call TracyoneKeyMap("nnoremap",s:alt_char['h'],"  <C-w>h")
+call TracyoneKeyMap("nnoremap",s:alt_char['l'],"<C-w>l")
+call TracyoneKeyMap("nnoremap",s:alt_char['j'],"<C-w>j")
+call TracyoneKeyMap("nnoremap",s:alt_char['k'],"<C-w>k")
 
-exec "cnoremap " .s:alt_char['l']. " <right>"
-exec "cnoremap " .s:alt_char['j']. " <down>"
-exec "cnoremap " .s:alt_char['k']. " <up>"
-exec "cnoremap " .s:alt_char["b"]." <S-left>"
-exec "cnoremap " .s:alt_char["f"]." <S-right>"
-exec "cnoremap " s:alt_char['h']." <left>" 
+call TracyoneKeyMap("cnoremap",s:alt_char['l'],"<right>")
+call TracyoneKeyMap("cnoremap",s:alt_char['j'],"<down>")
+call TracyoneKeyMap("cnoremap",s:alt_char['k'],"<up>")
+call TracyoneKeyMap("cnoremap",s:alt_char["b"],"<S-left>")
+call TracyoneKeyMap("cnoremap",s:alt_char["f"],"<S-right>")
+call TracyoneKeyMap("cnoremap",s:alt_char['h'],"<left>")
 
-exec "nnoremap " s:alt_char["m"] " :call MouseToggle()<cr>"
+call TracyoneKeyMap("nnoremap",s:alt_char["m"],":call MouseToggle()<cr>")   
 " Mouse mode toggle
 nnoremap <leader>tm :call MouseToggle()<cr>
 " }}}
