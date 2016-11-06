@@ -145,6 +145,9 @@ set wic
 set listchars=tab:\|\ ,trail:-  "Strings to use in 'list' mode and for the |:list| command
 au misc_group BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif "jump to last position last open in vim
 
+" Show a few lines of context around the cursor.  Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
 " Don't use Ex mode, use Q for formatting.
 " Revert with ":unmap Q".
 map Q gq
@@ -248,10 +251,10 @@ if s:is_nvim != 1
             exec "inoremap \e".d." <m-".d.">"
             let d = nr2char(1+char2nr(d))
         endw
-        set timeout timeoutlen=500 ttimeoutlen=1
     endif
 endif
 
+set timeout timeoutlen=1000 ttimeoutlen=100
 ""no", "yes" or "menu"; how to use the ALT key
 set winaltkeys=no
 
