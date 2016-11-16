@@ -682,18 +682,38 @@ if empty(glob($VIMFILES.'/autoload/plug.vim'))
 endif
 call plug#begin($VIMFILES."/bundle")
 Plug 'tracyone/a.vim'
-if has('win64') || s:cpu_arch == "x86_64" || empty(glob($VIMFILES."/bundle/YouCompleteMe/third_party/ycmd/ycm_core.*")) == 0
-    if s:python_ver
-        Plug 'Valloric/YouCompleteMe', { 'on': [] }
-        Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-    endif
-    let s:complete_plugin=2
-    let g:is_load_ycm = 0
+if  s:python_ver 
+        if empty(glob($VIMFILES."/bundle/YouCompleteMe/third_party/ycmd/ycm_core.*")) == 0 || s:is_win 
+                                \ || ( s:is_unix && s:cpu_arch == "x86_64" )
+                let s:complete_plugin=2
+                let g:is_load_ycm = 0
+        elseif has('lua')
+                let s:complete_plugin=1
+        else
+                let s:complete_plugin=0
+        endif
+elseif has('lua')
+        let s:complete_plugin=1
 else
-    let s:complete_plugin=1
-    Plug 'Shougo/neocomplete'
-    Plug 'tracyone/dict'
-    Plug 'Konfekt/FastFold'
+        let s:complete_plugin=0
+endif
+
+if s:complete_plugin == 2 
+        if s:is_win == 1
+                Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
+                let s:complete_plugin_name="YouCompleteMe-x86"
+        elseif s:is_win == 2
+                Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
+                let s:complete_plugin_name="YouCompleteMe-x64"
+        else
+                Plug 'Valloric/YouCompleteMe', { 'on': [] }
+                let s:complete_plugin_name="YouCompleteMe"
+        endif
+        Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+else
+        Plug 'Shougo/neocomplete'
+        Plug 'tracyone/dict'
+        Plug 'Konfekt/FastFold'
 endif
 
 Plug 'tracyone/hex2ascii.vim', { 'do': 'make' }
@@ -956,7 +976,7 @@ endfunction
 if s:complete_plugin == 2
     augroup load_us_ycm
         autocmd!
-        autocmd InsertEnter * call plug#load('ultisnips','YouCompleteMe')
+        autocmd InsertEnter * call plug#load('ultisnips',s:complete_plugin_name)
                     \| call delete(".ycm_extra_conf.pyc")  | call youcompleteme#Enable() 
                     \| let g:is_load_ycm = 1 |  autocmd! load_us_ycm
     augroup END
