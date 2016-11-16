@@ -19,6 +19,7 @@ if s:is_win
     let $HOME=$VIM
     let $VIMFILES = $VIM.'\\vimfiles'
     set makeprg=mingw32-make
+    let s:cpu_arch = "x86"
     if s:is_win == 2 | let s:cpu_arch = "x86_64" | endif
 else
     set keywordprg=""
