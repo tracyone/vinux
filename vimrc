@@ -176,11 +176,12 @@ set confirm  "start a dialog when a command fails
 set smartindent "do clever autoindenting
 "set nowrap   "don't auto linefeed
 set cindent  "enable specific indenting for C code
-set tabstop=4  "number of spaces a <Tab> in the text stands for
-set softtabstop=4  "if non-zero, number of spaces to insert for a <Tab>
-set smarttab "a <Tab> in an indent inserts 'shiftwidth' spaces
+set tabstop=8  "number of spaces a <Tab> in the text stands for
+set softtabstop=0  "if non-zero, number of spaces to insert for a <Tab>
+set noexpandtab
+set nosmarttab "a <Tab> in an indent inserts 'shiftwidth' spaces
 set hlsearch "highlight all matches for the last used search pattern
-set shiftwidth=4 "number of spaces used for each step of (auto)indent
+set shiftwidth=8 "number of spaces used for each step of (auto)indent
 set showmode "display the current mode in the status line
 "set ruler  "show cursor position below each window
 set selection=inclusive  ""old", "inclusive" or "exclusive"; how selecting text behaves
