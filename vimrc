@@ -17,7 +17,7 @@ let s:python_ver=s:has_python+s:has_python3
 set filetype=text
 if s:is_win
     let $HOME=$VIM
-    let $VIMFILES = $VIM.'/vimfiles'
+    let $VIMFILES = $VIM.'\\vimfiles'
     set makeprg=mingw32-make
     if s:is_win == 2 | let s:cpu_arch = "x86_64" | endif
 else
@@ -667,9 +667,15 @@ endfunction
 " Vim-plug ------------------------{{{
 let &rtp=&rtp.",".$VIMFILES
 if empty(glob($VIMFILES.'/autoload/plug.vim'))
-    silent! exec ":!mkdir -p ".$VIMFILES."/autoload"
-    exec ":!curl -fLo " . $VIMFILES."/autoload"."/plug.vim " .
-                \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    if s:is_win
+        silent! exec ":!mkdir -p ".$VIMFILES."\\autoload"
+        silent! exec ":!curl -fLo " . $VIMFILES."\\autoload"."\\plug.vim " .
+                    \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    else
+        silent! exec ":!mkdir -p ".$VIMFILES."/autoload"
+        exec ":!curl -fLo " . $VIMFILES."/autoload"."/plug.vim " .
+                    \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    endif
     autocmd VimEnter * PlugInstall
 endif
 call plug#begin($VIMFILES."/bundle")
