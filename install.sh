@@ -66,6 +66,8 @@ echo -e "[5] deoplete.nvim(neovim)\n"
 read -p "Enter number: " choose
 echo -e "\n"
 
+stty erase ^?
+
 case ${choose} in
 	1 )
 		InstallYCM
