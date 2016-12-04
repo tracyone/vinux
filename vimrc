@@ -76,11 +76,10 @@ augroup filetype_group
     au BufRead,BufNewFile *.veo setlocal filetype=verilog
     au BufRead,BufNewFile * let $CurBufferDir=expand('%:p:h')
     au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} :setlocal filetype=markdown 
-    au FileType verilog setlocal tabstop=3 shiftwidth=3 softtabstop=3
-    au FileType c,cpp,java,vim,verilog setlocal expandtab "instead tab with space 
+    au FileType verilog setlocal tabstop=3 shiftwidth=3 softtabstop=3 expandtab
     au FileType make setlocal noexpandtab
     au FileType markdown setlocal nospell conceallevel=2 | nnoremap <buffer> <leader>tt :Toc<cr>
-    au FileType vim setlocal fdm=marker
+    au FileType vim setlocal fdm=marker expandtab tabstop=4 shiftwidth=4 softtabstop=4
     au BufRead,BufNewFile *.hex,*.out,*.o,*.a Vinarise
 augroup END
 
@@ -174,13 +173,18 @@ set smartcase  "override 'ignorecase' when pattern has upper case characters
 set confirm  "start a dialog when a command fails
 set smartindent "do clever autoindenting
 "set nowrap   "don't auto linefeed
+
+"linux kernel coding stype
 set cindent  "enable specific indenting for C code
 set tabstop=8  "number of spaces a <Tab> in the text stands for
-set softtabstop=0  "if non-zero, number of spaces to insert for a <Tab>
+set shiftwidth=8 "number of spaces used for each step of (auto)indent
+set softtabstop=8  "if non-zero, number of spaces to insert for a <Tab>
 set noexpandtab
 set nosmarttab "a <Tab> in an indent inserts 'shiftwidth' spaces
+set textwidth=80
+set cinoptions=:0,l1,t0,g0,(0)
+
 set hlsearch "highlight all matches for the last used search pattern
-set shiftwidth=8 "number of spaces used for each step of (auto)indent
 set showmode "display the current mode in the status line
 "set ruler  "show cursor position below each window
 set selection=inclusive  ""old", "inclusive" or "exclusive"; how selecting text behaves
@@ -279,7 +283,7 @@ vnoremap <s-TAB>  <gv
 nnoremap <silent><c-TAB> :AT<cr>
 nnoremap <silent><right> :tabnext<cr>
 nnoremap <silent><Left> :tabp<cr>
-au misc_group FileType c,cpp nnoremap <silent> K :call TracyoneFindMannel()<cr>
+au  filetype_group FileType c,cpp nnoremap <silent> K :call TracyoneFindMannel()<cr> \
 
 "{{{ alt or meta key mapping
 " in mac osx please set your option key as meta key
