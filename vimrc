@@ -693,7 +693,6 @@ if s:complete_plugin == 1
     let s:complete_plugin_name="YouCompleteMe"
 elseif s:complete_plugin == 2
     Plug 'Rip-Rip/clang_complete'
-    Plug 'ervandew/supertab'
 elseif s:complete_plugin == 3
     Plug 'maralla/completor.vim'
 elseif s:complete_plugin == 4
@@ -985,6 +984,9 @@ else
 
 endif
 
+" autoclose preview windows
+autocmd misc_group InsertLeave * if pumvisible() == 0|pclose|endif
+
 if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
 function! GenYCM()
     let l:cur_dir=getcwd()
@@ -1000,7 +1002,6 @@ function! GenYCM()
 endfunction
 " jume to definition (YCM)
 nnoremap <leader>jl :YcmCompleter GoToDeclaration<CR>
-autocmd misc_group InsertLeave * if pumvisible() == 0|pclose|endif
 let g:ycm_confirm_extra_conf=0
 let g:syntastic_always_populate_loc_list = 1
 let g:ycm_semantic_triggers = {
@@ -1114,25 +1115,19 @@ elseif s:complete_plugin == 4
      let g:clang_complete_auto = 1
      let g:clang_debug = 1
      let g:clang_snippets=1
-     let g:clang_complete_copen=1
+     let g:clang_complete_copen=0
      let g:clang_periodic_quickfix=1
-     let g:clang_snippets_engine="ultisnips"
+     "let g:clang_snippets_engine="ultisnips"
      let g:clang_close_preview=1
      "let g:clang_jumpto_declaration_key=""
      "g:clang_jumpto_declaration_in_preview_key
-     let g:SuperTabDefaultCompletionType="context"
-     let g:SuperTabContextDefaultCompletionType="<c-p>"
-     let g:SuperTabCompletionContexts=['s:ContextText', 's:ContextDiscover']
-     let g:SuperTabContextTextOmniPrecedence=['&omnifunc', '&completefunc']
-     let g:SuperTabContextDiscoverDiscovery=["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
-     augroup plugin_supertab
-         autocmd!
-         autocmd FileType *
-                     \ if &omnifunc!='' && exists("*SuperTabChain") && exists("*SuperTabSetDefaultCompletionType")|
-                     \     call SuperTabChain(&omnifunc, "<c-p>")|
-                     \     call SuperTabSetDefaultCompletionType("<c-x><c-u>")|
-                     \ endif
-     augroup END
+     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
+elseif s:complete_plugin == 3 
+    "completor.vim 
+    let g:completor_clang_binary = '/usr/bin/clang'
+    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
 endif
 "}}}
 
