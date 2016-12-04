@@ -283,7 +283,7 @@ vnoremap <s-TAB>  <gv
 nnoremap <silent><c-TAB> :AT<cr>
 nnoremap <silent><right> :tabnext<cr>
 nnoremap <silent><Left> :tabp<cr>
-au  filetype_group FileType c,cpp nnoremap <silent> K :call TracyoneFindMannel()<cr> \
+au  filetype_group FileType c,cpp nnoremap <silent> K :call TracyoneFindMannel()<cr> | setlocal colorcolumn=80
 
 "{{{ alt or meta key mapping
 " in mac osx please set your option key as meta key
