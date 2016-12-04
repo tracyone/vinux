@@ -81,7 +81,7 @@ augroup filetype_group
     au FileType verilog setlocal softtabstop=3
     au FileType c,cpp,java,vim,verilog setlocal expandtab "instead tab with space 
     au FileType make setlocal noexpandtab
-    au FileType markdown setlocal nospell
+    au FileType markdown setlocal nospell conceallevel=2 | nnoremap <buffer> <leader>tt :Toc<cr>
     au FileType vim setlocal fdm=marker
     au BufRead,BufNewFile *.hex,*.out,*.o,*.a Vinarise
 augroup END
@@ -1424,7 +1424,6 @@ else
     let g:mkdp_path_to_chrome = "google-chrome"
 endif
 let g:vim_markdown_toc_autofit = 1
-au filetype_group FileType MARKDOWN setlocal conceallevel=2
 " Markdown preview in browser
 nnoremap <leader>mp :MarkdownPreview<cr>
 " generate markdown TOC
