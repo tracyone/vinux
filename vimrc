@@ -599,14 +599,14 @@ endfunction
 
 func! s:YcmGotoDef(open_type)
     let l:cur_word=expand("<cword>")."\s*\(.*[^;]$"
-    if s:complete_plugin == 2
+    if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
         if g:is_load_ycm != 1
             call s:EchoWarning("Loading ycm ...")
             call plug#load('ultisnips','YouCompleteMe')
             call delete(".ycm_extra_conf.pyc")  
             call youcompleteme#Enable() 
             let g:is_load_ycm = 1
-            autocmd! load_us_ycm 
+            autocmd! lazy_load_group 
             sleep 1
             call s:EchoWarning("ycm has been loaded!")
         endif
@@ -684,38 +684,32 @@ if empty(glob($VIMFILES.'/autoload/plug.vim'))
 endif
 call plug#begin($VIMFILES."/bundle")
 Plug 'tracyone/a.vim'
-if  s:python_ver 
-        if empty(glob($VIMFILES."/bundle/YouCompleteMe/third_party/ycmd/ycm_core.*")) == 0 || s:is_win 
-                                \ || ( s:is_unix && s:cpu_arch == "x86_64" )
-                let s:complete_plugin=2
-                let g:is_load_ycm = 0
-        elseif has('lua')
-                let s:complete_plugin=1
-        else
-                let s:complete_plugin=0
-        endif
-elseif has('lua')
-        let s:complete_plugin=1
-else
-        let s:complete_plugin=0
-endif
 
-if s:complete_plugin == 2 
-        if s:is_win == 1
-                Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
-                let s:complete_plugin_name="YouCompleteMe-x86"
-        elseif s:is_win == 2
-                Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
-                let s:complete_plugin_name="YouCompleteMe-x64"
-        else
-                Plug 'Valloric/YouCompleteMe', { 'on': [] }
-                let s:complete_plugin_name="YouCompleteMe"
-        endif
-        Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+let s:complete_plugin=readfile($VIMFILES."/.complete_plugin")[0]
+
+if s:complete_plugin == 1
+    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+    Plug 'Valloric/YouCompleteMe', { 'on': [] }
+    let s:complete_plugin_name="YouCompleteMe"
+elseif s:complete_plugin == 2
+    Plug 'Rip-Rip/clang_complete'
+    Plug 'ervandew/supertab'
+elseif s:complete_plugin == 3
+    Plug 'maralla/completor.vim'
+elseif s:complete_plugin == 4
+    Plug 'Shougo/neocomplete'
+    Plug 'tracyone/dict'
+    Plug 'Konfekt/FastFold'
+elseif s:complete_plugin == 5
+    Plug 'Shougo/deoplete.nvim'
+elseif s:complete_plugin == 6
+    Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
+    let s:complete_plugin_name="YouCompleteMe-x86"
+elseif s:complete_plugin == 7
+    Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
+    let s:complete_plugin_name="YouCompleteMe-x64"
 else
-        Plug 'Shougo/neocomplete'
-        Plug 'tracyone/dict'
-        Plug 'Konfekt/FastFold'
+    call s:EchoWarning("No complete plugin selected!")
 endif
 
 Plug 'tracyone/hex2ascii.vim', { 'do': 'make' }
@@ -975,23 +969,23 @@ endfunction
 "generate .ycm_extra_conf.py for current directory
 
 " lazyload ultisnips and YouCompleteMe
-if s:complete_plugin == 2
-    augroup load_us_ycm
+if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
+    augroup lazy_load_group
         autocmd!
         autocmd InsertEnter * call plug#load('ultisnips',s:complete_plugin_name)
                     \| call delete(".ycm_extra_conf.pyc")  | call youcompleteme#Enable() 
-                    \| let g:is_load_ycm = 1 |  autocmd! load_us_ycm
+                    \| let g:is_load_ycm = 1 |  autocmd! lazy_load_group
     augroup END
 else
-    augroup load_us_ycm
+    augroup lazy_load_group
         autocmd!
         autocmd InsertEnter * call plug#load('ultisnips')
-                    \| autocmd! load_us_ycm
+                    \| autocmd! lazy_load_group
     augroup END
 
 endif
 
-if s:complete_plugin == 2
+if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
 function! GenYCM()
     let l:cur_dir=getcwd()
     cd $VIMFILES/bundle/YCM-Generator
@@ -1032,7 +1026,7 @@ let g:ycm_filetype_blacklist = {
             \ 'mail' : 1
             \}
 let g:ycm_global_ycm_extra_conf = $VIMFILES . "/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
-elseif s:complete_plugin == 1
+elseif s:complete_plugin == 4
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
     let g:neocomplete#enable_at_startup = 1
@@ -1108,6 +1102,37 @@ elseif s:complete_plugin == 1
        let col = col('.') - 1
        return !col || getline('.')[col - 1]  =~ '\s'
      endfunction
+ elseif s:complete_plugin == 2 
+     " clang_complete
+     " path to directory where library can be found
+     if s:is_unix == 2
+         let g:clang_library_path='/Library/Developer/CommandLineTools/usr/lib'
+     elseif s:is_unix == 1
+         let g:clang_library_path='/usr/local/lib'
+     endif
+     "let g:clang_use_library = 1
+     let g:clang_complete_auto = 1
+     let g:clang_debug = 1
+     let g:clang_snippets=1
+     let g:clang_complete_copen=1
+     let g:clang_periodic_quickfix=1
+     let g:clang_snippets_engine="ultisnips"
+     let g:clang_close_preview=1
+     "let g:clang_jumpto_declaration_key=""
+     "g:clang_jumpto_declaration_in_preview_key
+     let g:SuperTabDefaultCompletionType="context"
+     let g:SuperTabContextDefaultCompletionType="<c-p>"
+     let g:SuperTabCompletionContexts=['s:ContextText', 's:ContextDiscover']
+     let g:SuperTabContextTextOmniPrecedence=['&omnifunc', '&completefunc']
+     let g:SuperTabContextDiscoverDiscovery=["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+     augroup plugin_supertab
+         autocmd!
+         autocmd FileType *
+                     \ if &omnifunc!='' && exists("*SuperTabChain") && exists("*SuperTabSetDefaultCompletionType")|
+                     \     call SuperTabChain(&omnifunc, "<c-p>")|
+                     \     call SuperTabSetDefaultCompletionType("<c-x><c-u>")|
+                     \ endif
+     augroup END
 endif
 "}}}
 
