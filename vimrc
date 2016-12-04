@@ -76,9 +76,7 @@ augroup filetype_group
     au BufRead,BufNewFile *.veo setlocal filetype=verilog
     au BufRead,BufNewFile * let $CurBufferDir=expand('%:p:h')
     au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} :setlocal filetype=markdown 
-    au FileType verilog setlocal tabstop=3
-    au FileType verilog setlocal shiftwidth=3
-    au FileType verilog setlocal softtabstop=3
+    au FileType verilog setlocal tabstop=3 shiftwidth=3 softtabstop=3
     au FileType c,cpp,java,vim,verilog setlocal expandtab "instead tab with space 
     au FileType make setlocal noexpandtab
     au FileType markdown setlocal nospell conceallevel=2 | nnoremap <buffer> <leader>tt :Toc<cr>
