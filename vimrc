@@ -685,7 +685,11 @@ endif
 call plug#begin($VIMFILES."/bundle")
 Plug 'tracyone/a.vim'
 
-let s:complete_plugin=readfile($VIMFILES."/.complete_plugin")[0]
+if empty($VIMFILES."/.complete_plugin")
+    let s:complete_plugin = 1
+else
+    let s:complete_plugin=readfile($VIMFILES."/.complete_plugin")[0]
+endif
 
 if s:complete_plugin == 1
     Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
