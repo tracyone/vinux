@@ -8,7 +8,7 @@
 function InstallPlugin()
 {
 	if [[ $# -ne 1 ]]; then
-		return 3;
+		return 1;
 	fi
 
 	local id_name=${1%/*}
@@ -18,7 +18,7 @@ function InstallPlugin()
 
 	if [[ ! -d "${HOME}/.vim/bundle/${repo_name}" ]]; then
 		mkdir -p ${HOME}/.vim/bundle/${repo_name}
-		git clone --depth=1 https://github.com/$1 ${HOME}/.vim/bundle/${repo_name} || exit 3
+		git clone --depth=1 https://github.com/$1 ${HOME}/.vim/bundle/${repo_name} || return 2
     else
         echo -e "${repo_name} has been installed!\n"
 	fi
@@ -34,14 +34,17 @@ function InstallYCM()
 	if [[ -f "${HOME}/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.so" ]]; then
 		echo -e "YouCompleteMe has already been installed.\n"
 		echo -e "Finish! Happy Vim hacking.\n"
-		return 1
+		return 0
 	fi
 
 	echo -e "Start install YouCompleteMe\n"
 
 	cd  ${HOME}/.vim/bundle/YouCompleteMe
 
-	git submodule update --init --recursive && ./install.py --clang-completer --tern-completer  && echo -e "Finish! Happy Vim hacking."
+	git submodule update --init --recursive && ./install.py --clang-completer --tern-completer || return 1
+
+    echo -e "Finish! Happy Vim hacking.\n"
+
     return 0
 }
 
@@ -57,14 +60,25 @@ ln -sf $(pwd)/vimrc ${HOME}/.config/nvim/init.vim
 echo -e "Create soft link for linux and mac\n"
 ln -sf $(pwd)/vimrc ${HOME}/.vimrc
 
-echo -e "Which comlete plugin do you want to install? \n"
-echo -e "[1] YouCompleteMe(clang,complicated and powerful)\n"
-echo -e "[2] clang_complete(clang)\n"
-echo -e "[3] completor.vim(vim8)\n"
-echo -e "[4] neocomplete.vim(lua)\n"
-echo -e "[5] deoplete.nvim(neovim)\n"
-read -p "Enter number: " choose
-echo -e "\n"
+if [[ $# -gt 1 ]]; then
+    echo -e "Wrong argument\n"
+    exit  1
+fi
+
+if [[ ! -z $1 ]]; then
+    choose=$1
+else
+    echo -e "Which comlete plugin do you want to install? \n"
+    echo -e "[1] YouCompleteMe(clang,complicated and powerful)\n"
+    echo -e "[2] clang_complete(clang)\n"
+    echo -e "[3] completor.vim(vim8)\n"
+    echo -e "[4] neocomplete.vim(lua)\n"
+    echo -e "[5] deoplete.nvim(neovim)\n"
+    read -p "Enter number: " choose
+    echo -e "\n"
+
+fi
+
 
 stty erase ^?
 
@@ -85,11 +99,14 @@ case ${choose} in
 		InstallPlugin "Shougo/deoplete.nvim"
 		;;
 	* )
-		echo -e "Wrong number!\n";exit 3
+		echo -e "Wrong number!\n";exit 2
 		;;
 esac
 
-echo ${choose} > ${HOME}/.vim/.complete_plugin
+if [[ $? -ne 0 ]]; then
+    echo -e "Install plugin failed\n";exit 3
+fi
 
+echo ${choose} > ${HOME}/.vim/.complete_plugin
 
 # vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
