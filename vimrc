@@ -582,6 +582,7 @@ endfunc
 
 function! TracyoneGotoDef(open_type)
     let l:cword=expand("<cword>")
+    execute a:open_type
     let l:ycm_ret=s:YcmGotoDef(a:open_type)
     if l:ycm_ret < 0
         try
