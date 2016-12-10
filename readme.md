@@ -215,6 +215,7 @@ mode  |      key | description
     n |       tt | Open tagbar
     n |       th | realtime underline word toggle
     n |       tu | undo tree window toggle
+    n |       tc | toggle between tab or space,8 or 4
 
 ### Ag searcher
 
