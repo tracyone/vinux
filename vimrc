@@ -463,6 +463,22 @@ function! s:TracyoneGetError(command,err_str)
     endif
 endfunction
 
+function! TracyoneCodingStypeToggle()
+    if &tabstop == 4
+        set tabstop=8  
+        set shiftwidth=8 
+        set softtabstop=8 
+        set noexpandtab
+        set nosmarttab
+    else
+        set tabstop=4  
+        set shiftwidth=4 
+        set softtabstop=4 
+        set expandtab
+        set smarttab
+    endif
+endfunction
+
 function! Tracyone_SaveFile()
     try 
         update
@@ -1558,7 +1574,7 @@ function! TracyoneSearch(direction)
     endif
     let l:ret = s:TracyoneGetError(l:cmd,"No marks.*")
     if l:ret != 0
-        execute l:cmd2
+        execute "silent! ".l:cmd2
     endif
     :normal zz
 endfunction
@@ -1665,6 +1681,11 @@ nnoremap <leader>7 7gt
 nnoremap <leader>8 8gt
 " tab 9
 nnoremap <leader>9 9gt
+" toggle coding style 
+nnoremap <leader>tc :call TracyoneCodingStypeToggle()<cr>
+
+let g:love_support_option=["tabstop","shiftwidth","softtabstop"
+            \,"expandtab","smarttab"]
 " }}}
 
 " Windows manger -----------------{{{
