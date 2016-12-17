@@ -720,6 +720,7 @@ elseif s:complete_plugin == 4
     Plug 'Shougo/neocomplete'
     Plug 'tracyone/dict'
     Plug 'Konfekt/FastFold'
+    Plug 'Shougo/neco-vim'
 elseif s:complete_plugin == 5
     Plug 'Shougo/deoplete.nvim'
 elseif s:complete_plugin == 6
