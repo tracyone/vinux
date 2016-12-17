@@ -708,6 +708,10 @@ else
     let s:complete_plugin=readfile($VIMFILES."/.complete_plugin")[0]
 endif
 
+if s:complete_plugin == 5 && s:is_nvim == 0
+    let s:complete_plugin = 1
+endif
+
 if s:complete_plugin == 1
     Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
     Plug 'Valloric/YouCompleteMe', { 'on': [] }
@@ -722,7 +726,9 @@ elseif s:complete_plugin == 4
     Plug 'Konfekt/FastFold'
     Plug 'Shougo/neco-vim'
 elseif s:complete_plugin == 5
-    Plug 'Shougo/deoplete.nvim'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/neco-vim'
+    Plug 'zchee/deoplete-clang'
 elseif s:complete_plugin == 6
     Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
     let s:complete_plugin_name="YouCompleteMe-x86"
@@ -1157,6 +1163,15 @@ elseif s:complete_plugin == 3
     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
     inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
+elseif s:complete_plugin == 5 
+    "deoplete
+     if s:is_unix == 2
+         let g:deoplete#sources#clang#libclang_path='/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
+         let g:deoplete#sources#clang#clang_header='/Library/Developer/CommandLineTools/usr/lib/clang/8.0.0/include/'
+     elseif s:is_unix == 1
+         let g:deoplete#sources#clang#libclang_path='/usr/local/lib/libclang.so'
+     endif
+    let g:deoplete#enable_at_startup = 1
 endif
 "}}}
 
