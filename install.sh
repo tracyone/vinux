@@ -74,7 +74,7 @@ else
     echo -e "[3] completor.vim(vim8)\n"
     echo -e "[4] neocomplete.vim(lua)\n"
     echo -e "[5] deoplete.nvim(neovim)\n"
-    read -p "Enter number: " choose
+    read -n1 -p "Enter number: " choose
     echo -e "\n"
 
 fi
