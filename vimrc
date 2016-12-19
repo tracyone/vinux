@@ -470,12 +470,14 @@ function! TracyoneCodingStypeToggle()
         set softtabstop=8 
         set noexpandtab
         set nosmarttab
+        call s:EchoWarning("change to linux kernel coding style ...")
     else
         set tabstop=4  
         set shiftwidth=4 
         set softtabstop=4 
         set expandtab
         set smarttab
+        call s:EchoWarning("Use space instead of tab ...")
     endif
 endfunction
 
@@ -816,7 +818,7 @@ Plug 'vim-scripts/L9'
 Plug 'mattn/emmet-vim',{'for': 'html'}
 Plug 'junegunn/vim-easy-align',{'on': [ '<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)' ]}
 Plug 'adah1972/fencview',{'on': 'FencManualEncoding'}
-Plug 'vim-scripts/DrawIt',{'on': 'DIstart'}
+Plug 'vim-scripts/DrawIt',{'on': 'DrawIt'}
 Plug 'mbbill/VimExplorer',{'on': 'VE'}
 Plug 'vim-scripts/renamer.vim',{'on': 'Ren'}
 Plug  'hari-rangarajan/CCTree'
@@ -1707,6 +1709,16 @@ nnoremap <leader>8 8gt
 nnoremap <leader>9 9gt
 " toggle coding style 
 nnoremap <leader>tc :call TracyoneCodingStypeToggle()<cr>
+function DrawItToggle()
+    let l:ret = s:TracyoneGetError("DrawIt","already on")
+    if l:ret != 0
+        :DrawIt!
+    else
+        call s:EchoWarning("Started DrawIt")
+    endif
+endfunction
+" draw it
+nnoremap <leader>aw :call DrawItToggle()<cr>
 
 let g:love_support_option=["tabstop","shiftwidth","softtabstop"
             \,"expandtab","smarttab"]
