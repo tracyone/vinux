@@ -1498,7 +1498,7 @@ nnoremap <Leader>gd :Gdiff<cr>
 " list git issue
 nnoremap <Leader>gi :Gissue<cr>
 " git push origin master
-nnoremap <Leader>gp :call te#git#GitPush("git")<cr>
+nnoremap <Leader>gp :call te#git#GitPush("head")<cr>
 "}}}
 
 " neomake -------------------------{{{

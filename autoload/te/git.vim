@@ -29,17 +29,22 @@ endfunction
 "auto gain remote name
 "auto gain local branch name
 "arg:push_type is detemine weather push to gerrit or normal git server
-"set to "git" to push to normal git server
-"set to "gerrit" to push to gerrit server
+"set to "head" to push to normal git server
+"set to "for" to push to gerrit server
 function! te#git#GitPush(push_type)
+    if a:push_type !~ "\vhead|for"
+        :call te#utils#EchoWarning("Error argument")
+        return 1
+    endif
     let l:remote_name=system('git remote')[:-2]." "
     if v:shell_error || l:remote_name == " "
         call te#utils#EchoWarning("git remote failed")
-        return 1
+        return 2
     endif
     let l:branch_name = input("Please input the branch name: ","","custom,te#git#GetRemoteBr")
     call te#utils#EchoWarning(s:HowToRunGit()."push ".l:remote_name.te#git#GitBranchName().":refs/for/".l:branch_name)
-    :exec s:HowToRunGit()."push ".l:remote_name.te#git#GitBranchName().":refs/for/".l:branch_name
+    :exec s:HowToRunGit()."push ".l:remote_name.te#git#GitBranchName().":refs/".a:push_type."/".l:branch_name
+    return 0
 endfunction
 
 " a complet function that is needed by input function
