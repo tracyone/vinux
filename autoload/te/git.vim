@@ -32,7 +32,7 @@ endfunction
 "set to "head" to push to normal git server
 "set to "for" to push to gerrit server
 function! te#git#GitPush(push_type)
-    if a:push_type !~ "\vhead|for"
+    if a:push_type !~ "\\vheads|for"
         :call te#utils#EchoWarning("Error argument")
         return 1
     endif
@@ -42,7 +42,7 @@ function! te#git#GitPush(push_type)
         return 2
     endif
     let l:branch_name = input("Please input the branch name: ","","custom,te#git#GetRemoteBr")
-    call te#utils#EchoWarning(s:HowToRunGit()."push ".l:remote_name.te#git#GitBranchName().":refs/for/".l:branch_name)
+    call te#utils#EchoWarning(s:HowToRunGit()."push ".l:remote_name.te#git#GitBranchName().":refs/".a:push_type."/".l:branch_name)
     :exec s:HowToRunGit()."push ".l:remote_name.te#git#GitBranchName().":refs/".a:push_type."/".l:branch_name
     return 0
 endfunction
