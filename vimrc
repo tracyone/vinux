@@ -420,9 +420,9 @@ noremap <F5> :call Do_Make()<CR>
 " make
 nnoremap <leader>am :call Do_Make()<cr>
 
-nnoremap <F7> :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
+nnoremap <F7> :call Dosunix()<cr>:call te#utils#EchoWarning("Dos2unix...")<cr>
 " dos to unix or unix to dos
-nnoremap <Leader>td :call Dosunix()<cr>:call s:EchoWarning("Dos2unix...")<cr>
+nnoremap <Leader>td :call Dosunix()<cr>:call te#utils#EchoWarning("Dos2unix...")<cr>
 " open url on cursor with default browser
 nnoremap <leader>o :call Open_url()<cr>
 " linu number toggle
@@ -432,34 +432,15 @@ nnoremap <Leader>tn :call TracyoneNuToggle()<cr>
 "Function{{{
 function! TracyoneFindMannel()
     let l:cur_word=expand("<cword>")
-    let l:ret = s:TracyoneGetError("Snman 3 ".l:cur_word,"no manual.*")
+    let l:ret = te#utils#GetError("Snman 3 ".l:cur_word,"no manual.*")
     "make sure index valid
     if l:ret != 0
-        let l:ret = s:TracyoneGetError("Snman 2 ".l:cur_word,"no manual.*")
+        let l:ret = te#utils#GetError("Snman 2 ".l:cur_word,"no manual.*")
         if l:ret != 0
             execute "silent! help ".l:cur_word
         endif
     else
         execute "Snman 2 ".l:cur_word
-    endif
-endfunction
-
-" name :s:TracyoneGetError
-" arg  :command,vim command(not shell command) that want to
-"       test execute status
-" arg   : err_str,error substring pattern that is expected
-" return:return 0 if no error exist,return -1 else
-function! s:TracyoneGetError(command,err_str)
-    redir => l:msg
-    silent! execute a:command
-    redir END
-    let l:rs=split(l:msg,'\r\n\|\n')
-    if get(l:rs,-1,3) ==3  "no error exists
-        return 0
-    elseif l:rs[-1] =~# a:err_str
-        return -1
-    else
-        return 0
     endif
 endfunction
 
@@ -470,14 +451,14 @@ function! TracyoneCodingStypeToggle()
         set softtabstop=8 
         set noexpandtab
         set nosmarttab
-        call s:EchoWarning("change to linux kernel coding style ...")
+        call te#utils#EchoWarning("change to linux kernel coding style ...")
     else
         set tabstop=4  
         set shiftwidth=4 
         set softtabstop=4 
         set expandtab
         set smarttab
-        call s:EchoWarning("Use space instead of tab ...")
+        call te#utils#EchoWarning("Use space instead of tab ...")
     endif
 endfunction
 
@@ -486,7 +467,7 @@ function! Tracyone_SaveFile()
         update
     catch /^Vim\%((\a\+)\)\=:E212/
         if exists(":SudoWrite")
-            call s:EchoWarning("sudo write,please input your password!")
+            call te#utils#EchoWarning("sudo write,please input your password!")
             SudoWrite %
             return 0
         endif
@@ -497,14 +478,14 @@ function! Tracyone_SaveFile()
         endif
         let l:filename=input("NO FILE NAME!Please input the file name: ")
         if l:filename == ""
-            call s:EchoWarning("You just give a empty name!")
+            call te#utils#EchoWarning("You just give a empty name!")
             return 3
         endif
         try 
             exec "w ".l:filename
         catch /^Vim\%((\a\+)\)\=:E212/
             if exists(":SudoWrite")
-                call s:EchoWarning("sudo write,please input your password!")
+                call te#utils#EchoWarning("sudo write,please input your password!")
                 SudoWrite %
                 return 0
             endif
@@ -513,7 +494,7 @@ function! Tracyone_SaveFile()
 endfunction
 
 function! Do_Make()
-    :call s:EchoWarning("making ...")
+    :call te#utils#EchoWarning("making ...")
     :wa
     if empty(glob("makefile")) && empty(glob("Makefile"))
         exec ":AsyncRun -post=!". "./\"%<\" gcc \"%\" -o \"%<\" "
@@ -547,7 +528,7 @@ endfunction
 
 function! GotoCurFile()
     execute "lcd %:h"
-    execute ':call s:EchoWarning("cd to ".getcwd())'
+    execute ':call te#utils#EchoWarning("cd to ".getcwd())'
 endfunction
 function! Open_url()
     let s:url = s:Get_pattern_at_cursor('\v(https?://|ftp://|file:/{3}|www\.)(\w|[.-])+(:\d+)?(/(\w|[~@#$%^&+=/.?:-])+)?')
@@ -582,18 +563,13 @@ func! Dosunix()
     endif
 endfunc
 
-"echo warning messag
-func! s:EchoWarning(str)
-    redraw!
-    echohl WarningMsg | echo a:str | echohl None
-endfunc
 
 func! MouseToggle()
     if &mouse == "a"
-        :call s:EchoWarning("Mouse off")
+        :call te#utils#EchoWarning("Mouse off")
         set mouse&
     else
-        :call s:EchoWarning("Mouse on")
+        :call te#utils#EchoWarning("Mouse on")
         set mouse=a
     endif
 endfunc
@@ -606,7 +582,7 @@ function! TracyoneGotoDef(open_type)
         try
             execute "cs find g ".l:cword
         catch /^Vim\%((\a\+)\)\=:E/	
-            call s:EchoWarning("cscope query failed")
+            call te#utils#EchoWarning("cscope query failed")
             if a:open_type != "" | wincmd q | endif
             return -1
         endtry
@@ -620,19 +596,19 @@ func! s:YcmGotoDef(open_type)
     let l:cur_word=expand("<cword>")."\s*\(.*[^;]$"
     if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
         if g:is_load_ycm != 1
-            call s:EchoWarning("Loading ycm ...")
+            call te#utils#EchoWarning("Loading ycm ...")
             call plug#load('ultisnips','YouCompleteMe')
             call delete(".ycm_extra_conf.pyc")  
             call youcompleteme#Enable() 
             let g:is_load_ycm = 1
             autocmd! lazy_load_group 
             sleep 1
-            call s:EchoWarning("ycm has been loaded!")
+            call te#utils#EchoWarning("ycm has been loaded!")
         endif
     endif
-    let l:ret = s:TracyoneGetError(":YcmCompleter GoToDefinition","Runtime.*")
+    let l:ret = te#utils#GetError(":YcmCompleter GoToDefinition","Runtime.*")
     if l:ret == -1
-        let l:ret = s:TracyoneGetError(":YcmCompleter GoToDeclaration","Runtime.*")
+        let l:ret = te#utils#GetError(":YcmCompleter GoToDeclaration","Runtime.*")
         if l:ret == 0
             execute ":silent! A"
             " search failed then go back
@@ -738,7 +714,7 @@ elseif s:complete_plugin == 7
     Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
     let s:complete_plugin_name="YouCompleteMe-x64"
 else
-    call s:EchoWarning("No complete plugin selected!")
+    call te#utils#EchoWarning("No complete plugin selected!")
 endif
 
 Plug 'tracyone/hex2ascii.vim', { 'do': 'make' }
@@ -935,7 +911,7 @@ function! GenerateCscope4Kernel()
     :silent! cs kill cscope.out
     silent! execute "AsyncRun -post=cs\\ add\\ cscope.out ". "make O=.
                 \ SRCARCH=arm SUBARCH=sun4i COMPILED_SOURCE=1 cscope tags"
-    :call s:EchoWarning("Generating cscope database file for linux kernel ...")
+    :call te#utils#EchoWarning("Generating cscope database file for linux kernel ...")
 endfunction
 
 function! Do_CsTag(dir)
@@ -951,21 +927,21 @@ function! Do_CsTag(dir)
     if filereadable("tags")
         let tagsdeleted=delete(l:tagfile)
         if(tagsdeleted!=0)
-            :call s:EchoWarning("Fail to do tags! I cannot delete the tags")
+            :call te#utils#EchoWarning("Fail to do tags! I cannot delete the tags")
             return
         endif
     endif
     if filereadable(a:dir."/cscope.files")
         let csfilesdeleted=delete(l:cscopefiles)
         if(csfilesdeleted!=0)
-            :call s:EchoWarning("Fail to do cscope! I cannot delete the cscope.files")
+            :call te#utils#EchoWarning("Fail to do cscope! I cannot delete the cscope.files")
             return
         endif
     endif
     if filereadable(a:dir."/cscope.out")
         let csoutdeleted=delete(l:cscopeout)
         if(csoutdeleted!=0)
-            :call s:EchoWarning("I cannot delete the cscope.out,try again")
+            :call te#utils#EchoWarning("I cannot delete the cscope.out,try again")
             echo "kill the cscope connection"
             if has("cscope") && filereadable(l:cscopeout)
                 silent! execute "cs kill ".l:cscopeout
@@ -973,7 +949,7 @@ function! Do_CsTag(dir)
             let csoutdeleted=delete(l:cscopeout)
         endif
         if(csoutdeleted!=0)
-            :call s:EchoWarning("I still cannot delete the cscope.out,failed to do cscope")
+            :call te#utils#EchoWarning("I still cannot delete the cscope.out,failed to do cscope")
             return
         endif
     endif
@@ -990,7 +966,7 @@ function! Do_CsTag(dir)
         if filereadable(l:cscopeout)
             silent! execute "cs kill ".l:cscopeout
         else
-            :call s:EchoWarning("No cscope.out")
+            :call te#utils#EchoWarning("No cscope.out")
         endif
         exec "cd ".a:dir
         silent! execute "AsyncRun -post=cs\\ add\\ ".l:cscopeout. " cscope -Rbkq -i ".l:cscopefiles
@@ -1338,12 +1314,12 @@ let g:fencview_auto_patterns='*.txt,*.htm{l\=},*.c,*.cpp,*.s,*.vim'
 function! FencToggle()
     if &fenc == "utf-8"
         FencManualEncoding cp936
-        call s:EchoWarning("Chang encode to cp936")
+        call te#utils#EchoWarning("Chang encode to cp936")
     elseif &fenc == "cp936"
         FencManualEncoding utf-8
-        call s:EchoWarning("Chang encode to utf-8")
+        call te#utils#EchoWarning("Chang encode to utf-8")
     else
-        call s:EchoWarning("Current file encoding is ".&fenc)
+        call te#utils#EchoWarning("Current file encoding is ".&fenc)
     endif
 endfunction
 " Convert file's encode
@@ -1522,7 +1498,7 @@ nnoremap <Leader>gd :Gdiff<cr>
 " list git issue
 nnoremap <Leader>gi :Gissue<cr>
 " git push origin master
-nnoremap <Leader>gp :exec "Gpush origin " . fugitive#head()<cr>
+nnoremap <Leader>gp :call te#git#GitPush("git")<cr>
 "}}}
 
 " neomake -------------------------{{{
@@ -1598,7 +1574,7 @@ function! TracyoneSearch(direction)
         let l:cmd = "normal \<Plug>MarkSearchAnyNext"
         let l:cmd2=":normal \<Plug>(incsearch-nohl-n)"
     endif
-    let l:ret = s:TracyoneGetError(l:cmd,"No marks.*")
+    let l:ret = te#utils#GetError(l:cmd,"No marks.*")
     if l:ret != 0
         execute "silent! ".l:cmd2
     endif
@@ -1710,11 +1686,11 @@ nnoremap <leader>9 9gt
 " toggle coding style 
 nnoremap <leader>tc :call TracyoneCodingStypeToggle()<cr>
 function DrawItToggle()
-    let l:ret = s:TracyoneGetError("DrawIt","already on")
+    let l:ret = te#utils#GetError("DrawIt","already on")
     if l:ret != 0
         :DrawIt!
     else
-        call s:EchoWarning("Started DrawIt")
+        call te#utils#EchoWarning("Started DrawIt")
     endif
 endfunction
 " draw it

@@ -53,9 +53,10 @@ function InstallYCM()
 stty erase ^H
 
 echo -e "Create soft link for neovim\n" 
-mkdir -p ${HOME}/.vim ${HOME}/.config/nvim
+mkdir -p ${HOME}/.vim ${HOME}/.config/nvim ${HOME}/.vim/autoload
 ln -sf ${HOME}/.vim ${HOME}/.config/nvim
 ln -sf $(pwd)/vimrc ${HOME}/.config/nvim/init.vim
+ln -sf $(pwd)/autoload/te ${HOME}/.vim/autoload/
 
 echo -e "Create soft link for linux and mac\n"
 ln -sf $(pwd)/vimrc ${HOME}/.vimrc
