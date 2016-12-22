@@ -376,9 +376,9 @@ nnoremap <leader>vc :tabedit $MYVIMRC<CR>
 
 "save file 
 "in terminal ctrl-s is used to stop printf..
-noremap <C-S>	:call Tracyone_SaveFile()<cr>
-vnoremap <C-S>	<C-C>:call Tracyone_SaveFile()<cr>
-inoremap <C-S>	<C-O>:call Tracyone_SaveFile()<cr>
+noremap <C-S>	:call te#utils#SaveFiles()<cr>
+vnoremap <C-S>	<C-C>:call te#utils#SaveFiles()<cr>
+inoremap <C-S>	<C-O>:call te#utils#SaveFiles()<cr>
 
 "copy,paste and cut 
 noremap <S-Insert> "+gP
@@ -462,36 +462,6 @@ function! TracyoneCodingStypeToggle()
     endif
 endfunction
 
-function! Tracyone_SaveFile()
-    try 
-        update
-    catch /^Vim\%((\a\+)\)\=:E212/
-        if exists(":SudoWrite")
-            call te#utils#EchoWarning("sudo write,please input your password!")
-            SudoWrite %
-            return 0
-        endif
-    catch /^Vim\%((\a\+)\)\=:E32/   "no file name
-        if s:is_gui
-            exec ":emenu File.Save"
-            return 0
-        endif
-        let l:filename=input("NO FILE NAME!Please input the file name: ")
-        if l:filename == ""
-            call te#utils#EchoWarning("You just give a empty name!")
-            return 3
-        endif
-        try 
-            exec "w ".l:filename
-        catch /^Vim\%((\a\+)\)\=:E212/
-            if exists(":SudoWrite")
-                call te#utils#EchoWarning("sudo write,please input your password!")
-                SudoWrite %
-                return 0
-            endif
-        endtry
-    endtry
-endfunction
 
 function! Do_Make()
     :call te#utils#EchoWarning("making ...")
@@ -1648,7 +1618,7 @@ nmap <Leader>aT goT
 " run Ag command
 nnoremap <Leader>fg :AsyncRun -post=cw ag 
 " save file
-nnoremap <Leader>fs :call Tracyone_SaveFile()<cr>
+nnoremap <Leader>fs :call te#utils#SaveFiles()<cr>
 " save all
 nnoremap <Leader>fS :wa<cr>
 " manpage or vimhelp on current curosr word

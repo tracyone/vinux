@@ -24,3 +24,40 @@ func! te#utils#EchoWarning(str)
     redraw!
     echohl WarningMsg | echo a:str | echohl None
 endfunc
+
+
+" save files in every condition
+function! te#utils#SaveFiles()
+    try 
+        update
+    catch /^Vim\%((\a\+)\)\=:E212/
+        if exists(":SudoWrite")
+            call te#utils#EchoWarning("sudo write,please input your password!")
+            SudoWrite %
+            return 0
+        else
+            :w !sudo tee %
+        endif
+    catch /^Vim\%((\a\+)\)\=:E32/   "no file name
+        if s:is_gui
+            exec ":emenu File.Save"
+            return 0
+        endif
+        let l:filename=input("NO FILE NAME!Please input the file name: ")
+        if l:filename == ""
+            call te#utils#EchoWarning("You just give a empty name!")
+            return 3
+        endif
+        try 
+            exec "w ".l:filename
+        catch /^Vim\%((\a\+)\)\=:E212/
+            call te#utils#EchoWarning("sudo write,please input your password!")
+            if exists(":SudoWrite")
+                SudoWrite %
+                return 0
+            else
+                :w !sudo tee %
+            endif
+        endtry
+    endtry
+endfunction
