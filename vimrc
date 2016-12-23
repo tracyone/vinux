@@ -880,7 +880,7 @@ endfunction
 function! GenerateCscope4Kernel()
     :silent! cs kill cscope.out
     silent! execute "AsyncRun -post=cs\\ add\\ cscope.out ". "make O=.
-                \ SRCARCH=arm SUBARCH=sun4i COMPILED_SOURCE=1 cscope tags"
+                \ SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags"
     :call te#utils#EchoWarning("Generating cscope database file for linux kernel ...")
 endfunction
 
