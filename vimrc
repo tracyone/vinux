@@ -877,6 +877,18 @@ function! TracyoneGenCsTag()
     endif
 endfunction
 
+function! GenCCTreeDataBase()
+    if filereadable("cctree.out")
+        :CCTreeLoadXRefDB cctree.out
+    else
+        if filereadable("cscope.out")
+            exec ":AsyncRun vim +\"CCTreeLoadDB cscope.out\" +\"CCTreeSaveXRefDB cctree.out\" +qa"
+        else
+            :call te#utils#EchoWarning("No cscope.out!Please generate cscope first.")
+        endif
+    endif
+endfunction
+
 function! GenerateCscope4Kernel()
     :silent! cs kill cscope.out
     silent! execute "AsyncRun -post=cs\\ add\\ cscope.out ". "make O=.
