@@ -15,12 +15,9 @@ endfunction
 function! te#git#GitBranchName()
     if exists("*fugitive#head")
         return fugitive#head()
-    else
-        let l:br_name=system("git branch")[:-2]
-        if v:shell_error
-            return " "
-        endif
-        return substitute(l:br_name,"^\*\\s","","") 
+    endif
+    if exists("*gita#statusline#format")
+        return gita#statusline#format('%lb')
     endif
 endfunction
 
