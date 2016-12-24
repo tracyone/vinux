@@ -891,6 +891,7 @@ endfunction
 
 function! GenerateCscope4Kernel()
     :silent! cs kill cscope.out
+    :silent! call delete("cctree.out")
     silent! execute "AsyncRun -post=cs\\ add\\ cscope.out ". "make O=.
                 \ SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags"
     :call te#utils#EchoWarning("Generating cscope database file for linux kernel ...")
@@ -901,11 +902,14 @@ function! Do_CsTag(dir)
         let l:tagfile=a:dir."\\"."tags"
         let l:cscopefiles=a:dir."\\"."cscope.files"
         let l:cscopeout=a:dir."\\"."cscope.out"
+        let l:cctreeout=a:dir."\\"."cctree.out"
     else
         let l:tagfile=a:dir."/tags"
         let l:cscopefiles=a:dir."/cscope.files"
         let l:cscopeout=a:dir."/cscope.out"
+        let l:cctreeout=a:dir."/cctree.out"
     endif
+    :silent! call delete(l:cctreeout)
     if filereadable("tags")
         let tagsdeleted=delete(l:tagfile)
         if(tagsdeleted!=0)
