@@ -1255,6 +1255,8 @@ let g:ctrlp_funky_syntax_highlight = 0
 let g:ctrlp_funky_matchtype = 'path'
 nnoremap <c-k> :CtrlPFunky<Cr>
 nnoremap <c-j> :CtrlPBuffer<Cr>
+" show global mark
+nnoremap <leader>pm :SignatureListGlobalMarks<Cr>
 " ctrlp buffer 
 nnoremap <Leader>pl :CtrlPBuffer<Cr>
 nnoremap <c-l> :CtrlPMRUFiles<cr>
@@ -1684,6 +1686,9 @@ nnoremap <leader>aw :call DrawItToggle()<cr>
 
 let g:love_support_option=["tabstop","shiftwidth","softtabstop"
             \,"expandtab","smarttab"]
+let g:SignatureEnabledAtStartup=0
+" toggle show sign
+nnoremap <leader>ts :SignatureToggleSigns<cr> 
 " }}}
 
 " Windows manger -----------------{{{
