@@ -1555,24 +1555,9 @@ vnoremap <leader>yr :'<,'>QuickRun<cr>
 " }}}
 
 " Incsearch -----------------------{{{
-function! TracyoneSearch(direction)
-    if a:direction == "prev"
-        let l:cmd = "normal \<Plug>MarkSearchAnyPrev"
-        let l:cmd2=":normal \<Plug>(incsearch-nohl-N)"
-    else
-        let l:cmd = "normal \<Plug>MarkSearchAnyNext"
-        let l:cmd2=":normal \<Plug>(incsearch-nohl-n)"
-    endif
-    let l:ret = te#utils#GetError(l:cmd,"No marks.*")
-    if l:ret != 0
-        execute "silent! ".l:cmd2
-    endif
-    :normal zz
-endfunction
-
 let g:incsearch#auto_nohlsearch = 1
-map n  :call TracyoneSearch("next")<cr>
-map N  :call TracyoneSearch("prev")<cr>
+map n  <Plug>(incsearch-nohl-n)zz
+map N  <Plug>(incsearch-nohl-N)zz
 map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
 map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
 map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
