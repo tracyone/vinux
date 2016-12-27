@@ -1180,7 +1180,7 @@ nnoremap <leader>iav :AT<cr>
 " DelimitMate ---------------------{{{
 au FileType filetype_group verilog,c let b:delimitMate_matchpairs = "(:),[:],{:}"
 let delimitMate_nesting_quotes = ['"','`']
-let delimitMate_expand_cr = 1
+let delimitMate_expand_cr = 0
 let delimitMate_expand_space = 0
 "}}}
 
@@ -1383,6 +1383,7 @@ nnoremap <Leader>as :call TracyoneVimShellPop()<cr>
 
 " Nerdcommander -------------------{{{
 let g:NERDMenuMode=0
+let NERD_c_alt_style=1
 "}}}
 
 " VimStartify ---------------------{{{
