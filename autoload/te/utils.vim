@@ -20,9 +20,20 @@ endfunction
 
 
 "echo warning messag
-func! te#utils#EchoWarning(str)
+"a:0-->err or warn or none,default
+func! te#utils#EchoWarning(str,...)
     redraw!
-    echohl WarningMsg | echo a:str | echohl None
+    let l:level="WarningMsg"
+    if a:0 == 1
+        if a:1 == "err"
+            let l:level="ErrorMsg"
+        elseif a:1 == "warn"
+            let l:level="WarningMsg"
+        elseif a:1 == "none"
+            let l:level="None"
+        endif
+    endif
+    execut "echohl ".l:level | echo a:str | echohl None
 endfunc
 
 
@@ -62,18 +73,24 @@ function! te#utils#SaveFiles()
     endtry
 endfunction
 
+"opt_str can be vim option or variable's name(string)
+"toggle list,length must 2
+"eg. call te#utils#OptionToggle("background",["dark","light"]
 function! te#utils#OptionToggle(opt_str,opt_list)
     let l:len=len(a:opt_list)
     if l:len != 2 
-        call te#utils#EchoWarning("Invalid argument.")
+        call te#utils#EchoWarning("Invalid argument.","err")
         return 1
     endif
     if exists("&".a:opt_str)
         let l:leed="&"
         let l:opt_val=eval("&".a:opt_str)
-    else
+    elseif exists(a:opt_str)
         let l:leed=""
         let l:opt_val=eval(a:opt_str)
+    else
+        call te#utils#EchoWarning(a:opt_str." not found","err")
+        return 2
     endif
     if l:opt_val == a:opt_list[0]
         execute "let ".l:leed.a:opt_str."="."\"".a:opt_list[1]."\""
