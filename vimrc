@@ -347,7 +347,7 @@ call TracyoneKeyMap("cnoremap",s:alt_char['h'],"<left>")
 
 call TracyoneKeyMap("nnoremap",s:alt_char["m"],":call MouseToggle()<cr>")   
 " Mouse mode toggle
-nnoremap <leader>tm :call MouseToggle()<cr>
+nnoremap <leader>tm :call te#utils#OptionToggle("mouse",["a",""])<cr>
 " }}}
 
 "home end move
@@ -534,16 +534,6 @@ func! Dosunix()
 endfunc
 
 
-func! MouseToggle()
-    if &mouse == "a"
-        :call te#utils#EchoWarning("Mouse off")
-        set mouse&
-    else
-        :call te#utils#EchoWarning("Mouse on")
-        set mouse=a
-    endif
-endfunc
-
 function! TracyoneGotoDef(open_type)
     let l:cword=expand("<cword>")
     execute a:open_type
@@ -609,14 +599,6 @@ function! TracyonePrev()
     else
         " No tab support, or no tabs open
         execute ":bprev"
-    endif
-endfunction
-
-function! TracyoneBgToggle()
-    if &bg == "dark"
-        set bg=light
-    else
-        set bg=dark
     endif
 endfunction
 
@@ -1576,14 +1558,6 @@ augroup QuickfixStatus
         \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
 augroup END
 
-func! CursorwordToggle()
-    if g:cursorword == 0
-        let g:cursorword=1
-    else
-        let g:cursorword=0
-    endif
-endfunc
-
 autocmd misc_group VimEnter * :let g:cursorword = 0
 
 "remove mapping of * and # in mark.vim
@@ -1592,7 +1566,7 @@ nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 
 
 " realtime underline word toggle
-nnoremap <leader>th :call CursorwordToggle()<cr>
+nnoremap <leader>th :call te#utils#OptionToggle("g:cursorword",[0,1])<cr>
 " YouDao translate
 nnoremap <Leader>ay <esc>:Ydc<cr>
 " YouDao translate (visual mode)
@@ -1821,7 +1795,7 @@ catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme desert "default setting 
 endtry
 
-nnoremap <leader>tb :call TracyoneBgToggle()<cr>
+nnoremap <leader>tb :call te#utils#OptionToggle("bg",["dark","light"])<cr>
 
 "}}}
 "}}}

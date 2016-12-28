@@ -61,3 +61,29 @@ function! te#utils#SaveFiles()
         endtry
     endtry
 endfunction
+
+function! te#utils#OptionToggle(opt_str,opt_list)
+    let l:len=len(a:opt_list)
+    if l:len != 2 
+        call te#utils#EchoWarning("Invalid argument.")
+        return 1
+    endif
+    if exists("&".a:opt_str)
+        let l:leed="&"
+        let l:opt_val=eval("&".a:opt_str)
+    else
+        let l:leed=""
+        let l:opt_val=eval(a:opt_str)
+    endif
+    if l:opt_val == a:opt_list[0]
+        execute "let ".l:leed.a:opt_str."="."\"".a:opt_list[1]."\""
+        call te#utils#EchoWarning("Change ".l:leed.a:opt_str." from ".l:opt_val." to ".a:opt_list[1])
+    elseif l:opt_val == a:opt_list[1]
+        execute "let ".l:leed.a:opt_str."="."\"".a:opt_list[0]."\""
+        call te#utils#EchoWarning("Change ".l:leed.a:opt_str." from ".l:opt_val." to ".a:opt_list[0])
+    else
+        execute "let ".l:leed.a:opt_str."="."\"".a:opt_list[0]."\""
+        call te#utils#EchoWarning("Change ".l:leed.a:opt_str." from ".l:opt_val." to ".a:opt_list[0])
+    endif
+    return 0
+endfunction
