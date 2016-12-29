@@ -50,17 +50,17 @@ function! te#utils#SaveFiles() abort
             :w !sudo tee %
         endif
     catch /^Vim\%((\a\+)\)\=:E32/   "no file name
-        if s:is_gui
+        if has("gui_running") ||  has('gui_macvim')
             exec ':emenu File.Save'
             return 0
         endif
         let l:filename=input('NO FILE NAME!Please input the file name: ')
-        if l:filename == ""
+        if l:filename ==# ''
             call te#utils#EchoWarning('You just give a empty name!')
             return 3
         endif
         try 
-            exec "w ".l:filename
+            exec 'w '.l:filename
         catch /^Vim\%((\a\+)\)\=:E212/
             call te#utils#EchoWarning('sudo write,please input your password!')
             if exists(':SudoWrite')
@@ -96,10 +96,10 @@ function! te#utils#OptionToggle(opt_str,opt_list) abort
         execute 'let '.l:leed.a:opt_str.'='.'"'.a:opt_list[1].'"'
         call te#utils#EchoWarning('Change '.l:leed.a:opt_str.' from '.l:opt_val.' to '.a:opt_list[1])
     elseif l:opt_val == a:opt_list[1]
-        execute "let ".l:leed.a:opt_str."=".'"'.a:opt_list[0].'"'
+        execute 'let '.l:leed.a:opt_str.'='.'"'.a:opt_list[0].'"'
         call te#utils#EchoWarning('Change '.l:leed.a:opt_str.' from '.l:opt_val.' to '.a:opt_list[0])
     else
-        execute "let ".l:leed.a:opt_str."=".'"'.a:opt_list[0].'"'
+        execute 'let '.l:leed.a:opt_str.'='.'"'.a:opt_list[0].'"'
         call te#utils#EchoWarning('Change '.l:leed.a:opt_str.' from '.l:opt_val.' to '.a:opt_list[0])
     endif
     return 0
