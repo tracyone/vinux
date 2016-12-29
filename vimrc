@@ -81,6 +81,10 @@ augroup filetype_group
     au FileType markdown setlocal nospell conceallevel=2 | nnoremap <buffer> <leader>tt :Toc<cr>
     au FileType vim setlocal fdm=marker expandtab tabstop=4 shiftwidth=4 softtabstop=4
     au BufRead,BufNewFile *.hex,*.out,*.o,*.a Vinarise
+    au BufEnter * 
+                \ if &diff |
+                \ set statusline=%<%t%m%r%h%w |
+                \ endif
 augroup END
 
 "}}}
@@ -582,25 +586,6 @@ func! s:YcmGotoDef(open_type)
     endif
     return 0
 endfunc
-
-function! TracyoneNext()
-    if exists( '*tabpagenr' ) && tabpagenr('$') != 1
-        " Tab support && tabs open
-        normal gt
-    else
-        " No tab support, or no tabs open
-        execute ":bnext"
-    endif
-endfunction
-function! TracyonePrev()
-    if exists( '*tabpagenr' ) && tabpagenr('$') != '1'
-        " Tab support && tabs open
-        normal gT
-    else
-        " No tab support, or no tabs open
-        execute ":bprev"
-    endif
-endfunction
 
 " line number toggle
 function! TracyoneNuToggle()
@@ -1580,9 +1565,9 @@ nnoremap <leader>tu :UndotreeToggle<cr>
 "hex to ascii convert
 nnoremap <leader>ah :call Hex2asciiConvert()<cr>
 " next buffer or tab
-nnoremap <Leader>bn :call TracyoneNext()<cr>
+nnoremap <Leader>bn :bnext<cr>
 " previous buffer or tab
-nnoremap <Leader>bp :call TracyonePrev()<cr>
+nnoremap <Leader>bp :bprev<cr>
 " delete buffer
 nnoremap <Leader>bk :bdelete<cr>
 " open current file's position with default file explorer
