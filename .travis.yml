@@ -3,4 +3,4 @@ dist: trusty
 before_install:
     - pip install --user vim-vint
 script:
-    - vint vimrc autoload/te/*.vim
+    - vint vimrc autoload/te/*.vim --enable-neovim
