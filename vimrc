@@ -6,12 +6,12 @@
 "@website    http://onetracy.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "System check{{{
-let s:is_unix  = ( has('mac') + has("unix") )
-let s:is_win   = has("win32") + has("win64")
+let s:is_unix  = ( has('mac') + has('unix') )
+let s:is_win   = has('win32') + has('win64')
 let s:is_nvim  = has('nvim')
-let s:is_gui   = has("gui_running") + has('gui_macvim')
-let s:has_python = has("python")
-let s:has_python3 = has("python3")
+let s:is_gui   = has('gui_running') + has('gui_macvim')
+let s:has_python = has('python')
+let s:has_python3 = has('python3')
 let s:python_ver=s:has_python+s:has_python3
 
 set filetype=text
@@ -19,8 +19,8 @@ if s:is_win
     let $HOME=$VIM
     let $VIMFILES = $VIM.'\\vimfiles'
     set makeprg=mingw32-make
-    let s:cpu_arch = "x86"
-    if s:is_win == 2 | let s:cpu_arch = "x86_64" | endif
+    let s:cpu_arch = 'x86'
+    if s:is_win == 2 | let s:cpu_arch = 'x86_64' | endif
 else
     set keywordprg=""
     set path=.,/usr/include/
@@ -125,8 +125,8 @@ function! MyFoldText()
         endif
     endif
     let n = v:foldend - v:foldstart + 1
-    let info = " " . n . " lines"
-    let sub = sub . "                                                                                                                  "
+    let info = ' ' . n . ' lines'
+    let sub = sub . '                                                                                                                  '
     let num_w = getwinvar( 0, '&number' ) * getwinvar( 0, '&numberwidth' )
     let fold_w = getwinvar( 0, '&foldcolumn' )
     let sub = strpart( sub, 0, winwidth(0) - strlen( info ) - num_w - fold_w - 1 )
@@ -1621,7 +1621,7 @@ nnoremap <leader>tc :call TracyoneCodingStypeToggle()<cr>
 function DrawItToggle()
     let l:ret = te#utils#GetError("DrawIt","already on")
     if l:ret != 0
-        :DrawIt!
+        :DIstop
     else
         call te#utils#EchoWarning("Started DrawIt")
     endif
