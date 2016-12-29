@@ -1,36 +1,20 @@
-language: python
+language: viml
 
-cache:
-  pip: true
+sudo: required
+dist: trusty
 
-env:
-  matrix:
-    - LINT=vimlint-errors
-    - LINT=vimlint
-    - LINT=vint-errors
-    - LINT=vint
+os:
+    - linux
+    - osx
+osx_image: xcode7.3
 
-matrix:
-  allow_failures:
-    - env: LINT=vimlint
-    - env: LINT=vint
+before_script:
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install vim --HEAD; fi
+    - vim --version
+    - git clone https://github.com/syngan/vim-vimlint /tmp/vim-vimlint
+    - git clone https://github.com/ynkdir/vim-vimlparser /tmp/vim-vimlparser
+    - git clone https://github.com/thinca/vim-themis
 
-install:
-  - |
-    if [ "${LINT#vimlint}" != "$LINT" ]; then
-      git clone --depth=1 https://github.com/syngan/vim-vimlint /tmp/vimlint
-      git clone --depth=1 https://github.com/ynkdir/vim-vimlparser /tmp/vimlparser
-    elif [ "${LINT#vint}" != "$LINT" ]; then
-      virtualenv /tmp/vint && source /tmp/vint/bin/activate && pip install vim-vint
-    fi
 script:
-  - |
-    if [ "$LINT" = "vimlint" ]; then
-      sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser .
-    elif [ "$LINT" = "vimlint-errors" ]; then
-      sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser .
-    elif [ "$LINT" = "vint" ]; then
-      vint .
-    elif [ "$LINT" = "vint-errors" ]; then
-      vint --error .
-    fi
+    - sh /tmp/vim-vimlint/bin/vimlint.sh -l /tmp/vim-vimlint -p /tmp/vim-vimlparser -e EVL103=1 -e EVL102.l:_=1 autoload
+    - vim-themis/bin/themis --reporter spec
