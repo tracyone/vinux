@@ -1,9 +1,9 @@
-"@file       vimrc 
-"@brief      config file for neovim,vim,gvim in linux,gvim in win32,macvim
-"@date       2015-11-28/22:56:20
-"@author     tracyone,tracyone@live.cn,
-"@github     https://github.com/tracyone/t-vim
-"@website    http://onetracy.com
+"File       vimrc 
+"Brief      config file for neovim,vim,gvim in linux,gvim in win32,macvim
+"Date       2015-11-28/22:56:20
+"Author     tracyone,tracyone@live.cn,
+"Github     https://github.com/tracyone/t-vim
+"Website    http://onetracy.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "System check{{{
 let s:is_unix  = ( has('mac') + has('unix') )
@@ -43,6 +43,7 @@ endif
 source $VIMRUNTIME/delmenu.vim
 lan mes en_US.UTF-8
 "set langmenu=nl_NL.ISO_8859-1
+:scriptencoding utf-8
 "}}}
 
 "{{{autocmd autogroup
@@ -107,7 +108,7 @@ function! MyFoldText()
         while linenum < v:foldend
             let line = getline( linenum )
             let comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
-            if comment_content != ''
+            if comment_content !=? ''
                 break
             endif
             let linenum = linenum + 1
@@ -116,10 +117,10 @@ function! MyFoldText()
     else
         let sub = line
         let startbrace = substitute( line, '^.*{[ \t]*$', '{', 'g')
-        if startbrace == '{'
+        if startbrace ==? '{'
             let line = getline(v:foldend)
             let endbrace = substitute( line, '^[ \t]*}\(.*\)$', '}', 'g')
-            if endbrace == '}'
+            if endbrace ==? '}'
                 let sub = sub.substitute( line, '^[ \t]*}\(.*\)$', '...}\1', 'g')
             endif
         endif
@@ -159,7 +160,7 @@ set backup "generate a backupfile when open file
 set backupext=.bak  "backup file'a suffix
 set backupdir=$VIMFILES/vimbackup  "backup file's directory
 if !isdirectory(&backupdir)
-    call mkdir(&backupdir, "p")
+    call mkdir(&backupdir, 'p')
 endif
 "}}}
 "do not Ring the bell (beep or screen flash) for error messages
@@ -210,7 +211,7 @@ function! TracyoneHasPlugin(name)
     return !empty(globpath(&rtp, pat))
 endfunction
 
-if TracyoneHasPlugin("tagbar") && TracyoneHasPlugin("vim-fugitive")
+if TracyoneHasPlugin('tagbar') && TracyoneHasPlugin('vim-fugitive')
     set statusline=%<%t%m%r%h%w%{tagbar#currenttag('[%s]','')}
     set statusline+=%=[%{(&fenc!=''?&fenc:&enc)}\|%{&ff}\|%Y][%l,%v][%p%%]%{fugitive#statusline()}
     set statusline+=[%{strftime(\"%m/%d\-\%H:%M\")}]
@@ -248,7 +249,7 @@ endif
 " keycodes:such as <C-d>
 " action: map action.
 function! TracyoneKeyMap(maptype,keycodes,action)
-    execute a:maptype." ".a:keycodes." ".a:action
+    execute a:maptype.' '.a:keycodes.' '.a:action
 endfunction
 
 "map jj to esc..
@@ -256,15 +257,15 @@ endfunction
 if s:is_nvim != 1
     if(!s:is_gui)
         let c='a'
-        while c <= 'z'
-            exec "set <m-".c.">=\e".c
-            exec "inoremap \e".c." <m-".c.">"
+        while c <=# 'z'
+            exec 'set <m-'.c.'>=\e'.c
+            exec 'inoremap \e'.c.' <m-'.c.'>'
             let c = nr2char(1+char2nr(c))
         endw
         let d='1'
-        while d <= '9'
-            exec "set <m-".d.">=\e".d
-            exec "inoremap \e".d." <m-".d.">"
+        while d <=? '9'
+            exec 'set <m-'.d.'>=\e'.d
+            exec 'inoremap \e'.d.' <m-'.d.'>'
             let d = nr2char(1+char2nr(d))
         endw
     endif
@@ -292,66 +293,66 @@ au  filetype_group FileType c,cpp nnoremap <silent> K :call TracyoneFindMannel()
 "{{{ alt or meta key mapping
 " in mac osx please set your option key as meta key
 if s:is_gui == 2 "macvim
-    let s:alt_char={1:"¡",2:"™",3:"£",4:"¢",5:"∞",6:"§",7:"¶",8:"•",9:"ª"
-                \,'t':"†",'q':"œ",'a':"å",'=':"≠",'h':"˙",'l':"¬",'j':"∆",'k':"˚"
-                \,'o':"ø",'-':"–",'b':"∫",'f':"ƒ",'m':"µ",'w':"∑"}
+    let s:alt_char={1:'¡',2:'™',3:'£',4:'¢',5:'∞',6:'§',7:'¶',8:'•',9:'ª'
+                \,'t':'†','q':'œ','a':'å','=':'≠','h':'˙','l':'¬','j':'∆','k':'˚'
+                \,'o':'ø','-':'–','b':'∫','f':'ƒ','m':'µ','w':'∑'}
 elseif s:is_unix && !s:is_nvim && !s:is_gui   "linux and not neovim and not gvim
-    let s:alt_char={1:"±" ,2:"²",3:"³",4:"´",5:"µ",6:"¶",7:"·",8:"¸",9:"¹"
-                \,'t':"ô",'q':"ñ",'a':"á",'=':"½",'h':"è",'l':"ì",'j':"ê",'k':"ë"
-                \,'o':"ï",'-':"­",'b':"â",'f':"æ",'m':"í",'w':"÷"}
+    let s:alt_char={1:'±' ,2:'²',3:'³',4:'´',5:'µ',6:'¶',7:'·',8:'¸',9:'¹'
+                \,'t':'ô','q':'ñ','a':'á','=':'½','h':'è','l':'ì','j':'ê','k':'ë'
+                \,'o':'ï','-':'­','b':'â','f':'æ','m':'í','w':'÷'}
 elseif s:is_gui || s:is_nvim "gvim or neovim
-    let s:alt_char={1:"<m-1>",2:"<m-2>",3:"<m-3>",4:"<m-4>",5:"<m-5>",6:"<m-6>",7:"<m-7>",8:"<m-8>",9:"<m-9>"
-                \,'t':"<m-t>",'q':"<m-q>",'a':"<m-a>",'=':"<m-=>",'h':"<m-h>",'l':"<m-l>",'j':"<m-j>",'k':"<m-k>"
-                \,'o':"<m-o>",'-':"<m-->",'b':"<m-b>",'f':"<m-f>",'m':"<m-m>",'w':"<m-w>"}
+    let s:alt_char={1:'<m-1>',2:'<m-2>',3:'<m-3>',4:'<m-4>',5:'<m-5>',6:'<m-6>',7:'<m-7>',8:'<m-8>',9:'<m-9>'
+                \,'t':'<m-t>','q':'<m-q>','a':'<m-a>','=':'<m-=>','h':'<m-h>','l':'<m-l>','j':'<m-j>','k':'<m-k>'
+                \,'o':'<m-o>','-':'<m-->','b':'<m-b>','f':'<m-f>','m':'<m-m>','w':'<m-w>'}
 endif
 
-call TracyoneKeyMap("noremap",s:alt_char[1],"<esc>1gt")
-call TracyoneKeyMap("noremap",s:alt_char[2],"<esc>2gt")
-call TracyoneKeyMap("noremap",s:alt_char[3],"<esc>3gt")
-call TracyoneKeyMap("noremap",s:alt_char[4],"<esc>4gt")
-call TracyoneKeyMap("noremap",s:alt_char[5],"<esc>5gt")
-call TracyoneKeyMap("noremap",s:alt_char[6],"<esc>6gt")
-call TracyoneKeyMap("noremap",s:alt_char[7],"<esc>7gt")
-call TracyoneKeyMap("noremap",s:alt_char[8],"<esc>8gt")
-call TracyoneKeyMap("noremap",s:alt_char[9],"<esc>9gt")
+call TracyoneKeyMap('noremap',s:alt_char[1],'<esc>1gt')
+call TracyoneKeyMap('noremap',s:alt_char[2],'<esc>2gt')
+call TracyoneKeyMap('noremap',s:alt_char[3],'<esc>3gt')
+call TracyoneKeyMap('noremap',s:alt_char[4],'<esc>4gt')
+call TracyoneKeyMap('noremap',s:alt_char[5],'<esc>5gt')
+call TracyoneKeyMap('noremap',s:alt_char[6],'<esc>6gt')
+call TracyoneKeyMap('noremap',s:alt_char[7],'<esc>7gt')
+call TracyoneKeyMap('noremap',s:alt_char[8],'<esc>8gt')
+call TracyoneKeyMap('noremap',s:alt_char[9],'<esc>9gt')
 "option+t
-call TracyoneKeyMap("nnoremap",s:alt_char['t'],":tabnew<cr>")
-call TracyoneKeyMap("inoremap",s:alt_char['t'],"<esc>:tabnew<cr>")
+call TracyoneKeyMap('nnoremap',s:alt_char['t'],':tabnew<cr>')
+call TracyoneKeyMap('inoremap',s:alt_char['t'],'<esc>:tabnew<cr>')
 "option+q
-call TracyoneKeyMap("noremap",s:alt_char['q'],":nohls<CR>:MarkClear<cr>:redraw!<cr>")
+call TracyoneKeyMap('noremap',s:alt_char['q'],':nohls<CR>:MarkClear<cr>:redraw!<cr>')
 "select all
-call TracyoneKeyMap("noremap",s:alt_char['a'],"gggH<C-O>G")
-call TracyoneKeyMap("inoremap",s:alt_char['a'],"<C-O>gg<C-O>gH<C-O>G")
-call TracyoneKeyMap("cnoremap",s:alt_char['a'],"<C-C>gggH<C-O>G")
-call TracyoneKeyMap("onoremap",s:alt_char['a'],"<C-C>gggH<C-O>G")
-call TracyoneKeyMap("snoremap",s:alt_char['a'],"<C-C>gggH<C-O>G")
-call TracyoneKeyMap("xnoremap",s:alt_char['a'],"<C-C>ggVG")
+call TracyoneKeyMap('noremap',s:alt_char['a'],'gggH<C-O>G')
+call TracyoneKeyMap('inoremap',s:alt_char['a'],'<C-O>gg<C-O>gH<C-O>G')
+call TracyoneKeyMap('cnoremap',s:alt_char['a'],'<C-C>gggH<C-O>G')
+call TracyoneKeyMap('onoremap',s:alt_char['a'],'<C-C>gggH<C-O>G')
+call TracyoneKeyMap('snoremap',s:alt_char['a'],'<C-C>gggH<C-O>G')
+call TracyoneKeyMap('xnoremap',s:alt_char['a'],'<C-C>ggVG')
 "Alignment
-call TracyoneKeyMap("nnoremap",s:alt_char['=']," <esc>ggVG=``")
+call TracyoneKeyMap('nnoremap',s:alt_char['='],' <esc>ggVG=``')
 "move
-call TracyoneKeyMap("inoremap",s:alt_char['h'],"<Left>")
-call TracyoneKeyMap("inoremap",s:alt_char['l'],"<Right>")
-call TracyoneKeyMap("inoremap",s:alt_char['j'],"<Down>")
-call TracyoneKeyMap("inoremap",s:alt_char['k'],"<Up>")
-call TracyoneKeyMap("inoremap",s:alt_char["b"],"<S-left>")
-call TracyoneKeyMap("inoremap",s:alt_char["f"],"<S-right>")
+call TracyoneKeyMap('inoremap',s:alt_char['h'],'<Left>')
+call TracyoneKeyMap('inoremap',s:alt_char['l'],'<Right>')
+call TracyoneKeyMap('inoremap',s:alt_char['j'],'<Down>')
+call TracyoneKeyMap('inoremap',s:alt_char['k'],'<Up>')
+call TracyoneKeyMap('inoremap',s:alt_char['b'],'<S-left>')
+call TracyoneKeyMap('inoremap',s:alt_char['f'],'<S-right>')
 
 "move between windows
-call TracyoneKeyMap("nnoremap",s:alt_char['h'],"  <C-w>h")
-call TracyoneKeyMap("nnoremap",s:alt_char['l'],"<C-w>l")
-call TracyoneKeyMap("nnoremap",s:alt_char['j'],"<C-w>j")
-call TracyoneKeyMap("nnoremap",s:alt_char['k'],"<C-w>k")
+call TracyoneKeyMap('nnoremap',s:alt_char['h'],'  <C-w>h')
+call TracyoneKeyMap('nnoremap',s:alt_char['l'],'<C-w>l')
+call TracyoneKeyMap('nnoremap',s:alt_char['j'],'<C-w>j')
+call TracyoneKeyMap('nnoremap',s:alt_char['k'],'<C-w>k')
 
-call TracyoneKeyMap("cnoremap",s:alt_char['l'],"<right>")
-call TracyoneKeyMap("cnoremap",s:alt_char['j'],"<down>")
-call TracyoneKeyMap("cnoremap",s:alt_char['k'],"<up>")
-call TracyoneKeyMap("cnoremap",s:alt_char["b"],"<S-left>")
-call TracyoneKeyMap("cnoremap",s:alt_char["f"],"<S-right>")
-call TracyoneKeyMap("cnoremap",s:alt_char['h'],"<left>")
+call TracyoneKeyMap('cnoremap',s:alt_char['l'],'<right>')
+call TracyoneKeyMap('cnoremap',s:alt_char['j'],'<down>')
+call TracyoneKeyMap('cnoremap',s:alt_char['k'],'<up>')
+call TracyoneKeyMap('cnoremap',s:alt_char['b'],'<S-left>')
+call TracyoneKeyMap('cnoremap',s:alt_char['f'],'<S-right>')
+call TracyoneKeyMap('cnoremap',s:alt_char['h'],'<left>')
 
-call TracyoneKeyMap("nnoremap",s:alt_char["m"],":call MouseToggle()<cr>")   
+call TracyoneKeyMap('nnoremap',s:alt_char['m'],':call MouseToggle()<cr>')   
 " Mouse mode toggle
-nnoremap <leader>tm :call te#utils#OptionToggle("mouse",["a",""])<cr>
+nnoremap <leader>tm :call te#utils#OptionToggle('mouse',['a',''])<cr>
 " }}}
 
 "home end move
@@ -435,16 +436,16 @@ nnoremap <Leader>tn :call TracyoneNuToggle()<cr>
 "}}}
 "Function{{{
 function! TracyoneFindMannel()
-    let l:cur_word=expand("<cword>")
-    let l:ret = te#utils#GetError("Snman 3 ".l:cur_word,"no manual.*")
+    let l:cur_word=expand('<cword>')
+    let l:ret = te#utils#GetError('Snman 3 '.l:cur_word,'no manual.*')
     "make sure index valid
     if l:ret != 0
-        let l:ret = te#utils#GetError("Snman 2 ".l:cur_word,"no manual.*")
+        let l:ret = te#utils#GetError('Snman 2 '.l:cur_word,'no manual.*')
         if l:ret != 0
-            execute "silent! help ".l:cur_word
+            execute 'silent! help '.l:cur_word
         endif
     else
-        execute "Snman 2 ".l:cur_word
+        execute 'Snman 2 '.l:cur_word
     endif
 endfunction
 
@@ -455,24 +456,24 @@ function! TracyoneCodingStypeToggle()
         set softtabstop=8 
         set noexpandtab
         set nosmarttab
-        call te#utils#EchoWarning("change to linux kernel coding style ...")
+        call te#utils#EchoWarning('change to linux kernel coding style ...')
     else
         set tabstop=4  
         set shiftwidth=4 
         set softtabstop=4 
         set expandtab
         set smarttab
-        call te#utils#EchoWarning("Use space instead of tab ...")
+        call te#utils#EchoWarning('Use space instead of tab ...')
     endif
 endfunction
 
 
 function! Do_Make()
-    :call te#utils#EchoWarning("making ...")
+    :call te#utils#EchoWarning('making ...')
     :wa
-    if empty(glob("makefile")) && empty(glob("Makefile"))
-        exec ":AsyncRun -post=!". "./\"%<\" gcc \"%\" -o \"%<\" "
-        exec ""
+    if empty(glob('makefile')) && empty(glob('Makefile'))
+        exec ':AsyncRun -post=!'. './"%<" gcc "%" -o "%<" '
+        exec ''
     else
         :AsyncRun -post=cw make -s
     endif
@@ -496,25 +497,25 @@ function! s:Get_pattern_at_cursor(pat)
     if ebeg >= 0
         return strpart(line, ebeg, elen)
     else
-        return ""
+        return ''
     endif
 endfunction
 
 function! GotoCurFile()
-    execute "lcd %:h"
+    execute 'lcd %:h'
     execute ':call te#utils#EchoWarning("cd to ".getcwd())'
 endfunction
 function! Open_url()
     let s:url = s:Get_pattern_at_cursor('\v(https?://|ftp://|file:/{3}|www\.)(\w|[.-])+(:\d+)?(/(\w|[~@#$%^&+=/.?:-])+)?')
-    if s:url == ""
+    if s:url ==? ''
         echohl WarningMsg
         echomsg 'It is not a URL on current cursor！'
         echohl None
     else
         echo 'Open URL：' . s:url
-        if has("win32") || has("win64")
-            call system("cmd /C start " . s:url)
-        elseif has("mac")
+        if has('win32') || has('win64')
+            call system('cmd /C start ' . s:url)
+        elseif has('mac')
             call system("open '" . s:url . "'")
         else
             call system("xdg-open '" . s:url . "' &")
@@ -524,30 +525,30 @@ function! Open_url()
 endfunction
 
 function! s:CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
+    exe 'menu Foo.Bar :' . a:str
     emenu Foo.Bar
     unmenu Foo
 endfunction
 
 func! Dosunix()
-    if &ff == 'unix'
-        exec "se ff=dos"
+    if &ff ==# 'unix'
+        exec 'se ff=dos'
     else
-        exec "se ff=unix"
+        exec 'se ff=unix'
     endif
 endfunc
 
 
 function! TracyoneGotoDef(open_type)
-    let l:cword=expand("<cword>")
+    let l:cword=expand('<cword>')
     execute a:open_type
     let l:ycm_ret=s:YcmGotoDef(a:open_type)
     if l:ycm_ret < 0
         try
-            execute "cs find g ".l:cword
+            execute 'cs find g '.l:cword
         catch /^Vim\%((\a\+)\)\=:E/	
-            call te#utils#EchoWarning("cscope query failed")
-            if a:open_type != "" | wincmd q | endif
+            call te#utils#EchoWarning('cscope query failed')
+            if a:open_type !=? '' | wincmd q | endif
             return -1
         endtry
     else
@@ -557,27 +558,27 @@ function! TracyoneGotoDef(open_type)
 endfunction
 
 func! s:YcmGotoDef(open_type)
-    let l:cur_word=expand("<cword>")."\s*\(.*[^;]$"
+    let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
     if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
         if g:is_load_ycm != 1
-            call te#utils#EchoWarning("Loading ycm ...")
+            call te#utils#EchoWarning('Loading ycm ...')
             call plug#load('ultisnips','YouCompleteMe')
-            call delete(".ycm_extra_conf.pyc")  
+            call delete('.ycm_extra_conf.pyc')  
             call youcompleteme#Enable() 
             let g:is_load_ycm = 1
             autocmd! lazy_load_group 
             sleep 1
-            call te#utils#EchoWarning("ycm has been loaded!")
+            call te#utils#EchoWarning('ycm has been loaded!')
         endif
     endif
-    let l:ret = te#utils#GetError(":YcmCompleter GoToDefinition","Runtime.*")
+    let l:ret = te#utils#GetError(':YcmCompleter GoToDefinition','Runtime.*')
     if l:ret == -1
-        let l:ret = te#utils#GetError(":YcmCompleter GoToDeclaration","Runtime.*")
+        let l:ret = te#utils#GetError(':YcmCompleter GoToDeclaration','Runtime.*')
         if l:ret == 0
-            execute ":silent! A"
+            execute ':silent! A'
             " search failed then go back
             if search(l:cur_word) == 0
-                execute ":silent! A"
+                execute ':silent! A'
                 return -2
             endif
         else
