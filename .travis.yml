@@ -1,8 +1,6 @@
 sudo: required
 dist: trusty
 before_install:
-    - gem install mdl
     - pip install --user vim-vint
 script:
-    - mdl -c ./.mdlrc *.md
-    - vint vimrc.sample autoload/*.vim plugin/*.vim
+    - vint vimrc autoload/te/*.vim
