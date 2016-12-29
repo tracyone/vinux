@@ -1,3 +1,7 @@
+# t-vim 
+
+[![Build Status](https://travis-ci.org/tracyone/t-vim.svg?branch=master)](https://travis-ci.org/tracyone/t-vim)
+
 ![screenshot](https://cloud.githubusercontent.com/assets/4246425/19315778/a08cc216-90d1-11e6-92e5-8083851b3841.png)
 
 
