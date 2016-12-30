@@ -561,7 +561,7 @@ endfunction
 func! s:YcmGotoDef(open_type)
     let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
     if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
-        if g:is_load_ycm != 1
+        if  exists('*youcompleteme#Enable') == 0
             call te#utils#EchoWarning('Loading ycm ...')
             call plug#load('ultisnips','YouCompleteMe')
             call delete('.ycm_extra_conf.pyc')  
@@ -941,7 +941,7 @@ if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
         autocmd!
         autocmd InsertEnter * call plug#load('ultisnips',s:complete_plugin_name)
                     \| call delete('.ycm_extra_conf.pyc')  | call youcompleteme#Enable() 
-                    \| let g:is_load_ycm = 1 |  autocmd! lazy_load_group
+                    \| autocmd! lazy_load_group
     augroup END
 else
     augroup lazy_load_group
