@@ -205,22 +205,17 @@ set clipboard+=unnamed
 "set autochdir  "change to directory of file in buffer
 
 "statuslne
-" check for the existance of specified plugin
-function! TracyoneHasPlugin(name)
-    let l:pat='bundle/'.a:name
-    return !empty(globpath(&rtp, pat))
+function! GetRunStatus()
+    if exists('g:asyncrun_status') && g:asyncrun_status !=# ''
+       return  '['.g:asyncrun_status.']'
+   else
+       return ''
+    endif
 endfunction
-
-if TracyoneHasPlugin('tagbar') && TracyoneHasPlugin('vim-fugitive')
-    set statusline=%<%t%m%r%h%w%{tagbar#currenttag('[%s]','')}
-    set statusline+=%=[%{(&fenc!=''?&fenc:&enc)}\|%{&ff}\|%Y][%l,%v][%p%%]%{fugitive#statusline()}
-    set statusline+=[%{strftime(\"%m/%d\-\%H:%M\")}]
-else
-    set statusline=%<%t%m%r%h%w
-    set statusline+=%=[%{(&fenc!=''?&fenc:&enc)}\|%{&ff}\|%Y][%l,%v][%p%%]
-    set statusline+=[%{strftime(\"%m/%d\-\%H:%M\")}]
-endif
-set statusline+=[%{exists('g:asyncrun_status')?\ g:asyncrun_status\ :\ ''}]
+set statusline=%<%t%m%r%h%w%{exists('*tagbar#currenttag')?\ tagbar#currenttag('[%s]','')\ :\ ''}
+set statusline+=%=[%{(&fenc!=''?&fenc:&enc)}\|%{&ff}\|%Y][%l,%v][%p%%]%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}
+set statusline+=[%{strftime(\"%m/%d\-\%H:%M\")}]
+set statusline+=%{GetRunStatus()}
 set guitablabel=%N\ %t  "do not show dir in tab
 "0, 1 or 2; when to use a status line for the last window
 set laststatus=2 "always show status
