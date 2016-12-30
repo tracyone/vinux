@@ -258,14 +258,14 @@ if s:is_nvim != 1
     if(!s:is_gui)
         let c='a'
         while c <=# 'z'
-            exec 'set <m-'.c.'>=\e'.c
-            exec 'inoremap \e'.c.' <m-'.c.'>'
+            exec 'set <m-'.c.">=\e".c
+            exec "inoremap \e".c.' <m-'.c.'>'
             let c = nr2char(1+char2nr(c))
         endw
         let d='1'
         while d <=? '9'
-            exec 'set <m-'.d.'>=\e'.d
-            exec 'inoremap \e'.d.' <m-'.d.'>'
+            exec 'set <m-'.d.">=\e".d
+            exec "inoremap \e".d.' <m-'.d.'>'
             let d = nr2char(1+char2nr(d))
         endw
     endif
@@ -292,6 +292,7 @@ au  filetype_group FileType c,cpp nnoremap <silent> K :call TracyoneFindMannel()
 
 "{{{ alt or meta key mapping
 " in mac osx please set your option key as meta key
+
 if s:is_gui == 2 "macvim
     let s:alt_char={1:'¡',2:'™',3:'£',4:'¢',5:'∞',6:'§',7:'¶',8:'•',9:'ª'
                 \,'t':'†','q':'œ','a':'å','=':'≠','h':'˙','l':'¬','j':'∆','k':'˚'
@@ -602,26 +603,26 @@ endfunction
 "}}}
 "Plugin setting{{{
 " Vim-plug ------------------------{{{
-let &rtp=&rtp.",".$VIMFILES
+let &rtp=&rtp.','.$VIMFILES
 if empty(glob($VIMFILES.'/autoload/plug.vim'))
     if s:is_win
-        silent! exec ":!mkdir -p ".$VIMFILES."\\autoload"
-        silent! exec ":!curl -fLo " . $VIMFILES."\\autoload"."\\plug.vim " .
-                    \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+        silent! exec ':!mkdir -p '.$VIMFILES.'\\autoload'
+        silent! exec ':!curl -fLo ' . $VIMFILES.'\\autoload'.'\\plug.vim ' .
+                    \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     else
-        silent! exec ":!mkdir -p ".$VIMFILES."/autoload"
-        exec ":!curl -fLo " . $VIMFILES."/autoload"."/plug.vim " .
-                    \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+        silent! exec ':!mkdir -p '.$VIMFILES.'/autoload'
+        exec ':!curl -fLo ' . $VIMFILES.'/autoload'.'/plug.vim ' .
+                    \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     endif
-    autocmd VimEnter * PlugInstall
+    autocmd misc_group VimEnter * PlugInstall
 endif
-call plug#begin($VIMFILES."/bundle")
+call plug#begin($VIMFILES.'/bundle')
 Plug 'tracyone/a.vim'
 
-if empty($VIMFILES."/.complete_plugin")
+if empty($VIMFILES.'/.complete_plugin')
     let s:complete_plugin = 1
 else
-    let s:complete_plugin=readfile($VIMFILES."/.complete_plugin")[0]
+    let s:complete_plugin=readfile($VIMFILES.'/.complete_plugin')[0]
 endif
 
 if s:complete_plugin == 5 && s:is_nvim == 0
@@ -631,7 +632,7 @@ endif
 if s:complete_plugin == 1
     Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
     Plug 'Valloric/YouCompleteMe', { 'on': [] }
-    let s:complete_plugin_name="YouCompleteMe"
+    let s:complete_plugin_name='YouCompleteMe'
 elseif s:complete_plugin == 2
     Plug 'Rip-Rip/clang_complete'
 elseif s:complete_plugin == 3
@@ -647,12 +648,12 @@ elseif s:complete_plugin == 5
     Plug 'zchee/deoplete-clang'
 elseif s:complete_plugin == 6
     Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
-    let s:complete_plugin_name="YouCompleteMe-x86"
+    let s:complete_plugin_name='YouCompleteMe-x86'
 elseif s:complete_plugin == 7
     Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
-    let s:complete_plugin_name="YouCompleteMe-x64"
+    let s:complete_plugin_name='YouCompleteMe-x64'
 else
-    call te#utils#EchoWarning("No complete plugin selected!")
+    call te#utils#EchoWarning('No complete plugin selected!')
 endif
 
 Plug 'tracyone/hex2ascii.vim', { 'do': 'make' }
@@ -692,7 +693,7 @@ Plug 'arecarn/selection.vim' | Plug 'arecarn/crunch.vim'
 Plug 'mhinz/vim-startify'
 Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': ['Ydc','Ydv']}
-if s:python_ver | Plug 'iamcco/markdown-preview.vim' | endif
+Plug 'iamcco/markdown-preview.vim'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'plasticboy/vim-markdown'
 if(!s:is_win)
@@ -774,28 +775,28 @@ let g:tagbar_systemenc='cp936'
 
 " Cscope --------------------------{{{
 function! TracyoneAddCscopeOut()
-    if empty(glob(".project"))
-        exec "silent! cs add cscope.out"
+    if empty(glob('.project'))
+        exec 'silent! cs add cscope.out'
     else
-        for s:line in readfile(".project", '')
-            exec "silent! cs add ".s:line."/cscope.out"
+        for s:line in readfile('.project', '')
+            exec 'silent! cs add '.s:line.'/cscope.out'
         endfor
     endif
 endfunction
 :call TracyoneAddCscopeOut()
-if $CSCOPE_DB != "" "tpyically it is a include db 
-    exec "silent! cs add $CSCOPE_DB"
+if $CSCOPE_DB !=? '' "tpyically it is a include db 
+    exec 'silent! cs add $CSCOPE_DB'
 endif
-if $CSCOPE_DB1 != ""
-    exec "silent! cs add $CSCOPE_DB1"
+if $CSCOPE_DB1 !=? ''
+    exec 'silent! cs add $CSCOPE_DB1'
 endif
-if $CSCOPE_DB2 != ""
-    exec "silent! cs add $CSCOPE_DB2"
+if $CSCOPE_DB2 !=? ''
+    exec 'silent! cs add $CSCOPE_DB2'
 endif
-if $CSCOPE_DB3 != ""
-    exec "silent! cs add $CSCOPE_DB3"
+if $CSCOPE_DB3 !=? ''
+    exec 'silent! cs add $CSCOPE_DB3'
 endif
-if has("cscope")
+if has('cscope')
     " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
     set cscopetag
     set csprg=cscope
@@ -833,11 +834,11 @@ nnoremap ,a :call TracyoneAddCscopeOut()<cr>
 nnoremap ,k :cs kill cscope.out<cr> 
 
 function! TracyoneGenCsTag()
-    if empty(glob(".project"))
+    if empty(glob('.project'))
         :call Do_CsTag(getcwd())
     else
-        for l:line in readfile(".project", '')
-            let l:ans=input("Generate cscope database in ".l:line." [y/n/a]?","y")
+        for l:line in readfile('.project', '')
+            let l:ans=input('Generate cscope database in '.l:line.' [y/n/a]?','y')
             if l:ans =~# '\v^[yY]$'
                 call Do_CsTag(l:line)
             endif
@@ -846,64 +847,64 @@ function! TracyoneGenCsTag()
 endfunction
 
 function! GenCCTreeDataBase()
-    if filereadable("cctree.out")
+    if filereadable('cctree.out')
         :CCTreeLoadXRefDB cctree.out
     else
-        if filereadable("cscope.out")
-            exec ":AsyncRun -post=CCTreeLoadXRefDB\\ cctree.out vim +\"CCTreeLoadDB cscope.out\" +\"CCTreeSaveXRefDB cctree.out\" +qa"
+        if filereadable('cscope.out')
+            exec ':AsyncRun -post=CCTreeLoadXRefDB\ cctree.out vim +"CCTreeLoadDB cscope.out" +"CCTreeSaveXRefDB cctree.out" +qa'
         else
-            :call te#utils#EchoWarning("No cscope.out!Please generate cscope first.")
+            :call te#utils#EchoWarning('No cscope.out!Please generate cscope first.')
         endif
     endif
 endfunction
 
 function! GenerateCscope4Kernel()
     :silent! cs kill cscope.out
-    :silent! call delete("cctree.out")
-    silent! execute "AsyncRun -post=cs\\ add\\ cscope.out ". "make O=.
-                \ SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags"
-    :call te#utils#EchoWarning("Generating cscope database file for linux kernel ...")
+    :silent! call delete('cctree.out')
+    silent! execute 'AsyncRun -post=cs\ add\ cscope.out '. 'make O=.
+                \ SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags'
+    :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
 endfunction
 
 function! Do_CsTag(dir)
     if(s:is_win)
-        let l:tagfile=a:dir."\\"."tags"
-        let l:cscopefiles=a:dir."\\"."cscope.files"
-        let l:cscopeout=a:dir."\\"."cscope.out"
-        let l:cctreeout=a:dir."\\"."cctree.out"
+        let l:tagfile=a:dir.'\\'.'tags'
+        let l:cscopefiles=a:dir.'\\'.'cscope.files'
+        let l:cscopeout=a:dir.'\\'.'cscope.out'
+        let l:cctreeout=a:dir.'\\'.'cctree.out'
     else
-        let l:tagfile=a:dir."/tags"
-        let l:cscopefiles=a:dir."/cscope.files"
-        let l:cscopeout=a:dir."/cscope.out"
-        let l:cctreeout=a:dir."/cctree.out"
+        let l:tagfile=a:dir.'/tags'
+        let l:cscopefiles=a:dir.'/cscope.files'
+        let l:cscopeout=a:dir.'/cscope.out'
+        let l:cctreeout=a:dir.'/cctree.out'
     endif
     :silent! call delete(l:cctreeout)
-    if filereadable("tags")
+    if filereadable('tags')
         let tagsdeleted=delete(l:tagfile)
         if(tagsdeleted!=0)
-            :call te#utils#EchoWarning("Fail to do tags! I cannot delete the tags")
+            :call te#utils#EchoWarning('Fail to do tags! I cannot delete the tags')
             return
         endif
     endif
-    if filereadable(a:dir."/cscope.files")
+    if filereadable(a:dir.'/cscope.files')
         let csfilesdeleted=delete(l:cscopefiles)
         if(csfilesdeleted!=0)
-            :call te#utils#EchoWarning("Fail to do cscope! I cannot delete the cscope.files")
+            :call te#utils#EchoWarning('Fail to do cscope! I cannot delete the cscope.files')
             return
         endif
     endif
-    if filereadable(a:dir."/cscope.out")
+    if filereadable(a:dir.'/cscope.out')
         let csoutdeleted=delete(l:cscopeout)
         if(csoutdeleted!=0)
-            :call te#utils#EchoWarning("I cannot delete the cscope.out,try again")
-            echo "kill the cscope connection"
-            if has("cscope") && filereadable(l:cscopeout)
-                silent! execute "cs kill ".l:cscopeout
+            :call te#utils#EchoWarning('I cannot delete the cscope.out,try again')
+            echo 'kill the cscope connection'
+            if has('cscope') && filereadable(l:cscopeout)
+                silent! execute 'cs kill '.l:cscopeout
             endif
             let csoutdeleted=delete(l:cscopeout)
         endif
         if(csoutdeleted!=0)
-            :call te#utils#EchoWarning("I still cannot delete the cscope.out,failed to do cscope")
+            :call te#utils#EchoWarning('I still cannot delete the cscope.out,failed to do cscope')
             return
         endif
     endif
@@ -911,23 +912,23 @@ function! Do_CsTag(dir)
         "silent! execute "!ctags -R --c-types=+p --fields=+S *"
         "silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
     "endif
-    if(executable('cscope') && has("cscope") )
+    if(executable('cscope') && has('cscope') )
         if(!s:is_win)
-            silent! execute "!find " .a:dir. " -name \"*.[chsS]\" > "  . a:dir."/cscope.files"
+            silent! execute '!find ' .a:dir. ' -name "*.[chsS]" > '  . a:dir.'/cscope.files'
         else
-            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > ".a:dir."\cscope.files"
+            silent! execute '!dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.a:dir.'\cscope.files'
         endif
         if filereadable(l:cscopeout)
-            silent! execute "cs kill ".l:cscopeout
+            silent! execute 'cs kill '.l:cscopeout
         else
-            :call te#utils#EchoWarning("No cscope.out")
+            :call te#utils#EchoWarning('No cscope.out')
         endif
-        exec "cd ".a:dir
-        silent! execute "AsyncRun -post=cs\\ add\\ ".l:cscopeout. " cscope -Rbkq -i ".l:cscopefiles
+        exec 'cd '.a:dir
+        silent! execute 'AsyncRun -post=cs\ add\ '.l:cscopeout. ' cscope -Rbkq -i '.l:cscopefiles
         cd -
-        execute "normal :"
+        execute 'normal :'
     endif
-    execute "redraw!"
+    execute 'redraw!'
 endfunction
     "}}}
 
@@ -939,7 +940,7 @@ if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
     augroup lazy_load_group
         autocmd!
         autocmd InsertEnter * call plug#load('ultisnips',s:complete_plugin_name)
-                    \| call delete(".ycm_extra_conf.pyc")  | call youcompleteme#Enable() 
+                    \| call delete('.ycm_extra_conf.pyc')  | call youcompleteme#Enable() 
                     \| let g:is_load_ycm = 1 |  autocmd! lazy_load_group
     augroup END
 else
@@ -958,14 +959,14 @@ if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
     function! GenYCM()
         let l:cur_dir=getcwd()
         cd $VIMFILES/bundle/YCM-Generator
-        :silent execute  ":!./config_gen.py ".l:cur_dir
+        :silent execute  ':!./config_gen.py '.l:cur_dir
         if v:shell_error == 0
-            echom "Generate successfully!"
+            echom 'Generate successfully!'
             :YcmRestartServer
         else
-            echom "Generate failed!"
+            echom 'Generate failed!'
         endif
-        exec ":cd ". l:cur_dir
+        exec ':cd '. l:cur_dir
     endfunction
     " jume to definition (YCM)
     nnoremap <leader>jl :YcmCompleter GoToDeclaration<CR>
@@ -993,7 +994,7 @@ if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
                 \ 'infolog' : 1,
                 \ 'mail' : 1
                 \}
-    let g:ycm_global_ycm_extra_conf = $VIMFILES . "/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+    let g:ycm_global_ycm_extra_conf = $VIMFILES . '/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 elseif s:complete_plugin == 4
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
@@ -1068,7 +1069,7 @@ elseif s:complete_plugin == 4
            \ neocomplete#start_manual_complete()
      function! s:check_back_space() 
        let col = col('.') - 1
-       return !col || getline('.')[col - 1]  =~ '\s'
+       return !col || getline('.')[col - 1]  =~# '\s'
      endfunction
  elseif s:complete_plugin == 2 
      " clang_complete
@@ -1146,7 +1147,7 @@ nnoremap <leader>iav :AT<cr>
 "}}}
 
 " DelimitMate ---------------------{{{
-au FileType filetype_group verilog,c let b:delimitMate_matchpairs = "(:),[:],{:}"
+au filetype_group FileType  verilog,c let b:delimitMate_matchpairs = "(:),[:],{:}"
 let delimitMate_nesting_quotes = ['"','`']
 let delimitMate_expand_cr = 0
 let delimitMate_expand_space = 0
@@ -1163,7 +1164,7 @@ else
     nnoremap <Leader>yy :CtrlPRegister<cr>
 endif
 let yankring_history_dir = $VIMFILES
-let g:yankring_history_file = ".yank_history"
+let g:yankring_history_file = '.yank_history'
 let g:yankring_default_menu_mode = 0
 let g:yankring_replace_n_pkey = '<m-p>'
 let g:yankring_replace_n_nkey = '<m-n>'
@@ -1180,7 +1181,7 @@ let g:CCTreeKeyDepthPlus = '<C-\>='
 let g:CCTreeKeyDepthMinus = '<C-\>-'
 let CCTreeJoinProgCmd = 'PROG_JOIN JOIN_OPT IN_FILES > OUT_FILE'
 let  g:CCTreeJoinProg = 'cat' 
-let  g:CCTreeJoinProgOpts = ""
+let  g:CCTreeJoinProgOpts = ''
 "let g:CCTreeUseUTF8Symbols = 1
 "map <F7> :CCTreeLoadXRefDBFromDisk $CCTREE_DB<cr> 
 "}}}
@@ -1256,26 +1257,26 @@ if  s:has_python == 1
 else
     let g:UltiSnipsUsePythonVersion = 3 
 endif
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsListSnippets ="<c-tab>"
-let g:UltiSnipsJumpForwardTrigge="<c-j>"
-let g:UltiSnipsJumpBackwardTrigge="<c-k>"
-let g:UltiSnipsSnippetDirectories=["bundle/snippets"]
-let g:UltiSnipsSnippetsDir=$VIMFILES."/bundle/snippets"
+let g:UltiSnipsExpandTrigger='<c-j>'
+let g:UltiSnipsListSnippets ='<c-tab>'
+let g:UltiSnipsJumpForwardTrigge='<c-j>'
+let g:UltiSnipsJumpBackwardTrigge='<c-k>'
+let g:UltiSnipsSnippetDirectories=['bundle/snippets']
+let g:UltiSnipsSnippetsDir=$VIMFILES.'/bundle/snippets'
 "}}}
 
 " FencView ------------------------{{{
 let g:fencview_autodetect=0 
 let g:fencview_auto_patterns='*.txt,*.htm{l\=},*.c,*.cpp,*.s,*.vim'
 function! FencToggle()
-    if &fenc == "utf-8"
+    if &fenc ==# 'utf-8'
         FencManualEncoding cp936
-        call te#utils#EchoWarning("Chang encode to cp936")
-    elseif &fenc == "cp936"
+        call te#utils#EchoWarning('Chang encode to cp936')
+    elseif &fenc ==# 'cp936'
         FencManualEncoding utf-8
-        call te#utils#EchoWarning("Chang encode to utf-8")
+        call te#utils#EchoWarning('Chang encode to utf-8')
     else
-        call te#utils#EchoWarning("Current file encoding is ".&fenc)
+        call te#utils#EchoWarning('Current file encoding is '.&fenc)
     endif
 endfunction
 " Convert file's encode
@@ -1293,13 +1294,13 @@ if(s:is_nvim== 0)
     let g:vimshell_user_prompt = '":: " . "(" . fnamemodify(getcwd(), ":~") . ")"'
     "let g:vimshell_right_prompt = 'vcs#info("(%s)-[%b]", "(%s)-[%b|%a]")'
     let g:vimshell_enable_smart_case = 1
-    let g:vimshell_editor_command="gvim"
+    let g:vimshell_editor_command='gvim'
     if s:is_win
         " Display user name on Windows.
-        let g:vimshell_prompt = $USERNAME."% "
+        let g:vimshell_prompt = $USERNAME.'% '
     else
         " Display user name on Linux.
-        let g:vimshell_prompt = $USER."% "
+        let g:vimshell_prompt = $USER.'% '
     endif
     "let g:vimshell_popup_command='rightbelow 10split'
     " Initialize execute file list.
@@ -1341,8 +1342,8 @@ endif
 function! TracyoneVimShellPop()
     let l:line=(38*&lines)/100
     if  l:line < 10 | let l:line = 10 |endif
-    execute "rightbelow ".l:line."split"
-    if s:is_nvim | execute "terminal" | else | execute "VimShell" | endif
+    execute 'rightbelow '.l:line.'split'
+    if s:is_nvim | execute 'terminal' | else | execute 'VimShell' | endif
 endfunction
 noremap <F4> :call TracyoneVimShellPop()<cr>
 " Open vimshell or neovim's emulator
@@ -1395,11 +1396,11 @@ let g:neocomplete#force_omni_input_patterns.cpp =
 
 " GlobalSearch --------------------{{{
 if executable('ag')
-    let g:ag_prg="ag"." --vimgrep --ignore 'cscope.*'"
+    let g:ag_prg='ag'." --vimgrep --ignore 'cscope.*'"
     let g:ag_highlight=1
     let s:ag_ignored_directories = [ '.git', 'bin', 'log', 'build', 'node_modules', '.bundle', '.tmp','.svn' ]
     for dir in s:ag_ignored_directories
-        let g:ag_prg .= " --ignore-dir=" . dir
+        let g:ag_prg .= ' --ignore-dir=' . dir
     endfor
 "ag search for the word on current curosr
 nnoremap <leader>vv :exec ":AsyncRun -post=cw ag '\\b" . expand("<cword>") . "\\b'" . " ."<cr>
@@ -1419,11 +1420,11 @@ autocmd misc_group FileType gitcommit,qfreplace setlocal nofoldenable
 
 " Markdown ------------------------{{{
 if  s:is_unix == 2
-    let g:mkdp_path_to_chrome = "open -a safari"
+    let g:mkdp_path_to_chrome = 'open -a safari'
 elseif s:is_win
-    let g:mkdp_path_to_chrome = "C:\\Program\ Files\ (x86)\\Google\\Chrome\\Application\\chrome.exe"
+    let g:mkdp_path_to_chrome = 'C:\\Program\ Files\ (x86)\\Google\\Chrome\\Application\\chrome.exe'
 else
-    let g:mkdp_path_to_chrome = "google-chrome"
+    let g:mkdp_path_to_chrome = 'google-chrome'
 endif
 let g:vim_markdown_toc_autofit = 1
 " Markdown preview in browser
@@ -1486,11 +1487,11 @@ let g:EasyMotion_verbose = 0
 " Tmux-navigator ------------------{{{
 if !s:is_win
     let g:tmux_navigator_no_mappings = 1
-    exec "nnoremap <silent> ".s:alt_char['h'] ." :TmuxNavigateLeft<cr>"
-    exec "nnoremap <silent> ".s:alt_char['l']." :TmuxNavigateRight<cr>"
-    exec "nnoremap <silent>".s:alt_char['j']." :TmuxNavigateDown<cr>"
-    exec "nnoremap <silent> ".s:alt_char['k']. " :TmuxNavigateUp<cr>"
-    exec "nnoremap <silent> ".s:alt_char['w']. " :TmuxNavigatePrevious<cr>"
+    exec 'nnoremap <silent> '.s:alt_char['h'] .' :TmuxNavigateLeft<cr>'
+    exec 'nnoremap <silent> '.s:alt_char['l'].' :TmuxNavigateRight<cr>'
+    exec 'nnoremap <silent>'.s:alt_char['j'].' :TmuxNavigateDown<cr>'
+    exec 'nnoremap <silent> '.s:alt_char['k']. ' :TmuxNavigateUp<cr>'
+    exec 'nnoremap <silent> '.s:alt_char['w']. ' :TmuxNavigatePrevious<cr>'
 endif
 " }}}
 
@@ -1508,8 +1509,8 @@ let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String']
 
 " Quickrun ------------------------{{{
 let g:quickrun_config = {
-            \   "_" : {
-            \       "outputter" : "message",
+            \   '_' : {
+            \       'outputter' : 'message',
             \   },
             \}
 
@@ -1536,9 +1537,9 @@ map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
 let g:fml_all_sources = 1
 let g:asyncrun_bell=1
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-exec "map " .s:alt_char['o'] ." :Fontzoom!<cr>"
-exec "map " .s:alt_char['-'] ." <Plug>(fontzoom-smaller)"
-exec "map " .s:alt_char['='] ." <Plug>(fontzoom-larger)"
+exec 'map ' .s:alt_char['o'] .' :Fontzoom!<cr>'
+exec 'map ' .s:alt_char['-'] .' <Plug>(fontzoom-smaller)'
+exec 'map ' .s:alt_char['='] .' <Plug>(fontzoom-larger)'
 augroup QuickfixStatus
     au! BufWinEnter quickfix setlocal 
         \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
@@ -1620,18 +1621,18 @@ nnoremap <leader>9 9gt
 " toggle coding style 
 nnoremap <leader>tc :call TracyoneCodingStypeToggle()<cr>
 function DrawItToggle()
-    let l:ret = te#utils#GetError("DrawIt","already on")
+    let l:ret = te#utils#GetError('DrawIt','already on')
     if l:ret != 0
         :DIstop
     else
-        call te#utils#EchoWarning("Started DrawIt")
+        call te#utils#EchoWarning('Started DrawIt')
     endif
 endfunction
 " draw it
 nnoremap <leader>aw :call DrawItToggle()<cr>
 
-let g:love_support_option=["tabstop","shiftwidth","softtabstop"
-            \,"expandtab","smarttab"]
+let g:love_support_option=['tabstop','shiftwidth','softtabstop'
+            \,'expandtab','smarttab']
 let g:SignatureEnabledAtStartup=0
 " toggle show sign
 nnoremap <leader>ts :SignatureToggleSigns<cr> 
@@ -1708,8 +1709,8 @@ if s:is_gui
     nnoremap <Leader>tg :call MenuToggle()<cr>
     set cul
     "toolbar ----------------- {{{
-    if has("toolbar")
-        if exists("*Do_toolbar_tmenu")
+    if has('toolbar')
+        if exists('*Do_toolbar_tmenu')
             delfun Do_toolbar_tmenu
         endif
         fun Do_toolbar_tmenu()
