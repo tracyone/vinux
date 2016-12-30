@@ -84,7 +84,7 @@ augroup filetype_group
     au BufRead,BufNewFile *.hex,*.out,*.o,*.a Vinarise
     au BufEnter * 
                 \ if &diff |
-                \ set statusline=%<%t%m%r%h%w |
+                \ set statusline=%!MyStatusLine(2) |
                 \ endif
 augroup END
 
@@ -205,17 +205,19 @@ set clipboard+=unnamed
 "set autochdir  "change to directory of file in buffer
 
 "statuslne
-function! GetRunStatus()
-    if exists('g:asyncrun_status') && g:asyncrun_status !=# ''
-       return  '['.g:asyncrun_status.']'
-   else
-       return ''
+function! MyStatusLine(type)
+    let l:mystatus_line='%<%t%m%r%h%w'
+    let l:mystatus_line.="%{exists('*tagbar#currenttag')?\ tagbar#currenttag('[%s]','')\ :\ ''}"
+    if a:type == 1
+        let l:mystatus_line.="%=[%{(&fenc!=''?&fenc:&enc)}\|%{&ff}\|%Y][%l,%v][%p%%]%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}"
+        let l:mystatus_line.="[%{strftime(\"%m/%d\-\%H:%M\")}]"
     endif
+    if exists('g:asyncrun_status') && g:asyncrun_status !=# ''
+       let l:mystatus_line.='['.g:asyncrun_status.']'
+    endif
+    return l:mystatus_line
 endfunction
-set statusline=%<%t%m%r%h%w%{exists('*tagbar#currenttag')?\ tagbar#currenttag('[%s]','')\ :\ ''}
-set statusline+=%=[%{(&fenc!=''?&fenc:&enc)}\|%{&ff}\|%Y][%l,%v][%p%%]%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}
-set statusline+=[%{strftime(\"%m/%d\-\%H:%M\")}]
-set statusline+=%{GetRunStatus()}
+set statusline=%!MyStatusLine(1)
 set guitablabel=%N\ %t  "do not show dir in tab
 "0, 1 or 2; when to use a status line for the last window
 set laststatus=2 "always show status
