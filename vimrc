@@ -1358,7 +1358,14 @@ if s:is_win
 else
     let g:startify_session_dir = $VIMFILES .'/sessions'
 endif
-let g:startify_list_order = ['sessions', 'files']
+let g:startify_list_order = [
+            \ ['   These are my sessions:'],
+            \ 'sessions',
+            \ ['   My most recently used files in the current directory:'],
+            \ 'dir',
+            \ ['   My most recently used files:'],
+            \ 'files',
+            \ ]
 let g:startify_change_to_dir = 1
 let g:startify_files_number = 5 
 let g:startify_change_to_vcs_root = 0
