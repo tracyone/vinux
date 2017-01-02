@@ -655,7 +655,7 @@ endif
 
 Plug 'tracyone/hex2ascii.vim', { 'do': 'make' }
 Plug 'thinca/vim-qfreplace'
-Plug 'vim-scripts/verilog.vim'
+Plug 'vim-scripts/verilog.vim',{'for': 'verilog'}
 Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
             \ '<Plug>(easymotion-linebackward)','<Plug>(easymotion-overwin-w)' ]}
 Plug 'thinca/vim-quickrun'
@@ -686,14 +686,14 @@ Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
 Plug 'Raimondi/delimitMate'
 Plug 'vim-scripts/genutils'
 Plug 'itchyny/calendar.vim', { 'on': 'Calendar'}
-Plug 'arecarn/selection.vim' | Plug 'arecarn/crunch.vim'
+Plug 'arecarn/selection.vim' | Plug 'arecarn/crunch.vim',{'on':'Crunch'}
 "Plug 'youjumpiwatch/vim-neoeclim'
 Plug 'mhinz/vim-startify'
 Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': ['Ydc','Ydv']}
-Plug 'iamcco/markdown-preview.vim'
-Plug 'mzlogin/vim-markdown-toc'
-Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.vim',{'for': 'markdown'}
+Plug 'mzlogin/vim-markdown-toc',{'for': 'markdown'}
+Plug 'plasticboy/vim-markdown',{'for': 'markdown'}
 if(!s:is_win)
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
@@ -716,7 +716,7 @@ if s:is_nvim == 0
     else
         Plug 'Shougo/vimproc.vim', { 'do': 'mingw32-make.exe -f make_mingw64.mak' }
     endif
-    Plug 'Shougo/vimshell.vim'
+    Plug 'Shougo/vimshell.vim',{'on':'VimShell'}
     Plug 'vim-scripts/YankRing.vim'
 else
     Plug 'mattn/ctrlp-register',{'on': 'CtrlPRegister'}
@@ -734,10 +734,10 @@ Plug 'adah1972/fencview',{'on': 'FencManualEncoding'}
 Plug 'vim-scripts/DrawIt',{'on': 'DrawIt'}
 Plug 'mbbill/VimExplorer',{'on': 'VE'}
 Plug 'vim-scripts/renamer.vim',{'on': 'Ren'}
-Plug  'hari-rangarajan/CCTree'
+Plug 'hari-rangarajan/CCTree'
 Plug 'tracyone/mark.vim'
 Plug 'tpope/vim-repeat' "repeat enhance
-Plug 'Shougo/vinarise.vim'
+Plug 'Shougo/vinarise.vim',{'on': 'Vinarise'}
 Plug 'tracyone/love.vim'
 Plug 't9md/vim-choosewin'
 Plug 'itchyny/vim-cursorword'
@@ -748,7 +748,7 @@ Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/goyo.vim',{'on': 'Goyo'}
 Plug 'osyo-manga/vim-over'
 Plug 'rhysd/github-complete.vim'
-Plug 'skywind3000/asyncrun.vim'
+Plug 'skywind3000/asyncrun.vim',{'on': 'AsyncRun'}
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
@@ -1547,10 +1547,6 @@ command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 exec 'map ' .s:alt_char['o'] .' :Fontzoom!<cr>'
 exec 'map ' .s:alt_char['-'] .' <Plug>(fontzoom-smaller)'
 exec 'map ' .s:alt_char['='] .' <Plug>(fontzoom-larger)'
-augroup QuickfixStatus
-    au! BufWinEnter quickfix setlocal 
-        \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
-augroup END
 
 autocmd misc_group VimEnter * :let g:cursorword = 0
 
