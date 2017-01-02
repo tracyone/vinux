@@ -45,7 +45,7 @@ Dependency:
 - [the_silver_searcher](https://github.com/ggreer/the_silver_searcher)
 - [ctags](http://ctags.sourceforge.net/)
 - [cscope](http://cscope.sourceforge.net/)
-- [vim](http://www.vim.org/) with python2 support.
+- [vim](http://www.vim.org/)-8.0 with python2 support.
 
 Execute following shell script then start vim,it will install all stuff automatically.
 
@@ -53,6 +53,15 @@ Execute following shell script then start vim,it will install all stuff automati
 ```bash
 # for macOS and linux
 ./install.sh
+```
+
+It will ask you to choose a complete plugin,then try to install them.
+
+It is difficult to install some plugins like YouCompleteMe,I make this option for changing complete plugin easily
+
+```bash
+# install YouCompleteMe default
+./install.sh 1
 ```
 
 # Keymapping
@@ -423,27 +432,29 @@ n | k | find help on vim document or man page.
 
 **Lifechanging plugins**
 
-- [Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+- [Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe):Complete engine.
 
-- [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion)
+- [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion):Move your cursor to any position that you want.
 
-- [terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
+- [terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors):Sublime text like function.
 
-- [ctrlpvim/ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim)
+- [ctrlpvim/ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim):Fuzzy Searcher
 
-- [SirVer/ultisnips](https://github.com/SirVer/ultisnips)
+- [FelikZ/ctrlp-py-matcher](https://github.com/FelikZ/ctrlp-py-matcher):Speed up the ctrlp
 
-- [junegunn/vim-easy-align](https://github.com/junegunn/vim-easy-align)
+- [tacahiroy/ctrlp-funky](https://github.com/tacahiroy/ctrlp-funky):ctrlp's extension for listing functions of current file.
 
-- [thinca/vim-qfreplace](https://github.com/thinca/vim-qfreplace)
+- [SirVer/ultisnips](https://github.com/SirVer/ultisnips):Code snippets engine
 
-- [Shougo/vimshell.vim](https://github.com/Shougo/vimshell.vim)
+- [junegunn/vim-easy-align](https://github.com/junegunn/vim-easy-align):Align text.The tables in current markdown file are aligned by this plugin
 
-- [tacahiroy/ctrlp-funky](https://github.com/tacahiroy/ctrlp-funky)
+- [thinca/vim-qfreplace](https://github.com/thinca/vim-qfreplace):replcae text in multiple files.
 
-- [skywind3000/asyncrun.vim](https://github.com/skywind3000/asyncrun.vim)
+- [Shougo/vimshell.vim](https://github.com/Shougo/vimshell.vim):shell
 
-- [mhinz/vim-startify](https://github.com/mhinz/vim-startify)
+- [skywind3000/asyncrun.vim](https://github.com/skywind3000/asyncrun.vim):run external command asynchrounsly,support vim8 and neovim
+
+- [mhinz/vim-startify](https://github.com/mhinz/vim-startify):start screen,session manager,mru manager
 
 **others**
 
