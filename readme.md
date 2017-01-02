@@ -230,6 +230,7 @@ mode  |      key | description
     n |       th | realtime underline word toggle
     n |       tu | undo tree window toggle
     n |       tc | toggle between tab or space,8 or 4
+    n |       tp | toggle paste option
 
 ### Ag searcher
 
