@@ -679,7 +679,7 @@ Plug 'terryma/vim-expand-region'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
 Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
-Plug 'JazzCore/ctrlp-cmatcher'
+Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
@@ -1240,7 +1240,7 @@ nnoremap <Leader>pc :CtrlPCmdPalette<cr>
 nnoremap <Leader>pt :CtrlPTmux<cr>
 "CtrlP function
 nnoremap <Leader>pk :CtrlPFunky<cr>
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 "}}}
 
 " VimExplorer ---------------------{{{
