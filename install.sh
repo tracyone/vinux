@@ -59,7 +59,7 @@ ln -sf $(pwd)/vimrc ${HOME}/.config/nvim/init.vim
 ln -sf $(pwd)/autoload/te ${HOME}/.vim/autoload/
 
 echo -e "Create soft link for linux and mac\n"
-ln -sf $(pwd)/vimrc ${HOME}/.vimrc
+ln -sf $(pwd)/vimrc ${HOME}/.vim/
 
 if [[ $# -gt 1 ]]; then
     echo -e "Wrong argument\n"
