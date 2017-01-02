@@ -1304,12 +1304,12 @@ if(s:is_nvim== 0)
     "let g:vimshell_popup_command='rightbelow 10split'
     " Initialize execute file list.
     let g:vimshell_execute_file_list = {}
-    call vimshell#set_execute_file('txt,vim,c,h,cpp,d,xml,java', 'vim')
+    silent! call vimshell#set_execute_file('txt,vim,c,h,cpp,d,xml,java', 'vim')
     let g:vimshell_execute_file_list['rb'] = 'ruby'
     let g:vimshell_execute_file_list['pl'] = 'perl'
     let g:vimshell_execute_file_list['py'] = 'python'
     let g:vimshell_temporary_directory = $VIMFILES . '/.vimshell'
-    call vimshell#set_execute_file('html,xhtml', 'gexe firefox')
+    silent! call vimshell#set_execute_file('html,xhtml', 'gexe firefox')
     augroup vimshell_group
         autocmd!
         au FileType vimshell :imap <buffer> <HOME> <Plug>(vimshell_move_head)
