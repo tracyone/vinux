@@ -742,7 +742,7 @@ Plug 'tracyone/love.vim'
 Plug 't9md/vim-choosewin'
 Plug 'itchyny/vim-cursorword'
 Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
-Plug 'ktonga/vim-follow-my-lead'
+Plug 'hecal3/vim-leader-guide'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/goyo.vim',{'on': 'Goyo'}
@@ -1592,7 +1592,8 @@ nnoremap <Leader>fS :wa<cr>
 " manpage or vimhelp on current curosr word
 nnoremap <Leader>hm :call TracyoneFindMannel()<cr>
 " list leader's map
-nmap <Leader>hk <Plug>(FollowMyLead)<c-w>J
+nmap <Leader>hk  :LeaderGuide '<Space>'<cr>
+
 " quit all
 nnoremap <Leader>qq :qa<cr>
 " quit all without save
