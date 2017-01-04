@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/tracyone/t-vim.svg?branch=master)](https://travis-ci.org/tracyone/t-vim)
 
-![screenshot](https://cloud.githubusercontent.com/assets/4246425/19315778/a08cc216-90d1-11e6-92e5-8083851b3841.png)
+![screenshot](https://cloud.githubusercontent.com/assets/4246425/21648505/36a89600-d2d9-11e6-8dcf-9941e114c783.png)
 
 
 <!-- vim-markdown-toc GFM -->
@@ -46,6 +46,7 @@ Dependency:
 - [ctags](http://ctags.sourceforge.net/)
 - [cscope](http://cscope.sourceforge.net/)
 - [vim](http://www.vim.org/)-8.0 with python2 support.
+- [neovim](https://github.com/neovim/neovim) 0.1.6 or above
 
 Execute following shell script then start vim,it will install all stuff automatically.
 
@@ -55,12 +56,15 @@ Execute following shell script then start vim,it will install all stuff automati
 ./install.sh
 ```
 
-It will ask you to choose a complete plugin,then try to install them.
+It is difficult to install some plugins like YouCompleteMe and other complete
+plugin ,`install.sh` accept
+one integer argument which indicate the complete plugin.
 
-It is difficult to install some plugins like YouCompleteMe,I make this option for changing complete plugin easily
+If no argument pass to `install.sh`,it will ask you to choose a complete plugin,then try to install them.
+
 
 ```bash
-# install YouCompleteMe default
+# Install YouCompleteMe 
 ./install.sh 1
 ```
 
