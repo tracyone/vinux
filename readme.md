@@ -193,6 +193,9 @@ mode  |      key | description
     n |       hk | **list leader's map**
     n |       ?  | **list leader's map**
     n |       hm | **manpage or vimhelp on current curosr word**
+    n |       he | open eval.txt in new tab
+    n |       hf | open vim function-list in new tab
+    n |       hp | open vim script manual in new tab
 
 ### Session
 

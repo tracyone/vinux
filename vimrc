@@ -1603,6 +1603,12 @@ nnoremap <Leader>hm :call TracyoneFindMannel()<cr>
 nmap <Leader>hk  :LeaderGuide '<Space>'<cr>
 " list leader's map
 nmap <Leader>?  :LeaderGuide '<Space>'<cr>
+" open eval.txt
+nnoremap <Leader>he :tabnew<cr>:h eval.txt<cr>:only<cr>
+" open vim script help
+nnoremap <Leader>hp :tabnew<cr>:h usr_41.txt<cr>:only<cr>
+" open vim function list
+nnoremap <Leader>hf :tabnew<cr>:h function-list<cr>:only<cr>
 
 " quit all
 nnoremap <Leader>qq :qa<cr>
