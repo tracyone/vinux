@@ -258,7 +258,7 @@ mode  |      key | description
     n |        7 | tab 7
     n |        8 | tab 8
     n |        9 | tab 9
-    n |        w | **Choose windows**
+    n |       wc | **Choose windows**
     n |       wd | hide current windows
     n |       wh | move to left win
     n |       wj | move down win

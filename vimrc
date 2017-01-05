@@ -1661,7 +1661,7 @@ nnoremap <Leader>wd :q<cr>
 nnoremap <Leader>ww <C-w><C-w>
 let g:choosewin_overlay_enable = 1
 " Choose windows
-nmap <Leader>w <Plug>(choosewin)
+nmap <Leader>wc <Plug>(choosewin)
 " move to left win
 nnoremap <Leader>wh <C-w>h
 " move to right win
