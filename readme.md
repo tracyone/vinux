@@ -191,6 +191,7 @@ mode  |      key | description
 mode  |      key | description
 ----  |     ---- | -----------
     n |       hk | **list leader's map**
+    n |       ?  | **list leader's map**
     n |       hm | **manpage or vimhelp on current curosr word**
 
 ### Session
@@ -280,11 +281,11 @@ mode  |      key | description
 
 mode  |      key | description
 ----  |     ---- | -----------
-    n |        m | <Plug>MarkSet
-    x |        m | <Plug>MarkSet
-    n |        n | <Plug>MarkClear
-    n |        / | <Plug>MarkSearchAnyNext
-    n |        ? | <Plug>MarkSearchAnyPrev
+    n |        mm | <Plug>MarkSet
+    x |        mm | <Plug>MarkSet
+    n |        mn | <Plug>MarkClear
+    n |        m/ | <Plug>MarkSearchAnyNext
+    n |        m? | <Plug>MarkSearchAnyPrev
     n |        * | <Plug>MarkSearchCurrentNext
     n |        # | <Plug>MarkSearchCurrentPrev
     n |        r | <Plug>MarkRegex

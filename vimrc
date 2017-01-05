@@ -1553,6 +1553,14 @@ autocmd misc_group VimEnter * :let g:cursorword = 0
 "remove mapping of * and # in mark.vim
 nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
 nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
+nnoremap <leader>mm <Plug>MarkSet
+xmap <Leader>mm <Plug>MarkSet
+nnoremap <leader>mr <Plug>MarkRegex
+xmap <Leader>mr <Plug>MarkRegex
+nnoremap <leader>mn <Plug>MarkClear
+xmap <leader>mn <Plug>MarkClear
+nnoremap <leader>m? <Plug>MarkSearchAnyPrev
+nnoremap <leader>m/ <Plug>MarkSearchAnyNext
 
 
 " realtime underline word toggle
@@ -1593,6 +1601,8 @@ nnoremap <Leader>fS :wa<cr>
 nnoremap <Leader>hm :call TracyoneFindMannel()<cr>
 " list leader's map
 nmap <Leader>hk  :LeaderGuide '<Space>'<cr>
+" list leader's map
+nmap <Leader>?  :LeaderGuide '<Space>'<cr>
 
 " quit all
 nnoremap <Leader>qq :qa<cr>
