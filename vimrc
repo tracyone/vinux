@@ -1553,14 +1553,14 @@ autocmd misc_group VimEnter * :let g:cursorword = 0
 "remove mapping of * and # in mark.vim
 nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
 nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
-nnoremap <leader>mm <Plug>MarkSet
+nmap <leader>mm <Plug>MarkSet
 xmap <Leader>mm <Plug>MarkSet
-nnoremap <leader>mr <Plug>MarkRegex
+nmap <leader>mr <Plug>MarkRegex
 xmap <Leader>mr <Plug>MarkRegex
-nnoremap <leader>mn <Plug>MarkClear
+nmap <leader>mn <Plug>MarkClear
 xmap <leader>mn <Plug>MarkClear
-nnoremap <leader>m? <Plug>MarkSearchAnyPrev
-nnoremap <leader>m/ <Plug>MarkSearchAnyNext
+nmap <leader>m? <Plug>MarkSearchAnyPrev
+nmap <leader>m/ <Plug>MarkSearchAnyNext
 
 
 " realtime underline word toggle
