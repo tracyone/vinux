@@ -332,8 +332,6 @@ call TracyoneKeyMap('inoremap',s:alt_char['h'],'<Left>')
 call TracyoneKeyMap('inoremap',s:alt_char['l'],'<Right>')
 call TracyoneKeyMap('inoremap',s:alt_char['j'],'<Down>')
 call TracyoneKeyMap('inoremap',s:alt_char['k'],'<Up>')
-call TracyoneKeyMap('inoremap',s:alt_char['b'],'<S-left>')
-call TracyoneKeyMap('inoremap',s:alt_char['f'],'<S-right>')
 
 "move between windows
 call TracyoneKeyMap('nnoremap',s:alt_char['h'],'  <C-w>h')
@@ -345,23 +343,29 @@ call TracyoneKeyMap('cnoremap',s:alt_char['l'],'<right>')
 call TracyoneKeyMap('cnoremap',s:alt_char['j'],'<down>')
 call TracyoneKeyMap('cnoremap',s:alt_char['k'],'<up>')
 call TracyoneKeyMap('cnoremap',s:alt_char['b'],'<S-left>')
-call TracyoneKeyMap('cnoremap',s:alt_char['f'],'<S-right>')
-call TracyoneKeyMap('cnoremap',s:alt_char['h'],'<left>')
 
 call TracyoneKeyMap('nnoremap',s:alt_char['m'],':call MouseToggle()<cr>')   
 " Mouse mode toggle
 nnoremap <leader>tm :call te#utils#OptionToggle('mouse',['a',''])<cr>
 " }}}
 
-"home end move
+" GNU readline keybinding {{{
 inoremap        <C-A> <C-O>^
 inoremap   <C-X><C-A> <C-A>
 inoremap <expr> <C-E> col('.')>strlen(getline('.'))<bar><bar>pumvisible()?"\<Lt>C-E>":"\<Lt>End>"
 inoremap        <C-B> <Left>
 inoremap        <C-f> <right>
+"Delete the character underneath the cursor.
+inoremap        <C-d> <BS>
+"Delete the character underneath the cursor.
+inoremap        <C-h> <BS>
 cnoremap        <C-B> <Left>
 cnoremap        <C-f> <right>
-
+" Move forward a word or Move backward a word.
+call TracyoneKeyMap('inoremap',s:alt_char['b'],'<S-left>')
+call TracyoneKeyMap('inoremap',s:alt_char['f'],'<S-right>')
+call TracyoneKeyMap('cnoremap',s:alt_char['f'],'<S-right>')
+call TracyoneKeyMap('cnoremap',s:alt_char['h'],'<left>')
 
 "move in cmd win
 cnoremap        <C-A> <Home>
@@ -369,6 +373,8 @@ cnoremap   <C-X><C-A> <C-A>
 noremap! <expr> <SID>transposition getcmdpos()>strlen(getcmdline())?"\<Left>":getcmdpos()>1?'':"\<Right>"
 noremap! <expr> <SID>transpose "\<BS>\<Right>".matchstr(getcmdline()[0 : getcmdpos()-2], '.$')
 cmap   <script> <C-T> <SID>transposition<SID>transpose
+
+" }}}
 
 "update the _vimrc
 nnoremap <leader>so :source $MYVIMRC<CR>
@@ -1031,7 +1037,6 @@ elseif s:complete_plugin == 4
     " <CR>: close popup and save indent.
     " <TAB>: completion.
     " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
     inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
     inoremap <expr><C-y>  neocomplete#close_popup()
     inoremap <expr><C-e>  neocomplete#cancel_popup()
