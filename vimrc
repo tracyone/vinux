@@ -207,7 +207,7 @@ set clipboard+=unnamed
 "statuslne
 function! MyStatusLine(type)
     let l:mystatus_line='%<%t%m%r%h%w'
-    let l:mystatus_line.="%{exists('*tagbar#currenttag')?\ tagbar#currenttag('[%s]','')\ :\ ''}"
+    let l:mystatus_line.="%{exists(':TagbarToggle')?\ tagbar#currenttag('[%s]','')\ :\ ''}"
     if a:type == 1
         let l:mystatus_line.="%=[%{(&fenc!=''?&fenc:&enc)}\|%{&ff}\|%Y][%l,%v][%p%%]%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}"
         let l:mystatus_line.="[%{strftime(\"%m/%d\-\%H:%M\")}]"
