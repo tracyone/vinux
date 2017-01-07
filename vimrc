@@ -273,7 +273,8 @@ set timeout timeoutlen=1000 ttimeoutlen=100
 set winaltkeys=no
 
 "leader key
-let mapleader="\<Space>"
+let g:mapleader="\<Space>"
+let g:maplocalleader=","
 inoremap jj <c-[>
 
 vnoremap [p "0p
@@ -814,14 +815,14 @@ if has('cscope')
 endif
 set cscopeverbose 
 " show msg when any other cscope db added
-nnoremap ,s :cs find s <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-nnoremap ,g :call TracyoneGotoDef("")<cr>
-nnoremap ,d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:cw 7<cr>
-nnoremap ,c :cs find c <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-nnoremap ,t :cs find t <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-nnoremap ,e :cs find e <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+nnoremap <LocalLeader>s :cs find s <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+nnoremap <LocalLeader>g :call TracyoneGotoDef("")<cr>
+nnoremap <LocalLeader>d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:cw 7<cr>
+nnoremap <LocalLeader>c :cs find c <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+nnoremap <LocalLeader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+nnoremap <LocalLeader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
 "nnoremap ,f :cs find f <C-R>=expand("<cfile>")<CR><CR>:cw 7<cr>
-nnoremap ,i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:cw 7<cr>
+nnoremap <LocalLeader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:cw 7<cr>
 
 nnoremap <C-\>s :split<CR>:cs find s <C-R>=expand("<cword>")<CR><CR>
 nnoremap <C-\>g :call TracyoneGotoDef("sp")<cr>
@@ -832,10 +833,10 @@ nnoremap <C-\>e :split<CR>:cs find e <C-R>=expand("<cword>")<CR><CR>
 nnoremap <C-\>f :split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
 nnoremap <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
-nnoremap ,u :call TracyoneGenCsTag()<cr>
-nnoremap ,a :call TracyoneAddCscopeOut()<cr>
+nnoremap <LocalLeader>u :call TracyoneGenCsTag()<cr>
+nnoremap <LocalLeader>a :call TracyoneAddCscopeOut()<cr>
 "kill the connection of current dir 
-nnoremap ,k :cs kill cscope.out<cr> 
+nnoremap <LocalLeader>k :cs kill cscope.out<cr> 
 
 function! TracyoneGenCsTag()
     if empty(glob('.project'))
