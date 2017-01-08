@@ -1659,7 +1659,7 @@ nnoremap <leader>aw :call DrawItToggle()<cr>
 
 let g:love_support_option=['tabstop','shiftwidth','softtabstop'
             \,'expandtab','smarttab']
-let g:SignatureEnabledAtStartup=0
+let g:SignatureEnabledAtStartup=1
 " toggle show sign
 nnoremap <leader>ts :SignatureToggleSigns<cr> 
 " toggle paste option
