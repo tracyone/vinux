@@ -71,21 +71,23 @@ If no argument pass to `install.sh`,it will ask you to choose a complete plugin,
 
 # Feature introduction
 
-1. c/c++ GotoDefinition more accurately.I combine YCM' GotoDefinition function
+1. c/c++ GotoDefinition more accurate.I combine YCM' GotoDefinition function
    with cscope together，see [Source code reading and GoToDefinition](#source-code-reading-and-gotodefinition)
-2. Markdown syntax highlight,preview,TOC
-3. Run external command asynchronously.Include generating cscope database，cctree database.(Use [skywind3000/asyncrun.vim](https://github.com/skywind3000/asyncrun.vim))
-4. Ctrlp+ag+ctrlp-py-matcher+ctrlp-funky:high speed fuzzy searcher，search
+2. c/c++ complete more accurate.(see [Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe))
+3. Viml autocomplete and GoToDefinition (see [Shougo/neco-vim](https://github.cim/Shougo/neco-vim))
+4. Markdown syntax highlight,preview and TOC
+5. Run external command asynchronously.Include generating cscope database，cctree database.(Use [skywind3000/asyncrun.vim](https://github.com/skywind3000/asyncrun.vim))
+6. Ctrlp+ag+ctrlp-py-matcher+ctrlp-funky:high speed fuzzy searcher，search
    anything you want.
-5. Spacemacs like keybinding.(SPC+hk or SPC+? show the key guide)
-6. Some most use options can be toggle and can be save without modify vim
+7. Spacemacs like keybinding.(SPC+hk or SPC+? show the key guide)
+8. Some most use options can be toggle and can be save without modify vim
    config,just  press SPC+lo to save options(see
    [tracyone/love.vim](https://github.com/tracyone/love.vim) and [Toggle
    something](#toggle-something)).
-7. Do most of git operation in Vim.(See [Git relate](#git-relate))
-8. Smoothly switch window between vim and tmux.
-9. [GNU Readline keybinding](https://cnswww.cns.cwru.edu/php/chet/readline/readline.html) in vim's insert mode and command line mode.
-10. many other feature please see the keybinding below.
+9. Do most of git operation in Vim.(See [Git relate](#git-relate))
+10. Smoothly switch window between vim and tmux.
+11. [GNU Readline keybinding](https://cnswww.cns.cwru.edu/php/chet/readline/readline.html) in vim's insert mode and command line mode.
+12. many other feature please see the keybinding below.
 
 # Keymapping
 
@@ -607,6 +609,7 @@ n | k | find help on vim document or man page.
 
 [junegunn/goyo.vim](https://github.com/junegunn/goyo.vim)
 
+[Shougo/neco-vim](https://github.cim/Shougo/neco-vim)
 
 # Config Structure
 

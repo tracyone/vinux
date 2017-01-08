@@ -274,7 +274,7 @@ set winaltkeys=no
 
 "leader key
 let g:mapleader="\<Space>"
-let g:maplocalleader=","
+let g:maplocalleader=','
 inoremap jj <c-[>
 
 vnoremap [p "0p
@@ -645,10 +645,8 @@ elseif s:complete_plugin == 4
     Plug 'Shougo/neocomplete'
     Plug 'tracyone/dict'
     Plug 'Konfekt/FastFold'
-    Plug 'Shougo/neco-vim'
 elseif s:complete_plugin == 5
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'Shougo/neco-vim'
     Plug 'zchee/deoplete-clang'
 elseif s:complete_plugin == 6
     Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
@@ -659,6 +657,7 @@ elseif s:complete_plugin == 7
 else
     call te#utils#EchoWarning('No complete plugin selected!')
 endif
+Plug 'Shougo/neco-vim'
 
 Plug 'tracyone/hex2ascii.vim', { 'do': 'make' }
 Plug 'thinca/vim-qfreplace'
@@ -984,8 +983,10 @@ if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
                 \     'php' : ['->', '::', '.'],
                 \     'cs,java,javascript,d,vim,python,perl6,scala,vb,elixir,go' : ['.'],
                 \     'ruby' : ['.', '::'],
-                \     'lua' : ['.', ':']
+                \     'lua' : ['.', ':'],
+                \     'vim' : ['$', '&', 're![\w&$<-][\w:#<>-]*']
                 \ }
+
     let g:ycm_collect_identifiers_from_tag_files = 1
     let g:ycm_filetype_blacklist = {
                 \ 'tagbar' : 1,
@@ -1110,6 +1111,22 @@ elseif s:complete_plugin == 5
      endif
     let g:deoplete#enable_at_startup = 1
     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
+    let g:deoplete#sources#clang#flags=[]
+    function! TracyoneAddCFlags(dir)
+        let l:dir=a:dir.'/'
+        if strlen(a:dir) == 0
+            let l:dir=getcwd().'/'
+        endif
+        if empty(glob(l:dir.'.clang_complete'))
+           return 1 
+        else
+            for s:line in readfile(l:dir.'.clang_complete', '')
+                :call add(g:deoplete#sources#clang#flags,matchstr(s:line,"\\v[^']+"))
+            endfor
+        endif
+        return 0
+    endfunction
+    :call TracyoneAddCFlags('')
 endif
 "}}}
 
