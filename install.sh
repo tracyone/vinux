@@ -111,4 +111,4 @@ fi
 
 echo ${choose} > ${HOME}/.vim/.complete_plugin
 
-# vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
+# vim: set fdm=marker foldlevel=0  filetype=sh : 
