@@ -52,8 +52,12 @@ Dependency:
 - [vim](http://www.vim.org/)-8.0 with python2 support.
 - [neovim](https://github.com/neovim/neovim) 0.1.6 or above
 
-Execute following shell script then start vim,it will install all stuff automatically.
+Execute following shell script,it will do following things:
 
+1. make some softlink of vim and neovim config
+2. ask you to choose a complete plugin then try to install it.
+
+You can launch vim, all stuff will be installed automatically.
 
 ```bash
 # for macOS and linux
@@ -62,13 +66,10 @@ Execute following shell script then start vim,it will install all stuff automati
 
 It is difficult to install some plugins like YouCompleteMe and other complete
 plugin ,`install.sh` accept
-one integer argument which indicate the complete plugin.
-
-If no argument pass to `install.sh`,it will ask you to choose a complete plugin,then try to install them.
-
+one integer argument which indicate the complete plugin:
 
 ```bash
-# Install YouCompleteMe 
+# 1-->ycm, 2-->clang_complete, 3-->completor.vim, 4-->neocomplete, 5-->deoplete.nvim
 ./install.sh 1
 ```
 
