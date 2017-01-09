@@ -1246,6 +1246,7 @@ let g:ctrlp_funky_syntax_highlight = 0
 let g:ctrlp_funky_matchtype = 'path'
 nnoremap <c-k> :CtrlPFunky<Cr>
 nnoremap <c-j> :CtrlPBuffer<Cr>
+nnoremap <leader>tj :call te#utils#OptionToggle('g:ctrlp_use_caching',[0,1])<cr>
 " show global mark
 nnoremap <leader>pm :SignatureListGlobalMarks<Cr>
 " ctrlp buffer 

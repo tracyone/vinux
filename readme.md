@@ -263,6 +263,7 @@ mode  |      key | description
     n |       tu | undo tree window toggle
     n |       tc | toggle between tab or space,8 or 4 (**Can be save**)
     n |       tp | toggle paste option
+    n |       tj | whether use cache in ctrlp
 
 ### Ag searcher
 
