@@ -623,7 +623,7 @@ endif
 call plug#begin($VIMFILES.'/bundle')
 Plug 'tracyone/a.vim'
 
-if empty($VIMFILES.'/.complete_plugin')
+if empty(glob($VIMFILES.'/.complete_plugin'))
     let s:complete_plugin = 1
 else
     let s:complete_plugin=readfile($VIMFILES.'/.complete_plugin')[0]
