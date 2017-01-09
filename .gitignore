@@ -3,3 +3,4 @@ bundle/
 autoload/plug.vim
 .yank_history_v2.txt
 vimbackup/
+.complete_plugin
