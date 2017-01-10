@@ -5,3 +5,5 @@ autoload/plug.vim
 vimbackup/
 .complete_plugin
 love.ini
+.vimshell/
+sessions/
