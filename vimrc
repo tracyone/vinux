@@ -1679,7 +1679,7 @@ let g:love_support_option=['tabstop','shiftwidth','softtabstop'
             \,'expandtab','smarttab']
 let g:SignatureEnabledAtStartup=1
 " toggle show sign
-nnoremap <leader>ts :SignatureToggleSigns<cr> 
+nnoremap <leader>ts :call te#utils#OptionToggle('statusline',['%!MyStatusLine(1)','%!MyStatusLine(2)'])<cr>
 " toggle paste option
 nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
 " }}}

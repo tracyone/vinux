@@ -268,6 +268,7 @@ mode  |      key | description
     n |       tc | toggle between tab or space,8 or 4 (**Can be save**)
     n |       tp | toggle paste option
     n |       tj | whether use cache in ctrlp
+    n |       ts | toggle between long statusline and short statusline
 
 ### Ag searcher
 
