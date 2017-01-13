@@ -723,7 +723,7 @@ if s:is_nvim == 0
         Plug 'Shougo/vimproc.vim', { 'do': 'mingw32-make.exe -f make_mingw64.mak' }
     endif
     Plug 'Shougo/vimshell.vim',{'on':'VimShell'}
-    Plug 'vim-scripts/YankRing.vim'
+    Plug 'tracyone/YankRing.vim'
 else
     Plug 'mattn/ctrlp-register',{'on': 'CtrlPRegister'}
 endif
