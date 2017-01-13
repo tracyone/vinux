@@ -703,6 +703,7 @@ Plug 'plasticboy/vim-markdown',{'for': 'markdown'}
 if(!s:is_win)
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
+    Plug 'jebaum/vim-tmuxify'
     Plug 'vim-scripts/sudo.vim'
     Plug 'nhooyr/neoman.vim'
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
@@ -1261,8 +1262,6 @@ nnoremap <Leader>pp :CtrlP<cr>
 nnoremap <Leader>pU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 "CtrlP cmd
 nnoremap <Leader>pc :CtrlPCmdPalette<cr>
-"CtrlP tmux session
-nnoremap <Leader>pt :CtrlPTmux<cr>
 "CtrlP function
 nnoremap <Leader>pk :CtrlPFunky<cr>
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
@@ -1515,7 +1514,7 @@ let g:EasyMotion_show_prompt = 0
 let g:EasyMotion_verbose = 0
 " }}}
 
-" Tmux-navigator ------------------{{{
+" Tmux ------------------{{{
 if !s:is_win
     let g:tmux_navigator_no_mappings = 1
     exec 'nnoremap <silent> '.s:alt_char['h'] .' :TmuxNavigateLeft<cr>'
@@ -1523,6 +1522,11 @@ if !s:is_win
     exec 'nnoremap <silent>'.s:alt_char['j'].' :TmuxNavigateDown<cr>'
     exec 'nnoremap <silent> '.s:alt_char['k']. ' :TmuxNavigateUp<cr>'
     exec 'nnoremap <silent> '.s:alt_char['w']. ' :TmuxNavigatePrevious<cr>'
+    "CtrlP tmux session
+    nnoremap <Leader>uu :CtrlPTmux w<cr>
+    nnoremap <Leader>um :CtrlPTmux<cr>
+    "let g:tmuxify_custom_command = 'tmux split-window -p 20'
+    let g:tmuxify_map_prefix = '<leader>u'
 endif
 " }}}
 
