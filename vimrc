@@ -437,6 +437,7 @@ nnoremap <Leader>td :call Dosunix()<cr>:call te#utils#EchoWarning("Dos2unix...")
 nnoremap <leader>o :call Open_url()<cr>
 " linu number toggle
 nnoremap <Leader>tn :call TracyoneNuToggle()<cr>
+nnoremap <CR> o<Esc>j
 
 "}}}
 "Function{{{
@@ -702,7 +703,7 @@ Plug 'mzlogin/vim-markdown-toc',{'for': 'markdown'}
 Plug 'plasticboy/vim-markdown',{'for': 'markdown'}
 if(!s:is_win)
     Plug 'christoomey/vim-tmux-navigator'
-    Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
+    Plug 'tracyone/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
     Plug 'jebaum/vim-tmuxify'
     Plug 'vim-scripts/sudo.vim'
     Plug 'nhooyr/neoman.vim'
@@ -1524,7 +1525,10 @@ if !s:is_win
     exec 'nnoremap <silent> '.s:alt_char['w']. ' :TmuxNavigatePrevious<cr>'
     "CtrlP tmux session
     nnoremap <Leader>uu :CtrlPTmux w<cr>
+    nnoremap <Leader>uf :CtrlPTmux b<cr>
     nnoremap <Leader>um :CtrlPTmux<cr>
+    nnoremap <Leader>ud :CtrlPTmux c<cr>
+    nnoremap <Leader>ui :CtrlPTmux ci<cr>
     "let g:tmuxify_custom_command = 'tmux split-window -p 20'
     let g:tmuxify_map_prefix = '<leader>u'
 endif
