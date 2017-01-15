@@ -437,7 +437,6 @@ nnoremap <Leader>td :call Dosunix()<cr>:call te#utils#EchoWarning("Dos2unix...")
 nnoremap <leader>o :call Open_url()<cr>
 " linu number toggle
 nnoremap <Leader>tn :call TracyoneNuToggle()<cr>
-nnoremap <CR> o<Esc>j
 
 "}}}
 "Function{{{
