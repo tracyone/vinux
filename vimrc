@@ -704,6 +704,7 @@ if(!s:is_win)
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'tracyone/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
     Plug 'jebaum/vim-tmuxify'
+    Plug 'tracyone/ctrlp-leader-guide'
     Plug 'vim-scripts/sudo.vim'
     Plug 'nhooyr/neoman.vim'
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
@@ -749,7 +750,6 @@ Plug 'tracyone/love.vim'
 Plug 't9md/vim-choosewin'
 Plug 'itchyny/vim-cursorword'
 Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
-Plug 'hecal3/vim-leader-guide'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/goyo.vim',{'on': 'Goyo'}
@@ -1630,10 +1630,6 @@ nnoremap <Leader>fs :call te#utils#SaveFiles()<cr>
 nnoremap <Leader>fS :wa<cr>
 " manpage or vimhelp on current curosr word
 nnoremap <Leader>hm :call TracyoneFindMannel()<cr>
-" list leader's map
-nmap <Leader>hk  :LeaderGuide '<Space>'<cr>
-" list leader's map
-nmap <Leader>?  :LeaderGuide '<Space>'<cr>
 " open eval.txt
 nnoremap <Leader>he :tabnew<cr>:h eval.txt<cr>:only<cr>
 " open vim script help
