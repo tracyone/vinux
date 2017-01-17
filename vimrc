@@ -1179,10 +1179,12 @@ let delimitMate_expand_space = 0
 if s:is_nvim == 0
     nnoremap <c-y> :YRGetElem<CR>
     inoremap <c-y> <esc>:YRGetElem<CR>
+    " Open yankring window
     nnoremap <Leader>yy :YRGetElem<CR>
 else
     nnoremap <c-y> :CtrlPRegister<cr>
     inoremap <c-y> <esc>:CtrlPRegister<cr>
+    " Open CtrlPRegister
     nnoremap <Leader>yy :CtrlPRegister<cr>
 endif
 let yankring_history_dir = $VIMFILES
@@ -1247,6 +1249,7 @@ let g:ctrlp_funky_syntax_highlight = 0
 let g:ctrlp_funky_matchtype = 'path'
 nnoremap <c-k> :CtrlPFunky<Cr>
 nnoremap <c-j> :CtrlPBuffer<Cr>
+" toggle ctrlp g:ctrlp_use_caching option
 nnoremap <leader>tj :call te#utils#OptionToggle('g:ctrlp_use_caching',[0,1])<cr>
 " show global mark
 nnoremap <leader>pm :SignatureListGlobalMarks<Cr>
@@ -1501,8 +1504,9 @@ map W <Plug>(easymotion-lineforward)
 map B <Plug>(easymotion-linebackward)
 " MultiWindow easymotion for word
 nmap <Leader>F <Plug>(easymotion-overwin-w)
-" MultiChar easymotion
+" Multi Input Find Motion:s
 nmap <Leader>es <Plug>(easymotion-sn)
+" Multi Input Find Motion:t
 nmap <Leader>et <Plug>(easymotion-tn)
 " MultiWindow easymotion for line
 nmap <Leader>el <Plug>(easymotion-overwin-line)
@@ -1522,11 +1526,15 @@ if !s:is_win
     exec 'nnoremap <silent>'.s:alt_char['j'].' :TmuxNavigateDown<cr>'
     exec 'nnoremap <silent> '.s:alt_char['k']. ' :TmuxNavigateUp<cr>'
     exec 'nnoremap <silent> '.s:alt_char['w']. ' :TmuxNavigatePrevious<cr>'
-    "CtrlP tmux session
+    "CtrlP tmux window
     nnoremap <Leader>uu :CtrlPTmux w<cr>
+    "CtrlP tmux buffer
     nnoremap <Leader>uf :CtrlPTmux b<cr>
+    "CtrlP tmux session
     nnoremap <Leader>um :CtrlPTmux<cr>
+    "CtrlP tmux command
     nnoremap <Leader>ud :CtrlPTmux c<cr>
+    "CtrlP tmux command interactively
     nnoremap <Leader>ui :CtrlPTmux ci<cr>
     "let g:tmuxify_custom_command = 'tmux split-window -p 20'
     let g:tmuxify_map_prefix = '<leader>u'
@@ -1538,6 +1546,7 @@ endif
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 xmap <leader>al <Plug>(LiveEasyAlign)
+" Live easy align
 nmap <leader>al <Plug>(LiveEasyAlign)
 if !exists('g:easy_align_delimiters')
     let g:easy_align_delimiters = {}
@@ -1830,7 +1839,7 @@ try
 catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme desert "default setting 
 endtry
-
+" toggle background option.
 nnoremap <leader>tb :call te#utils#OptionToggle("bg",["dark","light"])<cr>
 
 "}}}
