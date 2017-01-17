@@ -104,3 +104,11 @@ function! te#utils#OptionToggle(opt_str,opt_list) abort
     endif
     return 0
 endfunction
+
+function! te#utils#SourceRc(path) abort
+    let l:ft_orig=&ft
+    :call te#utils#EchoWarning('Sourcing '.a:path.' ...')
+    execute ':source '.a:path
+    :execute "set ft=".l:ft_orig
+    :call te#utils#EchoWarning(a:path.' has been sourced.')
+endfunction

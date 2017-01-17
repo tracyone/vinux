@@ -376,9 +376,8 @@ noremap! <expr> <SID>transpose "\<BS>\<Right>".matchstr(getcmdline()[0 : getcmdp
 cmap   <script> <C-T> <SID>transposition<SID>transpose
 
 " }}}
-
 "update the _vimrc
-nnoremap <leader>so :source $MYVIMRC<CR>
+nnoremap <leader>so :call te#utils#SourceRc($MYVIMRC)<cr>
 "open the vimrc in tab
 nnoremap <leader>vc :tabedit $MYVIMRC<CR>
 
