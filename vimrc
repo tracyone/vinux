@@ -960,6 +960,9 @@ endif
 autocmd misc_group InsertLeave * if pumvisible() == 0|pclose|endif
 
 if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
+    if !has('patch-7.4.143')
+        :call te#utils#EchoWarning('To use ycm,vim must has patch 7.4.143','err')
+    endif
     function! GenYCM()
         let l:cur_dir=getcwd()
         cd $VIMFILES/bundle/YCM-Generator
@@ -1002,6 +1005,9 @@ if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
                 \}
     let g:ycm_global_ycm_extra_conf = $VIMFILES . '/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 elseif s:complete_plugin == 4
+    if !has('lua')
+        :call te#utils#EchoWarning('To use neocomplete,lua feature is needed.','err')
+    endif
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
     let g:neocomplete#enable_at_startup = 1
@@ -1096,6 +1102,9 @@ elseif s:complete_plugin == 4
      "g:clang_jumpto_declaration_in_preview_key
      inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
 elseif s:complete_plugin == 3 
+    if v:version < 800
+       :call te#utils#EchoWarning('To use completor.vim,vim 8 is needed.','err')
+    endif
     "completor.vim 
     let g:completor_clang_binary = '/usr/bin/clang'
     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
