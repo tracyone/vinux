@@ -6,26 +6,15 @@
 "Website    http://onetracy.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "System check{{{
-let s:is_unix  = ( has('mac') + has('unix') )
-let s:is_win   = has('win32') + has('win64')
-let s:is_nvim  = has('nvim')
-let s:is_gui   = has('gui_running') + has('gui_macvim')
-let s:has_python = has('python')
-let s:has_python3 = has('python3')
-let s:python_ver=s:has_python+s:has_python3
-
 set filetype=text
-if s:is_win
+if te#env#IsWindows()
     let $HOME=$VIM
     let $VIMFILES = $VIM.'\\vimfiles'
     set makeprg=mingw32-make
-    let s:cpu_arch = 'x86'
-    if s:is_win == 2 | let s:cpu_arch = 'x86_64' | endif
 else
     set keywordprg=""
     set path=.,/usr/include/
     let $VIMFILES = $HOME.'/.vim'
-    let s:cpu_arch = system('uname -m')[:-2]
 endif
 
 
@@ -228,7 +217,7 @@ set ffs=unix,dos,mac
 au misc_group BufRead * if &ff=="dos" | setlocal ffs=dos,unix,mac | endif  
 au misc_group VimResized * wincmd = 
 
-if(s:is_nvim== 1)
+if te#env#IsNvim()
     "terminal-emulator setting
     tnoremap <Esc> <C-\><C-n>
     tnoremap <A-h> <C-\><C-n><C-w>h
@@ -251,8 +240,8 @@ endfunction
 
 "map jj to esc..
 "fuck the meta key...
-if s:is_nvim != 1
-    if(!s:is_gui)
+if !te#env#IsNvim()
+    if(!te#env#IsGui())
         let c='a'
         while c <=# 'z'
             exec 'set <m-'.c.">=\e".c
@@ -291,15 +280,15 @@ au  filetype_group FileType c,cpp nnoremap <silent> K :call TracyoneFindMannel()
 "{{{ alt or meta key mapping
 " in mac osx please set your option key as meta key
 
-if s:is_gui == 2 "macvim
+if te#env#IsMacVim()
     let s:alt_char={1:'¡',2:'™',3:'£',4:'¢',5:'∞',6:'§',7:'¶',8:'•',9:'ª'
                 \,'t':'†','q':'œ','a':'å','=':'≠','h':'˙','l':'¬','j':'∆','k':'˚'
                 \,'o':'ø','-':'–','b':'∫','f':'ƒ','m':'µ','w':'∑'}
-elseif s:is_unix && !s:is_nvim && !s:is_gui   "linux and not neovim and not gvim
+elseif te#env#IsUnix() && !te#env#IsNvim() && !te#env#IsGui()
     let s:alt_char={1:'±' ,2:'²',3:'³',4:'´',5:'µ',6:'¶',7:'·',8:'¸',9:'¹'
                 \,'t':'ô','q':'ñ','a':'á','=':'½','h':'è','l':'ì','j':'ê','k':'ë'
                 \,'o':'ï','-':'­','b':'â','f':'æ','m':'í','w':'÷'}
-elseif s:is_gui || s:is_nvim "gvim or neovim
+elseif te#env#IsGui() || te#env#IsNvim()
     let s:alt_char={1:'<m-1>',2:'<m-2>',3:'<m-3>',4:'<m-4>',5:'<m-5>',6:'<m-6>',7:'<m-7>',8:'<m-8>',9:'<m-9>'
                 \,'t':'<m-t>','q':'<m-q>','a':'<m-a>','=':'<m-=>','h':'<m-h>','l':'<m-l>','j':'<m-j>','k':'<m-k>'
                 \,'o':'<m-o>','-':'<m-->','b':'<m-b>','f':'<m-f>','m':'<m-m>','w':'<m-w>'}
@@ -608,7 +597,7 @@ endfunction
 " Vim-plug ------------------------{{{
 let &rtp=&rtp.','.$VIMFILES
 if empty(glob($VIMFILES.'/autoload/plug.vim'))
-    if s:is_win
+    if te#env#IsWindows()
         silent! exec ':!mkdir -p '.$VIMFILES.'\\autoload'
         silent! exec ':!curl -fLo ' . $VIMFILES.'\\autoload'.'\\plug.vim ' .
                     \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -628,7 +617,7 @@ else
     let s:complete_plugin=readfile($VIMFILES.'/.complete_plugin')[0]
 endif
 
-if s:complete_plugin == 5 && s:is_nvim == 0
+if s:complete_plugin == 5 && !te#env#IsNvim()
     let s:complete_plugin = 1
 endif
 
@@ -665,7 +654,7 @@ Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
             \ '<Plug>(easymotion-linebackward)','<Plug>(easymotion-overwin-w)' ]}
 Plug 'thinca/vim-quickrun'
 "some awesome vim colour themes
-if s:is_gui
+if te#env#IsGui()
     Plug 'thinca/vim-fontzoom',{'on': ['<Plug>(fontzoom-smaller)', '<Plug>(fontzoom-larger)'] }
 endif
 Plug 'sjl/badwolf'
@@ -677,7 +666,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'KabbAmine/yowish.vim'
 "some productive plugins
 Plug 'terryma/vim-multiple-cursors'
-if s:has_python
+if te#env#SupportPy()
     Plug 'ashisha/image.vim'
 endif
 Plug 'terryma/vim-expand-region'
@@ -699,7 +688,7 @@ Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': [
 Plug 'iamcco/markdown-preview.vim',{'for': 'markdown'}
 Plug 'mzlogin/vim-markdown-toc',{'for': 'markdown'}
 Plug 'plasticboy/vim-markdown',{'for': 'markdown'}
-if(!s:is_win)
+if(!te#env#IsWindows())
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'tracyone/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
     Plug 'jebaum/vim-tmuxify'
@@ -707,7 +696,7 @@ if(!s:is_win)
     Plug 'vim-scripts/sudo.vim'
     Plug 'nhooyr/neoman.vim'
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
-    if s:is_unix == 2
+    if te#env#IsMac()
         Plug 'CodeFalling/fcitx-vim-osx',{'do': 'wget -c \"https://raw.githubusercontent.com/
                     \CodeFalling/fcitx-remote-for-osx/binary/fcitx-remote-sogou-pinyin\" && 
                     \chmod a+x fcitx* && mv fcitx* /usr/local/bin/fcitx-remote'}
@@ -715,10 +704,10 @@ if(!s:is_win)
         Plug 'CodeFalling/fcitx-vim-osx'
     endif
 endif
-if s:is_nvim == 0
-    if s:is_unix == 2
+if !te#env#IsNvim() 
+    if te#env#IsMac()
         Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
-    elseif s:is_unix == 1
+    elseif te#env#IsUnix()
         Plug 'Shougo/vimproc.vim', { 'do': 'make' }
     else
         Plug 'Shougo/vimproc.vim', { 'do': 'mingw32-make.exe -f make_mingw64.mak' }
@@ -871,7 +860,7 @@ function! GenerateCscope4Kernel()
 endfunction
 
 function! Do_CsTag(dir)
-    if(s:is_win)
+    if(te#env#IsWindows())
         let l:tagfile=a:dir.'\\'.'tags'
         let l:cscopefiles=a:dir.'\\'.'cscope.files'
         let l:cscopeout=a:dir.'\\'.'cscope.out'
@@ -917,7 +906,7 @@ function! Do_CsTag(dir)
         "silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
     "endif
     if(executable('cscope') && has('cscope') )
-        if(!s:is_win)
+        if(!te#env#IsWindows())
             silent! execute '!find ' .a:dir. ' -name "*.[chsS]" > '  . a:dir.'/cscope.files'
         else
             silent! execute '!dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.a:dir.'\cscope.files'
@@ -1085,9 +1074,9 @@ elseif s:complete_plugin == 4
  elseif s:complete_plugin == 2 
      " clang_complete
      " path to directory where library can be found
-     if s:is_unix == 2
+     if te#env#IsMac()
          let g:clang_library_path='/Library/Developer/CommandLineTools/usr/lib'
-     elseif s:is_unix == 1
+     elseif te#env#IsUnix()
          let g:clang_library_path='/usr/local/lib'
      endif
      "let g:clang_use_library = 1
@@ -1112,10 +1101,10 @@ elseif s:complete_plugin == 3
     inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
 elseif s:complete_plugin == 5 
     "deoplete
-     if s:is_unix == 2
+     if te#env#IsMac()
          let g:deoplete#sources#clang#libclang_path='/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
          let g:deoplete#sources#clang#clang_header='/Library/Developer/CommandLineTools/usr/lib/clang/8.0.0/include/'
-     elseif s:is_unix == 1
+     elseif te#env#IsUnix()
          let g:deoplete#sources#clang#libclang_path='/usr/local/lib/libclang.so'
      endif
     let g:deoplete#enable_at_startup = 1
@@ -1184,7 +1173,7 @@ let delimitMate_expand_space = 0
 "}}}
 
 " yankring ------------------------{{{
-if s:is_nvim == 0
+if !te#env#IsNvim()
     nnoremap <c-y> :YRGetElem<CR>
     inoremap <c-y> <esc>:YRGetElem<CR>
     " Open yankring window
@@ -1286,7 +1275,7 @@ nnoremap <Leader>fj :silent! VE .<cr>
 "}}}
 
 " UltiSnips -----------------------{{{
-if  s:has_python == 1
+if  te#env#SupportPy()
     let g:UltiSnipsUsePythonVersion = 2
 else
     let g:UltiSnipsUsePythonVersion = 3 
@@ -1324,12 +1313,12 @@ nnoremap <Leader>fR :Ren<cr>
 "}}}
 
 " Vimshell ------------------------{{{
-if(s:is_nvim== 0)
+if(!te#env#IsNvim())
     let g:vimshell_user_prompt = '":: " . "(" . fnamemodify(getcwd(), ":~") . ")"'
     "let g:vimshell_right_prompt = 'vcs#info("(%s)-[%b]", "(%s)-[%b|%a]")'
     let g:vimshell_enable_smart_case = 1
     let g:vimshell_editor_command='gvim'
-    if s:is_win
+    if te#env#IsWindows()
         " Display user name on Windows.
         let g:vimshell_prompt = $USERNAME.'% '
     else
@@ -1377,7 +1366,7 @@ function! TracyoneVimShellPop()
     let l:line=(38*&lines)/100
     if  l:line < 10 | let l:line = 10 |endif
     execute 'rightbelow '.l:line.'split'
-    if s:is_nvim | execute 'terminal' | else | execute 'VimShell' | endif
+    if te#env#IsNvim() | execute 'terminal' | else | execute 'VimShell' | endif
 endfunction
 noremap <F4> :call TracyoneVimShellPop()<cr>
 " Open vimshell or neovim's emulator
@@ -1390,7 +1379,7 @@ let NERD_c_alt_style=1
 "}}}
 
 " VimStartify ---------------------{{{
-if s:is_win
+if te#env#IsWindows()
     let g:startify_session_dir = $VIMFILES .'\sessions'
 else
     let g:startify_session_dir = $VIMFILES .'/sessions'
@@ -1460,9 +1449,9 @@ autocmd misc_group FileType gitcommit,qfreplace setlocal nofoldenable
 "}}}
 
 " Markdown ------------------------{{{
-if  s:is_unix == 2
+if  te#env#IsMac()
     let g:mkdp_path_to_chrome = 'open -a safari'
-elseif s:is_win
+elseif te#env#IsWindows()
     let g:mkdp_path_to_chrome = 'C:\\Program Files (x86)\Google\Chrome\Application\chrome.exe'
 else
     let g:mkdp_path_to_chrome = 'google-chrome'
@@ -1527,7 +1516,7 @@ let g:EasyMotion_verbose = 0
 " }}}
 
 " Tmux ------------------{{{
-if !s:is_win
+if !te#env#IsWindows()
     let g:tmux_navigator_no_mappings = 1
     exec 'nnoremap <silent> '.s:alt_char['h'] .' :TmuxNavigateLeft<cr>'
     exec 'nnoremap <silent> '.s:alt_char['l'].' :TmuxNavigateRight<cr>'
@@ -1742,10 +1731,10 @@ filetype plugin indent on
 syntax on
 "}}}
 "Gui releate{{{
-if s:is_gui
-    if ( s:is_unix==2 )
+if te#env#IsGui()
+    if (te#env#IsMac())
         set guifont=Consolas:h16
-    elseif s:is_unix == 1
+    elseif te#env#IsUnix()
         set guifont=Consolas\ 12
         set guifontwide=YaHei_Mono_Hybird_Consolas\ 12.5
     else
@@ -1817,10 +1806,10 @@ if s:is_gui
     amenu PopUp.&Open\ Header/Source :AT<cr>
     "}}}
     function! s:MaximizeWindow()
-        if s:is_unix == 1
+        if te#env#IsUnix()
             :win 1999 1999
             silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
-        elseif s:is_win
+        elseif te#env#IsWindows()
             :simalt~x "maximize window
         else
             :win 1999 1999

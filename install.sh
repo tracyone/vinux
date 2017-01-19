@@ -57,6 +57,7 @@ if [[ $(pwd) != "${HOME}/.config/nvim" ]]; then
 	mkdir -p ${HOME}/.vim ${HOME}/.config/nvim ${HOME}/.vim/autoload
 	ln -sf ${HOME}/.vim ${HOME}/.config/nvim
 	ln -sf $(pwd)/vimrc ${HOME}/.config/nvim/init.vim
+	ln -sf $(pwd)/autoload ${HOME}/.config/nvim/
 fi
 
 if [[ $(pwd) != "${HOME}/.vim" ]]; then
