@@ -733,6 +733,17 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'kshenoy/vim-signature'
 Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar'
+Plug 'MattesGroeger/vim-bookmarks'
+let g:bookmark_auto_save = 1
+let g:bookmark_no_default_key_mappings = 1
+"Bookmark annotate
+nnoremap <leader>mi :BookmarkAnnotate<CR>
+"Bookmark clear
+nnoremap <leader>mc :BookmarkClear<cr>
+"Bookmark show all
+nnoremap <leader>mb :BookmarkShowAll<CR>
+Plug 'hecal3/vim-leader-guide'
+nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/L9'
 Plug 'mattn/emmet-vim',{'for': 'html'}
@@ -1698,7 +1709,7 @@ nnoremap <leader>aw :call DrawItToggle()<cr>
 let g:love_support_option=['tabstop','shiftwidth','softtabstop'
             \,'expandtab','smarttab']
 let g:SignatureEnabledAtStartup=1
-" toggle show sign
+" toggle long or short statusline
 nnoremap <leader>ts :call te#utils#OptionToggle('statusline',['%!MyStatusLine(1)','%!MyStatusLine(2)'])<cr>
 " toggle paste option
 nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
