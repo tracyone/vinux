@@ -942,7 +942,14 @@ autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
 " Toggle auto formatting:
 nmap <Leader>C :ClangFormatAutoToggle<CR>
-    "}}}
+" linux coding style
+let g:clang_format#code_style='llvm'
+let g:clang_format#style_options = {
+            \ 'IndentWidth' : '8',
+            \ 'UseTab' : 'Always',
+            \ 'AllowShortIfStatementsOnASingleLine': 'false',
+            \ "IndentCaseLabels" : "false"}
+ "}}}
 
 " Complete ------------------------{{{
 "generate .ycm_extra_conf.py for current directory
