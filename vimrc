@@ -440,16 +440,17 @@ nnoremap <Leader>tn :call TracyoneNuToggle()<cr>
 "}}}
 "Function{{{
 function! TracyoneFindMannel()
+    let l:man_cmd='Man'
     let l:cur_word=expand('<cword>')
-    let l:ret = te#utils#GetError('Snman 3 '.l:cur_word,'no manual.*')
+    let l:ret = te#utils#GetError(l:man_cmd.' 3 '.l:cur_word,'no manual.*')
     "make sure index valid
     if l:ret != 0
-        let l:ret = te#utils#GetError('Snman 2 '.l:cur_word,'no manual.*')
+        let l:ret = te#utils#GetError(l:man_cmd.' 2 '.l:cur_word,'no manual.*')
         if l:ret != 0
             execute 'silent! help '.l:cur_word
         endif
     else
-        execute 'Snman 2 '.l:cur_word
+        execute l:man_cmd.' 2 '.l:cur_word
     endif
 endfunction
 
@@ -706,7 +707,7 @@ if(!s:is_win)
     Plug 'jebaum/vim-tmuxify'
     Plug 'tracyone/ctrlp-leader-guide'
     Plug 'vim-scripts/sudo.vim'
-    Plug 'nhooyr/neoman.vim'
+    if !s:is_nvim | Plug 'vim-utils/vim-man' | endif
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
     if s:is_unix == 2
         Plug 'CodeFalling/fcitx-vim-osx',{'do': 'wget -c \"https://raw.githubusercontent.com/
