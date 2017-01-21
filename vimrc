@@ -692,13 +692,14 @@ Plug 'Raimondi/delimitMate'
 Plug 'vim-scripts/genutils'
 Plug 'itchyny/calendar.vim', { 'on': 'Calendar'}
 Plug 'arecarn/selection.vim' | Plug 'arecarn/crunch.vim',{'on':'Crunch'}
-"Plug 'youjumpiwatch/vim-neoeclim'
 Plug 'mhinz/vim-startify'
 Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': ['Ydc','Ydv']}
 Plug 'iamcco/markdown-preview.vim',{'for': 'markdown'}
 Plug 'mzlogin/vim-markdown-toc',{'for': 'markdown'}
 Plug 'plasticboy/vim-markdown',{'for': 'markdown'}
+Plug 'rhysd/vim-clang-format',{'for': ['c', 'cpp']}
+"Plug 'sbdchd/neoformat',{'for': ['c', 'cpp']}
 if(!s:is_win)
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'tracyone/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
@@ -734,16 +735,7 @@ Plug 'kshenoy/vim-signature'
 Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar'
 Plug 'MattesGroeger/vim-bookmarks'
-let g:bookmark_auto_save = 1
-let g:bookmark_no_default_key_mappings = 1
-"Bookmark annotate
-nnoremap <leader>mi :BookmarkAnnotate<CR>
-"Bookmark clear
-nnoremap <leader>mc :BookmarkClear<cr>
-"Bookmark show all
-nnoremap <leader>mb :BookmarkShowAll<CR>
 Plug 'hecal3/vim-leader-guide'
-nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/L9'
 Plug 'mattn/emmet-vim',{'for': 'html'}
@@ -945,6 +937,11 @@ function! Do_CsTag(dir)
     endif
     execute 'redraw!'
 endfunction
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" Toggle auto formatting:
+nmap <Leader>C :ClangFormatAutoToggle<CR>
     "}}}
 
 " Complete ------------------------{{{
@@ -1437,15 +1434,6 @@ nnoremap <Leader>bh :Startify<cr>
 autocmd misc_group FileType startify setlocal buftype=
 "}}}
 
-" Eclim ---------------------------{{{
-let g:EclimCompletionMethod = 'omnifunc'
-if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.cpp =
-            \ '[^. *\t]\.\w*\|\h\w*::'
-"}}}
-
 " GlobalSearch --------------------{{{
 if executable('ag')
     let g:ag_prg='ag'." --vimgrep --ignore 'cscope.*'"
@@ -1509,10 +1497,6 @@ nnoremap <Leader>gd :Gdiff<cr>
 nnoremap <Leader>gi :Gissue<cr>
 " git push origin master
 nnoremap <Leader>gp :call te#git#GitPush("heads")<cr>
-"}}}
-
-" neomake -------------------------{{{
-let g:neomake_open_list=2
 "}}}
 
 " Vim-multiple-cursors ------------{{{
@@ -1713,6 +1697,16 @@ let g:SignatureEnabledAtStartup=1
 nnoremap <leader>ts :call te#utils#OptionToggle('statusline',['%!MyStatusLine(1)','%!MyStatusLine(2)'])<cr>
 " toggle paste option
 nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
+let g:bookmark_auto_save = 1
+let g:bookmark_no_default_key_mappings = 1
+"Bookmark annotate
+nnoremap <leader>mi :BookmarkAnnotate<CR>
+"Bookmark clear
+nnoremap <leader>mc :BookmarkClear<cr>
+"Bookmark show all
+nnoremap <leader>mb :BookmarkShowAll<CR>
+nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
+
 " }}}
 
 " Windows manger -----------------{{{
