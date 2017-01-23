@@ -948,6 +948,7 @@ let g:clang_format#code_style='llvm'
 let g:clang_format#style_options = {
             \ 'IndentWidth' : '8',
             \ 'UseTab' : 'Always',
+            \ 'BreakBeforeBraces' : 'Linux',
             \ 'AllowShortIfStatementsOnASingleLine': 'false',
             \ "IndentCaseLabels" : "false"}
  "}}}
@@ -1707,6 +1708,7 @@ nnoremap <leader>ts :call te#utils#OptionToggle('statusline',['%!MyStatusLine(1)
 nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
 let g:bookmark_auto_save = 1
 let g:bookmark_no_default_key_mappings = 1
+let g:bookmark_save_per_working_dir = 1
 "Bookmark annotate
 nnoremap <leader>mi :BookmarkAnnotate<CR>
 "Bookmark clear
