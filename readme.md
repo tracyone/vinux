@@ -1,6 +1,4 @@
-# t-vim 
-
-[![Build Status](https://travis-ci.org/tracyone/t-vim.svg?branch=master)](https://travis-ci.org/tracyone/t-vim)
+# t-vim [![Build Status](https://travis-ci.org/tracyone/t-vim.svg?branch=master)](https://travis-ci.org/tracyone/t-vim)
 
 ![screenshot](https://cloud.githubusercontent.com/assets/4246425/21648505/36a89600-d2d9-11e6-8dcf-9941e114c783.png)
 
@@ -12,28 +10,28 @@
 * [Installation](#installation)
 * [Feature introduction](#feature-introduction)
 * [Keymapping](#keymapping)
-	* [Keymapping with space prefix](#keymapping-with-space-prefix)
-		* [Application](#application)
-		* [Buffer](#buffer)
-		* [Comment operating](#comment-operating)
-		* [Easymotion mapping](#easymotion-mapping)
-		* [File releate](#file-releate)
-		* [Ctrlp](#ctrlp)
-		* [Git relate](#git-relate)
-		* [Help relate](#help-relate)
-		* [Session](#session)
-		* [Markdown](#markdown)
-		* [Quit](#quit)
-		* [Toggle something](#toggle-something)
-		* [Ag searcher](#ag-searcher)
-		* [Windows operatting](#windows-operatting)
-		* [Mark](#mark)
-		* [Others](#others)
-	* [Fuzzy files search & string search](#fuzzy-files-search--string-search)
-	* [FunctionKey](#functionkey)
-	* [Source code reading and GoToDefinition](#source-code-reading-and-gotodefinition)
-	* [keymapping with alt prefix](#keymapping-with-alt-prefix)
-	* [Other keymapping](#other-keymapping)
+    * [Keymapping with space prefix](#keymapping-with-space-prefix)
+        * [Application](#application)
+        * [Buffer](#buffer)
+        * [Comment operating](#comment-operating)
+        * [Easymotion mapping](#easymotion-mapping)
+        * [File releate](#file-releate)
+        * [Ctrlp](#ctrlp)
+        * [Git relate](#git-relate)
+        * [Help relate](#help-relate)
+        * [Session](#session)
+        * [Markdown](#markdown)
+        * [Quit](#quit)
+        * [Toggle something](#toggle-something)
+        * [Ag searcher](#ag-searcher)
+        * [Windows operatting](#windows-operatting)
+        * [Mark](#mark)
+        * [Others](#others)
+    * [Fuzzy files search & string search](#fuzzy-files-search--string-search)
+    * [FunctionKey](#functionkey)
+    * [Source code reading and GoToDefinition](#source-code-reading-and-gotodefinition)
+    * [keymapping with alt prefix](#keymapping-with-alt-prefix)
+    * [Other keymapping](#other-keymapping)
 * [Awesome colorscheme](#awesome-colorscheme)
 * [Plugin list](#plugin-list)
 * [Config Structure](#config-structure)
@@ -312,17 +310,20 @@ mode  |      key | description
 
 ### Mark 
 
-mode  |      key | description
-----  |     ---- | -----------
-    n |        mm | <Plug>MarkSet
-    x |        mm | <Plug>MarkSet
-    n |        mn | <Plug>MarkClear
-    n |        m/ | <Plug>MarkSearchAnyNext
-    n |        m? | <Plug>MarkSearchAnyPrev
-    n |        * | <Plug>MarkSearchCurrentNext
-    n |        # | <Plug>MarkSearchCurrentPrev
-    n |        r | <Plug>MarkRegex
-    x |        r | <Plug>MarkRegex
+mode  | key  | description
+----  | ---- | -----------
+    n | mm   | <Plug>MarkSet
+    x | mm   | <Plug>MarkSet
+    n | mn   | <Plug>MarkClear
+    n | m/   | <Plug>MarkSearchAnyNext
+    n | m?   | <Plug>MarkSearchAnyPrev
+    n | *    | <Plug>MarkSearchCurrentNext
+    n | #    | <Plug>MarkSearchCurrentPrev
+    n | r    | <Plug>MarkRegex
+    x | r    | <Plug>MarkRegex
+    n | mi   | bookmark annotate
+    n | mc   | clear current bookmark
+    n | mb   | bookmark browser
 
 ### Others 
 
