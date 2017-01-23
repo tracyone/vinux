@@ -324,6 +324,7 @@ mode  | key  | description
     n | mi   | bookmark annotate
     n | mc   | clear current bookmark
     n | mb   | bookmark browser
+    n | ma   | add bookmark use current line as annotate
 
 ### Others 
 

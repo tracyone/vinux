@@ -700,7 +700,6 @@ Plug 'iamcco/markdown-preview.vim',{'for': 'markdown'}
 Plug 'mzlogin/vim-markdown-toc',{'for': 'markdown'}
 Plug 'plasticboy/vim-markdown',{'for': 'markdown'}
 Plug 'rhysd/vim-clang-format',{'for': ['c', 'cpp']}
-"Plug 'sbdchd/neoformat',{'for': ['c', 'cpp']}
 if(!s:is_win)
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'tracyone/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
@@ -1718,6 +1717,8 @@ let g:bookmark_annotation_sign = '##'
 let g:bookmark_auto_close = 1
 "Bookmark annotate
 nnoremap <leader>mi :BookmarkAnnotate<CR>
+"add bookmark use current line as annotate.
+nnoremap <leader>ma : exec ':BookmarkAnnotate '.getline('.')<cr>
 "Bookmark clear
 nnoremap <leader>mc :BookmarkClear<cr>
 "Bookmark show all
