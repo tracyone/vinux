@@ -1709,6 +1709,9 @@ nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
 let g:bookmark_auto_save = 1
 let g:bookmark_no_default_key_mappings = 1
 let g:bookmark_save_per_working_dir = 1
+let g:bookmark_sign = '>>'
+let g:bookmark_annotation_sign = '##'
+let g:bookmark_auto_close = 1
 "Bookmark annotate
 nnoremap <leader>mi :BookmarkAnnotate<CR>
 "Bookmark clear
