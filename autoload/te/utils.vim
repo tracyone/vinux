@@ -109,6 +109,6 @@ function! te#utils#SourceRc(path) abort
     let l:ft_orig=&ft
     :call te#utils#EchoWarning('Sourcing '.a:path.' ...')
     execute ':source '.a:path
-    :execute "set ft=".l:ft_orig
+    :execute 'set ft='.l:ft_orig
     :call te#utils#EchoWarning(a:path.' has been sourced.')
 endfunction
