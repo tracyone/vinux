@@ -50,7 +50,7 @@ function! te#utils#SaveFiles() abort
             :w !sudo tee %
         endif
     catch /^Vim\%((\a\+)\)\=:E32/   "no file name
-        if has('gui_running') ||  has('gui_macvim')
+        if te#env#IsGui()
             exec ':emenu File.Save'
             return 0
         endif
