@@ -676,6 +676,8 @@ Plug 'tomasr/molokai'
 Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'KabbAmine/yowish.vim'
+Plug 'rakr/vim-one'
+Plug 'zanglg/nova.vim'
 "some productive plugins
 Plug 'terryma/vim-multiple-cursors'
 if s:has_python
@@ -734,7 +736,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'kshenoy/vim-signature'
 Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar'
-Plug 'MattesGroeger/vim-bookmarks'
+Plug 'tracyone/vim-bookmarks'
 Plug 'hecal3/vim-leader-guide'
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/L9'
@@ -1865,6 +1867,9 @@ let g:solarized_underline=0
 let g:solarized_termcolors=256
 let g:solarized_menu=0
 set background=dark
+if (has("termguicolors"))
+    set termguicolors
+endif
 try 
     colorscheme PaperColor "default setting 
 catch /^Vim\%((\a\+)\)\=:E185/
