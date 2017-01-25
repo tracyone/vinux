@@ -536,7 +536,11 @@ endfunc
 function! TracyoneGotoDef(open_type)
     let l:cword=expand('<cword>')
     execute a:open_type
-    let l:ycm_ret=s:YcmGotoDef(a:open_type)
+    if te#env#SupportYcm() && s:complete_plugin == 1
+        let l:ycm_ret=s:YcmGotoDef(a:open_type)
+    else
+        let l:ycm_ret = -1
+    endif
     if l:ycm_ret < 0
         try
             execute 'cs find g '.l:cword
@@ -623,9 +627,17 @@ if s:complete_plugin == 5 && !te#env#IsNvim()
 endif
 
 if s:complete_plugin == 1
-    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-    Plug 'Valloric/YouCompleteMe', { 'on': [] }
-    let s:complete_plugin_name='YouCompleteMe'
+    if te#env#IsUnix()
+        Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+        Plug 'Valloric/YouCompleteMe', { 'on': [] }
+        let s:complete_plugin_name='YouCompleteMe'
+    elseif te#env#IsWin32()
+        Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
+        let s:complete_plugin_name='YouCompleteMe-x86'
+    else
+        Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
+        let s:complete_plugin_name='YouCompleteMe-x64'
+    endif
 elseif s:complete_plugin == 2
     Plug 'Rip-Rip/clang_complete'
 elseif s:complete_plugin == 3
@@ -637,12 +649,6 @@ elseif s:complete_plugin == 4
 elseif s:complete_plugin == 5
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'zchee/deoplete-clang'
-elseif s:complete_plugin == 6
-    Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
-    let s:complete_plugin_name='YouCompleteMe-x86'
-elseif s:complete_plugin == 7
-    Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
-    let s:complete_plugin_name='YouCompleteMe-x64'
 else
     call te#utils#EchoWarning('No complete plugin selected!')
 endif
@@ -727,7 +733,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'kshenoy/vim-signature'
 Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar'
-Plug 'tracyone/vim-bookmarks'
+Plug 'MattesGroeger/vim-bookmarks'
 Plug 'hecal3/vim-leader-guide'
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/L9'
@@ -953,7 +959,7 @@ let g:clang_format#style_options = {
 "generate .ycm_extra_conf.py for current directory
 
 " lazyload ultisnips and YouCompleteMe
-if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
+if s:complete_plugin == 1
     augroup lazy_load_group
         autocmd!
         autocmd InsertEnter * call plug#load('ultisnips',s:complete_plugin_name)
@@ -972,7 +978,7 @@ endif
 " autoclose preview windows
 autocmd misc_group InsertLeave * if pumvisible() == 0|pclose|endif
 
-if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
+if s:complete_plugin == 1
     function! GenYCM()
         let l:cur_dir=getcwd()
         cd $VIMFILES/bundle/YCM-Generator
