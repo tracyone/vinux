@@ -950,6 +950,10 @@ let g:clang_format#style_options = {
             \ 'UseTab' : 'Always',
             \ 'BreakBeforeBraces' : 'Linux',
             \ 'AllowShortIfStatementsOnASingleLine': 'false',
+	    \ 'AllowShortBlocksOnASingleLine': 'false',
+	    \ 'AllowShortCaseLabelsOnASingleLine': 'false',
+	    \ 'AllowShortFunctionsOnASingleLine': 'None',
+	    \ 'AllowShortLoopsOnASingleLine': 'false',
             \ "IndentCaseLabels" : "false"}
  "}}}
 
