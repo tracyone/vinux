@@ -665,7 +665,7 @@ if te#env#IsGui()
     Plug 'thinca/vim-fontzoom',{'on': ['<Plug>(fontzoom-smaller)', '<Plug>(fontzoom-larger)'] }
 endif
 Plug 'sjl/badwolf'
-Plug 'altercation/vim-colors-solarized'
+Plug 'iCyMind/NeoSolarized'
 Plug 'cocopon/iceberg.vim'
 Plug 'tomasr/molokai'
 Plug 'morhetz/gruvbox'
@@ -1850,10 +1850,9 @@ else
 endif
 
 "{{{colorscheme
-let g:solarized_bold=1
-let g:solarized_underline=0
-let g:solarized_termcolors=256
-let g:solarized_menu=0
+let g:neosolarized_bold = 1
+let g:neosolarized_underline = 1
+let g:neosolarized_italic = 0
 set background=dark
 if (has("termguicolors"))
     set termguicolors
