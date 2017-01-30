@@ -75,6 +75,8 @@ augroup filetype_group
                 \ if &diff |
                 \ set statusline=%!MyStatusLine(2) |
                 \ endif
+    autocmd FileType vim nnoremap <buffer><silent> <c-]>  :call lookup#lookup()<cr>
+    autocmd FileType vim nnoremap <buffer><silent> <c-t>  :call lookup#pop()<cr>
 augroup END
 
 "}}}
@@ -653,7 +655,7 @@ else
     call te#utils#EchoWarning('No complete plugin selected!')
 endif
 Plug 'Shougo/neco-vim'
-
+Plug 'mhinz/vim-lookup', {'for': 'vim'}
 Plug 'tracyone/hex2ascii.vim', { 'do': 'make' }
 Plug 'thinca/vim-qfreplace'
 Plug 'vim-scripts/verilog.vim',{'for': 'verilog'}
