@@ -1501,6 +1501,8 @@ nnoremap <Leader>gd :Gdiff<cr>
 nnoremap <Leader>gi :Gissue<cr>
 " git push origin master
 nnoremap <Leader>gp :call te#git#GitPush("heads")<cr>
+" git push to gerrit
+nnoremap <Leader>gg :call te#git#GitPush("for")<cr>
 "}}}
 
 " Vim-multiple-cursors ------------{{{
