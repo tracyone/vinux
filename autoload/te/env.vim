@@ -82,3 +82,8 @@ function! te#env#IsUnix()
     if s:is_unix | return 1 | endif
     return 0
 endfunction
+
+function! te#env#SupportAsync()
+    if s:is_nvim && v:version >= 800 | return 1 | endif
+    return 0
+endfunction

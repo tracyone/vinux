@@ -66,17 +66,11 @@ augroup filetype_group
     au BufRead,BufNewFile *.veo setlocal filetype=verilog
     au BufRead,BufNewFile * let $CurBufferDir=expand('%:p:h')
     au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} :setlocal filetype=markdown 
-    au FileType verilog setlocal tabstop=3 shiftwidth=3 softtabstop=3 expandtab
-    au FileType make setlocal noexpandtab
-    au FileType markdown setlocal nospell conceallevel=2 | nnoremap <buffer> <leader>tt :Toc<cr>
-    au FileType vim setlocal fdm=marker expandtab tabstop=4 shiftwidth=4 softtabstop=4
     au BufRead,BufNewFile *.hex,*.out,*.o,*.a Vinarise
     au BufEnter * 
                 \ if &diff |
                 \ set statusline=%!MyStatusLine(2) |
                 \ endif
-    autocmd FileType vim nnoremap <buffer><silent> <c-]>  :call lookup#lookup()<cr>
-    autocmd FileType vim nnoremap <buffer><silent> <c-t>  :call lookup#pop()<cr>
 augroup END
 
 "}}}
@@ -84,9 +78,6 @@ augroup END
 "{{{fold setting
 "folding type: manual, indent, expr, marker or syntax
 set foldenable                  " enable folding
-autocmd fold_group FileType c,cpp setlocal foldmethod=syntax 
-autocmd fold_group FileType verilog setlocal foldmethod=marker 
-autocmd fold_group FileType verilog setlocal foldmarker=begin,end 
 autocmd fold_group FileType sh setlocal foldmethod=indent
 set foldlevel=100         " start out with everything folded
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
@@ -171,14 +162,12 @@ set smartindent "do clever autoindenting
 "set nowrap   "don't auto linefeed
 
 "linux kernel coding stype
-set cindent  "enable specific indenting for C code
 set tabstop=8  "number of spaces a <Tab> in the text stands for
 set shiftwidth=8 "number of spaces used for each step of (auto)indent
 set softtabstop=8  "if non-zero, number of spaces to insert for a <Tab>
 set noexpandtab
 set nosmarttab "a <Tab> in an indent inserts 'shiftwidth' spaces
 set textwidth=80
-set cinoptions=:0,l1,t0,g0,(0)
 
 set hlsearch "highlight all matches for the last used search pattern
 set showmode "display the current mode in the status line
@@ -277,7 +266,6 @@ vnoremap <s-TAB>  <gv
 nnoremap <silent><c-TAB> :AT<cr>
 nnoremap <silent><right> :tabnext<cr>
 nnoremap <silent><Left> :tabp<cr>
-au  filetype_group FileType c,cpp nnoremap <silent> K :call TracyoneFindMannel()<cr> | setlocal colorcolumn=80
 
 "{{{ alt or meta key mapping
 " in mac osx please set your option key as meta key
@@ -415,10 +403,6 @@ nnoremap dm :%s/\r\(\n\)/\1/g<CR>
 "cd to current buffer's path
 nnoremap <silent> <leader>fc :call GotoCurFile()<cr> 
 nnoremap <silent> <c-F7> :call GotoCurFile()<cr> 
-"resize windows
-noremap <F5> :call Do_Make()<CR>
-" make
-nnoremap <leader>am :call Do_Make()<cr>
 
 nnoremap <F7> :call Dosunix()<cr>:call te#utils#EchoWarning("Dos2unix...")<cr>
 " dos to unix or unix to dos
@@ -446,7 +430,7 @@ function! TracyoneFindMannel()
 endfunction
 
 function! TracyoneCodingStypeToggle()
-    if &tabstop == 4
+    if &tabstop != 8
         set tabstop=8  
         set shiftwidth=8 
         set softtabstop=8 
@@ -464,16 +448,6 @@ function! TracyoneCodingStypeToggle()
 endfunction
 
 
-function! Do_Make()
-    :call te#utils#EchoWarning('making ...')
-    :wa
-    if empty(glob('makefile')) && empty(glob('Makefile'))
-        exec ':AsyncRun -post=!'. './"%<" gcc "%" -o "%<" '
-        exec ''
-    else
-        :AsyncRun -post=cw make -s
-    endif
-endfunction
 
 function! s:Get_pattern_at_cursor(pat)
     let col = col('.') - 1
@@ -559,7 +533,7 @@ endfunction
 
 func! s:YcmGotoDef(open_type)
     let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
-    if s:complete_plugin == 1 || s:complete_plugin ==6 || s:complete_plugin == 7
+    if s:complete_plugin == 1 
         if  exists('*youcompleteme#Enable') == 0
             call te#utils#EchoWarning('Loading ycm ...')
             call plug#load('ultisnips','YouCompleteMe')
@@ -702,7 +676,7 @@ Plug 'rhysd/vim-clang-format',{'for': ['c', 'cpp']}
 if(!te#env#IsWindows())
     if te#env#IsTmux()
         Plug 'christoomey/vim-tmux-navigator'
-        Plug 'tracyone/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
+        Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
         Plug 'jebaum/vim-tmuxify'
     endif
     Plug 'tracyone/ctrlp-leader-guide'
@@ -780,182 +754,6 @@ let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
 let g:tagbar_systemenc='cp936'
 "}}}
-
-" Cscope --------------------------{{{
-function! TracyoneAddCscopeOut()
-    if empty(glob('.project'))
-        exec 'silent! cs add cscope.out'
-    else
-        for s:line in readfile('.project', '')
-            exec 'silent! cs add '.s:line.'/cscope.out'
-        endfor
-    endif
-endfunction
-:call TracyoneAddCscopeOut()
-if $CSCOPE_DB !=? '' "tpyically it is a include db 
-    exec 'silent! cs add $CSCOPE_DB'
-endif
-if $CSCOPE_DB1 !=? ''
-    exec 'silent! cs add $CSCOPE_DB1'
-endif
-if $CSCOPE_DB2 !=? ''
-    exec 'silent! cs add $CSCOPE_DB2'
-endif
-if $CSCOPE_DB3 !=? ''
-    exec 'silent! cs add $CSCOPE_DB3'
-endif
-if has('cscope')
-    " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
-    set cscopetag
-    set csprg=cscope
-    " check cscope for definition of a symbol before checking ctags: set to 1
-    " if you want the reverse search order.
-    set csto=0
-    set cscopequickfix=s-,c-,d-,i-,t-,e-,i-,g-,f-
-    " add any cscope database in current directory
-    " else add the database pointed to by environment variable 
-    set cscopetagorder=0
-endif
-set cscopeverbose 
-" show msg when any other cscope db added
-nnoremap <LocalLeader>s :cs find s <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-nnoremap <LocalLeader>g :call TracyoneGotoDef("")<cr>
-nnoremap <LocalLeader>d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:cw 7<cr>
-nnoremap <LocalLeader>c :cs find c <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-nnoremap <LocalLeader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-nnoremap <LocalLeader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-"nnoremap ,f :cs find f <C-R>=expand("<cfile>")<CR><CR>:cw 7<cr>
-nnoremap <LocalLeader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:cw 7<cr>
-
-nnoremap <C-\>s :split<CR>:cs find s <C-R>=expand("<cword>")<CR><CR>
-nnoremap <C-\>g :call TracyoneGotoDef("sp")<cr>
-nnoremap <C-\>d :split<CR>:cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>
-nnoremap <C-\>c :split<CR>:cs find c <C-R>=expand("<cword>")<CR><CR>
-nnoremap <C-\>t :split<CR>:cs find t <C-R>=expand("<cword>")<CR><CR>
-nnoremap <C-\>e :split<CR>:cs find e <C-R>=expand("<cword>")<CR><CR>
-nnoremap <C-\>f :split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
-nnoremap <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-
-nnoremap <LocalLeader>u :call TracyoneGenCsTag()<cr>
-nnoremap <LocalLeader>a :call TracyoneAddCscopeOut()<cr>
-"kill the connection of current dir 
-nnoremap <LocalLeader>k :cs kill cscope.out<cr> 
-
-function! TracyoneGenCsTag()
-    if empty(glob('.project'))
-        :call Do_CsTag(getcwd())
-    else
-        for l:line in readfile('.project', '')
-            let l:ans=input('Generate cscope database in '.l:line.' [y/n/a]?','y')
-            if l:ans =~# '\v^[yY]$'
-                call Do_CsTag(l:line)
-            endif
-        endfor
-    endif
-endfunction
-
-function! GenCCTreeDataBase()
-    if filereadable('cctree.out')
-        :CCTreeLoadXRefDB cctree.out
-    else
-        if filereadable('cscope.out')
-            exec ':AsyncRun -post=CCTreeLoadXRefDB\ cctree.out vim +"CCTreeLoadDB cscope.out" +"CCTreeSaveXRefDB cctree.out" +qa'
-        else
-            :call te#utils#EchoWarning('No cscope.out!Please generate cscope first.')
-        endif
-    endif
-endfunction
-
-function! GenerateCscope4Kernel()
-    :silent! cs kill cscope.out
-    :silent! call delete('cctree.out')
-    silent! execute 'AsyncRun -post=cs\ add\ cscope.out '. 'make O=.
-                \ SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags'
-    :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
-endfunction
-
-function! Do_CsTag(dir)
-    if(te#env#IsWindows())
-        let l:tagfile=a:dir.'\\'.'tags'
-        let l:cscopefiles=a:dir.'\\'.'cscope.files'
-        let l:cscopeout=a:dir.'\\'.'cscope.out'
-        let l:cctreeout=a:dir.'\\'.'cctree.out'
-    else
-        let l:tagfile=a:dir.'/tags'
-        let l:cscopefiles=a:dir.'/cscope.files'
-        let l:cscopeout=a:dir.'/cscope.out'
-        let l:cctreeout=a:dir.'/cctree.out'
-    endif
-    :silent! call delete(l:cctreeout)
-    if filereadable('tags')
-        let tagsdeleted=delete(l:tagfile)
-        if(tagsdeleted!=0)
-            :call te#utils#EchoWarning('Fail to do tags! I cannot delete the tags')
-            return
-        endif
-    endif
-    if filereadable(a:dir.'/cscope.files')
-        let csfilesdeleted=delete(l:cscopefiles)
-        if(csfilesdeleted!=0)
-            :call te#utils#EchoWarning('Fail to do cscope! I cannot delete the cscope.files')
-            return
-        endif
-    endif
-    if filereadable(a:dir.'/cscope.out')
-        let csoutdeleted=delete(l:cscopeout)
-        if(csoutdeleted!=0)
-            :call te#utils#EchoWarning('I cannot delete the cscope.out,try again')
-            echo 'kill the cscope connection'
-            if has('cscope') && filereadable(l:cscopeout)
-                silent! execute 'cs kill '.l:cscopeout
-            endif
-            let csoutdeleted=delete(l:cscopeout)
-        endif
-        if(csoutdeleted!=0)
-            :call te#utils#EchoWarning('I still cannot delete the cscope.out,failed to do cscope')
-            return
-        endif
-    endif
-    "if(executable('ctags'))
-        "silent! execute "!ctags -R --c-types=+p --fields=+S *"
-        "silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-    "endif
-    if(executable('cscope') && has('cscope') )
-        if(!te#env#IsWindows())
-            silent! execute '!find ' .a:dir. ' -name "*.[chsS]" > '  . a:dir.'/cscope.files'
-        else
-            silent! execute '!dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.a:dir.'\cscope.files'
-        endif
-        if filereadable(l:cscopeout)
-            silent! execute 'cs kill '.l:cscopeout
-        else
-            :call te#utils#EchoWarning('No cscope.out')
-        endif
-        exec 'cd '.a:dir
-        silent! execute 'AsyncRun -post=cs\ add\ '.l:cscopeout. ' cscope -Rbkq -i '.l:cscopefiles
-        cd -
-        execute 'normal :'
-    endif
-    execute 'redraw!'
-endfunction
-" map to <Leader>cf in C++ code
-autocmd filetype_group FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-autocmd filetype_group FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
-" Toggle auto formatting:
-nmap <Leader>C :ClangFormatAutoToggle<CR>
-" linux coding style
-let g:clang_format#code_style='llvm'
-let g:clang_format#style_options = {
-            \ 'IndentWidth' : '8',
-            \ 'UseTab' : 'Always',
-            \ 'BreakBeforeBraces' : 'Linux',
-            \ 'AllowShortIfStatementsOnASingleLine': 'false',
-	    \ 'AllowShortBlocksOnASingleLine': 'false',
-	    \ 'AllowShortCaseLabelsOnASingleLine': 'false',
-	    \ 'AllowShortFunctionsOnASingleLine': 'None',
-	    \ 'AllowShortLoopsOnASingleLine': 'false',
-            \ "IndentCaseLabels" : "false"}
- "}}}
 
 " Complete ------------------------{{{
 "generate .ycm_extra_conf.py for current directory
@@ -1189,7 +987,6 @@ nnoremap <leader>iav :AT<cr>
 "}}}
 
 " DelimitMate ---------------------{{{
-au filetype_group FileType  verilog,c let b:delimitMate_matchpairs = "(:),[:],{:}"
 let delimitMate_nesting_quotes = ['"','`']
 let delimitMate_expand_cr = 0
 let delimitMate_expand_space = 0
@@ -1498,7 +1295,16 @@ nnoremap <Leader>gb :Gblame<cr>
 " git diff current file (vimdiff)
 nnoremap <Leader>gd :Gdiff<cr>
 " list git issue
-nnoremap <Leader>gi :Gissue<cr>
+nnoremap <Leader>gi :silent! Gissue<cr>
+" create new github issue
+nnoremap <Leader>ga :silent! Giadd<cr>
+" create new github milestone
+nnoremap <Leader>gm :silent! Gmiles<cr>
+let g:gissues_lazy_load = 1
+let g:gissues_async_omni = 1
+if filereadable($VIMFILES.'/.github_token')
+    let g:github_access_token = readfile($VIMFILES.'/.github_token', '')[0]
+endif
 " git push origin master
 nnoremap <Leader>gp :call te#git#GitPush("heads")<cr>
 " git push to gerrit
@@ -1697,7 +1503,7 @@ endfunction
 nnoremap <leader>aw :call DrawItToggle()<cr>
 
 let g:love_support_option=['tabstop','shiftwidth','softtabstop'
-            \,'expandtab','smarttab']
+            \,'expandtab','smarttab', 'termguicolors']
 let g:SignatureEnabledAtStartup=1
 " toggle long or short statusline
 nnoremap <leader>ts :call te#utils#OptionToggle('statusline',['%!MyStatusLine(1)','%!MyStatusLine(2)'])<cr>
@@ -1718,6 +1524,8 @@ nnoremap <leader>mc :BookmarkClear<cr>
 "Bookmark show all
 nnoremap <leader>mb :BookmarkShowAll<CR>
 nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
+" Toggle termguicolors
+nnoremap <Leader>tl :call te#utils#OptionToggle('termguicolors',[1,0])<cr>
 
 " }}}
 
@@ -1858,9 +1666,6 @@ let g:neosolarized_bold = 1
 let g:neosolarized_underline = 1
 let g:neosolarized_italic = 0
 set background=dark
-if (has("termguicolors"))
-    set termguicolors
-endif
 try 
     colorscheme PaperColor "default setting 
 catch /^Vim\%((\a\+)\)\=:E185/
