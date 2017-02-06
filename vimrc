@@ -584,10 +584,9 @@ if empty(glob($VIMFILES.'/autoload/plug.vim'))
                     \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     else
         silent! exec ':!mkdir -p '.$VIMFILES.'/autoload'
-        exec ':!curl -fLo ' . $VIMFILES.'/autoload'.'/plug.vim ' .
+        silent! exec ':!curl -fLo ' . $VIMFILES.'/autoload'.'/plug.vim ' .
                     \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     endif
-    autocmd misc_group VimEnter * PlugInstall
 endif
 call plug#begin($VIMFILES.'/bundle')
 Plug 'tracyone/a.vim'
@@ -736,6 +735,11 @@ Plug 'skywind3000/asyncrun.vim',{'on': 'AsyncRun'}
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
+autocmd misc_group VimEnter *
+            \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+            \|   echom '[t-vim]Need to install the missing plugins!'
+            \|   PlugInstall --sync | q
+            \| endif
 "}}}
 
 " Tohtml --------------------------{{{
