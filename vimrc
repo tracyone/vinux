@@ -1521,6 +1521,8 @@ let g:bookmark_annotation_sign = '##'
 let g:bookmark_auto_close = 1
 "Bookmark annotate
 nnoremap <leader>mi :BookmarkAnnotate<CR>
+"Bookmark toggle
+nnoremap <leader>mg :BookmarkToggle<cr>
 "add bookmark use current line as annotate.
 nnoremap <leader>ma : exec ':BookmarkAnnotate '.getline('.')<cr>
 "Bookmark clear
