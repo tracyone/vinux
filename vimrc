@@ -1395,7 +1395,7 @@ map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
 " Misc ---------------------------{{{
 let g:fml_all_sources = 1
 let g:asyncrun_bell=1
-command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+command! -bang -nargs=* -complete=file Make Neomake! <args>
 exec 'map ' .s:alt_char['o'] .' :Fontzoom!<cr>'
 exec 'map ' .s:alt_char['-'] .' <Plug>(fontzoom-smaller)'
 exec 'map ' .s:alt_char['='] .' <Plug>(fontzoom-larger)'
