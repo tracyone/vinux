@@ -1,8 +1,8 @@
 function! s:HowToRunGit() abort
     if exists(':AsyncRun')
         let l:cmdline=':AsyncRun git '
-    elseif exists(':Git')
-        let l:cmdline=':Git '
+    elseif exists(':NeomakeSh')
+        let l:cmdline=':NeomakeSh git '
     else
         let l:cmdline='!git '
     endif
