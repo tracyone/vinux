@@ -1,12 +1,12 @@
-function! s:HowToRunGit() abort
+function! s:HowToRunGit(command) abort
+    call te#utils#EchoWarning('git '.a:command)
     if exists(':AsyncRun')
-        let l:cmdline=':AsyncRun git '
+        exec ':AsyncRun git '.a:command
     elseif exists(':NeomakeSh')
-        let l:cmdline=':NeomakeSh git '
+        call neogrep#RunCommand('git '.a:command)
     else
-        let l:cmdline='!git '
+        exec '!git '.a:command
     endif
-    return l:cmdline
 endfunction
 
 " Get git repo local branch name
@@ -39,8 +39,7 @@ function! te#git#GitPush(push_type) abort
         return 2
     endif
     let l:branch_name = input('Please input the branch name: ','','custom,te#git#GetRemoteBr')
-    call te#utils#EchoWarning(s:HowToRunGit().'push '.l:remote_name[0].' '.te#git#GitBranchName().':refs/'.a:push_type.'/'.l:branch_name)
-    :exec s:HowToRunGit().'push '.l:remote_name[0].' '.te#git#GitBranchName().':refs/'.a:push_type.'/'.l:branch_name
+    call s:HowToRunGit('push '.l:remote_name[0].' '.te#git#GitBranchName().':refs/'.a:push_type.'/'.l:branch_name)
     return 0
 endfunction
 
