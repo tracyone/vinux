@@ -41,8 +41,8 @@ function! GenCCTreeDataBase()
         :CCTreeLoadXRefDB cctree.out
     else
         if filereadable('cscope.out')
-            call neogrep#RunCommand('vim +"CCTreeLoadDB cscope.out" +"CCTreeSaveXRefDB cctree.out" +qa' 
-                        \,function('neogrep#SampleCallBack'),['CCTreeLoadXRefDB cctree.out'])
+            call neomakemp#RunCommand('vim +"CCTreeLoadDB cscope.out" +"CCTreeSaveXRefDB cctree.out" +qa' 
+                        \,function('neomakemp#SampleCallBack'),['CCTreeLoadXRefDB cctree.out'])
         else
             :call te#utils#EchoWarning('No cscope.out!Please generate cscope first.')
         endif
@@ -52,7 +52,7 @@ endfunction
 function! GenerateCscope4Kernel()
     :silent! cs kill cscope.out
     :silent! call delete('cctree.out')
-    call neogrep#RunCommand('make O=. SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags', function('<SID>AddCscopeOut'),[0])
+    call neomakemp#RunCommand('make O=. SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags', function('<SID>AddCscopeOut'),[0])
     :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
 endfunction
 
@@ -60,7 +60,7 @@ function! s:DoMake()
     :call te#utils#EchoWarning('making ...')
     :wa
     if empty(glob('makefile')) && empty(glob('Makefile'))
-        :call neogrep#RunCommand('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
+        :call neomakemp#RunCommand('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
                     \.fnamemodify(expand('%'),':r'))
         :copen
     else
@@ -112,12 +112,12 @@ function! s:DoCsTag(dir)
         "silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
     "endif
     if(!te#env#IsWindows())
-        call neogrep#RunCommand('find ' .a:dir. ' -name "*.[chsS]" > '  . l:cscopefiles)
+        call neomakemp#RunCommand('find ' .a:dir. ' -name "*.[chsS]" > '  . l:cscopefiles)
     else
-        call neogrep#RunCommand('dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.l:cscopefiles)
+        call neomakemp#RunCommand('dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.l:cscopefiles)
     endif
     exec 'cd '.a:dir
-    call neogrep#RunCommand('cscope -Rbkq -i '.l:cscopefiles, function('<SID>AddCscopeOut'),[0,a:dir])
+    call neomakemp#RunCommand('cscope -Rbkq -i '.l:cscopefiles, function('<SID>AddCscopeOut'),[0,a:dir])
     cd -
     execute 'normal :'
     execute 'redraw!'

@@ -734,7 +734,7 @@ Plug 'rhysd/github-complete.vim'
 if te#env#IsVim8() || te#env#IsNvim()
     "Plug 'skywind3000/asyncrun.vim',{'on': 'AsyncRun'}
     Plug 'neomake/neomake'
-    Plug 'tracyone/neogrep'
+    Plug 'tracyone/neomake-multiprocess'
 endif
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
@@ -1245,11 +1245,11 @@ autocmd misc_group FileType startify setlocal buftype=
 
 " GlobalSearch --------------------{{{
 "ag search for the word on current curosr
-nnoremap <leader>vv :call neogrep#global_search('\b'.expand("<cword>").'\b')<cr>
+nnoremap <leader>vv :call neomakemp#global_search('\b'.expand("<cword>").'\b')<cr>
 "ag search for the word on current curosr
-vnoremap <leader>vv :<c-u>:call neogrep#global_search(getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1])<cr>
+vnoremap <leader>vv :<c-u>:call neomakemp#global_search(getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1])<cr>
 "ag search c family function
-nnoremap <leader>vf :call neogrep#global_search(expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]")<cr>
+nnoremap <leader>vf :call neomakemp#global_search(expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]")<cr>
 "set grepprg=ag\ --nogroup\ --nocolor
 "set grepformat=%f:%l:%c%m
 autocmd misc_group FileType qf nnoremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>
@@ -1444,7 +1444,7 @@ nmap <Leader>aF goF
 " open project's(pwd) position with default terminal
 nmap <Leader>aT goT
 " run Ag command
-nnoremap <Leader>fg :call neogrep#global_search('')<cr>
+nnoremap <Leader>fg :call neomakemp#global_search('')<cr>
 " save file
 nnoremap <Leader>fs :call te#utils#SaveFiles()<cr>
 " save all
