@@ -112,12 +112,12 @@ function! s:DoCsTag(dir)
         "silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
     "endif
     if(!te#env#IsWindows())
-        call neomakemp#RunCommand('find ' .a:dir. ' -name "*.[chsS]" > '  . l:cscopefiles)
+        let l:generate_cscopefiles='find ' .a:dir. ' -name "*.[chsS]" > '  . l:cscopefiles
     else
-        call neomakemp#RunCommand('dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.l:cscopefiles)
+        let l:generate_cscopefiles='dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.l:cscopefiles
     endif
     exec 'cd '.a:dir
-    call neomakemp#RunCommand('cscope -Rbkq -i '.l:cscopefiles, function('<SID>AddCscopeOut'),[0,a:dir])
+    call neomakemp#RunCommand(l:generate_cscopefiles.' && cscope -Rbkq -i '.l:cscopefiles, function('<SID>AddCscopeOut'),[0,a:dir])
     cd -
     execute 'normal :'
     execute 'redraw!'
