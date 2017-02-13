@@ -1244,10 +1244,6 @@ autocmd misc_group FileType startify setlocal buftype=
 "}}}
 
 " GlobalSearch --------------------{{{
-"ag search for the word on current curosr
-nnoremap <leader>vv :call neomakemp#global_search('\b'.expand("<cword>").'\b')<cr>
-"ag search for the word on current curosr
-vnoremap <leader>vv :<c-u>:call neomakemp#global_search(getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1])<cr>
 "ag search c family function
 nnoremap <leader>vf :call neomakemp#global_search(expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]")<cr>
 "set grepprg=ag\ --nogroup\ --nocolor

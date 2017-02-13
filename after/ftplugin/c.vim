@@ -61,7 +61,7 @@ function! s:DoMake()
     :wa
     if empty(glob('makefile')) && empty(glob('Makefile'))
         :call neomakemp#RunCommand('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
-                    \.fnamemodify(expand('%'),':r'))
+                    \.fnamemodify(expand('%'),':r'),1)
         :copen
     else
         :Neomake!
