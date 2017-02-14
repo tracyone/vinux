@@ -1,13 +1,23 @@
-" add cscope database from current 
-" directory or read directory from
-" .project
-function! s:AddCscopeOut()
-    if empty(glob('.project'))
-        exec 'silent! cs add cscope.out'
+if !te#env#SupportCscope()
+    call te#utils#EchoWarning("Please install cscope and build vim with cscope feature")
+    finish
+endif
+" add cscope database
+function! s:AddCscopeOut(read_project,...)
+    if a:read_project == 1
+        if empty(glob('.project'))
+            exec 'silent! cs add cscope.out'
+        else
+            for s:line in readfile('.project', '')
+                exec 'silent! cs add '.s:line.'/cscope.out'
+            endfor
+        endif
     else
-        for s:line in readfile('.project', '')
-            exec 'silent! cs add '.s:line.'/cscope.out'
-        endfor
+        if a:0 == 1
+            exec 'cs add '.a:1.'/cscope.out'
+        else
+            exec 'silent! cs add cscope.out'
+        endif
     endif
 endfunction
 
@@ -31,7 +41,8 @@ function! GenCCTreeDataBase()
         :CCTreeLoadXRefDB cctree.out
     else
         if filereadable('cscope.out')
-            exec ':AsyncRun -post=CCTreeLoadXRefDB\ cctree.out vim +"CCTreeLoadDB cscope.out" +"CCTreeSaveXRefDB cctree.out" +qa'
+            call neomakemp#run_command('vim +"CCTreeLoadDB cscope.out" +"CCTreeSaveXRefDB cctree.out" +qa' 
+                        \,function('neomakemp#SampleCallBack'),['CCTreeLoadXRefDB cctree.out'])
         else
             :call te#utils#EchoWarning('No cscope.out!Please generate cscope first.')
         endif
@@ -41,8 +52,7 @@ endfunction
 function! GenerateCscope4Kernel()
     :silent! cs kill cscope.out
     :silent! call delete('cctree.out')
-    silent! execute 'AsyncRun -post=cs\ add\ cscope.out '. 'make O=.
-                \ SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags'
+    call neomakemp#run_command('make O=. SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags', function('<SID>AddCscopeOut'),[0])
     :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
 endfunction
 
@@ -50,10 +60,11 @@ function! s:DoMake()
     :call te#utils#EchoWarning('making ...')
     :wa
     if empty(glob('makefile')) && empty(glob('Makefile'))
-        exec ':AsyncRun -post=!'. './"%<" gcc "%" -o "%<" '
-        exec ''
+        :call neomakemp#run_command('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
+                    \.fnamemodify(expand('%'),':r'),1)
+        :copen
     else
-        :AsyncRun -post=cw make -s
+        :Neomake!
     endif
 endfunction
 
@@ -77,21 +88,18 @@ function! s:DoCsTag(dir)
             return
         endif
     endif
-    if filereadable(a:dir.'/cscope.files')
+    if filereadable(l:cscopefiles)
         let csfilesdeleted=delete(l:cscopefiles)
         if(csfilesdeleted!=0)
             :call te#utils#EchoWarning('Fail to do cscope! I cannot delete the cscope.files')
             return
         endif
     endif
-    if filereadable(a:dir.'/cscope.out')
+    if filereadable(l:cscopeout)
+        silent! execute 'cs kill '.l:cscopeout
         let csoutdeleted=delete(l:cscopeout)
         if(csoutdeleted!=0)
             :call te#utils#EchoWarning('I cannot delete the cscope.out,try again')
-            echo 'kill the cscope connection'
-            if has('cscope') && filereadable(l:cscopeout)
-                silent! execute 'cs kill '.l:cscopeout
-            endif
             let csoutdeleted=delete(l:cscopeout)
         endif
         if(csoutdeleted!=0)
@@ -103,64 +111,55 @@ function! s:DoCsTag(dir)
         "silent! execute "!ctags -R --c-types=+p --fields=+S *"
         "silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
     "endif
-    if(executable('cscope') && has('cscope') )
-        if(!te#env#IsWindows())
-            silent! execute '!find ' .a:dir. ' -name "*.[chsS]" > '  . a:dir.'/cscope.files'
-        else
-            silent! execute '!dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.a:dir.'\cscope.files'
-        endif
-        if filereadable(l:cscopeout)
-            silent! execute 'cs kill '.l:cscopeout
-        else
-            :call te#utils#EchoWarning('No cscope.out')
-        endif
-        exec 'cd '.a:dir
-        silent! execute 'AsyncRun -post=cs\ add\ '.l:cscopeout. ' cscope -Rbkq -i '.l:cscopefiles
-        cd -
-        execute 'normal :'
+    if(!te#env#IsWindows())
+        let l:generate_cscopefiles='find ' .a:dir. ' -name "*.[chsS]" > '  . l:cscopefiles
+    else
+        let l:generate_cscopefiles='dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.l:cscopefiles
     endif
+    exec 'cd '.a:dir
+    call neomakemp#run_command(l:generate_cscopefiles.' && cscope -Rbkq -i '.l:cscopefiles, function('<SID>AddCscopeOut'),[0,a:dir])
+    cd -
+    execute 'normal :'
     execute 'redraw!'
 endfunction
 
 " add cscope database at the first time
-:call s:AddCscopeOut()
+:call s:AddCscopeOut(1)
 
-if has('cscope')
-    " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
-    set cscopetag
-    set csprg=cscope
-    " check cscope for definition of a symbol before checking ctags: set to 1
-    " if you want the reverse search order.
-    set csto=0
-    set cscopequickfix=s-,c-,d-,i-,t-,e-,i-,g-,f-
-    " add any cscope database in current directory
-    " else add the database pointed to by environment variable 
-    set cscopetagorder=0
-    set cscopeverbose 
-    " show msg when any other cscope db added
-    nnoremap <buffer> <LocalLeader>s :cs find s <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-    nnoremap <buffer> <LocalLeader>g :call TracyoneGotoDef("")<cr>
-    nnoremap <buffer> <LocalLeader>d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:cw 7<cr>
-    nnoremap <buffer> <LocalLeader>c :cs find c <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-    nnoremap <buffer> <LocalLeader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-    nnoremap <buffer> <LocalLeader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-    "nnoremap ,f :cs find f <C-R>=expand("<cfile>")<CR><CR>:cw 7<cr>
-    nnoremap <buffer> <LocalLeader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:cw 7<cr>
+" use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+set cscopetag
+set csprg=cscope
+" check cscope for definition of a symbol before checking ctags: set to 1
+" if you want the reverse search order.
+set csto=0
+set cscopequickfix=s-,c-,d-,i-,t-,e-,i-,g-,f-
+" add any cscope database in current directory
+" else add the database pointed to by environment variable 
+set cscopetagorder=0
+set cscopeverbose 
+" show msg when any other cscope db added
+nnoremap <buffer> <LocalLeader>s :cs find s <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+nnoremap <buffer> <LocalLeader>g :call TracyoneGotoDef("")<cr>
+nnoremap <buffer> <LocalLeader>d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:cw 7<cr>
+nnoremap <buffer> <LocalLeader>c :cs find c <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+nnoremap <buffer> <LocalLeader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+nnoremap <buffer> <LocalLeader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
+"nnoremap ,f :cs find f <C-R>=expand("<cfile>")<CR><CR>:cw 7<cr>
+nnoremap <buffer> <LocalLeader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:cw 7<cr>
 
-    nnoremap <buffer> <C-\>s :split<CR>:cs find s <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <buffer> <C-\>g :call TracyoneGotoDef("sp")<cr>
-    nnoremap <buffer> <C-\>d :split<CR>:cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>
-    nnoremap <buffer> <C-\>c :split<CR>:cs find c <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <buffer> <C-\>t :split<CR>:cs find t <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <buffer> <C-\>e :split<CR>:cs find e <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <buffer> <C-\>f :split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
-    nnoremap <buffer> <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nnoremap <buffer> <C-\>s :split<CR>:cs find s <C-R>=expand("<cword>")<CR><CR>
+nnoremap <buffer> <C-\>g :call TracyoneGotoDef("sp")<cr>
+nnoremap <buffer> <C-\>d :split<CR>:cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>
+nnoremap <buffer> <C-\>c :split<CR>:cs find c <C-R>=expand("<cword>")<CR><CR>
+nnoremap <buffer> <C-\>t :split<CR>:cs find t <C-R>=expand("<cword>")<CR><CR>
+nnoremap <buffer> <C-\>e :split<CR>:cs find e <C-R>=expand("<cword>")<CR><CR>
+nnoremap <buffer> <C-\>f :split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
+nnoremap <buffer> <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
-    nnoremap <buffer> <LocalLeader>u :call <SID>GenCsTag()<cr>
-    nnoremap <buffer> <LocalLeader>a :call <SID>AddCscopeOut()<cr>
-    "kill the connection of current dir 
-    nnoremap <buffer> <LocalLeader>k :cs kill cscope.out<cr> 
-endif
+nnoremap <buffer> <LocalLeader>u :call <SID>GenCsTag()<cr>
+nnoremap <buffer> <LocalLeader>a :call <SID>AddCscopeOut()<cr>
+"kill the connection of current dir 
+nnoremap <buffer> <LocalLeader>k :cs kill cscope.out<cr> 
 
 " make
 nnoremap <buffer> <leader>am :call <SID>DoMake()<cr>
