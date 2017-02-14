@@ -3,7 +3,7 @@ function! s:HowToRunGit(command) abort
     if exists(':AsyncRun')
         exec ':AsyncRun git '.a:command
     elseif exists(':NeomakeSh')
-        call neomakemp#RunCommand('git '.a:command)
+        call neomakemp#run_command('git '.a:command)
     else
         exec '!git '.a:command
     endif
