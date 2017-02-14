@@ -64,7 +64,7 @@ function! s:DoMake()
                     \.fnamemodify(expand('%'),':r'),1)
         :copen
     else
-        :Neomake!
+        call neomake#Make(0,['make'])
     endif
 endfunction
 

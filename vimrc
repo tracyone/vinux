@@ -1388,6 +1388,13 @@ map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
 map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
 " }}}
 
+" syntax check -------------------{{{
+let g:neomake_make_maker = {
+            \ 'exe': 'make',
+            \ 'args': ['-j8'],
+            \ 'errorformat': '%f:%l:%c: %m',
+            \ }
+" }}}
 " Misc ---------------------------{{{
 let g:fml_all_sources = 1
 let g:asyncrun_bell=1
