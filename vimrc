@@ -1446,8 +1446,6 @@ nmap <Leader>at got
 nmap <Leader>aF goF
 " open project's(pwd) position with default terminal
 nmap <Leader>aT goT
-" run Ag command
-nnoremap <Leader>fg :call neomakemp#global_search('')<cr>
 " save file
 nnoremap <Leader>fs :call te#utils#SaveFiles()<cr>
 " save all
