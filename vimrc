@@ -1519,6 +1519,8 @@ let g:bookmark_auto_close = 1
 nnoremap <leader>mi :BookmarkAnnotate<CR>
 "Bookmark toggle
 nnoremap <leader>ma :BookmarkToggle<cr>
+"Bookmark annotate 
+vnoremap <leader>mi :<c-u>exec ':BookmarkAnnotate '.getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>
 "Bookmark clear
 nnoremap <leader>mc :BookmarkClear<cr>
 "Bookmark show all
