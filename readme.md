@@ -78,7 +78,7 @@ one integer argument which indicate the complete plugin:
 2. c/c++ complete more accurate.(see [Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe))
 3. Viml autocomplete and GoToDefinition (see [Shougo/neco-vim](https://github.cim/Shougo/neco-vim))
 4. Markdown syntax highlight,preview and TOC
-5. Run external command asynchronously.Include generating cscope database，cctree database.(Use [skywind3000/asyncrun.vim](https://github.com/skywind3000/asyncrun.vim))
+5. Run external command asynchronously.Include generating cscope database，cctree database.(Use [tracyone/neomake-multiprocess](https://github.com/tracyone/neomake-multiprocess))
 6. Ctrlp+ag+ctrlp-py-matcher+ctrlp-funky:high speed fuzzy searcher，search
    anything you want.
 7. Spacemacs like keybinding.(SPC+hk or SPC+? show the key guide)
@@ -493,7 +493,7 @@ n | k | find help on vim document or man page.
 
 - [Shougo/vimshell.vim](https://github.com/Shougo/vimshell.vim):shell
 
-- [skywind3000/asyncrun.vim](https://github.com/skywind3000/asyncrun.vim):run external command asynchrounsly,support vim8 and neovim
+- [tracyone/neomake-multiprocess](https://github.com/tracyone/neomake-multiprocess):run external command asynchrounsly,support vim8 and neovim
 
 - [mhinz/vim-startify](https://github.com/mhinz/vim-startify):start screen,session manager,mru manager
 
