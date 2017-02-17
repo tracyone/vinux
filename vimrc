@@ -1302,6 +1302,8 @@ endif
 nnoremap <Leader>gp :call te#git#GitPush("heads")<cr>
 " git push to gerrit
 nnoremap <Leader>gg :call te#git#GitPush("for")<cr>
+" git fetch all
+nnoremap <Leader>gf :call neomakemp#run_command('git fetch --all')<cr>
 "}}}
 
 " Vim-multiple-cursors ------------{{{
