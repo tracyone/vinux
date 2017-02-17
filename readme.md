@@ -207,6 +207,9 @@ mode  |      key | description
     n |       gL | Open git log(file mode)
     v |       gL | Open git log(file mode)
     n |       gp | git push origin master
+    n |       gg | git push to gerrit
+    n |       gm | git merge(use git rebase)
+    n |       gf | git fetch all
     n |       gs | Open git status window
 
 ### Help relate

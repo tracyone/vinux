@@ -1291,8 +1291,8 @@ nnoremap <Leader>gd :Gdiff<cr>
 nnoremap <Leader>gi :silent! Gissue<cr>
 " create new github issue
 nnoremap <Leader>ga :silent! Giadd<cr>
-" create new github milestone
-nnoremap <Leader>gm :silent! Gmiles<cr>
+" git merge
+nnoremap <Leader>gm :call te#git#git_merge()<cr>
 let g:gissues_lazy_load = 1
 let g:gissues_async_omni = 1
 if filereadable($VIMFILES.'/.github_token')

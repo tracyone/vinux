@@ -21,6 +21,15 @@ function! te#git#GitBranchName() abort
     endif
 endfunction
 
+function! s:get_remote_name()
+    let l:remote_name=split(system('git remote'),'\n')
+    if v:shell_error || len(l:remote_name) == 0
+        call te#utils#EchoWarning('git remote failed')
+        return 1
+    endif
+    return l:remote_name[0]
+endfunction
+
 "git push operation.
 "support complete remote branch name
 "auto gain remote name
@@ -33,13 +42,12 @@ function! te#git#GitPush(push_type) abort
         :call te#utils#EchoWarning('Error argument','err')
         return 1
     endif
-    let l:remote_name=split(system('git remote'),'\n')
-    if v:shell_error || len(l:remote_name) == 0
-        call te#utils#EchoWarning('git remote failed')
+    let l:remote_name=s:get_remote_name()
+    if type(l:remote_name) != v:t_string
         return 2
     endif
     let l:branch_name = input('Please input the branch name: ','','custom,te#git#GetRemoteBr')
-    call s:HowToRunGit('push '.l:remote_name[0].' '.te#git#GitBranchName().':refs/'.a:push_type.'/'.l:branch_name)
+    call s:HowToRunGit('push '.l:remote_name.' '.te#git#GitBranchName().':refs/'.a:push_type.'/'.l:branch_name)
     return 0
 endfunction
 
@@ -59,5 +67,23 @@ function! te#git#GetRemoteBr(A,L,P) abort
         let l:result.=substitute(l:str,'.*/','','')."\n"
     endfor
     return l:result
+endfunction
+
+function! te#git#git_rebase() abort
+    let l:remote_name=s:get_remote_name()
+    if type(l:remote_name) != v:t_string
+        return 2
+    endif
+    let l:branch_name = input('Please input the branch name: ','','custom,te#git#GetRemoteBr')
+    call s:HowToRunGit('rebase '.l:remote_name.'/'.l:branch_name)
+endfunction
+
+function! te#git#git_merge() abort
+    let l:remote_name=s:get_remote_name()
+    if type(l:remote_name) != v:t_string
+        return 2
+    endif
+    let l:branch_name = input('which branch do you want to merge','','custom,te#git#GetRemoteBr')
+    call neomakemp#run_command('git fetch --all && git rebase '.l:remote_name.'/'.l:branch_name)
 endfunction
 
