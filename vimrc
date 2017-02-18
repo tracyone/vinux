@@ -43,9 +43,10 @@ augroup END
 
 augroup quickfix_group
     autocmd!
-    au BufWinEnter quickfix  noremap <buffer> q :q<cr>
+    autocmd FileType qf noremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
-    autocmd BufReadPost quickfix nnoremap <buffer> s <C-w><Enter><C-w>K
+    autocmd FileType qf noremap <buffer> s <C-w><Enter><C-w>K
+    autocmd FileType qf nnoremap <buffer> q :q<cr>
 augroup END
 
 augroup misc_group
@@ -1248,7 +1249,6 @@ autocmd misc_group FileType startify setlocal buftype=
 nnoremap <leader>vf :call neomakemp#global_search(expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]")<cr>
 "set grepprg=ag\ --nogroup\ --nocolor
 "set grepformat=%f:%l:%c%m
-autocmd misc_group FileType qf nnoremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>
 autocmd misc_group FileType gitcommit,qfreplace setlocal nofoldenable
 "}}}
 
