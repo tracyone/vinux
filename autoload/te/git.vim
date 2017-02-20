@@ -84,6 +84,6 @@ function! te#git#git_merge() abort
         return 2
     endif
     let l:branch_name = input('which branch do you want to merge: ','','custom,te#git#GetRemoteBr')
-    call neomakemp#run_command('git fetch --all && git rebase '.l:remote_name.'/'.l:branch_name)
+    call neomakemp#run_command('git fetch --all && git rebase '.l:remote_name.'/'.l:branch_name, 1)
 endfunction
 
