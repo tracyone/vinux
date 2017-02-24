@@ -649,6 +649,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'KabbAmine/yowish.vim'
 Plug 'rakr/vim-one'
 Plug 'zanglg/nova.vim'
+Plug 'agude/vim-eldar'
 "some productive plugins
 Plug 'terryma/vim-multiple-cursors'
 if te#env#SupportPy()
