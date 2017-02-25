@@ -23,7 +23,7 @@ endif
 source $VIMRUNTIME/delmenu.vim
 lan mes en_US.UTF-8
 "set langmenu=nl_NL.ISO_8859-1
-:scriptencoding utf-8
+scriptencoding utf-8
 "}}}
 
 "list candidate word in statusline
@@ -119,18 +119,19 @@ set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
 set foldcolumn=1
 function! MyFoldText()
     let line = getline(v:foldstart)
+    let l:comment_content=''
     if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
         let initial = substitute( line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '' )
         let linenum = v:foldstart + 1
         while linenum < v:foldend
             let line = getline( linenum )
-            let comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
-            if comment_content !=? ''
+            let l:comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
+            if l:comment_content !=? ''
                 break
             endif
             let linenum = linenum + 1
         endwhile
-        let sub = initial . ' ' . comment_content
+        let sub = initial . ' ' . l:comment_content
     else
         let sub = line
         let startbrace = substitute( line, '^.*{[ \t]*$', '{', 'g')

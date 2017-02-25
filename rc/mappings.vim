@@ -1,4 +1,4 @@
-:scriptencoding utf-8
+scriptencoding utf-8
 "meta key handle... {{{
 if !te#env#IsNvim()
     if(!te#env#IsGui())

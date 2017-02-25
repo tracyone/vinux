@@ -1,4 +1,4 @@
-:scriptencoding utf-8
+scriptencoding utf-8
 " name :s:TracyoneGetError
 " arg  :command,vim command(not shell command) that want to
 "       test execute status
@@ -145,9 +145,7 @@ endfunction
 function! te#utils#open_url()
     let s:url = s:Get_pattern_at_cursor('\v(https?://|ftp://|file:/{3}|www\.)(\w|[.-])+(:\d+)?(/(\w|[~@#$%^&+=/.?:-])+)?')
     if s:url ==? ''
-        echohl WarningMsg
-        echomsg 'It is not a URL on current cursor！'
-        echohl None
+        call te#utils#EchoWarning('It is not a URL on current cursor！')
     else
         echo 'Open URL：' . s:url
         if has('win32') || has('win64')
