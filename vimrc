@@ -51,7 +51,7 @@ call s:source_rc('options.vim')
 call s:source_rc('mappings.vim')
 
 if filereadable($VIMFILES.'/module.vim')
-    :source $VIMFILES.'/module.vim'
+    execute ':source '.$VIMFILES.'/module.vim'
 endif
 
 call s:set('g:complete_plugin_type','ycm')
@@ -59,15 +59,13 @@ call s:set('g:feat_enable_complete', 0)
 call s:set('g:feat_enable_vim_develop', 0)
 call s:set('g:feat_enable_jump', 1)
 call s:set('g:feat_enable_tmux', 0)
-call s:set('g:feat_enable_git', 1)
-call s:set('g:feat_enable_lang_c', 1)
-call s:set('g:feat_enable_lang_verilog', 0)
+call s:set('g:feat_enable_git', 0)
+call s:set('g:feat_enable_lang_c', 0)
 call s:set('g:feat_enable_lang_markdown', 0)
 call s:set('g:feat_enable_lang_vim', 0)
 call s:set('g:feat_enable_awesome_gui', 0)
 call s:set('g:feat_enable_tools', 0)
-call s:set('g:feat_enable_edit', 1)
-call s:set('g:feat_enable_gui', 0)
+call s:set('g:feat_enable_edit', 0)
 call s:set('g:feat_enable_frontend', 0)
 call s:set('g:feat_enable_basic', 1)
 
@@ -110,7 +108,7 @@ if g:feat_enable_lang_c == 1
     call s:source_rc('c.vim')
 endif
 
-if g:feat_enable_gui == 1
+if g:feat_enable_awesome_gui == 1
     call s:source_rc('gui.vim')
 endif
 
@@ -126,6 +124,9 @@ if g:feat_enable_basic == 1
     call s:source_rc('basic.vim')
 endif
 
+if g:feat_enable_edit == 1
+    call s:source_rc('edit.vim')
+endif
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()

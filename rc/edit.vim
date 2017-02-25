@@ -1,7 +1,6 @@
 Plug 'terryma/vim-multiple-cursors'
 Plug 'terryma/vim-expand-region'
 Plug 'Raimondi/delimitMate'
-Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 Plug 'thinca/vim-qfreplace'
 Plug 'vim-scripts/The-NERD-Commenter'
 Plug 'tpope/vim-surround'
@@ -17,20 +16,6 @@ Plug 'tracyone/YankRing.vim'
 let delimitMate_nesting_quotes = ['"','`']
 let delimitMate_expand_cr = 0
 let delimitMate_expand_space = 0
-"}}}
-
-" UltiSnips -----------------------{{{
-if  te#env#SupportPy()
-    let g:UltiSnipsUsePythonVersion = 2
-else
-    let g:UltiSnipsUsePythonVersion = 3 
-endif
-let g:UltiSnipsExpandTrigger='<c-j>'
-let g:UltiSnipsListSnippets ='<c-tab>'
-let g:UltiSnipsJumpForwardTrigge='<c-j>'
-let g:UltiSnipsJumpBackwardTrigge='<c-k>'
-let g:UltiSnipsSnippetDirectories=['bundle/snippets']
-let g:UltiSnipsSnippetsDir=$VIMFILES.'/bundle/snippets'
 "}}}
 " Algin ---------------------------{{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)

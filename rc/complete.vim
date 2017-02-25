@@ -28,6 +28,7 @@ elseif g:complete_plugin_type ==# 'deoplete'
 else
     call te#utils#EchoWarning('No complete plugin selected!')
 endif
+Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 
 " Complete ------------------------{{{
 "generate .ycm_extra_conf.py for current directory
@@ -183,7 +184,7 @@ elseif g:complete_plugin_type ==# 'neocomplete'
      let g:clang_snippets=1
      let g:clang_complete_copen=0
      let g:clang_periodic_quickfix=1
-     "let g:clang_snippets_engine="ultisnips"
+     let g:clang_snippets_engine="ultisnips"
      let g:clang_close_preview=1
      "let g:clang_jumpto_declaration_key=""
      "g:clang_jumpto_declaration_in_preview_key
@@ -221,4 +222,17 @@ elseif g:complete_plugin_type ==# 'deoplete'
     endfunction
     :call TracyoneAddCFlags('')
 endif
+"}}}
+" UltiSnips -----------------------{{{
+if  te#env#SupportPy()
+    let g:UltiSnipsUsePythonVersion = 2
+else
+    let g:UltiSnipsUsePythonVersion = 3 
+endif
+let g:UltiSnipsExpandTrigger='<c-j>'
+let g:UltiSnipsListSnippets ='<c-tab>'
+let g:UltiSnipsJumpForwardTrigge='<c-j>'
+let g:UltiSnipsJumpBackwardTrigge='<c-k>'
+let g:UltiSnipsSnippetDirectories=['bundle/snippets']
+let g:UltiSnipsSnippetsDir=$VIMFILES.'/bundle/snippets'
 "}}}
