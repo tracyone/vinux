@@ -37,4 +37,9 @@ noremap <F8> :SSave<cr>
 " Open startify windows
 nnoremap <Leader>bh :Startify<cr>
 autocmd misc_group FileType startify setlocal buftype=
+" Session save 
+nnoremap <Leader>ls :SSave<cr>
+" Session load
+nnoremap <Leader>ll :SLoad 
 "}}}
+nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>

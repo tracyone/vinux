@@ -168,9 +168,6 @@ noremap <silent> <leader>w- :resize -10<CR>
 noremap <silent> <leader>w= :resize +10<CR>
 
 
-"replace
-nnoremap <c-h> :OverCommandLine<cr>:%s/<C-R>=expand("<cword>")<cr>/
-vnoremap <c-h> :OverCommandLine<cr>:<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>/
 "delete the ^M
 nnoremap dm :%s/\r\(\n\)/\1/g<CR>
 
@@ -185,3 +182,78 @@ nnoremap <Leader>td :call te#utils#OptionToggle('ff',['dos', 'unix'])<cr>
 nnoremap <leader>o :call te#utils#open_url()<cr>
 " linu number toggle
 nnoremap <Leader>tn :call te#utils#nu_toggle()<cr>
+" realtime underline word toggle
+nnoremap <leader>th :call te#utils#OptionToggle("g:cursorword",[0,1])<cr>
+" next buffer or tab
+nnoremap <Leader>bn :bnext<cr>
+" previous buffer or tab
+nnoremap <Leader>bp :bprev<cr>
+" delete buffer
+nnoremap <Leader>bk :bdelete<cr>
+" save file
+nnoremap <Leader>fs :call te#utils#SaveFiles()<cr>
+" save all
+nnoremap <Leader>fS :wa<cr>
+" manpage or vimhelp on current curosr word
+nnoremap <Leader>hm :call te#utils#find_mannel()<cr>
+" open eval.txt
+nnoremap <Leader>he :tabnew<cr>:h eval.txt<cr>:only<cr>
+" open vim script help
+nnoremap <Leader>hp :tabnew<cr>:h usr_41.txt<cr>:only<cr>
+" open vim function list
+nnoremap <Leader>hf :tabnew<cr>:h function-list<cr>:only<cr>
+
+" quit all
+nnoremap <Leader>qq :qa<cr>
+" quit all without save
+nnoremap <Leader>qQ :qa!<cr>
+" save and quit all
+nnoremap <Leader>qs :wqa<cr>
+" tab 1
+nnoremap <leader>1 1gt
+" tab 2
+nnoremap <leader>2 2gt
+" tab 3
+nnoremap <leader>3 3gt
+" tab 4
+nnoremap <leader>4 4gt
+" tab 5
+nnoremap <leader>5 5gt
+" tab 6
+nnoremap <leader>6 6gt
+" tab 7
+nnoremap <leader>7 7gt
+" tab 8
+nnoremap <leader>8 8gt
+" tab 9
+nnoremap <leader>9 9gt
+" toggle coding style 
+nnoremap <leader>tc :call te#utils#coding_style_toggle()<cr>
+" vertical open window
+nnoremap <Leader>wv :vsp<cr>
+" vertical open window then focus the new one
+nnoremap <Leader>wV :vsp<cr><C-w>l
+" horizontal open window 
+nnoremap <Leader>ws :sp<cr>
+" horizontal open window then focus the new one
+nnoremap <Leader>wS :sp<cr><C-w>j
+" maxsize of current windows
+nnoremap <Leader>wm :only<cr>
+" quit current windows
+nnoremap <Leader>wd :q<cr>
+" switch between two windows.
+nnoremap <Leader>ww <C-w><C-w>
+" move to left win
+nnoremap <Leader>wh <C-w>h
+" move to right win
+nnoremap <Leader>wl <C-w>l
+" move down win
+nnoremap <Leader>wj <C-w>j
+" move up win
+nnoremap <Leader>wk <C-w>k
+" toggle long or short statusline
+nnoremap <leader>ts :call te#utils#OptionToggle('statusline',['%!MyStatusLine(1)','%!MyStatusLine(2)'])<cr>
+" toggle paste option
+nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
+" Toggle termguicolors
+nnoremap <Leader>tl :call te#utils#OptionToggle('termguicolors',[1,0])<cr>

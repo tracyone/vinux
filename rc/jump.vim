@@ -1,8 +1,58 @@
+" jump to somewhere:file,mru,bookmark
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
 Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
 Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
+            \ '<Plug>(easymotion-linebackward)','<Plug>(easymotion-overwin-w)' ]}
+Plug 't9md/vim-choosewin'
+Plug 'kshenoy/vim-signature'
+Plug 'MattesGroeger/vim-bookmarks'
 
+" Matchit.vim ---------------------{{{
+"extend %
+runtime macros/matchit.vim "important 
+let loaded_matchit=0
+let b:match_ignorecase=1 
+set mps+=<:>
+set mps+=":"
+"}}}
+
+let g:SignatureEnabledAtStartup=1
+" Easymotion ----------------------{{{
+map W <Plug>(easymotion-lineforward)
+map B <Plug>(easymotion-linebackward)
+" MultiWindow easymotion for word
+nmap <Leader>F <Plug>(easymotion-overwin-w)
+" Multi Input Find Motion:s
+nmap <Leader>es <Plug>(easymotion-sn)
+" Multi Input Find Motion:t
+nmap <Leader>et <Plug>(easymotion-tn)
+" MultiWindow easymotion for line
+nmap <Leader>el <Plug>(easymotion-overwin-line)
+" MultiWindow easymotion for char
+nmap <Leader>ef <Plug>(easymotion-overwin-f)
+
+let g:EasyMotion_startofline = 0
+let g:EasyMotion_show_prompt = 0
+let g:EasyMotion_verbose = 0
+" }}}
+let g:bookmark_auto_save = 1
+let g:bookmark_no_default_key_mappings = 1
+let g:bookmark_save_per_working_dir = 1
+let g:bookmark_sign = '>>'
+let g:bookmark_annotation_sign = '##'
+let g:bookmark_auto_close = 1
+"Bookmark annotate
+nnoremap <leader>mi :BookmarkAnnotate<CR>
+"Bookmark toggle
+nnoremap <leader>ma :BookmarkToggle<cr>
+"Bookmark annotate 
+vnoremap <leader>mi :<c-u>exec ':BookmarkAnnotate '.getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>
+"Bookmark clear
+nnoremap <leader>mc :BookmarkClear<cr>
+"Bookmark show all
+nnoremap <leader>mb :BookmarkShowAll<CR>
 " Ctrlp ---------------------------{{{
 " Set Ctrl-P to show match at top of list instead of at bottom, which is so
 " stupid that it's not default
@@ -62,3 +112,7 @@ nnoremap <Leader>pc :CtrlPCmdPalette<cr>
 nnoremap <Leader>pk :CtrlPFunky<cr>
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 "}}}
+let g:choosewin_overlay_enable = 1
+" Choose windows
+nmap <Leader>wc <Plug>(choosewin)
+" vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 

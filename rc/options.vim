@@ -166,5 +166,6 @@ nnoremap sj za
 vnoremap sf zf
 nnoremap sk zM
 nnoremap si zi
+autocmd misc_group FileType gitcommit,qfreplace setlocal nofoldenable
 "}}}
 

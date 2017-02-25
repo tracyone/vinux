@@ -32,4 +32,10 @@ let  g:CCTreeJoinProg = 'cat'
 let  g:CCTreeJoinProgOpts = ''
 "let g:CCTreeUseUTF8Symbols = 1
 "map <F7> :CCTreeLoadXRefDBFromDisk $CCTREE_DB<cr> 
+let g:neomake_make_maker = {
+            \ 'exe': 'make',
+            \ 'args': ['-j8'],
+            \ 'errorformat': '%f:%l:%c: %m',
+            \ }
+command! -bang -nargs=* -complete=file Make Neomake! <args>
 "}}}
