@@ -11,6 +11,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'KabbAmine/yowish.vim'
 Plug 'rakr/vim-one'
 Plug 'zanglg/nova.vim'
+Plug 'vim-scripts/desert256.vim'
 
 "Gui releate{{{
 if te#env#IsGui()

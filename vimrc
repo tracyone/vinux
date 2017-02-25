@@ -68,6 +68,7 @@ call s:set('g:feat_enable_tools', 0)
 call s:set('g:feat_enable_edit', 0)
 call s:set('g:feat_enable_frontend', 0)
 call s:set('g:feat_enable_basic', 1)
+call s:set('g:feat_enable_help', 0)
 
 " Vim-plug ------------------------{{{
 let &rtp=&rtp.','.$VIMFILES
@@ -126,6 +127,10 @@ endif
 
 if g:feat_enable_edit == 1
     call s:source_rc('edit.vim')
+endif
+
+if g:feat_enable_help == 1
+    call s:source_rc('help.vim')
 endif
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
