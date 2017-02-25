@@ -1,3 +1,7 @@
+if g:feat_enable_lang_c != 1
+    :finish
+endif
+
 if !te#env#SupportCscope()
     call te#utils#EchoWarning("Please install cscope and build vim with cscope feature")
     finish

@@ -1,3 +1,6 @@
+if g:feat_enable_lang_vim != 1
+    :finish
+endif
 "settings....
 setlocal fdm=marker 
 setlocal expandtab 
