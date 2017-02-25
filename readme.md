@@ -628,7 +628,7 @@ n | k | find help on vim document or man page.
 
 ## Enable or disable feature
 
-`$VIMFILES/feature.vim` is the feature config file.
+`$VIMFILES/feature.vim` is the feature config file:
 
 ```vim
 let g:complete_plugin_type='ycm'
@@ -649,6 +649,9 @@ let g:feat_enable_basic=1
 let g:feat_enable_help=1
 ```
 
+
+Format:
+
 ```vim
 "enable 
 let g:feat_enable_<name>=1
@@ -656,12 +659,16 @@ let g:feat_enable_<name>=1
 let g:feat_enable_<name>=1
 ```
 
-`$VIMFILES/rc/<name>.vim` will be source when `g:feat_enable_<name>` equal to 1
+`$VIMFILES/rc/<name>.vim` will be sourced when `g:feat_enable_<name>` equal to 1
 
 
 ## Add new feature
 
-1. Add 'call s:set('g:feat_enable_<name>', <default>)' to `vimrc` between `plug#begin` and `plug#end`
+1. Add following line to `vimrc` between `plug#begin` and `plug#end`
+
+    ```vim
+    call s:set('g:feat_enable_<name>', <default>)
+    ```
 
 2. Create  `$VIMFILES/rc/<name>.vim`
 
