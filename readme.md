@@ -656,7 +656,7 @@ Format:
 "enable 
 let g:feat_enable_<name>=1
 "disable
-let g:feat_enable_<name>=1
+let g:feat_enable_<name>=0
 ```
 
 `$VIMFILES/rc/<name>.vim` will be sourced when `g:feat_enable_<name>` equal to 1

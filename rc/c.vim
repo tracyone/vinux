@@ -27,7 +27,7 @@ let g:CCTreeKeyToggleWindow = '<C-\>w'
 let g:CCTreeKeyCompressTree = 'zs' " Compress call-tree
 let g:CCTreeKeyDepthPlus = '<C-\>='
 let g:CCTreeKeyDepthMinus = '<C-\>-'
-let CCTreeJoinProgCmd = 'PROG_JOIN JOIN_OPT IN_FILES > OUT_FILE'
+let g:CCTreeJoinProgCmd = 'PROG_JOIN JOIN_OPT IN_FILES > OUT_FILE'
 let  g:CCTreeJoinProg = 'cat' 
 let  g:CCTreeJoinProgOpts = ''
 "let g:CCTreeUseUTF8Symbols = 1

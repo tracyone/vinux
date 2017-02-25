@@ -197,7 +197,7 @@ function! TracyoneGotoDef(open_type)
     let l:cword=expand('<cword>')
     execute a:open_type
     if te#env#SupportYcm() && g:complete_plugin_type ==# 'ycm'
-        let l:ycm_ret=s:YcmGotoDef(a:open_type)
+        let l:ycm_ret=s:YcmGotoDef()
     else
         let l:ycm_ret = -1
     endif
@@ -215,7 +215,7 @@ function! TracyoneGotoDef(open_type)
     return 0
 endfunction
 
-func! s:YcmGotoDef(open_type)
+func! s:YcmGotoDef()
     let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
     if g:complete_plugin_type ==# 'ycm' 
         if  exists('*youcompleteme#Enable') == 0

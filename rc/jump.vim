@@ -12,7 +12,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 " Matchit.vim ---------------------{{{
 "extend %
 runtime macros/matchit.vim "important 
-let loaded_matchit=0
+let g:loaded_matchit=0
 let b:match_ignorecase=1 
 set mps+=<:>
 set mps+=":"

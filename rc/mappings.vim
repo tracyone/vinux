@@ -1,18 +1,18 @@
-
+:scriptencoding utf-8
 "meta key handle... {{{
 if !te#env#IsNvim()
     if(!te#env#IsGui())
-        let c='a'
-        while c <=# 'z'
-            exec 'set <m-'.c.">=\e".c
-            exec "inoremap \e".c.' <m-'.c.'>'
-            let c = nr2char(1+char2nr(c))
+        let s:c='a'
+        while s:c <=# 'z'
+            exec 'set <m-'.s:c.">=\e".s:c
+            exec "inoremap \e".s:c.' <m-'.s:c.'>'
+            let s:c = nr2char(1+char2nr(s:c))
         endw
-        let d='1'
-        while d <=? '9'
-            exec 'set <m-'.d.">=\e".d
-            exec "inoremap \e".d.' <m-'.d.'>'
-            let d = nr2char(1+char2nr(d))
+        let s:d='1'
+        while s:d <=? '9'
+            exec 'set <m-'.s:d.">=\e".s:d
+            exec "inoremap \e".s:d.' <m-'.s:d.'>'
+            let s:d = nr2char(1+char2nr(s:d))
         endw
     endif
 endif
@@ -257,3 +257,12 @@ nnoremap <leader>ts :call te#utils#OptionToggle('statusline',['%!MyStatusLine(1)
 nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
 " Toggle termguicolors
 nnoremap <Leader>tl :call te#utils#OptionToggle('termguicolors',[1,0])<cr>
+
+if te#env#IsNvim()
+    "terminal-emulator setting
+    execute 'tnoremap <Esc> <C-\><C-n>'
+    execute 'tnoremap <A-h> <C-\><C-n><C-w>h'
+    execute 'tnoremap <A-j> <C-\><C-n><C-w>j'
+    execute 'tnoremap <A-k> <C-\><C-n><C-w>k'
+    execute 'tnoremap <A-l> <C-\><C-n><C-w>l'
+endif

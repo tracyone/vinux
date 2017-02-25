@@ -16,6 +16,8 @@ else
     let $VIMFILES = $HOME.'/.vim'
 endif
 
+let g:feature_dict={}
+
 function! s:source_rc(path, ...) abort "{{{
   let use_global = get(a:000, 0, !has('vim_starting'))
   let abspath = resolve(expand($VIMFILES.'/rc/' . a:path))
@@ -45,11 +47,18 @@ function! s:set(var, default) abort
       execute 'let' a:var '=' string(a:default)
     else
       execute 'let' a:var '=' a:default
+      let g:feature_dict[a:var]=a:default
     endif
   endif
   if eval(a:var) == 1
       call s:source_rc(matchstr(a:var,'_\zs[^_]*\ze$').'.vim')
   endif
+endfunction
+
+function! s:GenFeatureVim()
+	for key in keys(g:feature_dict)
+	   call writefile(['let '.key.'='.g:feature_dict[key]], $VIMFILES.'/feature.vim', 'a')
+	endfor
 endfunction
 "}}}
 
@@ -60,7 +69,6 @@ call s:source_rc('mappings.vim')
 if filereadable($VIMFILES.'/feature.vim')
     execute ':source '.$VIMFILES.'/feature.vim'
 endif
-
 
 let &rtp=&rtp.','.$VIMFILES
 if empty(glob($VIMFILES.'/autoload/plug.vim'))
@@ -91,6 +99,10 @@ call s:set('g:feat_enable_frontend', 0)
 call s:set('g:feat_enable_basic', 1)
 call s:set('g:feat_enable_help', 0)
 
+if !filereadable($VIMFILES.'/feature.vim')
+    call s:GenFeatureVim()
+endif
+
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
@@ -98,4 +110,3 @@ call plug#end()
 filetype plugin indent on
 syntax on
 set modeline
-" vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 

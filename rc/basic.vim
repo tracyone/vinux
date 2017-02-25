@@ -18,7 +18,9 @@ Plug 'itchyny/vim-cursorword'
 Plug 'thinca/vim-quickrun'
 if(!te#env#IsWindows())
     Plug 'vim-scripts/sudo.vim'
-    if !te#env#IsNvim() | Plug 'vim-utils/vim-man' | endif
+    if !te#env#IsNvim() 
+        Plug 'vim-utils/vim-man' 
+    endif
     if te#env#IsMac()
         Plug 'CodeFalling/fcitx-vim-osx',{'do': 'wget -c \"https://raw.githubusercontent.com/
                     \CodeFalling/fcitx-remote-for-osx/binary/fcitx-remote-sogou-pinyin\" && 
@@ -111,11 +113,11 @@ noremap <F4> :call TracyoneVimShellPop()<cr>
 nnoremap <Leader>as :call TracyoneVimShellPop()<cr>
 "}}}
 " Nerdtree  -----------------------{{{
-let NERDTreeShowLineNumbers=0	"don't show line number
-let NERDTreeWinPos='left'	"show nerdtree in the rigth side
+let g:NERDTreeShowLineNumbers=0	"don't show line number
+let g:NERDTreeWinPos='left'	"show nerdtree in the rigth side
 "let NERDTreeWinSize='30'
-let NERDTreeShowBookmarks=1
-let NERDTreeChDirMode=2
+let g:NERDTreeShowBookmarks=1
+let g:NERDTreeChDirMode=2
 noremap <F12> :NERDTreeToggle .<CR> 
 " Open nerd tree
 nnoremap <leader>te :NERDTreeToggle .<CR> 

@@ -13,9 +13,9 @@ Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
 Plug 'tracyone/YankRing.vim'
 
 " DelimitMate ---------------------{{{
-let delimitMate_nesting_quotes = ['"','`']
-let delimitMate_expand_cr = 0
-let delimitMate_expand_space = 0
+let g:delimitMate_nesting_quotes = ['"','`']
+let g:delimitMate_expand_cr = 0
+let g:delimitMate_expand_space = 0
 "}}}
 " Algin ---------------------------{{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -40,7 +40,7 @@ map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
 " }}}
 " Nerdcommander -------------------{{{
 let g:NERDMenuMode=0
-let NERD_c_alt_style=1
+let g:NERD_c_alt_style=1
 "}}}
 "replace
 nnoremap <c-h> :OverCommandLine<cr>:%s/<C-R>=expand("<cword>")<cr>/
@@ -52,7 +52,7 @@ nnoremap <c-y> :YRGetElem<CR>
 inoremap <c-y> <esc>:YRGetElem<CR>
 " Open yankring window
 nnoremap <Leader>yy :YRGetElem<CR>
-let yankring_history_dir = $VIMFILES
+let g:yankring_history_dir = $VIMFILES
 let g:yankring_history_file = '.yank_history'
 let g:yankring_default_menu_mode = 0
 let g:yankring_replace_n_pkey = '<m-p>'

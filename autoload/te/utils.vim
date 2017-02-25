@@ -1,4 +1,4 @@
-
+:scriptencoding utf-8
 " name :s:TracyoneGetError
 " arg  :command,vim command(not shell command) that want to
 "       test execute status
@@ -124,6 +124,7 @@ function! s:Get_pattern_at_cursor(pat)
     let line = getline('.')
     let ebeg = -1
     let cont = match(line, a:pat, 0)
+    let elen = 0
     while (ebeg >= 0 || (0 <= cont) && (cont <= col))
         let contn = matchend(line, a:pat, cont)
         if (cont <= col) && (col < contn)
