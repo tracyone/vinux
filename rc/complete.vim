@@ -4,7 +4,6 @@ endif
 
 if g:complete_plugin_type ==# 'ycm' 
     if te#env#IsUnix()
-        Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
         Plug 'Valloric/YouCompleteMe', { 'on': [] }
         let g:complete_plugin_type_name='YouCompleteMe'
     elseif te#env#IsWin32()
@@ -54,18 +53,6 @@ endif
 autocmd misc_group InsertLeave * if pumvisible() == 0|pclose|endif
 
 if g:complete_plugin_type ==# 'ycm'
-    function! GenYCM()
-        let l:cur_dir=getcwd()
-        cd $VIMFILES/bundle/YCM-Generator
-        :silent execute  ':!./config_gen.py '.l:cur_dir
-        if v:shell_error == 0
-            echom 'Generate successfully!'
-            :YcmRestartServer
-        else
-            echom 'Generate failed!'
-        endif
-        exec ':cd '. l:cur_dir
-    endfunction
     " jume to definition (YCM)
     nnoremap <leader>jl :YcmCompleter GoToDeclaration<CR>
     let g:ycm_confirm_extra_conf=0
