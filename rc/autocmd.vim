@@ -1,8 +1,14 @@
-"t{{autocmd autogroup
 
 augroup misc_group
     autocmd!
     autocmd CmdwinEnter * noremap <buffer> q :q<cr>
+    au BufRead * if &ff=="dos" | setlocal ffs=dos,unix,mac | endif  
+    au VimResized * wincmd = 
+    autocmd VimEnter *
+                \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+                \|   echom '[t-vim]Need to install the missing plugins!'
+                \|   PlugInstall --sync | q
+                \| endif
 augroup END
 
 augroup filetype_group
@@ -26,6 +32,8 @@ augroup filetype_group
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
     autocmd FileType qf noremap <buffer> s <C-w><Enter><C-w>K
     autocmd FileType qf nnoremap <buffer> q :q<cr>
+    autocmd FileType sh setlocal foldmethod=indent
+    autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 augroup END
 
-"}}}
+

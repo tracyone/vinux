@@ -109,8 +109,6 @@ set stal=1  "always show the tabline
 set sessionoptions-=folds
 set sessionoptions-=options
 set ffs=unix,dos,mac
-au misc_group BufRead * if &ff=="dos" | setlocal ffs=dos,unix,mac | endif  
-au misc_group VimResized * wincmd = 
 
 if te#env#IsNvim()
     "terminal-emulator setting
@@ -124,7 +122,6 @@ endif
 "{{{fold setting
 "folding type: manual, indent, expr, marker or syntax
 set foldenable                  " enable folding
-autocmd filetype_group FileType sh setlocal foldmethod=indent
 set foldlevel=100         " start out with everything folded
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
 set foldcolumn=1
@@ -166,6 +163,5 @@ nnoremap sj za
 vnoremap sf zf
 nnoremap sk zM
 nnoremap si zi
-autocmd misc_group FileType gitcommit,qfreplace setlocal nofoldenable
 "}}}
 

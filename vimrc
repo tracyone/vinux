@@ -5,6 +5,10 @@
 "Github     https://github.com/tracyone/t-vim
 "Website    http://onetracy.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if &compatible
+  set nocompatible
+endif
+
 if te#env#IsWindows()
     let $HOME=$VIM
     let $VIMFILES = $VIM.'/vimfiles'
@@ -43,6 +47,9 @@ function! s:set(var, default) abort
       execute 'let' a:var '=' a:default
     endif
   endif
+  if eval(a:var) == 1
+      call s:source_rc(matchstr(a:var,'_\zs[^_]*\ze$').'.vim')
+  endif
 endfunction
 "}}}
 
@@ -50,27 +57,11 @@ call s:source_rc('autocmd.vim')
 call s:source_rc('options.vim')
 call s:source_rc('mappings.vim')
 
-if filereadable($VIMFILES.'/module.vim')
-    execute ':source '.$VIMFILES.'/module.vim'
+if filereadable($VIMFILES.'/feature.vim')
+    execute ':source '.$VIMFILES.'/feature.vim'
 endif
 
-call s:set('g:complete_plugin_type','ycm')
-call s:set('g:feat_enable_complete', 0)
-call s:set('g:feat_enable_vim_develop', 0)
-call s:set('g:feat_enable_jump', 1)
-call s:set('g:feat_enable_tmux', 0)
-call s:set('g:feat_enable_git', 0)
-call s:set('g:feat_enable_lang_c', 0)
-call s:set('g:feat_enable_lang_markdown', 0)
-call s:set('g:feat_enable_lang_vim', 0)
-call s:set('g:feat_enable_awesome_gui', 0)
-call s:set('g:feat_enable_tools', 0)
-call s:set('g:feat_enable_edit', 0)
-call s:set('g:feat_enable_frontend', 0)
-call s:set('g:feat_enable_basic', 1)
-call s:set('g:feat_enable_help', 0)
 
-" Vim-plug ------------------------{{{
 let &rtp=&rtp.','.$VIMFILES
 if empty(glob($VIMFILES.'/autoload/plug.vim'))
     if te#env#IsWindows()
@@ -85,61 +76,24 @@ if empty(glob($VIMFILES.'/autoload/plug.vim'))
 endif
 call plug#begin($VIMFILES.'/bundle')
 
-if g:feat_enable_complete == 1
-    call s:source_rc('complete.vim')
-endif
+call s:set('g:complete_plugin_type','ycm')
+call s:set('g:feat_enable_complete', 0)
+call s:set('g:feat_enable_jump', 1)
+call s:set('g:feat_enable_tmux', 0)
+call s:set('g:feat_enable_git', 0)
+call s:set('g:feat_enable_c', 0)
+call s:set('g:feat_enable_markdown', 0)
+call s:set('g:feat_enable_vim', 0)
+call s:set('g:feat_enable_gui', 0)
+call s:set('g:feat_enable_tools', 0)
+call s:set('g:feat_enable_edit', 0)
+call s:set('g:feat_enable_frontend', 0)
+call s:set('g:feat_enable_basic', 1)
+call s:set('g:feat_enable_help', 0)
 
-if g:feat_enable_jump == 1
-    call s:source_rc('jump.vim')
-endif
-
-if g:feat_enable_lang_vim == 1
-    call s:source_rc('vim.vim')
-endif
-
-if g:feat_enable_git == 1
-    call s:source_rc('git.vim')
-endif
-
-if g:feat_enable_lang_markdown == 1
-    call s:source_rc('markdown.vim')
-endif
-
-if g:feat_enable_lang_c == 1
-    call s:source_rc('c.vim')
-endif
-
-if g:feat_enable_awesome_gui == 1
-    call s:source_rc('gui.vim')
-endif
-
-if g:feat_enable_tools == 1
-    call s:source_rc('tools.vim')
-endif
-
-if g:feat_enable_frontend == 1
-    call s:source_rc('frontend.vim')
-endif
-
-if g:feat_enable_basic == 1
-    call s:source_rc('basic.vim')
-endif
-
-if g:feat_enable_edit == 1
-    call s:source_rc('edit.vim')
-endif
-
-if g:feat_enable_help == 1
-    call s:source_rc('help.vim')
-endif
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
-autocmd misc_group VimEnter *
-            \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-            \|   echom '[t-vim]Need to install the missing plugins!'
-            \|   PlugInstall --sync | q
-            \| endif
 
 filetype plugin indent on
 syntax on

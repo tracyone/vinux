@@ -1,4 +1,4 @@
-if g:feat_enable_lang_c != 1
+if g:feat_enable_c != 1
     :finish
 endif
 

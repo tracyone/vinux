@@ -34,7 +34,9 @@
     * [Other keymapping](#other-keymapping)
 * [Awesome colorscheme](#awesome-colorscheme)
 * [Plugin list](#plugin-list)
-* [Config Structure](#config-structure)
+* [Feature Config](#feature-config)
+    * [Enable or disable feature](#enable-or-disable-feature)
+    * [Add new feature](#add-new-feature)
 
 <!-- vim-markdown-toc -->
 
@@ -622,21 +624,55 @@ n | k | find help on vim document or man page.
 
 [Shougo/neco-vim](https://github.cim/Shougo/neco-vim)
 
-# Config Structure
+# Feature Config
 
-![structure](https://cloud.githubusercontent.com/assets/4246425/16357646/0b8c9814-3b2f-11e6-8f21-b6247e4e6e02.png)
+## Enable or disable feature
 
-Open file `vimrc` with vim,it will be  folded automatically, you can press `za`(vim normal mode) to open or close fold.
+`$VIMFILES/feature.vim` is the feature config file.
 
-- System Check:OS,vim IO,vim type check
+```vim
+let g:complete_plugin_type='ycm'
+let g:feat_enable_complete=1
+let g:feat_enable_vim_develop=1
+let g:feat_enable_jump=1
+let g:feat_enable_tmux=1
+let g:feat_enable_git=1
+let g:feat_enable_c=1
+let g:feat_enable_markdown=1
+let g:feat_enable_vim=1
+let g:feat_enable_gui=1
+let g:feat_enable_tools=1
+let g:feat_enable_edit=1
+let g:feat_enable_gui=1
+let g:feat_enable_frontend=0
+let g:feat_enable_basic=1
+let g:feat_enable_help=1
+```
 
-- Basic Setting:vim basic setting like show line number,status line,backup file encode ...
+```vim
+"enable 
+let g:feat_enable_<name>=1
+"disable
+let g:feat_enable_<name>=1
+```
 
-- Key mapping: vim basic key mapping( exclude plugins's keymapping )
+`$VIMFILES/rc/<name>.vim` will be source when `g:feat_enable_<name>` equal to 1
 
-- Plugin setting:Plugins's setting
 
-- Function:Some useful vim function
+## Add new feature
 
-- Gui releate:gvim,macvim,font,mouse setting....
+1. Add 'call s:set('g:feat_enable_<name>', <default>)' to `vimrc` between `plug#begin` and `plug#end`
+
+2. Create  `$VIMFILES/rc/<name>.vim`
+
+3. Add package info and package info, example:
+
+```vim
+"package info
+Plug 'Shougo/neco-vim'
+Plug 'mhinz/vim-lookup', {'for': 'vim'}
+"package config
+nnoremap <buffer><silent> <c-]>  :call lookup#lookup()<cr>
+nnoremap <buffer><silent> <c-t>  :call lookup#pop()<cr>
+```
 

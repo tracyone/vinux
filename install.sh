@@ -65,6 +65,7 @@ if [[ $(pwd) != "${HOME}/.vim" ]]; then
 	ln -sf $(pwd)/autoload/te ${HOME}/.vim/autoload/
 	ln -sf $(pwd)/after ${HOME}/.vim/
 	ln -sf $(pwd)/vimrc ${HOME}/.vim/
+	ln -sf $(pwd)/rc ${HOME}/.vim/
 fi
 
 if [[ $# -gt 1 ]]; then
@@ -113,7 +114,5 @@ esac
 if [[ $? -ne 0 ]]; then
     echo -e "Install plugin failed\n";exit 3
 fi
-
-echo ${choose} > ${HOME}/.vim/.complete_plugin
 
 # vim: set fdm=marker foldlevel=0  filetype=sh : 
