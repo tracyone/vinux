@@ -112,3 +112,98 @@ function! te#utils#SourceRc(path) abort
     :execute 'set ft='.l:ft_orig
     :call te#utils#EchoWarning(a:path.' has been sourced.')
 endfunction
+
+
+function! te#utils#goto_cur_file() abort
+    execute 'lcd %:h'
+    execute ':call te#utils#EchoWarning("cd to ".getcwd())'
+endfunction
+
+function! s:Get_pattern_at_cursor(pat)
+    let col = col('.') - 1
+    let line = getline('.')
+    let ebeg = -1
+    let cont = match(line, a:pat, 0)
+    while (ebeg >= 0 || (0 <= cont) && (cont <= col))
+        let contn = matchend(line, a:pat, cont)
+        if (cont <= col) && (col < contn)
+            let ebeg = match(line, a:pat, cont)
+            let elen = contn - ebeg
+            break
+        else
+            let cont = match(line, a:pat, contn)
+        endif
+    endwhile
+    if ebeg >= 0
+        return strpart(line, ebeg, elen)
+    else
+        return ''
+    endif
+endfunction
+
+function! te#utils#open_url()
+    let s:url = s:Get_pattern_at_cursor('\v(https?://|ftp://|file:/{3}|www\.)(\w|[.-])+(:\d+)?(/(\w|[~@#$%^&+=/.?:-])+)?')
+    if s:url ==? ''
+        echohl WarningMsg
+        echomsg 'It is not a URL on current cursor！'
+        echohl None
+    else
+        echo 'Open URL：' . s:url
+        if has('win32') || has('win64')
+            call system('cmd /C start ' . s:url)
+        elseif has('mac')
+            call system("open '" . s:url . "'")
+        else
+            call system("xdg-open '" . s:url . "' &")
+        endif
+    endif
+    unlet s:url
+endfunction
+
+" line number toggle
+function! te#utils#nu_toggle()
+    if &nu && &rnu
+        set nonu nornu
+    elseif &nu && !&rnu
+        set rnu
+    else
+        set nu
+    endif
+endfunction
+
+function! te#utils#find_mannel()
+    let l:man_cmd=':Man'
+    if !exists(l:man_cmd)
+        call te#utils#EchoWarning("You must install vim-man first!")
+        return -1
+    endif
+    let l:cur_word=expand('<cword>')
+    let l:ret = te#utils#GetError(l:man_cmd.' 3 '.l:cur_word,'no manual.*')
+    "make sure index valid
+    if l:ret != 0
+        let l:ret = te#utils#GetError(l:man_cmd.' 2 '.l:cur_word,'no manual.*')
+        if l:ret != 0
+            execute 'silent! help '.l:cur_word
+        endif
+    else
+        execute l:man_cmd.' 2 '.l:cur_word
+    endif
+endfunction
+
+function! te#utils#coding_style_toggle()
+    if &tabstop != 8
+        set tabstop=8  
+        set shiftwidth=8 
+        set softtabstop=8 
+        set noexpandtab
+        set nosmarttab
+        call te#utils#EchoWarning('change to linux kernel coding style ...')
+    else
+        set tabstop=4  
+        set shiftwidth=4 
+        set softtabstop=4 
+        set expandtab
+        set smarttab
+        call te#utils#EchoWarning('Use space instead of tab ...')
+    endif
+endfunction

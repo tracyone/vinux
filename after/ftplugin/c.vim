@@ -164,7 +164,7 @@ nnoremap <buffer> <LocalLeader>k :cs kill cscope.out<cr>
 " make
 nnoremap <buffer> <leader>am :call <SID>DoMake()<cr>
 noremap <buffer> <F5> :call <SID>DoMake()<CR>
-nnoremap <buffer> <silent> K :call TracyoneFindMannel()<cr>
+nnoremap <buffer> <silent> K :call te#utils#find_mannel()<cr>
 nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
@@ -188,3 +188,56 @@ let g:clang_format#style_options = {
             \ "IndentCaseLabels" : "false"}
 
 let b:delimitMate_matchpairs = "(:),[:],{:}"
+
+function! TracyoneGotoDef(open_type)
+    let l:cword=expand('<cword>')
+    execute a:open_type
+    if te#env#SupportYcm() && g:complete_plugin_type ==# 'ycm'
+        let l:ycm_ret=s:YcmGotoDef(a:open_type)
+    else
+        let l:ycm_ret = -1
+    endif
+    if l:ycm_ret < 0
+        try
+            execute 'cs find g '.l:cword
+        catch /^Vim\%((\a\+)\)\=:E/	
+            call te#utils#EchoWarning('cscope query failed')
+            if a:open_type !=? '' | wincmd q | endif
+            return -1
+        endtry
+    else
+        return 0
+    endif
+    return 0
+endfunction
+
+func! s:YcmGotoDef(open_type)
+    let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
+    if g:complete_plugin_type ==# 'ycm' 
+        if  exists('*youcompleteme#Enable') == 0
+            call te#utils#EchoWarning('Loading ycm ...')
+            call plug#load('ultisnips','YouCompleteMe')
+            call delete('.ycm_extra_conf.pyc')  
+            call youcompleteme#Enable() 
+            let g:is_load_ycm = 1
+            autocmd! lazy_load_group 
+            sleep 1
+            call te#utils#EchoWarning('ycm has been loaded!')
+        endif
+    endif
+    let l:ret = te#utils#GetError(':YcmCompleter GoToDefinition','Runtime.*')
+    if l:ret == -1
+        let l:ret = te#utils#GetError(':YcmCompleter GoToDeclaration','Runtime.*')
+        if l:ret == 0
+            execute ':silent! A'
+            " search failed then go back
+            if search(l:cur_word) == 0
+                execute ':silent! A'
+                return -2
+            endif
+        else
+            return -3 
+        endif
+    endif
+    return 0
+endfunc

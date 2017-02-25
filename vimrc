@@ -5,49 +5,37 @@
 "Github     https://github.com/tracyone/t-vim
 "Website    http://onetracy.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"System check{{{
-set filetype=text
 if te#env#IsWindows()
     let $HOME=$VIM
-    let $VIMFILES = $VIM.'\\vimfiles'
-    set makeprg=mingw32-make
+    let $VIMFILES = $VIM.'/vimfiles'
 else
-    set keywordprg=""
-    set path=.,/usr/include/
     let $VIMFILES = $HOME.'/.vim'
 endif
 
+function! s:source_rc(path, ...) abort "{{{
+  let use_global = get(a:000, 0, !has('vim_starting'))
+  let abspath = resolve(expand($VIMFILES.'/rc/' . a:path))
+  if !use_global
+    execute 'source' fnameescape(abspath)
+    return
+  endif
 
-"}}}
-"Basic setting{{{
-
-"Encode {{{
-set encoding=utf-8
-set fileencoding=utf-8
-set termencoding=utf-8
-set fileencodings=ucs-bom,utf-8,cp936,gb1830,big5,euc-jp,euc-kr,gbk
-if v:lang=~? '^\(zh\)\|\(ja\)\|\(ko\)'
-    set ambiwidth=double
-endif
-source $VIMRUNTIME/delmenu.vim
-lan mes en_US.UTF-8
-"set langmenu=nl_NL.ISO_8859-1
-:scriptencoding utf-8
-"}}}
+  " substitute all 'set' to 'setglobal'
+  let content = map(readfile(abspath),
+        \ 'substitute(v:val, "^\\W*\\zsset\\ze\\W", "setglobal", "")')
+  " create tempfile and source the tempfile
+  let tempfile = tempname()
+  try
+    call writefile(content, tempfile)
+    execute 'source' fnameescape(tempfile)
+  finally
+    if filereadable(tempfile)
+      call delete(tempfile)
+    endif
+  endtry
+endfunction"}}}
 
 "{{{autocmd autogroup
-
-augroup fold_group
-    autocmd!
-augroup END
-
-augroup quickfix_group
-    autocmd!
-    autocmd FileType qf noremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>
-    " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
-    autocmd FileType qf noremap <buffer> s <C-w><Enter><C-w>K
-    autocmd FileType qf nnoremap <buffer> q :q<cr>
-augroup END
 
 augroup misc_group
     autocmd!
@@ -72,509 +60,23 @@ augroup filetype_group
                 \ if &diff |
                 \ set statusline=%!MyStatusLine(2) |
                 \ endif
+    autocmd FileType qf noremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>
+    " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
+    autocmd FileType qf noremap <buffer> s <C-w><Enter><C-w>K
+    autocmd FileType qf nnoremap <buffer> q :q<cr>
 augroup END
 
 "}}}
 
-"{{{fold setting
-"folding type: manual, indent, expr, marker or syntax
-set foldenable                  " enable folding
-autocmd fold_group FileType sh setlocal foldmethod=indent
-set foldlevel=100         " start out with everything folded
-set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
-set foldcolumn=1
-function! MyFoldText()
-    let line = getline(v:foldstart)
-    if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
-        let initial = substitute( line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '' )
-        let linenum = v:foldstart + 1
-        while linenum < v:foldend
-            let line = getline( linenum )
-            let comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
-            if comment_content !=? ''
-                break
-            endif
-            let linenum = linenum + 1
-        endwhile
-        let sub = initial . ' ' . comment_content
-    else
-        let sub = line
-        let startbrace = substitute( line, '^.*{[ \t]*$', '{', 'g')
-        if startbrace ==? '{'
-            let line = getline(v:foldend)
-            let endbrace = substitute( line, '^[ \t]*}\(.*\)$', '}', 'g')
-            if endbrace ==? '}'
-                let sub = sub.substitute( line, '^[ \t]*}\(.*\)$', '...}\1', 'g')
-            endif
-        endif
-    endif
-    let n = v:foldend - v:foldstart + 1
-    let info = ' ' . n . ' lines'
-    let sub = sub . '                                                                                                                  '
-    let num_w = getwinvar( 0, '&number' ) * getwinvar( 0, '&numberwidth' )
-    let fold_w = getwinvar( 0, '&foldcolumn' )
-    let sub = strpart( sub, 0, winwidth(0) - strlen( info ) - num_w - fold_w - 1 )
-    return sub . info
-endfunction
-set foldtext=MyFoldText()
-nnoremap sj za
-vnoremap sf zf
-nnoremap sk zM
-nnoremap si zi
-"}}}
+call s:source_rc('options.vim')
+call s:source_rc('mappings.vim')
 
-"list candidate word in statusline
-set wildmenu
-set wildmode=longest,full
-set wic
-"set list  "display unprintable characters by set list
-set listchars=tab:\|\ ,trail:-  "Strings to use in 'list' mode and for the |:list| command
-au misc_group BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif "jump to last position last open in vim
-
-" Show a few lines of context around the cursor.  Note that this makes the
-" text scroll if you mouse-click near the start or end of the window.
-set scrolloff=5
-" Don't use Ex mode, use Q for formatting.
-" Revert with ":unmap Q".
-map Q gq
-
-"{{{backup
-set backup "generate a backupfile when open file
-set backupext=.bak  "backup file'a suffix
-set backupdir=$VIMFILES/vimbackup  "backup file's directory
-if !isdirectory(&backupdir)
-    call mkdir(&backupdir, 'p')
-endif
-"}}}
-"do not Ring the bell (beep or screen flash) for error messages
-set noerrorbells
-set mat=2  
-set report=0  "Threshold for reporting number of lines changed
-set lazyredraw  " Don't update the display while executing macros
-set helplang=en,cn  "set helplang=en
-set autoread   "autoread when a file is changed from the outside
-set relativenumber number "show the line number for each line
-set cmdheight=1  "number of lines used for the command-line
-set showmatch "when inserting a bracket, briefly jump to its match
-set printfont=Yahei_Mono:h10:cGB2312  "name of the font to be used for :hardcopy
-set smartcase  "override 'ignorecase' when pattern has upper case characters
-set confirm  "start a dialog when a command fails
-set smartindent "do clever autoindenting
-"set nowrap   "don't auto linefeed
-
-"linux kernel coding stype
-set tabstop=8  "number of spaces a <Tab> in the text stands for
-set shiftwidth=8 "number of spaces used for each step of (auto)indent
-set softtabstop=8  "if non-zero, number of spaces to insert for a <Tab>
-set noexpandtab
-set nosmarttab "a <Tab> in an indent inserts 'shiftwidth' spaces
-set textwidth=80
-
-set hlsearch "highlight all matches for the last used search pattern
-set showmode "display the current mode in the status line
-"set ruler  "show cursor position below each window
-set selection=inclusive  ""old", "inclusive" or "exclusive"; how selecting text behaves
-set is  "show match for partly typed search command
-"set lbr "wrap long lines at a character in 'breakat'
-set backspace=indent,eol,start  "specifies what <BS>, CTRL-W, etc. can do in Insert mode
-set whichwrap=b,h,l,<,>,[,]  "list of menu_flags specifying which commands wrap to another line
-set mouse=a "list of menu_flags for using the mouse,support all
-
-"unnamed" to use the * register like unnamed register
-"autoselect" to always put selected text on the clipboardset clipboard+=unnamed
-set clipboard+=unnamed
-"set autochdir  "change to directory of file in buffer
-
-"statuslne
-function! MyStatusLine(type)
-    let l:mystatus_line='%<%t%m%r%h%w'
-    let l:mystatus_line.="%{exists(':TagbarToggle')?\ tagbar#currenttag('[%s]','')\ :\ ''}"
-    if a:type == 1
-        let l:mystatus_line.="%=[%{(&fenc!=''?&fenc:&enc)}\|%{&ff}\|%Y][%l,%v][%p%%]%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}"
-        let l:mystatus_line.="[%{strftime(\"%m/%d\-\%H:%M\")}]"
-    endif
-    if exists('g:asyncrun_status') && g:asyncrun_status !=# ''
-       let l:mystatus_line.='['.g:asyncrun_status.']'
-    endif
-    return l:mystatus_line
-endfunction
-set statusline=%!MyStatusLine(1)
-set guitablabel=%N\ %t  "do not show dir in tab
-"0, 1 or 2; when to use a status line for the last window
-set laststatus=2 "always show status
-set stal=1  "always show the tabline
-set sessionoptions-=folds
-set sessionoptions-=options
-set ffs=unix,dos,mac
-au misc_group BufRead * if &ff=="dos" | setlocal ffs=dos,unix,mac | endif  
-au misc_group VimResized * wincmd = 
-
-if te#env#IsNvim()
-    "terminal-emulator setting
-    tnoremap <Esc> <C-\><C-n>
-    tnoremap <A-h> <C-\><C-n><C-w>h
-    tnoremap <A-j> <C-\><C-n><C-w>j
-    tnoremap <A-k> <C-\><C-n><C-w>k
-    tnoremap <A-l> <C-\><C-n><C-w>l
+if filereadable($VIMFILES.'/.module.vim')
+    :source $VIMFILES.'/.module.vim'
+else
+    let g:complete_plugin_type = 'ycm'
 endif
 
-
-"}}}
-"Key mapping{{{
-
-" normal no remap function
-" maptype:type of keymap,nnoremap, map ie.
-" keycodes:such as <C-d>
-" action: map action.
-function! TracyoneKeyMap(maptype,keycodes,action)
-    execute a:maptype.' '.a:keycodes.' '.a:action
-endfunction
-
-"map jj to esc..
-"fuck the meta key...
-if !te#env#IsNvim()
-    if(!te#env#IsGui())
-        let c='a'
-        while c <=# 'z'
-            exec 'set <m-'.c.">=\e".c
-            exec "inoremap \e".c.' <m-'.c.'>'
-            let c = nr2char(1+char2nr(c))
-        endw
-        let d='1'
-        while d <=? '9'
-            exec 'set <m-'.d.">=\e".d
-            exec "inoremap \e".d.' <m-'.d.'>'
-            let d = nr2char(1+char2nr(d))
-        endw
-    endif
-endif
-
-set timeout timeoutlen=1000 ttimeoutlen=100
-""no", "yes" or "menu"; how to use the ALT key
-set winaltkeys=no
-
-"leader key
-let g:mapleader="\<Space>"
-let g:maplocalleader=','
-inoremap jj <c-[>
-
-vnoremap [p "0p
-
-"visual mode hit tab forward indent ,hit shift-tab backward indent
-vnoremap <TAB>  >gv  
-vnoremap <s-TAB>  <gv 
-"Ctrl-tab is not work in vim
-nnoremap <silent><c-TAB> :AT<cr>
-nnoremap <silent><right> :tabnext<cr>
-nnoremap <silent><Left> :tabp<cr>
-
-"{{{ alt or meta key mapping
-" in mac osx please set your option key as meta key
-
-if te#env#IsMacVim()
-    let s:alt_char={1:'¡',2:'™',3:'£',4:'¢',5:'∞',6:'§',7:'¶',8:'•',9:'ª'
-                \,'t':'†','q':'œ','a':'å','=':'≠','h':'˙','l':'¬','j':'∆','k':'˚'
-                \,'o':'ø','-':'–','b':'∫','f':'ƒ','m':'µ','w':'∑'}
-elseif te#env#IsUnix() && !te#env#IsNvim() && !te#env#IsGui()
-    let s:alt_char={1:'±' ,2:'²',3:'³',4:'´',5:'µ',6:'¶',7:'·',8:'¸',9:'¹'
-                \,'t':'ô','q':'ñ','a':'á','=':'½','h':'è','l':'ì','j':'ê','k':'ë'
-                \,'o':'ï','-':'­','b':'â','f':'æ','m':'í','w':'÷'}
-elseif te#env#IsGui() || te#env#IsNvim()
-    let s:alt_char={1:'<m-1>',2:'<m-2>',3:'<m-3>',4:'<m-4>',5:'<m-5>',6:'<m-6>',7:'<m-7>',8:'<m-8>',9:'<m-9>'
-                \,'t':'<m-t>','q':'<m-q>','a':'<m-a>','=':'<m-=>','h':'<m-h>','l':'<m-l>','j':'<m-j>','k':'<m-k>'
-                \,'o':'<m-o>','-':'<m-->','b':'<m-b>','f':'<m-f>','m':'<m-m>','w':'<m-w>'}
-endif
-
-call TracyoneKeyMap('noremap',s:alt_char[1],'<esc>1gt')
-call TracyoneKeyMap('noremap',s:alt_char[2],'<esc>2gt')
-call TracyoneKeyMap('noremap',s:alt_char[3],'<esc>3gt')
-call TracyoneKeyMap('noremap',s:alt_char[4],'<esc>4gt')
-call TracyoneKeyMap('noremap',s:alt_char[5],'<esc>5gt')
-call TracyoneKeyMap('noremap',s:alt_char[6],'<esc>6gt')
-call TracyoneKeyMap('noremap',s:alt_char[7],'<esc>7gt')
-call TracyoneKeyMap('noremap',s:alt_char[8],'<esc>8gt')
-call TracyoneKeyMap('noremap',s:alt_char[9],'<esc>9gt')
-"option+t
-call TracyoneKeyMap('nnoremap',s:alt_char['t'],':tabnew<cr>')
-call TracyoneKeyMap('inoremap',s:alt_char['t'],'<esc>:tabnew<cr>')
-"option+q
-call TracyoneKeyMap('noremap',s:alt_char['q'],':nohls<CR>:MarkClear<cr>:redraw!<cr>')
-"select all
-call TracyoneKeyMap('noremap',s:alt_char['a'],'gggH<C-O>G')
-call TracyoneKeyMap('inoremap',s:alt_char['a'],'<C-O>gg<C-O>gH<C-O>G')
-call TracyoneKeyMap('cnoremap',s:alt_char['a'],'<C-C>gggH<C-O>G')
-call TracyoneKeyMap('onoremap',s:alt_char['a'],'<C-C>gggH<C-O>G')
-call TracyoneKeyMap('snoremap',s:alt_char['a'],'<C-C>gggH<C-O>G')
-call TracyoneKeyMap('xnoremap',s:alt_char['a'],'<C-C>ggVG')
-"Alignment
-call TracyoneKeyMap('nnoremap',s:alt_char['='],' <esc>ggVG=``')
-"move
-call TracyoneKeyMap('inoremap',s:alt_char['h'],'<Left>')
-call TracyoneKeyMap('inoremap',s:alt_char['l'],'<Right>')
-call TracyoneKeyMap('inoremap',s:alt_char['j'],'<Down>')
-call TracyoneKeyMap('inoremap',s:alt_char['k'],'<Up>')
-
-"move between windows
-call TracyoneKeyMap('nnoremap',s:alt_char['h'],'  <C-w>h')
-call TracyoneKeyMap('nnoremap',s:alt_char['l'],'<C-w>l')
-call TracyoneKeyMap('nnoremap',s:alt_char['j'],'<C-w>j')
-call TracyoneKeyMap('nnoremap',s:alt_char['k'],'<C-w>k')
-
-call TracyoneKeyMap('cnoremap',s:alt_char['l'],'<right>')
-call TracyoneKeyMap('cnoremap',s:alt_char['j'],'<down>')
-call TracyoneKeyMap('cnoremap',s:alt_char['k'],'<up>')
-call TracyoneKeyMap('cnoremap',s:alt_char['b'],'<S-left>')
-
-call TracyoneKeyMap('nnoremap',s:alt_char['m'],':call MouseToggle()<cr>')   
-" Mouse mode toggle
-nnoremap <leader>tm :call te#utils#OptionToggle('mouse',['a',''])<cr>
-" }}}
-
-" GNU readline keybinding {{{
-inoremap        <C-A> <C-O>^
-inoremap   <C-X><C-A> <C-A>
-inoremap <expr> <C-E> col('.')>strlen(getline('.'))<bar><bar>pumvisible()?"\<Lt>C-E>":"\<Lt>End>"
-inoremap        <C-B> <Left>
-inoremap        <C-f> <right>
-"Delete the character underneath the cursor.
-inoremap        <C-d> <BS>
-"Delete the character underneath the cursor.
-inoremap        <C-h> <BS>
-cnoremap        <C-B> <Left>
-cnoremap        <C-f> <right>
-" Move forward a word or Move backward a word.
-call TracyoneKeyMap('inoremap',s:alt_char['b'],'<S-left>')
-call TracyoneKeyMap('inoremap',s:alt_char['f'],'<S-right>')
-call TracyoneKeyMap('cnoremap',s:alt_char['f'],'<S-right>')
-call TracyoneKeyMap('cnoremap',s:alt_char['h'],'<left>')
-
-"move in cmd win
-cnoremap        <C-A> <Home>
-cnoremap   <C-X><C-A> <C-A>
-noremap! <expr> <SID>transposition getcmdpos()>strlen(getcmdline())?"\<Left>":getcmdpos()>1?'':"\<Right>"
-noremap! <expr> <SID>transpose "\<BS>\<Right>".matchstr(getcmdline()[0 : getcmdpos()-2], '.$')
-cmap   <script> <C-T> <SID>transposition<SID>transpose
-
-" }}}
-"update the _vimrc
-nnoremap <leader>so :call te#utils#SourceRc($MYVIMRC)<cr>
-"open the vimrc in tab
-nnoremap <leader>vc :tabedit $MYVIMRC<CR>
-
-"clear search result
-
-"save file 
-"in terminal ctrl-s is used to stop printf..
-noremap <C-S>	:call te#utils#SaveFiles()<cr>
-vnoremap <C-S>	<C-C>:call te#utils#SaveFiles()<cr>
-inoremap <C-S>	<C-O>:call te#utils#SaveFiles()<cr>
-
-"copy,paste and cut 
-noremap <S-Insert> "+gP
-inoremap <c-v>	<C-o>"+gp
-cmap <C-V>	<C-R>+
-cmap <S-Insert>	<C-R>+
-vnoremap <C-X> "+x
-
-
-" CTRL-C and SHIFT-Insert are Paste
-vnoremap <C-C> "+y
-
-"change the windows size,f9, f10, f11, f12 --> hj, j, k, l
-noremap <silent> <C-F9> :vertical resize -10<CR>
-noremap <silent> <C-F10> :resize +10<CR>
-noremap <silent> <C-F11> :resize -10<CR>
-noremap <silent> <C-F12> :vertical resize +10<CR>
-" vertical increase window's size
-noremap <silent> <leader>w. :vertical resize +10<CR>
-" vertical decrease window's size
-noremap <silent> <leader>w, :vertical resize -10<CR>
-" horizontal decrease window's size
-noremap <silent> <leader>w- :resize -10<CR>
-" horizontal increase window's size
-noremap <silent> <leader>w= :resize +10<CR>
-
-
-"replace
-nnoremap <c-h> :OverCommandLine<cr>:%s/<C-R>=expand("<cword>")<cr>/
-vnoremap <c-h> :OverCommandLine<cr>:<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>/
-"delete the ^M
-nnoremap dm :%s/\r\(\n\)/\1/g<CR>
-
-"cd to current buffer's path
-nnoremap <silent> <leader>fc :call GotoCurFile()<cr> 
-nnoremap <silent> <c-F7> :call GotoCurFile()<cr> 
-
-nnoremap <F7> :call Dosunix()<cr>:call te#utils#EchoWarning("Dos2unix...")<cr>
-" dos to unix or unix to dos
-nnoremap <Leader>td :call Dosunix()<cr>:call te#utils#EchoWarning("Dos2unix...")<cr>
-" open url on cursor with default browser
-nnoremap <leader>o :call Open_url()<cr>
-" linu number toggle
-nnoremap <Leader>tn :call TracyoneNuToggle()<cr>
-
-"}}}
-"Function{{{
-function! TracyoneFindMannel()
-    let l:man_cmd='Man'
-    let l:cur_word=expand('<cword>')
-    let l:ret = te#utils#GetError(l:man_cmd.' 3 '.l:cur_word,'no manual.*')
-    "make sure index valid
-    if l:ret != 0
-        let l:ret = te#utils#GetError(l:man_cmd.' 2 '.l:cur_word,'no manual.*')
-        if l:ret != 0
-            execute 'silent! help '.l:cur_word
-        endif
-    else
-        execute l:man_cmd.' 2 '.l:cur_word
-    endif
-endfunction
-
-function! TracyoneCodingStypeToggle()
-    if &tabstop != 8
-        set tabstop=8  
-        set shiftwidth=8 
-        set softtabstop=8 
-        set noexpandtab
-        set nosmarttab
-        call te#utils#EchoWarning('change to linux kernel coding style ...')
-    else
-        set tabstop=4  
-        set shiftwidth=4 
-        set softtabstop=4 
-        set expandtab
-        set smarttab
-        call te#utils#EchoWarning('Use space instead of tab ...')
-    endif
-endfunction
-
-
-
-function! s:Get_pattern_at_cursor(pat)
-    let col = col('.') - 1
-    let line = getline('.')
-    let ebeg = -1
-    let cont = match(line, a:pat, 0)
-    while (ebeg >= 0 || (0 <= cont) && (cont <= col))
-        let contn = matchend(line, a:pat, cont)
-        if (cont <= col) && (col < contn)
-            let ebeg = match(line, a:pat, cont)
-            let elen = contn - ebeg
-            break
-        else
-            let cont = match(line, a:pat, contn)
-        endif
-    endwhile
-    if ebeg >= 0
-        return strpart(line, ebeg, elen)
-    else
-        return ''
-    endif
-endfunction
-
-function! GotoCurFile()
-    execute 'lcd %:h'
-    execute ':call te#utils#EchoWarning("cd to ".getcwd())'
-endfunction
-function! Open_url()
-    let s:url = s:Get_pattern_at_cursor('\v(https?://|ftp://|file:/{3}|www\.)(\w|[.-])+(:\d+)?(/(\w|[~@#$%^&+=/.?:-])+)?')
-    if s:url ==? ''
-        echohl WarningMsg
-        echomsg 'It is not a URL on current cursor！'
-        echohl None
-    else
-        echo 'Open URL：' . s:url
-        if has('win32') || has('win64')
-            call system('cmd /C start ' . s:url)
-        elseif has('mac')
-            call system("open '" . s:url . "'")
-        else
-            call system("xdg-open '" . s:url . "' &")
-        endif
-    endif
-    unlet s:url
-endfunction
-
-function! s:CmdLine(str)
-    exe 'menu Foo.Bar :' . a:str
-    emenu Foo.Bar
-    unmenu Foo
-endfunction
-
-func! Dosunix()
-    if &ff ==# 'unix'
-        exec 'se ff=dos'
-    else
-        exec 'se ff=unix'
-    endif
-endfunc
-
-
-function! TracyoneGotoDef(open_type)
-    let l:cword=expand('<cword>')
-    execute a:open_type
-    if te#env#SupportYcm() && s:complete_plugin == 1
-        let l:ycm_ret=s:YcmGotoDef(a:open_type)
-    else
-        let l:ycm_ret = -1
-    endif
-    if l:ycm_ret < 0
-        try
-            execute 'cs find g '.l:cword
-        catch /^Vim\%((\a\+)\)\=:E/	
-            call te#utils#EchoWarning('cscope query failed')
-            if a:open_type !=? '' | wincmd q | endif
-            return -1
-        endtry
-    else
-        return 0
-    endif
-    return 0
-endfunction
-
-func! s:YcmGotoDef(open_type)
-    let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
-    if s:complete_plugin == 1 
-        if  exists('*youcompleteme#Enable') == 0
-            call te#utils#EchoWarning('Loading ycm ...')
-            call plug#load('ultisnips','YouCompleteMe')
-            call delete('.ycm_extra_conf.pyc')  
-            call youcompleteme#Enable() 
-            let g:is_load_ycm = 1
-            autocmd! lazy_load_group 
-            sleep 1
-            call te#utils#EchoWarning('ycm has been loaded!')
-        endif
-    endif
-    let l:ret = te#utils#GetError(':YcmCompleter GoToDefinition','Runtime.*')
-    if l:ret == -1
-        let l:ret = te#utils#GetError(':YcmCompleter GoToDeclaration','Runtime.*')
-        if l:ret == 0
-            execute ':silent! A'
-            " search failed then go back
-            if search(l:cur_word) == 0
-                execute ':silent! A'
-                return -2
-            endif
-        else
-            return -3 
-        endif
-    endif
-    return 0
-endfunc
-
-" line number toggle
-function! TracyoneNuToggle()
-    if &nu && &rnu
-        set nonu nornu
-    elseif &nu && !&rnu
-        set rnu
-    else
-        set nu
-    endif
-endfunction
-
-"}}}
 "Plugin setting{{{
 " Vim-plug ------------------------{{{
 let &rtp=&rtp.','.$VIMFILES
@@ -592,37 +94,31 @@ endif
 call plug#begin($VIMFILES.'/bundle')
 Plug 'tracyone/a.vim'
 
-if empty(glob($VIMFILES.'/.complete_plugin'))
-    let s:complete_plugin = 1
-else
-    let s:complete_plugin=readfile($VIMFILES.'/.complete_plugin')[0]
+if g:complete_plugin_type ==# 'deoplete'  && !te#env#IsNvim()
+    let g:complete_plugin_type = 'ycm'
 endif
 
-if s:complete_plugin == 5 && !te#env#IsNvim()
-    let s:complete_plugin = 1
-endif
-
-if s:complete_plugin == 1
+if g:complete_plugin_type ==# 'ycm' 
     if te#env#IsUnix()
         Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
         Plug 'Valloric/YouCompleteMe', { 'on': [] }
-        let s:complete_plugin_name='YouCompleteMe'
+        let g:complete_plugin_type_name='YouCompleteMe'
     elseif te#env#IsWin32()
         Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
-        let s:complete_plugin_name='YouCompleteMe-x86'
+        let g:complete_plugin_type_name='YouCompleteMe-x86'
     else
         Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
-        let s:complete_plugin_name='YouCompleteMe-x64'
+        let g:complete_plugin_type_name='YouCompleteMe-x64'
     endif
-elseif s:complete_plugin == 2
+elseif g:complete_plugin_type ==# 'clang_complete'
     Plug 'Rip-Rip/clang_complete'
-elseif s:complete_plugin == 3
+elseif g:complete_plugin_type ==# 'completor.vim'
     Plug 'maralla/completor.vim'
-elseif s:complete_plugin == 4
+elseif g:complete_plugin_type ==# 'neocomplete' 
     Plug 'Shougo/neocomplete'
     Plug 'tracyone/dict'
     Plug 'Konfekt/FastFold'
-elseif s:complete_plugin == 5
+elseif g:complete_plugin_type ==# 'deoplete' 
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'zchee/deoplete-clang'
 else
@@ -769,10 +265,10 @@ let g:tagbar_systemenc='cp936'
 "generate .ycm_extra_conf.py for current directory
 
 " lazyload ultisnips and YouCompleteMe
-if s:complete_plugin == 1
+if g:complete_plugin_type ==# 'ycm'
     augroup lazy_load_group
         autocmd!
-        autocmd InsertEnter * call plug#load('ultisnips',s:complete_plugin_name)
+        autocmd InsertEnter * call plug#load('ultisnips',g:complete_plugin_type_name)
                     \| call delete('.ycm_extra_conf.pyc')  | call youcompleteme#Enable() 
                     \| autocmd! lazy_load_group
     augroup END
@@ -788,7 +284,7 @@ endif
 " autoclose preview windows
 autocmd misc_group InsertLeave * if pumvisible() == 0|pclose|endif
 
-if s:complete_plugin == 1
+if g:complete_plugin_type ==# 'ycm'
     function! GenYCM()
         let l:cur_dir=getcwd()
         cd $VIMFILES/bundle/YCM-Generator
@@ -830,7 +326,7 @@ if s:complete_plugin == 1
                 \ 'mail' : 1
                 \}
     let g:ycm_global_ycm_extra_conf = $VIMFILES . '/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-elseif s:complete_plugin == 4
+elseif g:complete_plugin_type ==# 'neocomplete'
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
     let g:neocomplete#enable_at_startup = 1
@@ -905,7 +401,7 @@ elseif s:complete_plugin == 4
        let col = col('.') - 1
        return !col || getline('.')[col - 1]  =~# '\s'
      endfunction
- elseif s:complete_plugin == 2 
+ elseif g:complete_plugin_type ==# 'clang_complete'
      " clang_complete
      " path to directory where library can be found
      if te#env#IsMac()
@@ -924,13 +420,13 @@ elseif s:complete_plugin == 4
      "let g:clang_jumpto_declaration_key=""
      "g:clang_jumpto_declaration_in_preview_key
      inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
-elseif s:complete_plugin == 3 
+elseif g:complete_plugin_type ==# 'completor.vim'
     "completor.vim 
     let g:completor_clang_binary = '/usr/bin/clang'
     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
     inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
-elseif s:complete_plugin == 5 
+elseif g:complete_plugin_type ==# 'deoplete'
     "deoplete
      if te#env#IsMac()
          let g:deoplete#sources#clang#libclang_path='/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
@@ -1332,11 +828,11 @@ let g:EasyMotion_verbose = 0
 " Tmux ------------------{{{
 if te#env#IsTmux()
     let g:tmux_navigator_no_mappings = 1
-    exec 'nnoremap <silent> '.s:alt_char['h'] .' :TmuxNavigateLeft<cr>'
-    exec 'nnoremap <silent> '.s:alt_char['l'].' :TmuxNavigateRight<cr>'
-    exec 'nnoremap <silent>'.s:alt_char['j'].' :TmuxNavigateDown<cr>'
-    exec 'nnoremap <silent> '.s:alt_char['k']. ' :TmuxNavigateUp<cr>'
-    exec 'nnoremap <silent> '.s:alt_char['w']. ' :TmuxNavigatePrevious<cr>'
+    call TracyoneAltMap('nnoremap <silent>','l',':TmuxNavigateRight<cr>')
+    call TracyoneAltMap('nnoremap <silent>','h',':TmuxNavigateLeft<cr>')
+    call TracyoneAltMap('nnoremap <silent>','j',':TmuxNavigateDown<cr>')
+    call TracyoneAltMap('nnoremap <silent>','k',':TmuxNavigateUp<cr>')
+    call TracyoneAltMap('nnoremap <silent>','w',':TmuxNavigatePrevious<cr>')
     "CtrlP tmux window
     nnoremap <Leader>uu :CtrlPTmux w<cr>
     "CtrlP tmux buffer
@@ -1402,9 +898,9 @@ let g:neomake_make_maker = {
 let g:fml_all_sources = 1
 let g:asyncrun_bell=1
 command! -bang -nargs=* -complete=file Make Neomake! <args>
-exec 'map ' .s:alt_char['o'] .' :Fontzoom!<cr>'
-exec 'map ' .s:alt_char['-'] .' <Plug>(fontzoom-smaller)'
-exec 'map ' .s:alt_char['='] .' <Plug>(fontzoom-larger)'
+call TracyoneAltMap('map', 'o',':Fontzoom!<cr>')
+call TracyoneAltMap('map','-','<Plug>(fontzoom-smaller)')
+call TracyoneAltMap('map','=','<Plug>(fontzoom-larger)')
 
 autocmd misc_group VimEnter * :let g:cursorword = 0
 
@@ -1454,7 +950,7 @@ nnoremap <Leader>fs :call te#utils#SaveFiles()<cr>
 " save all
 nnoremap <Leader>fS :wa<cr>
 " manpage or vimhelp on current curosr word
-nnoremap <Leader>hm :call TracyoneFindMannel()<cr>
+nnoremap <Leader>hm :call te#utils#find_mannel()<cr>
 " open eval.txt
 nnoremap <Leader>he :tabnew<cr>:h eval.txt<cr>:only<cr>
 " open vim script help
@@ -1491,7 +987,7 @@ nnoremap <leader>8 8gt
 " tab 9
 nnoremap <leader>9 9gt
 " toggle coding style 
-nnoremap <leader>tc :call TracyoneCodingStypeToggle()<cr>
+nnoremap <leader>tc :call te#utils#coding_style_toggle()<cr>
 function! DrawItToggle()
     let l:ret = te#utils#GetError('DrawIt','already on')
     if l:ret != 0
