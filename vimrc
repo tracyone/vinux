@@ -45,6 +45,7 @@ function! s:set(var, default) abort
   if !exists(a:var)
     if type(a:default)
       execute 'let' a:var '=' string(a:default)
+      let g:feature_dict[a:var]=string(a:default)
     else
       execute 'let' a:var '=' a:default
       let g:feature_dict[a:var]=a:default

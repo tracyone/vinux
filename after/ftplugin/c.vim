@@ -143,7 +143,7 @@ set cscopetagorder=0
 set cscopeverbose 
 " show msg when any other cscope db added
 nnoremap <buffer> <LocalLeader>s :cs find s <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
-nnoremap <buffer> <LocalLeader>g :call TracyoneGotoDef("")<cr>
+nnoremap <buffer> <LocalLeader>g :call te#complete#goto_def("")<cr>
 nnoremap <buffer> <LocalLeader>d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:cw 7<cr>
 nnoremap <buffer> <LocalLeader>c :cs find c <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
 nnoremap <buffer> <LocalLeader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:cw 7<cr>
@@ -152,7 +152,7 @@ nnoremap <buffer> <LocalLeader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:cw 7
 nnoremap <buffer> <LocalLeader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:cw 7<cr>
 
 nnoremap <buffer> <C-\>s :split<CR>:cs find s <C-R>=expand("<cword>")<CR><CR>
-nnoremap <buffer> <C-\>g :call TracyoneGotoDef("sp")<cr>
+nnoremap <buffer> <C-\>g :call te#complete#goto_def("sp")<cr>
 nnoremap <buffer> <C-\>d :split<CR>:cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>
 nnoremap <buffer> <C-\>c :split<CR>:cs find c <C-R>=expand("<cword>")<CR><CR>
 nnoremap <buffer> <C-\>t :split<CR>:cs find t <C-R>=expand("<cword>")<CR><CR>
@@ -161,7 +161,7 @@ nnoremap <buffer> <C-\>f :split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
 nnoremap <buffer> <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
 nnoremap <buffer> <LocalLeader>u :call <SID>GenCsTag()<cr>
-nnoremap <buffer> <LocalLeader>a :call <SID>AddCscopeOut()<cr>
+nnoremap <buffer> <LocalLeader>a :call <SID>AddCscopeOut(1)<cr>
 "kill the connection of current dir 
 nnoremap <buffer> <LocalLeader>k :cs kill cscope.out<cr> 
 
@@ -193,55 +193,3 @@ let g:clang_format#style_options = {
 
 let b:delimitMate_matchpairs = "(:),[:],{:}"
 
-function! TracyoneGotoDef(open_type)
-    let l:cword=expand('<cword>')
-    execute a:open_type
-    if te#env#SupportYcm() && g:complete_plugin_type ==# 'ycm'
-        let l:ycm_ret=s:YcmGotoDef()
-    else
-        let l:ycm_ret = -1
-    endif
-    if l:ycm_ret < 0
-        try
-            execute 'cs find g '.l:cword
-        catch /^Vim\%((\a\+)\)\=:E/	
-            call te#utils#EchoWarning('cscope query failed')
-            if a:open_type !=? '' | wincmd q | endif
-            return -1
-        endtry
-    else
-        return 0
-    endif
-    return 0
-endfunction
-
-func! s:YcmGotoDef()
-    let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
-    if g:complete_plugin_type ==# 'ycm' 
-        if  exists('*youcompleteme#Enable') == 0
-            call te#utils#EchoWarning('Loading ycm ...')
-            call plug#load('ultisnips','YouCompleteMe')
-            call delete('.ycm_extra_conf.pyc')  
-            call youcompleteme#Enable() 
-            let g:is_load_ycm = 1
-            autocmd! lazy_load_group 
-            sleep 1
-            call te#utils#EchoWarning('ycm has been loaded!')
-        endif
-    endif
-    let l:ret = te#utils#GetError(':YcmCompleter GoToDefinition','Runtime.*')
-    if l:ret == -1
-        let l:ret = te#utils#GetError(':YcmCompleter GoToDeclaration','Runtime.*')
-        if l:ret == 0
-            execute ':silent! A'
-            " search failed then go back
-            if search(l:cur_word) == 0
-                execute ':silent! A'
-                return -2
-            endif
-        else
-            return -3 
-        endif
-    endif
-    return 0
-endfunc
