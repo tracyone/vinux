@@ -89,19 +89,21 @@ set clipboard+=unnamed
 "set autochdir  "change to directory of file in buffer
 
 "statuslne
-function! MyStatusLine(type)
-    let l:mystatus_line='%<%t%m%r%h%w'
-    let l:mystatus_line.="%{exists(':TagbarToggle')?\ tagbar#currenttag('[%s]','')\ :\ ''}"
-    if a:type == 1
-        let l:mystatus_line.="%=[%{(&fenc!=''?&fenc:&enc)}\|%{&ff}\|%Y][%l,%v][%p%%]%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}"
-        let l:mystatus_line.="[%{strftime(\"%m/%d\-\%H:%M\")}]"
-    endif
-    if exists('g:asyncrun_status') && g:asyncrun_status !=# ''
-       let l:mystatus_line.='['.g:asyncrun_status.']'
-    endif
-    return l:mystatus_line
-endfunction
-set statusline=%!MyStatusLine(1)
+if !exists('g:feat_enable_airline') || g:feat_enable_airline != 1
+    function! MyStatusLine(type)
+        let l:mystatus_line='%<%t%m%r%h%w'
+        let l:mystatus_line.="%{exists(':TagbarToggle')?\ tagbar#currenttag('[%s]','')\ :\ ''}"
+        if a:type == 1
+            let l:mystatus_line.="%=[%{(&fenc!=''?&fenc:&enc)}\|%{&ff}\|%Y][%l,%v][%p%%]%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}"
+            let l:mystatus_line.="[%{strftime(\"%m/%d\-\%H:%M\")}]"
+        endif
+        if exists('g:asyncrun_status') && g:asyncrun_status !=# ''
+            let l:mystatus_line.='['.g:asyncrun_status.']'
+        endif
+        return l:mystatus_line
+    endfunction
+    set statusline=%!MyStatusLine(1)
+endif
 set guitablabel=%N\ %t  "do not show dir in tab
 "0, 1 or 2; when to use a status line for the last window
 set laststatus=2 "always show status

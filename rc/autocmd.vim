@@ -24,10 +24,13 @@ augroup filetype_group
     au BufRead,BufNewFile * let $CurBufferDir=expand('%:p:h')
     au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} :setlocal filetype=markdown 
     au BufRead,BufNewFile *.hex,*.out,*.o,*.a Vinarise
-    au BufEnter * 
-                \ if &diff |
-                \ set statusline=%!MyStatusLine(2) |
-                \ endif
+
+    if exists('g:feat_enable_airline') && g:feat_enable_airline != 1
+        au BufEnter * 
+                    \ if &diff |
+                    \ set statusline=%!MyStatusLine(2) |
+                    \ endif
+    endif
     autocmd FileType qf noremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
     autocmd FileType qf noremap <buffer> s <C-w><Enter><C-w>K

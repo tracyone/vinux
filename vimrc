@@ -51,7 +51,7 @@ function! s:set(var, default) abort
       let g:feature_dict[a:var]=a:default
     endif
   endif
-  if eval(a:var) == 1
+  if eval(a:var) == 1 && matchstr(a:var, 'g:feat_enable_') != ''
       call s:source_rc(matchstr(a:var,'_\zs[^_]*\ze$').'.vim')
   endif
 endfunction
@@ -99,6 +99,8 @@ call s:set('g:feat_enable_edit', 0)
 call s:set('g:feat_enable_frontend', 0)
 call s:set('g:feat_enable_basic', 1)
 call s:set('g:feat_enable_help', 0)
+call s:set('g:feat_enable_airline', 0)
+call s:set('g:airline_powerline_fonts', 0)
 
 if !filereadable($VIMFILES.'/feature.vim')
     call s:GenFeatureVim()
