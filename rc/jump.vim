@@ -1,3 +1,4 @@
+" Package info {{{
 " jump to somewhere:file,mru,bookmark
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
@@ -8,8 +9,8 @@ Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
 Plug 't9md/vim-choosewin'
 Plug 'kshenoy/vim-signature'
 Plug 'MattesGroeger/vim-bookmarks'
-
-" Matchit.vim ---------------------{{{
+" }}}
+" Matchit.vim {{{
 "extend %
 runtime macros/matchit.vim "important 
 let g:loaded_matchit=0
@@ -17,9 +18,7 @@ let b:match_ignorecase=1
 set mps+=<:>
 set mps+=":"
 "}}}
-
-let g:SignatureEnabledAtStartup=1
-" Easymotion ----------------------{{{
+" Easymotion {{{
 map W <Plug>(easymotion-lineforward)
 map B <Plug>(easymotion-linebackward)
 " MultiWindow easymotion for word
@@ -37,6 +36,7 @@ let g:EasyMotion_startofline = 0
 let g:EasyMotion_show_prompt = 0
 let g:EasyMotion_verbose = 0
 " }}}
+" vim-bookmark {{{
 let g:bookmark_auto_save = 1
 let g:bookmark_no_default_key_mappings = 1
 let g:bookmark_save_per_working_dir = 1
@@ -53,7 +53,8 @@ vnoremap <leader>mi :<c-u>exec ':BookmarkAnnotate '.getline("'<")[getpos("'<")[2
 nnoremap <leader>mc :BookmarkClear<cr>
 "Bookmark show all
 nnoremap <leader>mb :BookmarkShowAll<CR>
-" Ctrlp ---------------------------{{{
+" }}}
+" Ctrlp {{{
 " Set Ctrl-P to show match at top of list instead of at bottom, which is so
 " stupid that it's not default
 let g:ctrlp_match_window_reversed = 0
@@ -112,7 +113,10 @@ nnoremap <Leader>pc :CtrlPCmdPalette<cr>
 nnoremap <Leader>pk :CtrlPFunky<cr>
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 "}}}
+" Misc {{{
+let g:SignatureEnabledAtStartup=1
 let g:choosewin_overlay_enable = 1
 " Choose windows
 nmap <Leader>wc <Plug>(choosewin)
+" }}}
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 

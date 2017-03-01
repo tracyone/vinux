@@ -1,9 +1,11 @@
+" Package info {{{
 Plug 'tracyone/a.vim'
 Plug 'rhysd/vim-clang-format',{'for': ['c', 'cpp']}
 Plug 'hari-rangarajan/CCTree',{'for': ['c', 'cpp']}
 if(!te#env#IsWindows())
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
 endif
+" }}}
 " A.vim ---------------------------{{{
 ":A switches to the header file corresponding to the current file being  edited (or vise versa)
 ":AS splits and switches
@@ -32,10 +34,18 @@ let  g:CCTreeJoinProg = 'cat'
 let  g:CCTreeJoinProgOpts = ''
 "let g:CCTreeUseUTF8Symbols = 1
 "map <F7> :CCTreeLoadXRefDBFromDisk $CCTREE_DB<cr> 
+command! -bang -nargs=* -complete=file Make Neomake! <args>
+"}}}
+"misc {{{
 let g:neomake_make_maker = {
             \ 'exe': 'make',
             \ 'args': ['-j8'],
             \ 'errorformat': '%f:%l:%c: %m',
             \ }
-command! -bang -nargs=* -complete=file Make Neomake! <args>
+
+" generate cscope for linux kernel
+nnoremap <Leader>gk :call te#pg#gen_cscope_kernel()<cr>
+" generate cctree database
+nnoremap <Leader>gc :call te#pg#cctree()<cr>
 "}}}
+" vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 

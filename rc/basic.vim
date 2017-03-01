@@ -1,3 +1,5 @@
+" basic package
+" Package info {{{
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'majutsushi/tagbar'
 if !te#env#IsNvim() 
@@ -29,7 +31,17 @@ if(!te#env#IsWindows())
         Plug 'CodeFalling/fcitx-vim-osx'
     endif
 endif
-" Tagbar --------------------------{{{
+
+if te#env#IsVim8() || te#env#IsNvim()
+    Plug 'neomake/neomake'
+    Plug 'tracyone/neomake-multiprocess'
+    "ag search c family function
+    nnoremap <leader>vf :call neomakemp#global_search(expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]")<cr>
+    "set grepprg=ag\ --nogroup\ --nocolor
+    "set grepformat=%f:%l:%c%m
+endif
+"}}}
+" Tagbar {{{
 nnoremap <silent><F9> :TagbarToggle<CR>
 " Open tagbar
 nnoremap <leader>tt :TagbarToggle<CR>
@@ -40,19 +52,7 @@ let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
 let g:tagbar_systemenc='cp936'
 "}}}
-
-if te#env#IsVim8() || te#env#IsNvim()
-    Plug 'neomake/neomake'
-    Plug 'tracyone/neomake-multiprocess'
-    " GlobalSearch --------------------{{{
-    "ag search c family function
-    nnoremap <leader>vf :call neomakemp#global_search(expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]")<cr>
-    "set grepprg=ag\ --nogroup\ --nocolor
-    "set grepformat=%f:%l:%c%m
-    "}}}
-endif
-
-" Vimshell ------------------------{{{
+" Vimshell {{{
 if(!te#env#IsNvim())
     let g:vimshell_user_prompt = '":: " . "(" . fnamemodify(getcwd(), ":~") . ")"'
     "let g:vimshell_right_prompt = 'vcs#info("(%s)-[%b]", "(%s)-[%b|%a]")'
@@ -112,7 +112,7 @@ noremap <F4> :call TracyoneVimShellPop()<cr>
 " Open vimshell or neovim's emulator
 nnoremap <Leader>as :call TracyoneVimShellPop()<cr>
 "}}}
-" Nerdtree  -----------------------{{{
+" Nerdtree {{{
 let g:NERDTreeShowLineNumbers=0	"don't show line number
 let g:NERDTreeWinPos='left'	"show nerdtree in the rigth side
 "let NERDTreeWinSize='30'
@@ -137,11 +137,7 @@ xmap <leader>mn <Plug>MarkClear
 nmap <leader>m? <Plug>MarkSearchAnyPrev
 nmap <leader>m/ <Plug>MarkSearchAnyNext
 "}}}
-let g:love_support_option=['tabstop','shiftwidth','softtabstop'
-            \,'expandtab','smarttab', 'termguicolors']
-" Save basic setting
-nnoremap <Leader>lo :Love<cr>
-" Quickrun ------------------------{{{
+" Quickrun {{{
 let g:quickrun_config = {
             \   '_' : {
             \       'outputter' : 'message',
@@ -156,3 +152,10 @@ nmap <leader>yr <Plug>(quickrun)
 " run selection text
 vnoremap <leader>yr :'<,'>QuickRun<cr>
 " }}}
+" Misc {{{
+let g:love_support_option=['tabstop','shiftwidth','softtabstop'
+            \,'expandtab','smarttab', 'termguicolors']
+" Save basic setting
+nnoremap <Leader>lo :Love<cr>
+" }}}
+" vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 

@@ -1,8 +1,10 @@
+" Help:Welcome screen, leader guide
+" Package info {{{
 Plug 'hecal3/vim-leader-guide'
 Plug 'tracyone/ctrlp-leader-guide'
 Plug 'mhinz/vim-startify'
-
-" VimStartify ---------------------{{{
+" }}}
+" VimStartify {{{
 if te#env#IsWindows()
     let g:startify_session_dir = $VIMFILES .'\sessions'
 else
@@ -43,3 +45,4 @@ nnoremap <Leader>ls :SSave<cr>
 nnoremap <Leader>ll :SLoad 
 "}}}
 nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
+" vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
