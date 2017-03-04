@@ -1,11 +1,11 @@
 function! s:HowToRunGit(command) abort
-    call te#utils#EchoWarning('git '.a:command)
+    call te#utils#EchoWarning(a:command)
     if exists(':AsyncRun')
-        exec ':AsyncRun git '.a:command
+        exec ':AsyncRun '.a:command
     elseif exists(':NeomakeSh')
-        call neomakemp#run_command('git '.a:command, 1)
+        call neomakemp#run_command(a:command, 1)
     else
-        exec '!git '.a:command
+        exec '!'.a:command
     endif
 endfunction
 
@@ -47,7 +47,7 @@ function! te#git#GitPush(push_type) abort
         return 2
     endif
     let l:branch_name = input('Please input the branch name: ','','custom,te#git#GetRemoteBr')
-    call s:HowToRunGit('push '.l:remote_name.' '.te#git#GitBranchName().':refs/'.a:push_type.'/'.l:branch_name)
+    call s:HowToRunGit('git push '.l:remote_name.' '.te#git#GitBranchName().':refs/'.a:push_type.'/'.l:branch_name)
     return 0
 endfunction
 
@@ -75,7 +75,7 @@ function! te#git#git_rebase() abort
         return 2
     endif
     let l:branch_name = input('Please input the branch name: ','','custom,te#git#GetRemoteBr')
-    call s:HowToRunGit('rebase '.l:remote_name.'/'.l:branch_name)
+    call s:HowToRunGit('git rebase '.l:remote_name.'/'.l:branch_name)
 endfunction
 
 function! te#git#git_merge() abort
@@ -84,6 +84,6 @@ function! te#git#git_merge() abort
         return 2
     endif
     let l:branch_name = input('which branch do you want to merge: ','','custom,te#git#GetRemoteBr')
-    call neomakemp#run_command('git fetch --all && git rebase '.l:remote_name.'/'.l:branch_name, 1)
+    call s:HowToRunGit('git fetch --all && git rebase '.l:remote_name.'/'.l:branch_name)
 endfunction
 
