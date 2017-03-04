@@ -21,7 +21,7 @@ function! te#git#GitBranchName() abort
     endif
 endfunction
 
-function! s:get_remote_name()
+function! s:get_remote_name() abort
     let l:remote_name=split(system('git remote'),'\n')
     if v:shell_error || len(l:remote_name) == 0
         call te#utils#EchoWarning('git remote failed')

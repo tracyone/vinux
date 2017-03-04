@@ -1,4 +1,3 @@
-let b:delimitMate_matchpairs = "(:),[:],{:}"
 setlocal tabstop=3 
 setlocal shiftwidth=3 
 setlocal softtabstop=3 

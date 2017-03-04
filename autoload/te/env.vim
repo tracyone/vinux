@@ -37,59 +37,59 @@ function! te#env#IsWin32() abort
     return 0
 endfunction
 
-function! te#env#IsNvim()
+function! te#env#IsNvim() abort
     if s:is_nvim | return 1 | endif
     return 0
 endfunction
 
-function! te#env#IsGui()
+function! te#env#IsGui() abort
     if s:is_gui | return 1 | endif
     return 0
 endfunction
 
-function! te#env#IsMacVim()
+function! te#env#IsMacVim() abort
     if s:is_gui == 2 | return 1 | endif
     return 0
 endfunction
 
-function! te#env#SupportPy2()
+function! te#env#SupportPy2() abort
     if s:has_python | return 1 |endif
     return 0
 endfunction
 
-function! te#env#SupportPy3()
+function! te#env#SupportPy3() abort
     if s:has_python3 | return 1 |endif
     return 0
 endfunction
 
-function! te#env#SupportPy()
+function! te#env#SupportPy() abort
     if s:python_ver | return 1 | endif
     return 0
 endfunction
 
-function! te#env#SupportYcm()
+function! te#env#SupportYcm() abort
     if s:ycm_dependency && s:python_ver | return 1 | endif
     return 0
 endfunction
 
-function! te#env#IsTmux()
+function! te#env#IsTmux() abort
     if  s:is_tmux
         return 0
     endif
     return 1
 endfunction
 
-function! te#env#IsUnix()
+function! te#env#IsUnix() abort
     if s:is_unix | return 1 | endif
     return 0
 endfunction
 
-function! te#env#SupportAsync()
+function! te#env#SupportAsync() abort
     if s:is_nvim && v:version >= 800 | return 1 | endif
     return 0
 endfunction
 
-function! te#env#SupportCscope()
+function! te#env#SupportCscope() abort
     if s:support_cscope == 2 | return 1 | endif
     return 0
 endfunction

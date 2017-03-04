@@ -119,7 +119,7 @@ function! te#utils#goto_cur_file() abort
     execute ':call te#utils#EchoWarning("cd to ".getcwd())'
 endfunction
 
-function! s:Get_pattern_at_cursor(pat)
+function! s:Get_pattern_at_cursor(pat) abort
     let col = col('.') - 1
     let line = getline('.')
     let ebeg = -1
@@ -142,7 +142,7 @@ function! s:Get_pattern_at_cursor(pat)
     endif
 endfunction
 
-function! te#utils#open_url()
+function! te#utils#open_url() abort
     let s:url = s:Get_pattern_at_cursor('\v(https?://|ftp://|file:/{3}|www\.)(\w|[.-])+(:\d+)?(/(\w|[~@#$%^&+=/.?:-])+)?')
     if s:url ==? ''
         call te#utils#EchoWarning('It is not a URL on current cursor！')
@@ -160,7 +160,7 @@ function! te#utils#open_url()
 endfunction
 
 " line number toggle
-function! te#utils#nu_toggle()
+function! te#utils#nu_toggle() abort
     if &nu && &rnu
         set nonu nornu
     elseif &nu && !&rnu
@@ -170,10 +170,10 @@ function! te#utils#nu_toggle()
     endif
 endfunction
 
-function! te#utils#find_mannel()
+function! te#utils#find_mannel() abort
     let l:man_cmd=':Man'
     if !exists(l:man_cmd)
-        call te#utils#EchoWarning("You must install vim-man first!")
+        call te#utils#EchoWarning('You must install vim-man first!')
         return -1
     endif
     let l:cur_word=expand('<cword>')
@@ -189,7 +189,7 @@ function! te#utils#find_mannel()
     endif
 endfunction
 
-function! te#utils#coding_style_toggle()
+function! te#utils#coding_style_toggle() abort
     if &tabstop != 8
         set tabstop=8  
         set shiftwidth=8 

@@ -171,7 +171,7 @@ elseif g:complete_plugin_type ==# 'neocomplete'
      let g:clang_snippets=1
      let g:clang_complete_copen=0
      let g:clang_periodic_quickfix=1
-     let g:clang_snippets_engine="ultisnips"
+     let g:clang_snippets_engine='ultisnips'
      let g:clang_close_preview=1
      "let g:clang_jumpto_declaration_key=""
      "g:clang_jumpto_declaration_in_preview_key

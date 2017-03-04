@@ -3,7 +3,7 @@ if g:feat_enable_c != 1
 endif
 
 if !te#env#SupportCscope()
-    call te#utils#EchoWarning("Please install cscope and build vim with cscope feature")
+    call te#utils#EchoWarning('Please install cscope and build vim with cscope feature')
     finish
 endif
 " add cscope database
@@ -189,7 +189,7 @@ let g:clang_format#style_options = {
 	    \ 'AllowShortCaseLabelsOnASingleLine': 'false',
 	    \ 'AllowShortFunctionsOnASingleLine': 'None',
 	    \ 'AllowShortLoopsOnASingleLine': 'false',
-            \ "IndentCaseLabels" : "false"}
+            \ 'IndentCaseLabels' : 'false'}
 
-let b:delimitMate_matchpairs = "(:),[:],{:}"
+let b:delimitMate_matchpairs = '(:),[:],{:}'
 

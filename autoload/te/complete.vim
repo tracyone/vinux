@@ -20,7 +20,7 @@ function! te#complete#goto_def(open_type) abort
     return 0
 endfunction
 
-func! s:YcmGotoDef()
+func! s:YcmGotoDef() abort
     let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
     if g:complete_plugin_type ==# 'ycm' 
         if  exists('*youcompleteme#Enable') == 0
@@ -51,7 +51,7 @@ func! s:YcmGotoDef()
     return 0
 endfunc
 
-function! s:get_input()
+function! s:get_input() abort
   let col = col( '.' )
   let line = getline( '.' )
   if col - 1 < len( line )
