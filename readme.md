@@ -667,7 +667,7 @@ let g:feat_enable_<name>=0
 1. Add following line to `vimrc` between `plug#begin` and `plug#end`
 
     ```vim
-    call s:set('g:feat_enable_<name>', <default>)
+    call s:feat_enable('g:feat_enable_<name>', <default>)
     ```
 
 2. Create  `$VIMFILES/rc/<name>.vim`

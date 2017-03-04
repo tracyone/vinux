@@ -1,5 +1,6 @@
 " vim-airline
 " powerline font: https://github.com/Magnetic2014/YaHei-Consolas-Hybrid-For-Powerline
+scriptencoding utf-8
 " Package info {{{
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'

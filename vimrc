@@ -41,7 +41,7 @@ function! s:source_rc(path, ...) abort "{{{
   endtry
 endfunction
 
-function! s:set(var, default) abort
+function! s:feat_enable(var, default) abort
   if !exists(a:var)
     if type(a:default)
       execute 'let' a:var '=' string(a:default)
@@ -85,22 +85,22 @@ if empty(glob($VIMFILES.'/autoload/plug.vim'))
 endif
 call plug#begin($VIMFILES.'/bundle')
 
-call s:set('g:complete_plugin_type','ycm')
-call s:set('g:feat_enable_complete', 0)
-call s:set('g:feat_enable_jump', 1)
-call s:set('g:feat_enable_tmux', 0)
-call s:set('g:feat_enable_git', 0)
-call s:set('g:feat_enable_c', 0)
-call s:set('g:feat_enable_markdown', 0)
-call s:set('g:feat_enable_vim', 0)
-call s:set('g:feat_enable_gui', 0)
-call s:set('g:feat_enable_tools', 0)
-call s:set('g:feat_enable_edit', 0)
-call s:set('g:feat_enable_frontend', 0)
-call s:set('g:feat_enable_basic', 1)
-call s:set('g:feat_enable_help', 0)
-call s:set('g:feat_enable_airline', 0)
-call s:set('g:airline_powerline_fonts', 0)
+call s:feat_enable('g:complete_plugin_type','ycm')
+call s:feat_enable('g:feat_enable_complete', 0)
+call s:feat_enable('g:feat_enable_jump', 1)
+call s:feat_enable('g:feat_enable_tmux', 0)
+call s:feat_enable('g:feat_enable_git', 0)
+call s:feat_enable('g:feat_enable_c', 0)
+call s:feat_enable('g:feat_enable_markdown', 0)
+call s:feat_enable('g:feat_enable_vim', 0)
+call s:feat_enable('g:feat_enable_gui', 0)
+call s:feat_enable('g:feat_enable_tools', 0)
+call s:feat_enable('g:feat_enable_edit', 0)
+call s:feat_enable('g:feat_enable_frontend', 0)
+call s:feat_enable('g:feat_enable_basic', 1)
+call s:feat_enable('g:feat_enable_help', 0)
+call s:feat_enable('g:feat_enable_airline', 0)
+call s:feat_enable('g:airline_powerline_fonts', 0)
 
 if !filereadable($VIMFILES.'/feature.vim')
     call s:GenFeatureVim()
