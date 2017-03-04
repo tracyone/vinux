@@ -130,9 +130,9 @@ cmap   <script> <C-T> <SID>transposition<SID>transpose
 
 " }}}
 "update the _vimrc
-nnoremap <leader>so :call te#utils#SourceRc($MYVIMRC)<cr>
+nnoremap <leader>so :call te#utils#source_vimrc($MYVIMRC)<cr>
 "open the vimrc in tab
-nnoremap <leader>vc :tabedit $MYVIMRC<CR>
+nnoremap <leader>vc :tabedit $MYVIMRC<CR>:call te#utils#goto_cur_file()<cr>
 
 "clear search result
 

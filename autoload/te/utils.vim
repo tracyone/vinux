@@ -105,7 +105,7 @@ function! te#utils#OptionToggle(opt_str,opt_list) abort
     return 0
 endfunction
 
-function! te#utils#SourceRc(path) abort
+function! te#utils#source_vimrc(path) abort
     let l:ft_orig=&ft
     :call te#utils#EchoWarning('Sourcing '.a:path.' ...')
     execute ':source '.a:path
