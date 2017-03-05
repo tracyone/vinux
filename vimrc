@@ -51,7 +51,7 @@ function! s:feat_enable(var, default) abort
       let g:feature_dict[a:var]=a:default
     endif
   endif
-  if eval(a:var) == 1 && matchstr(a:var, 'g:feat_enable_') != ''
+  if eval(a:var) != 0 && matchstr(a:var, 'g:feat_enable_') != ''
       call s:source_rc(matchstr(a:var,'_\zs[^_]*\ze$').'.vim')
   endif
 endfunction
