@@ -104,6 +104,9 @@ if te#env#IsGui()
         endif
         ":set vb t_vb=
     endfunction
+    call TracyoneAltMap('map', 'o',':Fontzoom!<cr>')
+    call TracyoneAltMap('map','-','<Plug>(fontzoom-smaller)')
+    call TracyoneAltMap('map','=','<Plug>(fontzoom-larger)')
 else
     set nocul
     set novb
@@ -126,8 +129,5 @@ endtry
 " toggle background option.
 nnoremap <leader>tb :call te#utils#OptionToggle("bg",["dark","light"])<cr>
 "}}}
-call TracyoneAltMap('map', 'o',':Fontzoom!<cr>')
-call TracyoneAltMap('map','-','<Plug>(fontzoom-smaller)')
-call TracyoneAltMap('map','=','<Plug>(fontzoom-larger)')
 "}}}
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
