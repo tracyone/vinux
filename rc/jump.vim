@@ -9,6 +9,10 @@ Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
 Plug 't9md/vim-choosewin'
 Plug 'kshenoy/vim-signature'
 Plug 'MattesGroeger/vim-bookmarks'
+if exists('g:feat_enable_airline') && g:feat_enable_airline == 0
+    Plug 'bling/vim-bufferline'
+    let g:bufferline_show_bufnr = 0
+endif
 " }}}
 " Matchit.vim {{{
 "extend %

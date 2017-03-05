@@ -210,23 +210,23 @@ nnoremap <Leader>qQ :qa!<cr>
 " save and quit all
 nnoremap <Leader>qs :wqa<cr>
 " tab 1
-nnoremap <leader>1 1gt
+nnoremap <leader>1 :call te#utils#tab_buf_switch(1)<cr>
 " tab 2
-nnoremap <leader>2 2gt
+nnoremap <leader>2 :call te#utils#tab_buf_switch(2)<cr>
 " tab 3
-nnoremap <leader>3 3gt
+nnoremap  <leader>3 :call te#utils#tab_buf_switch(3)<cr>
 " tab 4
-nnoremap <leader>4 4gt
+nnoremap  <leader>4 :call te#utils#tab_buf_switch(4)<cr>
 " tab 5
-nnoremap <leader>5 5gt
+nnoremap  <leader>5 :call te#utils#tab_buf_switch(5)<cr>
 " tab 6
-nnoremap <leader>6 6gt
+nnoremap  <leader>6 :call te#utils#tab_buf_switch(6)<cr>
 " tab 7
-nnoremap <leader>7 7gt
+nnoremap  <leader>7 :call te#utils#tab_buf_switch(7)<cr>
 " tab 8
-nnoremap <leader>8 8gt
+nnoremap  <leader>8 :call te#utils#tab_buf_switch(8)<cr>
 " tab 9
-nnoremap <leader>9 9gt
+nnoremap  <leader>9 :call te#utils#tab_buf_switch(9)<cr>
 " toggle coding style 
 nnoremap <leader>tc :call te#utils#coding_style_toggle()<cr>
 " vertical open window
