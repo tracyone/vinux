@@ -114,8 +114,12 @@ function! te#utils#source_vimrc(path) abort
 endfunction
 
 
-function! te#utils#goto_cur_file() abort
-    execute 'lcd %:h'
+function! te#utils#goto_cur_file(option) abort
+    if a:option == 1
+        execute 'cd %:h'
+    else
+        execute 'lcd %:h'
+    endif
     execute ':call te#utils#EchoWarning("cd to ".getcwd())'
 endfunction
 
