@@ -52,4 +52,5 @@ let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
+autocmd misc_group VimEnter * let g:airline_section_error = airline#section#create_right(['%{neomakemp#run_status()}'])
 " }}}
