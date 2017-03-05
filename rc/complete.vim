@@ -27,13 +27,13 @@ elseif g:complete_plugin_type ==# 'deoplete'
 else
     call te#utils#EchoWarning('No complete plugin selected!')
 endif
-Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 
 " Complete ------------------------{{{
 "generate .ycm_extra_conf.py for current directory
 
 " lazyload ultisnips and YouCompleteMe
 if g:complete_plugin_type ==# 'ycm'
+    Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
     augroup lazy_load_group
         autocmd!
         autocmd InsertEnter * call plug#load('ultisnips',g:complete_plugin_type_name)
@@ -41,12 +41,7 @@ if g:complete_plugin_type ==# 'ycm'
                     \| autocmd! lazy_load_group
     augroup END
 else
-    augroup lazy_load_group
-        autocmd!
-        autocmd InsertEnter * call plug#load('ultisnips')
-                    \| autocmd! lazy_load_group
-    augroup END
-
+    Plug 'SirVer/ultisnips'
 endif
 
 " autoclose preview windows
