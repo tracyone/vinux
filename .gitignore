@@ -10,3 +10,4 @@ sessions/
 .github_token
 feature.vim
 .vim-bookmarks
+.netrwhist
