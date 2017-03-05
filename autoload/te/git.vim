@@ -12,13 +12,14 @@ endfunction
 " Get git repo local branch name
 " return a string which is the name of local branch name
 " return a space if no local branch found
-function! te#git#GitBranchName() abort
+function! te#git#get_cur_br_name() abort
     if exists('*fugitive#head')
         return fugitive#head()
     endif
     if exists('*gita#statusline#format')
         return gita#statusline#format('%lb')
     endif
+    return -1
 endfunction
 
 function! s:get_remote_name() abort
@@ -47,7 +48,12 @@ function! te#git#GitPush(push_type) abort
         return 2
     endif
     let l:branch_name = input('Please input the branch name: ','','custom,te#git#GetRemoteBr')
-    call s:HowToRunGit('git push '.l:remote_name.' '.te#git#GitBranchName().':refs/'.a:push_type.'/'.l:branch_name)
+    let l:cur_br_name=te#git#get_cur_br_name()
+    if type(l:cur_br_name) != v:t_string
+        :call te#utils#EchoWarning('Get current branch name failed','err')
+        return 3
+    endif
+    call s:HowToRunGit('git push '.l:remote_name.' '.l:cur_br_name.':refs/'.a:push_type.'/'.l:branch_name)
     return 0
 endfunction
 
