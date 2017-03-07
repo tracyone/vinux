@@ -49,6 +49,9 @@ function! te#git#GitPush(push_type) abort
     endif
     let l:branch_name = input('Please input the branch name: ','','custom,te#git#GetRemoteBr')
     let l:cur_br_name=te#git#get_cur_br_name()
+    if a:push_type ==# 'for'
+        let l:cur_br_name='HEAD'
+    endif
     if type(l:cur_br_name) != v:t_string
         :call te#utils#EchoWarning('Get current branch name failed','err')
         return 3
