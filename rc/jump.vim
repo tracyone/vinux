@@ -11,6 +11,9 @@ Plug 'kshenoy/vim-signature'
 Plug 'MattesGroeger/vim-bookmarks'
 if exists('g:feat_enable_airline') && g:feat_enable_airline == 0
     Plug 'ap/vim-buftabline'
+    let g:buftabline_numbers=2
+    let g:buftabline_show=1
+    let g:buftabline_indicators=1
 endif
 " }}}
 " Matchit.vim {{{

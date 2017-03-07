@@ -218,6 +218,9 @@ function! te#utils#tab_buf_switch(num) abort
         if exists( '*tabpagenr' ) && tabpagenr('$') != 1
             " Tab support && tabs open
             execute 'normal '.a:num.'gt'
+        elseif exists('g:buftabline_numbers') && g:buftabline_numbers == 2
+            
+            execute 'normal '."\<Plug>BufTabLine.Go(".a:num.')'
         else
             let l:temp=a:num
             let l:buf_index=a:num
