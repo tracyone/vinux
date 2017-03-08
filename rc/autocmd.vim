@@ -4,6 +4,9 @@ augroup misc_group
     autocmd CmdwinEnter * noremap <buffer> q :q<cr>
     au BufRead * if &ff=="dos" | setlocal ffs=dos,unix,mac | endif  
     au VimResized * wincmd = 
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") |
+                \ exe "normal! g'\"" |
+                \ endif "jump to last position last open in vim
     autocmd VimEnter *
                 \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
                 \|   echom '[t-vim]Need to install the missing plugins!'
@@ -29,6 +32,12 @@ augroup filetype_group
         au BufEnter * 
                     \ if &diff |
                     \ set statusline=%!MyStatusLine(2) |
+                    \ exe "normal! gg" |
+                    \ endif
+    else
+        au BufEnter * 
+                    \ if &diff |
+                    \ exe "normal! gg" |
                     \ endif
     endif
     autocmd FileType qf noremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>

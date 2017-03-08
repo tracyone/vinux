@@ -32,7 +32,6 @@ set wildmode=longest,full
 set wic
 "set list  "display unprintable characters by set list
 set listchars=tab:\|\ ,trail:-  "Strings to use in 'list' mode and for the |:list| command
-au misc_group BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif "jump to last position last open in vim
 
 " Show a few lines of context around the cursor.  Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
