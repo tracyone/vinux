@@ -54,8 +54,6 @@ vnoremap <TAB>  >gv
 vnoremap <s-TAB>  <gv 
 "Ctrl-tab is not work in vim
 nnoremap <silent><c-TAB> :AT<cr>
-nnoremap <silent><right> :tabnext<cr>
-nnoremap <silent><Left> :tabp<cr>
 
 " in mac osx please set your option key as meta key
 
