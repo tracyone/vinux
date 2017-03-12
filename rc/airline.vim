@@ -39,20 +39,17 @@ if g:airline_powerline_fonts == 1 && !te#env#IsMacVim()
     let g:airline_symbols.branch = ''
     let g:airline_symbols.readonly = ''
 else
-    let g:airline_left_sep = '»'
     let g:airline_left_sep = '▶'
-    let g:airline_right_sep = '«'
     let g:airline_right_sep = '◀'
-    let g:airline_symbols.crypt = '🔒'
-    let g:airline_symbols.maxlinenr = '☰'
-    let g:airline_symbols.maxlinenr = ''
     let g:airline_symbols.branch = '⎇'
 endif
+let g:airline_symbols.maxlinenr = '☰'
 let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_symbols.crypt = '🔒'
 
 function! s:airline_setting()
     let g:airline_section_error = airline#section#create_right(['%{neomakemp#run_status()}'])

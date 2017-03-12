@@ -28,9 +28,8 @@ let g:startify_custom_header = [
             \ '    / /_/_____/ |/ / / / / / / /',
             \ '    \__/      |___/_/_/ /_/ /_/ ',
             \ '                                ',                            
-            \ '    <space>hk open keymap list',
-            \ '    <space>vc open vimrc in new tab',
-            \ '    author:tracyone at live dot cn',
+            \ '    ['.g:t_vim_version.'] '.'[tracyone@live.cn]',
+            \ '    [https://github.com/tracyone/t-vim]',
             \ '',
             \ '',
             \ ]

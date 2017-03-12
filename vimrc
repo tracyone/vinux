@@ -56,10 +56,17 @@ function! s:feat_enable(var, default) abort
   endif
 endfunction
 
-function! s:GenFeatureVim()
+function! s:gen_feature_vim()
 	for key in keys(g:feature_dict)
 	   call writefile(['let '.key.'='.g:feature_dict[key]], $VIMFILES.'/feature.vim', 'a')
 	endfor
+    let l:t_vim_version=system('git describe')
+    if v:shell_error != 0
+	    let l:t_vim_version='Unknown'
+    else
+        let l:t_vim_version=split(l:t_vim_version, '\n')[-1].'@'.v:version
+    endif
+    call writefile(['let g:t_vim_version='.string(l:t_vim_version)], $VIMFILES.'/feature.vim', 'a')
 endfunction
 "}}}
 
@@ -93,7 +100,7 @@ call s:feat_enable('g:feat_enable_git', 0)
 call s:feat_enable('g:feat_enable_c', 0)
 call s:feat_enable('g:feat_enable_markdown', 0)
 call s:feat_enable('g:feat_enable_vim', 0)
-call s:feat_enable('g:feat_enable_gui', 0)
+call s:feat_enable('g:feat_enable_gui', 1)
 call s:feat_enable('g:feat_enable_tools', 0)
 call s:feat_enable('g:feat_enable_edit', 0)
 call s:feat_enable('g:feat_enable_frontend', 0)
@@ -103,7 +110,7 @@ call s:feat_enable('g:feat_enable_airline', 0)
 call s:feat_enable('g:airline_powerline_fonts', 0)
 
 if !filereadable($VIMFILES.'/feature.vim')
-    call s:GenFeatureVim()
+    call s:gen_feature_vim()
 endif
 
 " Open plug status windows
