@@ -24,15 +24,7 @@
 
 #  Installation
 
-Dependency:
-
-- [git](https://git-scm.com/downloads)
-- [curl](https://curl.haxx.se/)
-- [the_silver_searcher](https://github.com/ggreer/the_silver_searcher)
-- [ctags](http://ctags.sourceforge.net/)
-- [cscope](http://cscope.sourceforge.net/)
-- [vim](http://www.vim.org/)-8.0 with python2 support.
-- [neovim](https://github.com/neovim/neovim) 0.1.6 or above
+Dependency see :[Install-external-dependency](https://github.com/tracyone/t-vim/wiki/Install-external-dependency)
 
 Execute following shell script,it will do following things:
 
@@ -57,22 +49,21 @@ one integer argument which indicate the complete plugin:
 
 # Feature introduction
 
-1. c/c++ accurate complete and GoToDefinition. see [Source code reading and GoToDefinition](https://github.com/tracyone/t-vim/wiki/Keymapping#source-code-reading-and-gotodefinition)
+1. c/c++ source code complete and GoToDefinition. see [Source code reading and GoToDefinition](https://github.com/tracyone/t-vim/wiki/Keymapping#source-code-reading-and-gotodefinition)
 3. Viml autocomplete and GoToDefinition (see [Shougo/neco-vim](https://github.cim/Shougo/neco-vim))
-4. Markdown syntax highlight,preview and TOC
+4. Markdown syntax highlight,preview and TOC.(see [markdown](https://github.com/tracyone/t-vim/wiki/Keymapping#markdown))
 5. Run external command asynchronously.Include generating cscope database，cctree database.(Use [tracyone/neomake-multiprocess](https://github.com/tracyone/neomake-multiprocess))
 6. Ctrlp+ag+ctrlp-py-matcher+ctrlp-funky:high speed fuzzy searcher，search
-   anything you want.
-7. Spacemacs like keybinding.(SPC+hk or SPC+? show the key guide)
-8. Some most use options can be toggle and can be save without modify vim
-   config,just  press SPC+lo to save options(see
-   [tracyone/love.vim](https://github.com/tracyone/love.vim) and [Toggle
-   something](#toggle-something)).
-9. Do most of git operation in Vim.(See [Git relate](#git-relate))
+   anything you want.(see [ctrlp](https://github.com/tracyone/t-vim/wiki/Keymapping#ctrlp) and [fuzzy-files-search-string-search](https://github.com/tracyone/t-vim/wiki/Keymapping#fuzzy-files-search--string-search))
+7. Spacemacs like keybinding.(SPC+hk or SPC+? show the key guide, also see [Keymapping with space prefix](https://github.com/tracyone/t-vim/wiki/Keymapping#keymapping-with-space-prefix))
+8. Some most use options can be toggled and saved without modifying vim's
+   config.(see [tracyone/love.vim](https://github.com/tracyone/love.vim) and [Toggle something](https://github.com/tracyone/t-vim/wiki/Keymapping#toggle-something))
+9. Do most of git operation in Vim.(see [git-relate](https://github.com/tracyone/t-vim/wiki/Keymapping#git-relate))
 10. Smoothly switch window between vim and tmux.
-11. Smoothly switch buffers and tabs.
+11. Smoothly switch buffers and tabs.(see [windows operation](https://github.com/tracyone/t-vim/wiki/Keymapping#windows-operatting))
 12. [GNU Readline keybinding](https://cnswww.cns.cwru.edu/php/chet/readline/readline.html) in vim's insert mode and command line mode.
-13. many other feature please see the [wiki](https://github.com/tracyone/t-vim/wiki)
+13. Syntax check function that is provided by [neomake](https://github.com/neomake/neomake).
+14. many other feature please see the [wiki](https://github.com/tracyone/t-vim/wiki)
 
 
 # Feature Config
