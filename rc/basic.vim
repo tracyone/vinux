@@ -21,7 +21,7 @@ Plug 'thinca/vim-quickrun'
 if(!te#env#IsWindows())
     Plug 'vim-scripts/sudo.vim'
     if !te#env#IsNvim() 
-        Plug 'vim-utils/vim-man' 
+        Plug 'lambdalisue/vim-manpager'
     endif
     if te#env#IsMac()
         Plug 'CodeFalling/fcitx-vim-osx',{'do': 'wget -c \"https://raw.githubusercontent.com/

@@ -177,19 +177,17 @@ endfunction
 function! te#utils#find_mannel() abort
     let l:man_cmd=':Man'
     if !exists(l:man_cmd)
-        call te#utils#EchoWarning('You must install vim-man first!')
+        call te#utils#EchoWarning('You must install lambdalisue/vim-manpager first!')
         return -1
     endif
     let l:cur_word=expand('<cword>')
-    let l:ret = te#utils#GetError(l:man_cmd.' 3 '.l:cur_word,'no manual.*')
+    let l:ret = te#utils#GetError(l:man_cmd.' 3 '.l:cur_word,'\cno \(manual\|entry\).*')
     "make sure index valid
     if l:ret != 0
-        let l:ret = te#utils#GetError(l:man_cmd.' 2 '.l:cur_word,'no manual.*')
+        let l:ret = te#utils#GetError(l:man_cmd.' 2 '.l:cur_word,'\cno \(manual\|entry\).*')
         if l:ret != 0
             execute 'silent! help '.l:cur_word
         endif
-    else
-        execute l:man_cmd.' 2 '.l:cur_word
     endif
 endfunction
 
