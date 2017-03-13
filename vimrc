@@ -64,7 +64,8 @@ function! s:gen_feature_vim()
     if v:shell_error != 0
 	    let l:t_vim_version='Unknown'
     else
-        let l:t_vim_version=split(l:t_vim_version, '\n')[-1].'@'.v:version
+        let l:temp=te#utils#get_vim_version()
+        let l:t_vim_version=split(l:t_vim_version, '\n')[-1].'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
     endif
     call writefile(['let g:t_vim_version='.string(l:t_vim_version)], $VIMFILES.'/feature.vim', 'a')
 endfunction

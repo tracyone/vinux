@@ -106,7 +106,7 @@ function! te#utils#OptionToggle(opt_str,opt_list) abort
 endfunction
 
 function! te#utils#source_vimrc(path) abort
-    let l:ft_orig=&ft
+    let l:ft_orig=&filetype
     :call te#utils#EchoWarning('Sourcing '.a:path.' ...')
     execute ':source '.a:path
     :execute 'set ft='.l:ft_orig
@@ -124,23 +124,23 @@ function! te#utils#goto_cur_file(option) abort
 endfunction
 
 function! s:Get_pattern_at_cursor(pat) abort
-    let col = col('.') - 1
-    let line = getline('.')
-    let ebeg = -1
-    let cont = match(line, a:pat, 0)
-    let elen = 0
-    while (ebeg >= 0 || (0 <= cont) && (cont <= col))
-        let contn = matchend(line, a:pat, cont)
-        if (cont <= col) && (col < contn)
-            let ebeg = match(line, a:pat, cont)
-            let elen = contn - ebeg
+    let l:col = col('.') - 1
+    let l:line = getline('.')
+    let l:ebeg = -1
+    let l:cont = match(l:line, a:pat, 0)
+    let l:elen = 0
+    while (l:ebeg >= 0 || (0 <= l:cont) && (l:cont <= l:col))
+        let l:contn = matchend(l:line, a:pat, l:cont)
+        if (l:cont <= l:col) && (l:col < l:contn)
+            let l:ebeg = match(l:line, a:pat, l:cont)
+            let l:elen = l:contn - l:ebeg
             break
         else
-            let cont = match(line, a:pat, contn)
+            let l:cont = match(l:line, a:pat, l:contn)
         endif
     endwhile
-    if ebeg >= 0
-        return strpart(line, ebeg, elen)
+    if l:ebeg >= 0
+        return strpart(l:line, l:ebeg, l:elen)
     else
         return ''
     endif
@@ -165,12 +165,12 @@ endfunction
 
 " line number toggle
 function! te#utils#nu_toggle() abort
-    if &nu && &rnu
-        set nonu nornu
-    elseif &nu && !&rnu
-        set rnu
+    if &number && &relativenumber
+        set nonumber norelativenumber
+    elseif &number && !&relativenumber
+        set relativenumber
     else
-        set nu
+        set number
     endif
 endfunction
 
@@ -238,4 +238,17 @@ function! te#utils#tab_buf_switch(num) abort
             execute ':'.l:temp.'b'
         endif
     endif
+endfunction
+
+"return vim version infomatrion
+"l:result[0]:vim main version
+"l:result[1]:vim patch info
+function! te#utils#get_vim_version() abort
+    redir => l:msg
+    silent! execute ':version'
+    redir END
+    let l:result=[]
+    call add(l:result,matchstr(l:msg,'VIM - Vi IMproved\s\zs\d.\d\ze'))
+    call add(l:result, matchstr(l:msg, ':\s\d-\zs\d\{1,3\}\ze'))
+    return l:result
 endfunction
