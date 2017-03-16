@@ -32,12 +32,6 @@ augroup filetype_group
         au BufEnter * 
                     \ if &diff |
                     \ set statusline=%!MyStatusLine(2) |
-                    \ exe "normal! gg" |
-                    \ endif
-    else
-        au BufEnter * 
-                    \ if &diff |
-                    \ exe "normal! gg" |
                     \ endif
     endif
     autocmd FileType qf noremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>
