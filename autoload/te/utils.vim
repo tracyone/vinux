@@ -240,15 +240,3 @@ function! te#utils#tab_buf_switch(num) abort
     endif
 endfunction
 
-"return vim version infomatrion
-"l:result[0]:vim main version
-"l:result[1]:vim patch info
-function! te#utils#get_vim_version() abort
-    redir => l:msg
-    silent! execute ':version'
-    redir END
-    let l:result=[]
-    call add(l:result,matchstr(l:msg,'VIM - Vi IMproved\s\zs\d.\d\ze'))
-    call add(l:result, matchstr(l:msg, ':\s\d-\zs\d\{1,3\}\ze'))
-    return l:result
-endfunction

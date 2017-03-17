@@ -255,6 +255,8 @@ nnoremap <leader>ts :call te#utils#OptionToggle('statusline',['%!MyStatusLine(1)
 nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
 " Toggle termguicolors
 nnoremap <Leader>tl :call te#utils#OptionToggle('termguicolors',[1,0])<cr>
+" feature enable
+nnoremap <Leader>fe :call te#feat#feat_dyn_enable()<cr>
 
 if te#env#IsNvim()
     "terminal-emulator setting

@@ -18,6 +18,7 @@
 * [Feature introduction](#feature-introduction)
 * [Feature Config](#feature-config)
 	* [Enable or disable feature](#enable-or-disable-feature)
+	* [Enable feature at runtime](#enable-feature-at-runtime)
 	* [Add new feature](#add-new-feature)
 
 <!-- vim-markdown-toc -->
@@ -104,12 +105,21 @@ let g:feat_enable_<name>=0
 `$VIMFILES/rc/<name>.vim` will be sourced when `g:feat_enable_<name>` equal to 1
 
 
+## Enable feature at runtime
+
+Shutcut: `<SPC>+fe` or
+
+```vim
+:call te#feat#feat_dyn_enable()
+```
+
+
 ## Add new feature
 
 1. Add following line to `vimrc` between `plug#begin` and `plug#end`
 
     ```vim
-    call s:feat_enable('g:feat_enable_<name>', <default>)
+    call te#feat#feat_enable('g:feat_enable_<name>', <default>)
     ```
 
 2. Create  `$VIMFILES/rc/<name>.vim`
