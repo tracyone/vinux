@@ -2,6 +2,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
 Plug 'rhysd/github-complete.vim'
+Plug 'airblade/vim-gitgutter'
 
 " Git releate ---------------------{{{
 nnoremap <F3> :Gstatus<cr>
