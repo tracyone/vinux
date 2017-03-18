@@ -13,8 +13,6 @@ if !te#env#IsNvim()
     Plug 'Shougo/vimshell.vim',{'on':'VimShell'}
 endif
 Plug 'tracyone/love.vim'
-Plug 'vim-scripts/genutils'
-Plug 'vim-scripts/L9'
 Plug 'tracyone/mark.vim'
 Plug 'itchyny/vim-cursorword'
 Plug 'thinca/vim-quickrun'
@@ -40,6 +38,7 @@ if te#env#IsVim8() || te#env#IsNvim()
     "set grepprg=ag\ --nogroup\ --nocolor
     "set grepformat=%f:%l:%c%m
 endif
+Plug 'google/vim-searchindex'
 "}}}
 " Tagbar {{{
 nnoremap <silent><F9> :TagbarToggle<CR>
