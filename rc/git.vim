@@ -2,7 +2,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
 Plug 'rhysd/github-complete.vim'
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 
 " Git releate ---------------------{{{
 nnoremap <F3> :Gstatus<cr>
@@ -37,4 +37,9 @@ nnoremap <Leader>gp :call te#git#GitPush("heads")<cr>
 nnoremap <Leader>gg :call te#git#GitPush("for")<cr>
 " git fetch all
 nnoremap <Leader>gf :call neomakemp#run_command('git fetch --all')<cr>
+let g:signify_vcs_list = [ 'git', 'svn' ]
+omap ic <plug>(signify-motion-inner-pending)
+xmap ic <plug>(signify-motion-inner-visual)
+omap ac <plug>(signify-motion-outer-pending)
+xmap ac <plug>(signify-motion-outer-visual)
 "}}}
