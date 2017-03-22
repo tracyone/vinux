@@ -12,6 +12,7 @@ Plug 'tracyone/hex2ascii.vim', { 'do': 'make' }
 Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
 Plug 'adah1972/fencview',{'on': 'FencManualEncoding'}
 Plug 'junegunn/goyo.vim',{'on': 'Goyo'}
+Plug 'vimwiki/vimwiki'
 
 " FencView ------------------------{{{
 let g:fencview_autodetect=0 
@@ -73,4 +74,11 @@ nnoremap <Leader>fR :Ren<cr>
 nnoremap <Leader>ad :Calendar<cr>
 " toggle free writing in vim (Goyo)
 nnoremap <Leader>to :Goyo<cr>
+map <localleader>wt <Plug>VimwikiToggleListItem
+nmap <localleader>wT <Plug>VimwikiTabIndex
+nmap <localleader>ww <Plug>VimwikiIndex
+nmap <localleader>wl <Plug>VimwikiUISelect
+nmap <localleader>wi <Plug>VimwikiDiaryIndex
+nmap <localleader>wd <Plug>VimwikiMakeDiaryNote
+nmap <localleader>ii 0i* [ ] 
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
