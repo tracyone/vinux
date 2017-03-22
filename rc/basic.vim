@@ -38,7 +38,6 @@ if te#env#IsVim8() || te#env#IsNvim()
     "set grepprg=ag\ --nogroup\ --nocolor
     "set grepformat=%f:%l:%c%m
 endif
-Plug 'google/vim-searchindex'
 "}}}
 " Tagbar {{{
 nnoremap <silent><F9> :TagbarToggle<CR>
