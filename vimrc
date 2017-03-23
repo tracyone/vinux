@@ -56,6 +56,7 @@ call te#feat#feat_enable('g:feat_enable_basic', 1)
 call te#feat#feat_enable('g:feat_enable_help', 0)
 call te#feat#feat_enable('g:feat_enable_airline', 0)
 call te#feat#feat_enable('g:airline_powerline_fonts', 0)
+call te#feat#register_vim_enter_setting(function('te#feat#check_plugin_install'))
 
 if !filereadable($VIMFILES.'/feature.vim')
     call te#feat#gen_feature_vim()

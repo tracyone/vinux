@@ -108,3 +108,27 @@ function! te#feat#feat_enable(var, default) abort
   endif
 endfunction
 
+let s:plugin_func_list=[]
+
+function! te#feat#register_vim_enter_setting(funcref) abort
+    if type(a:funcref) != v:t_func
+        call te#utils#EchoWarning('register failed!funcref must be a funcref variable', 'err')
+        return -1
+    endif
+    call add(s:plugin_func_list, a:funcref)
+    return 0
+endfunction
+
+function! te#feat#run_vim_enter_setting() abort
+    for l:Needle in s:plugin_func_list
+        call l:Needle()
+    endfor
+endfunction
+
+function! te#feat#check_plugin_install() abort
+    if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+        call te#utils#EchoWarning('Install the missing plugins!')
+        PlugInstall --sync | q
+    endif
+endfunction
+

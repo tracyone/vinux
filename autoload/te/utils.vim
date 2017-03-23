@@ -20,20 +20,22 @@ endfunction
 
 
 "echo warning messag
-"a:0-->err or warn or none,default
+"a:0-->err or warn or info,default is warn
 func! te#utils#EchoWarning(str,...) abort
     redraw!
     let l:level='WarningMsg'
+    let l:prompt='warn'
     if a:0 == 1
+        let l:prompt = a:1
         if a:1 ==? 'err'
             let l:level='ErrorMsg'
         elseif a:1 ==? 'warn'
             let l:level='WarningMsg'
-        elseif a:1 ==? 'none'
+        elseif a:1 ==? 'info'
             let l:level='None'
         endif
     endif
-    execut 'echohl '.l:level | echo a:str | echohl None
+    execut 'echohl '.l:level | echo '['.l:prompt.'] '.a:str | echohl None
 endfunc
 
 

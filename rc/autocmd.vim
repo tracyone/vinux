@@ -7,11 +7,7 @@ augroup misc_group
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") |
                 \ exe "normal! g'\"" |
                 \ endif "jump to last position last open in vim
-    autocmd VimEnter *
-                \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-                \|   echom '[t-vim]Need to install the missing plugins!'
-                \|   PlugInstall --sync | q
-                \| endif
+    autocmd VimEnter * call te#feat#run_vim_enter_setting()
 augroup END
 
 augroup filetype_group
