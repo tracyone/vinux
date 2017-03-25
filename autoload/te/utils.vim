@@ -213,15 +213,39 @@ endfunction
 
 function! te#utils#tab_buf_switch(num) abort
     if exists('g:feat_enable_airline') && g:feat_enable_airline == 1
-        execute 'normal '."\<Plug>AirlineSelectTab".a:num
+        if a:num == 0
+            execute 'normal '."\<Plug>AirlineSelectPrevTab"
+        elseif a:num == -1
+            execute 'normal '."\<Plug>AirlineSelectNextTab"
+        else
+            execute 'normal '."\<Plug>AirlineSelectTab".a:num
+        endif
     else
         if exists( '*tabpagenr' ) && tabpagenr('$') != 1
             " Tab support && tabs open
-            execute 'normal '.a:num.'gt'
+            if a:num == 0
+                :tabprev
+            elseif a:num == -1
+                :tabnext
+            else
+                execute 'normal '.a:num.'gt'
+            endif
         elseif exists('g:buftabline_numbers') && g:buftabline_numbers == 2
-            
-            execute 'normal '."\<Plug>BufTabLine.Go(".a:num.')'
+            if a:num == 0
+                :bprev
+            elseif a:num == -1
+                :bnext
+            else
+                execute 'normal '."\<Plug>BufTabLine.Go(".a:num.')'
+            endif
         else
+            if a:num == 0
+                :bprev
+                return
+            elseif a:num == -1
+                :bnext
+                return
+            endif
             let l:temp=a:num
             let l:buf_index=a:num
             let l:buf_count=len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))

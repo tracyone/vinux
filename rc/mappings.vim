@@ -225,6 +225,11 @@ nnoremap  <leader>7 :call te#utils#tab_buf_switch(7)<cr>
 nnoremap  <leader>8 :call te#utils#tab_buf_switch(8)<cr>
 " tab 9
 nnoremap  <leader>9 :call te#utils#tab_buf_switch(9)<cr>
+
+nnoremap <Left> :call te#utils#tab_buf_switch(0)<cr>
+
+nnoremap <Right> :call te#utils#tab_buf_switch(-1)<cr>
+
 " toggle coding style 
 nnoremap <leader>tc :call te#utils#coding_style_toggle()<cr>
 " vertical open window
