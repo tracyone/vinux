@@ -118,7 +118,11 @@ endif
 "{{{colorscheme
 let g:neosolarized_bold = 1
 let g:neosolarized_underline = 1
-let g:neosolarized_italic = 0
+if te#env#IsNvim()
+    let g:neosolarized_italic = 0
+    let g:jellybeans_use_term_italics = 0
+    let g:jellybeans_use_gui_italics = 0
+endif
 set background=dark
 try 
     colorscheme PaperColor "default setting 
