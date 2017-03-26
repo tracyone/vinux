@@ -6,13 +6,10 @@ endif
 "some awesome vim colour themes
 Plug 'sjl/badwolf'
 Plug 'iCyMind/NeoSolarized'
-Plug 'cocopon/iceberg.vim'
 Plug 'tomasr/molokai'
 Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'KabbAmine/yowish.vim'
-Plug 'rakr/vim-one'
-Plug 'zanglg/nova.vim'
+Plug 'nanotech/jellybeans.vim'
 Plug 'vim-scripts/desert256.vim'
 " }}}
 "Gui releate{{{
