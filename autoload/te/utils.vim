@@ -218,6 +218,9 @@ function! te#utils#tab_buf_switch(num) abort
         elseif a:num == -1
             execute 'normal '."\<Plug>AirlineSelectNextTab"
         else
+            if tabpagenr('$') != 1 && a:num > tabpagenr('$')
+                return
+            endif
             execute 'normal '."\<Plug>AirlineSelectTab".a:num
         endif
     else
