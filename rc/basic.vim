@@ -15,7 +15,7 @@ endif
 Plug 'tracyone/love.vim'
 Plug 'tracyone/mark.vim'
 Plug 'itchyny/vim-cursorword'
-Plug 'thinca/vim-quickrun'
+Plug 'thinca/vim-quickrun',{'on': '<Plug>(quickrun)'}
 if(!te#env#IsWindows())
     Plug 'vim-scripts/sudo.vim'
     if !te#env#IsNvim() 
