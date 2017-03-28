@@ -11,6 +11,7 @@ Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'nanotech/jellybeans.vim'
 Plug 'vim-scripts/desert256.vim'
+Plug 'liuchengxu/space-vim-dark'
 " }}}
 "Gui releate{{{
 if te#env#IsGui()
