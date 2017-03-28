@@ -3,6 +3,7 @@ if(!te#env#IsWindows())
         Plug 'christoomey/vim-tmux-navigator'
         Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
         Plug 'jebaum/vim-tmuxify'
+        Plug 'wellle/tmux-complete.vim'
         let g:tmux_navigator_no_mappings = 1
         call TracyoneAltMap('nnoremap <silent>','l',':TmuxNavigateRight<cr>')
         call TracyoneAltMap('nnoremap <silent>','h',':TmuxNavigateLeft<cr>')
@@ -21,5 +22,8 @@ if(!te#env#IsWindows())
         nnoremap <Leader>ui :CtrlPTmux ci<cr>
         "let g:tmuxify_custom_command = 'tmux split-window -p 20'
         let g:tmuxify_map_prefix = '<leader>u'
+        if g:complete_plugin_type ==# 'ycm' 
+            let g:tmuxcomplete#trigger = 'omnifunc'
+        endif
     endif
 endif
