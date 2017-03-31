@@ -38,7 +38,7 @@ if empty(glob($VIMFILES.'/autoload/plug.vim'))
                     \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     endif
 endif
-call plug#begin($VIMFILES.'/bundle')
+silent! call plug#begin($VIMFILES.'/bundle')
 
 call te#feat#feat_enable('g:complete_plugin_type','ycm')
 call te#feat#feat_enable('g:feat_enable_complete', 0)
