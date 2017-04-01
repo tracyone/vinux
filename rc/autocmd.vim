@@ -21,8 +21,8 @@ augroup filetype_group
     au BufRead,BufNewFile *.make setlocal filetype=make
     au BufRead,BufNewFile *.veo setlocal filetype=verilog
     au BufRead,BufNewFile * let $CurBufferDir=expand('%:p:h')
-    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} :setlocal filetype=markdown 
     au BufRead,BufNewFile *.hex,*.out,*.o,*.a Vinarise
+    au BufRead,BufNewFile *.sys setlocal filetype=dosini
 
     if exists('g:feat_enable_airline') && g:feat_enable_airline != 1
         au BufEnter * 
