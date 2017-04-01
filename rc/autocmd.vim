@@ -35,7 +35,7 @@ augroup filetype_group
     autocmd FileType qf noremap <buffer> s <C-w><Enter><C-w>K
     autocmd FileType qf nnoremap <buffer> q :q<cr>
     autocmd FileType sh setlocal foldmethod=indent
-    autocmd FileType gitcommit,qfreplace setlocal nofoldenable
+    autocmd FileType gitcommit,qfreplace setlocal nofoldenable cursorline
 augroup END
 
 
