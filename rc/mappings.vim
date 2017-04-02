@@ -55,6 +55,9 @@ vnoremap <s-TAB>  <gv
 "Ctrl-tab is not work in vim
 nnoremap <silent><c-TAB> :AT<cr>
 
+vnoremap < <gv
+vnoremap > >gv
+
 " in mac osx please set your option key as meta key
 
 call TracyoneAltMap('noremap','1','<esc>1gt')
