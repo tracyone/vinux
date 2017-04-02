@@ -188,7 +188,7 @@ elseif g:complete_plugin_type ==# 'deoplete'
     let g:deoplete#enable_at_startup = 1
     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
     let g:deoplete#sources#clang#flags=[]
-    function! TracyoneAddCFlags(dir)
+    function! AddCFlags(dir)
         let l:dir=a:dir.'/'
         if strlen(a:dir) == 0
             let l:dir=getcwd().'/'
@@ -202,7 +202,7 @@ elseif g:complete_plugin_type ==# 'deoplete'
         endif
         return 0
     endfunction
-    :call TracyoneAddCFlags('')
+    :call AddCFlags('')
 endif
 "}}}
 " UltiSnips -----------------------{{{

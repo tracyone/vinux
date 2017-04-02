@@ -100,15 +100,15 @@ if(!te#env#IsNvim())
     endfunction
 endif
 
-function! TracyoneVimShellPop()
+function! VimShellPop()
     let l:line=(38*&lines)/100
     if  l:line < 10 | let l:line = 10 |endif
     execute 'rightbelow '.l:line.'split'
     if te#env#IsNvim() | execute 'terminal' | else | execute 'VimShell' | endif
 endfunction
-noremap <F4> :call TracyoneVimShellPop()<cr>
+noremap <F4> :call VimShellPop()<cr>
 " Open vimshell or neovim's emulator
-nnoremap <Leader>as :call TracyoneVimShellPop()<cr>
+nnoremap <Leader>as :call VimShellPop()<cr>
 "}}}
 " Nerdtree {{{
 let g:NERDTreeShowLineNumbers=0	"don't show line number

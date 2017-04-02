@@ -104,9 +104,9 @@ if te#env#IsGui()
         endif
         ":set vb t_vb=
     endfunction
-    call TracyoneAltMap('map', 'o',':Fontzoom!<cr>')
-    call TracyoneAltMap('map','-','<Plug>(fontzoom-smaller)')
-    call TracyoneAltMap('map','=','<Plug>(fontzoom-larger)')
+    call te#meta#map('map', 'o',':Fontzoom!<cr>')
+    call te#meta#map('map','-','<Plug>(fontzoom-smaller)')
+    call te#meta#map('map','=','<Plug>(fontzoom-larger)')
 else
     set nocul
     set novb

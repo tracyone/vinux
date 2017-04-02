@@ -1,5 +1,5 @@
 scriptencoding utf-8
-" name :s:TracyoneGetError
+" name :te#utils#GetError
 " arg  :command,vim command(not shell command) that want to
 "       test execute status
 " arg   : err_str,error substring pattern that is expected

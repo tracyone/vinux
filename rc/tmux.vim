@@ -5,11 +5,11 @@ if(!te#env#IsWindows())
         Plug 'jebaum/vim-tmuxify'
         Plug 'wellle/tmux-complete.vim'
         let g:tmux_navigator_no_mappings = 1
-        call TracyoneAltMap('nnoremap <silent>','l',':TmuxNavigateRight<cr>')
-        call TracyoneAltMap('nnoremap <silent>','h',':TmuxNavigateLeft<cr>')
-        call TracyoneAltMap('nnoremap <silent>','j',':TmuxNavigateDown<cr>')
-        call TracyoneAltMap('nnoremap <silent>','k',':TmuxNavigateUp<cr>')
-        call TracyoneAltMap('nnoremap <silent>','w',':TmuxNavigatePrevious<cr>')
+        call te#meta#map('nnoremap <silent>','l',':TmuxNavigateRight<cr>')
+        call te#meta#map('nnoremap <silent>','h',':TmuxNavigateLeft<cr>')
+        call te#meta#map('nnoremap <silent>','j',':TmuxNavigateDown<cr>')
+        call te#meta#map('nnoremap <silent>','k',':TmuxNavigateUp<cr>')
+        call te#meta#map('nnoremap <silent>','w',':TmuxNavigatePrevious<cr>')
         "CtrlP tmux window
         nnoremap <Leader>uu :CtrlPTmux w<cr>
         "CtrlP tmux buffer

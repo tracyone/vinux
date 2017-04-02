@@ -1,44 +1,8 @@
 scriptencoding utf-8
-"meta key handle... {{{
-if !te#env#IsNvim()
-    if(!te#env#IsGui())
-        let s:c='a'
-        while s:c <=# 'z'
-            exec 'set <m-'.s:c.">=\e".s:c
-            exec "inoremap \e".s:c.' <m-'.s:c.'>'
-            let s:c = nr2char(1+char2nr(s:c))
-        endw
-        let s:d='1'
-        while s:d <=? '9'
-            exec 'set <m-'.s:d.">=\e".s:d
-            exec "inoremap \e".s:d.' <m-'.s:d.'>'
-            let s:d = nr2char(1+char2nr(s:d))
-        endw
-    endif
-endif
-
-if te#env#IsMacVim()
-    let s:alt_char={1:'¡',2:'™',3:'£',4:'¢',5:'∞',6:'§',7:'¶',8:'•',9:'ª'
-                \,'t':'†','q':'œ','a':'å','=':'≠','h':'˙','l':'¬','j':'∆','k':'˚'
-                \,'o':'ø','-':'–','b':'∫','f':'ƒ','m':'µ','w':'∑'}
-elseif te#env#IsUnix() && !te#env#IsNvim() && !te#env#IsGui()
-    let s:alt_char={1:'±' ,2:'²',3:'³',4:'´',5:'µ',6:'¶',7:'·',8:'¸',9:'¹'
-                \,'t':'ô','q':'ñ','a':'á','=':'½','h':'è','l':'ì','j':'ê','k':'ë'
-                \,'o':'ï','-':'­','b':'â','f':'æ','m':'í','w':'÷'}
-elseif te#env#IsGui() || te#env#IsNvim()
-    let s:alt_char={1:'<m-1>',2:'<m-2>',3:'<m-3>',4:'<m-4>',5:'<m-5>',6:'<m-6>',7:'<m-7>',8:'<m-8>',9:'<m-9>'
-                \,'t':'<m-t>','q':'<m-q>','a':'<m-a>','=':'<m-=>','h':'<m-h>','l':'<m-l>','j':'<m-j>','k':'<m-k>'
-                \,'o':'<m-o>','-':'<m-->','b':'<m-b>','f':'<m-f>','m':'<m-m>','w':'<m-w>'}
-endif
-
-function! TracyoneAltMap(maptype,keycodes,action) abort
-    execute a:maptype.' '.s:alt_char[a:keycodes].' '.a:action
-endfunction
-"}}}
 
 set timeout timeoutlen=1000 ttimeoutlen=100
-""no", "yes" or "menu"; how to use the ALT key
-set winaltkeys=no
+
+call te#meta#init()
 
 "leader key
 let g:mapleader="\<Space>"
@@ -60,47 +24,47 @@ vnoremap > >gv
 
 " in mac osx please set your option key as meta key
 
-call TracyoneAltMap('noremap','1','<esc>1gt')
-call TracyoneAltMap('noremap','2','<esc>2gt')
-call TracyoneAltMap('noremap','3','<esc>3gt')
-call TracyoneAltMap('noremap','4','<esc>4gt')
-call TracyoneAltMap('noremap','5','<esc>5gt')
-call TracyoneAltMap('noremap','6','<esc>6gt')
-call TracyoneAltMap('noremap','7','<esc>7gt')
-call TracyoneAltMap('noremap','8','<esc>8gt')
-call TracyoneAltMap('noremap','9','<esc>9gt')
+call te#meta#map('noremap','1','<esc>1gt')
+call te#meta#map('noremap','2','<esc>2gt')
+call te#meta#map('noremap','3','<esc>3gt')
+call te#meta#map('noremap','4','<esc>4gt')
+call te#meta#map('noremap','5','<esc>5gt')
+call te#meta#map('noremap','6','<esc>6gt')
+call te#meta#map('noremap','7','<esc>7gt')
+call te#meta#map('noremap','8','<esc>8gt')
+call te#meta#map('noremap','9','<esc>9gt')
 ""option+t
-call TracyoneAltMap('nnoremap','t',':tabnew<cr>')
-call TracyoneAltMap('inoremap','t','<esc>:tabnew<cr>')
+call te#meta#map('nnoremap','t',':tabnew<cr>')
+call te#meta#map('inoremap','t','<esc>:tabnew<cr>')
 "option+q
-call TracyoneAltMap('noremap','q',':nohls<CR>:MarkClear<cr>:redraw!<cr>')
+call te#meta#map('noremap','q',':nohls<CR>:MarkClear<cr>:redraw!<cr>')
 "select all
-call TracyoneAltMap('noremap','a','gggH<C-O>G')
-call TracyoneAltMap('inoremap','a','<C-O>gg<C-O>gH<C-O>G')
-call TracyoneAltMap('cnoremap','a','<C-C>gggH<C-O>G')
-call TracyoneAltMap('onoremap','a','<C-C>gggH<C-O>G')
-call TracyoneAltMap('snoremap','a','<C-C>gggH<C-O>G')
-call TracyoneAltMap('xnoremap','a','<C-C>ggVG')
+call te#meta#map('noremap','a','gggH<C-O>G')
+call te#meta#map('inoremap','a','<C-O>gg<C-O>gH<C-O>G')
+call te#meta#map('cnoremap','a','<C-C>gggH<C-O>G')
+call te#meta#map('onoremap','a','<C-C>gggH<C-O>G')
+call te#meta#map('snoremap','a','<C-C>gggH<C-O>G')
+call te#meta#map('xnoremap','a','<C-C>ggVG')
 "Alignment
-call TracyoneAltMap('nnoremap','=',' <esc>ggVG=``')
+call te#meta#map('nnoremap','=',' <esc>ggVG=``')
 "move
-call TracyoneAltMap('inoremap','h','<Left>')
-call TracyoneAltMap('inoremap','l','<Right>')
-call TracyoneAltMap('inoremap','j','<Down>')
-call TracyoneAltMap('inoremap','k','<Up>')
+call te#meta#map('inoremap','h','<Left>')
+call te#meta#map('inoremap','l','<Right>')
+call te#meta#map('inoremap','j','<Down>')
+call te#meta#map('inoremap','k','<Up>')
 
 "move between windows
-call TracyoneAltMap('nnoremap','h','  <C-w>h')
-call TracyoneAltMap('nnoremap','l','<C-w>l')
-call TracyoneAltMap('nnoremap','j','<C-w>j')
-call TracyoneAltMap('nnoremap','k','<C-w>k')
+call te#meta#map('nnoremap','h','  <C-w>h')
+call te#meta#map('nnoremap','l','<C-w>l')
+call te#meta#map('nnoremap','j','<C-w>j')
+call te#meta#map('nnoremap','k','<C-w>k')
 
-call TracyoneAltMap('cnoremap','l','<right>')
-call TracyoneAltMap('cnoremap','j','<down>')
-call TracyoneAltMap('cnoremap','k','<up>')
-call TracyoneAltMap('cnoremap','b','<S-left>')
+call te#meta#map('cnoremap','l','<right>')
+call te#meta#map('cnoremap','j','<down>')
+call te#meta#map('cnoremap','k','<up>')
+call te#meta#map('cnoremap','b','<S-left>')
 
-call TracyoneAltMap('nnoremap','m',':call MouseToggle()<cr>')   
+call te#meta#map('nnoremap','m',':call MouseToggle()<cr>')   
 " Mouse mode toggle
 nnoremap <leader>tm :call te#utils#OptionToggle('mouse',['a',''])<cr>
 
@@ -117,10 +81,10 @@ inoremap        <C-h> <BS>
 cnoremap        <C-B> <Left>
 cnoremap        <C-f> <right>
 " Move forward a word or Move backward a word.
-call TracyoneAltMap('inoremap','b','<S-left>')
-call TracyoneAltMap('inoremap','f','<S-right>')
-call TracyoneAltMap('cnoremap','f','<S-right>')
-call TracyoneAltMap('cnoremap','h','<left>')
+call te#meta#map('inoremap','b','<S-left>')
+call te#meta#map('inoremap','f','<S-right>')
+call te#meta#map('cnoremap','f','<S-right>')
+call te#meta#map('cnoremap','h','<left>')
 
 "move in cmd win
 cnoremap        <C-A> <Home>
@@ -205,7 +169,9 @@ nnoremap <Leader>hp :tabnew<cr>:h usr_41.txt<cr>:only<cr>
 nnoremap <Leader>hf :tabnew<cr>:h function-list<cr>:only<cr>
 
 " quit all
-nnoremap <Leader>qq :qa<cr>
+nnoremap <Leader>qa :qa<cr>
+" quit current window
+nnoremap <Leader>qq :q<cr>
 " quit all without save
 nnoremap <Leader>qQ :qa!<cr>
 " save and quit all
