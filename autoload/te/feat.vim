@@ -32,7 +32,7 @@ function! te#feat#gen_feature_vim() abort
 	endfor
     let l:t_vim_version=system('git describe')
     if v:shell_error != 0
-	    let l:t_vim_version='Unknown'
+	    let l:t_vim_version='V1.0.2'
     else
         let l:temp=te#feat#get_vim_version()
         let l:t_vim_version=split(l:t_vim_version, '\n')[-1].'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
