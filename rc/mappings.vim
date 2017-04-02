@@ -24,15 +24,15 @@ vnoremap > >gv
 
 " in mac osx please set your option key as meta key
 
-call te#meta#map('noremap','1','<esc>1gt')
-call te#meta#map('noremap','2','<esc>2gt')
-call te#meta#map('noremap','3','<esc>3gt')
-call te#meta#map('noremap','4','<esc>4gt')
-call te#meta#map('noremap','5','<esc>5gt')
-call te#meta#map('noremap','6','<esc>6gt')
-call te#meta#map('noremap','7','<esc>7gt')
-call te#meta#map('noremap','8','<esc>8gt')
-call te#meta#map('noremap','9','<esc>9gt')
+call te#meta#map('noremap','1',':call te#utils#tab_buf_switch(1)<cr>')
+call te#meta#map('noremap','2',':call te#utils#tab_buf_switch(2)<cr>')
+call te#meta#map('noremap','3',':call te#utils#tab_buf_switch(3)<cr>')
+call te#meta#map('noremap','4',':call te#utils#tab_buf_switch(4)<cr>')
+call te#meta#map('noremap','5',':call te#utils#tab_buf_switch(5)<cr>')
+call te#meta#map('noremap','6',':call te#utils#tab_buf_switch(6)<cr>')
+call te#meta#map('noremap','7',':call te#utils#tab_buf_switch(7)<cr>')
+call te#meta#map('noremap','8',':call te#utils#tab_buf_switch(8)<cr>')
+call te#meta#map('noremap','9',':call te#utils#tab_buf_switch(9)<cr>')
 ""option+t
 call te#meta#map('nnoremap','t',':tabnew<cr>')
 call te#meta#map('inoremap','t','<esc>:tabnew<cr>')
