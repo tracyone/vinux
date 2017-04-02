@@ -33,7 +33,7 @@ augroup filetype_group
     autocmd FileType qf noremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
     autocmd FileType qf noremap <buffer> s <C-w><Enter><C-w>K
-    autocmd FileType qf nnoremap <buffer> q :q<cr>
+    autocmd FileType qf nnoremap <buffer> q :ccl<cr>
     autocmd FileType sh setlocal foldmethod=indent
     autocmd FileType qfreplace setlocal nofoldenable | nmap <buffer> q :bdelete<cr>
     autocmd FileType gitcommit setlocal nofoldenable cursorline
