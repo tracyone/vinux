@@ -110,6 +110,7 @@ set stal=1  "always show the tabline
 set sessionoptions-=folds
 set sessionoptions-=options
 set ffs=unix,dos,mac
+set diffopt=vertical
 
 
 "{{{fold setting
