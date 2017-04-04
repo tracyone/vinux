@@ -124,6 +124,9 @@ if te#env#IsNvim()
     let g:jellybeans_use_term_italics = 0
     let g:jellybeans_use_gui_italics = 0
 endif
+let g:jellybeans_overrides = {
+\    'background': { 'guibg': '000000' },
+\}
 set background=dark
 try 
     colorscheme PaperColor "default setting 

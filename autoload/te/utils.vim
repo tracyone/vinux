@@ -279,6 +279,7 @@ function! te#utils#focus_coding()
         set nonu
         set nornu
         set signcolumn=no
+        let g:buftabline_show=0
     else
         if te#env#IsTmux()
             call system('tmux set -g status on')
@@ -288,6 +289,7 @@ function! te#utils#focus_coding()
         set nu
         set rnu
         set signcolumn=yes
+        let g:buftabline_show=1
     endif
 endfunction
 
