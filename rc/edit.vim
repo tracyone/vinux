@@ -56,7 +56,7 @@ nnoremap <Leader>yy :IPaste<cr>
 nnoremap <Leader>yc :ClearYanks<cr>
 let g:EasyClipShareYanks=1
 let g:EasyClipShareYanksDirectory=$VIMFILES
-let g:EasyClipUseYankDefaults=1
+let g:EasyClipUseYankDefaults=0
 let g:EasyClipUseCutDefaults=0
 let g:EasyClipUsePasteDefaults=0
 let g:EasyClipEnableBlackHoleRedirect=0
@@ -64,5 +64,7 @@ let g:EasyClipUsePasteToggleDefaults=0
 nmap <silent> gs <plug>SubstituteOverMotionMap 
 nmap gss <plug>SubstituteLine
 xmap gs <plug>XEasyClipPaste
+call te#meta#map('nmap ','p','<plug>EasyClipSwapPasteForward')
+call te#meta#map('nmap ','n','<plug>EasyClipSwapPasteBackwards')
 "}}}
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
