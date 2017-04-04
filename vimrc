@@ -16,7 +16,6 @@ else
     let $VIMFILES = $HOME.'/.vim'
 endif
 
-let g:feature_dict={}
 
 call te#feat#source_rc('autocmd.vim')
 call te#feat#source_rc('options.vim')
@@ -66,6 +65,11 @@ endif
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
+
+"user custom config file
+if filereadable($HOME.'/.local.vim')
+    execute ':source '.$HOME.'/.local.vim'
+endif
 
 filetype plugin indent on
 syntax on

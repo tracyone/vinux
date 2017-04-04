@@ -1,3 +1,4 @@
+let s:feature_dict={}
 "return vim version infomatrion
 "l:result[0]:vim main version
 "l:result[1]:vim patch info
@@ -13,12 +14,12 @@ endfunction
 
 function! te#feat#get_feature(A, L, P) abort
     let l:temp=a:A.a:L.a:P
-    if !exists('g:feature_dict')
+    if !exists('s:feature_dict')
         return 'GET FEATURE ERROR'
     endif
     let l:result=l:temp 
     let l:result=''
-    for l:key in keys(g:feature_dict)
+    for l:key in keys(s:feature_dict)
         let l:result.=l:key."\n"
     endfor
     let l:result.='all'."\n"
@@ -27,8 +28,8 @@ endfunction
 
 function! te#feat#gen_feature_vim() abort
     call delete($VIMFILES.'/feature.vim')
-	for l:key in keys(g:feature_dict)
-	   call writefile(['let '.l:key.'='.g:feature_dict[l:key]], $VIMFILES.'/feature.vim', 'a')
+	for l:key in keys(s:feature_dict)
+	   call writefile(['let '.l:key.'='.s:feature_dict[l:key]], $VIMFILES.'/feature.vim', 'a')
 	endfor
     let l:t_vim_version=system('git describe')
     if v:shell_error != 0
@@ -46,20 +47,20 @@ function! te#feat#feat_dyn_enable() abort
     if l:feat !=# 'all'
         if type(eval(l:feat))
             let l:str=input('Input the value of '.l:feat.': ')
-            let g:feature_dict[l:feat]=string(l:str)
+            let s:feature_dict[l:feat]=string(l:str)
             execute 'let '.l:feat.'='.string(l:str)
         else
-            let g:feature_dict[l:feat]=1
+            let s:feature_dict[l:feat]=1
             execute 'let '.l:feat.'=1'
         endif
         call te#feat#gen_feature_vim()
-        call te#feat#feat_enable(l:feat,eval(g:feature_dict[l:feat]))
+        call te#feat#feat_enable(l:feat,eval(s:feature_dict[l:feat]))
     else
-        for l:key in keys(g:feature_dict)
+        for l:key in keys(s:feature_dict)
             if type(eval(l:key)) != v:t_string
-                let g:feature_dict[l:key]=1
+                let s:feature_dict[l:key]=1
                 execute 'let '.l:key.'=1'
-                call te#feat#feat_enable(l:key,eval(g:feature_dict[l:key]))
+                call te#feat#feat_enable(l:key,eval(s:feature_dict[l:key]))
             endif
         endfor
         call te#feat#gen_feature_vim()
@@ -98,10 +99,10 @@ function! te#feat#feat_enable(var, default) abort
     endif
     if type(l:val)
         execute 'let '.a:var.'='.string(l:val)
-        let g:feature_dict[a:var]=string(l:val)
+        let s:feature_dict[a:var]=string(l:val)
     else
         execute 'let '.a:var.'='.l:val
-        let g:feature_dict[a:var]=l:val
+        let s:feature_dict[a:var]=l:val
     endif
   if eval(a:var) != 0 && matchstr(a:var, 'g:feat_enable_') !=# ''
       call te#feat#source_rc(matchstr(a:var,'_\zs[^_]*\ze$').'.vim')
