@@ -2,6 +2,7 @@
 bundle/
 autoload/plug.vim
 .yank_history_v2.txt
+.easyclip
 vimbackup/
 .complete_plugin
 love.ini
