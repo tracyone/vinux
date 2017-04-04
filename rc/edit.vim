@@ -10,7 +10,7 @@ Plug 'osyo-manga/vim-over',{'on': 'OverCommandLine'}
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
-Plug 'tracyone/YankRing.vim'
+Plug 'svermeulen/vim-easyclip'
 
 " DelimitMate ---------------------{{{
 let g:delimitMate_nesting_quotes = ['"','`']
@@ -48,14 +48,23 @@ vnoremap <c-h> :OverCommandLine<cr>:<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-
 " undo tree window toggle
 nnoremap <leader>tu :UndotreeToggle<cr>
 " yankring ------------------------{{{
-nnoremap <c-y> :YRGetElem<CR>
-inoremap <c-y> <esc>:YRGetElem<CR>
+nnoremap <c-y> :IPaste<cr>
+imap <c-y> <c-o>:IPaste<cr>
 " Open yankring window
-nnoremap <Leader>yy :YRGetElem<CR>
-let g:yankring_history_dir = $VIMFILES
-let g:yankring_history_file = '.yank_history'
-let g:yankring_default_menu_mode = 0
-let g:yankring_replace_n_pkey = '<m-p>'
-let g:yankring_replace_n_nkey = '<m-n>'
+nnoremap <Leader>yy :IPaste<cr>
+" clear yank history
+nnoremap <Leader>yc :ClearYanks<cr>
+let g:EasyClipShareYanks=1
+let g:EasyClipShareYanksDirectory=$VIMFILES
+let g:EasyClipUseYankDefaults=0
+let g:EasyClipUseCutDefaults=0
+let g:EasyClipUsePasteDefaults=0
+let g:EasyClipEnableBlackHoleRedirect=0
+let g:EasyClipUsePasteToggleDefaults=0
+nmap <silent> gs <plug>SubstituteOverMotionMap 
+nmap gss <plug>SubstituteLine
+xmap gs <plug>XEasyClipPaste
+call te#meta#map('nmap ','p','<plug>EasyClipSwapPasteForward')
+call te#meta#map('nmap ','n','<plug>EasyClipSwapPasteBackwards')
 "}}}
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
