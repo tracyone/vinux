@@ -129,7 +129,7 @@ let g:jellybeans_overrides = {
 \}
 set background=dark
 try 
-    colorscheme PaperColor "default setting 
+    colorscheme jellybeans "default setting 
 catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme desert "default setting 
 endtry
