@@ -22,14 +22,10 @@ let g:startify_change_to_dir = 1
 let g:startify_files_number = 5 
 let g:startify_change_to_vcs_root = 0
 let g:startify_custom_header = [
-            \ '       __             _         ',
-            \ '      / /_     _   __(_)___ ___ ',
-            \ '     / __/____| | / / / __ `__ \',
-            \ '    / /_/_____/ |/ / / / / / / /',
-            \ '    \__/      |___/_/_/ /_/ /_/ ',
             \ '                                ',                            
-            \ '    ['.g:t_vim_version.'] '.'[tracyone@live.cn]',
-            \ '    [https://github.com/tracyone/t-vim]',
+            \ '    '.strftime("%Y %b %d %X").' ',                            
+            \ '                                ',                            
+            \ '    ['.g:t_vim_version.'] ',
             \ '',
             \ '',
             \ ]
