@@ -62,14 +62,15 @@ if !filereadable($VIMFILES.'/feature.vim')
     call te#feat#gen_feature_vim()
 endif
 
-" Open plug status windows
-nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
-call plug#end()
-
 "user custom config file
 if filereadable($HOME.'/.local.vim')
     execute ':source '.$HOME.'/.local.vim'
 endif
+
+" Open plug status windows
+nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
+call plug#end()
+
 
 filetype plugin indent on
 syntax on
