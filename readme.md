@@ -4,7 +4,9 @@
 
 **Quick Install**
 
-	git clone https://github.com/tracyone/t-vim ~/.vim
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/t-vim/master/install.sh)"
+```
 
 
 **Wiki**
@@ -27,26 +29,10 @@
 
 Dependency see :[Install-external-dependency](https://github.com/tracyone/t-vim/wiki/Install-external-dependency)
 
-Execute following shell script,it will do following things:
-
-1. make some softlink of vim and neovim config
-2. ask you to choose a complete plugin then try to install it.
-
-You can launch vim, all stuff will be installed automatically.
-
 ```bash
-# for macOS and linux
-./install.sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/t-vim/master/install.sh)"
 ```
 
-It is difficult to install some plugins like YouCompleteMe and other complete
-plugin ,`install.sh` accept
-one integer argument which indicate the complete plugin:
-
-```bash
-# 1-->ycm, 2-->clang_complete, 3-->completor.vim, 4-->neocomplete, 5-->deoplete.nvim
-./install.sh 1
-```
 
 # Feature introduction
 
@@ -71,13 +57,14 @@ one integer argument which indicate the complete plugin:
 
 ## Enable or disable feature
 
-`$VIMFILES/feature.vim` is the feature config file.There are all the features showing below.
+`~/.vim/feature.vim` is the feature config file.There are all the features showing below.
 
 ```vim
+let g:feat_enable_writing=1
 let g:feat_enable_tools=1
 let g:feat_enable_frontend=0
 let g:feat_enable_complete=1
-let g:feat_enable_airline=1
+let g:feat_enable_airline=0
 let g:feat_enable_edit=1
 let g:complete_plugin_type='ycm'
 let g:feat_enable_c=1
@@ -88,7 +75,7 @@ let g:feat_enable_gui=1
 let g:feat_enable_tmux=1
 let g:airline_powerline_fonts=1
 let g:feat_enable_help=1
-let g:feat_enable_markdown=1
+let g:feat_enable_markdown=0
 let g:feat_enable_git=1
 ```
 
@@ -102,15 +89,21 @@ let g:feat_enable_<name>=1
 let g:feat_enable_<name>=0
 ```
 
-`$VIMFILES/rc/<name>.vim` will be sourced when `g:feat_enable_<name>` equal to 1
+`~/.vim/rc/<name>.vim` will be sourced when `g:feat_enable_<name>` equal to 1
 
 
-## Enable feature at runtime
+## Enable/disable feature at runtime
 
 Shutcut: `<SPC>+fe` or
 
 ```vim
-:call te#feat#feat_dyn_enable()
+:call te#feat#feat_dyn_enable(1)
+```
+
+Shutcut: `<SPC>+fd` or
+
+```vim
+:call te#feat#feat_dyn_enable(0)
 ```
 
 
@@ -122,7 +115,7 @@ Shutcut: `<SPC>+fe` or
     call te#feat#feat_enable('g:feat_enable_<name>', <default>)
     ```
 
-2. Create  `$VIMFILES/rc/<name>.vim`
+2. Create  `~/.vim/rc/<name>.vim`
 
 3. Add package info and package info, example:
 

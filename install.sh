@@ -113,9 +113,9 @@ create_symlinks() {
     local target_path="$2"
 
     lnif "$source_path/vimrc"            "$target_path/vimrc"
-    lnif "$source_path/autoload/te"      "$target_path/autoload/te"
-    lnif "$source_path/rc"               "$target_path/rc"
-    lnif "$source_path/after"            "$target_path/after"
+    lnif "$source_path/autoload/te"      "$target_path/autoload/"
+    lnif "$source_path/rc"               "$target_path/"
+    lnif "$source_path/after"            "$target_path/"
 
     ret="$?"
     success "Setting up vim symlinks."
