@@ -42,7 +42,7 @@ function! te#feat#gen_feature_vim() abort
     call writefile(['let g:t_vim_version='.string(l:t_vim_version)], $VIMFILES.'/feature.vim', 'a')
 endfunction
 
-function! te#feat#feat_dyn_enable() abort
+function! te#feat#feat_dyn_enable(en) abort
     let l:feat = input('Select the feature: ','g:feat_enable_','custom,te#feat#get_feature')
     if l:feat !=# 'all'
         if type(eval(l:feat))
@@ -50,16 +50,16 @@ function! te#feat#feat_dyn_enable() abort
             let s:feature_dict[l:feat]=string(l:str)
             execute 'let '.l:feat.'='.string(l:str)
         else
-            let s:feature_dict[l:feat]=1
-            execute 'let '.l:feat.'=1'
+            let s:feature_dict[l:feat]=a:en
+            execute 'let '.l:feat.'='.a:en
         endif
         call te#feat#gen_feature_vim()
         call te#feat#feat_enable(l:feat,eval(s:feature_dict[l:feat]))
     else
         for l:key in keys(s:feature_dict)
             if type(eval(l:key)) != v:t_string
-                let s:feature_dict[l:key]=1
-                execute 'let '.l:key.'=1'
+                let s:feature_dict[l:key]=a:en
+                execute 'let '.l:key.'='.a:en
                 call te#feat#feat_enable(l:key,eval(s:feature_dict[l:key]))
             endif
         endfor

@@ -230,7 +230,9 @@ nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
 " Toggle termguicolors
 nnoremap <Leader>tl :call te#utils#OptionToggle('termguicolors',[1,0])<cr>
 " feature enable
-nnoremap <Leader>fe :call te#feat#feat_dyn_enable()<cr>
+nnoremap <Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
+" feature disable
+nnoremap <Leader>fd :call te#feat#feat_dyn_enable(0)<cr>
 
 if te#env#IsNvim()
     "terminal-emulator setting
