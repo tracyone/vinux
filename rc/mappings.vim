@@ -225,6 +225,9 @@ nnoremap <Leader>wj <C-w>j
 nnoremap <Leader>wk <C-w>k
 " toggle long or short statusline
 nnoremap <leader>ts :call te#utils#OptionToggle('statusline',['%!MyStatusLine(1)','%!MyStatusLine(2)'])<cr>
+" toggle focus coding
+nnoremap <leader>tw :call te#utils#focus_coding()<cr>
+" toggle paste option
 " toggle paste option
 nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
 " Toggle termguicolors

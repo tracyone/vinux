@@ -269,3 +269,25 @@ function! te#utils#tab_buf_switch(num) abort
     endif
 endfunction
 
+function! te#utils#focus_coding()
+    if &laststatus != 0
+        if te#env#IsTmux()
+            call system('tmux set -g status off')
+        endif
+        set laststatus=0
+        set showtabline=0
+        set nonu
+        set nornu
+        set signcolumn=no
+    else
+        if te#env#IsTmux()
+            call system('tmux set -g status on')
+        endif
+        set laststatus=2
+        set showtabline=1
+        set nu
+        set rnu
+        set signcolumn=yes
+    endif
+endfunction
+
