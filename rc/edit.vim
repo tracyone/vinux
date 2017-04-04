@@ -52,6 +52,8 @@ nnoremap <c-y> :IPaste<cr>
 imap <c-y> <c-o>:IPaste<cr>
 " Open yankring window
 nnoremap <Leader>yy :IPaste<cr>
+" clear yank history
+nnoremap <Leader>yc :ClearYanks<cr>
 let g:EasyClipShareYanks=1
 let g:EasyClipShareYanksDirectory=$VIMFILES
 let g:EasyClipUseYankDefaults=1
