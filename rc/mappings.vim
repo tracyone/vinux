@@ -144,7 +144,7 @@ nnoremap <F7> :call te#utils#OptionToggle('ff',['dos', 'unix'])<cr>
 " dos to unix or unix to dos
 nnoremap <Leader>td :call te#utils#OptionToggle('ff',['dos', 'unix'])<cr>
 " open url on cursor with default browser
-nnoremap <leader>o :call te#utils#open_url()<cr>
+nnoremap <leader>ou :call te#utils#open_url()<cr>
 " linu number toggle
 nnoremap <Leader>tn :call te#utils#nu_toggle()<cr>
 " realtime underline word toggle

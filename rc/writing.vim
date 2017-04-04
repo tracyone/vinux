@@ -7,7 +7,24 @@ Plug 'tracyone/utl.vim'
 
 " toggle free writing in vim (Goyo)
 nnoremap <Leader>to :Goyo<cr>
-nmap <localleader>ww :call <SID>open_index_org()<cr>
+" org open index.org
+nmap <Leader>ow :call <SID>open_index_org()<cr>
+" org show todo
+nmap <Leader>ot <Plug>OrgAgendaTodo
+" org change todo type
+nmap <Leader>od <Plug>OrgTodoToggleInteractive
+" org inster a new date
+nmap <Leader>os <Plug>OrgDateInsertTimestampInactiveCmdLine
+" org new check box
+nmap <Leader>oc <Plug>OrgCheckBoxNewBelow
+" org instert new url
+nmap <Leader>on <Plug>OrgHyperlinkInsert
+" org checkbox toggle
+nmap <Leader>ob <Plug>OrgCheckBoxToggle
+" org checkbox update
+nmap <Leader>ou <Plug>OrgCheckBoxUpdate
+
+
 
 let g:org_agenda_files = [$VIMFILES.'/org/*.org']
 let g:org_todo_keywords = [['TODO(t)', '|', 'DONE(d)'],
