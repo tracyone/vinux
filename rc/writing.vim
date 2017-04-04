@@ -35,7 +35,7 @@ function! s:open_index_org() abort
     let l:index_org = $VIMFILES.'/org/index.org'
     if !filereadable(l:index_org)
         call te#utils#EchoWarning(l:index_org.' is not exist! Try to create one.')
-        call writefile(['* Organize everything !!'], l:index_org, "w")
+        call writefile(['* Organize everything !!'], l:index_org, 'a')
     endif
     silent! execute 'edit! ' . l:index_org
 endfunction
@@ -43,12 +43,12 @@ endfunction
 if te#env#IsGui()
 	let g:utl_cfg_hdl_scm_http = "silent !xdg-open '%u' &"
 	let g:utl_cfg_hdl_scm_mailto = "silent !x-terminal-emulator -e mutt '%u'"
-	for pdfviewer in ['evince', 'okular', 'kpdf', 'acroread']
+	for s:pdfviewer in ['evince', 'okular', 'kpdf', 'acroread']
 		" slower implementation but also detect executeables in other locations
-		"let pdfviewer = substitute(system('which '.pdfviewer), '\n.*', '', '')
-		let pdfviewer = '/usr/bin/'.pdfviewer
-		if filereadable(pdfviewer)
-			let g:utl_cfg_hdl_mt_application_pdf = 'silent !'.pdfviewer.' "%p"'
+		"let s:pdfviewer = substitute(system('which '.s:pdfviewer), '\n.*', '', '')
+		let s:pdfviewer = '/usr/bin/'.s:pdfviewer
+		if filereadable(s:pdfviewer)
+			let g:utl_cfg_hdl_mt_application_pdf = 'silent !'.s:pdfviewer.' "%p"'
 			break
 		endif
 	endfor
