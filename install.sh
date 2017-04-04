@@ -1,118 +1,189 @@
-#!/bin/bash
-# Installation shell script for linux and MacOS
-# date:2016-10-12 16:08 
+#!/usr/bin/env bash
 
-# Functions definiton {{{
-# InstallPlugin
-# argument:$1:plugin name,<github_id/reponame>
-function InstallPlugin()
-{
-	if [[ $# -ne 1 ]]; then
-		return 1;
-	fi
+#   This setup file is based on spf13-vim's bootstrap.sh.
+#   Thanks for spf13-vim.
 
-	local id_name=${1%/*}
-	local repo_name=${1#*/}
+app_name='t-vim'
+dot_localvim="$HOME/.local.vim"
+[ -z "$APP_PATH" ] && APP_PATH="$HOME/.t-vim"
+[ -z "$REPO_URI" ] && REPO_URI='https://github.com/tracyone/t-vim.git'
+[ -z "$REPO_BRANCH" ] && REPO_BRANCH='master'
+debug_mode='0'
+[ -z "$VIM_PLUG_PATH" ] && VIM_PLUG_PATH="$HOME/.vim/autoload"
+[ -z "$VIM_PLUG_URL" ] && VIM_PLUG_URL='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-	echo -e "======= ${repo_name} installation ======== \n"
-
-	if [[ ! -d "${HOME}/.vim/bundle/${repo_name}" ]]; then
-		mkdir -p ${HOME}/.vim/bundle/${repo_name}
-		git clone --depth=1 https://github.com/$1 ${HOME}/.vim/bundle/${repo_name} || return 2
-    else
-        echo -e "${repo_name} has been installed!\n"
-	fi
-	return 0
+########## Basic setup tools
+msg() {
+    printf '%b\n' "$1" >&2
 }
 
-# InstallYCM:
-# argument:NONE
-function InstallYCM()
-{
-	InstallPlugin "Valloric/YouCompleteMe"
+success() {
+    if [ "$ret" -eq '0' ];
+    then
+        msg "\33[32m[✔]\33[0m ${1}${2}"
+    fi
+}
 
-	if [[ -f "${HOME}/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.so" ]]; then
-		echo -e "YouCompleteMe has already been installed.\n"
-		echo -e "Finish! Happy Vim hacking.\n"
-		return 0
-	fi
+error() {
+    msg "\33[31m[✘]\33[0m ${1}${2}"
+    exit 1
+}
 
-	echo -e "Start install YouCompleteMe\n"
+debug() {
+    if [ "$debug_mode" -eq '1' ] && [ "$ret" -gt '1' ];
+    then
+        msg "An error occurred in function \"${FUNCNAME[$i+1]}\" on line ${BASH_LINENO[$i+1]}, we're sorry for that."
+    fi
+}
 
-	cd  ${HOME}/.vim/bundle/YouCompleteMe
+exists() {
+    command -v "$1" >/dev/null 2>&1
+}
 
-	git submodule update --init --recursive && ./install.py --clang-completer --tern-completer || return 1
+program_exists() {
+    local ret='0'
+    exists "$1" || { local ret='1'; }
 
-    echo -e "Finish! Happy Vim hacking.\n"
+    # fail on non-zero return value
+    if [ "$ret" -ne 0 ];
+    then
+        return 1
+    fi
 
     return 0
 }
 
-# }}}
+program_must_exist() {
 
-stty erase ^H
+    # throw error on non-zero return value
+    if ! program_exists "$1";
+    then
+        error "You must have '$1' installed to continue."
+    fi
+}
 
-if [[ $(pwd) != "${HOME}/.config/nvim" ]]; then
-	echo -e "Create soft link for neovim\n" 
-	mkdir -p ${HOME}/.vim ${HOME}/.config/nvim ${HOME}/.vim/autoload
-	ln -sf ${HOME}/.vim ${HOME}/.config/nvim
-	ln -sf $(pwd)/vimrc ${HOME}/.config/nvim/init.vim
-	ln -sf $(pwd)/autoload ${HOME}/.config/nvim/
-fi
+lnif() {
+    if [ -e "$1" ];
+    then
+        ln -sf "$1" "$2"
+    fi
+    ret="$?"
+    debug
+}
 
-if [[ $(pwd) != "${HOME}/.vim" ]]; then
-	echo -e "Create soft link for linux and mac\n"
-	ln -sf $(pwd)/autoload/te ${HOME}/.vim/autoload/
-	ln -sf $(pwd)/after ${HOME}/.vim/
-	ln -sf $(pwd)/vimrc ${HOME}/.vim/
-	ln -sf $(pwd)/rc ${HOME}/.vim/
-fi
+########## Setup function
+backup() {
+    if [ -e "$1" ];
+    then
+        msg "Attempting to back up your original vim configuration."
+        today=$(date +%Y%m%d_%s)
+        mv -v "$1" "$1.$today"
 
-if [[ $# -gt 1 ]]; then
-    echo -e "Wrong argument\n"
-    exit  1
-fi
+        ret="$?"
+        success "Your original vim configuration has been backed up."
+        debug
+    fi
+}
 
-if [[ ! -z $1 ]]; then
-    choose=$1
-else
-    echo -e "Which comlete plugin do you want to install? \n"
-    echo -e "[1] YouCompleteMe(clang,complicated and powerful)\n"
-    echo -e "[2] clang_complete(clang)\n"
-    echo -e "[3] completor.vim(vim8)\n"
-    echo -e "[4] neocomplete.vim(lua)\n"
-    echo -e "[5] deoplete.nvim(neovim)\n"
-    read -n1 -p "Enter number: " choose
-    echo -e "\n"
+sync_repo() {
+    local repo_path="$1"
+    local repo_uri="$2"
+    local repo_branch="$3"
+    local repo_name="$4"
 
-fi
+    if [ ! -e "$repo_path" ];
+    then
+        msg "\033[1;34m==>\033[0m Trying to clone $repo_name"
+        mkdir -p "$repo_path"
+        git clone -b "$repo_branch" "$repo_uri" "$repo_path" --depth=1
+        ret="$?"
+        success "Successfully cloned $repo_name."
+    else
+        msg "\033[1;34m==>\033[0m Trying to update $repo_name"
+        cd "$repo_path" && git pull origin "$repo_branch"
+        ret="$?"
+        success "Successfully updated $repo_name"
+    fi
 
+    debug
+}
 
-stty erase ^?
+create_symlinks() {
+    local source_path="$1"
+    local target_path="$2"
 
-case ${choose} in
-	1 )
-		InstallYCM
-		;;
-	2 )
-		InstallPlugin "Rip-Rip/clang_complete"
-		;;
-	3 )
-		InstallPlugin "maralla/completor.vim"
-		;;
-	4 )
-		InstallPlugin "Shougo/neocomplete.vim"
-		;;
-	5 )
-		InstallPlugin "Shougo/deoplete.nvim"
-		;;
-	* )
-		echo -e "Wrong number!\n";exit 2
-		;;
-esac
+    lnif "$source_path/vimrc"            "$target_path/vimrc"
+    lnif "$source_path/autoload/te"      "$target_path/autoload/te"
+    lnif "$source_path/rc"               "$target_path/rc"
+    lnif "$source_path/after"            "$target_path/after"
 
-if [[ $? -ne 0 ]]; then
-    echo -e "Install plugin failed\n";exit 3
-fi
+    ret="$?"
+    success "Setting up vim symlinks."
 
-# vim: set fdm=marker foldlevel=0  filetype=sh : 
+    debug
+}
+
+sync_vim_plug() {
+    if [ ! -f "$VIM_PLUG_PATH/plug.vim" ];
+    then
+        curl -fLo "$1/plug.vim" --create-dirs "$2"
+    fi
+
+    debug
+}
+
+setup_vim_plug(){
+    local system_shell="$SHELL"
+    export SHELL='/bin/sh'
+
+    vim \
+        "+PlugInstall!" \
+        "+PlugClean" \
+        "+qall"
+
+    export SHELL="$system_shell"
+
+    success "Now updating/installing plugins using vim-plug"
+
+    debug
+}
+
+generate_dot_localvim(){
+    if [ ! -f "$dot_localvim" ];
+    then
+        touch "$dot_localvim"
+        (
+        cat <<DOTSPACEVIM
+"add you extra config here
+"Plug 'someone/something'
+"set nonu
+"set nornu
+DOTSPACEVIM
+) >"$dot_localvim"
+
+    fi
+}
+
+########## Main()
+program_must_exist "vim"
+program_must_exist "git"
+program_must_exist "curl"
+
+backup          "$HOME/.vimrc"
+
+sync_repo       "$APP_PATH" \
+                "$REPO_URI" \
+                "$REPO_BRANCH" \
+                "$app_name"
+
+create_symlinks "$APP_PATH" \
+                "$HOME/.vim"
+
+sync_vim_plug   "$VIM_PLUG_PATH" \
+                "$VIM_PLUG_URL"
+
+generate_dot_localvim
+
+setup_vim_plug
+
+msg             "\nThanks for installing \033[1;31m$app_name\033[0m. Enjoy!"
