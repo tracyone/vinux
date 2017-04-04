@@ -56,7 +56,7 @@ nnoremap <Leader>yy :IPaste<cr>
 nnoremap <Leader>yc :ClearYanks<cr>
 let g:EasyClipShareYanks=1
 let g:EasyClipShareYanksDirectory=$VIMFILES
-let g:EasyClipUseYankDefaults=0
+let g:EasyClipUseYankDefaults=1
 let g:EasyClipUseCutDefaults=0
 let g:EasyClipUsePasteDefaults=0
 let g:EasyClipEnableBlackHoleRedirect=0
