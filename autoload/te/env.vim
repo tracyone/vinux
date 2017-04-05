@@ -8,6 +8,7 @@ let s:has_python3 = has('python3')
 let s:python_ver  = s:has_python+s:has_python3
 let s:ycm_dependency = has('patch-7.4.143')
 let s:is_tmux = empty($TMUX)
+let s:has_display = empty($DISPLAY)
 let s:support_cscope=has('cscope')+executable('cscope')
 
 function! te#env#IsVim8() abort
@@ -79,6 +80,13 @@ function! te#env#IsTmux() abort
     return 1
 endfunction
 
+function! te#env#IsDisplay() abort
+    if  s:has_display
+        return 0
+    endif
+    return 1
+endfunction
+
 function! te#env#IsUnix() abort
     if s:is_unix | return 1 | endif
     return 0
@@ -88,6 +96,7 @@ function! te#env#SupportAsync() abort
     if s:is_nvim && v:version >= 800 | return 1 | endif
     return 0
 endfunction
+
 
 function! te#env#SupportCscope() abort
     if s:support_cscope == 2 | return 1 | endif

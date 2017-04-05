@@ -35,6 +35,7 @@ function! s:open_index_org() abort
     let l:index_org = $VIMFILES.'/org/index.org'
     if !filereadable(l:index_org)
         call te#utils#EchoWarning(l:index_org.' is not exist! Try to create one.')
+        call mkdir($VIMFILES.'/org', 'p')
         call writefile(['* Organize everything !!'], l:index_org, 'a')
     endif
     silent! execute 'edit! ' . l:index_org

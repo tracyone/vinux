@@ -47,7 +47,7 @@ nnoremap <c-h> :OverCommandLine<cr>:%s/<C-R>=expand("<cword>")<cr>/
 vnoremap <c-h> :OverCommandLine<cr>:<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>/
 " undo tree window toggle
 nnoremap <leader>tu :UndotreeToggle<cr>
-" yankring ------------------------{{{
+" easyclip ------------------------{{{
 nnoremap <c-y> :IPaste<cr>
 imap <c-y> <c-o>:IPaste<cr>
 " Open yankring window
@@ -61,6 +61,7 @@ let g:EasyClipUseCutDefaults=0
 let g:EasyClipUsePasteDefaults=0
 let g:EasyClipEnableBlackHoleRedirect=0
 let g:EasyClipUsePasteToggleDefaults=0
+let g:EasyClipCopyExplicitRegisterToDefault=1
 nmap <silent> gs <plug>SubstituteOverMotionMap 
 nmap gss <plug>SubstituteLine
 xmap gs <plug>XEasyClipPaste
