@@ -48,10 +48,10 @@ vnoremap <c-h> :OverCommandLine<cr>:<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-
 " undo tree window toggle
 nnoremap <leader>tu :UndotreeToggle<cr>
 " easyclip ------------------------{{{
-nnoremap <c-y> :IPaste<cr>
-imap <c-y> <c-o>:IPaste<cr>
+nnoremap <c-y> :Yanks<cr>
+imap <c-y> <c-o>:Yanks<cr>
 " Open yankring window
-nnoremap <Leader>yy :IPaste<cr>
+nnoremap <Leader>yy :Yanks<cr>
 " clear yank history
 nnoremap <Leader>yc :ClearYanks<cr>
 let g:EasyClipShareYanks=1
