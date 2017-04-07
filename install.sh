@@ -154,10 +154,17 @@ generate_dot_localvim(){
         touch "$dot_localvim"
         (
         cat <<DOTSPACEVIM
-"add you extra config here
-"Plug 'someone/something'
+"Add you extra config here
+function! ExtraInit()
 "set nonu
 "set nornu
+endfunction
+
+"Add you extra favoriate plugin here
+function! ExtraPlugin()
+"Plug 'someone/something'
+endfunction
+
 DOTSPACEVIM
 ) >"$dot_localvim"
 

@@ -25,6 +25,11 @@ if filereadable($VIMFILES.'/feature.vim')
     execute ':source '.$VIMFILES.'/feature.vim'
 endif
 
+"user custom config file
+if filereadable($HOME.'/.local.vim')
+    execute ':source '.$HOME.'/.local.vim'
+endif
+
 let &rtp=&rtp.','.$VIMFILES
 if empty(glob($VIMFILES.'/autoload/plug.vim'))
     if te#env#IsWindows()
@@ -62,15 +67,17 @@ if !filereadable($VIMFILES.'/feature.vim')
     call te#feat#gen_feature_vim()
 endif
 
-"user custom config file
-if filereadable($HOME.'/.local.vim')
-    execute ':source '.$HOME.'/.local.vim'
+if exists('*ExtraPlugin')
+    call ExtraPlugin()
 endif
 
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
 
+if exists('*ExtraInit')
+    call ExtraInit()
+endif
 
 filetype plugin indent on
 syntax on

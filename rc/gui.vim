@@ -18,8 +18,8 @@ if te#env#IsGui()
     if (te#env#IsMac())
         set guifont=Consolas:h16
     elseif te#env#IsUnix()
-        set guifont=Consolas\ 12
-        set guifontwide=YaHei_Mono_Hybird_Consolas\ 12.5
+        set guifont=YaHei\ Consolas\ Hybrid\ 12
+        set guifontwide=YaHei\ Consolas\ Hybrid\ 12
     else
         set guifont=Monaco:h12:cANSI
         set guifontwide=YaHei_Mono:h12.5:cGB2312
