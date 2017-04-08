@@ -176,6 +176,8 @@ nnoremap <Leader>qq :q<cr>
 nnoremap <Leader>qQ :qa!<cr>
 " save and quit all
 nnoremap <Leader>qs :wqa<cr>
+" switch to last open tab or buffer
+nnoremap <Leader><tab> :call te#utils#tab_buf_switch(-2)<cr>
 " tab 1
 nnoremap <leader>1 :call te#utils#tab_buf_switch(1)<cr>
 " tab 2

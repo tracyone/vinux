@@ -211,12 +211,38 @@ function! te#utils#coding_style_toggle() abort
     endif
 endfunction
 
+function! s:get_listed_buf_order_num() abort
+    let l:i=1
+    for l:buf in getbufinfo({'buflisted':1})
+        if l:buf.name !=# expand('%:p')
+            let l:i=l:i+1
+        else
+            break
+        endif
+    endfor
+    return l:i
+endfunction
+
+let s:lastopen_tab=1
+let s:lastopen_buf=1
+augroup Tabpage
+    autocmd!
+    autocmd TabLeave * let s:lastopen_tab=tabpagenr()
+    autocmd BufLeave * let s:lastopen_buf=s:get_listed_buf_order_num()
+augroup end
+
 function! te#utils#tab_buf_switch(num) abort
     if exists('g:feat_enable_airline') && g:feat_enable_airline == 1
         if a:num == 0
             execute 'normal '."\<Plug>AirlineSelectPrevTab"
         elseif a:num == -1
             execute 'normal '."\<Plug>AirlineSelectNextTab"
+        elseif a:num == -2
+            if exists( '*tabpagenr' ) && tabpagenr('$') != 1
+                execute 'normal '."\<Plug>AirlineSelectTab".s:lastopen_tab
+            else
+                execute 'normal '."\<Plug>AirlineSelectTab".s:lastopen_buf
+            endif
         else
             if tabpagenr('$') != 1 && a:num > tabpagenr('$')
                 return
@@ -230,6 +256,8 @@ function! te#utils#tab_buf_switch(num) abort
                 :tabprev
             elseif a:num == -1
                 :tabnext
+            elseif a:num == -2
+                execute 'normal '.s:lastopen_tab.'gt'
             else
                 execute 'normal '.a:num.'gt'
             endif
@@ -238,6 +266,8 @@ function! te#utils#tab_buf_switch(num) abort
                 :bprev
             elseif a:num == -1
                 :bnext
+            elseif a:num == -2
+                execute 'normal '."\<Plug>BufTabLine.Go(".s:lastopen_buf.')'
             else
                 execute 'normal '."\<Plug>BufTabLine.Go(".a:num.')'
             endif
@@ -247,6 +277,9 @@ function! te#utils#tab_buf_switch(num) abort
                 return
             elseif a:num == -1
                 :bnext
+                return
+            elseif a:num == -2
+                call te#utils#EchoWarning('Not support '.a:num, 'err')
                 return
             endif
             let l:temp=a:num
