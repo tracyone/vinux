@@ -10,6 +10,7 @@ love.ini
 sessions/
 .github_token
 feature.vim
+local.vim
 .vim-bookmarks
 .netrwhist
 org/

@@ -26,8 +26,8 @@ if filereadable($VIMFILES.'/feature.vim')
 endif
 
 "user custom config file
-if filereadable($HOME.'/.local.vim')
-    execute ':source '.$HOME.'/.local.vim'
+if filereadable($VIMFILES.'/local.vim')
+    execute ':source '.$VIMFILES.'/local.vim'
 endif
 
 let &rtp=&rtp.','.$VIMFILES

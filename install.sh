@@ -4,8 +4,8 @@
 #   Thanks for spf13-vim.
 
 app_name='t-vim'
-dot_localvim="$HOME/.local.vim"
-[ -z "$APP_PATH" ] && APP_PATH="$HOME/.t-vim"
+dot_localvim="$HOME/.vim/local.vim"
+[ -z "$APP_PATH" ] && APP_PATH="$HOME/.vim"
 [ -z "$REPO_URI" ] && REPO_URI='https://github.com/tracyone/t-vim.git'
 [ -z "$REPO_BRANCH" ] && REPO_BRANCH='master'
 debug_mode='0'
@@ -91,13 +91,18 @@ sync_repo() {
     local repo_branch="$3"
     local repo_name="$4"
 
-    if [ ! -e "$repo_path" ];
+    if [ ! -e "$repo_path/.git" ];
     then
         msg "\033[1;34m==>\033[0m Trying to clone $repo_name"
         mkdir -p "$repo_path"
-        git clone -b "$repo_branch" "$repo_uri" "$repo_path" --depth=1
+        git clone --no-checkout --depth=1 -b "$repo_branch" "$repo_uri" "$repo_path/temp" 
         ret="$?"
         success "Successfully cloned $repo_name."
+	mv "${repo_path}/temp/.git" "${repo_path}"
+	rmdir temp
+	cd "${repo_path}"
+	git reset --hard HEAD
+	cd -
     else
         msg "\033[1;34m==>\033[0m Trying to update $repo_name"
         cd "$repo_path" && git pull origin "$repo_branch"
