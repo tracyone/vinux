@@ -167,7 +167,7 @@ function! ExtraInit()
 "set guifontwide=
 endfunction
 
-"Add you extra favoriate plugin here
+"Add you extra favorite plugin here
 function! ExtraPlugin()
 "Plug 'someone/something'
 endfunction

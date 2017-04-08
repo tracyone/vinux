@@ -19,9 +19,11 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/t-vim/master/inst
 * [Installation](#installation)
 * [Feature introduction](#feature-introduction)
 * [Feature Config](#feature-config)
-	* [Enable or disable feature](#enable-or-disable-feature)
-	* [Enable feature at runtime](#enable-feature-at-runtime)
-	* [Add new feature](#add-new-feature)
+        * [Enable or disable feature](#enable-or-disable-feature)
+        * [Enable/disable feature at runtime](#enabledisable-feature-at-runtime)
+        * [Add new feature](#add-new-feature)
+* [User config](#user-config)
+* [Buy me a coffee](#buy-me-a-coffee)
 
 <!-- vim-markdown-toc -->
 
@@ -35,7 +37,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/t-vim/master/inst
 
 **Uninstall**
 
-All the stuff included config files, plugins, caches and  backup files is in `~/.vim`.
+All the stuff included config files, plugins, caches and  backup files are all in `~/.vim`.
 
 To uninstall t-vim, just delete `~/.vim`
 
@@ -137,3 +139,27 @@ nnoremap <silent> <c-]>  :call lookup#lookup()<cr>
 nnoremap <silent> <c-t>  :call lookup#pop()<cr>
 ```
 
+# User config
+
+After install t-vim, `~/.vim/local.vim` will be generated.
+
+```vim
+"Add you extra config here
+function! ExtraInit()
+"set nonu
+"set nornu
+"colorscheme desert256
+"set guifont=
+"set guifontwide=
+endfunction
+
+"Add you extra favorite plugin here
+function! ExtraPlugin()
+"Plug 'someone/something'
+endfunction
+
+```
+
+# Buy me a coffee
+
+![Buy me a coffee](http://7xkx9a.com1.z0.glb.clouddn.com/blog_qrcode/alipay.jpg)
