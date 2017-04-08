@@ -33,6 +33,15 @@ Dependency see :[Install-external-dependency](https://github.com/tracyone/t-vim/
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/t-vim/master/install.sh)"
 ```
 
+**Uninstall**
+
+All the stuff included config files, plugins, caches and  backup files is in `~/.vim`.
+
+To uninstall t-vim, just delete `~/.vim`
+
+```bash
+rm -rf ~/.vim
+```
 
 # Feature introduction
 

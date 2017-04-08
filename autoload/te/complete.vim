@@ -1,7 +1,7 @@
 function! te#complete#goto_def(open_type) abort
     let l:cword=expand('<cword>')
     execute a:open_type
-    if te#env#SupportYcm() && g:complete_plugin_type ==# 'ycm'
+    if te#env#SupportYcm() && g:complete_plugin_type ==# 'ycm' && g:feat_enable_complete
         let l:ycm_ret=s:YcmGotoDef()
     else
         let l:ycm_ret = -1
@@ -30,8 +30,8 @@ func! s:YcmGotoDef() abort
             call youcompleteme#Enable() 
             let g:is_load_ycm = 1
             autocmd! lazy_load_group 
-            sleep 1
             call te#utils#EchoWarning('ycm has been loaded!')
+            return -1 
         endif
     endif
     let l:ret = te#utils#GetError(':YcmCompleter GoToDefinition','Runtime.*')

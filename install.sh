@@ -162,6 +162,7 @@ generate_dot_localvim(){
 function! ExtraInit()
 "set nonu
 "set nornu
+colorscheme jellybeans
 endfunction
 
 "Add you extra favoriate plugin here

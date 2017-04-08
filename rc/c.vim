@@ -43,9 +43,5 @@ let g:neomake_make_maker = {
             \ 'errorformat': '%f:%l:%c: %m',
             \ }
 
-" generate cscope for linux kernel
-nnoremap <Leader>gk :call te#pg#gen_cscope_kernel()<cr>
-" generate cctree database
-nnoremap <Leader>gc :call te#pg#cctree()<cr>
 "}}}
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
