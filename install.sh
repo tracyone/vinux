@@ -99,7 +99,7 @@ sync_repo() {
         ret="$?"
         success "Successfully cloned $repo_name."
 	mv "${repo_path}/temp/.git" "${repo_path}"
-	rmdir temp
+	rm -rf temp
 	cd "${repo_path}"
 	git reset --hard HEAD
 	cd -
@@ -117,13 +117,13 @@ create_symlinks() {
     local source_path="$1"
     local target_path="$2"
 
-    lnif "$source_path/vimrc"            "$target_path/vimrc"
-    lnif "$source_path/autoload/te"      "$target_path/autoload/"
-    lnif "$source_path/rc"               "$target_path/"
-    lnif "$source_path/after"            "$target_path/"
+    mkdir -p ${target_path}
+
+    lnif "$source_path/vimrc"            "$target_path/init.vim"
+    lnif "$source_path/autoload"      "$target_path/"
 
     ret="$?"
-    success "Setting up vim symlinks."
+    success "Setting up neovim symlinks."
 
     debug
 }
@@ -143,7 +143,6 @@ setup_vim_plug(){
 
     vim \
         "+PlugInstall!" \
-        "+PlugClean" \
         "+qall"
 
     export SHELL="$system_shell"
@@ -182,6 +181,7 @@ program_must_exist "git"
 program_must_exist "curl"
 
 backup          "$HOME/.vimrc"
+backup          "$HOME/.config/nvim/init.vim"
 
 sync_repo       "$APP_PATH" \
                 "$REPO_URI" \
@@ -189,7 +189,7 @@ sync_repo       "$APP_PATH" \
                 "$app_name"
 
 create_symlinks "$APP_PATH" \
-                "$HOME/.vim"
+                "$HOME/.config/nvim"
 
 sync_vim_plug   "$VIM_PLUG_PATH" \
                 "$VIM_PLUG_URL"
