@@ -15,17 +15,14 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/t-vim/master/inst
 
 **Content**
 
-<!-- vim-markdown-toc GFM -->
 * [Installation](#installation)
 * [Feature introduction](#feature-introduction)
 * [Feature Config](#feature-config)
-        * [Enable or disable feature](#enable-or-disable-feature)
-        * [Enable/disable feature at runtime](#enabledisable-feature-at-runtime)
-        * [Add new feature](#add-new-feature)
+    * [Enable or disable feature](#enable-or-disable-feature)
+    * [Enable/disable feature at runtime](#enabledisable-feature-at-runtime)
+    * [Add new feature](#add-new-feature)
 * [User config](#user-config)
 * [Buy me a coffee](#buy-me-a-coffee)
-
-<!-- vim-markdown-toc -->
 
 #  Installation
 
@@ -162,4 +159,4 @@ endfunction
 
 # Buy me a coffee
 
-![Buy me a coffee](http://7xkx9a.com1.z0.glb.clouddn.com/blog_qrcode/alipay.jpg)
+![donation](https://cloud.githubusercontent.com/assets/4246425/24827592/553bc732-1c7f-11e7-8207-284cccbc2e5c.jpg)

@@ -121,6 +121,8 @@ create_symlinks() {
 
     lnif "$source_path/vimrc"            "$target_path/init.vim"
     lnif "$source_path/autoload"      "$target_path/"
+    lnif "$source_path/after"      "$target_path/"
+    lnif "$source_path/rc"      "$target_path/"
 
     ret="$?"
     success "Setting up neovim symlinks."
