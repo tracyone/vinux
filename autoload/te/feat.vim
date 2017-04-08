@@ -32,8 +32,8 @@ function! te#feat#gen_feature_vim() abort
 	   call writefile(['let '.l:key.'='.s:feature_dict[l:key]], $VIMFILES.'/feature.vim', 'a')
 	endfor
     let l:t_vim_version=system('git describe')
+    let l:temp=te#feat#get_vim_version()
     if v:shell_error != 0
-        let l:temp=te#feat#get_vim_version()
 	    let l:t_vim_version='V1.0.4'.'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
     else
         let l:t_vim_version=split(l:t_vim_version, '\n')[-1].'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
