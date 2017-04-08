@@ -49,7 +49,7 @@ autocmd misc_group InsertLeave * if pumvisible() == 0|pclose|endif
 
 if g:complete_plugin_type ==# 'ycm'
     " jume to definition (YCM)
-    nnoremap <leader>jl :YcmCompleter GoToDeclaration<CR>
+    nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
     let g:ycm_confirm_extra_conf=0
     let g:syntastic_always_populate_loc_list = 1
     let g:ycm_semantic_triggers = {

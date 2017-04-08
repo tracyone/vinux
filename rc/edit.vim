@@ -41,6 +41,9 @@ map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
 " Nerdcommander -------------------{{{
 let g:NERDMenuMode=0
 let g:NERD_c_alt_style=1
+"toggle comment
+nmap <Leader>;; <plug>NERDCommenterComment
+nmap <Leader>cc <plug>NERDCommenterComment
 "}}}
 "replace
 nnoremap <c-h> :OverCommandLine<cr>:%s/<C-R>=expand("<cword>")<cr>/

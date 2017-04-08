@@ -31,15 +31,15 @@ set mps+=":"
 map W <Plug>(easymotion-lineforward)
 map B <Plug>(easymotion-linebackward)
 " MultiWindow easymotion for word
-nmap <Leader>F <Plug>(easymotion-overwin-w)
+nmap <Leader>jw <Plug>(easymotion-overwin-w)
 " Multi Input Find Motion:s
-nmap <Leader>es <Plug>(easymotion-sn)
+nmap <Leader>js <Plug>(easymotion-sn)
 " Multi Input Find Motion:t
-nmap <Leader>et <Plug>(easymotion-tn)
+nmap <Leader>jt <Plug>(easymotion-tn)
 " MultiWindow easymotion for line
-nmap <Leader>el <Plug>(easymotion-overwin-line)
+nmap <Leader>jl <Plug>(easymotion-overwin-line)
 " MultiWindow easymotion for char
-nmap <Leader>ef <Plug>(easymotion-overwin-f)
+nmap <Leader>jj <Plug>(easymotion-overwin-f)
 
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_show_prompt = 0
@@ -120,6 +120,8 @@ nnoremap <Leader>pU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 nnoremap <Leader>pc :CtrlPCmdPalette<cr>
 "CtrlP function
 nnoremap <Leader>pk :CtrlPFunky<cr>
+"CtrlP cmd
+nnoremap <Leader><Leader> :CtrlPCmdPalette<cr>
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 "}}}
 " Misc {{{
