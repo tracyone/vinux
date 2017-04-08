@@ -129,11 +129,6 @@ let g:jellybeans_overrides = {
 \    'background': { 'guibg': '000000' },
 \}
 set background=dark
-try 
-    colorscheme jellybeans "default setting 
-catch /^Vim\%((\a\+)\)\=:E185/
-    colorscheme desert "default setting 
-endtry
 " toggle background option.
 nnoremap <leader>tb :call te#utils#OptionToggle("bg",["dark","light"])<cr>
 "}}}

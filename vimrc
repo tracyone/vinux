@@ -75,6 +75,12 @@ endif
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 call plug#end()
 
+try 
+    colorscheme jellybeans "default setting 
+catch /^Vim\%((\a\+)\)\=:E185/
+    colorscheme desert "default setting 
+endtry
+
 if exists('*ExtraInit')
     call ExtraInit()
 endif

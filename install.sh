@@ -162,7 +162,9 @@ generate_dot_localvim(){
 function! ExtraInit()
 "set nonu
 "set nornu
-colorscheme jellybeans
+"colorscheme jellybeans
+"set guifont=
+"set guifontwide=
 endfunction
 
 "Add you extra favoriate plugin here
