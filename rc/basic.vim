@@ -151,8 +151,7 @@ nmap <leader>yr <Plug>(quickrun)
 vnoremap <leader>yr :'<,'>QuickRun<cr>
 " }}}
 " Misc {{{
-let g:love_support_option=['tabstop','shiftwidth','softtabstop'
-            \,'expandtab','smarttab', 'termguicolors']
+let g:love_support_option=['termguicolors']
 " Save basic setting
 nnoremap <Leader>lo :Love<cr>
 nnoremap <Leader>sc :Neomake<cr>

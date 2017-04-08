@@ -18,14 +18,15 @@ if te#env#IsGui()
     if (te#env#IsMac())
         set guifont=Consolas:h16
     elseif te#env#IsUnix()
-        set guifont=YaHei\ Consolas\ Hybrid\ 12
-        set guifontwide=YaHei\ Consolas\ Hybrid\ 12
+        set guifont=Consolas\ 12
+        set guifontwide=YaHei_Mono_Hybird_Consolas\ 12.5
     else
         set guifont=Monaco:h12:cANSI
         set guifontwide=YaHei_Mono:h12.5:cGB2312
     endif
     if !te#env#IsMacVim()
-        if g:airline_powerline_fonts == 1 && g:feat_enable_airline == 1
+        if g:airline_powerline_fonts == 1
+            set guifont=YaHei\ Consolas\ Hybrid\ 12
             set guifontwide=YaHei\ Consolas\ Hybrid\ 12
         endif
     endif
