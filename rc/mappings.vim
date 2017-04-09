@@ -215,6 +215,8 @@ nnoremap <Leader>wS :sp<cr><C-w>j
 nnoremap <Leader>wm :only<cr>
 " quit current windows
 nnoremap <Leader>wd :q<cr>
+" switch between two windows alternately
+nnoremap <Leader>w<tab> <C-w><C-p>
 " switch between two windows.
 nnoremap <Leader>ww <C-w><C-w>
 " move to left win
@@ -225,6 +227,20 @@ nnoremap <Leader>wl <C-w>l
 nnoremap <Leader>wj <C-w>j
 " move up win
 nnoremap <Leader>wk <C-w>k
+" move to very left win
+nnoremap <Leader>wH <C-w>H
+" move to very right win
+nnoremap <Leader>wL <C-w>L
+" move to very down win
+nnoremap <Leader>wJ <C-w>J
+" move to very up win
+nnoremap <Leader>wK <C-w>K
+" rotate the window backward
+nnoremap <Leader>wR <C-w>R
+" rotate the window forward
+nnoremap <Leader>wr <C-w>r
+" Move the current window to a new tab page.
+nnoremap <Leader>wt <C-w>T
 " toggle long or short statusline
 nnoremap <leader>ts :call te#utils#OptionToggle('statusline',['%!MyStatusLine(1)','%!MyStatusLine(2)'])<cr>
 " toggle focus coding
