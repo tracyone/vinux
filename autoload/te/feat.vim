@@ -43,7 +43,12 @@ function! te#feat#gen_feature_vim() abort
 endfunction
 
 function! te#feat#feat_dyn_enable(en) abort
-    let l:feat = input('Select the feature: ','g:feat_enable_','custom,te#feat#get_feature')
+    if a:en == 1
+        let l:enable='Enable'
+    else
+        let l:enable='Disable'
+    endif
+    let l:feat = input(l:enable.' the feature(or "all"): ','g:feat_enable_','custom,te#feat#get_feature')
     if l:feat !=# 'all'
         if type(eval(l:feat))
             let l:str=input('Input the value of '.l:feat.': ')
