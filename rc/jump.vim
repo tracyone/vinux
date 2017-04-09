@@ -100,7 +100,14 @@ if executable('ag')
 endif
 let g:ctrlp_funky_syntax_highlight = 0
 let g:ctrlp_funky_matchtype = 'path'
-nnoremap <c-k> :CtrlPFunky<Cr>
+
+"handle bug of gitgutter
+function! s:ctrlp_funky()
+    let g:gitgutter_async=0
+    :CtrlPFunky
+    let g:gitgutter_async=1
+endfunction
+nnoremap <c-k> :call <SID>ctrlp_funky()<cr>
 nnoremap <c-j> :CtrlPBuffer<Cr>
 " toggle ctrlp g:ctrlp_use_caching option
 nnoremap <leader>tj :call te#utils#OptionToggle('g:ctrlp_use_caching',[0,1])<cr>
