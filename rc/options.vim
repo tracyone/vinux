@@ -4,12 +4,10 @@
 set filetype=text
 if te#env#IsWindows()
     let $HOME=$VIM
-    let $VIMFILES = $VIM.'\\vimfiles'
     set makeprg=mingw32-make
 else
     set keywordprg=""
     set path=.,/usr/include/
-    let $VIMFILES = $HOME.'/.vim'
 endif
 
 "Encode {{{

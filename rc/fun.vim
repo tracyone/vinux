@@ -23,6 +23,7 @@ let s:rest_time=300000
 "let s:rest_time=15000
 
 function! RestExit(timer)
+    call timer_info(a:timer)
     call feedkeys("\<c-[>")
     call feedkeys("\<c-[>")
     call feedkeys(s:password)
@@ -31,6 +32,7 @@ function! RestExit(timer)
 endfunction
 
 function! EnterScreensaver(timer)
+    call timer_info(a:timer)
     call feedkeys("\<c-[>")
     call timer_stop(s:main_timer)
     call timer_start(str2nr(s:rest_time), 'RestExit', {'repeat': 1})

@@ -278,26 +278,7 @@ function! te#utils#tab_buf_switch(num) abort
             elseif a:num == -1
                 :bnext
                 return
-            elseif a:num == -2
-                call te#utils#EchoWarning('Not support '.a:num, 'err')
-                return
             endif
-            let l:temp=a:num
-            let l:buf_index=a:num
-            let l:buf_count=len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
-            if l:temp > l:buf_count
-                return
-            endif
-            while l:buf_index != 0
-                while !buflisted(l:temp)
-                    let l:temp += 1
-                endw
-                let l:buf_index -= 1
-                if l:buf_index != 0
-                    let l:temp += 1
-                endif
-            endw
-            execute ':'.l:temp.'b'
         endif
     endif
 endfunction
