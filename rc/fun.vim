@@ -15,17 +15,13 @@ call te#feat#register_vim_enter_setting(function('<SID>fun_setting'))
 nnoremap <Leader>ad :Calendar<cr>
 nnoremap <Leader>ab :Thumbnail<cr>
 
-let s:reset_time=0
-let s:expires_time=90000
-autocmd misc_group CursorMoved,CursorMovedI * let s:reset_time=1
+" 25 mins in pomodoro mode
+let s:expires_time=1500000
 
 function! EnterScreensaver(timer)
-    if s:reset_time == 0
-        call feedkeys("\<c-[>")
-        :ScreenSaver largeclock
-        :ScreenSaver password
-    endif
-    let s:reset_time=0
+    call feedkeys("\<c-[>")
+    :ScreenSaver largeclock
+    :ScreenSaver password
 endfunction
 
 call timer_start(str2nr(s:expires_time), 'EnterScreensaver', {'repeat': -1})
