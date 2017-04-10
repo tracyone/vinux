@@ -269,7 +269,3 @@ if te#env#IsNvim()
     execute 'tnoremap   jj         <C-\><C-n>'
     execute 'tnoremap   j<Space>   j'
 endif
-" If press l on fold, fold open.
-nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0' : 'l'
-" If press l on fold, range fold open.
-xnoremap <expr> l foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
