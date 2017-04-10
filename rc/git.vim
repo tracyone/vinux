@@ -26,6 +26,8 @@ nnoremap <Leader>gi :silent! Gissue<cr>
 nnoremap <Leader>ga :silent! Giadd<cr>
 " git merge
 nnoremap <Leader>gm :call te#git#git_merge()<cr>
+" git cd
+nnoremap <Leader>gc :Gcd<cr>
 let g:gissues_lazy_load = 1
 let g:gissues_async_omni = 1
 if filereadable($VIMFILES.'/.github_token')
