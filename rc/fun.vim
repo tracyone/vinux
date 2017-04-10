@@ -28,6 +28,9 @@ function! RestExit(timer)
     call feedkeys("\<c-[>")
     call feedkeys(s:password)
     call feedkeys("\<cr>")
+    if te#env#IsTmux()
+        call system('tmux set -g status on')
+    endif
     let s:main_timer=timer_start(str2nr(s:expires_time), 'EnterScreensaver', {'repeat': 1})
 endfunction
 
@@ -36,6 +39,9 @@ function! EnterScreensaver(timer)
     call feedkeys("\<c-[>")
     call timer_stop(s:main_timer)
     call timer_start(str2nr(s:rest_time), 'RestExit', {'repeat': 1})
+    if te#env#IsTmux()
+        call system('tmux set -g status off')
+    endif
     :ScreenSaver password
 endfunction
 
