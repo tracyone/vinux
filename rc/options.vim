@@ -112,6 +112,22 @@ set sessionoptions-=options
 set ffs=unix,dos,mac
 set diffopt=vertical
 set shortmess=filnxtToOI
+if te#env#IsNvim()
+    " Use cursor shape feature
+    let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
+
+    let g:python_host_prog  = '/usr/bin/python2'
+    let g:python3_host_prog = '/usr/bin/python3'
+
+    if exists('&inccommand')
+        set inccommand=nosplit
+    endif
+
+    if has('vim_starting')
+        syntax off
+    endif
+endif
+
 
 "{{{fold setting
 "folding type: manual, indent, expr, marker or syntax

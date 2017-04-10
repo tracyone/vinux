@@ -266,6 +266,8 @@ if te#env#IsNvim()
     execute 'tnoremap <A-j> <C-\><C-n><C-w>j'
     execute 'tnoremap <A-k> <C-\><C-n><C-w>k'
     execute 'tnoremap <A-l> <C-\><C-n><C-w>l'
+    execute 'tnoremap   jj         <C-\><C-n>'
+    execute 'tnoremap   j<Space>   j'
 endif
 " If press l on fold, fold open.
 nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0' : 'l'
