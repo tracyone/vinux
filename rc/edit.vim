@@ -10,7 +10,7 @@ Plug 'osyo-manga/vim-over',{'on': 'OverCommandLine'}
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
-Plug 'svermeulen/vim-easyclip'
+Plug 'tracyone/vim-easyclip'
 
 " DelimitMate ---------------------{{{
 let g:delimitMate_nesting_quotes = ['"','`']
@@ -52,7 +52,7 @@ vnoremap <c-h> :OverCommandLine<cr>:<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-
 nnoremap <leader>tu :UndotreeToggle<cr>
 " easyclip ------------------------{{{
 nnoremap <c-y> :Yanks<cr>
-imap <c-y> <c-o>:Yanks<cr>
+imap <c-y> <c-[>:Yanks<cr>
 " Open yankring window
 nnoremap <Leader>yy :Yanks<cr>
 " clear yank history
