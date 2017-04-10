@@ -111,7 +111,7 @@ set sessionoptions-=folds
 set sessionoptions-=options
 set ffs=unix,dos,mac
 set diffopt=vertical
-
+set shortmess=filnxtToOI
 
 "{{{fold setting
 "folding type: manual, indent, expr, marker or syntax
