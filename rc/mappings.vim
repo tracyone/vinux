@@ -10,6 +10,10 @@ let g:maplocalleader=','
 
 "map jj to esc..
 inoremap jj <c-[>
+cnoremap <expr> j
+      \ getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
+
+inoremap j<Space>     j
 
 vnoremap [p "0p
 
@@ -263,3 +267,7 @@ if te#env#IsNvim()
     execute 'tnoremap <A-k> <C-\><C-n><C-w>k'
     execute 'tnoremap <A-l> <C-\><C-n><C-w>l'
 endif
+" If press l on fold, fold open.
+nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0' : 'l'
+" If press l on fold, range fold open.
+xnoremap <expr> l foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
