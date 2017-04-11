@@ -82,7 +82,7 @@ endfunction
 
 function! te#env#IsDisplay() abort
     if  s:has_display
-        return 0
+        return s:is_win
     endif
     return 1
 endfunction

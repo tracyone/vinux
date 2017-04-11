@@ -7,7 +7,9 @@ Plug 'vim-scripts/DrawIt',{'on': 'DrawIt'}
 Plug 'mbbill/VimExplorer',{'on': 'VE'}
 Plug 'vim-scripts/renamer.vim',{'on': 'Ren'}
 Plug 'Shougo/vinarise.vim',{'on': 'Vinarise'}
-Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
+if te#env#IsDisplay()
+    Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
+endif
 Plug 'adah1972/fencview',{'on': 'FencManualEncoding'}
 if te#env#IsMac()
     Plug 'itchyny/dictionary.vim',{'on': 'Dictionary'}

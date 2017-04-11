@@ -1,4 +1,6 @@
-Plug 'iamcco/markdown-preview.vim',{'for': 'markdown'}
+if te#env#IsDisplay()
+    Plug 'iamcco/markdown-preview.vim',{'for': 'markdown'}
+endif
 Plug 'mzlogin/vim-markdown-toc',{'for': 'markdown'}
 Plug 'plasticboy/vim-markdown',{'for': 'markdown'}
 
