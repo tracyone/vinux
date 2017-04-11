@@ -119,6 +119,8 @@ endfunction
 function! te#utils#goto_cur_file(option) abort
     if a:option == 1
         execute 'cd %:h'
+    elseif a:option == 2
+        execute 'cd '. fnamemodify(resolve(expand("%")), ":p:h")
     else
         execute 'lcd %:h'
     endif
