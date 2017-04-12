@@ -34,6 +34,8 @@ let g:indentLine_fileTypeExclude = ['help', 'startify', 'vimfiler', 'markdown']
 let g:indentLine_concealcursor = 'niv'
 let g:indentLine_color_gui = '#09AA08'
 let g:indentLine_color_term = 239
+let g:indentLine_enabled=0
+nnoremap <Leader>ti :IndentLinesToggle<cr>
 if te#env#IsVim8() || te#env#IsNvim()
     Plug 'neomake/neomake'
     Plug 'tracyone/neomake-multiprocess'
