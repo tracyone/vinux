@@ -1,6 +1,8 @@
 # 🍎 t-vim [![Build Status](https://travis-ci.org/tracyone/t-vim.svg?branch=master)](https://travis-ci.org/tracyone/t-vim)
 
-![screenshot](https://cloud.githubusercontent.com/assets/4246425/23589032/5d9e2a48-0201-11e7-999e-393185ae3a25.png)
+**Yet another modular and dark power config for Vim !!**
+
+![screenshot](https://cloud.githubusercontent.com/assets/4246425/25069673/b7e5b906-22ba-11e7-95e9-21380cff710c.png)
 
 **Quick Install**
 
@@ -102,20 +104,20 @@ let g:feat_enable_<name>=0
 
 ## Enable/disable feature at runtime
 
-Shutcut: `<SPC>+fe` or
+Enable feature: shutcut: `<SPC>+fe` or
 
 ```vim
 :call te#feat#feat_dyn_enable(1)
 ```
 
-Shutcut: `<SPC>+fd` or
+Disable feature shutcut: `<SPC>+fd` or
 
 ```vim
 :call te#feat#feat_dyn_enable(0)
 ```
 
 
-## Add new feature
+## Add new feature(for power user or contributor)
 
 1. Add following line to `vimrc` between `plug#begin` and `plug#end`
 
