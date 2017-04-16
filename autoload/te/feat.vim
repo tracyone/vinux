@@ -49,11 +49,11 @@ function! te#feat#feat_dyn_enable(en) abort
         let l:enable='Disable'
     endif
     let l:feat = input(l:enable.' the feature(or "all"): ','g:feat_enable_','custom,te#feat#get_feature')
-    if !has_key(s:feature_dict, l:feat)
-        call te#utils#EchoWarning(l:feat.' feature is not exist!', 'err')
-        return
-    endif
     if l:feat !=# 'all'
+        if !has_key(s:feature_dict, l:feat)
+            call te#utils#EchoWarning(l:feat.' feature is not exist!', 'err')
+            return
+        endif
         if type(eval(l:feat))
             let l:str=input('Input the value of '.l:feat.': ')
             let s:feature_dict[l:feat]=string(l:str)
