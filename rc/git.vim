@@ -5,6 +5,7 @@ Plug 'rhysd/github-complete.vim'
 Plug 'airblade/vim-gitgutter'
 
 " Git releate ---------------------{{{
+let g:fugitive_no_maps=0
 nnoremap <F3> :Gstatus<cr>
 " Open git status window
 nnoremap <Leader>gs :Gstatus<cr>

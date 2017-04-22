@@ -154,9 +154,9 @@ nnoremap <Leader>tn :call te#utils#nu_toggle()<cr>
 " realtime underline word toggle
 nnoremap <leader>th :call te#utils#OptionToggle("g:cursorword",[0,1])<cr>
 " next buffer or tab
-nnoremap <Leader>bn :bnext<cr>
+nnoremap <Leader>bn :call te#utils#tab_buf_switch(-1)<cr>
 " previous buffer or tab
-nnoremap <Leader>bp :bprev<cr>
+nnoremap <Leader>bp :call te#utils#tab_buf_switch(0)<cr>
 " delete buffer
 nnoremap <Leader>bk :bdelete<cr>
 " save file
