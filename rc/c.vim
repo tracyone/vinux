@@ -1,7 +1,7 @@
 " Package info {{{
 Plug 'tracyone/a.vim'
 Plug 'rhysd/vim-clang-format',{'for': ['c', 'cpp']}
-Plug 'hari-rangarajan/CCTree',{'for': ['c', 'cpp']}
+Plug 'hari-rangarajan/CCTree'
 if(!te#env#IsWindows())
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
 endif
