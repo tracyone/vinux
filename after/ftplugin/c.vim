@@ -49,7 +49,7 @@ vnoremap <buffer><Leader>cf :ClangFormat<CR>
 " generate cscope for linux kernel
 nnoremap <buffer><Leader>gk :call te#pg#gen_cscope_kernel()<cr>
 " generate cctree database
-nnoremap <buffer><Leader>gc :call te#pg#cctree()<cr>
+nnoremap <buffer><Leader>gt :call te#pg#cctree()<cr>
 
 setlocal cinoptions=:0,l1,t0,g0,(0)
 setlocal comments    =sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/
