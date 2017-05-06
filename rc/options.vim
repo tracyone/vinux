@@ -128,6 +128,29 @@ if te#env#IsNvim()
     endif
 endif
 
+if te#env#IsVim8()
+    let g:t_number=v:t_number
+    let g:t_string=v:t_string
+    let g:t_func=v:t_func
+    let g:t_list=v:t_list
+    let g:t_dict=v:t_dict
+    let g:t_float=v:t_float
+    let g:t_bool=v:t_bool
+    let g:t_none=v:t_none
+    let g:t_job=v:t_job
+    let g:t_channel=v:t_channel
+else
+    let g:t_number=0
+    let g:t_string=1
+    let g:t_func=2
+    let g:t_list=3
+    let g:t_dict=4
+    let g:t_float=5
+    let g:t_bool=6
+    let g:t_none=7
+    let g:t_job=8
+    let g:t_channel=9
+endif
 
 "{{{fold setting
 "folding type: manual, indent, expr, marker or syntax

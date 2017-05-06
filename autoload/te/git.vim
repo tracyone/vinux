@@ -44,7 +44,7 @@ function! te#git#GitPush(push_type) abort
         return 1
     endif
     let l:remote_name=s:get_remote_name()
-    if type(l:remote_name) != v:t_string
+    if type(l:remote_name) != g:t_string
         return 2
     endif
     let l:branch_name = input('Please input the branch name(master): ','master','custom,te#git#GetRemoteBr')
@@ -55,7 +55,7 @@ function! te#git#GitPush(push_type) abort
             let l:cur_br_name = matchstr(l:cur_br_name,'^\w\+\ze\s') 
         endif
     endif
-    if type(l:cur_br_name) != v:t_string
+    if type(l:cur_br_name) != g:t_string
         :call te#utils#EchoWarning('Get current branch name failed','err')
         return 3
     endif
@@ -99,7 +99,7 @@ endfunction
 
 function! te#git#git_rebase() abort
     let l:remote_name=s:get_remote_name()
-    if type(l:remote_name) != v:t_string
+    if type(l:remote_name) != g:t_string
         return 2
     endif
     let l:branch_name = input('Please input the branch name: ','','function,te#git#GetRemoteBr')
@@ -108,7 +108,7 @@ endfunction
 
 function! te#git#git_merge() abort
     let l:remote_name=s:get_remote_name()
-    if type(l:remote_name) != v:t_string
+    if type(l:remote_name) != g:t_string
         return 2
     endif
     let l:branch_name = input('which branch do you want to merge: ','','custom,te#git#GetRemoteBr')

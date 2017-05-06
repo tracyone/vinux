@@ -66,7 +66,7 @@ function! te#feat#feat_dyn_enable(en) abort
         call te#feat#feat_enable(l:feat,eval(s:feature_dict[l:feat]))
     else
         for l:key in keys(s:feature_dict)
-            if type(eval(l:key)) != v:t_string
+            if type(eval(l:key)) != g:t_string
                 let s:feature_dict[l:key]=a:en
                 execute 'let '.l:key.'='.a:en
                 call te#feat#feat_enable(l:key,eval(s:feature_dict[l:key]))
@@ -121,7 +121,7 @@ endfunction
 let s:plugin_func_list=[]
 
 function! te#feat#register_vim_enter_setting(funcref) abort
-    if type(a:funcref) != v:t_func
+    if type(a:funcref) != g:t_func
         call te#utils#EchoWarning('register failed!funcref must be a funcref variable', 'err')
         return -1
     endif
