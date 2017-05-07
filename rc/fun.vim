@@ -47,14 +47,23 @@ endfunction
 
 function! s:clear_screen_flag()
     let l:timer_info=timer_info(s:main_timer)
-    if !empty(l:timer_info)
-        call delete($VIMFILES.'/.screenlock')
+    if filereadable($VIMFILES.'/.screenlock')
+        if te#env#IsUnix()
+            let l:pid=readfile($VIMFILES.'/.screenlock', '')[0]
+            call system('kill -0 '.l:pid)
+            if v:shell_error
+                call delete($VIMFILES.'/.screenlock')
+            endif
+        endif
+        if !empty(l:timer_info)
+            call delete($VIMFILES.'/.screenlock')
+        endif
     endif
 endfunction
 
 if !filereadable($VIMFILES.'/.screenlock')
     let s:main_timer=timer_start(str2nr(s:expires_time), 'EnterScreensaver', {'repeat': 1})
-    call writefile(['Hello, World'],$VIMFILES.'/.screenlock')
+    call writefile([getpid()],$VIMFILES.'/.screenlock')
 endif
 
 autocmd misc_group VimLeave * call <SID>clear_screen_flag()
