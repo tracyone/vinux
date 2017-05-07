@@ -8,7 +8,7 @@ if !te#env#IsNvim()
     elseif te#env#IsUnix()
         Plug 'Shougo/vimproc.vim', { 'do': 'make' }
     else
-        Plug 'Shougo/vimproc.vim', { 'do': 'mingw32-make.exe -f make_mingw64.mak' }
+        Plug 'Shougo/vimproc.vim'
     endif
     Plug 'Shougo/vimshell.vim',{'on':'VimShell'}
 endif
@@ -104,6 +104,11 @@ if(!te#env#IsNvim())
     augroup END
     function! s:interactive_settings()
     endfunction
+    if te#env#IsWin64()
+        let g:vimproc#dll_path=$VIMRUNTIME.'/vimproc_win64.dll'
+    elseif te#env#IsWin32()
+        let g:vimproc#dll_path=$VIMRUNTIME.'/vimproc_win32.dll'
+    endif
 endif
 
 function! VimShellPop()
