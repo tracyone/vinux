@@ -159,6 +159,8 @@ elseif g:complete_plugin_type ==# 'neocomplete'
          let g:clang_library_path='/Library/Developer/CommandLineTools/usr/lib'
      elseif te#env#IsUnix()
          let g:clang_library_path='/usr/local/lib'
+     else
+         let g:clang_library_path='c:/LLVM/bin'
      endif
      "let g:clang_use_library = 1
      let g:clang_complete_auto = 1
