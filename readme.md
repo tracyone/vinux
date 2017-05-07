@@ -44,6 +44,14 @@ To uninstall t-vim, just delete `~/.vim`
 rm -rf ~/.vim
 ```
 
+**Windows quick install**
+
+Install vim and git for windows, then
+
+```bash
+git clone https://github.com/tracyone/t-vim /c/Users/YourName/vimfiles
+```
+
 # Feature introduction
 
 1. c/c++ source code complete and GoToDefinition. see [Source code reading and GoToDefinition](https://github.com/tracyone/t-vim/wiki/Keymapping#source-code-reading-and-gotodefinition)

@@ -5,12 +5,14 @@ set filetype=text
 if te#env#IsWindows()
     let $HOME=$VIM
     set makeprg=mingw32-make
+    let $MYVIMRC=$VIMFILES.'/vimrc'
 else
     set keywordprg=""
     set path=.,/usr/include/
+    lan time en_US.UTF-8
+    lan ctype en_US.UTF-8
 endif
 
-"Encode {{{
 set encoding=utf-8
 set fileencoding=utf-8
 set termencoding=utf-8
@@ -20,11 +22,8 @@ if v:lang=~? '^\(zh\)\|\(ja\)\|\(ko\)'
 endif
 source $VIMRUNTIME/delmenu.vim
 lan mes en_US.UTF-8
-lan time en_US.UTF-8
-lan ctype en_US.UTF-8
 "set langmenu=nl_NL.ISO_8859-1
 scriptencoding utf-8
-"}}}
 
 "list candidate word in statusline
 set wildmenu

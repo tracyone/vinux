@@ -10,8 +10,7 @@ if &compatible
 endif
 
 if te#env#IsWindows()
-    let $HOME=$VIM
-    let $VIMFILES = $VIM.'/vimfiles'
+    let $VIMFILES = $HOME.'/vimfiles'
 else
     let $VIMFILES = $HOME.'/.vim'
 endif
