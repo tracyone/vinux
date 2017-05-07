@@ -97,6 +97,10 @@ if executable('ag')
     let g:ctrlp_use_caching = 0
     let g:ctrlp_show_hidden = 1
     let g:user_command_async = 1
+else
+    if executable('git')
+        let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+    endif
 endif
 let g:ctrlp_funky_syntax_highlight = 0
 let g:ctrlp_funky_matchtype = 'path'

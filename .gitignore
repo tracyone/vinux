@@ -14,3 +14,4 @@ local.vim
 .vim-bookmarks
 .netrwhist
 org/
+.neocomplete/
