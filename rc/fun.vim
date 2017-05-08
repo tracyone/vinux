@@ -21,6 +21,7 @@ let s:expires_time=1500000
 let s:rest_time=300000
 "let s:expires_time=8000
 "let s:rest_time=15000
+let s:main_timer=-1
 
 function! RestExit(timer)
     call timer_info(a:timer)
