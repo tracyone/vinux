@@ -35,9 +35,9 @@ noremap <F8> :SSave<cr>
 nnoremap <Leader>bh :Startify<cr>
 autocmd misc_group FileType startify setlocal buftype=
 " Session save 
-nnoremap <Leader>ls :SSave<cr>
+nnoremap <Leader>ss :SSave<cr>
 " Session load
-nnoremap <Leader>ll :SLoad 
+nnoremap <Leader>sl :SLoad 
 "}}}
 nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 

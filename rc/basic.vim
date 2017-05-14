@@ -44,6 +44,19 @@ if te#env#IsVim8() || te#env#IsNvim()
     "set grepprg=ag\ --nogroup\ --nocolor
     "set grepformat=%f:%l:%c%m
 endif
+if g:feat_enable_help == 0
+    Plug 'xolox/vim-session', {'on': ['OpenSession', 'SaveSession', 'DeleteSession']}
+    Plug 'xolox/vim-misc', {'on': ['OpenSession', 'SaveSession', 'DeleteSession']}
+    let g:session_autoload=0
+    let g:session_autosave='no'
+    " Session save 
+    nnoremap <Leader>ss :SaveSession 
+    " Session load
+    nnoremap <Leader>sl :OpenSession<cr> 
+    " Session delete
+    nnoremap <Leader>sd :DeleteSession<cr>
+    let g:session_directory=$VIMFILES.'/sessions'
+endif
 "}}}
 " Tagbar {{{
 nnoremap <silent><F9> :TagbarToggle<CR>
