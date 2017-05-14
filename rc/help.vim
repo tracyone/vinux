@@ -38,6 +38,8 @@ autocmd misc_group FileType startify setlocal buftype=
 nnoremap <Leader>ss :SSave<cr>
 " Session load
 nnoremap <Leader>sl :SLoad 
+" Session delete
+nnoremap <Leader>sd :SDelete<cr>
 "}}}
 nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
