@@ -31,7 +31,7 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 
-if g:airline_powerline_fonts == 1 && !te#env#IsMacVim()
+if get(g:,'airline_powerline_fonts') == 1 && !te#env#IsMacVim()
     let g:airline_left_sep = ''
     let g:airline_left_alt_sep = ''
     let g:airline_right_sep = ''

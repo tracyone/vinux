@@ -87,7 +87,7 @@ set clipboard=unnamed
 "set autochdir  "change to directory of file in buffer
 
 "statuslne
-if !exists('g:feat_enable_airline') || g:feat_enable_airline != 1
+if get(g:,'feat_enable_airline') != 1
     function! MyStatusLine(type)
         let l:mystatus_line='%<%t%m%r%h%w'
         let l:mystatus_line.="%{exists(':TagbarToggle')?\ tagbar#currenttag('[%s]','')\ :\ ''}"

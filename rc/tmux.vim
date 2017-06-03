@@ -22,7 +22,7 @@ if(!te#env#IsWindows())
         nnoremap <Leader>ui :CtrlPTmux ci<cr>
         "let g:tmuxify_custom_command = 'tmux split-window -p 20'
         let g:tmuxify_map_prefix = '<leader>u'
-        if g:complete_plugin_type ==# 'ycm' 
+        if get(g: ,'complete_plugin_type') ==# 'ycm' 
             let g:tmuxcomplete#trigger = 'omnifunc'
         endif
     endif

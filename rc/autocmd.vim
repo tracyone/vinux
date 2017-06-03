@@ -24,7 +24,7 @@ augroup filetype_group
     au BufRead,BufNewFile *.hex,*.out,*.o,*.a Vinarise
     au BufRead,BufNewFile *.fex setlocal filetype=dosini
 
-    if exists('g:feat_enable_airline') && g:feat_enable_airline != 1
+    if get(g:,'feat_enable_airline') != 1
         au BufEnter * 
                     \ if &diff |
                     \ set statusline=%!MyStatusLine(2) |

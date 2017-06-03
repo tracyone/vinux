@@ -1,7 +1,7 @@
 function! te#complete#goto_def(open_type) abort
     let l:cword=expand('<cword>')
     execute a:open_type
-    if te#env#SupportYcm() && g:complete_plugin_type ==# 'ycm' && g:feat_enable_complete
+    if te#env#SupportYcm() && get(g:, 'complete_plugin_type') ==# 'ycm' && get(g:, 'feat_enable_complete', 0)
         let l:ycm_ret=s:YcmGotoDef()
     else
         let l:ycm_ret = -1
@@ -22,7 +22,7 @@ endfunction
 
 func! s:YcmGotoDef() abort
     let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
-    if g:complete_plugin_type ==# 'ycm' 
+    if get(g:, 'complete_plugin_type') ==# 'ycm' 
         if  exists('*youcompleteme#Enable') == 0
             call te#utils#EchoWarning('Loading ycm ...')
             call plug#load('ultisnips','YouCompleteMe')

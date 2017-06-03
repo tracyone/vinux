@@ -234,7 +234,7 @@ augroup Tabpage
 augroup end
 
 function! te#utils#tab_buf_switch(num) abort
-    if exists('g:feat_enable_airline') && g:feat_enable_airline == 1
+    if get(g:, 'feat_enable_airline') == 1
         if a:num == 0
             execute 'normal '."\<Plug>AirlineSelectPrevTab"
         elseif a:num == -1

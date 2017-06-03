@@ -1,4 +1,4 @@
-if g:feat_enable_c != 1
+if get(g:, 'feat_enable_c') != 1
     :finish
 endif
 

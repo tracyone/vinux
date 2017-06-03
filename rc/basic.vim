@@ -44,7 +44,7 @@ if te#env#IsVim8() || te#env#IsNvim()
     "set grepprg=ag\ --nogroup\ --nocolor
     "set grepformat=%f:%l:%c%m
 endif
-if g:feat_enable_help == 0
+if get(g:, 'feat_enable_help') == 0
     Plug 'xolox/vim-session', {'on': ['OpenSession', 'SaveSession', 'DeleteSession']}
     Plug 'xolox/vim-misc', {'on': ['OpenSession', 'SaveSession', 'DeleteSession']}
     let g:session_autoload=0

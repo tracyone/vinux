@@ -25,7 +25,7 @@ if te#env#IsGui()
         set guifontwide=YaHei_Mono:h12.5:cGB2312
     endif
     if !te#env#IsMacVim()
-        if g:airline_powerline_fonts == 1
+        if get(g:,'airline_powerline_fonts') == 1
             set guifont=YaHei\ Consolas\ Hybrid\ 12
             set guifontwide=YaHei\ Consolas\ Hybrid\ 12
         endif
