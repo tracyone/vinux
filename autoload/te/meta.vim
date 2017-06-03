@@ -14,7 +14,7 @@ elseif te#env#IsGui() || te#env#IsNvim()
                 \,'o':'<m-o>','-':'<m-->','b':'<m-b>','f':'<m-f>','m':'<m-m>','w':'<m-w>','p':'<c-p>','n':'<c-n>'}
 endif
 
-function! te#meta#init()
+function! te#meta#init() abort
     if !te#env#IsNvim()
         if(!te#env#IsGui())
             let s:c='a'

@@ -120,7 +120,7 @@ function! te#utils#goto_cur_file(option) abort
     if a:option == 1
         execute 'cd %:h'
     elseif a:option == 2
-        execute 'cd '. fnamemodify(resolve(expand("%")), ":p:h")
+        execute 'cd '. fnamemodify(resolve(expand("%")), ':p:h')
     else
         execute 'lcd %:h'
     endif
@@ -285,7 +285,7 @@ function! te#utils#tab_buf_switch(num) abort
     endif
 endfunction
 
-function! te#utils#focus_coding()
+function! te#utils#focus_coding() abort
     if &laststatus != 0
         if te#env#IsTmux()
             call system('tmux set -g status off')

@@ -38,7 +38,7 @@ function! te#pg#cctree() abort
     endif
 endfunction
 
-function! te#pg#do_cs_tags(dir)
+function! te#pg#do_cs_tags(dir) abort
     if(te#env#IsWindows())
         let l:tagfile=a:dir.'\\'.'tags'
         let l:cscopefiles=a:dir.'\\'.'cscope.files'
