@@ -102,3 +102,7 @@ function! te#env#SupportCscope() abort
     if s:support_cscope == 2 | return 1 | endif
     return 0
 endfunction
+
+function! te#env#SupportTimer() abort
+    return has('timers')
+endfunction

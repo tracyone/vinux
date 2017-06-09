@@ -1,8 +1,16 @@
 "just for fun ...
 Plug 'itchyny/thumbnail.vim',{'on': 'Thumbnail'}
-Plug 'itchyny/screensaver.vim'
 Plug 'itchyny/calendar.vim', { 'on': 'Calendar'}
 
+" open calendar
+nnoremap <Leader>ad :Calendar<cr>
+nnoremap <Leader>ab :Thumbnail<cr>
+
+if !te#env#SupportTimer()
+    :finish
+endif
+
+Plug 'itchyny/screensaver.vim'
 
 "config ...
 function! s:fun_setting()
@@ -12,9 +20,6 @@ function! s:fun_setting()
     nnoremap <Leader>ar :call EnterScreensaver(0)<cr>
 endfunction
 call te#feat#register_vim_enter_setting(function('<SID>fun_setting'))
-" open calendar
-nnoremap <Leader>ad :Calendar<cr>
-nnoremap <Leader>ab :Thumbnail<cr>
 
 " 25 mins in pomodoro mode
 let s:expires_time=1500000
