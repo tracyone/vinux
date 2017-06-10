@@ -215,6 +215,9 @@ endfunction
 
 function! s:get_listed_buf_order_num() abort
     let l:i=1
+    if !te#env#SupportAsync()
+        return l:i
+    endif
     for l:buf in getbufinfo({'buflisted':1})
         if l:buf.name !=# expand('%:p')
             let l:i=l:i+1

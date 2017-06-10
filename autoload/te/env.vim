@@ -93,7 +93,7 @@ function! te#env#IsUnix() abort
 endfunction
 
 function! te#env#SupportAsync() abort
-    if s:is_nvim && v:version >= 800 | return 1 | endif
+    if s:is_nvim || v:version >= 800 | return 1 | endif
     return 0
 endfunction
 

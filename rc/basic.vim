@@ -175,7 +175,9 @@ nmap <leader>yr <Plug>(quickrun)
 vnoremap <leader>yr :'<,'>QuickRun<cr>
 " }}}
 " Misc {{{
-let g:love_support_option=['termguicolors']
+if te#env#SupportAsync()
+    let g:love_support_option=['termguicolors']
+endif
 " Save basic setting
 nnoremap <Leader>lo :Love<cr>
 nnoremap <Leader>sc :Neomake<cr>
