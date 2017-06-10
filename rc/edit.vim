@@ -6,7 +6,9 @@ Plug 'vim-scripts/The-NERD-Commenter'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat' "repeat enhance
 Plug 'junegunn/vim-easy-align',{'on': [ '<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)' ]}
-Plug 'osyo-manga/vim-over',{'on': 'OverCommandLine'}
+if !te#env#IsNvim()
+    Plug 'osyo-manga/vim-over',{'on': 'OverCommandLine'}
+endif
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
@@ -46,8 +48,13 @@ nmap <Leader>;; <plug>NERDCommenterComment
 nmap <Leader>cc <plug>NERDCommenterComment
 "}}}
 "replace
-nnoremap <c-h> :OverCommandLine<cr>:%s/<C-R>=expand("<cword>")<cr>/
-vnoremap <c-h> :OverCommandLine<cr>:<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>/
+if !te#env#IsNvim()
+    nnoremap <c-h> :OverCommandLine<cr>:%s/<C-R>=expand("<cword>")<cr>/
+    vnoremap <c-h> :OverCommandLine<cr>:<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>/
+else
+    nnoremap <c-h> :%s/<C-R>=expand("<cword>")<cr>/
+    vnoremap <c-h> :<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>/
+endif
 " undo tree window toggle
 nnoremap <leader>tu :UndotreeToggle<cr>
 " easyclip ------------------------{{{
