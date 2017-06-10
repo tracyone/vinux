@@ -52,7 +52,9 @@ let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_symbols.crypt = '🔒'
 
 function! s:airline_setting()
-    let g:airline_section_error = airline#section#create_right(['%{neomakemp#run_status()}'])
+    if te#env#SupportAsync()
+        let g:airline_section_error = airline#section#create_right(['%{neomakemp#run_status()}'])
+    endif
     let g:airline_section_warning='%{strftime("%m/%d\-%H:%M")}'
     if g:colors_name ==# 'PaperColor'
         :AirlineTheme gruvbox
