@@ -7,8 +7,13 @@ function! te#feat#get_vim_version() abort
     silent! execute ':version'
     redir END
     let l:result=[]
-    call add(l:result,matchstr(l:msg,'VIM - Vi IMproved\s\zs\d.\d\ze'))
-    call add(l:result, matchstr(l:msg, ':\s\d-\zs\d\{1,3\}\ze'))
+    if te#env#IsNvim()
+        call add(l:result,'nvim')
+        call add(l:result,matchstr(l:msg,'NVIM\s\zs\S\+\ze-'))
+    else
+        call add(l:result,matchstr(l:msg,'VIM - Vi IMproved\s\zs\d.\d\ze'))
+        call add(l:result, matchstr(l:msg, ':\s\d-\zs\d\{1,3\}\ze'))
+    endif
     return l:result
 endfunction
 

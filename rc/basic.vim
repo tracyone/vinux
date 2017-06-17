@@ -181,6 +181,7 @@ endif
 " Save basic setting
 nnoremap <Leader>lo :Love<cr>
 nnoremap <Leader>sc :Neomake<cr>
+nnoremap <Leader>ch :call te#utils#check_health()<cr>
 let g:neomake_open_list=2
 " }}}
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 

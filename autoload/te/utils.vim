@@ -312,3 +312,66 @@ function! te#utils#focus_coding() abort
     endif
 endfunction
 
+function! te#utils#check_health() abort
+    tabnew
+    setlocal wrap
+    setlocal filetype=markdown
+    setlocal conceallevel=2 concealcursor=nc
+    setlocal keywordprg=:help iskeyword=@,48-57,_,192-255,-,#
+    let l:output=[]
+    call add(l:output, 'Vim health info')
+    call add(l:output, '============================================')
+    let l:i=2
+    call add(l:output, 'Vim **version**: ')
+    let l:temp=te#feat#get_vim_version()
+    let l:output[l:i].=l:temp[0].' '.l:temp[1]
+
+    call add(l:output, 'Operating system: ')
+    let l:i=l:i + 1
+    if te#env#IsMac()
+        let l:output[l:i].='**MacOS**'
+    elseif te#env#IsUnix()
+        let l:output[l:i].='**Unix**'
+    elseif te#env#IsWin32()
+        let l:output[l:i].='**Windows x86**'
+    elseif te#env#IsWin64()
+        let l:output[l:i].='**Windows x86_64**'
+    endif
+
+    call add(l:output, '')
+    let l:i=l:i + 1
+
+
+    for needle in ['termguicolors', 'lua', 'perl', 'ruby', 'tcl', 
+                \ 'timers', 'python', 'python3', 'cscope', 
+                \'multi_byte', 'signs']
+        call add(l:output, printf("%s:\t", '**'.needle.'**'.' support'))
+        let l:i=l:i + 1
+        if te#env#SupportFeature(needle)
+            let l:output[l:i].='Yes'
+        else
+            let l:output[l:i].='**No**'
+        endif
+    endfor
+
+    call add(l:output, printf("%s:\t",'**job** support'))
+    let l:i=l:i + 1
+    if te#env#SupportAsync()
+        let l:output[l:i].='Yes'
+    else
+        let l:output[l:i].='**No**'
+    endif
+
+
+    call add(l:output, printf("%s:\t",'**ycm** support'))
+    let l:i=l:i + 1
+    if te#env#SupportYcm()
+        let l:output[l:i].='Yes'
+    else
+        let l:output[l:i].='**No**'
+    endif
+
+    call append('$', l:output)
+    setlocal nomodified
+    setlocal bufhidden=hide
+endfunction

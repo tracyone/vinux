@@ -106,3 +106,8 @@ endfunction
 function! te#env#SupportTimer() abort
     return has('timers')
 endfunction
+
+function! te#env#SupportFeature(feature_name) abort
+    return has(a:feature_name)
+endfunction
+
