@@ -344,7 +344,7 @@ function! te#utils#check_health() abort
 
     for needle in ['termguicolors', 'lua', 'perl', 'ruby', 'tcl', 
                 \ 'timers', 'python', 'python3', 'cscope', 
-                \'multi_byte', 'signs']
+                \'multi_byte', 'signs', 'clipboard']
         call add(l:output, printf("%s:\t", '**'.needle.'**'.' support'))
         let l:i=l:i + 1
         if te#env#SupportFeature(needle)
