@@ -78,8 +78,8 @@ if g:complete_plugin_type ==# 'ycm'
                 \ 'mail' : 1
                 \}
     let g:ycm_global_ycm_extra_conf = $VIMFILES . '/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-    let g:complete_parameter_mapping_goto_next = '<c-j>'
-    let g:complete_parameter_mapping_goto_previous = '<c-k>'
+    "let g:complete_parameter_mapping_goto_next = '<c-j>'
+    "let g:complete_parameter_mapping_goto_previous = '<c-k>'
 elseif g:complete_plugin_type ==# 'neocomplete'
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
