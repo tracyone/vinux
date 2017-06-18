@@ -1,14 +1,3 @@
-function! s:HowToRunGit(command) abort
-    call te#utils#EchoWarning(a:command)
-    if exists(':AsyncRun')
-        exec ':AsyncRun '.a:command
-    elseif exists(':NeomakeSh')
-        call neomakemp#run_command(a:command, 1)
-    else
-        exec '!'.a:command
-    endif
-endfunction
-
 " Get git repo local branch name
 " return a string which is the name of local branch name
 " return a space if no local branch found
@@ -59,7 +48,7 @@ function! te#git#GitPush(push_type) abort
         :call te#utils#EchoWarning('Get current branch name failed','err')
         return 3
     endif
-    call s:HowToRunGit('git push '.l:remote_name.' '.l:cur_br_name.':refs/'.a:push_type.'/'.l:branch_name)
+    call te#utils#run_command('git push '.l:remote_name.' '.l:cur_br_name.':refs/'.a:push_type.'/'.l:branch_name, 1)
     return 0
 endfunction
 
@@ -103,7 +92,7 @@ function! te#git#git_rebase() abort
         return 2
     endif
     let l:branch_name = input('Please input the branch name: ','','function,te#git#GetRemoteBr')
-    call s:HowToRunGit('git rebase '.l:remote_name.'/'.l:branch_name)
+    call te#utils#run_command('git rebase '.l:remote_name.'/'.l:branch_name, 1)
 endfunction
 
 function! te#git#git_merge() abort
@@ -112,6 +101,6 @@ function! te#git#git_merge() abort
         return 2
     endif
     let l:branch_name = input('which branch do you want to merge: ','','custom,te#git#GetRemoteBr')
-    call s:HowToRunGit('git fetch --all && git rebase '.l:remote_name.'/'.l:branch_name)
+    call te#utils#run_command('git fetch --all && git rebase '.l:remote_name.'/'.l:branch_name, 1)
 endfunction
 
