@@ -371,6 +371,16 @@ function! te#utils#check_health() abort
         let l:output[l:i].='**No**'
     endif
 
+    for needle in ['cscope', 'ctags', 'ag', 'rg', 'git']
+        call add(l:output, printf("%s:\t", '**'.needle.'**'.' exist'))
+        let l:i=l:i + 1
+        if te#env#Executable(needle)
+            let l:output[l:i].='Yes'
+        else
+            let l:output[l:i].='**No**'
+        endif
+    endfor
+
     call append('$', l:output)
     setlocal nomodified
     setlocal bufhidden=hide

@@ -103,6 +103,10 @@ function! te#env#SupportCscope() abort
     return 0
 endfunction
 
+function! te#env#Executable(exe) abort
+    return executable(a:exe)
+endfunction
+
 function! te#env#SupportTimer() abort
     return has('timers')
 endfunction
