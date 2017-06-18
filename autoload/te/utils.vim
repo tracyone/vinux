@@ -322,11 +322,11 @@ function! te#utils#check_health() abort
     call add(l:output, 'Vim health info')
     call add(l:output, '============================================')
     let l:i=2
-    call add(l:output, 'Vim **version**: ')
+    call add(l:output, printf("%22s:\t",'Vim version'))
     let l:temp=te#feat#get_vim_version()
     let l:output[l:i].=l:temp[0].' '.l:temp[1]
 
-    call add(l:output, 'Operating system: ')
+    call add(l:output, printf("%22s:\t",'OS'))
     let l:i=l:i + 1
     if te#env#IsMac()
         let l:output[l:i].='**MacOS**'
@@ -345,7 +345,7 @@ function! te#utils#check_health() abort
     for needle in ['termguicolors', 'lua', 'perl', 'ruby', 'tcl', 
                 \ 'timers', 'python', 'python3', 'cscope', 
                 \'multi_byte', 'signs', 'clipboard']
-        call add(l:output, printf("%s:\t", '**'.needle.'**'.' support'))
+        call add(l:output, printf("%26s:\t", '**'.needle.'**'.' support'))
         let l:i=l:i + 1
         if te#env#SupportFeature(needle)
             let l:output[l:i].='Yes'
@@ -354,7 +354,7 @@ function! te#utils#check_health() abort
         endif
     endfor
 
-    call add(l:output, printf("%s:\t",'**job** support'))
+    call add(l:output, printf("%26s:\t",'**job** support'))
     let l:i=l:i + 1
     if te#env#SupportAsync()
         let l:output[l:i].='Yes'
@@ -363,7 +363,7 @@ function! te#utils#check_health() abort
     endif
 
 
-    call add(l:output, printf("%s:\t",'**ycm** support'))
+    call add(l:output, printf("%26s:\t",'**ycm** support'))
     let l:i=l:i + 1
     if te#env#SupportYcm()
         let l:output[l:i].='Yes'
@@ -372,7 +372,7 @@ function! te#utils#check_health() abort
     endif
 
     for needle in ['cscope', 'ctags', 'ag', 'rg', 'git', 'clang']
-        call add(l:output, printf("%s:\t", '**'.needle.'**'.' exist'))
+        call add(l:output, printf("%26s:\t", '**'.needle.'**'.' exist'))
         let l:i=l:i + 1
         if te#env#Executable(needle)
             let l:output[l:i].='Yes'
@@ -383,6 +383,7 @@ function! te#utils#check_health() abort
 
     call append('$', l:output)
     setlocal nomodified
+    setlocal nomodifiable
     setlocal bufhidden=hide
 endfunction
 
