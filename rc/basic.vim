@@ -43,6 +43,11 @@ if te#env#IsVim8() || te#env#IsNvim()
     nnoremap <leader>vf :call neomakemp#global_search(expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]")<cr>
     "set grepprg=ag\ --nogroup\ --nocolor
     "set grepformat=%f:%l:%c%m
+else
+    Plug 'dyng/ctrlsf.vim'
+    nnoremap <Leader>vv :CtrlSF<cr>
+    vmap <Leader>vv <Plug>CtrlSFVwordExec
+    nmap <Leader>vs <Plug>CtrlSFPrompt
 endif
 if get(g:, 'feat_enable_help') == 0
     Plug 'xolox/vim-session', {'on': ['OpenSession', 'SaveSession', 'DeleteSession']}
