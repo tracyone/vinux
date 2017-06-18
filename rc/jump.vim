@@ -132,7 +132,7 @@ nnoremap <Leader>pc :CtrlPCmdPalette<cr>
 "CtrlP function
 nnoremap <Leader>pk :CtrlPFunky<cr>
 "CtrlP cmd
-nnoremap <Leader><Leader> :CtrlPCmdPalette<cr>
+nnoremap <Leader><Leader> :CtrlP<cr>
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 "}}}
 " Misc {{{
