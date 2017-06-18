@@ -21,7 +21,7 @@ endfunction
 function! te#pg#gen_cscope_kernel() abort
     :silent! cs kill cscope.out
     :silent! call delete('cctree.out')
-    call neomakemp#run_command('make O=. SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags', function('te#pg#add_cscope_out'),[0])
+    call te#utils#run_command('make O=. SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags', function('te#pg#add_cscope_out'),[0])
     :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
 endfunction
 
@@ -30,7 +30,7 @@ function! te#pg#cctree() abort
         :CCTreeLoadXRefDB cctree.out
     else
         if filereadable('cscope.out')
-            call neomakemp#run_command('vim +"CCTreeLoadDB cscope.out" +"CCTreeSaveXRefDB cctree.out" +qa' 
+            call te#utils#run_command('vim +"CCTreeLoadDB cscope.out" +"CCTreeSaveXRefDB cctree.out" +qa' 
                         \,function('neomakemp#SampleCallBack'),['CCTreeLoadXRefDB cctree.out'])
         else
             :call te#utils#EchoWarning('No cscope.out!Please generate cscope first.')
@@ -87,7 +87,7 @@ function! te#pg#do_cs_tags(dir) abort
         let l:generate_cscopefiles='dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.l:cscopefiles
     endif
     exec 'cd '.a:dir
-    call neomakemp#run_command(l:generate_cscopefiles.' && cscope -Rbkq -i '.l:cscopefiles, function('te#pg#add_cscope_out'),[0,a:dir])
+    call te#utils#run_command(l:generate_cscopefiles.' && cscope -Rbkq -i '.l:cscopefiles, function('te#pg#add_cscope_out'),[0,a:dir])
     cd -
     execute 'normal :'
     execute 'redraw!'
@@ -115,7 +115,7 @@ function! te#pg#do_make()
     :call te#utils#EchoWarning('making ...')
     :wa
     if empty(glob('makefile')) && empty(glob('Makefile'))
-        :call neomakemp#run_command('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
+        :call te#utils#run_command('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
                     \.fnamemodify(expand('%'),':r'),1)
         :copen
     else

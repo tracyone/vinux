@@ -385,3 +385,24 @@ function! te#utils#check_health() abort
     setlocal nomodified
     setlocal bufhidden=hide
 endfunction
+
+function! te#utils#run_command(command,...) abort
+    call te#utils#EchoWarning(a:command)
+    if exists(':AsyncRun')
+        exec ':AsyncRun '.a:command
+    elseif exists(':NeomakeSh')
+        if a:0 == 0
+            call neomakemp#run_command(a:command)
+        elseif a:0 == 1
+            call neomakemp#run_command(a:command, a:1)
+        elseif a:0 == 2
+            call neomakemp#run_command(a:command, a:1, a:2)
+        elseif a:0 == 3
+            call neomakemp#run_command(a:command, a:1, a:2, a:3)
+        else
+            call te#utils#EchoWarning('Wrong argument', 'err')
+        endif
+    else
+        exec '!'.a:command
+    endif
+endfunction
