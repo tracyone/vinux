@@ -15,3 +15,5 @@ local.vim
 .netrwhist
 org/
 .neocomplete/
+.love.vim
+.gui_love.vim
