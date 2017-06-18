@@ -117,7 +117,6 @@ function! te#pg#do_make()
     if empty(glob('makefile')) && empty(glob('Makefile'))
         :call neomakemp#run_command('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
                     \.fnamemodify(expand('%'),':r'),1)
-        :copen
     else
         call neomake#Make(0,['make'])
     endif
