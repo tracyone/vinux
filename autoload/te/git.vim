@@ -56,7 +56,7 @@ endfunction
 " get all the remote branch name into a string seperate by CR
 function! te#git#GetRemoteBr(A,L,P) abort
     let l:temp=a:A.a:L.a:P
-    let l:all_remote_name=systemlist('git branch -r')
+    let l:all_remote_name=split(system('git branch -r'), '\n')
     if empty(l:all_remote_name) == 1
         call te#utils#EchoWarning('No remote name found!')
         return 1
@@ -72,7 +72,7 @@ endfunction
 
 function! te#git#get_latest_sevral_commit(A, L, P) abort
     let l:temp=a:A.a:L.a:P
-    let g:log=systemlist('git log --abbrev-commit -6 --pretty=oneline')
+    let g:log=split(system('git log --abbrev-commit -6 --pretty=oneline'), '\n')
     if empty(g:log) == 1
         call te#utils#EchoWarning('git log failed')
         return 1
