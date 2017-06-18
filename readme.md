@@ -1,6 +1,6 @@
 # 🍎 t-vim [![Build Status](https://travis-ci.org/tracyone/t-vim.svg?branch=master)](https://travis-ci.org/tracyone/t-vim)
 
-**Yet another modular and dark power config for Vim !!**
+**倚天剑屠龙刀**
 
 ![screenshot](https://cloud.githubusercontent.com/assets/4246425/25069673/b7e5b906-22ba-11e7-95e9-21380cff710c.png)
 
