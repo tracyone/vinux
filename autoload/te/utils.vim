@@ -388,9 +388,7 @@ endfunction
 
 function! te#utils#run_command(command,...) abort
     call te#utils#EchoWarning(a:command)
-    if exists(':AsyncRun')
-        exec ':AsyncRun '.a:command
-    elseif exists(':NeomakeSh')
+    if exists(':NeomakeSh')
         if a:0 == 0
             call neomakemp#run_command(a:command)
         elseif a:0 == 1
@@ -403,6 +401,24 @@ function! te#utils#run_command(command,...) abort
             call te#utils#EchoWarning('Wrong argument', 'err')
         endif
     else
+        let l:job_info={}
+        let l:job_info.callback=''
+        let l:job_info.args=[]
+        for s:needle in a:000
+            if type(s:needle) == g:t_func
+                let l:job_info.callback=s:needle
+            elseif type(s:needle) == g:t_list
+                let l:job_info.args=s:needle
+            else
+                call te#utils#EchoWarning('Wrong argument', 'err')
+                return 0
+            endif 
+            unlet s:needle
+        endfor
         exec '!'.a:command
+        try
+            call call(l:job_info.callback, l:job_info.args)
+        catch /^Vim\%((\a\+)\)\=:E117/
+        endtry
     endif
 endfunction
