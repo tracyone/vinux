@@ -118,6 +118,11 @@ function! te#pg#do_make()
         :call te#utils#run_command('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
                     \.fnamemodify(expand('%'),':r'),1)
     else
-        call neomake#Make(0,['make'])
+        if get(g:,'feat_enable_basic') && te#env#SupportAsync()
+            call neomake#Make(0,['make'])
+        else
+            :make
+            :copen
+        endif
     endif
 endfunction

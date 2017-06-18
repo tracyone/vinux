@@ -2,7 +2,7 @@ if g:complete_plugin_type ==# 'deoplete'  && !te#env#IsNvim()
     let g:complete_plugin_type = 'ycm'
 endif
 
-if g:complete_plugin_type ==# 'ycm' 
+if g:complete_plugin_type ==# 'ycm' && te#env#SupportYcm()
     if te#env#IsUnix()
         Plug 'Valloric/YouCompleteMe', { 'on': [] }
         let g:complete_plugin_type_name='YouCompleteMe'
@@ -16,17 +16,18 @@ if g:complete_plugin_type ==# 'ycm'
     Plug 'tenfyzhong/CompleteParameter.vim'
 elseif g:complete_plugin_type ==# 'clang_complete'
     Plug 'Rip-Rip/clang_complete'
-elseif g:complete_plugin_type ==# 'completor.vim'
+elseif g:complete_plugin_type ==# 'completor.vim' && te#env#IsVim8()
     Plug 'maralla/completor.vim'
-elseif g:complete_plugin_type ==# 'neocomplete' 
+elseif g:complete_plugin_type ==# 'neocomplete' && te#env#SupportFeature('lua')
     Plug 'Shougo/neocomplete'
     Plug 'tracyone/dict'
     Plug 'Konfekt/FastFold'
-elseif g:complete_plugin_type ==# 'deoplete' 
+elseif g:complete_plugin_type ==# 'deoplete'  && te#env#IsNvim()
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'zchee/deoplete-clang'
 else
     call te#utils#EchoWarning('No complete plugin selected!')
+    let g:complete_plugin_type=''
 endif
 
 " Complete ------------------------{{{
@@ -211,7 +212,7 @@ elseif g:complete_plugin_type ==# 'deoplete'
 endif
 "}}}
 " UltiSnips -----------------------{{{
-if  te#env#SupportPy()
+if  te#env#SupportPy2()
     let g:UltiSnipsUsePythonVersion = 2
 else
     let g:UltiSnipsUsePythonVersion = 3 
