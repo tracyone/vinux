@@ -31,14 +31,21 @@ endif
 
 let &rtp=&rtp.','.$VIMFILES
 if empty(glob($VIMFILES.'/autoload/plug.vim'))
-    if te#env#IsWindows()
-        silent! exec ':!mkdir -p '.$VIMFILES.'\\autoload'
-        silent! exec ':!curl -fLo ' . $VIMFILES.'\\autoload'.'\\plug.vim ' .
-                    \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    if te#env#Executable('curl') && te#env#Executable('git')
+        if te#env#IsWindows()
+            silent! exec ':!mkdir -p '.$VIMFILES.'\\autoload'
+            silent! exec ':!curl -fLo ' . $VIMFILES.'\\autoload'.'\\plug.vim ' .
+                        \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        else
+            silent! exec ':!mkdir -p '.$VIMFILES.'/autoload'
+            silent! exec ':!curl -fLo ' . $VIMFILES.'/autoload'.'/plug.vim ' .
+                        \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        endif
     else
-        silent! exec ':!mkdir -p '.$VIMFILES.'/autoload'
-        silent! exec ':!curl -fLo ' . $VIMFILES.'/autoload'.'/plug.vim ' .
-                    \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        call te#utils#EchoWarning('Please install curl and git!', 1)
+        filetype plugin indent on
+        syntax on
+        :finish
     endif
 endif
 silent! call plug#begin($VIMFILES.'/bundle')
@@ -63,6 +70,7 @@ call te#feat#feat_enable('g:feat_enable_writing', 0)
 call te#feat#feat_enable('g:feat_enable_fun', 0)
 call te#feat#feat_enable('g:enable_auto_plugin_install', 1)
 call te#feat#register_vim_enter_setting(function('te#feat#check_plugin_install'))
+call te#feat#register_vim_enter_setting(function('te#utils#echo_info_after'))
 
 if !filereadable($VIMFILES.'/feature.vim')
     call te#feat#gen_feature_vim()

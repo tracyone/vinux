@@ -19,26 +19,46 @@ function! te#utils#GetError(command,err_str) abort
 endfunction
 
 
+let s:global_echo_str=[]
 "echo warning messag
-"a:0-->err or warn or info,default is warn
+"a:1-->err or warn or info,default is warn
+"a:2-->flag of VimEnter,0 or 1
 func! te#utils#EchoWarning(str,...) abort
     redraw!
     let l:level='WarningMsg'
     let l:prompt='warn'
-    if a:0 == 1
-        let l:prompt = a:1
-        if a:1 ==? 'err'
-            let l:level='ErrorMsg'
-        elseif a:1 ==? 'warn'
-            let l:level='WarningMsg'
-        elseif a:1 ==? 'info'
-            let l:level='None'
-        endif
+    let l:flag=0
+    if a:0 != 0
+        for s:needle in a:000
+            if type(s:needle) == g:t_string
+                let l:prompt = s:needle
+                if s:needle ==? 'err'
+                    let l:level='ErrorMsg'
+                elseif s:needle ==? 'warn'
+                    let l:level='WarningMsg'
+                elseif s:needle ==? 'info'
+                    let l:level='None'
+                endif
+            elseif type(s:needle) == g:t_number
+                let l:flag=s:needle
+            endif
+        endfor
     endif
-    execut 'echohl '.l:level | echo '['.l:prompt.'] '.a:str | echohl None
+    if l:flag == 0
+        execut 'echohl '.l:level | echom '['.l:prompt.'] '.a:str | echohl None
+    else
+        call add(s:global_echo_str, a:str)
+    endif
 endfunc
 
-
+function! te#utils#echo_info_after()
+    if !empty(s:global_echo_str)
+        for l:needle in s:global_echo_str
+            call te#utils#EchoWarning(l:needle, 'err')
+        endfor
+        let s:global_echo_str=[]
+    endif
+endfunction
 " save files in every condition
 function! te#utils#SaveFiles() abort
     try 
