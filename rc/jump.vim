@@ -18,6 +18,8 @@ endif
 Plug 'ronakg/quickr-preview.vim'
 autocmd filetype_group FileType qf nmap <buffer> <down> <down><plug>(quickr_preview)
 autocmd filetype_group FileType qf nmap <buffer> <up> <up><plug>(quickr_preview)
+let g:quickr_preview_keymaps = 0
+autocmd filetype_group FileType qf nmap <buffer> <Space><Space>  <plug>(quickr_preview)
 " }}}
 " Matchit.vim {{{
 "extend %
