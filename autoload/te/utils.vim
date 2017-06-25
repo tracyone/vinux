@@ -371,7 +371,7 @@ function! te#utils#check_health() abort
         let l:output[l:i].='**No**'
     endif
 
-    for needle in ['cscope', 'ctags', 'ag', 'rg', 'git', 'clang']
+    for needle in ['cscope', 'ctags', 'ag', 'rg', 'git', 'clang', 'curl']
         call add(l:output, printf("%26s:\t", '**'.needle.'**'.' exist'))
         let l:i=l:i + 1
         if te#env#Executable(needle)
