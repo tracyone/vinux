@@ -141,6 +141,9 @@ function! te#feat#run_vim_enter_setting() abort
 endfunction
 
 function! te#feat#check_plugin_install() abort
+    if !get(g:,'enable_auto_plugin_install')
+        return
+    endif
     if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
         call te#utils#EchoWarning('Install the missing plugins!')
         PlugInstall --sync | q
