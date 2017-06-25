@@ -43,9 +43,6 @@ if empty(glob($VIMFILES.'/autoload/plug.vim'))
         endif
     else
         call te#utils#EchoWarning('Please install curl and git!', 1)
-        filetype plugin indent on
-        syntax on
-        :finish
     endif
 endif
 silent! call plug#begin($VIMFILES.'/bundle')
@@ -82,7 +79,7 @@ endif
 
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
-call plug#end()
+silent! call plug#end()
 
 try 
     colorscheme jellybeans "default setting 

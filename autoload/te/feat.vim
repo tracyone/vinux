@@ -118,9 +118,12 @@ function! te#feat#feat_enable(var, default) abort
         execute 'let '.a:var.'='.l:val
         let s:feature_dict[a:var]=l:val
     endif
-  if eval(a:var) != 0 && matchstr(a:var, 'g:feat_enable_') !=# ''
-      call te#feat#source_rc(matchstr(a:var,'_\zs[^_]*\ze$').'.vim')
-  endif
+    if !exists(':Plug')
+        return
+    endif
+    if eval(a:var) != 0 && matchstr(a:var, 'g:feat_enable_') !=# ''
+        call te#feat#source_rc(matchstr(a:var,'_\zs[^_]*\ze$').'.vim')
+    endif
 endfunction
 
 let s:plugin_func_list=[]
@@ -142,6 +145,9 @@ endfunction
 
 function! te#feat#check_plugin_install() abort
     if !get(g:,'enable_auto_plugin_install')
+        return
+    endif
+    if !exists(':Plug')
         return
     endif
     if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
