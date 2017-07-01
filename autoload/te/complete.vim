@@ -72,3 +72,20 @@ function! te#complete#vim_complete( findstart, base ) abort
     return necovim#gather_candidates( line_prefix . a:base, a:base )
   endif
 endfunction
+
+function! te#complete#update_ycm() abort
+    execute 'cd '.$VIMFILES.'/bundle/'.'YouCompleteMe'
+    if !isdirectory($VIMFILES.'/bundle/'.'YouCompleteMe')
+        return
+    endif
+    let l:update_command='git submodule update --remote --merge && git pull origin master' 
+    if te#env#IsMac()
+        let l:update_command.=' && ./install.py --system-libclang --clang-completer'
+    elseif te#env#IsUnix()
+        let l:update_command.=' && ./install.py --clang-completer'
+    else
+        call te#utils#EchoWarning('Current OS is not support','err')
+        return
+    endif
+        call te#utils#run_command(l:update_command)
+endfunction
