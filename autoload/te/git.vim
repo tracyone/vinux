@@ -105,10 +105,19 @@ function! te#git#git_merge() abort
 endfunction
 
 "archive my vim config using git archive.
-function! te#git#archive_my_vim_cfg() abort
+function! te#git#archive_my_vim_cfg(git_dir, out_name) abort
     let l:cur_dir=getcwd()
-    execute 'cd '.$VIMFILES
-    call te#utils#run_command('git archive --format=tar.gz HEAD -o '.l:cur_dir.'/vim_config.tar.gz')
-    call te#utils#EchoWarning('Creating '.l:cur_dir.'/vim_config.tar.gz ...')
+    execute 'cd '.a:git_dir
+    if !isdirectory('.git')
+        call te#utils#EchoWarning('Not a git repo!', 'err')
+        return
+    endif
+    if a:out_name ==# ''
+        let l:out_name=fnamemodify(getcwd(), ':t').'.zip'
+    else
+        let l:out_name=a:out_name.'.zip'
+    endif
+    call te#utils#run_command('git archive --format=zip HEAD -o '.l:cur_dir.'/'.l:out_name)
+    call te#utils#EchoWarning('Creating '.l:cur_dir.'/'.l:out_name.' ...')
 endfunction
 
