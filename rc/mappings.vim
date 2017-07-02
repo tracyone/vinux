@@ -259,6 +259,9 @@ nnoremap <Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
 " feature disable
 nnoremap <Leader>fd :call te#feat#feat_dyn_enable(0)<cr>
 
+" cd to any plugin directory
+nnoremap <Leader>CP :call te#utils#cd_to_plugin()<cr>
+
 if te#env#IsNvim()
     "terminal-emulator setting
     execute 'tnoremap <Esc> <C-\><C-n>'

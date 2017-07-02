@@ -443,3 +443,25 @@ function! te#utils#run_command(command,...) abort
         endtry
     endif
 endfunction
+
+function! te#utils#get_plugin_name(A,L,P) abort
+    let l:temp=a:A.a:L.a:P
+    let l:result=l:temp 
+    let l:result=''
+    let l:dir = split(system('ls -d */'), '/')
+    for l:str in l:dir
+        let l:result.=l:str
+    endfor
+    return l:result
+endfunction
+
+function! te#utils#cd_to_plugin()
+    execute 'cd '.$VIMFILES.'/bundle'
+    let l:plugin_name = input('Please input the plugin name: ','','custom,te#utils#get_plugin_name')
+    if !isdirectory(l:plugin_name)
+        call te#utils#EchoWarning(l:plugin_name.' not found','err')
+        return
+    endif
+    execute 'cd '.l:plugin_name 
+    call te#utils#EchoWarning('cd to '.l:plugin_name)
+endfunction
