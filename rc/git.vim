@@ -27,6 +27,8 @@ nnoremap <Leader>gi :silent! Gissue<cr>
 nnoremap <Leader>ga :silent! Giadd<cr>
 " git merge
 nnoremap <Leader>gm :call te#git#git_merge()<cr>
+" arhcive vim config.
+nnoremap <leader>gA :call te#git#archive_my_vim_cfg()<cr>
 " git cd
 nnoremap <Leader>gc :Gcd<cr>
 let g:gissues_lazy_load = 1

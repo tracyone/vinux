@@ -104,3 +104,11 @@ function! te#git#git_merge() abort
     call te#utils#run_command('git fetch --all && git rebase '.l:remote_name.'/'.l:branch_name, 1)
 endfunction
 
+"archive my vim config using git archive.
+function! te#git#archive_my_vim_cfg() abort
+    let l:cur_dir=getcwd()
+    execute 'cd '.$VIMFILES
+    call te#utils#run_command('git archive --format=tar.gz HEAD -o '.l:cur_dir.'/vim_config.tar.gz')
+    call te#utils#EchoWarning('Creating '.l:cur_dir.'/vim_config.tar.gz ...')
+endfunction
+
