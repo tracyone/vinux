@@ -60,19 +60,6 @@ function! s:get_input() abort
   return line
 endfunction
 
-function! te#complete#vim_complete( findstart, base ) abort
-  let line_prefix = s:get_input()
-  if a:findstart
-    let ret = necovim#get_complete_position( line_prefix )
-    if ret < 0
-      return col( '.' ) " default to current
-    endif
-    return ret
-  else
-    return necovim#gather_candidates( line_prefix . a:base, a:base )
-  endif
-endfunction
-
 function! te#complete#update_ycm() abort
     execute 'cd '.$VIMFILES.'/bundle/'.'YouCompleteMe'
     if !isdirectory($VIMFILES.'/bundle/'.'YouCompleteMe')
