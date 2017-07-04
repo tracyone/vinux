@@ -257,6 +257,12 @@ augroup Tabpage
 augroup end
 
 function! te#utils#tab_buf_switch(num) abort
+    if a:num == 0 || a:num == -1
+        let l:ret = getbufinfo({'buflisted':1})
+        if empty(l:ret)
+            return
+        endif
+    endif
     if get(g:, 'feat_enable_airline') == 1
         if a:num == 0
             execute 'normal '."\<Plug>AirlineSelectPrevTab"
