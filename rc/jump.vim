@@ -42,6 +42,7 @@ nmap <Leader>jt <Plug>(easymotion-tn)
 nmap <Leader>jl <Plug>(easymotion-overwin-line)
 " MultiWindow easymotion for char
 nmap <Leader>jj <Plug>(easymotion-overwin-f)
+map <LocalLeader><LocalLeader> <Plug>(easymotion-prefix)
 
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_show_prompt = 0
