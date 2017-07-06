@@ -56,17 +56,17 @@ if g:complete_plugin_type ==# 'ycm'
     nnoremap <leader>yf :YcmCompleter FixIt<cr>
     nnoremap <Leader>yu :call te#complete#update_ycm()<cr>
     let g:ycm_key_detailed_diagnostics = '<leader>ys'
+    let g:ycm_key_invoke_completion = '<leader><tab>'
     let g:ycm_autoclose_preview_window_after_insertion = 1
     let g:ycm_complete_in_comments = 1
     let g:ycm_confirm_extra_conf=0
     let g:syntastic_always_populate_loc_list = 1
-    let g:ycm_key_invoke_completion = '<C-Space>'
     let g:ycm_semantic_triggers = {
                 \   'c' : ['->', '    ', '.', ' ', '(', '[', '&', 're!\w{4}'],
                 \     'cpp,objcpp' : ['->', '.', ' ', '(', '[', '&', '::'],
                 \     'perl' : ['->', '::', ' '],
                 \     'php' : ['->', '::', '.'],
-                \     'cs,java,javascript,d,vim,python,perl6,scala,vb,elixir,go' : ['.'],
+                \     'cs,java,javascript,d,vim,perl6,scala,vb,elixir,go' : ['.'],
                 \     'ruby' : ['.', '::'],
                 \     'lua' : ['.', ':'],
                 \     'vim' : ['$', '&', 're![\w&$<-][\w:#<>-]*']
@@ -74,7 +74,10 @@ if g:complete_plugin_type ==# 'ycm'
 	let g:ycm_semantic_triggers.tex = [
 				\ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
 				\ ]
-	let g:ycm_semantic_triggers.php = ['->', '::', '(', 'use ', 'namespace ', '\', '$']
+	let g:ycm_semantic_triggers.php = ['->', '::', '(', 'use ', 'namespace ', '\', '$', 're!\w{3}']
+    let g:ycm_semantic_triggers.html = ['<', '"', '</', ' ']
+    let g:ycm_semantic_triggers.python=['.', 'import ', 're!import [,\w ]+, ']
+
     let g:ycm_collect_identifiers_from_tag_files = 1
     let g:ycm_filetype_blacklist = {
                 \ 'tagbar' : 1,
