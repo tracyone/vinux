@@ -62,7 +62,7 @@ if g:complete_plugin_type ==# 'ycm'
     let g:syntastic_always_populate_loc_list = 1
     let g:ycm_key_invoke_completion = '<C-Space>'
     let g:ycm_semantic_triggers = {
-                \   'c' : ['->', '    ', '.', ' ', '(', '[', '&'],
+                \   'c' : ['->', '    ', '.', ' ', '(', '[', '&', 're!\w{4}'],
                 \     'cpp,objcpp' : ['->', '.', ' ', '(', '[', '&', '::'],
                 \     'perl' : ['->', '::', ' '],
                 \     'php' : ['->', '::', '.'],
@@ -71,7 +71,10 @@ if g:complete_plugin_type ==# 'ycm'
                 \     'lua' : ['.', ':'],
                 \     'vim' : ['$', '&', 're![\w&$<-][\w:#<>-]*']
                 \ }
-
+	let g:ycm_semantic_triggers.tex = [
+				\ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
+				\ ]
+	let g:ycm_semantic_triggers.php = ['->', '::', '(', 'use ', 'namespace ', '\', '$']
     let g:ycm_collect_identifiers_from_tag_files = 1
     let g:ycm_filetype_blacklist = {
                 \ 'tagbar' : 1,
@@ -86,8 +89,6 @@ if g:complete_plugin_type ==# 'ycm'
                 \ 'mail' : 1
                 \}
     let g:ycm_global_ycm_extra_conf = $VIMFILES . '/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-    "let g:complete_parameter_mapping_goto_next = '<c-j>'
-    "let g:complete_parameter_mapping_goto_previous = '<c-k>'
 elseif g:complete_plugin_type ==# 'neocomplete'
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
