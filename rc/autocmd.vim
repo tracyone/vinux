@@ -38,5 +38,8 @@ augroup filetype_group
     autocmd FileType qfreplace setlocal nofoldenable | nmap <buffer> q :bdelete<cr>
     autocmd FileType gitcommit setlocal nofoldenable cursorline
 augroup END
+if te#env#IsNvim()
+    au misc_group TermOpen * setlocal nonu signcolumn=no
+endif
 
 
