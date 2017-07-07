@@ -78,7 +78,7 @@ set selection=inclusive  ""old", "inclusive" or "exclusive"; how selecting text 
 set is  "show match for partly typed search command
 "set lbr "wrap long lines at a character in 'breakat'
 set backspace=indent,eol,start  "specifies what <BS>, CTRL-W, etc. can do in Insert mode
-set whichwrap=b,h,l,<,>  "list of menu_flags specifying which commands wrap to another line
+set whichwrap=b,h,l,<,>,[,]  "list of menu_flags specifying which commands wrap to another line
 set mouse=a "list of menu_flags for using the mouse,support all
 
 "unnamed" to use the * register like unnamed register
