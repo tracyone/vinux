@@ -161,6 +161,7 @@ nnoremap <Leader>bp :call te#utils#tab_buf_switch(0)<cr>
 nnoremap <Leader>bk :bdelete<cr>
 " save file
 nnoremap <Leader>fs :call te#utils#SaveFiles()<cr>
+nnoremap <Leader>ff :call te#utils#SaveFiles()<cr>
 " save all
 nnoremap <Leader>fS :wa<cr>
 " manpage or vimhelp on current curosr word

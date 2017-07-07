@@ -56,7 +56,6 @@ if g:complete_plugin_type ==# 'ycm'
     nnoremap <leader>yf :YcmCompleter FixIt<cr>
     nnoremap <Leader>yu :call te#complete#update_ycm()<cr>
     let g:ycm_key_detailed_diagnostics = '<leader>ys'
-    let g:ycm_key_invoke_completion = '<leader><tab>'
     let g:ycm_autoclose_preview_window_after_insertion = 1
     let g:ycm_complete_in_comments = 1
     let g:ycm_confirm_extra_conf=0
