@@ -16,3 +16,5 @@ nnoremap <silent> <plug>(help-prev-tag)
 
 nmap <buffer> ]g <Plug>(help-next-tag)
 nmap <buffer> [g <Plug>(help-prev-tag)
+nnoremap <buffer> d <c-d>
+nnoremap <buffer> u <c-u>
