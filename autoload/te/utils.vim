@@ -398,7 +398,7 @@ function! te#utils#check_health() abort
     endif
 
     for needle in ['cscope', 'ctags', 'ag', 'rg', 'git', 
-                \ 'clang', 'curl', 'bear']
+                \ 'clang', 'curl', 'bear', 'pbcopy', 'xsel', 'xclip']
         call add(l:output, printf("%26s:\t", '**'.needle.'**'.' exist'))
         let l:i=l:i + 1
         if te#env#Executable(needle)

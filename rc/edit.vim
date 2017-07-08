@@ -8,11 +8,11 @@ Plug 'tpope/vim-repeat' "repeat enhance
 Plug 'junegunn/vim-easy-align',{'on': [ '<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)' ]}
 if !te#env#IsNvim()
     Plug 'osyo-manga/vim-over',{'on': 'OverCommandLine'}
+    Plug 'tracyone/vim-easyclip'
 endif
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
-Plug 'tracyone/vim-easyclip'
 Plug 'tweekmonster/spellrotate.vim', {'on': ['<Plug>(SpellRotateForward)']}
 nmap <silent> <leader>zn <Plug>(SpellRotateForward)
 nmap <silent> <leader>zp <Plug>(SpellRotateBackward)
