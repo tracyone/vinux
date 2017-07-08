@@ -160,8 +160,13 @@ generate_dot_localvim(){
         touch "$dot_localvim"
         (
         cat <<DOTSPACEVIM
+"system level init
+function! TVIM_pre_init()
+"let g:t_vim_plugin_install_path=$VIMFILES.'/bundle/'
+endfunction
+
 "Add you extra config here
-function! ExtraInit()
+function! TVIM_user_init()
 "set nonu
 "set nornu
 "colorscheme jellybeans
@@ -170,7 +175,7 @@ function! ExtraInit()
 endfunction
 
 "Add you extra favorite plugin here
-function! ExtraPlugin()
+function! TVIM_plug_init()
 "Plug 'someone/something'
 endfunction
 

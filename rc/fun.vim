@@ -1,6 +1,8 @@
 "just for fun ...
 Plug 'itchyny/thumbnail.vim',{'on': 'Thumbnail'}
 Plug 'itchyny/calendar.vim', { 'on': 'Calendar'}
+Plug 'johngrib/vim-game-code-break', {'on': 'VimGameCodeBreak'}
+
 
 " open calendar
 nnoremap <Leader>ad :Calendar<cr>

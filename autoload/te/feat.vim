@@ -39,12 +39,21 @@ function! te#feat#gen_feature_vim() abort
     let l:t_vim_version=system('git describe')
     let l:temp=te#feat#get_vim_version()
     if v:shell_error != 0
-	    let l:t_vim_version='V1.1.5'.'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
+	    let l:t_vim_version='V1.1.6'.'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
     else
         let l:t_vim_version=split(l:t_vim_version, '\n')[-1].'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
     endif
     let g:t_vim_version=string(l:t_vim_version)
     call writefile(['let g:t_vim_version='.string(l:t_vim_version)], $VIMFILES.'/feature.vim', 'a')
+endfunction
+
+function! te#feat#gen_local_vim() abort
+    call writefile(['function! TVIM_pre_init()'], $VIMFILES.'/local.vim')
+    call writefile(['endfunction'], $VIMFILES.'/local.vim', 'a')
+    call writefile(['function! TVIM_user_init()'], $VIMFILES.'/local.vim', 'a')
+    call writefile(['endfunction'], $VIMFILES.'/local.vim', 'a')
+    call writefile(['function! TVIM_plug_init()'], $VIMFILES.'/local.vim', 'a')
+    call writefile(['endfunction'], $VIMFILES.'/local.vim', 'a')
 endfunction
 
 function! te#feat#feat_dyn_enable(en) abort

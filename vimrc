@@ -27,6 +27,8 @@ endif
 "user custom config file
 if filereadable($VIMFILES.'/local.vim')
     execute ':source '.$VIMFILES.'/local.vim'
+else
+    call te#feat#gen_local_vim()
 endif
 
 if exists('*TVIM_pre_init')
@@ -94,8 +96,8 @@ if !filereadable($VIMFILES.'/feature.vim')
     call te#feat#gen_feature_vim()
 endif
 
-if exists('*ExtraPlugin')
-    call ExtraPlugin()
+if exists('*TVIM_plug_init')
+    call TVIM_plug_init()
 endif
 
 " Open plug status windows
@@ -108,8 +110,8 @@ catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme desert "default setting 
 endtry
 
-if exists('*ExtraInit')
-    call ExtraInit()
+if exists('*TVIM_user_init')
+    call TVIM_user_init()
 endif
 
 filetype plugin indent on
