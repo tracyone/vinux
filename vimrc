@@ -29,6 +29,27 @@ if filereadable($VIMFILES.'/local.vim')
     execute ':source '.$VIMFILES.'/local.vim'
 endif
 
+if exists('*TVIM_pre_init')
+    call TVIM_pre_init()
+endif
+
+if exists('g:t_vim_plugin_install_path')
+    if type(g:t_vim_plugin_install_path) ==# g:t_string
+        if !isdirectory(g:t_vim_plugin_install_path)
+            silent! call mkdir(g:t_vim_plugin_install_path, 'p')
+            if !isdirectory(g:t_vim_plugin_install_path)
+                call te#utils#EchoWarning('Create '.g:t_vim_plugin_install_path.' fail!', 'err', 1)
+                let g:t_vim_plugin_install_path=$VIMFILES.'/bundle/'
+            endif
+        endif
+    else
+        call te#utils#EchoWarning('g:t_vim_plugin_install_path must be a string !', 'err', 1)
+        let g:t_vim_plugin_install_path=$VIMFILES.'/bundle/'
+    endif
+else
+    let g:t_vim_plugin_install_path=$VIMFILES.'/bundle/'
+endif
+
 let &rtp=&rtp.','.$VIMFILES
 if empty(glob($VIMFILES.'/autoload/plug.vim'))
     if te#env#Executable('curl') && te#env#Executable('git')
@@ -45,7 +66,7 @@ if empty(glob($VIMFILES.'/autoload/plug.vim'))
         call te#utils#EchoWarning('Please install curl and git!', 1)
     endif
 endif
-silent! call plug#begin($VIMFILES.'/bundle')
+silent! call plug#begin(g:t_vim_plugin_install_path)
 
 call te#feat#feat_enable('g:complete_plugin_type','ycm')
 call te#feat#feat_enable('g:feat_enable_complete', 0)

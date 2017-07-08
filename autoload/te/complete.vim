@@ -61,8 +61,8 @@ function! s:get_input() abort
 endfunction
 
 function! te#complete#update_ycm() abort
-    execute 'cd '.$VIMFILES.'/bundle/'.'YouCompleteMe'
-    if !isdirectory($VIMFILES.'/bundle/'.'YouCompleteMe')
+    execute 'cd '.g:t_vim_plugin_install_path.'/YouCompleteMe'
+    if !isdirectory(g:t_vim_plugin_install_path.'/YouCompleteMe')
         return
     endif
     let l:update_command='git submodule update --remote --merge && git pull origin master' 

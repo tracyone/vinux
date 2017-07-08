@@ -90,7 +90,7 @@ if g:complete_plugin_type ==# 'ycm'
                 \ 'infolog' : 1,
                 \ 'mail' : 1
                 \}
-    let g:ycm_global_ycm_extra_conf = $VIMFILES . '/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf = g:t_vim_plugin_install_path.'/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 elseif g:complete_plugin_type ==# 'neocomplete'
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
@@ -105,14 +105,14 @@ elseif g:complete_plugin_type ==# 'neocomplete'
     " Define dictionary.
     let g:neocomplete#sources#dictionary#dictionaries = {
                 \ 'default' : '',
-                \ 'cpp' : $VIMFILES.'/bundle/dict/cpp.dict',
-                \ 'html' : $VIMFILES.'/bundle/dict/html.dict',
-                \ 'c' : $VIMFILES.'/bundle/dict/c.dict',
-                \ 'sh' : $VIMFILES.'/bundle/dict/bash.dict',
-                \ 'dosbatch' : $VIMFILES.'/bundle/dict/batch.dict',
-                \ 'tex' : $VIMFILES.'/bundle/dict/latex.dict',
-                \ 'vim' : $VIMFILES.'/bundle/dict/vim.dict.txt',
-                \ 'verilog' : $VIMFILES.'/bundle/dict/verilog.dict'
+                \ 'cpp' : g:t_vim_plugin_install_path.'/dict/cpp.dict',
+                \ 'html' : g:t_vim_plugin_install_path.'/dict/html.dict',
+                \ 'c' : g:t_vim_plugin_install_path.'/dict/c.dict',
+                \ 'sh' : g:t_vim_plugin_install_path.'/dict/bash.dict',
+                \ 'dosbatch' : g:t_vim_plugin_install_path.'/dict/batch.dict',
+                \ 'tex' : g:t_vim_plugin_install_path.'/dict/latex.dict',
+                \ 'vim' : g:t_vim_plugin_install_path.'/dict/vim.dict.txt',
+                \ 'verilog' : g:t_vim_plugin_install_path.'/dict/verilog.dict'
                 \ }
 
     " Define keyword.
@@ -232,5 +232,5 @@ let g:UltiSnipsListSnippets ='<c-tab>'
 let g:UltiSnipsJumpForwardTrigge='<c-j>'
 let g:UltiSnipsJumpBackwardTrigge='<c-k>'
 let g:UltiSnipsSnippetDirectories=['bundle/snippets']
-let g:UltiSnipsSnippetsDir=$VIMFILES.'/bundle/snippets'
+let g:UltiSnipsSnippetsDir=g:t_vim_plugin_install_path.'/snippets'
 "}}}

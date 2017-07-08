@@ -463,7 +463,7 @@ function! te#utils#get_plugin_name(A,L,P) abort
 endfunction
 
 function! te#utils#cd_to_plugin()
-    execute 'cd '.$VIMFILES.'/bundle'
+    execute 'cd '.g:t_vim_plugin_install_path
     let l:plugin_name = input('Please input the plugin name: ','','custom,te#utils#get_plugin_name')
     if !isdirectory(l:plugin_name)
         call te#utils#EchoWarning(l:plugin_name.' not found','err')
