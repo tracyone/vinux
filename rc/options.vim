@@ -195,6 +195,7 @@ function! MyFoldText()
     return sub . info
 endfunction
 set foldtext=MyFoldText()
+nmap s <Sop>
 nnoremap sj za
 vnoremap sf zf
 nnoremap sk zM
