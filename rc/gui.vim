@@ -24,10 +24,13 @@ if te#env#IsGui()
         set guifont=Monaco:h12:cANSI
         set guifontwide=YaHei_Mono:h12.5:cGB2312
     endif
-    if !te#env#IsMacVim()
-        if get(g:,'airline_powerline_fonts') == 1
+    if get(g:,'airline_powerline_fonts') == 1
+        if !te#env#IsMacVim()
             set guifont=YaHei\ Consolas\ Hybrid\ 12
             set guifontwide=YaHei\ Consolas\ Hybrid\ 12
+        else
+            set guifont=YaHei\ Consolas\ Hybrid:h14
+            set guifontwide=YaHei\ Consolas\ Hybrid:h14
         endif
     endif
     au misc_group GUIEnter * call s:MaximizeWindow()
