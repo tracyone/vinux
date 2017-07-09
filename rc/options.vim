@@ -28,6 +28,9 @@ scriptencoding utf-8
 "list candidate word in statusline
 set wildmenu
 set wildmode=longest,full
+set wildignore=*.swp,*.bak
+set wildignore+=*.min.*,*.css.map
+set wildignore+=*.jpg,*.png,*.gif
 set wic
 "set list  "display unprintable characters by set list
 set listchars=tab:\|\ ,trail:-  "Strings to use in 'list' mode and for the |:list| command
