@@ -130,6 +130,7 @@ if(!te#env#IsNvim())
 endif
 
 function! VimShellPop()
+    " 38% height of current window
     let l:line=(38*&lines)/100
     if  l:line < 10 | let l:line = 10 |endif
     execute 'rightbelow '.l:line.'split'
