@@ -20,6 +20,20 @@ function! te#complete#goto_def(open_type) abort
     return 0
 endfunction
 
+function! te#complete#vim_complete( findstart, base ) abort
+  let line_prefix = s:get_input()
+  if a:findstart
+    let ret = necovim#get_complete_position( line_prefix )
+    if ret < 0
+      return col( '.' ) " default to current
+    endif
+    return ret
+  else
+    return necovim#gather_candidates( line_prefix . a:base, a:base )
+  endif
+endfunction
+
+
 func! s:YcmGotoDef() abort
     let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
     if get(g:, 'complete_plugin_type') ==# 'ycm' 

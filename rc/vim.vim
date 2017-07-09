@@ -1,3 +1,5 @@
 Plug 'mhinz/vim-lookup', {'for': 'vim'}
-Plug 'kyuhi/vim-vimlcmpl'
+Plug 'Shougo/neco-vim'
 Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'}
+
+autocmd FileType vim setlocal omnifunc=te#complete#vim_complete
