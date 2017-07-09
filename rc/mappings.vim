@@ -259,6 +259,8 @@ nnoremap <Leader>tl :call te#utils#OptionToggle('termguicolors',[1,0])<cr>
 nnoremap <Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
 " feature disable
 nnoremap <Leader>fd :call te#feat#feat_dyn_enable(0)<cr>
+" feature update
+nnoremap <Leader>fu :call te#feat#gen_feature_vim()<cr>
 
 " cd to any plugin directory
 nnoremap <Leader>cp :call te#utils#cd_to_plugin()<cr>
