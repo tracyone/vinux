@@ -98,7 +98,7 @@ if(!te#env#IsNvim())
         au FileType vimshell,neoman setlocal nonu nornu
         au FileType vimshell :imap <buffer> <c-d> <Plug>(vimshell_exit)
         au FileType vimshell :imap <buffer> <c-j> <Plug>(vimshell_enter)
-        au Filetype vimshell  setlocal completefunc=vimshell#complete#omnifunc omnifunc=vimshell#complete#omnifunc
+        au Filetype vimshell  setlocal completefunc=vimshell#complete#omnifunc omnifunc=vimshell#complete#omnifunc buftype=
         autocmd FileType vimshell
                     \ call vimshell#altercmd#define('g', 'git')
                     \| call vimshell#altercmd#define('i', 'iexe')
@@ -126,12 +126,16 @@ function! VimShellPop()
     " 38% height of current window
     let l:line=(38*&lines)/100
     if  l:line < 10 | let l:line = 10 |endif
-    execute 'rightbelow '.l:line.'split'
+    if bufexists(expand('%')) && &filetype !=# 'startify'
+        execute 'rightbelow '.l:line.'split'
+    endif
     if te#env#IsNvim() | execute 'terminal' | else | execute 'VimShell' | endif
 endfunction
 noremap <F4> :call VimShellPop()<cr>
 " Open vimshell or neovim's emulator
 nnoremap <Leader>as :call VimShellPop()<cr>
+" Open vimshell or neovim's emulator in new tab
+nnoremap <Leader>ns :tabnew<cr>:call VimShellPop()<cr>
 "}}}
 " Nerdtree {{{
 let g:NERDTreeShowLineNumbers=0	"don't show line number
