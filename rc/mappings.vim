@@ -175,8 +175,10 @@ nnoremap <Leader>hf :tabnew<cr>:h function-list<cr>:only<cr>
 
 " quit all
 nnoremap <Leader>qa :qa<cr>
-" quit current window
+" quit current split windows
 nnoremap <Leader>qq :q<cr>
+" quit current tab
+nnoremap <Leader>qw :tabclose<cr>
 " quit all without save
 nnoremap <Leader>qQ :qa!<cr>
 " save and quit all
@@ -261,10 +263,13 @@ nnoremap <Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
 nnoremap <Leader>fd :call te#feat#feat_dyn_enable(0)<cr>
 " feature update
 nnoremap <Leader>fu :call te#feat#gen_feature_vim()<cr>
-
+nnoremap <Leader>dj <c-u>
+nnoremap <Leader>dd <c-d>
 " cd to any plugin directory
 nnoremap <Leader>cp :call te#utils#cd_to_plugin()<cr>
 
+" close all buffer
+map <Leader>ba :bufdo bd<cr>
 if te#env#IsNvim()
     "terminal-emulator setting
     execute 'tnoremap <Esc> <C-\><C-n>'
