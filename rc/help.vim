@@ -1,7 +1,6 @@
 " Help:Welcome screen, leader guide
 " Package info {{{
 Plug 'hecal3/vim-leader-guide'
-Plug 'tracyone/ctrlp-leader-guide'
 Plug 'mhinz/vim-startify'
 " }}}
 " VimStartify {{{
