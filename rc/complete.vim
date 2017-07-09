@@ -76,7 +76,7 @@ if g:complete_plugin_type ==# 'ycm'
 	let g:ycm_semantic_triggers.php = ['->', '::', '(', 'use ', 'namespace ', '\', '$', 're!\w{3}']
     let g:ycm_semantic_triggers.html = ['<', '"', '</', ' ']
     let g:ycm_semantic_triggers.python=['.', 'import ', 're!import [,\w ]+, ']
-    let g:ycm_semantic_triggers.vimshell=['re!\w{2}']
+    let g:ycm_semantic_triggers.vimshell=['re!\w{2}', '/']
 
     let g:ycm_collect_identifiers_from_tag_files = 1
     let g:ycm_filetype_blacklist = {
