@@ -267,6 +267,8 @@ nnoremap <Leader>dj <c-u>
 nnoremap <Leader>dd <c-d>
 " cd to any plugin directory
 nnoremap <Leader>cp :call te#utils#cd_to_plugin()<cr>
+"newtab
+nnoremap <Leader>nt :tabnew<cr>
 
 " close all buffer
 map <Leader>ba :bufdo bd<cr>
