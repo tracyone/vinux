@@ -32,6 +32,7 @@ function! te#feat#get_feature(A, L, P) abort
 endfunction
 
 function! te#feat#gen_feature_vim() abort
+    execute 'cd '.$VIMFILES
     call delete($VIMFILES.'/feature.vim')
 	for l:key in keys(s:feature_dict)
 	   call writefile(['let '.l:key.'='.s:feature_dict[l:key]], $VIMFILES.'/feature.vim', 'a')

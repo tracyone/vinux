@@ -6,6 +6,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " }}}
 " Config {{{
+let g:airline_extensions = []
+
+let g:airline_extensions = ['branch', 'tabline', 'tagbar', 'ctrlp']
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 let g:airline#extensions#tabline#show_tab_nr = 1
@@ -20,11 +23,11 @@ let g:airline#extensions#hunks#enabled = 0
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline_detect_crypt=1
-let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#tagbar#flags = 'f'
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#ycm#enabled = 1
+let g:airline#extensions#ycm#enabled = 0
+let g:airline#extensions#ctrlp#show_adjacent_modes = 0
 
 
 if !exists('g:airline_symbols')
@@ -58,7 +61,10 @@ function! s:airline_setting()
     let g:airline_section_warning='%{strftime("%m/%d\-%H:%M")}'
     if g:colors_name ==# 'PaperColor'
         :AirlineTheme gruvbox
+    elseif g:colors_name ==# 'space-vim-dark'
+        :AirlineTheme violet
     endif
+  let g:airline#extensions#disable_rtp_load = 1
 endfunction
 
 call te#feat#register_vim_enter_setting(function('<SID>airline_setting'))
