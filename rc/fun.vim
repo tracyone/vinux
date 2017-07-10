@@ -39,6 +39,7 @@ function! RestExit(timer)
     if te#env#IsTmux()
         call system('tmux set -g status on')
     endif
+    call writefile(['work'],$VIMFILES.'/.screenlock')
     let s:main_timer=timer_start(str2nr(s:expires_time), 'EnterScreensaver', {'repeat': 1})
 endfunction
 
@@ -50,6 +51,7 @@ function! EnterScreensaver(timer)
     if te#env#IsTmux()
         call system('tmux set -g status off')
     endif
+    call writefile(['rest'],$VIMFILES.'/.screenlock')
     :ScreenSaver password
 endfunction
 
@@ -71,7 +73,10 @@ endfunction
 
 if !filereadable($VIMFILES.'/.screenlock')
     let s:main_timer=timer_start(str2nr(s:expires_time), 'EnterScreensaver', {'repeat': 1})
-    call writefile([getpid()],$VIMFILES.'/.screenlock')
+    call writefile(['work'],$VIMFILES.'/.screenlock')
+elseif readfile($VIMFILES.'/.screenlock', 1)[0] ==# 'rest'
+    echom 'Have a break (5 mins)'
+    :qa
 endif
 
 autocmd misc_group VimLeave * call <SID>clear_screen_flag()
