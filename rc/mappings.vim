@@ -14,6 +14,7 @@ cnoremap <expr> j
       \ getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
 
 inoremap j<Space>     j
+cnoremap j<Space>     j
 
 vnoremap [p "0p
 
@@ -267,6 +268,8 @@ nnoremap <Leader>dj <c-u>
 nnoremap <Leader>dd <c-d>
 " cd to any plugin directory
 nnoremap <Leader>cp :call te#utils#cd_to_plugin()<cr>
+nnoremap <silent> <Enter> <C-]>
+nnoremap <silent> <BS> <C-o>
 "newtab
 nnoremap <Leader>nt :tabnew<cr>
 

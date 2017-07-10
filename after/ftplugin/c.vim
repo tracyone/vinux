@@ -51,6 +51,8 @@ nnoremap <buffer><Leader>gk :call te#pg#gen_cscope_kernel()<cr>
 " generate cctree database
 nnoremap <buffer><Leader>gt :call te#pg#cctree()<cr>
 
+nnoremap <buffer><silent> <Enter> :call te#complete#goto_def("")<cr>
+
 setlocal cinoptions=:0,l1,t0,g0,(0)
 setlocal comments    =sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/
 setlocal cindent  "enable specific indenting for C code

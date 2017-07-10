@@ -11,3 +11,4 @@ setlocal iskeyword+=:,#
 "keymapping...
 nnoremap <buffer><silent> <c-]>  :call lookup#lookup()<cr>
 nnoremap <buffer><silent> <c-t>  :call lookup#pop()<cr>
+nnoremap <buffer><silent> <Enter> :call lookup#lookup()<cr>
