@@ -10,6 +10,7 @@ else
     let g:startify_session_dir = $VIMFILES .'/sessions'
 endif
 let g:startify_list_order = [
+            \ 'commands',
             \ ['   These are my sessions:'],
             \ 'sessions',
             \ ['   My most recently used files in the current directory:'],
@@ -27,6 +28,11 @@ let g:startify_custom_header = [
             \ '    ['.g:t_vim_version.'] ',
             \ '',
             \ '',
+            \ ]
+
+let g:startify_commands = [
+            \ {'h': ['Vim Reference', 'h ref']},
+            \ {'v': ['Open vimrc', 'call feedkeys("\<Space>vc")']},
             \ ]
 
 noremap <F8> :SSave<cr>
