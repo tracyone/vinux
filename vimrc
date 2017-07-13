@@ -15,14 +15,14 @@ else
     let $VIMFILES = $HOME.'/.vim'
 endif
 
+if filereadable($VIMFILES.'/feature.vim')
+    execute ':source '.$VIMFILES.'/feature.vim'
+endif
 
 call te#feat#source_rc('autocmd.vim')
 call te#feat#source_rc('options.vim')
 call te#feat#source_rc('mappings.vim')
 
-if filereadable($VIMFILES.'/feature.vim')
-    execute ':source '.$VIMFILES.'/feature.vim'
-endif
 
 "user custom config file
 if filereadable($VIMFILES.'/local.vim')
