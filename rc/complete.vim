@@ -26,7 +26,6 @@ elseif g:complete_plugin_type ==# 'deoplete'  && te#env#IsNvim()
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'zchee/deoplete-clang'
 else
-    call te#utils#EchoWarning('No comlete plugin was selected!', 1)
     Plug 'ervandew/supertab'
     let g:complete_plugin_type=''
 endif
