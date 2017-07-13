@@ -235,16 +235,25 @@ endfunction
 
 function! s:get_listed_buf_order_num() abort
     let l:i=1
-    if !te#env#SupportAsync()
-        return l:i
-    endif
-    for l:buf in getbufinfo({'buflisted':1})
-        if l:buf.name !=# expand('%:p')
-            let l:i=l:i+1
-        else
-            break
-        endif
-    endfor
+	if te#env#SupportAsync()
+		let l:ret = getbufinfo({'buflisted':1})
+        for l:buf in l:ret
+            if l:buf.name !=# expand('%:p')
+                let l:i=l:i+1
+            else
+                break
+            endif
+        endfor
+	else
+		let l:ret = filter(range(1, bufnr('$')), 'buflisted(v:val)')
+        for l:buf in l:ret
+            if bufname(l:buf) !=# expand('%:p')
+                let l:i=l:i+1
+            else
+                break
+            endif
+        endfor
+	endif
     return l:i
 endfunction
 
@@ -256,9 +265,17 @@ augroup Tabpage
     autocmd BufLeave * let s:lastopen_buf=s:get_listed_buf_order_num()
 augroup end
 
+"0:previous tab or buffer
+"-1:next tab or buffer
+"-2:lastopen tab or buffer
+"1~9:tab 1~9 or buffer 1~9
 function! te#utils#tab_buf_switch(num) abort
     if a:num == 0 || a:num == -1
-        let l:ret = getbufinfo({'buflisted':1})
+        if te#env#SupportAsync()
+            let l:ret = getbufinfo({'buflisted':1})
+        else
+            let l:ret = filter(range(1, bufnr('$')), 'buflisted(v:val)')
+        endif
         if empty(l:ret)
             return
         endif
