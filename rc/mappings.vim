@@ -43,6 +43,8 @@ call te#meta#map('nnoremap','t',':tabnew<cr>')
 call te#meta#map('inoremap','t','<esc>:tabnew<cr>')
 "option+q
 call te#meta#map('noremap','q',':nohls<CR>:MarkClear<cr>:redraw!<cr>')
+"no highlight
+nnoremap <Leader>nq :nohls<CR>:MarkClear<cr>:redraw!<cr>
 "select all
 call te#meta#map('noremap','a','gggH<C-O>G')
 call te#meta#map('inoremap','a','<C-O>gg<C-O>gH<C-O>G')
