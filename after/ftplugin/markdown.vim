@@ -7,5 +7,10 @@ setlocal nospell
 setlocal conceallevel=2 
 setlocal autoindent
 setlocal textwidth=0
+setlocal tabstop=4  
+setlocal shiftwidth=4 
+setlocal softtabstop=4 
+setlocal expandtab
+setlocal smarttab
 
 nnoremap <buffer> <leader>tt :Toc<cr>

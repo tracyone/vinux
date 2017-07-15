@@ -58,6 +58,11 @@ setlocal comments    =sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/
 setlocal cindent  "enable specific indenting for C code
 setlocal foldmethod=syntax 
 setlocal colorcolumn=80
+setlocal tabstop=8  
+setlocal shiftwidth=8 
+setlocal softtabstop=8 
+setlocal noexpandtab
+setlocal nosmarttab
 
 " linux coding style
 let g:clang_format#code_style='llvm'

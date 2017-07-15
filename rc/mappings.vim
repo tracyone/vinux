@@ -270,7 +270,6 @@ nnoremap <Leader>dj <c-u>
 nnoremap <Leader>dd <c-d>
 " cd to any plugin directory
 nnoremap <Leader>cp :call te#utils#cd_to_plugin(g:t_vim_plugin_install_path)<cr>
-nnoremap <silent> <Enter> <C-]>
 nnoremap <silent> <BS> <C-o>
 "newtab
 nnoremap <Leader>nt :tabnew<cr>

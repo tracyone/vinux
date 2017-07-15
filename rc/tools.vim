@@ -1,11 +1,11 @@
 if te#env#SupportPy()
     Plug 'ashisha/image.vim'
 endif
-Plug 'arecarn/selection.vim' | Plug 'arecarn/crunch.vim',{'on':'Crunch'}
+Plug 'arecarn/selection.vim' | Plug 'arecarn/vim-crunch',{'on':'Crunch'}
 Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': ['Ydc','Ydv']}
 Plug 'vim-scripts/DrawIt',{'on': 'DrawIt'}
 Plug 'mbbill/VimExplorer',{'on': 'VE'}
-Plug 'vim-scripts/renamer.vim',{'on': 'Ren'}
+Plug 'qpkorr/vim-renamer',{'on': 'Ren'}
 Plug 'Shougo/vinarise.vim',{'on': 'Vinarise'}
 if te#env#IsDisplay()
     Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
