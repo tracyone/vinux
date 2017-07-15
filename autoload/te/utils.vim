@@ -449,11 +449,14 @@ function! te#utils#run_command(command,...) abort
         let l:job_info={}
         let l:job_info.callback=''
         let l:job_info.args=[]
+        let l:job_info.flag=0
         for s:needle in a:000
             if type(s:needle) == g:t_func
                 let l:job_info.callback=s:needle
             elseif type(s:needle) == g:t_list
                 let l:job_info.args=s:needle
+            elseif type(s:needle) == g:t_number
+                let l:job_info.flag=s:needle
             else
                 call te#utils#EchoWarning('Wrong argument', 'err')
                 return 0
@@ -479,9 +482,9 @@ function! te#utils#get_plugin_name(A,L,P) abort
     return l:result
 endfunction
 
-function! te#utils#cd_to_plugin()
-    execute 'cd '.g:t_vim_plugin_install_path
-    let l:plugin_name = input('Please input the plugin name: ','','custom,te#utils#get_plugin_name')
+function! te#utils#cd_to_plugin(path)
+    execute 'cd '.a:path
+    let l:plugin_name = input('Please input the direcory name: ','','custom,te#utils#get_plugin_name')
     if !isdirectory(l:plugin_name)
         call te#utils#EchoWarning(l:plugin_name.' not found','err')
         return
