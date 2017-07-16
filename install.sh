@@ -98,15 +98,20 @@ sync_repo() {
         git clone --no-checkout  -b "$repo_branch" "$repo_uri" "$repo_path/temp" 
         ret="$?"
         success "Successfully cloned $repo_name."
-	mv "${repo_path}/temp/.git" "${repo_path}"
-	rm -rf temp
-	cd "${repo_path}"
-	git reset --hard HEAD
-	cd -
+        mv "${repo_path}/temp/.git" "${repo_path}"
+        rm -rf temp
+        cd "${repo_path}"
+        git reset --hard HEAD
+        local latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+        git checkout ${latest_tag}
+        cd -
     else
         msg "\033[1;34m==>\033[0m Trying to update $repo_name"
-        cd "$repo_path" && git pull origin "$repo_branch"
-        ret="$?"
+        cd "$repo_path" && git fetch --all
+        if [ $? -eq 0 ]; then
+            local latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+            git checkout ${latest_tag}
+        fi
         success "Successfully updated $repo_name"
     fi
 
