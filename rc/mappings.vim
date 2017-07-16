@@ -87,6 +87,7 @@ inoremap        <C-d> <BS>
 inoremap        <C-h> <BS>
 cnoremap        <C-B> <Left>
 cnoremap        <C-f> <right>
+cnoremap <C-r><C-l> <C-r>=getline('.')<CR>
 " Move forward a word or Move backward a word.
 call te#meta#map('inoremap','b','<S-left>')
 call te#meta#map('inoremap','f','<S-right>')
