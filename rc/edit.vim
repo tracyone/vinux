@@ -57,9 +57,13 @@ nmap <Leader>cc <plug>NERDCommenterComment
 if !te#env#IsNvim()
     nnoremap <c-h> :OverCommandLine<cr>:%s/<C-R>=expand("<cword>")<cr>/
     vnoremap <c-h> :OverCommandLine<cr>:<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>/
+    nnoremap ss :OverCommandLine<cr>%s//<left>
+    vnoremap : :OverCommandLine<cr>s//<left>
 else
     nnoremap <c-h> :%s/<C-R>=expand("<cword>")<cr>/
     vnoremap <c-h> :<c-u>%s/<C-R>=getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>/
+    nnoremap ss :%s//<left>
+    vnoremap : :s//<left>
 endif
 " undo tree window toggle
 nnoremap <leader>tu :UndotreeToggle<cr>
