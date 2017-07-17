@@ -137,7 +137,7 @@ if te#env#IsNvim()
     endif
 endif
 
-if te#env#IsVim8()
+if te#env#IsVim8() && !te#env#IsNvim()
     let g:t_number=v:t_number
     let g:t_string=v:t_string
     let g:t_func=v:t_func
@@ -202,10 +202,5 @@ function! MyFoldText()
     return sub . info
 endfunction
 set foldtext=MyFoldText()
-nmap s <Sop>
-nnoremap sj za
-vnoremap sf zf
-nnoremap sk zM
-nnoremap si zi
 "}}}
 

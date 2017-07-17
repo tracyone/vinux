@@ -275,6 +275,12 @@ nnoremap <silent> <BS> <C-o>
 "newtab
 nnoremap <Leader>nt :tabnew<cr>
 
+nmap s <Sop>
+nnoremap sj za
+vnoremap sf zf
+nnoremap sk zM
+nnoremap si zi
+
 " close all buffer
 map <Leader>ba :bufdo bd<cr>
 if te#env#IsNvim()
