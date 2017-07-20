@@ -1,6 +1,5 @@
 *.swp
 bundle/
-autoload/plug.vim
 .yank_history_v2.txt
 .easyclip
 vimbackup/
@@ -17,3 +16,4 @@ org/
 .neocomplete/
 .love.vim
 .gui_love.vim
+.screenlock
