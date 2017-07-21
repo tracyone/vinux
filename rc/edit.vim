@@ -8,7 +8,6 @@ Plug 'tpope/vim-repeat' "repeat enhance
 Plug 'junegunn/vim-easy-align',{'on': [ '<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)' ]}
 if !te#env#IsNvim()
     Plug 'osyo-manga/vim-over',{'on': 'OverCommandLine'}
-    Plug 'tracyone/vim-easyclip'
 endif
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
@@ -67,25 +66,4 @@ else
 endif
 " undo tree window toggle
 nnoremap <leader>tu :UndotreeToggle<cr>
-" easyclip ------------------------{{{
-nnoremap <c-y> :Yanks<cr>
-imap <c-y> <c-[>:Yanks<cr>
-" Open yankring window
-nnoremap <Leader>yy :Yanks<cr>
-" clear yank history
-nnoremap <Leader>yc :ClearYanks<cr>
-let g:EasyClipShareYanks=1
-let g:EasyClipShareYanksDirectory=$VIMFILES
-let g:EasyClipUseYankDefaults=1
-let g:EasyClipUseCutDefaults=0
-let g:EasyClipUsePasteDefaults=0
-let g:EasyClipEnableBlackHoleRedirect=0
-let g:EasyClipUsePasteToggleDefaults=0
-let g:EasyClipCopyExplicitRegisterToDefault=1
-nmap <silent> gs <plug>SubstituteOverMotionMap 
-nmap gss <plug>SubstituteLine
-xmap gs <plug>XEasyClipPaste
-call te#meta#map('nmap ','p','<plug>EasyClipSwapPasteForward')
-call te#meta#map('nmap ','n','<plug>EasyClipSwapPasteBackwards')
-"}}}
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
