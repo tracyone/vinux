@@ -89,6 +89,7 @@ if(!te#env#IsNvim())
     let g:vimshell_execute_file_list['py'] = 'python'
     let g:vimshell_temporary_directory = $VIMFILES . '/.vimshell'
     silent! call vimshell#set_execute_file('html,xhtml', 'gexe firefox')
+    let g:vimshell_split_command='tabnew'
     augroup vimshell_group
         autocmd!
         au FileType vimshell :imap <buffer> <HOME> <Plug>(vimshell_move_head)
