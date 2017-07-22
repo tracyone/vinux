@@ -11,6 +11,7 @@ if !te#env#IsNvim()
         Plug 'Shougo/vimproc.vim'
     endif
     Plug 'Shougo/vimshell.vim',{'on':'VimShell'}
+    Plug 'tracyone/ctrlp-vimshell.vim',{'on':'VimShell'}
 endif
 Plug 'tracyone/love.vim'
 Plug 'tracyone/mark.vim'
@@ -94,12 +95,11 @@ if(!te#env#IsNvim())
         autocmd!
         au FileType vimshell :imap <buffer> <HOME> <Plug>(vimshell_move_head)
         au FileType vimshell :imap <buffer> <c-l> <Plug>(vimshell_clear)
-        au FileType vimshell :imap <buffer> <c-p> <Plug>(vimshell_history_unite)
-        au FileType vimshell :imap <buffer> <up> <Plug>(vimshell_history_unite)
-        au FileType vimshell,neoman setlocal nonu nornu
+        au FileType vimshell :imap <buffer> <c-k> <c-o>:stopinsert<cr>:call ctrlp#vimshell#start()<cr> 
+        au FileType vimshell :imap <buffer> <up> <c-o>:stopinsert<cr>:call ctrlp#vimshell#start()<cr>
         au FileType vimshell :imap <buffer> <c-d> <Plug>(vimshell_exit)
         au FileType vimshell :imap <buffer> <c-j> <Plug>(vimshell_enter)
-        au Filetype vimshell  setlocal completefunc=vimshell#complete#omnifunc omnifunc=vimshell#complete#omnifunc buftype=
+        au Filetype vimshell  setlocal completefunc=vimshell#complete#omnifunc omnifunc=vimshell#complete#omnifunc buftype= nonu nornu
         autocmd FileType vimshell
                     \ call vimshell#altercmd#define('g', 'git')
                     \| call vimshell#altercmd#define('i', 'iexe')

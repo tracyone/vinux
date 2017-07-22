@@ -3,7 +3,11 @@ if(!te#env#IsWindows())
         Plug 'christoomey/vim-tmux-navigator'
         Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
         Plug 'jebaum/vim-tmuxify'
-        Plug 'kurtenbachkyle/vim-tmux-buffet',{'on': ['TmuxBuffetRegisterToTmux', 'TmuxBuffetCopyToUnnamed']}
+        if !te#env#IsDisplay() || !te#env#SupportFeature('clipboard')
+            Plug 'kurtenbachkyle/vim-tmux-buffet',{'on': ['TmuxBuffetRegisterToTmux', 'TmuxBuffetCopyToUnnamed']}
+            vnoremap <C-C> y:TmuxBuffetRegisterToTmux<cr>
+            inoremap <c-v>	<C-o>:TmuxBuffetCopyToUnnamed<cr><C-o>p
+        endif
         let g:tmux_navigator_no_mappings = 1
         call te#meta#map('nnoremap <silent>','l',':TmuxNavigateRight<cr>')
         call te#meta#map('nnoremap <silent>','h',':TmuxNavigateLeft<cr>')
@@ -22,7 +26,5 @@ if(!te#env#IsWindows())
         nnoremap <Leader>ui :CtrlPTmux ci<cr>
         let g:tmuxify_custom_command = 'tmux split-window -p 38'
         let g:tmuxify_map_prefix = '<leader>u'
-        vnoremap <C-C> y:TmuxBuffetRegisterToTmux<cr>
-        inoremap <c-v>	<C-o>:TmuxBuffetCopyToUnnamed<cr><C-o>p
     endif
 endif

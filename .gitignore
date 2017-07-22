@@ -17,4 +17,4 @@ org/
 .love.vim
 .gui_love.vim
 .screenlock
-.vmux_clipboard_data
+autoload/plug.vim
