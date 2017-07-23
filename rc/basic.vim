@@ -75,11 +75,11 @@ if(!te#env#IsNvim())
     let g:vimshell_prompt = '$ '
     if te#env#IsWindows()
         " Display user name on Windows.
-        let g:vimshell_user_prompt = '$USERNAME." : ".fnamemodify(getcwd(), ":~")." < ".te#git#get_cur_br_name().te#git#get_status()." \> ".
+        let g:vimshell_user_prompt = '$USERNAME." < ".te#git#get_cur_br_name().te#git#get_status()." \> "." : ".fnamemodify(getcwd(), ":~").
                     \" [".b:vimshell.system_variables["status"]."]"'
     else
         " Display user name on Linux.
-        let g:vimshell_user_prompt = '$USER." : ".fnamemodify(getcwd(), ":~")." < ".te#git#get_cur_br_name().te#git#get_status()." \> ".
+        let g:vimshell_user_prompt = '$USER." < ".te#git#get_cur_br_name().te#git#get_status()." \> "." : ".fnamemodify(getcwd(), ":~").
                     \" [".b:vimshell.system_variables["status"]."]"'
     endif
 
