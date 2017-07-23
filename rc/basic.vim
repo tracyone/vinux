@@ -70,17 +70,19 @@ let g:tagbar_systemenc='cp936'
 "}}}
 " Vimshell {{{
 if(!te#env#IsNvim())
-    let g:vimshell_user_prompt = '":: " . "(" . fnamemodify(getcwd(), ":~") . ")"'
-    "let g:vimshell_right_prompt = 'vcs#info("(%s)-[%b]", "(%s)-[%b|%a]")'
     let g:vimshell_enable_smart_case = 1
     let g:vimshell_editor_command='gvim'
+    let g:vimshell_prompt = '$ '
     if te#env#IsWindows()
         " Display user name on Windows.
-        let g:vimshell_prompt = $USERNAME.'% '
+        let g:vimshell_user_prompt = '$USERNAME." : ".fnamemodify(getcwd(), ":~")." < ".te#git#get_cur_br_name().te#git#get_status()." \> ".
+                    \" [".b:vimshell.system_variables["status"]."]"'
     else
         " Display user name on Linux.
-        let g:vimshell_prompt = $USER.'% '
+        let g:vimshell_user_prompt = '$USER." : ".fnamemodify(getcwd(), ":~")." < ".te#git#get_cur_br_name().te#git#get_status()." \> ".
+                    \" [".b:vimshell.system_variables["status"]."]"'
     endif
+
     "let g:vimshell_popup_command='rightbelow 10split'
     " Initialize execute file list.
     let g:vimshell_execute_file_list = {}
@@ -93,21 +95,21 @@ if(!te#env#IsNvim())
     let g:vimshell_split_command='tabnew'
     augroup vimshell_group
         autocmd!
-        au FileType vimshell :imap <buffer> <HOME> <Plug>(vimshell_move_head)
-        au FileType vimshell :imap <buffer> <c-l> <Plug>(vimshell_clear)
-        au FileType vimshell :imap <buffer> <c-k> <c-o>:stopinsert<cr>:call ctrlp#vimshell#start()<cr> 
-        au FileType vimshell :imap <buffer> <up> <c-o>:stopinsert<cr>:call ctrlp#vimshell#start()<cr>
-        au FileType vimshell :imap <buffer> <c-d> <Plug>(vimshell_exit)
-        au FileType vimshell :imap <buffer> <c-j> <Plug>(vimshell_enter)
-        au Filetype vimshell  setlocal completefunc=vimshell#complete#omnifunc omnifunc=vimshell#complete#omnifunc buftype= nonu nornu
-        autocmd FileType vimshell
-                    \ call vimshell#altercmd#define('g', 'git')
-                    \| call vimshell#altercmd#define('i', 'iexe')
-                    \| call vimshell#altercmd#define('ls', 'ls --color=auto')
-                    \| call vimshell#altercmd#define('ll', 'ls -al --color=auto')
-                    \| call vimshell#altercmd#define('l', 'ls -al --color=auto')
-                    \| call vimshell#altercmd#define('gtab', 'gvim --remote-tab')
-                    \| call vimshell#altercmd#define('c', 'clear')
+        au FileType vimshell :imap <buffer> <HOME> <Plug>(vimshell_move_head) 
+                    \ | :imap <buffer> <c-l> <Plug>(vimshell_clear)
+                    \ | :imap <buffer> <c-k> <c-o>:stopinsert<cr>:call ctrlp#vimshell#start()<cr> 
+                    \ | :imap <buffer> <up> <c-o>:stopinsert<cr>:call ctrlp#vimshell#start()<cr>
+                    \ | :imap <buffer> <c-d> <Plug>(vimshell_exit)
+                    \ | :imap <buffer> <c-j> <Plug>(vimshell_enter) 
+                    \ | setlocal completefunc=vimshell#complete#omnifunc omnifunc=vimshell#complete#omnifunc 
+                    \ buftype= nonu nornu 
+                    \ | call vimshell#altercmd#define('g', 'git') 
+                    \ | call vimshell#altercmd#define('i', 'iexe') 
+                    \ | call vimshell#altercmd#define('ls', 'ls --color=auto') 
+                    \ | call vimshell#altercmd#define('ll', 'ls -al --color=auto') 
+                    \ | call vimshell#altercmd#define('l', 'ls -al --color=auto') 
+                    \ | call vimshell#altercmd#define('gtab', 'gvim --remote-tab') 
+                    \ | call vimshell#altercmd#define('c', 'clear') 
         "\| call vimshell#hook#add('chpwd', 'my_chpwd', 'g:my_chpwd')
 
         "function! g:my_chpwd(args, context)

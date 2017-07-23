@@ -2,17 +2,42 @@
 " return a string which is the name of local branch name
 " return a space if no local branch found
 function! te#git#get_cur_br_name() abort
-    if exists('*fugitive#head')
-        return fugitive#head()
+    let l:br=split(system('git branch'),nr2char(10))
+    for l:needle in l:br
+        let l:needle=matchstr(needle, '^\*\s\+\zs.*\ze')
+        if l:needle !=# ''
+            return l:needle
+        endif
+    endfor
+    return ''
+endfunction
+
+function! te#git#get_status() abort
+    let l:result={}
+    let l:result.staged=''
+    let l:result.modify=''
+    let l:result.untracked=''
+    let l:st=split(system('git status -s'), nr2char(10))
+    for l:i in l:st
+        if matchstr(l:i, '^M') !=# ''
+            let l:result.staged='S'
+        endif
+        if matchstr(l:i, '^[M ]M') !=# ''
+            let l:result.modify='M'
+        endif
+        if matchstr(l:i, '^??') !=# ''
+            let l:result.untracked='?'
+        endif
+    endfor
+    let l:temp=l:result.untracked.l:result.modify.l:result.staged
+    if !empty(l:temp)
+        let l:temp=" ".l:result.untracked.l:result.modify.l:result.staged
     endif
-    if exists('*gita#statusline#format')
-        return gita#statusline#format('%lb')
-    endif
-    return -1
+    return l:temp
 endfunction
 
 function! s:get_remote_name() abort
-    let l:remote_name=split(system('git remote'),'\n')
+    let l:remote_name=split(system('git remote'),nr2char(10))
     if v:shell_error || len(l:remote_name) == 0
         call te#utils#EchoWarning('git remote failed')
         return 1
@@ -56,7 +81,7 @@ endfunction
 " get all the remote branch name into a string seperate by CR
 function! te#git#GetRemoteBr(A,L,P) abort
     let l:temp=a:A.a:L.a:P
-    let l:all_remote_name=split(system('git branch -r'), '\n')
+    let l:all_remote_name=split(system('git branch -r'), nr2char(10))
     if empty(l:all_remote_name) == 1
         call te#utils#EchoWarning('No remote name found!')
         return 1
@@ -72,7 +97,7 @@ endfunction
 
 function! te#git#get_latest_sevral_commit(A, L, P) abort
     let l:temp=a:A.a:L.a:P
-    let g:log=split(system('git log --abbrev-commit -6 --pretty=oneline'), '\n')
+    let g:log=split(system('git log --abbrev-commit -6 --pretty=oneline'), nr2char(10))
     if empty(g:log) == 1
         call te#utils#EchoWarning('git log failed')
         return 1
