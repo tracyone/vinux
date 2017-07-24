@@ -2,7 +2,7 @@
 " Package info {{{
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'majutsushi/tagbar'
-if !te#env#IsNvim() 
+if !te#env#SupportTerminal() 
     if te#env#IsMac()
         Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
     elseif te#env#IsUnix()
@@ -69,7 +69,7 @@ let g:tagbar_compact = 1
 let g:tagbar_systemenc='cp936'
 "}}}
 " Vimshell {{{
-if(!te#env#IsNvim())
+if(!te#env#SupportTerminal())
     let g:vimshell_enable_smart_case = 1
     let g:vimshell_editor_command='gvim'
     let g:vimshell_prompt = '$ '
@@ -134,7 +134,7 @@ function! VimShellPop()
     if bufexists(expand('%')) && &filetype !=# 'startify'
         execute 'rightbelow '.l:line.'split'
     endif
-    if te#env#IsNvim() | execute 'terminal' | else | execute 'VimShell' | endif
+    if te#env#SupportTerminal() | execute 'terminal' | else | execute 'VimShell' | endif
 endfunction
 noremap <F4> :call VimShellPop()<cr>
 " Open vimshell or neovim's emulator

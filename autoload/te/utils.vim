@@ -397,6 +397,14 @@ function! te#utils#check_health() abort
         endif
     endfor
 
+    call add(l:output, printf("%26s:\t",'**terminal** support'))
+    let l:i=l:i + 1
+    if te#env#SupportTerminal()
+        let l:output[l:i].='Yes'
+    else
+        let l:output[l:i].='**No**'
+    endif
+
     call add(l:output, printf("%26s:\t",'**job** support'))
     let l:i=l:i + 1
     if te#env#SupportAsync()
