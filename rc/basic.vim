@@ -2,14 +2,14 @@
 " Package info {{{
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'majutsushi/tagbar'
+if te#env#IsMac()
+    Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
+elseif te#env#IsUnix()
+    Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+else
+    Plug 'Shougo/vimproc.vim'
+endif
 if !te#env#SupportTerminal() 
-    if te#env#IsMac()
-        Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
-    elseif te#env#IsUnix()
-        Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-    else
-        Plug 'Shougo/vimproc.vim'
-    endif
     Plug 'Shougo/vimshell.vim',{'on':'VimShell'}
     Plug 'tracyone/ctrlp-vimshell.vim',{'on':'VimShell'}
 endif
