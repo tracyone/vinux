@@ -32,7 +32,6 @@ let g:startify_custom_header = [
             \ ]
 
 let g:startify_commands = [
-            \ {'h': ['Vim Reference', 'h ref']},
             \ {'v': ['Open vimrc', 'call feedkeys("\<Space>vc")']},
             \ ]
 
