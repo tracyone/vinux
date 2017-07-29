@@ -3,7 +3,6 @@
 
 set filetype=text
 if te#env#IsWindows()
-    let $HOME=$VIM
     set makeprg=mingw32-make
     let $MYVIMRC=$VIMFILES.'/vimrc'
 else
