@@ -180,7 +180,14 @@ nnoremap <Leader>hf :tabnew<cr>:h function-list<cr>:only<cr>
 " quit all
 nnoremap <Leader>qa :qa<cr>
 " quit current split windows
-nnoremap <Leader>qq :q<cr>
+function! s:quit_current_win()
+    if tabpagenr('$') != 1 || te#utils#has_listed_buffer() <= 1
+        :q
+    else
+        :bdelete
+    endif
+endfunction
+nnoremap <Leader>qq :call <SID>quit_current_win()<cr>
 " quit current tab
 nnoremap <Leader>qw :tabclose<cr>
 " quit all without save
