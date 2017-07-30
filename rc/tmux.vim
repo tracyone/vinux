@@ -1,5 +1,9 @@
 if(!te#env#IsWindows())
     if te#env#IsTmux()
+        function! s:rename_tmux_win()
+            let l:name=input("Input the name of current windows: ")
+            call te#utils#run_command('tmux rename-window '.l:name)
+        endfunction
         Plug 'christoomey/vim-tmux-navigator'
         Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
         Plug 'jebaum/vim-tmuxify'
@@ -24,6 +28,8 @@ if(!te#env#IsWindows())
         nnoremap <Leader>ud :CtrlPTmux c<cr>
         "CtrlP tmux command interactively
         nnoremap <Leader>ui :CtrlPTmux ci<cr>
+        "rename windows
+        nnoremap <Leader>uw :call <SID>rename_tmux_win()<cr>
         let g:tmuxify_custom_command = 'tmux split-window -p 38'
         let g:tmuxify_map_prefix = '<leader>u'
     endif

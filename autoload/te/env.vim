@@ -12,7 +12,7 @@ let s:has_display = empty($DISPLAY)
 let s:support_cscope=has('cscope')+executable('cscope')
 
 function! te#env#IsVim8() abort
-    if v:version >= 800
+    if v:version >= 800 && !s:is_nvim
         return 1
     else
         return 0

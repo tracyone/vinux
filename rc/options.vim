@@ -136,7 +136,7 @@ if te#env#IsNvim()
     endif
 endif
 
-if te#env#IsVim8() && !te#env#IsNvim()
+if te#env#IsVim8()
     let g:t_number=v:t_number
     let g:t_string=v:t_string
     let g:t_func=v:t_func
