@@ -127,20 +127,11 @@ if(!te#env#SupportTerminal())
     endif
 endif
 
-function! VimShellPop()
-    " 38% height of current window
-    let l:line=(38*&lines)/100
-    if  l:line < 10 | let l:line = 10 |endif
-    if bufexists(expand('%')) && &filetype !=# 'startify'
-        execute 'rightbelow '.l:line.'split'
-    endif
-    if te#env#SupportTerminal() | execute 'terminal' | else | execute 'VimShell' | endif
-endfunction
-noremap <F4> :call VimShellPop()<cr>
+noremap <F4> :call te#tools#shell_pop()<cr>
 " Open vimshell or neovim's emulator
-nnoremap <Leader>as :call VimShellPop()<cr>
+nnoremap <Leader>as :call te#tools#shell_pop()<cr>
 " Open vimshell or neovim's emulator in new tab
-nnoremap <Leader>ns :tabnew<cr>:call VimShellPop()<cr>
+nnoremap <Leader>ns :tabnew<cr>:call te#tools#shell_pop()<cr>
 "}}}
 " Nerdtree {{{
 let g:NERDTreeShowLineNumbers=0	"don't show line number
