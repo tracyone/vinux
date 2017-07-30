@@ -9,6 +9,9 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/t-vim/master/inst
 ```
 
 
+![screenshot](https://user-images.githubusercontent.com/4246425/28752015-e6c8080c-7547-11e7-9d51-f09c4d00f34e.png)
+
+
 **Wiki**
 
 [t-vim's wiki](https://github.com/tracyone/t-vim/wiki)
