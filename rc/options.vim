@@ -1,5 +1,4 @@
 "Vim options setting
-"author:tracyone@live.cn
 
 set filetype=text
 if te#env#IsWindows()
