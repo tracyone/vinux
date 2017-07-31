@@ -54,8 +54,11 @@ if g:complete_plugin_type ==# 'ycm'
     nnoremap <leader>yp :YcmCompleter GetParent<cr>
     nnoremap <leader>yf :YcmCompleter FixIt<cr>
     nnoremap <Leader>yu :call te#complete#update_ycm()<cr>
-    let g:complete_parameter_mapping_goto_next = '<c-j>'
-    let g:complete_parameter_mapping_goto_previous = '<c-k>'
+    inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+    smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+    imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+    smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+    imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
     let g:ycm_key_detailed_diagnostics = '<leader>ys'
     let g:ycm_autoclose_preview_window_after_insertion = 1
     let g:ycm_complete_in_comments = 1
