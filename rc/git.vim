@@ -32,7 +32,7 @@ nnoremap <leader>gA :call te#git#archive_my_vim_cfg($VIMFILES,'vim_config')<cr>
 " archive current git repo with default name
 nnoremap <leader>gC :call te#git#archive_my_vim_cfg('.','')<cr>
 " git cd
-nnoremap <Leader>gc :Gcd<cr>
+nnoremap <Leader>gc :Gcd<cr>:call te#utils#EchoWarning(getcwd())<cr>
 let g:gissues_lazy_load = 1
 let g:gissues_async_omni = 1
 if filereadable($VIMFILES.'/.github_token')
