@@ -33,7 +33,7 @@ if te#env#IsGui()
             set guifontwide=YaHei\ Consolas\ Hybrid\ 12
         else
             set guifont=Monaco:h12:cANSI
-            set guifontwide=YaHei_Consolas_Hybrid:h14:cGB2312
+            set guifontwide=YaHei_Consolas_Hybrid:h12:cGB2312
         endif
     endif
     au misc_group GUIEnter * call s:MaximizeWindow()
