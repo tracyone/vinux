@@ -2,7 +2,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'terryma/vim-expand-region'
 Plug 'Raimondi/delimitMate'
 Plug 'thinca/vim-qfreplace',{'on': 'Qfreplace'}
-Plug 'vim-scripts/The-NERD-Commenter'
+Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat' "repeat enhance
 Plug 'junegunn/vim-easy-align',{'on': [ '<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)' ]}

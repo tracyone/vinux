@@ -20,6 +20,7 @@ augroup filetype_group
     au BufRead,BufNewFile *.mk setlocal filetype=make
     au BufRead,BufNewFile *.make setlocal filetype=make
     au BufRead,BufNewFile *.veo setlocal filetype=verilog
+    au BufRead,BufNewFile *.h setlocal filetype=c
     au BufRead,BufNewFile * let $CurBufferDir=expand('%:p:h')
     au BufRead,BufNewFile *.hex,*.out,*.o,*.a Vinarise
     au BufRead,BufNewFile *.fex setlocal filetype=dosini
