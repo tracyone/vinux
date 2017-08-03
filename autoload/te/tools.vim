@@ -7,7 +7,7 @@ function! te#tools#shell_pop() abort
     "any list buffer exist or buffer is startify
     if bufexists(expand('%')) && &filetype !=# 'startify'
         let l:fullbuffer=0
-        if !te#env#IsVim8()
+        if te#env#IsNvim() || !te#env#SupportTerminal()
             execute 'rightbelow '.l:line.'split'
         endif
     endif
