@@ -8,7 +8,7 @@ if(!te#env#IsWindows())
         Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
         Plug 'jebaum/vim-tmuxify'
         if !te#env#IsDisplay() || !te#env#SupportFeature('clipboard')
-            Plug 'tracyone/vim-tmux-buffet',{'on': ['TmuxBuffetRegisterToTmux', 'TmuxBuffetCopyToUnnamed']}
+            Plug 'kurtenbachkyle/vim-tmux-buffet',{'on': ['TmuxBuffetRegisterToTmux', 'TmuxBuffetCopyToUnnamed']}
             vnoremap <C-C> y:TmuxBuffetRegisterToTmux<cr>
             inoremap <c-v>	<C-o>:TmuxBuffetCopyToUnnamed<cr><C-o>p
         endif
