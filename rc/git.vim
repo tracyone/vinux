@@ -52,7 +52,7 @@ if get(g:, 'git_plugin_name') ==# 'gina.vim' && te#env#SupportAsync()
                     \ ':q<cr>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
-        "let g:gina#command#status#use_default_mappings=0
+        let g:gina#command#status#use_default_mappings=0
         silent! call gina#custom#mapping#nmap(
                     \ 'blame', 'j',
                     \ 'j<Plug>(gina-blame-echo)'
