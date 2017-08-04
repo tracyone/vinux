@@ -89,7 +89,8 @@ function! te#feat#feat_dyn_enable(en) abort
         endfor
         call te#feat#gen_feature_vim()
     endif
-    :PlugInstall --sync | q
+    if a:en == 1 | :PlugInstall --sync | q | endif
+    call te#utils#EchoWarning(l:enable.' '.l:feat.' successfully!')
 endfunction
 
 function! te#feat#source_rc(path, ...) abort
