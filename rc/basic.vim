@@ -75,7 +75,7 @@ if(!te#env#SupportTerminal())
     let g:vimshell_prompt = '$ '
     if te#env#IsWindows()
         " Display user name on Windows.
-        let g:vimshell_user_prompt = '$USERNAME." < ".te#git#get_cur_br_name().te#git#get_status()." \> "." : ".fnamemodify(getcwd(), ":~").
+        let g:vimshell_user_prompt = '$USERNAME." : ".fnamemodify(getcwd(), ":~").
                     \" [".b:vimshell.system_variables["status"]."]"'
     else
         " Display user name on Linux.
