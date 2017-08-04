@@ -17,57 +17,57 @@ if get(g:, 'git_plugin_name') ==# 'gina.vim' && te#env#SupportAsync()
     nnoremap <Leader>gc :Gina cd<cr>:call te#utils#EchoWarning(getcwd())<cr>
     " list git issue
     function s:gina_setting()
-        call gina#custom#mapping#nmap(
+        silent! call gina#custom#mapping#nmap(
                     \ 'status', 'cc',
                     \ ':<C-u>Gina commit<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
-        call gina#custom#mapping#nmap(
+        silent! call gina#custom#mapping#nmap(
                     \ 'status', 'ca',
                     \ ':<C-u>Gina commit --amend<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
-        call gina#custom#mapping#nmap(
+        silent! call gina#custom#mapping#nmap(
                     \ 'commit', 'cc',
                     \ ':<C-u>Gina status<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
-        call gina#custom#mapping#nmap(
+        silent! call gina#custom#mapping#nmap(
                     \ 'status', '-',
                     \ ':call gina#action#call(''index:toggle'')<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
-        call gina#custom#mapping#vmap(
+        silent! call gina#custom#mapping#vmap(
                     \ 'status', '-',
                     \ ':call gina#action#call(''index:toggle'')<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
-        call gina#custom#mapping#nmap(
+        silent! call gina#custom#mapping#nmap(
                     \ 'status', 'U',
                     \ ':call gina#action#call(''index:discard'')<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
-        call gina#custom#mapping#nmap(
+        silent! call gina#custom#mapping#nmap(
                     \ 'status', 'd',
                     \ ':call gina#action#call(''patch'')<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
-        call gina#custom#mapping#nmap(
+        silent! call gina#custom#mapping#nmap(
                     \ 'status', 'D',
                     \ ':call gina#action#call(''compare'')<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
-        call gina#custom#mapping#nmap(
+        silent! call gina#custom#mapping#nmap(
                     \ '/.*', 'q',
                     \ ':q<cr>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
         let g:gina#command#status#use_default_mappings=0
-        call gina#custom#mapping#nmap(
+        silent! call gina#custom#mapping#nmap(
                     \ 'blame', 'j',
                     \ 'j<Plug>(gina-blame-echo)'
                     \)
-        call gina#custom#mapping#nmap(
+        silent! call gina#custom#mapping#nmap(
                     \ 'blame', 'k',
                     \ 'k<Plug>(gina-blame-echo)'
                     \)
