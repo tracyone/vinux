@@ -24,3 +24,12 @@ function! te#tools#shell_pop() abort
         execute 'VimShell' 
     endif
 endfunction
+"put message from vim command to + register
+function! te#tools#vim_get_message()
+    let l:command=input('Input command: ')
+    if l:command !=# ''
+        execute ':redir @+> | silent '.l:command.' | redir END'
+    else
+        call te#utils#EchoWarning('Empty command is not allowed!', 'err')
+    endif
+endfunction
