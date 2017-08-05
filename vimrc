@@ -106,11 +106,7 @@ endif
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
 silent! call plug#end()
 
-try 
-    colorscheme jellybeans "default setting 
-catch /^Vim\%((\a\+)\)\=:E185/
-    colorscheme desert "default setting 
-endtry
+colorscheme desert "default setting 
 
 if exists('*TVIM_user_init')
     call TVIM_user_init()
