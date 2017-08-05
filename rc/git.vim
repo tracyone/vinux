@@ -87,8 +87,14 @@ else
 endif
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
-Plug 'rhysd/github-complete.vim'
-Plug 'airblade/vim-gitgutter'
+Plug 'rhysd/github-complete.vim',{'for': ['gitcommit', 'markdown']}
+Plug 'airblade/vim-gitgutter', { 'on': [] }
+augroup gitguttergroup 
+    autocmd!
+    autocmd BufWritePost * call plug#load('vim-gitgutter')
+                \| :GitGutterEnable
+                \| autocmd! gitguttergroup
+augroup END
 
 " Git releate ---------------------{{{
 " list git issue
