@@ -259,8 +259,6 @@ nnoremap <Leader>wR <C-w>R
 nnoremap <Leader>wr <C-w>r
 " Move the current window to a new tab page.
 nnoremap <Leader>wt <C-w>T
-" toggle long or short statusline
-nnoremap <leader>ts :call te#utils#OptionToggle('statusline',['%!MyStatusLine(1)','%!MyStatusLine(2)'])<cr>
 " toggle focus coding
 nnoremap <leader>tf :call te#utils#focus_coding()<cr>
 " toggle paste option

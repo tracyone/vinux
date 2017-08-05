@@ -25,12 +25,6 @@ augroup filetype_group
     au BufRead,BufNewFile *.hex,*.out,*.o,*.a Vinarise
     au BufRead,BufNewFile *.fex setlocal filetype=dosini
 
-    if get(g:,'feat_enable_airline') != 1
-        au BufEnter * 
-                    \ if &diff |
-                    \ set statusline=%!MyStatusLine(2) |
-                    \ endif
-    endif
     autocmd FileType qf noremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
     autocmd FileType qf noremap <buffer> s <C-w><Enter><C-w>K

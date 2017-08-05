@@ -97,9 +97,17 @@ endif
 if get(g:,'feat_enable_airline') != 1
     function! MyStatusLine(type)
         let l:mystatus_line='%<%t%m%r%h%w'
-        let l:mystatus_line.="%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}"
+        if winwidth(0) < 70
+            return l:mystatus_line
+        endif
         if a:type == 1
-            let l:mystatus_line.="%= %{exists(':TagbarToggle')?\ tagbar#currenttag('%s".s:seperator."'".",'')\ :\ ''}"
+            let l:mystatus_line.="%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}%= "
+            let l:mystatus_line.="%{exists(':TagbarToggle')?\ tagbar#currenttag('%s".s:seperator."'".",'')\ :\ ''}"
+            let l:mystatus_line.="%{&ft}".s:seperator."%{(&fenc!=''?&fenc:&enc)}[%{&ff}]".s:seperator."%p%%[%l,%v]"
+            let l:mystatus_line.=s:seperator."%{strftime(\"%m/%d\-\%H:%M\")} "
+        elseif a:type == 3
+            "for win32 ctags make gvim slow...
+            let l:mystatus_line.="%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}%= "
             let l:mystatus_line.="%{&ft}".s:seperator."%{(&fenc!=''?&fenc:&enc)}[%{&ff}]".s:seperator."%p%%[%l,%v]"
             let l:mystatus_line.=s:seperator."%{strftime(\"%m/%d\-\%H:%M\")} "
         endif
@@ -108,7 +116,11 @@ if get(g:,'feat_enable_airline') != 1
         endif
         return l:mystatus_line
     endfunction
-    set statusline=%!MyStatusLine(1)
+    if te#env#IsWindows()
+        set statusline=%!MyStatusLine(3)
+    else
+        set statusline=%!MyStatusLine(1)
+    endif
 endif
 set guitablabel=%N\ %t  "do not show dir in tab
 "0, 1 or 2; when to use a status line for the last window
