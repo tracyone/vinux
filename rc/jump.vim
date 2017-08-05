@@ -1,9 +1,14 @@
 " Package info {{{
 " jump to somewhere:file,mru,bookmark
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
-Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
-Plug 'FelikZ/ctrlp-py-matcher'
+if get(g:, 'fuzzysearcher_plugin_name') !=# 'ctrlp' && te#env#SupportAsync()
+    Plug 'Yggdroot/LeaderF'
+    Plug 'Yggdroot/LeaderF-marks',{'on': 'LeaderfMarks'}
+else
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
+    Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
+    Plug 'FelikZ/ctrlp-py-matcher'
+endif
 Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
             \ '<Plug>(easymotion-linebackward)','<Plug>(easymotion-overwin-w)' ]}
 Plug 't9md/vim-choosewin'
@@ -76,78 +81,105 @@ nnoremap <leader>mc :BookmarkClear<cr>
 "Bookmark show all
 nnoremap <leader>mb :BookmarkShowAll<CR>
 " }}}
-" Ctrlp {{{
-" Set Ctrl-P to show match at top of list instead of at bottom, which is so
-" stupid that it's not default
-let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_max_files = 50000
+if get(g:, 'fuzzysearcher_plugin_name') ==# 'ctrlp'
+    " Ctrlp {{{
+    " Set Ctrl-P to show match at top of list instead of at bottom, which is so
+    " stupid that it's not default
+    let g:ctrlp_match_window_reversed = 0
+    let g:ctrlp_max_files = 50000
 
-" Tell Ctrl-P to keep the current VIM working directory when starting a
-" search, another really stupid non default
-let g:ctrlp_working_path_mode = 'w'
+    " Tell Ctrl-P to keep the current VIM working directory when starting a
+    " search, another really stupid non default
+    let g:ctrlp_working_path_mode = 'w'
 
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
-" Ctrl-P ignore target dirs so VIM doesn't have to! Yay!
-let g:ctrlp_custom_ignore = {
-            \ 'dir': '\v[\/]\.(git|svn|hg|build|sass-cache)$',
-            \ 'file': '\v\.(exe|so|dll|o|d|proj|out)$',
-            \ }
-let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'bookmarkdir']
-if executable('ag')
-    "NOTE: --ignore option use wildcard PATTERN instead of regex PATTERN,and
-    "it does not support {}
-    "--hidden:enable seach hidden dirs and files
-    "-g <regex PATTERN>:search file name that match the PATTERN
-    let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup 
-                \ --ignore "*.[odODaA]"
-                \ --ignore "*.exe"
-                \ --ignore "*.out"
-                \ --ignore "*.hex"
-                \ --ignore "cscope*"
-                \ --ignore "*.so"
-                \ --ignore "*.dll"
-                \ -g ""'
-    let g:ctrlp_use_caching = 0
-    let g:ctrlp_show_hidden = 1
-    let g:user_command_async = 1
-else
-    if executable('git')
-        let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+    let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+    " Ctrl-P ignore target dirs so VIM doesn't have to! Yay!
+    let g:ctrlp_custom_ignore = {
+                \ 'dir': '\v[\/]\.(git|svn|hg|build|sass-cache)$',
+                \ 'file': '\v\.(exe|so|dll|o|d|proj|out)$',
+                \ }
+    let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'bookmarkdir']
+    if executable('ag')
+        "NOTE: --ignore option use wildcard PATTERN instead of regex PATTERN,and
+        "it does not support {}
+        "--hidden:enable seach hidden dirs and files
+        "-g <regex PATTERN>:search file name that match the PATTERN
+        let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup 
+                    \ --ignore "*.[odODaA]"
+                    \ --ignore "*.exe"
+                    \ --ignore "*.out"
+                    \ --ignore "*.hex"
+                    \ --ignore "cscope*"
+                    \ --ignore "*.so"
+                    \ --ignore "*.dll"
+                    \ -g ""'
+        let g:ctrlp_use_caching = 0
+        let g:ctrlp_show_hidden = 1
+        let g:user_command_async = 1
+    else
+        if executable('git')
+            let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+        endif
     endif
-endif
-let g:ctrlp_funky_syntax_highlight = 0
-let g:ctrlp_funky_matchtype = 'path'
+    let g:ctrlp_funky_syntax_highlight = 0
+    let g:ctrlp_funky_matchtype = 'path'
 
-"handle bug of gitgutter
-function! s:ctrlp_funky()
-    let g:gitgutter_async=0
-    :CtrlPFunky
-    let g:gitgutter_async=1
-endfunction
-nnoremap <c-k> :call <SID>ctrlp_funky()<cr>
-nnoremap <c-j> :CtrlPBuffer<Cr>
-" toggle ctrlp g:ctrlp_use_caching option
-nnoremap <leader>tj :call te#utils#OptionToggle('g:ctrlp_use_caching',[0,1])<cr>
-" show global mark
-nnoremap <leader>pm :SignatureListGlobalMarks<Cr>
-" ctrlp buffer 
-nnoremap <Leader>pl :CtrlPBuffer<Cr>
-nnoremap <c-l> :CtrlPMRUFiles<cr>
-"CtrlP mru
-nnoremap <Leader>pr :CtrlPMRUFiles<cr>
-"CtrlP file
-nnoremap <Leader>pp :CtrlP<cr>
-" narrow the list down with a word under cursor
-"CtrlP function 
-nnoremap <Leader>pU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-"CtrlP cmd
-nnoremap <Leader>pc :CtrlPCmdPalette<cr>
-"CtrlP function
-nnoremap <Leader>pk :CtrlPFunky<cr>
-"CtrlP cmd
-nnoremap <Leader><Leader> :CtrlP<cr>
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-"}}}
+    "handle bug of gitgutter
+    function! s:ctrlp_funky()
+        let g:gitgutter_async=0
+        :CtrlPFunky
+        let g:gitgutter_async=1
+    endfunction
+    nnoremap <c-k> :call <SID>ctrlp_funky()<cr>
+    nnoremap <c-j> :CtrlPBuffer<Cr>
+    " toggle ctrlp g:ctrlp_use_caching option
+    nnoremap <leader>tj :call te#utils#OptionToggle('g:ctrlp_use_caching',[0,1])<cr>
+    " show global mark
+    nnoremap <leader>pm :SignatureListGlobalMarks<Cr>
+    " ctrlp buffer 
+    nnoremap <Leader>pl :CtrlPBuffer<Cr>
+    nnoremap <c-l> :CtrlPMRUFiles<cr>
+    "CtrlP mru
+    nnoremap <Leader>pr :CtrlPMRUFiles<cr>
+    "CtrlP file
+    nnoremap <Leader>pp :CtrlP<cr>
+    " narrow the list down with a word under cursor
+    "CtrlP function 
+    nnoremap <Leader>pU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+    "CtrlP cmd
+    nnoremap <Leader>pc :CtrlPCmdPalette<cr>
+    "CtrlP function
+    nnoremap <Leader>pk :CtrlPFunky<cr>
+    "CtrlP cmd
+    nnoremap <Leader><Leader> :CtrlP<cr>
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+    "}}}
+else
+
+    " show global mark
+    nnoremap <leader>pm :LeaderfMarks<Cr>
+
+    nnoremap <c-k> :LeaderfFunction<cr>
+    " buffer 
+    nnoremap <Leader>pl :LeaderfBuffer<Cr>
+    " recent file 
+    nnoremap <c-l> :LeaderfMru<cr>
+    nnoremap <Leader>pr :LeaderfMru<cr>
+    "file
+    nnoremap <Leader>pp :LeaderfFile<cr>
+    "cmd
+    nnoremap <Leader>ps :LeaderfSelf<cr>
+    "leaderf cmd
+    nnoremap <Leader>ps :LeaderfSelf<cr>
+    "leaderf cmd
+    nnoremap <Leader>pt :LeaderfBufTag<cr>
+    "colorsceme
+    nnoremap <Leader>pc :LeaderfColorscheme<cr>
+    "CtrlP cmd
+    let g:Lf_ShortcutF = '<C-P>'
+    let g:Lf_ShortcutB = '<C-j>'
+    nnoremap <Leader><Leader> :LeaderfFile<cr>
+endif
 " Misc {{{
 let g:SignatureEnabledAtStartup=1
 let g:choosewin_overlay_enable = 1

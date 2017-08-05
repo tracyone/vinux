@@ -5,7 +5,19 @@ if(!te#env#IsWindows())
             call te#utils#run_command('tmux rename-window '.l:name)
         endfunction
         Plug 'christoomey/vim-tmux-navigator'
-        Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
+        if get(g:, 'fuzzysearcher_plugin_name') ==# 'ctrlp'
+            Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
+            "CtrlP tmux window
+            nnoremap <Leader>uu :CtrlPTmux w<cr>
+            "CtrlP tmux buffer
+            nnoremap <Leader>uf :CtrlPTmux b<cr>
+            "CtrlP tmux session
+            nnoremap <Leader>um :CtrlPTmux<cr>
+            "CtrlP tmux command
+            nnoremap <Leader>ud :CtrlPTmux c<cr>
+            "CtrlP tmux command interactively
+            nnoremap <Leader>ui :CtrlPTmux ci<cr>
+        endif
         Plug 'jebaum/vim-tmuxify'
         if !te#env#IsDisplay() || !te#env#SupportFeature('clipboard')
             Plug 'kurtenbachkyle/vim-tmux-buffet',{'on': ['TmuxBuffetRegisterToTmux', 'TmuxBuffetCopyToUnnamed']}
@@ -18,16 +30,6 @@ if(!te#env#IsWindows())
         call te#meta#map('nnoremap <silent>','j',':TmuxNavigateDown<cr>')
         call te#meta#map('nnoremap <silent>','k',':TmuxNavigateUp<cr>')
         call te#meta#map('nnoremap <silent>','w',':TmuxNavigatePrevious<cr>')
-        "CtrlP tmux window
-        nnoremap <Leader>uu :CtrlPTmux w<cr>
-        "CtrlP tmux buffer
-        nnoremap <Leader>uf :CtrlPTmux b<cr>
-        "CtrlP tmux session
-        nnoremap <Leader>um :CtrlPTmux<cr>
-        "CtrlP tmux command
-        nnoremap <Leader>ud :CtrlPTmux c<cr>
-        "CtrlP tmux command interactively
-        nnoremap <Leader>ui :CtrlPTmux ci<cr>
         "rename windows
         nnoremap <Leader>uw :call <SID>rename_tmux_win()<cr>
         let g:tmuxify_custom_command = 'tmux split-window -p 38'

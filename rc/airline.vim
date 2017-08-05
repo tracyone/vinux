@@ -8,9 +8,12 @@ Plug 'vim-airline/vim-airline-themes'
 " Config {{{
 let g:airline_extensions = []
 
-let g:airline_extensions = ['tabline', 'tagbar', 'ctrlp']
+let g:airline_extensions = ['tabline', 'tagbar']
 if get(g:,'git_plugin_name') ==# 'vim-fugitive' && get(g:, 'feat_enable_git')
     call add(g:airline_extensions, 'branch')
+endif
+if get(g:, 'fuzzysearcher_plugin_name') ==# 'ctrlp'
+    call add(g:airline_extensions, 'ctrlp')
 endif
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
