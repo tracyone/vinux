@@ -17,8 +17,12 @@ Plug 'itchyny/screensaver.vim'
 "config ...
 function! s:fun_setting()
     let g:screensaver_password = 1
-    let s:password=screensaver#random#number()
-    call screensaver#source#password#set(sha256(s:password))
+    try
+        let s:password=screensaver#random#number()
+    catch /^Vim\%((\a\+)\)\=:E117/
+        let s:password=0
+    endtry
+    silent! call screensaver#source#password#set(sha256(s:password))
     nnoremap <Leader>ar :call EnterScreensaver(0)<cr>
 endfunction
 call te#feat#register_vim_enter_setting(function('<SID>fun_setting'))
