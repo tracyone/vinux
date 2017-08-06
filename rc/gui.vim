@@ -23,6 +23,9 @@ if te#env#IsGui()
     else
         set guifont=Monaco:h12:cANSI
         set guifontwide=YaHei_Mono:h12.5:cGB2312
+        if has("directx")
+            set renderoptions=type:directx
+        endif
     endif
     if get(g:,'airline_powerline_fonts') == 1
         if te#env#IsMacVim()
