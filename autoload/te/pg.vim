@@ -115,8 +115,13 @@ function! te#pg#do_make()
     :call te#utils#EchoWarning('making ...')
     :wa
     if empty(glob('makefile')) && empty(glob('Makefile'))
-        :call te#utils#run_command('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
-                    \.fnamemodify(expand('%'),':r'),1)
+        if te#env#IsWindows()
+            :call te#utils#run_command('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && '
+                        \.fnamemodify(expand('%'),':r'),1)
+        else
+            :call te#utils#run_command('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
+                        \.fnamemodify(expand('%'),':r'),1)
+        endif
     else
         if get(g:,'feat_enable_basic') && te#env#SupportAsync()
             call neomake#Make(0,['make'])
