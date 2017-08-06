@@ -18,3 +18,4 @@ org/
 .gui_love.vim
 .screenlock
 autoload/plug.vim
+.LfCache/
