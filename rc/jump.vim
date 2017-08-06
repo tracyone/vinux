@@ -6,7 +6,9 @@ if get(g:, 'fuzzysearcher_plugin_name') !=# 'ctrlp' && te#env#SupportAsync()
     " show global mark
     nnoremap <leader>pm :LeaderfMarks<Cr>
 
+    "function
     nnoremap <c-k> :LeaderfFunction<cr>
+    nnoremap <Leader>pk :LeaderfFunction<cr>
     " buffer 
     nnoremap <Leader>pl :LeaderfBuffer<Cr>
     " recent file 
@@ -14,11 +16,8 @@ if get(g:, 'fuzzysearcher_plugin_name') !=# 'ctrlp' && te#env#SupportAsync()
     nnoremap <Leader>pr :LeaderfMru<cr>
     "file
     nnoremap <Leader>pp :LeaderfFile<cr>
-    "cmd
-    nnoremap <Leader>ps :LeaderfSelf<cr>
     "leaderf cmd
     nnoremap <Leader>ps :LeaderfSelf<cr>
-    "leaderf cmd
     nnoremap <Leader>pt :LeaderfBufTag<cr>
     "colorsceme
     nnoremap <Leader>pc :LeaderfColorscheme<cr>
