@@ -33,3 +33,15 @@ function! te#tools#vim_get_message()
         call te#utils#EchoWarning('Empty command is not allowed!', 'err')
     endif
 endfunction
+
+"update latest stable t_vim
+function! te#tools#update_t_vim() abort
+    cd $VIMFILES
+    if isdirectory('.git') && te#env#Executable('git')
+        let l:command='git fetch --all && '
+        let l:command.='git checkout $(git describe --tags `git rev-list --tags --max-count=1`)'
+        call te#utils#run_command(l:command, 1)
+    else
+        call te#utils#EchoWarning('Not a git repository or git not found!', 'err')
+    endif
+endfunction

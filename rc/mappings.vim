@@ -179,6 +179,9 @@ nnoremap <Leader>hp :tabnew<cr>:h usr_41.txt<cr>:only<cr>
 " open vim function list
 nnoremap <Leader>hf :tabnew<cr>:h function-list<cr>:only<cr>
 
+"update t_vim
+nnoremap <Leader>ud :call te#tools#update_t_vim()<cr>
+
 " quit all
 nnoremap <Leader>qa :qa<cr>
 " quit current split windows
