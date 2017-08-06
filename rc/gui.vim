@@ -135,8 +135,11 @@ if te#env#IsNvim()
     let g:jellybeans_use_term_italics = 0
     let g:jellybeans_use_gui_italics = 0
 endif
+
 let g:jellybeans_overrides = {
 \    'background': { 'guibg': '000000' },
+\    'StatusLine': {'guibg': '282828', 'guifg': 'c7c7c7', 'ctermbg': '235', 'ctermfg': '255'},
+\    'StatusLineNC': {'guibg': '3a3a3a', 'guifg': '808080', 'ctermbg': '236', 'ctermfg': '244'},
 \}
 set background=dark
 " toggle background option.
