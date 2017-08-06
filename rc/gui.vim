@@ -43,6 +43,7 @@ if te#env#IsGui()
     set guioptions-=r "whether show the rigth scroll bar
     set guioptions-=l "whether show the left scroll bar
     set guioptions-=T "whether show toolbar or not
+    set guioptions+=c
     "highlight the screen line of the cursor
     func! MenuToggle()
         if &guioptions =~# '\a*[mT]\a*[mT]'
