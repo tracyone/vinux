@@ -43,7 +43,7 @@ if g:complete_plugin_type ==# 'ycm'
                     \| autocmd! lazy_load_group
     augroup END
 else
-    Plug 'SirVer/ultisnips'
+    Plug 'SirVer/ultisnips'| Plug 'tracyone/snippets'
 endif
 
 if g:complete_plugin_type ==# 'ycm'
