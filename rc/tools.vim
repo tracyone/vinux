@@ -1,7 +1,19 @@
 if te#env#SupportPy2() && !te#env#IsWindows()
     Plug 'ashisha/image.vim'
 endif
-Plug 'arecarn/selection.vim' | Plug 'arecarn/vim-crunch',{'on':'Crunch'}
+if te#env#SupportPy3()
+    Plug 'fedorenchik/VimCalc3',{'on': 'Calc'}
+    " vim calculator
+    nnoremap <Leader>ac :Calc<cr>
+elseif te#env#SupportPy2()
+    Plug 'gregsexton/VimCalc',{'on': 'Calc'}
+    " vim calculator
+    nnoremap <Leader>ac :Calc<cr>
+else
+    Plug 'arecarn/selection.vim' | Plug 'arecarn/vim-crunch',{'on':'Crunch'}
+    " vim calculator
+    nnoremap <Leader>ac :Crunch<cr>
+endif
 Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': ['Ydc','Ydv']}
 Plug 'vim-scripts/DrawIt',{'on': 'DrawIt'}
 Plug 'mbbill/VimExplorer',{'on': 'VE'}
@@ -38,8 +50,6 @@ nnoremap <Leader>ay <esc>:Ydc<cr>
 vnoremap <Leader>ay <esc>:Ydv<cr>
 nnoremap <F10> <esc>:Ydc<cr>
 vnoremap <F10> <esc>:Ydv<cr>
-" vim calculator
-nnoremap <Leader>ac :Crunch<cr>
 "hex to ascii convert
 nnoremap <leader>ah :call Hex2asciiConvert()<cr>
 " open current file's position with default file explorer
