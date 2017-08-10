@@ -1,4 +1,4 @@
-if te#env#SupportPy()
+if te#env#SupportPy2() && !te#env#IsWindows()
     Plug 'ashisha/image.vim'
 endif
 Plug 'arecarn/selection.vim' | Plug 'arecarn/vim-crunch',{'on':'Crunch'}
