@@ -14,7 +14,7 @@ if(!te#env#IsWindows())
             "CtrlP tmux session
             nnoremap <Leader>um :CtrlPTmux<cr>
             "CtrlP tmux command
-            nnoremap <Leader>ud :CtrlPTmux c<cr>
+            nnoremap <Leader>uc :CtrlPTmux c<cr>
             "CtrlP tmux command interactively
             nnoremap <Leader>ui :CtrlPTmux ci<cr>
         endif
