@@ -12,7 +12,8 @@ function! te#tools#shell_pop() abort
         endif
     endif
     if te#env#SupportTerminal()  && te#env#IsVim8()
-        :terminal
+        "close terminal windows automatically after exit.
+        :terminal ++close
         if l:fullbuffer == 1
             execute 'normal '."\<c-w>:only\<cr>"
         else

@@ -112,7 +112,7 @@ function! te#env#SupportTimer() abort
 endfunction
 
 function! te#env#SupportTerminal()
-    return te#env#IsNvim() || (has('patch-8.0.812') && has('terminal'))
+    return te#env#IsNvim() || (has('patch-8.0.896') && has('terminal'))
 endfunction
 
 function! te#env#SupportFeature(feature_name) abort
