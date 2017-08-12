@@ -11,12 +11,17 @@ function! te#tools#shell_pop() abort
             execute 'rightbelow '.l:line.'split'
         endif
     endif
+    if te#env#IsGui()
+        let l:shell='bash'
+    else
+        let l:shell=&shell
+    endif
     if te#env#SupportTerminal()  && te#env#IsVim8()
         if l:fullbuffer == 1
-            :terminal ++close ++curwin
+            execute ':terminal ++close ++curwin '.l:shell
         else
             "close terminal windows automatically after exit.
-            :terminal ++close
+            execute ':terminal ++close '.l:shell
             execute 'normal '."\<c-w>r"
         endif
     elseif te#env#SupportTerminal() && te#env#IsNvim()
