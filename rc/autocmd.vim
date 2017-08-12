@@ -32,6 +32,7 @@ augroup filetype_group
     autocmd FileType sh setlocal foldmethod=indent
     autocmd FileType qfreplace setlocal nofoldenable | nmap <buffer> q :bdelete<cr>
     autocmd FileType gitcommit setlocal nofoldenable cursorline
+    autocmd FileType vimcalc setlocal nonu nornu
 augroup END
 if te#env#IsNvim()
     au misc_group TermOpen * setlocal nonu signcolumn=no
