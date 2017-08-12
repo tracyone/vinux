@@ -23,7 +23,12 @@ let g:startify_files_number = 5
 let g:startify_change_to_vcs_root = 0
 let g:startify_session_sort = 1
 let g:startify_custom_header = [
+            \ '                                ',                            
+            \ '    '.strftime("%Y %b %d %X").' ',                            
+            \ '                                ',                            
             \ '    ['.g:t_vim_version.'] ',
+            \ '',
+            \ '',
             \ ]
 
 let g:startify_commands = [
