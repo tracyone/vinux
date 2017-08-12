@@ -215,24 +215,6 @@ function! te#utils#find_mannel() abort
     endif
 endfunction
 
-function! te#utils#coding_style_toggle() abort
-    if &tabstop != 8
-        set tabstop=8  
-        set shiftwidth=8 
-        set softtabstop=8 
-        set noexpandtab
-        set nosmarttab
-        call te#utils#EchoWarning('change to linux kernel coding style ...')
-    else
-        set tabstop=4  
-        set shiftwidth=4 
-        set softtabstop=4 
-        set expandtab
-        set smarttab
-        call te#utils#EchoWarning('Use space instead of tab ...')
-    endif
-endfunction
-
 function! s:get_listed_buf_order_num() abort
     let l:i=1
 	if te#env#SupportAsync()

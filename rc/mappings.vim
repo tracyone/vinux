@@ -224,8 +224,6 @@ nnoremap <Left> :call te#utils#tab_buf_switch(0)<cr>
 
 nnoremap <Right> :call te#utils#tab_buf_switch(-1)<cr>
 
-" toggle coding style 
-nnoremap <leader>tc :call te#utils#coding_style_toggle()<cr>
 " vertical open window
 nnoremap <Leader>wv :vsp<cr>
 " vertical open window then focus the new one
@@ -271,8 +269,10 @@ nnoremap <leader>tf :call te#utils#focus_coding()<cr>
 nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
 " Toggle termguicolors
 nnoremap <Leader>tl :call te#utils#OptionToggle('termguicolors',[1,0])<cr>
-
+"textwidth between 0 and 80
 nnoremap <Leader>tw :call te#utils#OptionToggle('textwidth',[80,0])<cr>
+" cursorline toggle
+nnoremap <Leader>tc :call te#utils#OptionToggle('cursorline',[1,0])<cr>
 " feature enable
 nnoremap <Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
 " feature disable
