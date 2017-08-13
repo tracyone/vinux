@@ -182,7 +182,17 @@ nnoremap <Leader>lo :Love<cr>
 nnoremap <Leader>sc :Neomake<cr>
 nnoremap <Leader>ch :call te#utils#check_health()<cr>
 "let g:neomake_open_list=2
-let g:neomake_info_sign = {'text': 'i', 'texthl': 'NeomakeInfoSign'}
+if !te#env#IsGui()
+    let g:neomake_info_sign = {'text': 'i', 'texthl': 'NeomakeInfoSign'}
+    let g:neomake_warning_sign = {
+                \ 'text': 'W',
+                \ 'texthl': 'WarningMsg',
+                \ }
+    let g:neomake_error_sign = {
+                \ 'text': 'E',
+                \ 'texthl': 'ErrorMsg',
+                \ }
+endif
 
 " }}}
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 

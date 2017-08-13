@@ -37,5 +37,8 @@ augroup END
 if te#env#IsNvim()
     au misc_group TermOpen * setlocal nonu signcolumn=no
 endif
+if get(g:, 'feat_enable_basic')
+    autocmd filetype_group BufWritePost,BufEnter *.php,*.sh Neomake
+endif
 
 
