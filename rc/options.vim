@@ -50,6 +50,7 @@ endif
 "}}}
 "do not Ring the bell (beep or screen flash) for error messages
 set noerrorbells
+set belloff=all
 set mat=2  
 set report=0  "Threshold for reporting number of lines changed
 set lazyredraw  " Don't update the display while executing macros
