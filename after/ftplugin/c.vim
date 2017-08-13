@@ -79,3 +79,7 @@ let g:clang_format#style_options = {
 
 let b:delimitMate_matchpairs = '(:),[:],{:}'
 
+let b:match_words=
+\ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
+\ '\<switch\>:\<case\>:\<default\>'
+
