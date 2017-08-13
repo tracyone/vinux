@@ -281,6 +281,7 @@ nnoremap <Leader>fd :call te#feat#feat_dyn_enable(0)<cr>
 nnoremap <Leader>fu :call te#feat#gen_feature_vim()<cr>
 nnoremap <Leader>dj <c-u>
 nnoremap <Leader>dd <c-d>
+nnoremap <Leader>pw :call te#utils#EchoWarning(getcwd())<cr>
 " cd to any plugin directory
 nnoremap <Leader>cp :call te#utils#cd_to_plugin(g:t_vim_plugin_install_path)<cr>
 nnoremap <silent> <BS> <C-o>
