@@ -127,7 +127,6 @@ autocmd filetype_group FileType qf nmap <buffer> <Space><Space>  <plug>(quickr_p
 " Matchit.vim {{{
 "extend %
 runtime macros/matchit.vim "important 
-let g:loaded_matchit=0
 let b:match_ignorecase=1 
 set mps+=<:>
 set mps+=":"
