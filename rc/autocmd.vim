@@ -38,7 +38,7 @@ if te#env#IsNvim()
     au misc_group TermOpen * setlocal nonu signcolumn=no
 endif
 if get(g:, 'feat_enable_basic') && te#env#SupportAsync()
-    autocmd filetype_group BufWritePost,BufEnter *.php,*.sh Neomake
+    autocmd filetype_group BufWritePost,BufEnter *.php,*.sh,*.js Neomake
 endif
 
 
