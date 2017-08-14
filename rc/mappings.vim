@@ -288,6 +288,9 @@ nnoremap <silent> <BS> <C-o>
 "newtab
 nnoremap <Leader>nt :tabnew<cr>
 
+"generate tags and cscope
+nnoremap <localleader>u :call te#pg#do_cs_tags(getcwd(), 0x3)<cr>
+
 nmap s <Sop>
 nnoremap sj za
 vnoremap sf zf

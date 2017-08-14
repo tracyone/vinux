@@ -38,7 +38,10 @@ function! te#pg#cctree() abort
     endif
 endfunction
 
-function! te#pg#do_cs_tags(dir) abort
+"option: 0x01-->generate tags only
+"        0x02-->generate cscope only
+"        0x03-->generate cscope and tags
+function! te#pg#do_cs_tags(dir, option) abort
     if(te#env#IsWindows())
         let l:tagfile=a:dir.'\\'.'tags'
         let l:cscopefiles=a:dir.'\\'.'cscope.files'
@@ -50,13 +53,31 @@ function! te#pg#do_cs_tags(dir) abort
         let l:cscopeout=a:dir.'/cscope.out'
         let l:cctreeout=a:dir.'/cctree.out'
     endif
+    if type(a:option) != g:t_number
+        call te#utils#EchoWarning('Wrong argument! Option must be a number', 'err')
+        return
+    endif
     :silent! call delete(l:cctreeout)
-    if filereadable('tags')
-        let tagsdeleted=delete(l:tagfile)
-        if(tagsdeleted!=0)
-            :call te#utils#EchoWarning('Fail to do tags! I cannot delete the tags')
-            return
+    if and(a:option, 0x01)
+        if filereadable('tags')
+            let tagsdeleted=delete(l:tagfile)
+            if(tagsdeleted!=0)
+                :call te#utils#EchoWarning('Fail to do tags! I cannot delete the tags')
+                return
+            endif
         endif
+        if(executable('ctags'))
+            if &ft ==# 'cpp'
+                call te#utils#run_command('ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .')
+            elseif &ft ==# 'c'
+                call te#utils#run_command('ctags -R --c-types=+p --fields=+S *')
+            else
+                call te#utils#run_command('ctags -R *')
+            endif
+        endif
+    endif
+    if !and(a:option, 0x02) || (&ft !=# 'c' && &ft !=# 'cpp')
+        return
     endif
     if filereadable(l:cscopefiles)
         let csfilesdeleted=delete(l:cscopefiles)
@@ -77,10 +98,6 @@ function! te#pg#do_cs_tags(dir) abort
             return
         endif
     endif
-    "if(executable('ctags'))
-        "silent! execute "!ctags -R --c-types=+p --fields=+S *"
-        "silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-    "endif
     if(!te#env#IsWindows())
         let l:generate_cscopefiles='find ' .a:dir. ' -name "*.[chsS]" > '  . l:cscopefiles
     else
@@ -97,12 +114,12 @@ endfunction
 function! te#pg#gen_cs_out() abort
     let l:project_root=getcwd()
     if empty(glob('.project'))
-        :call te#pg#do_cs_tags(getcwd())
+        :call te#pg#do_cs_tags(getcwd(),0x02)
     else
         for l:line in readfile('.project', '')
             let l:ans=input('Generate cscope database in '.l:line.' [y/n/a]?','y')
             if l:ans =~# '\v^[yY]$'
-                call te#pg#do_cs_tags(l:line)
+                call te#pg#do_cs_tags(l:line, 0x02)
             endif
         endfor
     endif

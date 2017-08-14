@@ -9,6 +9,10 @@ setlocal suffixesadd=.vim
 setlocal iskeyword+=:,#
 
 "keymapping...
-nnoremap <buffer><silent> <c-]>  :call lookup#lookup()<cr>
-nnoremap <buffer><silent> <c-t>  :call lookup#pop()<cr>
-nnoremap <buffer><silent> <Enter> :call lookup#lookup()<cr>
+if get(g:, 'feat_enable_vim')
+    nnoremap <buffer><silent> <c-]>  :call lookup#lookup()<cr>
+    nnoremap <buffer><silent> <c-t>  :call lookup#pop()<cr>
+    nnoremap <buffer><silent> <Enter> :call lookup#lookup()<cr>
+else
+    nnoremap <buffer><silent> <Enter> <C-]>
+endif
