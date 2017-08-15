@@ -20,9 +20,8 @@ if(!te#env#IsWindows())
         endif
         Plug 'jebaum/vim-tmuxify'
         if !te#env#IsDisplay() || !te#env#SupportFeature('clipboard')
-            Plug 'kurtenbachkyle/vim-tmux-buffet',{'on': ['TmuxBuffetRegisterToTmux', 'TmuxBuffetCopyToUnnamed']}
-            vnoremap <C-C> y:TmuxBuffetRegisterToTmux<cr>
-            inoremap <c-v>	<C-o>:TmuxBuffetCopyToUnnamed<cr><C-o>p
+            vnoremap <C-C> y:call te#tmux#reg2tmux()<cr>
+            inoremap <c-v>	<C-o>:call te#tmux#tmux2reg()<cr><C-o>p
         endif
         let g:tmux_navigator_no_mappings = 1
         call te#meta#map('nnoremap <silent>','l',':TmuxNavigateRight<cr>')
