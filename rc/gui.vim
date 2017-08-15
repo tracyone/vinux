@@ -12,6 +12,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'nanotech/jellybeans.vim'
 Plug 'vim-scripts/desert256.vim'
 Plug 'liuchengxu/space-vim-dark'
+Plug 'ayu-theme/ayu-vim'
 " }}}
 "Gui releate{{{
 if te#env#IsGui()
