@@ -5,6 +5,7 @@ Plug 'hari-rangarajan/CCTree'
 if(!te#env#IsWindows())
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
 endif
+Plug 'jyelloz/vim-dts-indent'
 " }}}
 " A.vim ---------------------------{{{
 ":A switches to the header file corresponding to the current file being  edited (or vise versa)
