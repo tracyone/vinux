@@ -6,6 +6,7 @@ function! te#tools#shell_pop() abort
     let l:fullbuffer=1
     "any list buffer exist or buffer is startify
     if bufexists(expand('%')) && &filetype !=# 'startify'
+                \ && &modified == 0
         let l:fullbuffer=0
         if te#env#IsNvim() || !te#env#SupportTerminal()
             execute 'rightbelow '.l:line.'split'
@@ -17,7 +18,7 @@ function! te#tools#shell_pop() abort
         let l:shell=&shell
     endif
     if te#env#SupportTerminal()  && te#env#IsVim8()
-        if l:fullbuffer == 1
+        if l:fullbuffer == 1 && &modified == 0
             execute ':terminal ++close ++curwin '.l:shell
         else
             "close terminal windows automatically after exit.
