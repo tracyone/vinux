@@ -28,6 +28,9 @@ augroup filetype_group
     autocmd FileType qf noremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR> 
                 \ | noremap <buffer> s <C-w><Enter><C-w>K
                 \ | nnoremap <buffer> q :ccl<cr>
+                \ | nnoremap <buffer> o <CR><C-w>p
+                \ | nnoremap <buffer> t <C-w><CR><C-w>T
+                \ | nnoremap <buffer> v <C-w><CR><C-w>L<C-w>p<C-w>J<C-w>p
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
     autocmd FileType sh setlocal foldmethod=indent
     autocmd FileType qfreplace setlocal nofoldenable | nmap <buffer> q :bdelete<cr>
