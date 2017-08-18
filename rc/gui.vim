@@ -40,7 +40,7 @@ if te#env#IsGui()
             set guifontwide=YaHei_Consolas_Hybrid:h12:cGB2312
         endif
     endif
-    au misc_group GUIEnter * call s:MaximizeWindow()
+    au misc_group VimEnter * call te#tools#max_win()
     " turn on this option as well
     set guioptions-=b
     set guioptions-=m "whether use menu
@@ -105,17 +105,6 @@ if te#env#IsGui()
     amenu PopUp.&Find\ Text :silent! execute "vimgrep " . expand("<cword>") . " **/*.[ch]". " **/*.cpp" . " **/*.cc"<cr>:cw 5<cr>
     amenu PopUp.&Open\ Header/Source :AT<cr>
     "}}}
-    function! s:MaximizeWindow()
-        if te#env#IsUnix()
-            :win 1999 1999
-            silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
-        elseif te#env#IsWindows()
-            :simalt~x "maximize window
-        else
-            :win 1999 1999
-        endif
-        ":set vb t_vb=
-    endfunction
     call te#meta#map('map', 'o',':Fontzoom!<cr>')
     call te#meta#map('map','-','<Plug>(fontzoom-smaller)')
     call te#meta#map('map','=','<Plug>(fontzoom-larger)')

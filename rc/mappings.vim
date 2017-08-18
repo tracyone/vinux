@@ -291,6 +291,8 @@ nnoremap <Leader>nt :tabnew<cr>
 "generate tags and cscope
 nnoremap <localleader>u :call te#pg#do_cs_tags(getcwd(), 0x3)<cr>
 
+nnoremap <leader>mw :call te#tools#max_win()<cr>
+
 nmap s <Sop>
 nnoremap sj za
 vnoremap sf zf
