@@ -266,7 +266,7 @@ nnoremap <Leader>wr <C-w>r
 " Move the current window to a new tab page.
 nnoremap <Leader>wt <C-w>T
 " toggle focus coding
-nnoremap <leader>tf :call te#utils#focus_coding()<cr>
+nnoremap <leader>tv :call te#utils#focus_coding()<cr>
 " toggle paste option
 " toggle paste option
 nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
