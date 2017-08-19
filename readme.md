@@ -5,12 +5,8 @@
 **Quick Install**
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/t-vim/master/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/t-vim/master/install.sh)"
 ```
-
-
-![screenshot](https://user-images.githubusercontent.com/4246425/28752015-e6c8080c-7547-11e7-9d51-f09c4d00f34e.png)
-
 
 **Wiki**
 
