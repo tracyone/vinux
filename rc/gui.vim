@@ -40,7 +40,7 @@ if te#env#IsGui()
             set guifontwide=YaHei_Consolas_Hybrid:h12:cGB2312
         endif
     endif
-    au misc_group VimEnter * call te#tools#max_win()
+    call te#feat#register_vim_enter_setting(function('te#tools#max_win'))
     " turn on this option as well
     set guioptions-=b
     set guioptions-=m "whether use menu
