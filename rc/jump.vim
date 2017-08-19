@@ -113,7 +113,7 @@ Plug 't9md/vim-choosewin'
 Plug 'kshenoy/vim-signature'
 Plug 'MattesGroeger/vim-bookmarks'
 if get(g:,'feat_enable_airline') == 0
-    Plug 'ap/vim-buftabline'
+    Plug 'tracyone/vim-buftabline'
     let g:buftabline_numbers=2
     let g:buftabline_show=1
     let g:buftabline_indicators=1
