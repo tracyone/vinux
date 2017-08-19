@@ -66,3 +66,41 @@ function! te#tools#max_win() abort
         :win 1999 1999
     endif
 endfunction
+
+function! te#tools#buf_only(buffer, bang) abort
+	if a:buffer == ''
+		" No l:buffer provided, use the current l:buffer.
+		let l:buffer = bufnr('%')
+	elseif (a:buffer + 0) > 0
+		" A l:buffer number was provided.
+		let l:buffer = bufnr(a:buffer + 0)
+	else
+		" A l:buffer name was provided.
+		let l:buffer = bufnr(a:buffer)
+	endif
+
+	if l:buffer == -1
+        call te#utils#EchoWarning("No matching l:buffer for" a:buffer, 'err')
+		return
+	endif
+
+	let l:last_buffer = bufnr('$')
+
+	let l:delete_count = 0
+	let l:n = 1
+	while l:n <= l:last_buffer
+		if l:n != l:buffer && buflisted(l:n)
+			if a:bang == '' && getbufvar(l:n, '&modified')
+                call te#utils#EchoWarning('No write since last change for l:buffer (add ! to override)', 'err')
+			else
+				silent exe 'bdel' . a:bang . ' ' . l:n
+				if ! buflisted(l:n)
+					let l:delete_count = l:delete_count+1
+				endif
+			endif
+		endif
+		let l:n = l:n+1
+	endwhile
+
+    call te#utils#EchoWarning(l:delete_count." buffers deleted")
+endfunction

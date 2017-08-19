@@ -146,6 +146,7 @@ noremap <silent> <leader>w= :resize +10<CR>
 "delete the ^M
 nnoremap dm :%s/\r\(\n\)/\1/g<CR>
 
+
 "cd to current buffer's path
 nnoremap <silent> <leader>fc :call te#utils#goto_cur_file(2)<cr> 
 nnoremap <silent> <c-F7> :call te#utils#goto_cur_file(2)<cr> 
@@ -165,6 +166,8 @@ nnoremap <Leader>bn :call te#utils#tab_buf_switch(-1)<cr>
 nnoremap <Leader>bp :call te#utils#tab_buf_switch(0)<cr>
 " delete buffer
 nnoremap <Leader>bk :bdelete<cr>
+"buffer only
+nnoremap <leader>bo :call te#tools#buf_only('', '')<cr>
 " save file
 nnoremap <Leader>fs :call te#utils#SaveFiles()<cr>
 nnoremap <Leader>ff :call te#utils#SaveFiles()<cr>
