@@ -51,7 +51,10 @@ else
                 \ 'file': '\v\.(exe|so|dll|o|d|proj|out)$',
                 \ }
     let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'bookmarkdir']
-    if executable('ag')
+    if executable('rg')
+        let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+        let g:ctrlp_use_caching = 0
+    elseif executable('ag')
         "NOTE: --ignore option use wildcard PATTERN instead of regex PATTERN,and
         "it does not support {}
         "--hidden:enable seach hidden dirs and files
@@ -66,13 +69,17 @@ else
                     \ --ignore "*.dll"
                     \ -g ""'
         let g:ctrlp_use_caching = 0
-        let g:ctrlp_show_hidden = 1
-        let g:user_command_async = 1
+    elseif executable('git')
+        let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
     else
-        if executable('git')
-            let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-        endif
+       if te#env#IsWindows()
+           let g:ctrlp_user_command='dir %s /-n /b /s /a-d'
+       else
+           let g:ctrlp_user_command='find %s -type f'
+       endif
     endif
+    let g:user_command_async = 1
+    let g:ctrlp_show_hidden = 1
     let g:ctrlp_funky_syntax_highlight = 0
     let g:ctrlp_funky_matchtype = 'path'
 
