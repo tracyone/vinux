@@ -14,6 +14,12 @@ function! te#tools#shell_pop() abort
     endif
     if te#env#IsGui()
         let l:shell='bash'
+        if te#env#IsWindows()
+            if !executable('bash')
+                let l:shell=&shell
+            endif
+        else
+        endif
     else
         let l:shell=&shell
     endif
