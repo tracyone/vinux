@@ -104,6 +104,8 @@ endif
 
 " Open plug status windows
 nnoremap <Leader>ap :PlugStatus<cr>:only<cr>
+" update plugin
+nnoremap <Leader>au :PlugUpdate<cr>
 silent! call plug#end()
 
 colorscheme desert "default setting 
