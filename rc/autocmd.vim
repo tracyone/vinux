@@ -32,10 +32,9 @@ augroup filetype_group
                 \ | nnoremap <buffer> t <C-w><CR><C-w>T
                 \ | nnoremap <buffer> v <C-w><CR><C-w>L<C-w>p<C-w>J<C-w>p
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
-    autocmd FileType sh setlocal foldmethod=indent
     autocmd FileType qfreplace setlocal nofoldenable | nmap <buffer> q :bdelete<cr>
     autocmd FileType gitcommit setlocal nofoldenable cursorline
-    autocmd FileType vimcalc setlocal nonu nornu
+    autocmd FileType vimcalc,man setlocal nonu nornu
 augroup END
 if te#env#IsNvim()
     au misc_group TermOpen * setlocal nonu signcolumn=no
