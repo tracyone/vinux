@@ -71,13 +71,16 @@ let g:clang_format#style_options = {
             \ 'UseTab' : 'Always',
             \ 'BreakBeforeBraces' : 'Linux',
             \ 'AllowShortIfStatementsOnASingleLine': 'false',
-	    \ 'AllowShortBlocksOnASingleLine': 'false',
-	    \ 'AllowShortCaseLabelsOnASingleLine': 'false',
-	    \ 'AllowShortFunctionsOnASingleLine': 'None',
-	    \ 'AllowShortLoopsOnASingleLine': 'false',
+            \ 'AllowShortBlocksOnASingleLine': 'false',
+            \ 'AllowShortCaseLabelsOnASingleLine': 'false',
+            \ 'AllowShortFunctionsOnASingleLine': 'None',
+            \ 'AllowShortLoopsOnASingleLine': 'false',
             \ 'IndentCaseLabels' : 'false'}
 
 let b:delimitMate_matchpairs = '(:),[:],{:}'
+
+
+vnoremap <buffer><Leader>ct :s/^\s\+/\t/g<cr>
 
 let b:match_words=
 \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
