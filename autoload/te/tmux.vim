@@ -6,7 +6,7 @@ function! s:run_tmux(args) abort
 endfunction
 
 function! s:reg2tmux(reg) abort
-        let args = 'set-buffer "' . escape(a:reg, '"') . '"'
+        let args = 'set-buffer "' . escape(a:reg, '"$\\') . '"'
         silent call s:run_tmux(args)
 endfunction
 
