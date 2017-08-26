@@ -12,7 +12,7 @@ function! te#feat#get_vim_version() abort
         call add(l:result,matchstr(l:msg,'NVIM\s\zs\S\+\ze-'))
     else
         call add(l:result,matchstr(l:msg,'VIM - Vi IMproved\s\zs\d.\d\ze'))
-        call add(l:result, matchstr(l:msg, ':\s\d-\zs\d\{1,3\}\ze'))
+        call add(l:result, matchstr(l:msg, ':\s\d-\zs\d\{1,4\}\ze'))
     endif
     return l:result
 endfunction
