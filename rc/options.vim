@@ -6,7 +6,7 @@ if te#env#IsWindows()
     let $MYVIMRC=$VIMFILES.'/vimrc'
 else
     set keywordprg=""
-    set path=.,/usr/include/
+    set path=.,/usr/include/,$PWD/**
     lan time en_US.UTF-8
     lan ctype en_US.UTF-8
 endif
