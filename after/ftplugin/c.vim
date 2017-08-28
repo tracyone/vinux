@@ -53,6 +53,9 @@ nnoremap <buffer><Leader>gt :call te#pg#cctree()<cr>
 
 nnoremap <buffer><silent> <Enter> :call te#complete#goto_def("")<cr>
 
+nnoremap <buffer><leader>cC :s,//\(.*\),/*\1 */,<cr>
+vnoremap <buffer><leader>cC :s,//\(.*\),/*\1 */,<cr>
+
 setlocal cinoptions=:0,l1,t0,g0,(0)
 setlocal comments    =sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/
 setlocal cindent  "enable specific indenting for C code
