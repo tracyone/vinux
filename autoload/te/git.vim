@@ -116,7 +116,7 @@ function! te#git#git_rebase() abort
     if type(l:remote_name) != g:t_string
         return 2
     endif
-    let l:branch_name = input('Please input the branch name: ','','function,te#git#GetRemoteBr')
+    let l:branch_name = input('Please input the branch name: ','','custom,te#git#GetRemoteBr')
     call te#utils#run_command('git rebase '.l:remote_name.'/'.l:branch_name, 1)
 endfunction
 
