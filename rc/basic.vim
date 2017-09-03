@@ -127,11 +127,11 @@ if(!te#env#SupportTerminal())
     endif
 endif
 
-noremap <F4> :call te#tools#shell_pop()<cr>
+noremap <F4> :call te#tools#shell_pop(0x1)<cr>
 " Open vimshell or neovim's emulator
-nnoremap <Leader>as :call te#tools#shell_pop()<cr>
+nnoremap <Leader>as :call te#tools#shell_pop(0x1)<cr>
 " Open vimshell or neovim's emulator in new tab
-nnoremap <Leader>ns :tabnew<cr>:call te#tools#shell_pop()<cr>
+nnoremap <Leader>ns :call te#tools#shell_pop(0x4)<cr>
 "}}}
 " Nerdtree {{{
 let g:NERDTreeShowLineNumbers=0	"don't show line number

@@ -146,3 +146,31 @@ function! te#git#archive_my_vim_cfg(git_dir, out_name) abort
     call te#utils#EchoWarning('Creating '.l:cur_dir.'/'.l:out_name.' ...')
 endfunction
 
+function! te#git#show_log() abort
+    if te#env#Executable('tig') 
+        if te#env#IsTmux()
+            call te#tmux#run_command('tig', 0x1)
+            return 0
+        elseif te#env#SupportTerminal()
+            if te#env#IsNvim()
+                :terminal tig
+            else
+                :terminal ++close tig
+            endif
+            return 0
+        endif
+    endif
+
+    if exists(':Gitv')
+        :Gitv --all
+        return 0
+    endif
+
+    if exists(':Gina')
+        :tabnew
+        :Gina log --max-count=1000 --opener=vsplit
+        return 0
+    endif
+    call te#utils#EchoWarning('Oooo somthing is wrong with your vim!', 'err')
+    return 1
+endfunction

@@ -18,7 +18,6 @@ if(!te#env#IsWindows())
             "CtrlP tmux command interactively
             nnoremap <Leader>ui :CtrlPTmux ci<cr>
         endif
-        Plug 'jebaum/vim-tmuxify'
         if !te#env#IsDisplay() || !te#env#SupportFeature('clipboard')
             vnoremap <C-C> y:call te#tmux#reg2tmux()<cr>
             inoremap <c-v>	<C-o>:call te#tmux#tmux2reg()<cr><C-o>p
@@ -31,7 +30,5 @@ if(!te#env#IsWindows())
         call te#meta#map('nnoremap <silent>','w',':TmuxNavigatePrevious<cr>')
         "rename windows
         nnoremap <Leader>uw :call <SID>rename_tmux_win()<cr>
-        let g:tmuxify_custom_command = 'tmux split-window -p 38'
-        let g:tmuxify_map_prefix = '<leader>u'
     endif
 endif

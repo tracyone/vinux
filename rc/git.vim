@@ -66,6 +66,7 @@ if get(g:, 'git_plugin_name') ==# 'gina.vim' && te#env#SupportAsync()
     call te#feat#register_vim_enter_setting(function('<SID>gina_setting'))
 else
     Plug 'tpope/vim-fugitive'
+    Plug 'gregsexton/gitv', { 'on': 'Gitv' }
     let g:fugitive_no_maps=0
     nnoremap <F3> :Gstatus<cr>
     " Open git status window
@@ -73,7 +74,6 @@ else
     " Open github url
     nnoremap <Leader>gh :Gbrowse<cr>
     " Open git log( browser mode)
-    nnoremap <Leader>gl :Gitv --all<cr>
     " Open git log(file mode)
     nnoremap <Leader>gL :Gitv! --all<cr>
     " Open git log(file mode)
@@ -85,7 +85,7 @@ else
     " git cd
     nnoremap <Leader>gc :Gcd<cr>:call te#utils#EchoWarning(getcwd())<cr>
 endif
-Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+nnoremap <Leader>gl :call te#git#show_log()<cr>
 if te#env#SupportPy2()
     Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
 endif

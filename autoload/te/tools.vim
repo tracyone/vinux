@@ -1,6 +1,9 @@
 "pop vimshell
-function! te#tools#shell_pop() abort
+function! te#tools#shell_pop(option) abort
     " 38% height of current window
+    if and(a:option, 0x04)
+        :tabnew
+    endif
     let l:line=(38*&lines)/100
     if  l:line < 10 | let l:line = 10 |endif
     let l:fullbuffer=1
@@ -33,6 +36,11 @@ function! te#tools#shell_pop() abort
         endif
     elseif te#env#SupportTerminal() && te#env#IsNvim()
         :terminal
+    elseif te#env#IsTmux()
+        if and(a:option, 0x04)
+            :q
+        endif
+        call te#tmux#run_command(&shell, a:option)
     else 
         execute 'VimShell' 
     endif
