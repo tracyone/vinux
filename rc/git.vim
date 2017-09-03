@@ -86,7 +86,9 @@ else
     nnoremap <Leader>gc :Gcd<cr>:call te#utils#EchoWarning(getcwd())<cr>
 endif
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
-Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
+if te#env#SupportPy2()
+    Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
+endif
 Plug 'rhysd/github-complete.vim',{'for': ['gitcommit', 'markdown']}
 Plug 'airblade/vim-gitgutter', { 'on': [] }
 augroup gitguttergroup 
