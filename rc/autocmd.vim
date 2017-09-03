@@ -37,7 +37,9 @@ augroup filetype_group
     autocmd FileType vimcalc,man setlocal nonu nornu
 augroup END
 if te#env#IsNvim()
-    au misc_group TermOpen * setlocal nonu signcolumn=no
+    au misc_group TermOpen * setlocal nonu signcolumn=no | :startinsert
+    "auto close terminal buffer
+    au misc_group TermClose * exe expand('<abuf>').'bd!'
 endif
 if get(g:, 'feat_enable_basic') && te#env#SupportAsync()
     autocmd filetype_group BufWritePost,BufEnter *.php,*.sh,*.js Neomake
