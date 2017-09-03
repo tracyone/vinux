@@ -159,9 +159,9 @@ if te#env#IsVim8()
     let g:t_none=v:t_none
     let g:t_job=v:t_job
     let g:t_channel=v:t_channel
-    "if te#env#SupportTerminal()
-        "set termkey=<C-k>
-    "endif
+    if te#env#SupportTerminal()
+        set termkey=<s-n>
+    endif
 else
     let g:t_number=0
     let g:t_string=1
