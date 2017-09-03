@@ -13,7 +13,7 @@ if g:complete_plugin_type ==# 'ycm' && te#env#SupportYcm()
         Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
         let g:complete_plugin_type_name='YouCompleteMe-x64'
     endif
-    Plug 'tenfyzhong/CompleteParameter.vim', { 'on': [] }
+    "Plug 'tenfyzhong/CompleteParameter.vim', { 'on': [] }
 elseif g:complete_plugin_type ==# 'clang_complete'
     Plug 'Rip-Rip/clang_complete'
 elseif g:complete_plugin_type ==# 'completor.vim' && te#env#IsVim8()
@@ -38,7 +38,7 @@ if g:complete_plugin_type ==# 'ycm'
     Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
     augroup lazy_load_group
         autocmd!
-        autocmd InsertEnter * call plug#load('ultisnips',g:complete_plugin_type_name,'CompleteParameter.vim')
+        autocmd InsertEnter * call plug#load('ultisnips',g:complete_plugin_type_name)
                     \| call delete('.ycm_extra_conf.pyc')  | call youcompleteme#Enable() 
                     \| autocmd! lazy_load_group
     augroup END
@@ -54,11 +54,11 @@ if g:complete_plugin_type ==# 'ycm'
     nnoremap <leader>yp :YcmCompleter GetParent<cr>
     nnoremap <leader>yf :YcmCompleter FixIt<cr>
     nnoremap <Leader>yu :call te#complete#update_ycm()<cr>
-    inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-    smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-    imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-    smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-    imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+    "inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+    "smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+    "imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+    "smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+    "imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
     let g:ycm_key_detailed_diagnostics = '<leader>ys'
     let g:ycm_autoclose_preview_window_after_insertion = 1
     let g:ycm_complete_in_comments = 1
