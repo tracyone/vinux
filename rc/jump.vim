@@ -28,6 +28,7 @@ if get(g:, 'fuzzysearcher_plugin_name') !=# 'ctrlp' && te#env#SupportAsync()
     let g:Lf_DefaultMode='FullPath'
     let g:Lf_StlColorscheme = 'default'
     let g:Lf_StlSeparator = { 'left': '', 'right': '' }
+    let g:Lf_UseMemoryCache = 0
     nnoremap <Leader><Leader> :LeaderfFile<cr>
 else
     Plug 'ctrlpvim/ctrlp.vim'
