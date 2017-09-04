@@ -19,6 +19,7 @@ Plug 'vim-scripts/DrawIt',{'on': 'DrawIt'}
 Plug 'mbbill/VimExplorer',{'on': 'VE'}
 Plug 'qpkorr/vim-renamer',{'on': 'Ren'}
 Plug 'Shougo/vinarise.vim',{'on': 'Vinarise'}
+Plug 'will133/vim-dirdiff',{'on': 'DirDiff'}
 if te#env#IsDisplay()
     Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
 endif
