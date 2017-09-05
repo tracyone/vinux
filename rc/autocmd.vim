@@ -40,6 +40,8 @@ if te#env#IsNvim()
     au misc_group TermOpen * setlocal nonu signcolumn=no | :startinsert
     "auto close terminal buffer
     au misc_group TermClose * exe expand('<abuf>').'bd!'
+elseif te#env#SupportTerminal()
+    autocmd misc_group BufEnter * if &buftype == 'terminal' | setlocal <m-b>= <m-f>= | endif
 endif
 if get(g:, 'feat_enable_basic') && te#env#SupportAsync()
     autocmd filetype_group BufWritePost,BufEnter *.php,*.sh,*.js Neomake
