@@ -50,7 +50,9 @@ endif
 "}}}
 "do not Ring the bell (beep or screen flash) for error messages
 set noerrorbells
+if te#env#IsVim8()
 set belloff=all
+endif
 set mat=2  
 set report=0  "Threshold for reporting number of lines changed
 set lazyredraw  " Don't update the display while executing macros
@@ -174,14 +176,17 @@ else
     let g:t_job=8
     let g:t_channel=9
 endif
-if empty($TMUX)
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-  let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-else
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+
+if te#env#IsVim8()
+    if empty($TMUX)
+      let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+      let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+      let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+    else
+      let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+      let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+      let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+    endif
 endif
 
 "{{{fold setting
