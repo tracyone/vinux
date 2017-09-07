@@ -223,9 +223,15 @@ nnoremap  <leader>8 :call te#utils#tab_buf_switch(8)<cr>
 " tab 9
 nnoremap  <leader>9 :call te#utils#tab_buf_switch(9)<cr>
 
+"switch previous tab or buftab
 nnoremap <Left> :call te#utils#tab_buf_switch(0)<cr>
 
+"switch next tab or buftab
 nnoremap <Right> :call te#utils#tab_buf_switch(-1)<cr>
+
+"move
+nnoremap <Up> <C-b>
+nnoremap <Down> <C-f>
 
 " vertical open window
 nnoremap <Leader>wv :vsp<cr>
