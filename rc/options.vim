@@ -114,8 +114,8 @@ if get(g:,'feat_enable_airline') != 1
             let l:mystatus_line.="%{&ft}".s:seperator."%{(&fenc!=''?&fenc:&enc)}[%{&ff}]".s:seperator."%p%%[%l,%v]"
             let l:mystatus_line.=s:seperator."%{strftime(\"%m/%d\-\%H:%M\")} "
         endif
-        if exists('g:asyncrun_status') && g:asyncrun_status !=# ''
-            let l:mystatus_line.=s:seperator.g:asyncrun_status.' '
+        if exists('*neomakemp#run_status') && neomakemp#run_status() !=# ''
+            let l:mystatus_line.=s:seperator.neomakemp#run_status().' '
         endif
         return l:mystatus_line
     endfunction
