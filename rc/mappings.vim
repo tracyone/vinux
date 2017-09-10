@@ -321,9 +321,9 @@ if te#env#IsNvim()
 elseif te#env#SupportTerminal()
     "terminal-emulator setting
     "execute 'tnoremap <Esc> <C-\><C-n>' "effect <a-> key?
-    execute 'tnoremap jk '.&termkey.'N'
-    execute 'tmap è '.&termkey.'h'
-    execute 'tmap ê '.&termkey.'j'
-    execute 'tmap ë '.&termkey.'k'
-    execute 'tmap ì '.&termkey.'l'
+    silent! execute 'tnoremap jk '.&termkey.'N'
+    silent! execute 'tmap è '.&termkey.'h'
+    silent! execute 'tmap ê '.&termkey.'j'
+    silent! execute 'tmap ë '.&termkey.'k'
+    silent! execute 'tmap ì '.&termkey.'l'
 endif
