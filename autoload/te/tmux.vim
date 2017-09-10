@@ -23,15 +23,23 @@ function! te#tmux#tmux2reg() abort
     :call <SID>tmux2reg()
 endfunction
 
-function! te#tmux#run_command(cmd, option) abort
-    let l:action = ''
+"flag
+"0x1 hor split window
+"0x2 vertical split window
+"0x4 new window
+"0x8 run command in background
+function! te#tmux#run_command(cmd, flag) abort
+    let l:action = 'split-window -p 38 '
     "split
-    if and(a:option, 0x1)
+    if and(a:flag, 0x1)
         let l:action = 'split-window -p 38 '
-    elseif and(a:option, 0x2)
+    elseif and(a:flag, 0x2)
         let l:action = 'split-window -h -p 50 '
-    elseif and(a:option, 0x4)
+    elseif and(a:flag, 0x4)
         let l:action = 'new-window '
     endif
-    call system('tmux '.l:action.a:cmd)
+    if and(a:flag, 0x8)
+        let l:action .= ' -d '
+    endif
+    call system('tmux '.l:action.string(a:cmd))
 endfunction

@@ -439,6 +439,8 @@ function! te#utils#run_command(command,...) abort
         else
             call te#utils#EchoWarning('Wrong argument', 'err')
         endif
+    elseif te#env#IsTmux()
+        call te#tmux#run_command(a:command, 0x0c)
     else
         let l:job_info={}
         let l:job_info.callback=''
