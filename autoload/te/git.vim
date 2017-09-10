@@ -149,13 +149,14 @@ endfunction
 function! te#git#show_log() abort
     if te#env#Executable('tig') 
         if te#env#IsTmux()
-            call te#tmux#run_command('tig', 0x1)
+            call te#tmux#run_command('tig', 0x4)
             return 0
         elseif te#env#SupportTerminal()
+            :tabnew
             if te#env#IsNvim()
                 :terminal tig
             else
-                :terminal ++close tig
+                :terminal ++curwin ++close tig
             endif
             return 0
         endif
