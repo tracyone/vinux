@@ -313,8 +313,17 @@ map <Leader>ba :bufdo bd<cr>
 if te#env#IsNvim()
     "terminal-emulator setting
     execute 'tnoremap <Esc> <C-\><C-n>'
+    execute 'tnoremap jk <C-\><C-n>'
     execute 'tnoremap <A-h> <C-\><C-n><C-w>h'
     execute 'tnoremap <A-j> <C-\><C-n><C-w>j'
     execute 'tnoremap <A-k> <C-\><C-n><C-w>k'
     execute 'tnoremap <A-l> <C-\><C-n><C-w>l'
+elseif te#env#SupportTerminal()
+    "terminal-emulator setting
+    "execute 'tnoremap <Esc> <C-\><C-n>' "effect <a-> key?
+    execute 'tnoremap jk '.&termkey.'N'
+    execute 'tmap è '.&termkey.'h'
+    execute 'tmap ê '.&termkey.'j'
+    execute 'tmap ë '.&termkey.'k'
+    execute 'tmap ì '.&termkey.'l'
 endif
