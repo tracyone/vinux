@@ -317,6 +317,7 @@ if te#env#IsNvim()
     execute 'tnoremap <A-j> <C-\><C-n><C-w>j'
     execute 'tnoremap <A-k> <C-\><C-n><C-w>k'
     execute 'tnoremap <A-l> <C-\><C-n><C-w>l'
+    silent! execute 'tmap <c-v> <C-\><C-n>"*pa'
 elseif te#env#SupportTerminal()
     "terminal-emulator setting
     "execute 'tnoremap <Esc> <C-\><C-n>' "effect <a-> key?
@@ -325,4 +326,5 @@ elseif te#env#SupportTerminal()
     silent! execute 'tmap ê '.&termkey.'j'
     silent! execute 'tmap ë '.&termkey.'k'
     silent! execute 'tmap ì '.&termkey.'l'
+    silent! execute 'tmap <c-v> '.&termkey.'"*'
 endif
