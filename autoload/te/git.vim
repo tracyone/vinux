@@ -73,7 +73,7 @@ function! te#git#GitPush(push_type) abort
         :call te#utils#EchoWarning('Get current branch name failed','err')
         return 3
     endif
-    call te#utils#run_command('git push '.l:remote_name.' '.l:cur_br_name.':refs/'.a:push_type.'/'.l:branch_name, 1)
+    call te#utils#run_command('git push '.l:remote_name.' '.l:cur_br_name.':refs/'.a:push_type.'/'.l:branch_name)
     return 0
 endfunction
 
@@ -117,7 +117,7 @@ function! te#git#git_rebase() abort
         return 2
     endif
     let l:branch_name = input('Please input the branch name: ','','custom,te#git#GetRemoteBr')
-    call te#utils#run_command('git rebase '.l:remote_name.'/'.l:branch_name, 1)
+    call te#utils#run_command('git rebase '.l:remote_name.'/'.l:branch_name)
 endfunction
 
 function! te#git#git_merge() abort
@@ -126,7 +126,7 @@ function! te#git#git_merge() abort
         return 2
     endif
     let l:branch_name = input('which branch do you want to merge: ','','custom,te#git#GetRemoteBr')
-    call te#utils#run_command('git fetch --all && git rebase '.l:remote_name.'/'.l:branch_name, 1)
+    call te#utils#run_command('git fetch --all && git rebase '.l:remote_name.'/'.l:branch_name)
 endfunction
 
 "archive my vim config using git archive.
