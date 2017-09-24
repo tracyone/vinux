@@ -1,5 +1,5 @@
 setlocal colorcolumn=
-nnoremap <buffer> q :q<cr>
+nnoremap <buffer> q :bdelete<cr>
 nnoremap <buffer> <tab> :call search('\|.\{-}\|', 'w')<cr>:noh<cr>2l
 nnoremap <buffer> <S-tab> F\|:call search('\|.\{-}\|', 'wb')<cr>:noh<cr>2l
 nnoremap <buffer> <cr> <c-]>
