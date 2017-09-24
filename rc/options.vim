@@ -87,7 +87,7 @@ set mouse=a "list of menu_flags for using the mouse,support all
 
 "unnamed" to use the * register like unnamed register
 "autoselect" to always put selected text on the clipboardset clipboard+=unnamed
-set clipboard=unnamed
+set clipboard+=unnamed
 "set autochdir  "change to directory of file in buffer
 "
 if get(g:, 'airline_powerline_fonts') == 1
