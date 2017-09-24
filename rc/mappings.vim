@@ -189,10 +189,17 @@ nnoremap <Leader>ud :call te#tools#update_t_vim()<cr>
 nnoremap <Leader>qa :qa<cr>
 " quit current split windows
 function! s:quit_current_win()
-    if tabpagenr('$') != 1 || te#utils#has_listed_buffer() <= 1
-        :q
+    "multiple tab
+    if tabpagenr('$') != 1
+			:quit
     else
-        :bdelete
+        if te#utils#has_listed_buffer() <= 1
+            if (confirm("Do you really want to quit Vim?", "&Yes\n&No", 2)==1)
+                :quit
+            endif
+        else
+            :bdelete
+        endif
     endif
 endfunction
 nnoremap <Leader>qq :call <SID>quit_current_win()<cr>
