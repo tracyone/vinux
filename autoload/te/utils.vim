@@ -247,6 +247,7 @@ augroup Tabpage
     autocmd BufLeave * let s:lastopen_buf=s:get_listed_buf_order_num()
 augroup end
 
+"Return the total number of listed buffers
 function! te#utils#has_listed_buffer() abort
     if te#env#SupportAsync()
         let l:ret = len(getbufinfo({'buflisted':1}))
@@ -254,6 +255,33 @@ function! te#utils#has_listed_buffer() abort
         let l:ret = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
     endif
     return l:ret
+endfunction
+
+"Detect whether current buffer is listed or not
+function! te#utils#is_listed_buffer()
+    return buflisted(bufnr('%'))
+endfunction
+
+" quit current split windows
+function! te#utils#quit_current_win()
+    "multiple tab
+    if tabpagenr('$') != 1
+        :quit
+    else
+        " 0 or 1 listed buffer
+        let l:no_of_listed_buffer=te#utils#has_listed_buffer()
+        if l:no_of_listed_buffer <= 1
+            if !te#utils#is_listed_buffer() && l:no_of_listed_buffer == 1
+                :bdelete
+            else
+                if (confirm("Quit Vim Vim Vim Vim Vim ?", "&Yes\n&No", 2)==1)
+                    :quit
+                endif
+            endif
+        else
+            :bdelete
+        endif
+    endif
 endfunction
 
 "0:previous tab or buffer
