@@ -186,8 +186,8 @@ nnoremap <Leader>hf :tabnew<cr>:h function-list<cr>:only<cr>
 nnoremap <Leader>ud :call te#tools#update_t_vim()<cr>
 
 " quit all
-nnoremap <Leader>qa :qa<cr>
-nnoremap <Leader>qq :call te#utils#quit_current_win()<cr>
+nnoremap <Leader>qa :call te#utils#quit_win(1)<cr>
+nnoremap <Leader>qq :call te#utils#quit_win(0)<cr>
 " quit current tab
 nnoremap <Leader>qw :tabclose<cr>
 " quit all without save

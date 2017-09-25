@@ -263,7 +263,13 @@ function! te#utils#is_listed_buffer()
 endfunction
 
 " quit current split windows
-function! te#utils#quit_current_win()
+function! te#utils#quit_win(all)
+    if a:all == 1
+        if (confirm("Quit Vim Vim Vim Vim Vim ?", "&Yes\n&No", 2)==1)
+            :qa
+        endif
+        return
+    endif
     "multiple tab
     if tabpagenr('$') != 1
         :quit
