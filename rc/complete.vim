@@ -4,7 +4,7 @@ endif
 
 if g:complete_plugin_type ==# 'ycm' && te#env#SupportYcm()
     if te#env#IsUnix()
-        Plug 'Valloric/YouCompleteMe', { 'on': [] }
+        Plug 'Valloric/YouCompleteMe', { 'on': [], 'commit': '32f1eae9cb8b8c7793f632fd24b2289839bf768e' }
         let g:complete_plugin_type_name='YouCompleteMe'
     elseif te#env#IsWin32()
         Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
