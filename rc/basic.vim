@@ -31,7 +31,7 @@ if(!te#env#IsWindows())
     endif
 endif
 if te#env#IsVim8() || te#env#IsNvim()
-    Plug 'neomake/neomake', { 'commit': '48df73ff790214bd9561'}
+    Plug 'neomake/neomake', { 'commit': 'f4a3185ac627474ee592eb1a452ce19c79c8907e'}
     Plug 'tracyone/neomake-multiprocess'
     "ag search c family function
     nnoremap <leader>vf :call neomakemp#global_search(expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]")<cr>
