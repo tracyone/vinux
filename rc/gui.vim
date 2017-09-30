@@ -102,9 +102,10 @@ if te#env#IsGui()
     ""extend", "popup" or "popup_setpos"; what the right
     set mousemodel=popup_setpos
     amenu PopUp.&Undo :UndotreeToggle<CR>
-    amenu PopUp.&Goto\ Definition :cs find g <C-R>=expand("<cword>")<CR><CR>
-    amenu PopUp.&Find\ Text :silent! execute "vimgrep " . expand("<cword>") . " **/*.[ch]". " **/*.cpp" . " **/*.cc"<cr>:cw 5<cr>
+    amenu PopUp.&Goto\ Definition ::call te#complete#goto_def("")<cr>
+    amenu PopUp.&Find\ Text :call neomakemp#global_search('\b'.expand("<cword>").'\b',0x1)<cr>
     amenu PopUp.&Open\ Header/Source :AT<cr>
+    amenu PopUp.&Hightlight :execute "normal ". "\<Plug>MarkSet"<cr>
     "}}}
     call te#meta#map('map', 'o',':Fontzoom!<cr>')
     call te#meta#map('map','-','<Plug>(fontzoom-smaller)')
