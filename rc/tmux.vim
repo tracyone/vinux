@@ -1,6 +1,6 @@
 if(!te#env#IsWindows())
     if te#env#IsTmux()
-        function! s:rename_tmux_win()
+        function! s:rename_tmux_win() abort
             let l:name=input("Input the name of current windows: ")
             call te#utils#run_command('tmux rename-window '.l:name)
         endfunction

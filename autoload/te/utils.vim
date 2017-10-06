@@ -23,7 +23,7 @@ let s:global_echo_str=[]
 "echo warning messag
 "a:1-->err or warn or info,default is warn
 "a:2-->flag of VimEnter,0 or 1
-func! te#utils#EchoWarning(str,...) abort
+function! te#utils#EchoWarning(str,...) abort
     redraw!
     let l:level='WarningMsg'
     let l:prompt='warn'
@@ -49,7 +49,7 @@ func! te#utils#EchoWarning(str,...) abort
     else
         call add(s:global_echo_str, a:str)
     endif
-endfunc
+endfunction
 
 function! te#utils#echo_info_after()
     if !empty(s:global_echo_str)

@@ -34,7 +34,7 @@ function! te#complete#vim_complete( findstart, base ) abort
 endfunction
 
 
-func! s:YcmGotoDef() abort
+function! s:YcmGotoDef() abort
     let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
     if get(g:, 'complete_plugin_type') ==# 'ycm' 
         if  exists('*youcompleteme#Enable') == 0
@@ -63,7 +63,7 @@ func! s:YcmGotoDef() abort
         endif
     endif
     return 0
-endfunc
+endfunction
 
 function! s:get_input() abort
   let col = col( '.' )

@@ -5,7 +5,7 @@ nnoremap <buffer> <S-tab> F\|:call search('\|.\{-}\|', 'wb')<cr>:noh<cr>2l
 nnoremap <buffer> <cr> <c-]>
 nnoremap <buffer> <bs> <c-T>
 
-function! s:help_tag(prev)
+function! s:help_tag(prev) abort
   call search('|\S\+|', a:prev.'W')
 endfunction
 

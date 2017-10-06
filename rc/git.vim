@@ -70,7 +70,7 @@ else
     let g:fugitive_no_maps=0
     nnoremap <F3> :Gstatus<cr>
     " Open git status window
-    nmap <Leader>gs :Gstatus<cr>gg<C-n>
+    nnoremap <Leader>gs :Gstatus<cr>gg<C-n>
     " Open github url
     nnoremap <Leader>gh :Gbrowse<cr>
     " Open git log( browser mode)

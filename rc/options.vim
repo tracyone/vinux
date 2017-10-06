@@ -98,7 +98,7 @@ endif
 
 "statuslne
 if get(g:,'feat_enable_airline') != 1
-    function! MyStatusLine(type)
+    function! MyStatusLine(type) abort
         let l:mystatus_line='%<%t%m%r%h%w'
         if winwidth(0) < 70
             return l:mystatus_line
@@ -195,7 +195,7 @@ set foldenable                  " enable folding
 set foldlevel=100         " start out with everything folded
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
 set foldcolumn=1
-function! MyFoldText()
+function! MyFoldText() abort
     let line = getline(v:foldstart)
     let l:comment_content=''
     if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0

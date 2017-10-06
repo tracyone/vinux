@@ -42,7 +42,7 @@ nnoremap <buffer> <LocalLeader>k :cs kill cscope.out<cr>
 
 " make
 nnoremap <buffer> <leader>am :call te#pg#do_make()<cr>
-noremap <buffer> <F5> :call te#pg#do_make()<CR>
+nnoremap <buffer> <F5> :call te#pg#do_make()<CR>
 nnoremap <buffer> <silent> K :call te#utils#find_mannel()<cr>
 nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 vnoremap <buffer><Leader>cf :ClangFormat<CR>
