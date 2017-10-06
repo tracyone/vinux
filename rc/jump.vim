@@ -186,7 +186,6 @@ nnoremap <leader>mc :BookmarkClear<cr>
 "Bookmark show all
 nnoremap <leader>mb :BookmarkShowAll<CR>
 " }}}
-
 " Misc {{{
 let g:SignatureEnabledAtStartup=1
 let g:choosewin_overlay_enable = 1
