@@ -314,9 +314,9 @@ elseif te#env#SupportTerminal()
     "terminal-emulator setting
     "execute 'tnoremap <Esc> <C-\><C-n>' "effect <a-> key?
     silent! execute 'tnoremap <Esc><Esc> '.&termkey.'N'
-    silent! execute 'tmap è '.&termkey.'h'
-    silent! execute 'tmap ê '.&termkey.'j'
-    silent! execute 'tmap ë '.&termkey.'k'
-    silent! execute 'tmap ì '.&termkey.'l'
+    call te#meta#map('tmap <silent>','h',&termkey.'h')
+    call te#meta#map('tmap <silent>','j',&termkey.'j')
+    call te#meta#map('tmap <silent>','k',&termkey.'k')
+    call te#meta#map('tmap <silent>','l',&termkey.'l')
     silent! execute 'tmap <c-v> '.&termkey.'"*'
 endif
