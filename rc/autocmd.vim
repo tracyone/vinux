@@ -40,8 +40,11 @@ if te#env#IsNvim()
     autocmd misc_group TermOpen * setlocal nonu signcolumn=no | :startinsert
     "auto close terminal buffer
     autocmd misc_group TermClose * exe expand('<abuf>').'bd!'
-elseif te#env#SupportTerminal()
-    autocmd misc_group BufEnter * if &buftype == 'terminal' | setlocal <m-b>= <m-f>= | endif
+else
+    if te#env#SupportTerminal()
+        autocmd misc_group BufEnter * if &buftype == 'terminal' | setlocal <m-b>= <m-f>= | endif
+    endif
+    autocmd misc_group FocusGained * :redraw!
 endif
 if get(g:, 'feat_enable_basic') && te#env#SupportAsync()
     autocmd filetype_group BufWritePost,BufEnter *.php,*.sh,*.js Neomake
