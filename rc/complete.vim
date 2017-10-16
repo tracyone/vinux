@@ -1,7 +1,3 @@
-if g:complete_plugin_type ==# 'deoplete'  && !te#env#IsNvim()
-    let g:complete_plugin_type = 'ycm'
-endif
-
 if g:complete_plugin_type ==# 'ycm' && te#env#SupportYcm()
     if te#env#IsUnix()
         Plug 'Valloric/YouCompleteMe', { 'on': [], 'commit': '32f1eae9cb8b8c7793f632fd24b2289839bf768e' }
@@ -22,9 +18,13 @@ elseif g:complete_plugin_type ==# 'neocomplete' && te#env#SupportFeature('lua')
     Plug 'Shougo/neocomplete'
     Plug 'tracyone/dict'
     Plug 'Konfekt/FastFold'
-elseif g:complete_plugin_type ==# 'deoplete'  && te#env#IsNvim()
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+elseif g:complete_plugin_type ==# 'deoplete'
+    Plug 'Shougo/deoplete.nvim'
     Plug 'zchee/deoplete-clang'
+    if !te#env#IsNvim()
+        Plug 'roxma/nvim-yarp'
+        Plug 'roxma/vim-hug-neovim-rpc'
+    endif
 else
     Plug 'ervandew/supertab'
     let g:complete_plugin_type=''
