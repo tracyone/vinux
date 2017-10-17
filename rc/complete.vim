@@ -21,8 +21,8 @@ elseif g:complete_plugin_type ==# 'neocomplete' && te#env#SupportFeature('lua')
 elseif g:complete_plugin_type ==# 'deoplete'
     Plug 'Shougo/deoplete.nvim'
     Plug 'zchee/deoplete-clang'
+    Plug 'roxma/nvim-yarp'
     if !te#env#IsNvim()
-        Plug 'roxma/nvim-yarp'
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
 else
