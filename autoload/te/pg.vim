@@ -4,6 +4,7 @@
 function! te#pg#add_cscope_out(read_project,...) abort
     if a:read_project == 1
         if empty(glob('.project'))
+            silent! execute 'cs kill cscope.out'
             exec 'silent! cs add cscope.out'
         else
             for s:line in readfile('.project', '')
@@ -12,14 +13,15 @@ function! te#pg#add_cscope_out(read_project,...) abort
         endif
     else
         if a:0 == 1
+            silent! execute 'cs kill '.a:1.'/cscope.out'
             exec 'cs add '.a:1.'/cscope.out'
         else
+            silent! execute 'cs kill cscope.out'
             exec 'silent! cs add cscope.out'
         endif
     endif
 endfunction
 function! te#pg#gen_cscope_kernel() abort
-    :silent! cs kill cscope.out
     :silent! call delete('cctree.out')
     call te#utils#run_command('make O=. SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags', function('te#pg#add_cscope_out'),[0])
     :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
@@ -83,18 +85,6 @@ function! te#pg#do_cs_tags(dir, option) abort
         let csfilesdeleted=delete(l:cscopefiles)
         if(csfilesdeleted!=0)
             :call te#utils#EchoWarning('Fail to do cscope! I cannot delete the cscope.files')
-            return
-        endif
-    endif
-    if filereadable(l:cscopeout)
-        silent! execute 'cs kill '.l:cscopeout
-        let csoutdeleted=delete(l:cscopeout)
-        if(csoutdeleted!=0)
-            :call te#utils#EchoWarning('I cannot delete the cscope.out,try again')
-            let csoutdeleted=delete(l:cscopeout)
-        endif
-        if(csoutdeleted!=0)
-            :call te#utils#EchoWarning('I still cannot delete the cscope.out,failed to do cscope')
             return
         endif
     endif
