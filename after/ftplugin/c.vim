@@ -47,7 +47,7 @@ nnoremap <buffer> <silent> K :call te#utils#find_mannel()<cr>
 nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 vnoremap <buffer><Leader>cf :ClangFormat<CR>
 " generate cscope for linux kernel
-nnoremap <buffer><Leader>gk :call te#pg#gen_cscope_kernel()<cr>
+nnoremap <buffer><Leader>gk :call te#pg#gen_cscope_kernel(-1)<cr>
 " generate cctree database
 nnoremap <buffer><Leader>gt :call te#pg#cctree()<cr>
 
@@ -66,6 +66,24 @@ setlocal shiftwidth=8
 setlocal softtabstop=8 
 setlocal noexpandtab
 setlocal nosmarttab
+
+let s:auto_update_cscope_flag = 0
+function! s:auto_update_cscope()
+    if te#env#SupportTimer()
+        if s:auto_update_cscope_flag == 1
+            call te#pg#update_cs_every_x_mins(0, 5 , 0)
+            let s:auto_update_cscope_flag = 0
+            return 0
+        endif
+        let l:is_kernel=confirm('Is linux kernel?', "&Yes\n&No", 1)
+        let l:is_kernel-=1
+        let s:auto_update_cscope_flag = 1
+        call te#pg#update_cs_every_x_mins(l:is_kernel, 5 , 1)
+    endif
+endfunction
+
+nnoremap <buffer> <LocalLeader>ua :call <SID>auto_update_cscope()<cr>
+
 
 " linux coding style
 let g:clang_format#code_style='llvm'

@@ -21,7 +21,8 @@ function! te#pg#add_cscope_out(read_project,...) abort
         endif
     endif
 endfunction
-function! te#pg#gen_cscope_kernel() abort
+
+function! te#pg#gen_cscope_kernel(timer_id) abort
     :silent! call delete('cctree.out')
     call te#utils#run_command('make O=. SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags', function('te#pg#add_cscope_out'),[0])
     :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
@@ -136,5 +137,25 @@ function! te#pg#do_make()
             :make
             :copen
         endif
+    endif
+endfunction
+
+let s:cs_timer=-1
+
+function! te#pg#update_cs_hooks(timer)
+    call te#pg#do_cs_tags(getcwd(),0x02)
+endfunction
+
+function! te#pg#update_cs_every_x_mins(is_kernel, mins, start)
+    if a:start == 0
+        call te#utils#EchoWarning('Stop auto update cscope ...')
+        call timer_stop(s:cs_timer)
+        return 0
+    endif
+    let l:expires_time=a:mins*60*1000
+    if a:is_kernel
+        let s:cs_timer=timer_start(str2nr(l:expires_time), 'te#pg#gen_cscope_kernel', {'repeat': -1})
+    else
+        let s:cs_timer=timer_start(str2nr(l:expires_time), 'te#pg#update_cs_hooks', {'repeat': -1})
     endif
 endfunction
