@@ -44,7 +44,9 @@ else
     if te#env#SupportTerminal()
         autocmd misc_group BufEnter * if &buftype == 'terminal' | setlocal <m-b>= <m-f>= | endif
     endif
-    autocmd misc_group FocusGained * :redraw!
+    if te#env#IsMacVim()
+        autocmd misc_group FocusGained * :redraw!
+    endif
 endif
 if get(g:, 'feat_enable_basic') && te#env#SupportAsync()
     autocmd filetype_group BufWritePost,BufEnter *.php,*.sh,*.js Neomake
