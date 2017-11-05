@@ -5,9 +5,8 @@
 "Github     https://github.com/tracyone/t-vim
 "Website    http://onetracy.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if &compatible
-  set nocompatible
-endif
+
+set nocompatible
 
 if te#env#IsWindows()
     let $VIMFILES = $HOME.'/vimfiles'
