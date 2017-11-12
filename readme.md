@@ -12,6 +12,8 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/t-vim/master/in
 
 [t-vim's wiki](https://github.com/tracyone/t-vim/wiki)
 
+telegram 交流群: [vim-china](https://t.me/joinchat/GTkBzg2y_qsQCPr-8S7Z7A)
+
 
 # Buy me a coffee
 
