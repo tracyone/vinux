@@ -469,23 +469,25 @@ endfunction
 
 function! te#utils#run_command(command,...) abort
     if a:command =~# '^\s*$'
-        let a:command = input("Run command:",'','customlist,te#bashcomplete#cmd_complete')
+        let l:command = input("Run command:",'','customlist,te#bashcomplete#cmd_complete')
+    else
+        let l:command=a:command
     endif
-    call te#utils#EchoWarning(a:command)
+    call te#utils#EchoWarning(l:command)
     if exists(':NeomakeSh')
         if a:0 == 0
-            call neomakemp#run_command(a:command)
+            call neomakemp#run_command(l:command)
         elseif a:0 == 1
-            call neomakemp#run_command(a:command, a:1)
+            call neomakemp#run_command(l:command, a:1)
         elseif a:0 == 2
-            call neomakemp#run_command(a:command, a:1, a:2)
+            call neomakemp#run_command(l:command, a:1, a:2)
         elseif a:0 == 3
-            call neomakemp#run_command(a:command, a:1, a:2, a:3)
+            call neomakemp#run_command(l:command, a:1, a:2, a:3)
         else
             call te#utils#EchoWarning('Wrong argument', 'err')
         endif
     elseif te#env#IsTmux()
-        call te#tmux#run_command(a:command, 0x0c)
+        call te#tmux#run_command(l:command, 0x0c)
     else
         let l:job_info={}
         let l:job_info.callback=''
@@ -504,7 +506,7 @@ function! te#utils#run_command(command,...) abort
             endif 
             unlet s:needle
         endfor
-        exec '!'.a:command
+        exec '!'.l:command
         try
             call call(l:job_info.callback, l:job_info.args)
         catch /^Vim\%((\a\+)\)\=:E117/
