@@ -468,6 +468,9 @@ function! te#utils#check_health() abort
 endfunction
 
 function! te#utils#run_command(command,...) abort
+    if a:command =~# '^\s*$'
+        let a:command = input("Run command:",'','customlist,te#bashcomplete#cmd_complete')
+    endif
     call te#utils#EchoWarning(a:command)
     if exists(':NeomakeSh')
         if a:0 == 0

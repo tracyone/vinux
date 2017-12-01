@@ -29,6 +29,9 @@ function! s:self.complete_input(ArgLead, CmdLine, CursorPos) abort
   return result
 endfunction
 
+function! te#bashcomplete#cmd_complete(ArgLead, CmdLine, CursorPos)
+  return s:self.complete_input(a:ArgLead, a:CmdLine, a:CursorPos)
+endfunction
 
 let s:pos = 0
 

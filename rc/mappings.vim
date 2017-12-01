@@ -294,6 +294,9 @@ nnoremap <localleader>u :call te#pg#do_cs_tags(getcwd(), 0x3)<cr>
 
 nnoremap <leader>mw :call te#tools#max_win()<cr>
 
+"run command from input
+nnoremap <leader>rc :call te#utils#run_command("", 1)<cr>
+            
 nmap s <Sop>
 nnoremap sj za
 vnoremap sf zf
