@@ -405,7 +405,7 @@ function! te#utils#check_health() abort
 
     for needle in ['termguicolors', 'lua', 'perl', 'ruby', 'tcl', 
                 \ 'timers', 'python', 'python3', 'cscope', 
-                \'multi_byte', 'signs', 'clipboard']
+                \'multi_byte', 'signs', 'clipboard', 'clientserver']
         call add(l:output, printf("%26s:\t", ''.needle.''.' support'))
         let l:i=l:i + 1
         if te#env#SupportFeature(needle)
@@ -449,7 +449,7 @@ function! te#utils#check_health() abort
     let l:i=l:i + 1
 
     for needle in ['cscope', 'ctags', 'ag', 'rg', 'git', 
-                \ 'clang', 'curl', 'bear', 'pbcopy', 'xsel', 'xclip']
+                \ 'clang', 'curl', 'bear', 'pbcopy', 'xsel', 'xclip', 'nvr']
         call add(l:output, printf("%26s:\t", ''.needle.''.' exist'))
         let l:i=l:i + 1
         if te#env#Executable(needle)

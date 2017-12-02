@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
 # t-vim client mode
 
-`$VIM_REMOTE $@`
+if [ -n "${VIM_REMOTE}" ]; then
+    `$VIM_REMOTE $@`
+else
+    # use tmux instead
+    if [ -n "$TMUX"  ]; then
+        v.sh $@
+    fi
+
+fi
