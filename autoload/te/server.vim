@@ -11,11 +11,15 @@ function! te#server#connect()
             let $TVIM_SERVER_ADDRESS = fnamemodify('/tmp/' . (has('nvim') ? 'nvim_' : 'vim_') . 'server', ':p')
         endif
         if te#env#IsNvim()
-            let $VIM_REMOTE='nvr --servername /tmp/nvim_server -cc tabedit --remote-wait '
             try
                 call serverstart($TVIM_SERVER_ADDRESS)
             catch
             endtry
+            if !te#env#Executable('nvr')
+                let $VIM_REMOTE='echo echo You need to install nvr first!'
+            else
+                let $VIM_REMOTE='nvr --servername /tmp/nvim_server -cc tabedit --remote-wait '
+            endif
         elseif has('clientserver') && exists('*remote_startserver')
             if index(split(serverlist(), "\n"), $TVIM_SERVER_ADDRESS) == -1
                 let $VIM_REMOTE='vim --servername /tmp/vim_server --remote-silent-tab '
