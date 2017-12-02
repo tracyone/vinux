@@ -170,21 +170,25 @@ function! s:Get_pattern_at_cursor(pat) abort
     endif
 endfunction
 
-function! te#utils#open_url() abort
-    let s:url = s:Get_pattern_at_cursor('\v(https?://|ftp://|file:/{3}|www\.)(\w|[.-])+(:\d+)?(/(\w|[~@#$%^&+=/.?:-])+)?')
-    if s:url ==? ''
+function! te#utils#open_url(url) abort
+    if a:url ==# ""
+        let l:url = s:Get_pattern_at_cursor('\v(https?://|ftp://|file:/{3}|www\.)(\w|[.-])+(:\d+)?(/(\w|[~@#$%^&+=/.?:-])+)?')
+    else
+        let l:url = a:url
+    endif
+    if l:url ==? ''
         call te#utils#EchoWarning('It is not a URL on current cursor！')
     else
-        echo 'Open URL：' . s:url
+        echo 'Open URL：' . l:url
         if has('win32') || has('win64')
-            call system('cmd /C start ' . s:url)
+            call system('cmd /C start ' . l:url)
         elseif has('mac')
-            call system("open '" . s:url . "'")
+            call system("open '" . l:url . "'")
         else
-            call system("xdg-open '" . s:url . "' &")
+            call system("xdg-open '" . l:url . "' &")
         endif
     endif
-    unlet s:url
+    unlet l:url
 endfunction
 
 " line number toggle

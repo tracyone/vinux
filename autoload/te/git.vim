@@ -175,3 +175,12 @@ function! te#git#show_log() abort
     call te#utils#EchoWarning('Oooo somthing is wrong with your vim!', 'err')
     return 1
 endfunction
+
+function! te#git#git_browse()
+    let l:remote_name=s:get_remote_name()
+    if type(l:remote_name) != g:t_string
+        return 2
+    endif
+    let l:br=split(system('git remote get-url --all '.l:remote_name),nr2char(10))
+    call te#utils#open_url(l:br[0])
+endfunction

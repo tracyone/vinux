@@ -71,8 +71,6 @@ else
     nnoremap <F3> :Gstatus<cr>
     " Open git status window
     nnoremap <Leader>gs :Gstatus<cr>gg<C-n>
-    " Open github url
-    nnoremap <Leader>gh :Gbrowse<cr>
     " Open git log( browser mode)
     " Open git log(file mode)
     nnoremap <Leader>gL :Gitv! --all<cr>
@@ -84,6 +82,8 @@ else
     nnoremap <Leader>gd :Gdiff<cr>
     " git cd
     nnoremap <Leader>gc :Gcd<cr>:call te#utils#EchoWarning(getcwd())<cr>
+    " Open github url
+    nnoremap <Leader>gh :call te#git#git_browse()<cr>
 endif
 nnoremap <Leader>gl :call te#git#show_log()<cr>
 if te#env#SupportPy2()
