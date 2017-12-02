@@ -181,6 +181,6 @@ function! te#git#git_browse()
     if type(l:remote_name) != g:t_string
         return 2
     endif
-    let l:br=te#compatiable#systemlist('git remote get-url --all '.l:remote_name)
+    let l:br=te#compatiable#systemlist('git remote get-url '.l:remote_name)
     call te#utils#open_url(l:br[0])
 endfunction
