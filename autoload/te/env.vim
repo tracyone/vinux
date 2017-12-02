@@ -1,5 +1,5 @@
 "environment check
-let s:is_unix     = ( has('mac') + has('unix') )
+let s:is_unix     =  (has('mac') || has('osx')) + has('unix')
 let s:is_win      = has('win32') + has('win64')
 let s:is_nvim     = has('nvim')
 let s:is_gui      = has('gui_running') + has('gui_macvim')

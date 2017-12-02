@@ -179,10 +179,10 @@ function! te#utils#open_url(url) abort
     if l:url ==? ''
         call te#utils#EchoWarning('It is not a URL on current cursor！')
     else
-        echo 'Open URL：' . l:url
-        if has('win32') || has('win64')
+        call te#utils#EchoWarning('Open URL：' . l:url)
+        if te#env#IsWindows()
             call system('cmd /C start ' . l:url)
-        elseif has('mac')
+        elseif te#env#IsMac()
             call system("open '" . l:url . "'")
         else
             call system("xdg-open '" . l:url . "' &")
