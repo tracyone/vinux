@@ -2,7 +2,7 @@
 " return a string which is the name of local branch name
 " return a space if no local branch found
 function! te#git#get_cur_br_name() abort
-    let l:br=split(system('git branch'),nr2char(10))
+    let l:br=te#compatiable#systemlist('git branch')
     for l:needle in l:br
         let l:needle=matchstr(needle, '^\*\s\+\zs.*\ze')
         if l:needle !=# ''
@@ -17,7 +17,7 @@ function! te#git#get_status() abort
     let l:result.staged=''
     let l:result.modify=''
     let l:result.untracked=''
-    let l:st=split(system('git status -s'), nr2char(10))
+    let l:st=te#compatiable#systemlist('git status -s')
     for l:i in l:st
         if matchstr(l:i, '^M') !=# ''
             let l:result.staged='S'
@@ -37,7 +37,7 @@ function! te#git#get_status() abort
 endfunction
 
 function! s:get_remote_name() abort
-    let l:remote_name=split(system('git remote'),nr2char(10))
+    let l:remote_name=te#compatiable#systemlist('git remote')
     if v:shell_error || len(l:remote_name) == 0
         call te#utils#EchoWarning('git remote failed')
         return 1
@@ -81,7 +81,7 @@ endfunction
 " get all the remote branch name into a string seperate by CR
 function! te#git#GetRemoteBr(A,L,P) abort
     let l:temp=a:A.a:L.a:P
-    let l:all_remote_name=split(system('git branch -r'), nr2char(10))
+    let l:all_remote_name=te#compatiable#systemlist('git branch -r')
     if empty(l:all_remote_name) == 1
         call te#utils#EchoWarning('No remote name found!')
         return 1
@@ -97,7 +97,7 @@ endfunction
 
 function! te#git#get_latest_sevral_commit(A, L, P) abort
     let l:temp=a:A.a:L.a:P
-    let g:log=split(system('git log --abbrev-commit -6 --pretty=oneline'), nr2char(10))
+    let g:log=te#compatiable#systemlist('git log --abbrev-commit -6 --pretty=oneline')
     if empty(g:log) == 1
         call te#utils#EchoWarning('git log failed')
         return 1
@@ -181,6 +181,6 @@ function! te#git#git_browse()
     if type(l:remote_name) != g:t_string
         return 2
     endif
-    let l:br=split(system('git remote get-url --all '.l:remote_name),nr2char(10))
+    let l:br=te#compatiable#systemlist('git remote get-url --all '.l:remote_name)
     call te#utils#open_url(l:br[0])
 endfunction

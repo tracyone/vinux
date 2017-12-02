@@ -6,9 +6,9 @@ let s:completer = $VIMFILES . '/bin/get_complete '
 
 function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
     if a:CmdLine =~ '^[^ ]*$'
-        return systemlist('compgen -c ' . a:CmdLine)
+        return te#compatiable#systemlist('compgen -c ' . a:CmdLine)
     endif
-    let result = systemlist(s:completer.a:CmdLine)
+    let result = te#compatiable#systemlist(s:completer.a:CmdLine)
     return map(result, 'substitute(v:val, "[ ]*$", "", "g")')
 endfunction
 
@@ -17,9 +17,9 @@ endfunction
 
 function! s:self.complete_input(ArgLead, CmdLine, CursorPos) abort
     if a:CmdLine =~ '^[^ ]*$'
-        return systemlist('compgen -c ' . a:CmdLine)
+        return te#compatiable#systemlist('compgen -c ' . a:CmdLine)
     endif
-    let result = systemlist(s:completer.a:CmdLine)
+    let result = te#compatiable#systemlist(s:completer.a:CmdLine)
     if a:ArgLead == ''
         let result = map(result, 'a:CmdLine . v:val')
     else

@@ -35,26 +35,26 @@ function! te#feat#gen_feature_vim() abort
     execute 'cd '.$VIMFILES
     call delete($VIMFILES.'/feature.vim')
 	for l:key in keys(s:feature_dict)
-	   call te#feat#writefile(['let '.l:key.'='.s:feature_dict[l:key]], $VIMFILES.'/feature.vim', 'a')
+	   call te#compatiable#writefile(['let '.l:key.'='.s:feature_dict[l:key]], $VIMFILES.'/feature.vim', 'a')
 	endfor
     let l:t_vim_version=system('git describe')
     let l:temp=te#feat#get_vim_version()
     if v:shell_error != 0
-	    let l:t_vim_version='V0.3.3'.'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
+	    let l:t_vim_version='V0.4.0'.'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
     else
         let l:t_vim_version=split(l:t_vim_version, '\n')[-1].'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
     endif
     let g:t_vim_version=string(l:t_vim_version)
-    call te#feat#writefile(['let g:t_vim_version='.string(l:t_vim_version)], $VIMFILES.'/feature.vim', 'a')
+    call te#compatiable#writefile(['let g:t_vim_version='.string(l:t_vim_version)], $VIMFILES.'/feature.vim', 'a')
 endfunction
 
 function! te#feat#gen_local_vim() abort
-    call te#feat#writefile(['function! TVIM_pre_init()'], $VIMFILES.'/local.vim')
-    call te#feat#writefile(['endfunction'], $VIMFILES.'/local.vim', 'a')
-    call te#feat#writefile(['function! TVIM_user_init()'], $VIMFILES.'/local.vim', 'a')
-    call te#feat#writefile(['endfunction'], $VIMFILES.'/local.vim', 'a')
-    call te#feat#writefile(['function! TVIM_plug_init()'], $VIMFILES.'/local.vim', 'a')
-    call te#feat#writefile(['endfunction'], $VIMFILES.'/local.vim', 'a')
+    call te#compatiable#writefile(['function! TVIM_pre_init()'], $VIMFILES.'/local.vim')
+    call te#compatiable#writefile(['endfunction'], $VIMFILES.'/local.vim', 'a')
+    call te#compatiable#writefile(['function! TVIM_user_init()'], $VIMFILES.'/local.vim', 'a')
+    call te#compatiable#writefile(['endfunction'], $VIMFILES.'/local.vim', 'a')
+    call te#compatiable#writefile(['function! TVIM_plug_init()'], $VIMFILES.'/local.vim', 'a')
+    call te#compatiable#writefile(['endfunction'], $VIMFILES.'/local.vim', 'a')
 endfunction
 
 function! te#feat#feat_dyn_enable(en) abort
@@ -107,7 +107,7 @@ function! te#feat#source_rc(path, ...) abort
   " create l:tempfile and source the l:tempfile
   let l:tempfile = tempname()
   try
-    call te#feat#writefile(l:content, l:tempfile)
+    call te#compatiable#writefile(l:content, l:tempfile)
     execute 'source' fnameescape(l:tempfile)
   finally
     if filereadable(l:tempfile)
@@ -167,30 +167,3 @@ function! te#feat#check_plugin_install() abort
     endif
 endfunction
 
-"write to file
-function! te#feat#writefile(list, fname,...) abort
-    if te#env#SupportAsync()
-        if a:0 == 1
-            call writefile(a:list, a:fname, a:1)
-        else
-            call writefile(a:list, a:fname)
-        endif
-    else
-        if type(a:list) != g:t_list
-            call te#utils#EchoWarning("Not a list", 'err')
-            return
-        endif
-        if type(a:fname) != g:t_string
-            call te#utils#EchoWarning("Not a string", 'err')
-            return
-        endif
-        let l:fcontents=[]
-        if filereadable(a:fname)
-            let l:fcontents=readfile(a:fname, 'b')
-            if !empty(l:fcontents) && empty(l:fcontents[-1])
-                call remove(l:fcontents, -1)
-            endif
-        endif
-        call writefile(l:fcontents+a:list, a:fname, 'b')
-    endif
-endfunction
