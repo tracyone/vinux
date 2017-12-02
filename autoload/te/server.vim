@@ -25,7 +25,7 @@ function! te#server#connect()
                 endtry
             endif
         else
-            let $VIM_REMOTE='echo '
+            let $VIM_REMOTE='echo echo Your vim is not support clientserver feature!'
         endif
         let s:flag = 1
     endif
