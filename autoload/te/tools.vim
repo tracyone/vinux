@@ -4,7 +4,7 @@ function! te#tools#shell_pop(option) abort
     if !te#env#IsGui()
         call te#server#connect()
         if te#env#IsNvim()
-            let $VIM_REMOTE='nvr --servername /tmp/nvim_server --remote-silent-tab '
+            let $VIM_REMOTE='nvr --servername /tmp/nvim_server -cc tabedit --remote-wait '
         else
             let $VIM_REMOTE='vim --servername /tmp/vim_server --remote-silent-tab '
         endif
