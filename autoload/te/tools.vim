@@ -1,6 +1,9 @@
 "pop vimshell
 function! te#tools#shell_pop(option) abort
     " 38% height of current window
+    if !te#env#IsGui()
+        call te#server#connect()
+    endif
     if and(a:option, 0x04)
         :tabnew
     endif

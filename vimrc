@@ -12,6 +12,7 @@ if te#env#IsWindows()
     let $VIMFILES = $HOME.'/vimfiles'
 else
     let $VIMFILES = $HOME.'/.vim'
+    let $PATH = $PATH.':'.$VIMFILES.'/bin'
 endif
 
 if filereadable($VIMFILES.'/feature.vim')
