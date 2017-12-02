@@ -3,6 +3,17 @@ function! te#tools#shell_pop(option) abort
     " 38% height of current window
     if !te#env#IsGui()
         call te#server#connect()
+        if te#env#IsNvim()
+            let $VIM_REMOTE='nvr --servername /tmp/nvim_server --remote-silent-tab '
+        else
+            let $VIM_REMOTE='vim --servername /tmp/vim_server --remote-silent-tab '
+        endif
+    else
+        if te#env#IsMacVim()
+            let $VIM_REMOTE='/Applications/MacVim.app/Contents/bin/mvim --remote-tab-silent '
+        else
+            let $VIM_REMOTE='gvim --remote-tab-silent '
+        endif
     endif
     if and(a:option, 0x04)
         :tabnew

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# t-vim client mode
+
+`$VIM_REMOTE $@`
