@@ -81,7 +81,8 @@ if g:complete_plugin_type ==# 'ycm'
     let g:ycm_semantic_triggers.html = ['<', '"', '</', ' ']
     let g:ycm_semantic_triggers.python=['.', 'import ', 're!import [,\w ]+, ']
     let g:ycm_semantic_triggers.vimshell=['re!\w{2}', '/']
-    let g:ycm_semantic_triggers.sh=['re!\w{2}', '/', '-']
+    let g:ycm_semantic_triggers.sh=['re![\w-]{2}', '/', '-']
+    let g:ycm_semantic_triggers.zsh=['re![\w-]{2}', '/', '-']
 
     let g:ycm_collect_identifiers_from_tag_files = 1
     let g:ycm_filetype_blacklist = {
@@ -225,6 +226,14 @@ elseif g:complete_plugin_type ==# 'deoplete'
         return 0
     endfunction
     :call AddCFlags('')
+    "let g:deoplete#omni#functions = {}
+	"let g:deoplete#omni#functions.zsh = ['zsh_completion#Complete']
+    "let g:deoplete#omni_patterns = {}
+	"let g:deoplete#omni_patterns.zsh = '[^\t ]\+'
+    "let g:deoplete#omni_patterns.lua = get(g:deoplete#omni_patterns, 'lua', '.')
+    "let g:deoplete#sources = {}
+    "load all source
+    "let g:deoplete#sources._ = []
 endif
 "}}}
 " UltiSnips -----------------------{{{
