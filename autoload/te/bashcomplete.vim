@@ -5,7 +5,7 @@ let s:completer = $VIMFILES . '/bin/get_complete '
 " this is for vim command completion 
 
 function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
-    if a:CmdLine =~ '^[^ ]*$'
+    if a:CmdLine =~ '^\s\{0,\}\w\+$'
         return te#compatiable#systemlist('compgen -c ' . a:CmdLine)
     endif
     let result = te#compatiable#systemlist(s:completer.a:CmdLine)
@@ -16,7 +16,7 @@ endfunction
 " this is for vim input()
 
 function! s:self.complete_input(ArgLead, CmdLine, CursorPos) abort
-    if a:CmdLine =~ '^[^ ]*$'
+    if a:CmdLine =~ '^\s\{0,\}\w\+$'
         return te#compatiable#systemlist('compgen -c ' . a:CmdLine)
     endif
     let result = te#compatiable#systemlist(s:completer.a:CmdLine)
