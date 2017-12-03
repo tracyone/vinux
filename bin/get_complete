@@ -11,7 +11,7 @@ get_completions(){
     local completion COMP_CWORD COMP_LINE COMP_POINT COMP_WORDS COMPREPLY=()
 
     # load bash-completion if necessary
-    declare -F _completion_loader &>/dev/null || {
+    declare -F _completion_loader 2>/dev/null 1>&2 || {
         if [[ ${OS} == "Darwin" ]]; then
             source /usr/local/etc/bash_completion
         else
@@ -39,7 +39,7 @@ get_completions(){
     [[ -n $completion ]] || {
 
         # load completion
-        _completion_loader "$1"
+        _completion_loader "$1" 2>/dev/null 1>&2
 
         # detect completion
         completion=$(complete -p "$1" 2>/dev/null | awk '{print $(NF-1)}')
