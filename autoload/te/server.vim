@@ -20,7 +20,7 @@ function! te#server#connect()
             else
                 let $VIM_REMOTE=''
             endif
-        elseif has('clientserver') && exists('*remote_startserver')
+        elseif has('clientserver') && exists('*remote_startserver') && te#env#IsDisplay()
             if index(split(serverlist(), "\n"), $TVIM_SERVER_ADDRESS) == -1
                 let $VIM_REMOTE='vim --servername /tmp/vim_server --remote-silent-tab '
                 try
