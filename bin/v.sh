@@ -17,7 +17,7 @@ if [ -n "$TMUX"  ]; then
           absfilepath="$PWD/${1#./}"
         fi
         #exit terminal mode in vim
-        tmux send-keys -t $i "NN" C-m
+        tmux send-keys -t $i C-\\ C-n
         # only sendkeys to vim if there were args (like a file name or path), if not we just change to the vim window/pane
         # use bash's printf to escape chars like vim likes.
         tmux send-keys -t $i ":tabnew $(printf "%q" "$absfilepath")" C-m
