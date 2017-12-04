@@ -11,7 +11,7 @@ else
         v.sh $@
     else
         if [[ ${OS} == "Darwin" ]]; then
-            v.scpt $@
+            v.scpt $@ 2>/dev/null
         else
             vim $@
         fi
