@@ -16,9 +16,9 @@ function! te#server#connect()
             catch
             endtry
             if !te#env#Executable('nvr')
-                let $VIM_REMOTE='echo echo You need to install nvr first!'
-            else
                 let $VIM_REMOTE=''
+            else
+                let $VIM_REMOTE='nvr --servername /tmp/nvim_server -cc tabedit --remote-wait '
             endif
         elseif has('clientserver') && exists('*remote_startserver') && te#env#IsDisplay()
             if index(split(serverlist(), "\n"), $TVIM_SERVER_ADDRESS) == -1

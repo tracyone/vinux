@@ -1,12 +1,19 @@
 #!/usr/bin/env bash
 # t-vim client mode
 
+OS=$(uname)
+
 if [ -n "${VIM_REMOTE}" ]; then
     `$VIM_REMOTE $@`
 else
     # use tmux instead
     if [ -n "$TMUX"  ]; then
         v.sh $@
+    else
+        if [[ ${OS} == "Darwin" ]]; then
+            v.scpt $@
+        else
+            vim $@
+        fi
     fi
-
 fi
