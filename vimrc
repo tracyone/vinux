@@ -12,8 +12,8 @@ if te#env#IsWindows()
     let $VIMFILES = $HOME.'/vimfiles'
 else
     let $VIMFILES = $HOME.'/.vim'
-    let $PATH = $VIMFILES.'/bin:'.$PATH
 endif
+let $PATH = $VIMFILES.'/bin:'.$PATH
 
 if filereadable($VIMFILES.'/feature.vim')
     execute ':source '.$VIMFILES.'/feature.vim'
