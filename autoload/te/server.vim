@@ -18,7 +18,7 @@ function! te#server#connect()
             if !te#env#Executable('nvr')
                 let $VIM_REMOTE=''
             else
-                let $VIM_REMOTE='nvr --servername /tmp/nvim_server -cc tabedit --remote-wait '
+                let $VIM_REMOTE='nvr --servername /tmp/nvim_server --remote-tab-silent '
             endif
         elseif has('clientserver') && exists('*remote_startserver') && te#env#IsDisplay()
             if index(split(serverlist(), "\n"), $TVIM_SERVER_ADDRESS) == -1
