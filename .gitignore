@@ -1,5 +1,6 @@
 *.swp
 bundle/
+bundle
 .yank_history_v2.txt
 .easyclip
 vimbackup/
@@ -19,3 +20,4 @@ org/
 .screenlock
 autoload/plug.vim
 .LfCache/
+init.vim

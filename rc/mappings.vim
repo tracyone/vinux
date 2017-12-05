@@ -105,7 +105,7 @@ cmap   <script> <C-T> <SID>transposition<SID>transpose
 "update the _vimrc
 nnoremap <leader>so :call te#utils#source_vimrc($MYVIMRC)<cr>
 "open the vimrc in tab
-nnoremap <leader>vc :tabedit $MYVIMRC<CR>:vs $VIMFILES/feature.vim<CR>:sp $VIMFILES/local.vim<cr>:call te#utils#goto_cur_file(2)<cr>
+nnoremap <leader>vc :call te#feat#edit_config()<cr>
 "open quickfix windows
 nnoremap <leader>qf :copen<cr>
 

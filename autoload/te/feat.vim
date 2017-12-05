@@ -167,3 +167,11 @@ function! te#feat#check_plugin_install() abort
     endif
 endfunction
 
+"open vim config and change directory.
+function te#feat#edit_config() abort
+    :tabedit $MYVIMRC
+    execute 'vsplit '.fnamemodify($MYVIMRC, ":p:h").'/feature.vim'
+    execute 'split '.fnamemodify($MYVIMRC, ":p:h").'/local.vim'
+    call te#utils#goto_cur_file(2)
+endfunction
+
