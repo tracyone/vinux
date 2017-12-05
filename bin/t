@@ -13,7 +13,7 @@ else
         if [[ ${OS} == "Darwin" ]]; then
             v.scpt $@ 2>/dev/null
         else
-            vim $@
+            vim -p $@
         fi
     fi
 fi

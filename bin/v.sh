@@ -9,18 +9,20 @@ if [ -n "$TMUX"  ]; then
     if [ "${cmd%m}" = "vi"  ]; then
       # We have found a pane with vim running lets send it to the pane with :e (change for split/buffer/tab)
       if [ "$#" -gt 0 ]; then
-        if [[ $@ = /*  ]]; then
-          #path already looks absolute...
-          absfilepath="$@"
-        else
-          #path not absolute,  lets prefix with pwd...
-          absfilepath="$PWD/${1#./}"
-        fi
-        #exit terminal mode in vim
-        tmux send-keys -t $i C-\\ C-n
-        # only sendkeys to vim if there were args (like a file name or path), if not we just change to the vim window/pane
-        # use bash's printf to escape chars like vim likes.
-        tmux send-keys -t $i ":tabnew $(printf "%q" "$absfilepath")" C-m
+          #exit terminal mode in vim
+          tmux send-keys -t $i C-\\ C-n
+          for var in $@; do
+              if [[ $var = /*  ]]; then
+                  #path already looks absolute...
+                  absfilepath="$var"
+              else
+                  #path not absolute,  lets prefix with pwd...
+                  absfilepath="$PWD/${var#./}"
+              fi
+              # only sendkeys to vim if there were args (like a file name or path), if not we just change to the vim window/pane
+              # use bash's printf to escape chars like vim likes.
+              tmux send-keys -t $i ":tabnew $(printf "%q" "$absfilepath")" C-m
+          done
       fi
       # lets make the tmux window that had the first vim pane active 
       tmux list-panes -a  -s |grep "$i" |cut -f2 -d: |xargs tmux select-window -t
