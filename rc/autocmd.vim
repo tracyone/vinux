@@ -46,7 +46,7 @@ if te#env#IsNvim()
     endif
 else
     if te#env#SupportTerminal()
-        autocmd misc_group BufEnter * if &buftype == 'terminal' | setlocal <m-b>= <m-f>= | endif
+        autocmd misc_group BufWinEnter * if &buftype == 'terminal' | setlocal <m-b>= <m-f>= | endif
     endif
     if te#env#IsMacVim()
         autocmd misc_group FocusGained * :redraw!
