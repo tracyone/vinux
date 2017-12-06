@@ -40,6 +40,7 @@ else
     " stupid that it's not default
     let g:ctrlp_match_window_reversed = 0
     let g:ctrlp_max_files = 50000
+    let g:ctrlp_search_hidden=""
 
     " Tell Ctrl-P to keep the current VIM working directory when starting a
     " search, another really stupid non default
@@ -52,33 +53,36 @@ else
                 \ 'file': '\v\.(exe|so|dll|o|d|proj|out)$',
                 \ }
     let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'bookmarkdir']
-    if executable('rg')
-        let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-        let g:ctrlp_use_caching = 0
-    elseif executable('ag')
-        "NOTE: --ignore option use wildcard PATTERN instead of regex PATTERN,and
-        "it does not support {}
-        "--hidden:enable seach hidden dirs and files
-        "-g <regex PATTERN>:search file name that match the PATTERN
-        let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup 
-                    \ --ignore "*.[odODaA]"
-                    \ --ignore "*.exe"
-                    \ --ignore "*.out"
-                    \ --ignore "*.hex"
-                    \ --ignore "cscope*"
-                    \ --ignore "*.so"
-                    \ --ignore "*.dll"
-                    \ -g ""'
-        let g:ctrlp_use_caching = 0
-    elseif executable('git')
-        let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-    else
-       if te#env#IsWindows()
-           let g:ctrlp_user_command='dir %s /-n /b /s /a-d'
-       else
-           let g:ctrlp_user_command='find %s -type f'
-       endif
-    endif
+    function! s:update_ctrlp_command()
+        if executable('rg')
+            let g:ctrlp_user_command = 'rg '.g:ctrlp_search_hidden.' %s --files --color=never --glob ""'
+            let g:ctrlp_use_caching = 0
+        elseif executable('ag')
+            "NOTE: --ignore option use wildcard PATTERN instead of regex PATTERN,and
+            "it does not support {}
+            "--hidden:enable seach hidden dirs and files
+            "-g <regex PATTERN>:search file name that match the PATTERN
+            let g:ctrlp_user_command = 'ag '.g:ctrlp_search_hidden.' %s -l --nocolor --nogroup 
+                        \ --ignore "*.[odODaA]"
+                        \ --ignore "*.exe"
+                        \ --ignore "*.out"
+                        \ --ignore "*.hex"
+                        \ --ignore "cscope*"
+                        \ --ignore "*.so"
+                        \ --ignore "*.dll"
+                        \ -g ""'
+            let g:ctrlp_use_caching = 0
+        elseif executable('git')
+            let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+        else
+            if te#env#IsWindows()
+                let g:ctrlp_user_command='dir %s /-n /b /s /a-d'
+            else
+                let g:ctrlp_user_command='find %s -type f'
+            endif
+        endif
+    endfunction
+    call s:update_ctrlp_command()
     let g:user_command_async = 1
     let g:ctrlp_show_hidden = 1
     let g:ctrlp_funky_syntax_highlight = 0
@@ -94,6 +98,7 @@ else
     nnoremap <c-j> :CtrlPBuffer<Cr>
     " toggle ctrlp g:ctrlp_use_caching option
     nnoremap <leader>tj :call te#utils#OptionToggle('g:ctrlp_use_caching',[0,1])<cr>
+    nnoremap <leader>ti :call te#utils#OptionToggle('g:ctrlp_search_hidden',["", "--hidden"])<cr>:call <SID>update_ctrlp_command()<cr>
     " show global mark
     nnoremap <leader>pm :SignatureListGlobalMarks<Cr>
     " ctrlp buffer 
