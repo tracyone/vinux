@@ -40,6 +40,10 @@ if te#env#IsNvim()
     autocmd misc_group TermOpen * setlocal nonu signcolumn=no | :startinsert
     "auto close terminal buffer
     autocmd misc_group TermClose * exe expand('<abuf>').'bd!'
+    if exists('+winhighlight')
+      autocmd BufEnter,FocusGained,VimEnter,WinEnter * if te#autocmds#should_colorcolumn() | set winhighlight= | endif
+      autocmd FocusLost,WinLeave * if te#autocmds#should_colorcolumn() | set winhighlight=CursorLineNr:LineNr,IncSearch:ColorColumn,Normal:ColorColumn,NormalNC:ColorColumn,SignColumn:ColorColumn | endif
+    endif
 else
     if te#env#SupportTerminal()
         autocmd misc_group BufEnter * if &buftype == 'terminal' | setlocal <m-b>= <m-f>= | endif
@@ -51,5 +55,6 @@ endif
 if get(g:, 'feat_enable_basic') && te#env#SupportAsync()
     autocmd filetype_group BufWritePost,BufEnter *.php,*.sh,*.js Neomake
 endif
+
 
 
