@@ -55,7 +55,7 @@ else
     let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'bookmarkdir']
     function! s:update_ctrlp_command()
         if executable('rg')
-            let g:ctrlp_user_command = 'rg '.g:ctrlp_search_hidden.' %s --files --color=never --glob ""'
+            let g:ctrlp_user_command = 'rg '.g:ctrlp_search_hidden.' %s --files --color=never --glob "!.git"'
             let g:ctrlp_use_caching = 0
         elseif executable('ag')
             "NOTE: --ignore option use wildcard PATTERN instead of regex PATTERN,and
@@ -70,6 +70,7 @@ else
                         \ --ignore "cscope*"
                         \ --ignore "*.so"
                         \ --ignore "*.dll"
+                        \ --ignore ".git"
                         \ -g ""'
             let g:ctrlp_use_caching = 0
         elseif executable('git')
