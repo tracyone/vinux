@@ -73,13 +73,23 @@ else
                         \ --ignore ".git"
                         \ -g ""'
             let g:ctrlp_use_caching = 0
-        elseif executable('git')
-            let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
         else
-            if te#env#IsWindows()
-                let g:ctrlp_user_command='dir %s /-n /b /s /a-d'
+            if te#env#IsUnix()
+                let g:ctrlp_user_command = {
+                            \ 'types': {
+                            \ 1: ['.git', 'cd %s && git ls-files -oc --exclude-standard'],
+                            \ 2: ['.hg', 'hg --cwd %s status -numac -I . $(hg root)'],
+                            \ },
+                            \ 'fallback': 'find %s -type f'
+                            \ }
             else
-                let g:ctrlp_user_command='find %s -type f'
+                let g:ctrlp_user_command = {
+                            \ 'types': {
+                            \ 1: ['.git', 'cd %s && git ls-files -oc --exclude-standard'],
+                            \ 2: ['.hg', 'hg --cwd %s status -numac -I . $(hg root)'],
+                            \ },
+                            \ 'fallback': 'dir %s /-n /b /s /a-d'
+                            \ }
             endif
         endif
     endfunction
