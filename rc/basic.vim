@@ -38,10 +38,35 @@ if te#env#IsVim8() || te#env#IsNvim()
     "set grepprg=ag\ --nogroup\ --nocolor
     "set grepformat=%f:%l:%c%m
 else
-    Plug 'dyng/ctrlsf.vim'
-    nnoremap <Leader>vv :CtrlSF<cr>
-    vmap <Leader>vv <Plug>CtrlSFVwordExec
-    nmap <Leader>vs <Plug>CtrlSFPrompt
+    Plug 'dkprice/vim-easygrep'
+    let g:EasyGrepRecursive=1
+    if te#env#Executable('rg')
+        let g:EasyGrepCommand="rg"
+    elseif te#env#Executable('ag')
+        let g:EasyGrepCommand="ag"
+    elseif te#env#Executable('grep')
+        set grepprg=grep\ -n\ $*\ /dev/null
+        let g:EasyGrepCommand=1
+    endif
+    function s:search_in_opened_buffer()
+        let g:EasyGrepMode=1
+        execute 'normal '."\<plug>EgMapGrepCurrentWord_v"
+        let g:EasyGrepMode=0
+    endfunction
+    function! s:easygrep_mapping()
+        map <silent> <Leader>vV <plug>EgMapGrepCurrentWord_v
+        vmap <silent> <Leader>vV <plug>EgMapGrepSelection_v
+        map <silent> <Leader>vv <plug>EgMapGrepCurrentWord_V
+        vmap <silent> <Leader>vv <plug>EgMapGrepSelection_V
+        map <silent> <Leader>vb :call <SID>search_in_opened_buffer()<cr>
+        map <silent> <Leader>vi <plug>EgMapReplaceCurrentWord_r
+        map <silent> <Leader>vI <plug>EgMapReplaceCurrentWord_R
+        vmap <silent> <Leader>vi <plug>EgMapReplaceSelection_r
+        vmap <silent> <Leader>vI <plug>EgMapReplaceSelection_R
+        map <silent> <Leader>vo <plug>EgMapGrepOptions
+        nnoremap  <Leader>vs :Grep 
+    endfunction
+    call te#feat#register_vim_enter_setting(function('<SID>easygrep_mapping'))
 endif
 if get(g:, 'feat_enable_help') == 0
     Plug 'xolox/vim-session', {'on': ['OpenSession', 'SaveSession', 'DeleteSession']}
