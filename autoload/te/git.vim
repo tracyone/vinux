@@ -45,6 +45,15 @@ function! s:get_remote_name() abort
     return l:remote_name[0]
 endfunction
 
+function! te#git#get_remote_name(A, L, P) abort
+    let l:remote_name=te#compatiable#systemlist('git remote')
+    if v:shell_error || len(l:remote_name) == 0
+        call te#utils#EchoWarning('Git remote name failed!')
+        return []
+    endif
+    return l:remote_name
+endfunction
+
 "git push operation.
 "support complete remote branch name
 "auto gain remote name
@@ -121,7 +130,7 @@ function! te#git#git_rebase() abort
 endfunction
 
 function! te#git#git_merge() abort
-    let l:remote_name=s:get_remote_name()
+    let l:remote_name=input('Which remote do you want to merge: ','origin','customlist,te#git#get_remote_name')
     if type(l:remote_name) != g:t_string
         return 2
     endif
