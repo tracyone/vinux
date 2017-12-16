@@ -60,9 +60,11 @@ endfunction
 function! te#tools#update_t_vim() abort
     cd $VIMFILES
     if isdirectory('.git') && te#env#Executable('git')
-        let l:command='git fetch --all && '
-        let l:command.='git checkout $(git describe --tags `git rev-list --tags --max-count=1`)'
-        call te#utils#run_command(l:command, 1)
+        call te#utils#EchoWarning('Updating ...')
+        call system('git fetch --all')
+        let l:temp1=te#compatiable#systemlist('git rev-list --tags --max-count=1')
+        let l:temp2=te#compatiable#systemlist('git describe --tags '.l:temp1[0])
+        call te#utils#run_command('git checkout '.l:temp2[0])
     else
         call te#utils#EchoWarning('Not a git repository or git not found!', 'err')
     endif
