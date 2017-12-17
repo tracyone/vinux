@@ -133,7 +133,7 @@ else
 endif
 Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
             \ '<Plug>(easymotion-linebackward)','<Plug>(easymotion-overwin-w)' ]}
-Plug 't9md/vim-choosewin'
+Plug 't9md/vim-choosewin',{'on': '<Plug>(choosewin)'}
 Plug 'kshenoy/vim-signature'
 Plug 'MattesGroeger/vim-bookmarks', { 'on': ['BookmarkShowAll', 'BookmarkToggle', 'BookmarkAnnotate']}
 if get(g:,'feat_enable_airline') == 0
@@ -142,7 +142,7 @@ if get(g:,'feat_enable_airline') == 0
     let g:buftabline_show=1
     let g:buftabline_indicators=1
 endif
-Plug 'ronakg/quickr-preview.vim'
+Plug 'ronakg/quickr-preview.vim', { 'for': ['qf']}
 autocmd filetype_group FileType qf nmap <buffer> <down> <down><plug>(quickr_preview)
 autocmd filetype_group FileType qf nmap <buffer> <up> <up><plug>(quickr_preview)
 let g:quickr_preview_keymaps = 0

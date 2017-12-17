@@ -24,6 +24,11 @@ function! te#env#IsMac() abort
     return 0
 endfunction
 
+function! te#env#IsLinux() abort
+    if s:is_unix == 1 | return 1 | endif
+    return 0
+endfunction
+
 function! te#env#IsWindows() abort
     if s:is_win | return 1 | endif
     return 0

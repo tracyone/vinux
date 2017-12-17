@@ -1,11 +1,11 @@
 " Package info {{{
-Plug 'tracyone/a.vim'
+Plug 'tracyone/a.vim',{'for': ['c', 'cpp']}
 Plug 'rhysd/vim-clang-format',{'for': ['c', 'cpp']}
-Plug 'hari-rangarajan/CCTree'
-if(!te#env#IsWindows())
+Plug 'hari-rangarajan/CCTree',{'for': ['c', 'cpp']}
+if(te#env#IsLinux())
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
 endif
-Plug 'jyelloz/vim-dts-indent'
+Plug 'jyelloz/vim-dts-indent',{'for': ['dts']}
 " }}}
 " A.vim ---------------------------{{{
 ":A switches to the header file corresponding to the current file being  edited (or vise versa)

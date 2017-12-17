@@ -18,7 +18,7 @@ Plug 'tracyone/mark.vim'
 Plug 'itchyny/vim-cursorword'
 Plug 'thinca/vim-quickrun',{'on': '<Plug>(quickrun)'}
 if(!te#env#IsWindows())
-    Plug 'vim-scripts/sudo.vim'
+    Plug 'vim-scripts/sudo.vim', {'on': ['SudoRead', 'SudoWrite']}
     if !te#env#IsNvim() 
         Plug 'lambdalisue/vim-manpager'
     endif

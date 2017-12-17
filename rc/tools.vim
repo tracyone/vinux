@@ -1,4 +1,4 @@
-if te#env#SupportPy2() && !te#env#IsWindows()
+if te#env#SupportPy2() && te#env#IsLinux()
     Plug 'ashisha/image.vim'
 endif
 if te#env#SupportPy3()

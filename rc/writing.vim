@@ -2,8 +2,8 @@
 Plug 'junegunn/goyo.vim',{'on': 'Goyo'}
 Plug 'jceb/vim-orgmode', {'for': 'org'}
 Plug 'tpope/vim-speeddating'
-Plug 'chrisbra/NrrwRgn'
-Plug 'tracyone/utl.vim'
+Plug 'chrisbra/NrrwRgn',{'on': 'NR'}
+Plug 'tracyone/utl.vim', { 'on': 'Utl'}
 
 " toggle free writing in vim (Goyo)
 nnoremap <Leader>to :Goyo<cr>
