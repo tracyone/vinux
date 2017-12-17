@@ -21,10 +21,28 @@ function! te#pg#add_cscope_out(read_project,...) abort
         endif
     endif
 endfunction
+
+function! s:top_of_kernel_tree()
+    let l:tree_check= ["COPYING", "CREDITS", "Kbuild", "MAINTAINERS", "Makefile",
+                \ "README", "Documentation", "arch", "include", "drivers",
+                \ "fs", "init", "ipc", "kernel", "lib", "scripts"]
+    for l:needle in l:tree_check
+        if !isdirectory(l:needle) && !filereadable(l:needle)
+            return 1
+        endif
+    endfor
+    return 0
+endfunction
+
 function! te#pg#gen_cscope_kernel() abort
-    :silent! call delete('cctree.out')
-    call te#utils#run_command('make O=. SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags', function('te#pg#add_cscope_out'),[0])
-    :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
+    if s:top_of_kernel_tree()
+        call te#pg#gen_cs_out()
+        call te#utils#EchoWarning("Current directory is not in the top level of kernel tree")
+    else
+        :silent! call delete('cctree.out')
+        call te#utils#run_command('make O=. SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags', function('te#pg#add_cscope_out'),[0])
+        :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
+    endif
 endfunction
 
 function! te#pg#cctree() abort
