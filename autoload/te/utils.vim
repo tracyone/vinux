@@ -209,13 +209,22 @@ function! te#utils#find_mannel() abort
         return -1
     endif
     let l:cur_word=expand('<cword>')
-    let l:ret = te#utils#GetError(l:man_cmd.' 3 '.l:cur_word,'\cno \(manual\|entry\).*')
-    "make sure index valid
-    if l:ret != 0
+    if &ft ==# 'sh'
+        let l:ret = te#utils#GetError(l:man_cmd.' '.l:cur_word,'\cno \(manual\|entry\).*')
+    else
         let l:ret = te#utils#GetError(l:man_cmd.' 2 '.l:cur_word,'\cno \(manual\|entry\).*')
         if l:ret != 0
-            execute 'silent! help '.l:cur_word
+            "try in user library
+            let l:ret = te#utils#GetError(l:man_cmd.' 3 '.l:cur_word,'\cno \(manual\|entry\).*')
+            "try in kernel
+            if l:ret != 0
+                let l:ret = te#utils#GetError(l:man_cmd.' 9 '.l:cur_word,'\cno \(manual\|entry\).*')
+            endif
         endif
+    endif
+    "open help in vim
+    if l:ret != 0
+        execute 'silent! help '.l:cur_word
     endif
 endfunction
 
