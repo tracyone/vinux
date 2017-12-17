@@ -32,7 +32,7 @@ function! te#pg#cctree() abort
         :CCTreeLoadXRefDB cctree.out
     else
         if filereadable('cscope.out')
-            call te#utils#run_command('vim +"CCTreeLoadDB cscope.out" +"CCTreeSaveXRefDB cctree.out" +qa' 
+            call te#utils#run_command('vim +"set ft=c" +"CCTreeLoadDB cscope.out" +"CCTreeSaveXRefDB cctree.out" +qa' 
                         \,function('neomakemp#SampleCallBack'),['CCTreeLoadXRefDB cctree.out'])
         else
             :call te#utils#EchoWarning('No cscope.out!Please generate cscope first.')
