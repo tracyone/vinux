@@ -135,7 +135,7 @@ Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
             \ '<Plug>(easymotion-linebackward)','<Plug>(easymotion-overwin-w)' ]}
 Plug 't9md/vim-choosewin'
 Plug 'kshenoy/vim-signature'
-Plug 'MattesGroeger/vim-bookmarks'
+Plug 'MattesGroeger/vim-bookmarks', { 'on': ['BookmarkShowAll', 'BookmarkToggle', 'BookmarkAnnotate']}
 if get(g:,'feat_enable_airline') == 0
     Plug 'tracyone/vim-buftabline'
     let g:buftabline_numbers=2
