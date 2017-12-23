@@ -25,10 +25,13 @@ if(!te#env#IsWindows())
     if te#env#IsMac()
         Plug 'CodeFalling/fcitx-vim-osx',{'do': 'wget -c \"https://raw.githubusercontent.com/
                     \CodeFalling/fcitx-remote-for-osx/binary/fcitx-remote-sogou-pinyin\" && 
-                    \chmod a+x fcitx* && mv fcitx* /usr/local/bin/fcitx-remote'}
+                    \chmod a+x fcitx* && mv fcitx* /usr/local/bin/fcitx-remote','on': [] }
     else
-        Plug 'CodeFalling/fcitx-vim-osx'
+        Plug 'CodeFalling/fcitx-vim-osx', { 'on': [] }
     endif
+
+    call te#feat#register_vim_plug_insert_setting([], 
+                \ ['fcitx-vim-osx'])
 endif
 if te#env#IsVim8() || te#env#IsNvim()
     Plug 'neomake/neomake', { 'commit': 'f4a3185ac627474ee592eb1a452ce19c79c8907e'}

@@ -139,6 +139,7 @@ endfunction
 
 let s:plugin_func_list=[]
 
+"funcref must be a funcref variable
 function! te#feat#register_vim_enter_setting(funcref) abort
     if type(a:funcref) != g:t_func
         call te#utils#EchoWarning('register failed!funcref must be a funcref variable', 'err')
@@ -151,6 +152,26 @@ endfunction
 function! te#feat#run_vim_enter_setting() abort
     for l:Needle in s:plugin_func_list
         call l:Needle()
+    endfor
+endfunction
+
+let s:pluin_list_load_after_insert = []
+let s:plugin_func_list_load_after_insert = []
+"argument funcref can be a Funcref variable or a command
+"plug_name must be a list
+function! te#feat#register_vim_plug_insert_setting(funcref, plug_name) abort
+    call extend(s:pluin_list_load_after_insert, a:plug_name)
+    call extend(s:plugin_func_list_load_after_insert, a:funcref)
+endfunction
+
+function! te#feat#vim_plug_insert_enter() abort
+    call plug#load(s:pluin_list_load_after_insert)
+    for l:Needle in s:plugin_func_list_load_after_insert
+        if type(l:Needle) == g:t_func
+            call l:Needle()
+        else
+            execute l:Needle
+        endif
     endfor
 endfunction
 

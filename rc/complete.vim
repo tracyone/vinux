@@ -33,7 +33,7 @@ else
     let g:complete_plugin_type = ''
     Plug 'ervandew/supertab', { 'on': [] }
 endif
-Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
+Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets', { 'on': [] }
 
 " Complete ------------------------{{{
 "generate .ycm_extra_conf.py for current directory
@@ -249,13 +249,9 @@ else
     endfunction
     let g:complete_plugin.enable_func=function('<SID>supertab_change_complete_type')
 endif
+call te#feat#register_vim_plug_insert_setting([g:complete_plugin.enable_func], 
+            \ ['ultisnips', 'snippets', g:complete_plugin.name])
 
-augroup lazy_load_group
-    autocmd!
-    autocmd InsertEnter * call plug#load('ultisnips',g:complete_plugin.name)
-                \| call g:complete_plugin.enable_func()
-                \| autocmd! lazy_load_group
-augroup END
 "}}}
 " UltiSnips -----------------------{{{
 if  te#env#SupportPy2()

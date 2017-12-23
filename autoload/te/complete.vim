@@ -40,7 +40,7 @@ function! s:YcmGotoDef() abort
     if get(g:, 'complete_plugin_type') ==# 'ycm' 
         if  exists('*youcompleteme#Enable') == 0
             call te#utils#EchoWarning('Loading ycm ...')
-            call plug#load('ultisnips','YouCompleteMe')
+            call plug#load(['ultisnips', 'snippets', g:complete_plugin.name])
             call delete('.ycm_extra_conf.pyc')  
             call youcompleteme#Enable() 
             let g:is_load_ycm = 1

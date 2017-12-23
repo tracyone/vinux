@@ -91,12 +91,8 @@ if te#env#SupportPy2()
 endif
 Plug 'rhysd/github-complete.vim',{'for': ['gitcommit', 'markdown']}
 Plug 'airblade/vim-gitgutter', { 'on': [] }
-augroup gitguttergroup 
-    autocmd!
-    autocmd BufWritePost * call plug#load('vim-gitgutter')
-                \| :GitGutterEnable
-                \| autocmd! gitguttergroup
-augroup END
+call te#feat#register_vim_plug_insert_setting(['GitGutterEnable'], 
+            \ ['vim-gitgutter'])
 
 " Git releate ---------------------{{{
 " list git issue

@@ -10,6 +10,12 @@ augroup misc_group
     autocmd VimEnter * call te#feat#run_vim_enter_setting()
 augroup END
 
+augroup lazy_load_group
+    autocmd!
+    autocmd InsertEnter * call te#feat#vim_plug_insert_enter()
+                \| autocmd! lazy_load_group
+augroup END
+
 augroup filetype_group
     autocmd!
     autocmd BufRead,BufNewFile *.vt setlocal filetype=verilog

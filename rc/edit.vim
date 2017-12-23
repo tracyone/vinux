@@ -1,6 +1,6 @@
 Plug 'terryma/vim-multiple-cursors'
 Plug 'terryma/vim-expand-region'
-Plug 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate',{'on':[]}
 Plug 'thinca/vim-qfreplace',{'on': 'Qfreplace'}
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
@@ -13,6 +13,8 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
 Plug 'tweekmonster/spellrotate.vim', {'on': ['<Plug>(SpellRotateForward)']}
+call te#feat#register_vim_plug_insert_setting([], 
+            \ ['delimitMate'])
 nmap <silent> <leader>zn <Plug>(SpellRotateForward)
 nmap <silent> <leader>zp <Plug>(SpellRotateBackward)
 vmap <silent> <leader>zn <Plug>(SpellRotateForwardV)
