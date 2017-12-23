@@ -120,4 +120,6 @@ nnoremap <Leader>gp :call te#git#GitPush("heads")<cr>
 nnoremap <Leader>gg :call te#git#GitPush("for")<cr>
 " git fetch all
 nnoremap <Leader>gf :call te#utils#run_command('git fetch --all')<cr>
+" git config -e
+nnoremap <Leader>ge :sp .git/config<cr>
 "}}}
