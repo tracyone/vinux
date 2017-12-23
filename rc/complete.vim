@@ -1,28 +1,27 @@
+let g:complete_plugin={}
+let g:complete_plugin.name=g:complete_plugin_type
+let g:complete_plugin.enable_func=function('te#env#IsVim8')
 if g:complete_plugin_type ==# 'ycm' && te#env#SupportYcm()
     if te#env#IsUnix()
         Plug 'Valloric/YouCompleteMe', { 'on': [], 'commit': '32f1eae9cb8b8c7793f632fd24b2289839bf768e' }
-        let g:complete_plugin_type_name='YouCompleteMe'
+        let g:complete_plugin.name='YouCompleteMe'
     elseif te#env#IsWin32()
         Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
-        let g:complete_plugin_type_name='YouCompleteMe-x86'
+        let g:complete_plugin.name='YouCompleteMe-x86'
     else
         Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
-        let g:complete_plugin_type_name='YouCompleteMe-x64'
+        let g:complete_plugin.name='YouCompleteMe-x64'
     endif
     "Plug 'tenfyzhong/CompleteParameter.vim', { 'on': [] }
 elseif g:complete_plugin_type ==# 'clang_complete'
     Plug 'Rip-Rip/clang_complete', { 'on': [] }
-    let g:complete_plugin_type_name='clang_complete'
 elseif g:complete_plugin_type ==# 'completor.vim' && te#env#IsVim8()
     Plug 'maralla/completor.vim'
-    let g:complete_plugin_type_name='completor.vim'
 elseif g:complete_plugin_type ==# 'neocomplete' && te#env#SupportFeature('lua')
-    let g:complete_plugin_type_name='neocomplete'
-    Plug 'Shougo/neocomplete'
+    Plug 'Shougo/neocomplete', { 'on': [] }
     Plug 'tracyone/dict'
     Plug 'Konfekt/FastFold'
-elseif g:complete_plugin_type ==# 'deoplete'
-    let g:complete_plugin_type_name='deoplete.nvim'
+elseif g:complete_plugin_type ==# 'deoplete.nvim'
     Plug 'Shougo/deoplete.nvim', { 'on': [] }
     Plug 'zchee/deoplete-clang',{'for':['c', 'cpp']}
     if !te#env#IsNvim()
@@ -30,9 +29,9 @@ elseif g:complete_plugin_type ==# 'deoplete'
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
 else
+    let g:complete_plugin.name="supertab"
+    let g:complete_plugin_type = ''
     Plug 'ervandew/supertab', { 'on': [] }
-    let g:complete_plugin_type_name='supertab'
-    let g:complete_plugin_type=''
 endif
 Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 
@@ -40,23 +39,13 @@ Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 "generate .ycm_extra_conf.py for current directory
 
 " lazyload ultisnips and YouCompleteMe
-if g:complete_plugin_type ==# 'ycm'
-    augroup lazy_load_group
-        autocmd!
-        autocmd InsertEnter * call plug#load('ultisnips',g:complete_plugin_type_name)
-                    \| call delete('.ycm_extra_conf.pyc')  | call youcompleteme#Enable() 
-                    \| autocmd! lazy_load_group
-    augroup END
-else
-    augroup lazy_load_group
-        autocmd!
-        autocmd InsertEnter * call plug#load('ultisnips',g:complete_plugin_type_name)
-                    \| autocmd! lazy_load_group
-    augroup END
-endif
 
 if g:complete_plugin_type ==# 'ycm'
     " jume to definition (YCM)
+    function! s:enable_ycm()
+        call delete('.ycm_extra_conf.pyc')  | call youcompleteme#Enable() 
+    endfunction
+    let g:complete_plugin.enable_func=function('<SID>enable_ycm')
     nnoremap <leader>yj :YcmCompleter GoTo<CR>
     nnoremap <leader>yd :YcmDiags<cr>
     nnoremap <leader>yt :YcmCompleter GetType<cr>
@@ -209,7 +198,7 @@ elseif g:complete_plugin_type ==# 'completor.vim'
     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
     inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
-elseif g:complete_plugin_type ==# 'deoplete'
+elseif g:complete_plugin_type ==# 'deoplete.nvim'
     "deoplete
      if te#env#IsMac()
          let g:deoplete#sources#clang#libclang_path='/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
@@ -244,10 +233,29 @@ elseif g:complete_plugin_type ==# 'deoplete'
     "load all source
     "let g:deoplete#sources._ = []
 else
-    "let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-    let g:SuperTabDefaultCompletionType = "context"
-    let g:SuperTabRetainCompletionType=2
+    let g:SuperTabCrMapping = 0
+    let g:SuperTabDefaultCompletionType = 'context'
+    let g:SuperTabContextDefaultCompletionType = '<c-x><c-o>'
+    function! s:supertab_change_complete_type()
+        if &omnifunc ==# '' && &completefunc ==# ''
+            call SuperTabSetDefaultCompletionType("<c-p>")
+        elseif &omnifunc !=# ''
+            call SuperTabSetDefaultCompletionType("<c-x><c-o>")
+            call SuperTabChain(&omnifunc, "<c-p>") |
+        elseif &completefunc !=# ''
+            call SuperTabSetDefaultCompletionType("<c-x><c-u>")
+            call SuperTabChain(&completefunc, "<c-p>") |
+        endif
+    endfunction
+    let g:complete_plugin.enable_func=function('<SID>supertab_change_complete_type')
 endif
+
+augroup lazy_load_group
+    autocmd!
+    autocmd InsertEnter * call plug#load('ultisnips',g:complete_plugin.name)
+                \| call g:complete_plugin.enable_func()
+                \| autocmd! lazy_load_group
+augroup END
 "}}}
 " UltiSnips -----------------------{{{
 if  te#env#SupportPy2()

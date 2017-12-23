@@ -323,3 +323,8 @@ elseif te#env#SupportTerminal()
     call te#meta#map('tmap <silent>','l',&termkey.'l')
     silent! execute 'tmap <c-v> '.&termkey.'"*'
 endif
+
+" Open plug status windows
+nnoremap <Leader>ap :PlugStatus<cr>
+" update plugin
+nnoremap <Leader>au :PlugUpdate<cr>
