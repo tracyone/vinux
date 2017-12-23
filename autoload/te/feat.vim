@@ -141,12 +141,7 @@ let s:plugin_func_list=[]
 
 "funcref must be a funcref variable
 function! te#feat#register_vim_enter_setting(funcref) abort
-    if type(a:funcref) != g:t_func
-        call te#utils#EchoWarning('register failed!funcref must be a funcref variable', 'err')
-        return -1
-    endif
     call add(s:plugin_func_list, a:funcref)
-    return 0
 endfunction
 
 function! te#feat#run_vim_enter_setting() abort
