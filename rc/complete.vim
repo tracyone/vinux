@@ -11,31 +11,36 @@ if g:complete_plugin_type ==# 'ycm' && te#env#SupportYcm()
     endif
     "Plug 'tenfyzhong/CompleteParameter.vim', { 'on': [] }
 elseif g:complete_plugin_type ==# 'clang_complete'
-    Plug 'Rip-Rip/clang_complete'
+    Plug 'Rip-Rip/clang_complete', { 'on': [] }
+    let g:complete_plugin_type_name='clang_complete'
 elseif g:complete_plugin_type ==# 'completor.vim' && te#env#IsVim8()
     Plug 'maralla/completor.vim'
+    let g:complete_plugin_type_name='completor.vim'
 elseif g:complete_plugin_type ==# 'neocomplete' && te#env#SupportFeature('lua')
+    let g:complete_plugin_type_name='neocomplete'
     Plug 'Shougo/neocomplete'
     Plug 'tracyone/dict'
     Plug 'Konfekt/FastFold'
 elseif g:complete_plugin_type ==# 'deoplete'
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'zchee/deoplete-clang'
-    Plug 'roxma/nvim-yarp'
+    let g:complete_plugin_type_name='deoplete.nvim'
+    Plug 'Shougo/deoplete.nvim', { 'on': [] }
+    Plug 'zchee/deoplete-clang',{'for':['c', 'cpp']}
     if !te#env#IsNvim()
+        Plug 'roxma/nvim-yarp'
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
 else
-    Plug 'ervandew/supertab'
+    Plug 'ervandew/supertab', { 'on': [] }
+    let g:complete_plugin_type_name='supertab'
     let g:complete_plugin_type=''
 endif
+Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
 
 " Complete ------------------------{{{
 "generate .ycm_extra_conf.py for current directory
 
 " lazyload ultisnips and YouCompleteMe
 if g:complete_plugin_type ==# 'ycm'
-    Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets'
     augroup lazy_load_group
         autocmd!
         autocmd InsertEnter * call plug#load('ultisnips',g:complete_plugin_type_name)
@@ -43,7 +48,11 @@ if g:complete_plugin_type ==# 'ycm'
                     \| autocmd! lazy_load_group
     augroup END
 else
-    Plug 'SirVer/ultisnips'| Plug 'tracyone/snippets'
+    augroup lazy_load_group
+        autocmd!
+        autocmd InsertEnter * call plug#load('ultisnips',g:complete_plugin_type_name)
+                    \| autocmd! lazy_load_group
+    augroup END
 endif
 
 if g:complete_plugin_type ==# 'ycm'
@@ -234,6 +243,10 @@ elseif g:complete_plugin_type ==# 'deoplete'
     "let g:deoplete#sources = {}
     "load all source
     "let g:deoplete#sources._ = []
+else
+    "let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+    let g:SuperTabDefaultCompletionType = "context"
+    let g:SuperTabRetainCompletionType=2
 endif
 "}}}
 " UltiSnips -----------------------{{{
