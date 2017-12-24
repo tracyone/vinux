@@ -1,4 +1,4 @@
-let g:WindColorColumnBlacklist = ['diff', 'fugitiveblame', 'vimfiler', 'qf', 'leaderf']
+let g:WindColorColumnBlacklist = ['diff', 'fugitiveblame', 'nerdtree', 'qf', 'leaderf']
 
 
 "filetype that do not need to color

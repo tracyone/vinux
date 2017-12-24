@@ -34,7 +34,7 @@ if(!te#env#IsWindows())
                 \ ['fcitx-vim-osx'])
 endif
 if te#env#IsVim8() || te#env#IsNvim()
-    Plug 'neomake/neomake', { 'commit': 'f4a3185ac627474ee592eb1a452ce19c79c8907e'}
+    Plug 'neomake/neomake', { 'commit': '459ac69da3eb00850eb3efefe31b3fb237d7926d'}
     Plug 'tracyone/neomake-multiprocess'
     "ag search c family function
     nnoremap <leader>vf :call neomakemp#global_search(expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]")<cr>
