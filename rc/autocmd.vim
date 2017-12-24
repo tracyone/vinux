@@ -35,6 +35,7 @@ augroup filetype_group
                 \ | noremap <buffer> <c-x> <C-w><Enter><C-w>K
                 \ | nnoremap <buffer> q :ccl<cr>
                 \ | nnoremap <buffer> o <CR><C-w>p
+                \ | nnoremap <buffer> <c-j> <CR><C-w>p
                 \ | nnoremap <buffer> <c-t> <C-w><CR><C-w>T
                 \ | nnoremap <buffer> <c-v> <C-w><CR><C-w>L<C-w>p<C-w>J<C-w>p
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
