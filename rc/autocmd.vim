@@ -52,9 +52,6 @@ if te#env#IsNvim()
       autocmd FocusLost,WinLeave * if te#autocmds#should_colorcolumn() | set winhighlight=CursorLineNr:LineNr,IncSearch:ColorColumn,Normal:ColorColumn,NormalNC:ColorColumn,SignColumn:ColorColumn | endif
     endif
 else
-    if te#env#SupportTerminal()
-        autocmd misc_group BufWinEnter * if &buftype == 'terminal' | setlocal <m-b>= <m-f>= | endif
-    endif
     if te#env#IsMacVim()
         autocmd misc_group FocusGained * :redraw!
     endif

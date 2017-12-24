@@ -322,6 +322,8 @@ elseif te#env#SupportTerminal()
     call te#meta#map('tmap <silent>','k',&termkey.'k')
     call te#meta#map('tmap <silent>','l',&termkey.'l')
     silent! execute 'tmap <c-v> '.&termkey.'"*'
+    call te#meta#map('tnoremap','b','<C-left>')
+    call te#meta#map('tnoremap','f','<C-right>')
 endif
 
 " Open plug status windows
