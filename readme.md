@@ -1,6 +1,4 @@
-# 🍎 vinux [![Build Status](https://travis-ci.org/tracyone/vinux.svg?branch=master)](https://travis-ci.org/tracyone/vinux)
-
-**倚天剑屠龙刀**
+# 🍎 vinux
 
 **Quick Install**
 
@@ -11,8 +9,6 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/vinux/master/in
 **Wiki**
 
 [vinux's wiki](https://github.com/tracyone/vinux/wiki)
-
-telegram 交流群: [vim-china](https://t.me/joinchat/GTkBzg2y_qsQCPr-8S7Z7A)
 
 
 # Buy me a coffee
