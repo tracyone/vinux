@@ -37,15 +37,15 @@ function! te#feat#gen_feature_vim() abort
 	for l:key in keys(s:feature_dict)
 	   call te#compatiable#writefile(['let '.l:key.'='.s:feature_dict[l:key]], $VIMFILES.'/feature.vim', 'a')
 	endfor
-    let l:t_vim_version=system('git describe')
+    let l:vinux_version=system('git describe')
     let l:temp=te#feat#get_vim_version()
     if v:shell_error != 0
-	    let l:t_vim_version='V0.6.1'.'@'.l:temp[0].'.'.l:temp[1].'(vinux)'
+	    let l:vinux_version='V0.6.2'.'@'.l:temp[0].'.'.l:temp[1].'(vinux)'
     else
-        let l:t_vim_version=split(l:t_vim_version, '\n')[-1].'@'.l:temp[0].'.'.l:temp[1].'(vinux)'
+        let l:vinux_version=split(l:vinux_version, '\n')[-1].'@'.l:temp[0].'.'.l:temp[1].'(vinux)'
     endif
-    let g:t_vim_version=string(l:t_vim_version)
-    call te#compatiable#writefile(['let g:t_vim_version='.string(l:t_vim_version)], $VIMFILES.'/feature.vim', 'a')
+    let g:vinux_version=string(l:vinux_version)
+    call te#compatiable#writefile(['let g:vinux_version='.string(l:vinux_version)], $VIMFILES.'/feature.vim', 'a')
 endfunction
 
 function! te#feat#gen_local_vim() abort

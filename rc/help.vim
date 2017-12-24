@@ -26,7 +26,7 @@ let g:startify_custom_header = [
             \ '                                ',                            
             \ '    '.strftime("%Y %b %d %X").' ',                            
             \ '                                ',                            
-            \ '    ['.g:t_vim_version.'] ',
+            \ '    ['.g:vinux_version.'] ',
             \ '',
             \ '',
             \ ]
