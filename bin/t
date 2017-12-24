@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# t-vim client mode
+# vinux client mode
 
 OS=$(uname)
 

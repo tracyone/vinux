@@ -40,9 +40,9 @@ function! te#feat#gen_feature_vim() abort
     let l:t_vim_version=system('git describe')
     let l:temp=te#feat#get_vim_version()
     if v:shell_error != 0
-	    let l:t_vim_version='V0.6.1'.'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
+	    let l:t_vim_version='V0.6.1'.'@'.l:temp[0].'.'.l:temp[1].'(vinux)'
     else
-        let l:t_vim_version=split(l:t_vim_version, '\n')[-1].'@'.l:temp[0].'.'.l:temp[1].'(t-vim)'
+        let l:t_vim_version=split(l:t_vim_version, '\n')[-1].'@'.l:temp[0].'.'.l:temp[1].'(vinux)'
     endif
     let g:t_vim_version=string(l:t_vim_version)
     call te#compatiable#writefile(['let g:t_vim_version='.string(l:t_vim_version)], $VIMFILES.'/feature.vim', 'a')

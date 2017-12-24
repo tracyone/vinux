@@ -3,10 +3,10 @@
 #   This setup file is based on spf13-vim's bootstrap.sh.
 #   Thanks for spf13-vim.
 
-app_name='t-vim'
+app_name='vinux'
 dot_localvim="$HOME/.vim/local.vim"
 [ -z "$APP_PATH" ] && APP_PATH="$HOME/.vim"
-[ -z "$REPO_URI" ] && REPO_URI='https://github.com/tracyone/t-vim.git'
+[ -z "$REPO_URI" ] && REPO_URI='https://github.com/tracyone/vinux.git'
 [ -z "$REPO_BRANCH" ] && REPO_BRANCH='master'
 debug_mode='0'
 [ -z "$VIM_PLUG_PATH" ] && VIM_PLUG_PATH="$HOME/.vim/autoload"

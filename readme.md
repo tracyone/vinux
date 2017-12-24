@@ -1,16 +1,16 @@
-# 🍎 t-vim [![Build Status](https://travis-ci.org/tracyone/t-vim.svg?branch=master)](https://travis-ci.org/tracyone/t-vim)
+# 🍎 vinux [![Build Status](https://travis-ci.org/tracyone/vinux.svg?branch=master)](https://travis-ci.org/tracyone/vinux)
 
 **倚天剑屠龙刀**
 
 **Quick Install**
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/t-vim/master/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/vinux/master/install.sh)"
 ```
 
 **Wiki**
 
-[t-vim's wiki](https://github.com/tracyone/t-vim/wiki)
+[vinux's wiki](https://github.com/tracyone/vinux/wiki)
 
 telegram 交流群: [vim-china](https://t.me/joinchat/GTkBzg2y_qsQCPr-8S7Z7A)
 

@@ -2,7 +2,7 @@
 "Brief      config file for neovim,vim,gvim in linux,gvim in win32,macvim
 "Date       2015-11-28/22:56:20
 "Author     tracyone,tracyone@live.cn,
-"Github     https://github.com/tracyone/t-vim
+"Github     https://github.com/tracyone/vinux
 "Website    http://onetracy.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
