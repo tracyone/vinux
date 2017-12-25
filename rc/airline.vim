@@ -34,6 +34,7 @@ let g:airline#extensions#tagbar#flags = 'f'
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#ycm#enabled = 0
 let g:airline#extensions#ctrlp#show_adjacent_modes = 0
+let g:airline_highlighting_cache = 1
 
 
 if !exists('g:airline_symbols')
@@ -72,6 +73,8 @@ function! s:airline_setting()
     endif
   let g:airline#extensions#disable_rtp_load = 1
 endfunction
+"https://github.com/vim-airline/vim-airline/issues/399
+autocmd misc_group BufDelete * call airline#extensions#tabline#buflist#invalidate()
 
 call te#feat#register_vim_enter_setting(function('<SID>airline_setting'))
 " }}}
