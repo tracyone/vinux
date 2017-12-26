@@ -6,6 +6,7 @@ if(te#env#IsLinux())
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
 endif
 Plug 'jyelloz/vim-dts-indent',{'for': ['dts']}
+Plug 'justinmk/vim-syntax-extra',{'for': ['c', 'cpp', 'lex', 'yacc']}
 " }}}
 " A.vim ---------------------------{{{
 ":A switches to the header file corresponding to the current file being  edited (or vise versa)
