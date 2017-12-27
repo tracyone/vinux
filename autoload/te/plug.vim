@@ -3,11 +3,21 @@
 "
 
 function! te#plug#open_doc() abort
-    let name = matchstr(getline('.'), '^- \zs\S\+\ze:')
+    let name = matchstr(getline('.'), '^[x-] \zs\S\+\ze:')
     if has_key(g:plugs, name)
         for doc in split(globpath(g:plugs[name].dir, 'doc/*.txt'), '\n')
             execute 'tabe' doc
         endfor
+    endif
+endfunction
+
+function! te#plug#open_plugin_dir() abort
+    let name = matchstr(getline('.'), '^[x-] \zs\S\+\ze:')
+    if has_key(g:plugs, name)
+       execute 'cd '.g:plugs[name].dir
+       if te#env#SupportTerminal()
+           call te#tools#shell_pop(0x4)
+       endif
     endif
 endfunction
 

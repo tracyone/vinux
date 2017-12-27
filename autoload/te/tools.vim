@@ -1,4 +1,6 @@
 "pop vimshell
+"option:0x04 open terminal in a new tab
+"option:0x01 open terminal in a split window
 function! te#tools#shell_pop(option) abort
     " 38% height of current window
     call te#server#connect()

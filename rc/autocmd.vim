@@ -44,6 +44,7 @@ augroup filetype_group
     autocmd FileType vimcalc,man setlocal nonu nornu
     autocmd FileType vim-plug nnoremap <buffer> <silent> H :call te#plug#open_doc()<cr> 
                 \ | nnoremap <buffer> <silent> gx :call te#plug#browse_plugin_url()<cr>
+                \ | nnoremap <buffer> <silent> <c-t> :call te#plug#open_plugin_dir()<cr>
                 \ | call te#plug#extra_key()
 augroup END
 if te#env#IsNvim()
