@@ -15,9 +15,7 @@ function! te#plug#open_plugin_dir() abort
     let name = matchstr(getline('.'), '^[x-] \zs\S\+\ze:')
     if has_key(g:plugs, name)
        execute 'cd '.g:plugs[name].dir
-       if te#env#SupportTerminal()
-           call te#tools#shell_pop(0x4)
-       endif
+       call te#tools#shell_pop(0x4)
     endif
 endfunction
 
