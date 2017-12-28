@@ -40,7 +40,7 @@ function! te#feat#gen_feature_vim() abort
     let l:vinux_version=system('git describe')
     let l:temp=te#feat#get_vim_version()
     if v:shell_error != 0
-	    let l:vinux_version='V0.6.2'.'@'.l:temp[0].'.'.l:temp[1].'(vinux)'
+	    let l:vinux_version='V0.6.3'.'@'.l:temp[0].'.'.l:temp[1].'(vinux)'
     else
         let l:vinux_version=split(l:vinux_version, '\n')[-1].'@'.l:temp[0].'.'.l:temp[1].'(vinux)'
     endif
