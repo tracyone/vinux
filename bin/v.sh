@@ -14,7 +14,6 @@ if [ -n "$TMUX"  ]; then
             continue
         fi
     fi
-    echo ${cmd}
     if [ "${cmd%m}" = "vi"  ]; then
       # We have found a pane with vim running lets send it to the pane with :e (change for split/buffer/tab)
       if [ "$#" -gt 0 ]; then

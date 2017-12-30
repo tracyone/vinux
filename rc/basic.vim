@@ -1,6 +1,6 @@
 " basic package
 " Package info {{{
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle','NERDTreeFind'] }
 Plug 'majutsushi/tagbar'
 if te#env#IsMac()
     Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
@@ -170,6 +170,8 @@ let g:NERDTreeChDirMode=2
 noremap <F12> :NERDTreeToggle .<CR> 
 " Open nerd tree
 nnoremap <leader>te :NERDTreeToggle .<CR> 
+" Open nerd tree
+nnoremap <leader>nf :NERDTreeFind<CR> 
 "map <2-LeftMouse>  *N "double click highlight the current cursor word 
 inoremap <F12> <ESC> :NERDTreeToggle<CR>
 autocmd misc_group VimEnter * :let g:cursorword = 0
