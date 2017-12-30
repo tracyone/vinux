@@ -34,7 +34,10 @@ else
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
     Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
-    Plug 'FelikZ/ctrlp-py-matcher'
+    if te#env#SupportPy()
+        Plug 'FelikZ/ctrlp-py-matcher'
+        let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+    endif
     " Ctrlp {{{
     " Set Ctrl-P to show match at top of list instead of at bottom, which is so
     " stupid that it's not default
@@ -128,7 +131,6 @@ else
     nnoremap <Leader>pk :CtrlPFunky<cr>
     "CtrlP cmd
     nnoremap <Leader><Leader> :CtrlP<cr>
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
     "}}}
 endif
 Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
