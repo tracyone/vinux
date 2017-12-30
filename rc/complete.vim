@@ -1,16 +1,16 @@
 let g:complete_plugin={}
-let g:complete_plugin.name=g:complete_plugin_type
+let g:complete_plugin.name=[g:complete_plugin_type]
 let g:complete_plugin.enable_func=function('te#env#IsVim8')
 if g:complete_plugin_type ==# 'ycm' && te#env#SupportYcm()
     if te#env#IsUnix()
         Plug 'Valloric/YouCompleteMe', { 'on': [], 'commit': '32f1eae9cb8b8c7793f632fd24b2289839bf768e' }
-        let g:complete_plugin.name='YouCompleteMe'
+        let g:complete_plugin.name=['YouCompleteMe']
     elseif te#env#IsWin32()
         Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
-        let g:complete_plugin.name='YouCompleteMe-x86'
+        let g:complete_plugin.name=['YouCompleteMe-x86']
     else
         Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
-        let g:complete_plugin.name='YouCompleteMe-x64'
+        let g:complete_plugin.name=['YouCompleteMe-x64']
     endif
     "Plug 'tenfyzhong/CompleteParameter.vim', { 'on': [] }
 elseif g:complete_plugin_type ==# 'clang_complete'
@@ -29,11 +29,14 @@ elseif g:complete_plugin_type ==# 'deoplete.nvim'
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
 else
-    let g:complete_plugin.name="supertab"
+    let g:complete_plugin.name=["supertab"]
     let g:complete_plugin_type = ''
     Plug 'ervandew/supertab', { 'on': [] }
 endif
-Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets', { 'on': [] }
+if te#env#SupportPy()
+    Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets', { 'on': [] }
+    call extend(g:complete_plugin.name, ['ultisnips', 'snippets'])
+endif
 
 " Complete ------------------------{{{
 "generate .ycm_extra_conf.py for current directory
@@ -250,7 +253,7 @@ else
     let g:complete_plugin.enable_func=function('<SID>supertab_change_complete_type')
 endif
 call te#feat#register_vim_plug_insert_setting([g:complete_plugin.enable_func], 
-            \ ['ultisnips', 'snippets', g:complete_plugin.name])
+            \ g:complete_plugin.name)
 
 "}}}
 " UltiSnips -----------------------{{{
