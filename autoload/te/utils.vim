@@ -483,6 +483,7 @@ function! te#utils#check_health() abort
     call matchadd("health", ".*No.*")
 endfunction
 
+"te#utils#run_command (command [, callback] [,arglist] [, flag)
 function! te#utils#run_command(command,...) abort
     if a:command =~# '^\s*$'
         let l:command = input("Run command:",'','customlist,te#bashcomplete#cmd_complete')
