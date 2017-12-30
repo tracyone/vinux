@@ -63,7 +63,6 @@ function! te#tools#update_t_vim() abort
     cd $VIMFILES
     if isdirectory('.git') && te#env#Executable('git')
         call te#utils#EchoWarning('Updating ...')
-        call system('git fetch --all')
         let l:temp1=te#compatiable#systemlist('git rev-list --tags --max-count=1')
         let l:temp2=te#compatiable#systemlist('git describe --tags '.l:temp1[0])
         call te#utils#run_command('git checkout '.l:temp2[0])
