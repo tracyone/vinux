@@ -20,6 +20,7 @@ if v:lang=~? '^\(zh\)\|\(ja\)\|\(ko\)'
 endif
 source $VIMRUNTIME/delmenu.vim
 lan mes en_US.UTF-8
+let $LANGUAGE='en_US.UTF-8'
 "set langmenu=nl_NL.ISO_8859-1
 scriptencoding utf-8
 
