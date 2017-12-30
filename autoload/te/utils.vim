@@ -390,7 +390,7 @@ endfunction
 
 function! te#utils#check_health() abort
     tabnew
-    nnoremap <buffer> q :q<cr>
+    nnoremap <buffer> q :bdelete<cr>:q<cr>
     setlocal wrap
     setlocal filetype=health
     setlocal conceallevel=2 concealcursor=nc
