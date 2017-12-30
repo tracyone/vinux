@@ -90,9 +90,11 @@ if te#env#SupportPy2()
     Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
 endif
 Plug 'rhysd/github-complete.vim',{'for': ['gitcommit', 'markdown']}
-Plug 'airblade/vim-gitgutter', { 'on': [] }
-call te#feat#register_vim_plug_insert_setting(['GitGutterEnable'], 
-            \ ['vim-gitgutter'])
+if te#env#SupportFeature('sign')
+    Plug 'airblade/vim-gitgutter', { 'on': [] }
+    call te#feat#register_vim_plug_insert_setting(['GitGutterEnable'], 
+                \ ['vim-gitgutter'])
+endif
 
 " Git releate ---------------------{{{
 " list git issue
