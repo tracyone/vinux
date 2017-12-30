@@ -8,13 +8,15 @@
 
 set nocompatible
 
-if te#env#IsWindows()
-    let $VIMFILES = $HOME.'/vimfiles'
-else
-    if te#env#IsNvim()
-        let $VIMFILES = $HOME.'/.config/nvim'
+if empty($VIMFILES)
+    if te#env#IsWindows()
+        let $VIMFILES = $HOME.'/vimfiles'
     else
-        let $VIMFILES = $HOME.'/.vim'
+        if te#env#IsNvim()
+            let $VIMFILES = $HOME.'/.config/nvim'
+        else
+            let $VIMFILES = $HOME.'/.vim'
+        endif
     endif
 endif
 let $PATH = $VIMFILES.'/bin:'.$PATH
