@@ -1,9 +1,5 @@
 if(!te#env#IsWindows())
     if te#env#IsTmux()
-        function! s:rename_tmux_win() abort
-            let l:name=input("Input the name of current windows: ")
-            call te#utils#run_command('tmux rename-window '.l:name)
-        endfunction
         Plug 'christoomey/vim-tmux-navigator'
         if get(g:, 'fuzzysearcher_plugin_name') ==# 'ctrlp'
             Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
@@ -29,6 +25,6 @@ if(!te#env#IsWindows())
         call te#meta#map('nnoremap <silent>','k',':TmuxNavigateUp<cr>')
         call te#meta#map('nnoremap <silent>','w',':TmuxNavigatePrevious<cr>')
         "rename windows
-        nnoremap <Leader>uw :call <SID>rename_tmux_win()<cr>
+        nnoremap <Leader>uw :call te#tmux#rename_win('')<cr>
     endif
 endif

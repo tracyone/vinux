@@ -43,3 +43,12 @@ function! te#tmux#run_command(cmd, flag) abort
     endif
     call system('tmux '.l:action.string(a:cmd))
 endfunction
+
+function! te#tmux#rename_win(name) abort
+    if a:name !=# ''
+        let l:name = a:name
+    else
+        let l:name=input("Input the name of current windows: ")
+    endif
+    call te#utils#run_command('tmux rename-window '.l:name)
+endfunction
