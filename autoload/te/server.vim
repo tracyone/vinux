@@ -7,6 +7,7 @@
 let s:flag = 0
 function! te#server#connect()
     if s:flag == 0
+        let $IN_VIM='vim'
         if empty($TVIM_SERVER_ADDRESS)
             let $TVIM_SERVER_ADDRESS = fnamemodify('/tmp/' . (has('nvim') ? 'nvim_' : 'vim_') . 'server', ':p')
         endif

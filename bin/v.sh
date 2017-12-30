@@ -6,6 +6,15 @@ if [ -n "$TMUX"  ]; then
     # loop through panes in active tmux session and find first active vim pane
     cmd="$(tmux display -p -t $i '#{pane_current_command}')" #look at this pane's running command
     cmd="$(basename "$cmd" | tr A-Z a-z)" #normalize basename and lowercase paranoid
+    current_pane=$(tmux list-panes |cut -f 7 -d " ")
+    # we are in nvim & vim's builin terminal
+    if [ "${IN_VIM%m}" = "vi"  ]; then
+        cmd=${IN_VIM}
+        if [ ${current_pane} != $i ]; then
+            continue
+        fi
+    fi
+    echo ${cmd}
     if [ "${cmd%m}" = "vi"  ]; then
       # We have found a pane with vim running lets send it to the pane with :e (change for split/buffer/tab)
       if [ "$#" -gt 0 ]; then
