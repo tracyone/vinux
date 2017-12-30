@@ -82,6 +82,7 @@ let g:clang_format#style_options = {
 
 let b:delimitMate_matchpairs = '(:),[:],{:}'
 
+:match Error /\s\+$/
 
 vnoremap <buffer><Leader>ct :s/^\s\+/\t/g<cr>
 
