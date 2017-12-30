@@ -390,8 +390,9 @@ endfunction
 
 function! te#utils#check_health() abort
     tabnew
+    nnoremap <buffer> q :q<cr>
     setlocal wrap
-    setlocal filetype=text
+    setlocal filetype=health
     setlocal conceallevel=2 concealcursor=nc
     setlocal keywordprg=:help iskeyword=@,48-57,_,192-255,-,#
     let l:output=[]
@@ -478,6 +479,8 @@ function! te#utils#check_health() abort
     setlocal nomodified
     setlocal nomodifiable
     setlocal bufhidden=hide
+    highlight health ctermbg=red guibg=red
+    call matchadd("health", ".*No.*")
 endfunction
 
 function! te#utils#run_command(command,...) abort

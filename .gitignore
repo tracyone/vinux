@@ -21,3 +21,5 @@ org/
 autoload/plug.vim
 .LfCache/
 init.vim
+*.swn
+*.swo
