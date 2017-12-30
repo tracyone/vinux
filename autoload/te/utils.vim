@@ -390,7 +390,7 @@ endfunction
 
 function! te#utils#check_health() abort
     tabnew
-    nnoremap <buffer> q :bdelete<cr>:q<cr>
+    nnoremap <buffer> q :call te#utils#quit_win(0)<cr>
     setlocal wrap
     setlocal filetype=health
     setlocal conceallevel=2 concealcursor=nc
@@ -478,7 +478,7 @@ function! te#utils#check_health() abort
     call append('$', l:output)
     setlocal nomodified
     setlocal nomodifiable
-    setlocal bufhidden=hide
+    setlocal bufhidden=delete
     highlight health ctermbg=red guibg=red
     call matchadd("health", ".*No.*")
 endfunction
