@@ -184,7 +184,8 @@ nnoremap <Leader>hf :tabnew<cr>:h function-list<cr>:only<cr>
 
 "update t_vim
 
-nnoremap <Leader>ud :call te#utils#run_command('git fetch --all',function('te#tools#update_t_vim'))<cr>
+nnoremap <Leader>ud :cd $VIMFILES<cr>:call te#utils#run_command('git fetch --all',function('te#tools#update_t_vim'))<cr>
+    
 
 " quit all
 nnoremap <Leader>qa :call te#utils#quit_win(1)<cr>
