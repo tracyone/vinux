@@ -68,4 +68,11 @@ else
 endif
 " undo tree window toggle
 nnoremap <leader>tu :UndotreeToggle<cr>
+"repeat some command
+silent! call repeat#set("\<plug>NERDCommenterComment", v:count)
+silent! call repeat#set("\<plug>NERDCommenterAppend", v:count)
+silent! call repeat#set("\<plug>NERDCommenterUncomment", v:count)
+silent! call repeat#set("\<Plug>(SpellRotateForward)", v:count)
+silent! call repeat#set("\<Plug>(SpellRotateBackward)", v:count)
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
+
