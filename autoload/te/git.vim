@@ -165,6 +165,7 @@ function! te#git#show_log() abort
             if te#env#IsNvim()
                 :terminal tig
             else
+                hi Terminal ctermbg=black ctermfg=white guibg=black guifg=white
                 :terminal ++curwin ++close tig
             endif
             return 0

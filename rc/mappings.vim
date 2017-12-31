@@ -108,8 +108,8 @@ nnoremap <leader>so :call te#utils#source_vimrc($MYVIMRC)<cr>
 nnoremap <leader>vc :call te#feat#edit_config()<cr>
 "open quickfix windows
 nnoremap <leader>qf :copen<cr>
-nnoremap <leader>qk q:
-nnoremap <leader>qj q/
+nnoremap <leader>qc q:
+nnoremap <leader>qd q/
 
 "clear search result
 
