@@ -31,7 +31,7 @@ function! te#plug#browse_plugin_url() abort
     let repo = matchstr(uri, '[^:/]*/'.name)
     let url  = empty(sha) ? 'https://github.com/'.repo
                 \ : printf('https://github.com/%s/commit/%s', repo, sha)
-    call netrw#BrowseX(url, 0)
+    call te#utils#open_url(url)
 endfunction
 
 

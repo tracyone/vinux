@@ -25,7 +25,7 @@ let g:startify_session_sort = 1
 let g:startify_custom_header = []
 
 let g:startify_commands = [
-            \ {'o': [g:vinux_version, 'call netrw#BrowseX("https://github.com/tracyone/vinux", 0)']},
+            \ {'o': [g:vinux_version, 'call te#utils#open_url("https://github.com/tracyone/vinux")']},
             \ {'v': ['Open vimrc', 'call feedkeys("\<Space>vc")']},
             \ ]
 
