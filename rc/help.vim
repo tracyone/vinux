@@ -22,16 +22,10 @@ let g:startify_change_to_dir = 1
 let g:startify_files_number = 5 
 let g:startify_change_to_vcs_root = 0
 let g:startify_session_sort = 1
-let g:startify_custom_header = [
-            \ '                                ',                            
-            \ '    '.strftime("%Y %b %d %X").' ',                            
-            \ '                                ',                            
-            \ '    ['.g:vinux_version.'] ',
-            \ '',
-            \ '',
-            \ ]
+let g:startify_custom_header = []
 
 let g:startify_commands = [
+            \ {'o': [g:vinux_version, 'call netrw#BrowseX("https://github.com/tracyone/vinux", 0)']},
             \ {'v': ['Open vimrc', 'call feedkeys("\<Space>vc")']},
             \ ]
 
