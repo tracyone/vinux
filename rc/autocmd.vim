@@ -1,7 +1,7 @@
 
 augroup misc_group
     autocmd!
-    autocmd CmdwinEnter * noremap <buffer> q :q<cr> | nunmap <buffer> <cr>
+    autocmd CmdwinEnter * set ft= | noremap <buffer> q :q<cr> | nmap <buffer><silent> <cr> <Enter>
     autocmd BufRead * if &ff=="dos" | setlocal ffs=dos,unix,mac | endif  
     autocmd VimResized * wincmd = 
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") |
