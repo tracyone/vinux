@@ -131,6 +131,12 @@ else
     nnoremap <Leader>pk :CtrlPFunky<cr>
     "CtrlP cmd
     nnoremap <Leader><Leader> :CtrlP<cr>
+    "CtrlP git branch
+    nnoremap <Leader>pgb :call te#ctrlp#git#start(1)<cr>
+    "CtrlP git branch
+    nnoremap <Leader>pgl :call te#ctrlp#git#start(2)<cr>
+    "CtrlP git log checkout
+    nnoremap <Leader>pgc :call te#ctrlp#git#start(3)<cr>
     "}}}
 endif
 Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',

@@ -12,7 +12,7 @@ call add(g:ctrlp_ext_vars, {
       \ 'init': 'te#ctrlp#colorscheme#init()',
       \ 'accept': 'te#ctrlp#colorscheme#accept',
       \ 'lname': 'colorscheme',
-      \ 'sname': 'colorscheme',
+      \ 'sname': 'color',
       \ 'type': 'line',
       \ 'sort': 0,
       \ 'specinput': 0,
