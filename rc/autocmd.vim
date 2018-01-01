@@ -33,7 +33,7 @@ augroup filetype_group
 
     autocmd FileType qf noremap <buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR> 
                 \ | noremap <buffer> <c-x> <C-w><Enter><C-w>K
-                \ | nnoremap <buffer> q :ccl<cr>
+                \ | nnoremap <buffer> q :ccl<cr>:lcl<cr>
                 \ | nnoremap <buffer> o <CR><C-w>p
                 \ | nnoremap <buffer> <c-j> <CR><C-w>p
                 \ | nnoremap <buffer> <c-t> <C-w><CR><C-w>T
