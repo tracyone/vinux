@@ -133,10 +133,12 @@ else
     nnoremap <Leader><Leader> :CtrlP<cr>
     "CtrlP git branch
     nnoremap <Leader>pgb :call te#ctrlp#git#start(1)<cr>
-    "CtrlP git branch
+    "CtrlP git show diff of specified commit
     nnoremap <Leader>pgl :call te#ctrlp#git#start(2)<cr>
     "CtrlP git log checkout
     nnoremap <Leader>pgc :call te#ctrlp#git#start(3)<cr>
+    "CtrlP git remote branch
+    nnoremap <Leader>pgr :call te#ctrlp#git#start(4)<cr>
     "}}}
 endif
 Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',

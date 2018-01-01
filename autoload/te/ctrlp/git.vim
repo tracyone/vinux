@@ -59,6 +59,8 @@ function! te#ctrlp#git#accept(mode, str) abort
         call s:git_show_diff(a:mode, matchstr(a:str, '^*\s\zs\w\+\ze\s.*'))
     elseif s:git_command == 3
         call te#utils#run_command('git checkout '.matchstr(a:str, '^*\s\zs\w\+\ze\s.*'))
+    elseif s:git_command == 4
+        call te#utils#run_command('git checkout '.matchstr(a:str, '\/\zs.*\ze'))
     endif
 endfunction
 
@@ -73,12 +75,15 @@ endfunction
 "1:branch
 "2:log
 "3:log checkout
+"4:remote branch
 function! te#ctrlp#git#start(arg) abort
     let s:git_command=a:arg
     if a:arg == 1
         let s:text = te#compatiable#systemlist("git for-each-ref --format='%(refname:short)' refs/heads/")
     elseif a:arg == 2 ||  a:arg == 3
         let s:text = te#compatiable#systemlist("git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative")
+    elseif a:arg == 4 
+        let s:text = te#compatiable#systemlist("git for-each-ref --format='%(refname:short)' refs/remotes/")
     endif
     call ctrlp#init(te#ctrlp#git#id()) 
 endfunction
