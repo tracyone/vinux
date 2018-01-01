@@ -126,7 +126,7 @@ else
     "CtrlP function 
     nnoremap <Leader>pU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
     "CtrlP cmd
-    nnoremap <Leader>pc :CtrlPCmdPalette<cr>
+    nnoremap <Leader>pc :call te#ctrlp#colorscheme#start()<cr>
     "CtrlP function
     nnoremap <Leader>pk :CtrlPFunky<cr>
     "CtrlP cmd
