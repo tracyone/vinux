@@ -125,7 +125,7 @@ else
     " narrow the list down with a word under cursor
     "CtrlP function 
     nnoremap <Leader>pU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-    "CtrlP cmd
+    "CtrlP colorsceme
     nnoremap <Leader>pc :call te#ctrlp#colorscheme#start()<cr>
     "CtrlP function
     nnoremap <Leader>pk :CtrlPFunky<cr>

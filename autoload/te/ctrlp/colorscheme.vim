@@ -23,6 +23,7 @@ function! te#ctrlp#colorscheme#init() abort
   return s:text
 endfunction
 
+"press ctrl-v will not exit ctrlp
 function! te#ctrlp#colorscheme#accept(mode, str) abort
   if a:mode !=# 'v'
       call ctrlp#exit()
