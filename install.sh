@@ -118,18 +118,22 @@ sync_repo() {
         mkdir -p "$repo_path"
         git clone  -b "$repo_branch" "$repo_uri" "$repo_path" 
         ret="$?"
-        success "Successfully cloned $repo_name."
-        local latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-        git checkout ${latest_tag}
-        cd -
+        if [ $ret -eq 0 ]; then
+            success "Successfully cloned $repo_name."
+            cd ${repo_path}
+            local latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+            git checkout ${latest_tag}
+            cd -
+        fi
     else
         msg "\033[1;34m==>\033[0m Trying to update $repo_name"
         cd "$repo_path" && git fetch --all
-        if [ $? -eq 0 ]; then
+        ret="$?"
+        if [ $ret -eq 0 ]; then
+            success "Successfully updated $repo_name"
             local latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
             git checkout ${latest_tag}
         fi
-        success "Successfully updated $repo_name"
     fi
 
     debug
