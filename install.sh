@@ -91,17 +91,34 @@ sync_repo() {
     local repo_branch="$3"
     local repo_name="$4"
 
-    if [ ! -e "$repo_path/.git" ];
+    #.vim is exist and is a git repo
+    if [ -d "$repo_path/.git" ];
+    then
+        cd ${repo_path}
+        local git_remote_url=$(git remote get-url `git remote` | grep tracyone | grep vinux)
+        #not my repo
+        if [ -z ${git_remote_url} ];
+        then
+            msg "\033[1;34m==>\033[0m Find git repo $(git remote get-url `git remote`) in $repo_path!"
+            msg "\033[1;34m==>\033[0m Backup to other place"
+            backup "${repo_path}"
+        fi
+        cd -
+    elif [ -d "${repo_path}" ];
+    then
+        # find ~/.vim and is not a git repo
+        msg "\033[1;34m==>\033[0m Find $repo_path"
+        msg "\033[1;34m==>\033[0m Backup to other place"
+        backup "${repo_path}"
+    fi
+
+    if [ ! -d "$repo_path" ];
     then
         msg "\033[1;34m==>\033[0m Trying to clone $repo_name"
         mkdir -p "$repo_path"
-        git clone --no-checkout  -b "$repo_branch" "$repo_uri" "$repo_path/temp" 
+        git clone  -b "$repo_branch" "$repo_uri" "$repo_path" 
         ret="$?"
         success "Successfully cloned $repo_name."
-        mv "${repo_path}/temp/.git" "${repo_path}"
-        rm -rf temp
-        cd "${repo_path}"
-        git reset --hard HEAD
         local latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
         git checkout ${latest_tag}
         cd -
