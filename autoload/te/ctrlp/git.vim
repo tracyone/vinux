@@ -81,7 +81,8 @@ function! te#ctrlp#git#start(arg) abort
     if a:arg == 1
         let s:text = te#compatiable#systemlist("git for-each-ref --format='%(refname:short)' refs/heads/")
     elseif a:arg == 2 ||  a:arg == 3
-        let s:text = te#compatiable#systemlist("git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative")
+        let s:text = te#compatiable#systemlist("git log --encoding=UTF-8 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) 
+                    \ %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative")
     elseif a:arg == 4 
         let s:text = te#compatiable#systemlist("git for-each-ref --format='%(refname:short)' refs/remotes/")
     endif
