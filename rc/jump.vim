@@ -131,6 +131,8 @@ else
     nnoremap <Leader>pk :CtrlPFunky<cr>
     "CtrlP cmd
     nnoremap <Leader><Leader> :CtrlP<cr>
+    "spacemacs :SPC ff
+    nnoremap <Leader>ff :call te#ctrlp#dir#start()<cr>
     "CtrlP git branch
     nnoremap <Leader>pgb :call te#ctrlp#git#start(1)<cr>
     "CtrlP git show diff of specified commit
@@ -218,4 +220,3 @@ let g:choosewin_overlay_enable = 1
 " Choose windows
 nmap <Leader>wc <Plug>(choosewin)
 " }}}
-" vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 

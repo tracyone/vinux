@@ -172,7 +172,6 @@ nnoremap <Leader>bk :bdelete<cr>
 nnoremap <leader>bo :call te#tools#buf_only('', '')<cr>
 " save file
 nnoremap <Leader>fs :call te#utils#SaveFiles()<cr>
-nnoremap <Leader>ff :call te#utils#SaveFiles()<cr>
 " save all
 nnoremap <Leader>fS :wa<cr>
 " manpage or vimhelp on current curosr word
