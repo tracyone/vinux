@@ -1,21 +1,24 @@
 "pop vimshell
 "option:0x04 open terminal in a new tab
 "option:0x01 open terminal in a split window
+"option:0x02 open terminal in a vsplit window
 function! te#tools#shell_pop(option) abort
     " 38% height of current window
     call te#server#connect()
     if and(a:option, 0x04)
         :tabnew
     endif
-    let l:line=(38*&lines)/100
-    if  l:line < 10 | let l:line = 10 |endif
-    let l:fullbuffer=1
     "any list buffer exist or buffer is startify
     if bufexists(expand('%')) && &filetype !=# 'startify'
                 \ && &modified == 0
         let l:fullbuffer=0
-        if te#env#IsNvim() || !te#env#SupportTerminal()
+        if and(a:option, 0x01)
+            let l:line=(38*&lines)/100
+            if  l:line < 10 | let l:line = 10 |endif
+            let l:fullbuffer=1
             execute 'rightbelow '.l:line.'split'
+        elseif and(a:option, 0x02)
+            :botright vsplit
         endif
     endif
     if te#env#IsGui() && te#env#IsUnix()
@@ -24,13 +27,7 @@ function! te#tools#shell_pop(option) abort
         let l:shell=&shell
     endif
     if te#env#SupportTerminal()  && te#env#IsVim8()
-        if l:fullbuffer == 1 && &modified == 0
-            execute ':terminal ++close ++curwin '.l:shell
-        else
-            "close terminal windows automatically after exit.
-            execute ':terminal ++close '.l:shell
-            execute 'normal '."\<c-w>r"
-        endif
+        execute ':terminal ++close ++curwin '.l:shell
     elseif te#env#SupportTerminal() && te#env#IsNvim()
         :terminal
     elseif te#env#IsTmux()
