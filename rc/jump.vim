@@ -35,8 +35,16 @@ else
     Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
     Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
     if te#env#SupportPy()
-        Plug 'FelikZ/ctrlp-py-matcher'
-        let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+        if te#env#IsMac()
+            Plug 'nixprime/cpsm', {'do':'PY3=OFF ./install.sh'}
+            let g:ctrlp_match_func ={'match': 'cpsm#CtrlPMatch'}
+        elseif te#env#IsUnix()
+            Plug 'JazzCore/ctrlp-cmatcher', {'do':'./install.sh'}
+            let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+        else
+            Plug 'FelikZ/ctrlp-py-matcher'
+            let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+        endif
     endif
     " Ctrlp {{{
     " Set Ctrl-P to show match at top of list instead of at bottom, which is so
