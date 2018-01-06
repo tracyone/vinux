@@ -30,7 +30,7 @@ if [ -n "$TMUX"  ]; then
               fi
               # only sendkeys to vim if there were args (like a file name or path), if not we just change to the vim window/pane
               # use bash's printf to escape chars like vim likes.
-              tmux send-keys -t $i ":tabnew $(printf "%q" "$absfilepath")" C-m
+              tmux send-keys -t $i "${VIM_ACTION} $(printf "%q" "$absfilepath")" C-m
           done
       fi
       # lets make the tmux window that had the first vim pane active 
@@ -58,7 +58,7 @@ if [ ${OS} == "Darwin" ]; then
             #path not absolute,  lets prefix with pwd...
             absfilepath="$PWD/${var#./}"
         fi
-        v.scpt $absfilepath 2>/dev/null
+        v.scpt ${VIM_ACTION} $absfilepath 2>/dev/null
     done
 else
     vim -p $@

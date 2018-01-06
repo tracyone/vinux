@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# vinux client mode
+
+export VIM_ACTION=":e!"
+
+if [ -n "${VIM_REMOTE}" ]; then
+    if [ "${IN_VIM%m}"  != "nvi" ]; then
+        `$VIM_REMOTE --remote-send "N:e! $1<cr>"`
+    else
+        `$VIM_REMOTE --remote $1`
+    fi
+else
+    v.sh $1
+fi

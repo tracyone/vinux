@@ -6,12 +6,14 @@
 
 let s:flag = 0
 function! te#server#connect()
-    if s:flag == 0
-        let $IN_VIM='vim'
+    "start server one time
+    "no need to start server in gvim
+    if s:flag == 0 && !te#env#IsGui()
         if empty($TVIM_SERVER_ADDRESS)
             let $TVIM_SERVER_ADDRESS = fnamemodify('/tmp/' . (has('nvim') ? 'nvim_' : 'vim_') . 'server', ':p')
         endif
         if te#env#IsNvim()
+            let $IN_VIM='nvim'
             try
                 call serverstart($TVIM_SERVER_ADDRESS)
             catch
@@ -19,11 +21,12 @@ function! te#server#connect()
             if !te#env#Executable('nvr')
                 let $VIM_REMOTE=''
             else
-                let $VIM_REMOTE='nvr --servername /tmp/nvim_server --remote-tab-silent '
+                let $VIM_REMOTE='nvr --servername /tmp/nvim_server '
             endif
         elseif has('clientserver') && exists('*remote_startserver') && te#env#IsDisplay()
+            let $IN_VIM='vim'
             if index(split(serverlist(), "\n"), $TVIM_SERVER_ADDRESS) == -1
-                let $VIM_REMOTE='vim --servername /tmp/vim_server --remote-tab-silent '
+                let $VIM_REMOTE='vim --servername /tmp/vim_server '
                 try
                     call remote_startserver($TVIM_SERVER_ADDRESS)
                 catch
@@ -35,9 +38,11 @@ function! te#server#connect()
         let s:flag = 1
     endif
     if te#env#IsMacVim()
-        let $VIM_REMOTE='/Applications/MacVim.app/Contents/bin/mvim --remote-tab-silent '
+        let $IN_VIM='mvim'
+        let $VIM_REMOTE='/Applications/MacVim.app/Contents/bin/mvim '
     elseif te#env#IsGui()
-        let $VIM_REMOTE='gvim --remote-tab-silent '
+        let $IN_VIM='gvim'
+        let $VIM_REMOTE='gvim '
     endif
 endfunction
 
