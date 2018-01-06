@@ -38,9 +38,6 @@ else
         if te#env#IsMac()
             Plug 'nixprime/cpsm', {'do':'PY3=OFF ./install.sh'}
             let g:ctrlp_match_func ={'match': 'cpsm#CtrlPMatch'}
-        elseif te#env#IsUnix()
-            Plug 'JazzCore/ctrlp-cmatcher', {'do':'./install.sh'}
-            let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
         else
             Plug 'FelikZ/ctrlp-py-matcher'
             let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
