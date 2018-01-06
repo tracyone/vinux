@@ -23,7 +23,7 @@ function! te#server#connect()
             endif
         elseif has('clientserver') && exists('*remote_startserver') && te#env#IsDisplay()
             if index(split(serverlist(), "\n"), $TVIM_SERVER_ADDRESS) == -1
-                let $VIM_REMOTE='vim --servername /tmp/vim_server --remote-silent-tab '
+                let $VIM_REMOTE='vim --servername /tmp/vim_server --remote-tab-silent '
                 try
                     call remote_startserver($TVIM_SERVER_ADDRESS)
                 catch
