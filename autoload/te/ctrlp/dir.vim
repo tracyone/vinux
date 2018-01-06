@@ -48,6 +48,15 @@ function! te#ctrlp#dir#id() abort
 endfunction
 
 function! te#ctrlp#dir#start() abort
-    let s:text = te#compatiable#systemlist('ls -a -F')
+    if te#env#IsWindows()
+        let s:text = te#compatiable#systemlist('dir /B /D')
+        let l:text_dir=filter(deepcopy(s:text),'isdirectory(v:val)')
+        call filter(s:text,'isdirectory(v:val) == 0')
+        call map(l:text_dir, 'v:val."\\"')
+        call extend(s:text, l:text_dir)
+        call add(s:text, '..\')
+    else
+        let s:text = te#compatiable#systemlist('ls -a -F')
+    endif
     call ctrlp#init(te#ctrlp#dir#id()) 
 endfunction

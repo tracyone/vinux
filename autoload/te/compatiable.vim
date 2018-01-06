@@ -30,7 +30,7 @@ endfunction
 
 "systemlist compatiable function.
 function! te#compatiable#systemlist(expr, ...)
-    if exists('*systemlist')
+    if exists('*systemlist') && !te#env#IsWindows()
         if a:0 == 1
             return systemlist(a:expr, a:1)
         else
