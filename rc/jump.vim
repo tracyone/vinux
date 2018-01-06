@@ -35,7 +35,7 @@ else
     Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
     Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
     if te#env#SupportPy()
-        if te#env#IsMac()
+        if te#env#IsMac() || get(g:, 'ctrlp_use_cpsm')
             Plug 'nixprime/cpsm', {'do':'PY3=OFF ./install.sh'}
             let g:ctrlp_match_func ={'match': 'cpsm#CtrlPMatch'}
         else
