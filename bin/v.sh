@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+OS=$(uname)
 if [ -n "$TMUX"  ]; then
   # we are in a tmux session...
   for i in  `tmux list-panes -a |cut -f 7 -d " "`
@@ -48,4 +49,17 @@ if [ -n "$TMUX"  ]; then
   exit
 fi
 # if we made it here,  we are running this command outside of tmux and will just pass all to vim normally.
-vim $@
+if [ ${OS} == "Darwin" ]; then
+    for var in $@; do
+        if [[ $var = /*  ]]; then
+            #path already looks absolute...
+            absfilepath="$var"
+        else
+            #path not absolute,  lets prefix with pwd...
+            absfilepath="$PWD/${var#./}"
+        fi
+        v.scpt $absfilepath 2>/dev/null
+    done
+else
+    vim -p $@
+fi

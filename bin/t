@@ -1,19 +1,9 @@
 #!/usr/bin/env bash
 # vinux client mode
 
-OS=$(uname)
 
 if [ -n "${VIM_REMOTE}" ]; then
     `$VIM_REMOTE $@`
 else
-    # use tmux instead
-    if [ -n "$TMUX"  ]; then
-        v.sh $@
-    else
-        if [[ ${OS} == "Darwin" ]]; then
-            v.scpt $@ 2>/dev/null
-        else
-            vim -p $@
-        fi
-    fi
+    v.sh $@
 fi
