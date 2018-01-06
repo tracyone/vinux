@@ -18,14 +18,8 @@ function! te#tools#shell_pop(option) abort
             execute 'rightbelow '.l:line.'split'
         endif
     endif
-    if te#env#IsGui()
+    if te#env#IsGui() && te#env#IsUnix()
         let l:shell='bash'
-        if te#env#IsWindows()
-            if !executable('bash')
-                let l:shell=&shell
-            endif
-        else
-        endif
     else
         let l:shell=&shell
     endif
