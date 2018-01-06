@@ -20,11 +20,11 @@ endfunction
 let s:id = g:ctrlp_builtins + len(g:ctrlp_ext_vars)
 "press ctrl-v will not exit ctrlp
 function! te#ctrlp#dir#accept(mode, str) abort
-    echom a:mode
+    let l:file_or_dir=matchstr(a:str,".*[^@]")
     "enter will cd else open netrw
-    if isdirectory(a:str) && a:mode ==# 'e' 
+    if isdirectory(l:file_or_dir) && a:mode ==# 'e' 
         call ctrlp#exit()
-        execute 'cd 'a:str
+        execute 'cd 'l:file_or_dir
         call te#ctrlp#dir#start()
     else
         call ctrlp#exit()
@@ -39,7 +39,7 @@ function! te#ctrlp#dir#accept(mode, str) abort
         else
             let l:HowToOpen='e'
         endif
-        execute l:HowToOpen.' '.a:str
+        execute l:HowToOpen.' '.l:file_or_dir
     endif
 endfunction
 
