@@ -189,7 +189,6 @@ generate_dot_localvim(){
         cat <<DOTSPACEVIM
 "system level init
 function! TVIM_pre_init()
-"let g:vinux_plugin_dir=$VIMFILES.'/bundle/'
 endfunction
 
 "Add you extra config here

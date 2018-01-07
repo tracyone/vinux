@@ -97,7 +97,7 @@ if g:complete_plugin_type.cur_val ==# 'YouCompleteMe'
                 \ 'infolog' : 1,
                 \ 'mail' : 1
                 \}
-    let g:ycm_global_ycm_extra_conf = g:vinux_plugin_dir.'/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf = g:vinux_plugin_dir.cur_val.'/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 elseif g:complete_plugin_type.cur_val ==# 'neocomplete'
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
@@ -112,14 +112,14 @@ elseif g:complete_plugin_type.cur_val ==# 'neocomplete'
     " Define dictionary.
     let g:neocomplete#sources#dictionary#dictionaries = {
                 \ 'default' : '',
-                \ 'cpp' : g:vinux_plugin_dir.'/dict/cpp.dict',
-                \ 'html' : g:vinux_plugin_dir.'/dict/html.dict',
-                \ 'c' : g:vinux_plugin_dir.'/dict/c.dict',
-                \ 'sh' : g:vinux_plugin_dir.'/dict/bash.dict',
-                \ 'dosbatch' : g:vinux_plugin_dir.'/dict/batch.dict',
-                \ 'tex' : g:vinux_plugin_dir.'/dict/latex.dict',
-                \ 'vim' : g:vinux_plugin_dir.'/dict/vim.dict.txt',
-                \ 'verilog' : g:vinux_plugin_dir.'/dict/verilog.dict'
+                \ 'cpp' : g:vinux_plugin_dir.cur_val.'/dict/cpp.dict',
+                \ 'html' : g:vinux_plugin_dir.cur_val.'/dict/html.dict',
+                \ 'c' : g:vinux_plugin_dir.cur_val.'/dict/c.dict',
+                \ 'sh' : g:vinux_plugin_dir.cur_val.'/dict/bash.dict',
+                \ 'dosbatch' : g:vinux_plugin_dir.cur_val.'/dict/batch.dict',
+                \ 'tex' : g:vinux_plugin_dir.cur_val.'/dict/latex.dict',
+                \ 'vim' : g:vinux_plugin_dir.cur_val.'/dict/vim.dict.txt',
+                \ 'verilog' : g:vinux_plugin_dir.cur_val.'/dict/verilog.dict'
                 \ }
 
     " Define keyword.
@@ -266,5 +266,5 @@ let g:UltiSnipsListSnippets ='<c-tab>'
 let g:UltiSnipsJumpForwardTrigge='<c-j>'
 let g:UltiSnipsJumpBackwardTrigge='<c-k>'
 let g:UltiSnipsSnippetDirectories=['bundle/snippets']
-let g:UltiSnipsSnippetsDir=g:vinux_plugin_dir.'/snippets'
+let g:UltiSnipsSnippetsDir=g:vinux_plugin_dir.cur_val.'/snippets'
 "}}}

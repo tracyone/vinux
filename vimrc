@@ -28,6 +28,7 @@ call te#feat#init_var('g:fuzzysearcher_plugin_name', ['ctrlp', 'leaderf', 'fzf',
 call te#feat#init_var('g:git_plugin_name',['vim-fugitive','gina.vim'])
 call te#feat#init_var('g:enable_powerline_fonts', ['OFF','ON'])
 call te#feat#init_var('g:enable_auto_plugin_install', ['ON','OFF'])
+call te#feat#init_var('g:vinux_plugin_dir', [$VIMFILES.'/bundle/', $HOME.'/plugged/'])
 
 if filereadable($VIMFILES.'/feature.vim')
     try
@@ -57,21 +58,12 @@ if exists('*TVIM_pre_init')
     call TVIM_pre_init()
 endif
 
-if exists('g:vinux_plugin_dir')
-    if type(g:vinux_plugin_dir) ==# g:t_string
-        if !isdirectory(g:vinux_plugin_dir)
-            silent! call mkdir(g:vinux_plugin_dir, 'p')
-            if !isdirectory(g:vinux_plugin_dir)
-                call te#utils#EchoWarning('Create '.g:vinux_plugin_dir.' fail!', 'err', 1)
-                let g:vinux_plugin_dir=$VIMFILES.'/bundle/'
-            endif
-        endif
-    else
-        call te#utils#EchoWarning('g:vinux_plugin_dir must be a string !', 'err', 1)
-        let g:vinux_plugin_dir=$VIMFILES.'/bundle/'
+if !isdirectory(g:vinux_plugin_dir.cur_val)
+    silent! call mkdir(g:vinux_plugin_dir.cur_val, 'p')
+    if !isdirectory(g:vinux_plugin_dir.cur_val)
+        call te#utils#EchoWarning('Create '.g:vinux_plugin_dir.cur_val.' fail!', 'err', 1)
+        let g:vinux_plugin_dir.cur_val=$VIMFILES.'/bundle/'
     endif
-else
-    let g:vinux_plugin_dir=$VIMFILES.'/bundle/'
 endif
 
 let &rtp=&rtp.','.$VIMFILES
@@ -90,7 +82,7 @@ if empty(glob($VIMFILES.'/autoload/plug.vim'))
         call te#utils#EchoWarning('Please install curl and git!', 1)
     endif
 endif
-silent! call plug#begin(g:vinux_plugin_dir)
+silent! call plug#begin(g:vinux_plugin_dir.cur_val)
 
 call te#feat#feat_enable('g:feat_enable_complete', 0)
 call te#feat#feat_enable('g:feat_enable_jump', 1)

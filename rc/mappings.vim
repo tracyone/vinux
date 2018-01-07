@@ -290,7 +290,7 @@ nnoremap <Leader>dj <c-u>
 nnoremap <Leader>dd <c-d>
 nnoremap <Leader>pw :call te#utils#EchoWarning(getcwd())<cr>
 " cd to any plugin directory
-nnoremap <Leader>cp :call te#utils#cd_to_plugin(g:vinux_plugin_dir)<cr>
+nnoremap <Leader>cp :call te#utils#cd_to_plugin(g:vinux_plugin_dir.cur_val)<cr>
 nnoremap <silent> <BS> <C-o>
 "newtab
 nnoremap <Leader>nt :tabnew<cr>
