@@ -55,7 +55,7 @@ function! te#tools#update_t_vim() abort
         call te#utils#EchoWarning('Updating ...')
         let l:temp1=te#compatiable#systemlist('git rev-list --tags --max-count=1')
         let l:temp2=te#compatiable#systemlist('git describe --tags '.l:temp1[0])
-        call te#utils#run_command('git checkout '.l:temp2[0], function('te#feat#gen_feature_vim'))
+        call te#utils#run_command('git checkout '.l:temp2[0], function('te#feat#gen_feature_vim'), [0])
     else
         call te#utils#EchoWarning('Not a git repository or git not found!', 'err')
     endif

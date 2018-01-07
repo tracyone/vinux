@@ -2,7 +2,7 @@
 "author:tracyone@live.cn
 
 function! s:git_show_diff(mode, commid_id) abort
-    if get(g:,'feat_enable_git') == 1 && g:git_plugin_name ==# 'vim-fugitive'
+    if get(g:,'feat_enable_git') == 1 && g:git_plugin_name.cur_val ==# 'vim-fugitive'
         if a:mode ==# 't'
             execute 'Gtabedit '.a:commid_id
         elseif a:mode ==# 'h'

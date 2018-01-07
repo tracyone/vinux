@@ -44,7 +44,7 @@ function! te#utils#EchoWarning(str,...) abort
             endif
         endfor
     endif
-    if l:flag == 0
+    if l:flag == 0 || !has('vim_starting')
         execut 'echohl '.l:level | echom '['.l:prompt.'] '.a:str | echohl None
     else
         call add(s:global_echo_str, a:str)
@@ -54,7 +54,7 @@ endfunction
 function! te#utils#echo_info_after()
     if !empty(s:global_echo_str)
         for l:needle in s:global_echo_str
-            call te#utils#EchoWarning(l:needle, 'err')
+            call te#utils#EchoWarning(l:needle, 'warn')
         endfor
         let s:global_echo_str=[]
     endif

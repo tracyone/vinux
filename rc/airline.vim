@@ -9,10 +9,10 @@ Plug 'vim-airline/vim-airline-themes'
 let g:airline_extensions = []
 
 let g:airline_extensions = ['tabline', 'tagbar']
-if get(g:,'git_plugin_name') ==# 'vim-fugitive' && get(g:, 'feat_enable_git')
+if g:git_plugin_name.cur_val ==# 'vim-fugitive' && get(g:, 'feat_enable_git')
     call add(g:airline_extensions, 'branch')
 endif
-if get(g:, 'fuzzysearcher_plugin_name') ==# 'ctrlp'
+if g:fuzzysearcher_plugin_name.cur_val ==# 'ctrlp'
     call add(g:airline_extensions, 'ctrlp')
 endif
 let g:airline#extensions#tabline#enabled = 1
@@ -41,13 +41,14 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 
-if get(g:,'airline_powerline_fonts') == 1
+if g:enable_powerline_fonts.cur_val ==# 'ON'
     let g:airline_left_sep = ''
     let g:airline_left_alt_sep = ''
     let g:airline_right_sep = ''
     let g:airline_right_alt_sep = ''
     let g:airline_symbols.branch = ''
     let g:airline_symbols.readonly = ''
+    let g:airline_powerline_fonts = 1
 else
     let g:airline_left_sep = '▶'
     let g:airline_right_sep = '◀'

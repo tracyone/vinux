@@ -1,7 +1,7 @@
 if(!te#env#IsWindows())
     if te#env#IsTmux()
         Plug 'christoomey/vim-tmux-navigator'
-        if get(g:, 'fuzzysearcher_plugin_name') ==# 'ctrlp'
+        if g:fuzzysearcher_plugin_name.cur_val ==# 'ctrlp'
             Plug 'lucidstack/ctrlp-tmux.vim',{'on': 'CtrlPTmux'}
             "CtrlP tmux window
             nnoremap <Leader>uu :CtrlPTmux w<cr>

@@ -1,7 +1,7 @@
 let g:complete_plugin={}
-let g:complete_plugin.name=[g:complete_plugin_type]
+let g:complete_plugin.name=[g:complete_plugin_type.cur_val]
 let g:complete_plugin.enable_func=function('te#env#IsVim8')
-if g:complete_plugin_type ==# 'ycm' && te#env#SupportYcm()
+if g:complete_plugin_type.cur_val ==# 'YouCompleteMe' && te#env#SupportYcm()
     if te#env#IsUnix()
         Plug 'Valloric/YouCompleteMe', { 'on': [], 'commit': '32f1eae9cb8b8c7793f632fd24b2289839bf768e' }
         let g:complete_plugin.name=['YouCompleteMe']
@@ -13,15 +13,15 @@ if g:complete_plugin_type ==# 'ycm' && te#env#SupportYcm()
         let g:complete_plugin.name=['YouCompleteMe-x64']
     endif
     "Plug 'tenfyzhong/CompleteParameter.vim', { 'on': [] }
-elseif g:complete_plugin_type ==# 'clang_complete'
+elseif g:complete_plugin_type.cur_val ==# 'clang_complete'
     Plug 'Rip-Rip/clang_complete', { 'on': [] }
-elseif g:complete_plugin_type ==# 'completor.vim' && te#env#IsVim8()
+elseif g:complete_plugin_type.cur_val ==# 'completor.vim' && te#env#IsVim8()
     Plug 'maralla/completor.vim'
-elseif g:complete_plugin_type ==# 'neocomplete' && te#env#SupportFeature('lua')
+elseif g:complete_plugin_type.cur_val ==# 'neocomplete' && te#env#SupportFeature('lua')
     Plug 'Shougo/neocomplete', { 'on': [] }
     Plug 'tracyone/dict'
     Plug 'Konfekt/FastFold'
-elseif g:complete_plugin_type ==# 'deoplete.nvim'
+elseif g:complete_plugin_type.cur_val ==# 'deoplete.nvim'
     Plug 'Shougo/deoplete.nvim', { 'on': [] }
     Plug 'zchee/deoplete-clang',{'for':['c', 'cpp']}
     if !te#env#IsNvim()
@@ -30,7 +30,6 @@ elseif g:complete_plugin_type ==# 'deoplete.nvim'
     endif
 else
     let g:complete_plugin.name=["supertab"]
-    let g:complete_plugin_type = ''
     Plug 'ervandew/supertab', { 'on': [] }
 endif
 if te#env#SupportPy()
@@ -43,7 +42,7 @@ endif
 
 " lazyload ultisnips and YouCompleteMe
 
-if g:complete_plugin_type ==# 'ycm'
+if g:complete_plugin_type.cur_val ==# 'YouCompleteMe'
     " jume to definition (YCM)
     function! s:enable_ycm()
         call delete('.ycm_extra_conf.pyc')  | call youcompleteme#Enable() 
@@ -99,7 +98,7 @@ if g:complete_plugin_type ==# 'ycm'
                 \ 'mail' : 1
                 \}
     let g:ycm_global_ycm_extra_conf = g:vinux_plugin_dir.'/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-elseif g:complete_plugin_type ==# 'neocomplete'
+elseif g:complete_plugin_type.cur_val ==# 'neocomplete'
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
     let g:neocomplete#enable_at_startup = 1
@@ -174,7 +173,7 @@ elseif g:complete_plugin_type ==# 'neocomplete'
        let col = col('.') - 1
        return !col || getline('.')[col - 1]  =~# '\s'
      endfunction
- elseif g:complete_plugin_type ==# 'clang_complete'
+ elseif g:complete_plugin_type.cur_val ==# 'clang_complete'
      " clang_complete
      " path to directory where library can be found
      if te#env#IsMac()
@@ -195,13 +194,13 @@ elseif g:complete_plugin_type ==# 'neocomplete'
      "let g:clang_jumpto_declaration_key=""
      "g:clang_jumpto_declaration_in_preview_key
      inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
-elseif g:complete_plugin_type ==# 'completor.vim'
+elseif g:complete_plugin_type.cur_val ==# 'completor.vim'
     "completor.vim 
     let g:completor_clang_binary = '/usr/bin/clang'
     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
     inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
-elseif g:complete_plugin_type ==# 'deoplete.nvim'
+elseif g:complete_plugin_type.cur_val ==# 'deoplete.nvim'
     "deoplete
      if te#env#IsMac()
          let g:deoplete#sources#clang#libclang_path='/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'

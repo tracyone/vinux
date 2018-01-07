@@ -41,7 +41,7 @@ augroup filetype_group
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
     autocmd FileType qfreplace setlocal nofoldenable | nmap <buffer> q :bdelete<cr>
     autocmd FileType gitcommit setlocal nofoldenable cursorline
-    autocmd FileType vimcalc,man setlocal nonu nornu
+    autocmd FileType vimcalc,man setlocal nonu nornu | imap <buffer> <c-d> :q<cr>
     autocmd FileType vim-plug nnoremap <buffer> <silent> H :call te#plug#open_doc()<cr> 
                 \ | nnoremap <buffer> <silent> gx :call te#plug#browse_plugin_url()<cr>
                 \ | nnoremap <buffer> <silent> <c-t> :call te#plug#open_plugin_dir()<cr>

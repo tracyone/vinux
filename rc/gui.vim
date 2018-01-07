@@ -28,7 +28,7 @@ if te#env#IsGui()
             set renderoptions=type:directx
         endif
     endif
-    if get(g:,'airline_powerline_fonts') == 1
+    if g:enable_powerline_fonts.cur_val ==# 'ON'
         if te#env#IsMacVim()
             set guifont=YaHei\ Consolas\ Hybrid:h14
             set guifontwide=YaHei\ Consolas\ Hybrid:h14

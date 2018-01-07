@@ -21,8 +21,20 @@ if empty($VIMFILES)
 endif
 let $PATH = $VIMFILES.'/bin:'.$PATH
 
+call te#feat#init_var('g:ctrlp_matcher_type',['py-matcher', 'cpsm'])
+call te#feat#init_var('g:complete_plugin_type',['YouCompleteMe', 'clang_complete', 'neocomplete',
+            \ 'completor.vim', 'deoplete.nvim','supertab'])
+call te#feat#init_var('g:fuzzysearcher_plugin_name', ['ctrlp', 'leaderf', 'fzf', 'denite.nvim'])
+call te#feat#init_var('g:git_plugin_name',['vim-fugitive','gina.vim'])
+call te#feat#init_var('g:enable_powerline_fonts', ['OFF','ON'])
+call te#feat#init_var('g:enable_auto_plugin_install', ['ON','OFF'])
+
 if filereadable($VIMFILES.'/feature.vim')
-    execute ':source '.$VIMFILES.'/feature.vim'
+    try
+        execute ':source '.$VIMFILES.'/feature.vim'
+    catch /^Vim\%((\a\+)\)\=:E/	
+        call delete($VIMFILES.'/feature.vim')
+    endtry
 endif
 
 call te#feat#source_rc('autocmd.vim')
@@ -32,7 +44,11 @@ call te#feat#source_rc('mappings.vim')
 
 "user custom config file
 if filereadable($VIMFILES.'/local.vim')
-    execute ':source '.$VIMFILES.'/local.vim'
+    try
+        execute ':source '.$VIMFILES.'/local.vim'
+    catch /^Vim\%((\a\+)\)\=:E/	
+        call te#feat#gen_local_vim()
+    endtry
 else
     call te#feat#gen_local_vim()
 endif
@@ -76,10 +92,6 @@ if empty(glob($VIMFILES.'/autoload/plug.vim'))
 endif
 silent! call plug#begin(g:vinux_plugin_dir)
 
-call te#feat#feat_enable('g:complete_plugin_type','ycm')
-call te#feat#feat_enable('g:fuzzysearcher_plugin_name', 'ctrlp')
-call te#feat#feat_enable('g:git_plugin_name','vim-fugitive')
-call te#feat#feat_enable('g:ctrlp_use_cpsm', 0)
 call te#feat#feat_enable('g:feat_enable_complete', 0)
 call te#feat#feat_enable('g:feat_enable_jump', 1)
 call te#feat#feat_enable('g:feat_enable_tmux', 0)
@@ -87,7 +99,6 @@ call te#feat#feat_enable('g:feat_enable_git', 0)
 call te#feat#feat_enable('g:feat_enable_c', 0)
 call te#feat#feat_enable('g:feat_enable_markdown', 0)
 call te#feat#feat_enable('g:feat_enable_vim', 0)
-call te#feat#feat_enable('g:airline_powerline_fonts', 0)
 call te#feat#feat_enable('g:feat_enable_gui', 1)
 call te#feat#feat_enable('g:feat_enable_tools', 0)
 call te#feat#feat_enable('g:feat_enable_edit', 0)
@@ -98,12 +109,11 @@ call te#feat#feat_enable('g:feat_enable_airline', 0)
 call te#feat#feat_enable('g:feat_enable_writing', 0)
 call te#feat#feat_enable('g:feat_enable_zsh', 0)
 call te#feat#feat_enable('g:feat_enable_fun', 0)
-call te#feat#feat_enable('g:enable_auto_plugin_install', 1)
 call te#feat#register_vim_enter_setting(function('te#feat#check_plugin_install'))
 call te#feat#register_vim_enter_setting(function('te#utils#echo_info_after'))
 
 if !filereadable($VIMFILES.'/feature.vim')
-    call te#feat#gen_feature_vim()
+    call te#feat#gen_feature_vim(0)
 endif
 
 if exists('*TVIM_plug_init')

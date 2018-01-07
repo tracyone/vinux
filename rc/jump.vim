@@ -1,6 +1,6 @@
 " Package info {{{
 " jump to somewhere:file,mru,bookmark
-if get(g:, 'fuzzysearcher_plugin_name') !=# 'ctrlp' && te#env#SupportAsync()
+if g:fuzzysearcher_plugin_name.cur_val !=# 'ctrlp' && te#env#SupportAsync()
     Plug 'Yggdroot/LeaderF'
     Plug 'Yggdroot/LeaderF-marks',{'on': 'LeaderfMarks'}
     " show global mark
@@ -36,7 +36,7 @@ else
     Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
     "ctrlp thirdparty matchers
     if te#env#SupportPy()
-        if get(g:, 'ctrlp_use_cpsm')
+        if g:ctrlp_matcher_type.cur_val ==# 'cpsm'
             if te#env#SupportPy2()
                 Plug 'nixprime/cpsm', {'do':'PY3=OFF ./install.sh'}
             else

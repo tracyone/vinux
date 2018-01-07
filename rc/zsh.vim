@@ -1,5 +1,5 @@
 Plug 'chrisbra/vim-zsh',{'for': 'zsh'}
-if get(g:, 'complete_plugin_type') ==# 'deoplete' 
+if g:complete_plugin_type.cur_val ==# 'deoplete.nvim' 
     Plug 'zchee/deoplete-zsh',{'for': 'zsh'}
 else
     Plug 'tracyone/vim-zsh-completion',{'for': ['zsh','sh']}

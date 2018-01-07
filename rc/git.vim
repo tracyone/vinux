@@ -1,4 +1,4 @@
-if get(g:, 'git_plugin_name') ==# 'gina.vim' && te#env#SupportAsync()
+if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
     Plug 'lambdalisue/gina.vim'
     nnoremap <F3> :Gina status<cr>
     " Open git status window

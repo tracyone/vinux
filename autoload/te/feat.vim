@@ -18,6 +18,14 @@ function! te#feat#get_vim_version() abort
     return l:result
 endfunction
 
+function! te#feat#get_var_value(A, L, P) abort
+    let l:result=''
+    for l:needle in s:var_candidate
+        let l:result.=l:needle.nr2char(10)
+    endfor
+    return l:result
+endfunction
+
 function! te#feat#get_feature(A, L, P) abort
     let l:temp=a:A.a:L.a:P
     if !exists('s:feature_dict')
@@ -32,9 +40,13 @@ function! te#feat#get_feature(A, L, P) abort
     return l:result
 endfunction
 
-function! te#feat#gen_feature_vim() abort
+function! te#feat#gen_feature_vim(reset) abort
     execute 'cd '.$VIMFILES
     call delete($VIMFILES.'/feature.vim')
+    if a:reset == 1 
+        call te#utils#EchoWarning('Reseted feature.vim successfully! Please restart vim!')
+        return 
+    endif
 	for l:key in keys(s:feature_dict)
 	   call te#compatiable#writefile(['let '.l:key.'='.s:feature_dict[l:key]], $VIMFILES.'/feature.vim', 'a')
 	endfor
@@ -51,6 +63,7 @@ function! te#feat#gen_feature_vim() abort
     endif
     let g:vinux_version=string(l:vinux_version)
     call te#compatiable#writefile(['let g:vinux_version='.string(l:vinux_version)], $VIMFILES.'/feature.vim', 'a')
+    call te#utils#EchoWarning('Updated feature.vim successfully!', 'warn', 1)
 endfunction
 
 function! te#feat#gen_local_vim() abort
@@ -75,24 +88,32 @@ function! te#feat#feat_dyn_enable(en) abort
             return
         endif
         if type(eval(l:feat))
-            let l:str=input('Input the value of '.l:feat.': ')
+            let s:var_candidate=[]
+            let l:feat_candidate=eval(matchstr(l:feat,'.*\(\.cur_val\)\@=').'.candidate')
+            call extend(s:var_candidate,l:feat_candidate)
+            let l:str=input('Input the value of '.l:feat.': ', '', 'custom,te#feat#get_var_value')
             let s:feature_dict[l:feat]=string(l:str)
             execute 'let '.l:feat.'='.string(l:str)
+            call te#feat#gen_feature_vim(0)
+            call te#utils#EchoWarning('Set '.l:feat.' to '.string(l:str).' successfully!')
+            return
         else
             let s:feature_dict[l:feat]=a:en
             execute 'let '.l:feat.'='.a:en
+            call te#feat#gen_feature_vim(0)
+            call te#feat#feat_enable(l:feat,eval(s:feature_dict[l:feat]))
         endif
-        call te#feat#gen_feature_vim()
-        call te#feat#feat_enable(l:feat,eval(s:feature_dict[l:feat]))
     else
         for l:key in keys(s:feature_dict)
             if type(eval(l:key)) != g:t_string
                 let s:feature_dict[l:key]=a:en
                 execute 'let '.l:key.'='.a:en
                 call te#feat#feat_enable(l:key,eval(s:feature_dict[l:key]))
+            else
+                let s:feature_dict[l:key]=string(eval(l:key))
             endif
         endfor
-        call te#feat#gen_feature_vim()
+        call te#feat#gen_feature_vim(0)
     endif
     if a:en == 1 | :PlugInstall --sync | q | endif
     call te#utils#EchoWarning(l:enable.' '.l:feat.' successfully!')
@@ -127,19 +148,23 @@ function! te#feat#feat_enable(var, default) abort
     else
         let l:val=eval(a:var)
     endif
-    if type(l:val)
-        execute 'let '.a:var.'='.string(l:val)
-        let s:feature_dict[a:var]=string(l:val)
-    else
-        execute 'let '.a:var.'='.l:val
-        let s:feature_dict[a:var]=l:val
-    endif
+    execute 'let '.a:var.'='.l:val
+    let s:feature_dict[a:var]=l:val
     if !exists(':Plug')
         return
     endif
     if eval(a:var) != 0 && matchstr(a:var, 'g:feat_enable_') !=# ''
         call te#feat#source_rc(matchstr(a:var,'_\zs[^_]*\ze$').'.vim')
     endif
+endfunction
+
+function! te#feat#init_var(val, default)
+    execute 'let '.a:val.'={}'
+    execute 'let '.a:val.'.cur_val='.string(a:default[0])
+    execute 'let '.a:val.'.default='.string(a:default[0])
+    execute 'let '.a:val.'.candidate=[]'
+    execute 'call extend('.a:val.'.candidate'.',a:default'.')'
+    let s:feature_dict[a:val.'.cur_val']=string(a:default[0])
 endfunction
 
 let s:plugin_func_list=[]
@@ -176,7 +201,7 @@ function! te#feat#vim_plug_insert_enter() abort
 endfunction
 
 function! te#feat#check_plugin_install() abort
-    if !get(g:,'enable_auto_plugin_install')
+    if g:enable_auto_plugin_install.cur_val ==# 'OFF'
         return
     endif
     if !exists(':Plug')

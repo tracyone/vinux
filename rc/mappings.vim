@@ -282,7 +282,10 @@ nnoremap <Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
 " feature disable
 nnoremap <Leader>fd :call te#feat#feat_dyn_enable(0)<cr>
 " feature update
-nnoremap <Leader>fu :call te#feat#gen_feature_vim()<cr>
+nnoremap <Leader>fu :call te#feat#gen_feature_vim(0)<cr>
+" reset feature
+nnoremap <Leader>fr :call te#feat#gen_feature_vim(1)<cr>
+
 nnoremap <Leader>dj <c-u>
 nnoremap <Leader>dd <c-d>
 nnoremap <Leader>pw :call te#utils#EchoWarning(getcwd())<cr>
