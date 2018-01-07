@@ -34,9 +34,15 @@ else
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
     Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
+    "ctrlp thirdparty matchers
     if te#env#SupportPy()
-        if te#env#IsMac() || get(g:, 'ctrlp_use_cpsm')
-            Plug 'nixprime/cpsm', {'do':'PY3=OFF ./install.sh'}
+        if get(g:, 'ctrlp_use_cpsm')
+            if te#env#SupportPy2()
+                Plug 'nixprime/cpsm', {'do':'PY3=OFF ./install.sh'}
+            else
+                Plug 'nixprime/cpsm', {'dir': g:t_vim_plugin_install_path.'/cpsm_py3/',
+                            \ 'do':'PY3=ON ./install.sh'}
+            endif
             let g:ctrlp_match_func ={'match': 'cpsm#CtrlPMatch'}
         else
             Plug 'FelikZ/ctrlp-py-matcher'
