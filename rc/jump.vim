@@ -40,7 +40,7 @@ else
             if te#env#SupportPy2()
                 Plug 'nixprime/cpsm', {'do':'PY3=OFF ./install.sh'}
             else
-                Plug 'nixprime/cpsm', {'dir': g:t_vim_plugin_install_path.'/cpsm_py3/',
+                Plug 'nixprime/cpsm', {'dir': g:vinux_plugin_dir.'/cpsm_py3/',
                             \ 'do':'PY3=ON ./install.sh'}
             endif
             let g:ctrlp_match_func ={'match': 'cpsm#CtrlPMatch'}
