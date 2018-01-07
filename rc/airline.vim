@@ -35,6 +35,7 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#ycm#enabled = 0
 let g:airline#extensions#ctrlp#show_adjacent_modes = 0
 let g:airline_highlighting_cache = 1
+let g:airline#extensions#tabline#show_tab_type = 0
 
 
 if !exists('g:airline_symbols')
