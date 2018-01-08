@@ -51,11 +51,11 @@ function! te#ctrlp#feat#accept(mode, str) abort
             call te#feat#feat_enable(a:str,eval(l:feat_dict[a:str]))
         endif
     else
-        for l:key in keys(s:feature_dict)
+        for l:key in keys(l:feat_dict)
             if type(eval(l:key)) != g:t_string
-                let s:feature_dict[l:key]=s:enable_flag
+                let l:feat_dict[l:key]=s:enable_flag
                 execute 'let '.l:key.'='.s:enable_flag
-                call te#feat#feat_enable(l:key,eval(s:feature_dict[l:key]))
+                call te#feat#feat_enable(l:key,eval(l:feat_dict[l:key]))
             endif
         endfor
         call te#feat#gen_feature_vim(0)
