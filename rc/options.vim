@@ -91,7 +91,7 @@ set mouse=a "list of menu_flags for using the mouse,support all
 set clipboard+=unnamed
 "set autochdir  "change to directory of file in buffer
 "
-if g:enable_powerline_fonts.cur_val ==# 'ON'
+if g:enable_powerline_fonts.cur_val ==# 'on'
     let s:seperator='  '
 else
     let s:seperator=' | '

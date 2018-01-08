@@ -53,7 +53,7 @@ else
     " Set Ctrl-P to show match at top of list instead of at bottom, which is so
     " stupid that it's not default
     let g:ctrlp_match_window_reversed = 0
-    let g:ctrlp_max_files = 50000
+    let g:ctrlp_max_files = 70000
     let g:ctrlp_search_hidden=""
 
     " Tell Ctrl-P to keep the current VIM working directory when starting a
@@ -67,10 +67,17 @@ else
                 \ 'file': '\v\.(exe|so|dll|o|d|proj|out)$',
                 \ }
     let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'bookmarkdir']
+
+    if g:ctrlp_caching_type.cur_val ==# 'limit'
+        let g:ctrlp_use_caching = 50000
+    elseif g:ctrlp_caching_type.cur_val ==# 'off'
+        let g:ctrlp_use_caching = 0
+    else
+        let g:ctrlp_use_caching = 1
+    endif
     function! s:update_ctrlp_command()
         if executable('rg')
             let g:ctrlp_user_command = 'rg '.g:ctrlp_search_hidden.' %s --files --color=never --glob "!.git"'
-            let g:ctrlp_use_caching = 0
         elseif executable('ag')
             "NOTE: --ignore option use wildcard PATTERN instead of regex PATTERN,and
             "it does not support {}
@@ -86,7 +93,6 @@ else
                         \ --ignore "*.dll"
                         \ --ignore ".git"
                         \ -g ""'
-            let g:ctrlp_use_caching = 0
         else
             if te#env#IsUnix()
                 let g:ctrlp_user_command = {
@@ -121,8 +127,6 @@ else
     endfunction
     nnoremap <c-k> :call <SID>ctrlp_funky()<cr>
     nnoremap <c-j> :CtrlPBuffer<Cr>
-    " toggle ctrlp g:ctrlp_use_caching option
-    nnoremap <leader>tj :call te#utils#OptionToggle('g:ctrlp_use_caching',[0,1])<cr>
     nnoremap <leader>ti :call te#utils#OptionToggle('g:ctrlp_search_hidden',["", "--hidden"])<cr>:call <SID>update_ctrlp_command()<cr>
     " show global mark
     nnoremap <leader>pm :SignatureListGlobalMarks<Cr>

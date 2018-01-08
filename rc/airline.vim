@@ -42,7 +42,7 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 
-if g:enable_powerline_fonts.cur_val ==# 'ON'
+if g:enable_powerline_fonts.cur_val ==# 'on'
     let g:airline_left_sep = ''
     let g:airline_left_alt_sep = ''
     let g:airline_right_sep = ''

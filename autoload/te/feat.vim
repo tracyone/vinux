@@ -159,7 +159,6 @@ endfunction
 function! te#feat#init_var(val, default)
     execute 'let '.a:val.'={}'
     execute 'let '.a:val.'.cur_val='.string(a:default[0])
-    execute 'let '.a:val.'.default='.string(a:default[0])
     execute 'let '.a:val.'.candidate=[]'
     execute 'call extend('.a:val.'.candidate'.',a:default'.')'
     let s:feature_dict[a:val.'.cur_val']=string(a:default[0])
@@ -199,7 +198,7 @@ function! te#feat#vim_plug_insert_enter() abort
 endfunction
 
 function! te#feat#check_plugin_install() abort
-    if g:enable_auto_plugin_install.cur_val ==# 'OFF'
+    if g:enable_auto_plugin_install.cur_val ==# 'off'
         return
     endif
     if !exists(':Plug')
@@ -241,10 +240,13 @@ function! te#feat#init_all() abort
                 \ 'completor.vim', 'deoplete.nvim','supertab'])
     call te#feat#init_var('g:fuzzysearcher_plugin_name', ['ctrlp', 'leaderf', 'fzf', 'denite.nvim'])
     call te#feat#init_var('g:git_plugin_name',['vim-fugitive','gina.vim'])
-    call te#feat#init_var('g:enable_powerline_fonts', ['OFF','ON'])
-    call te#feat#init_var('g:enable_auto_plugin_install', ['ON','OFF'])
+    call te#feat#init_var('g:enable_powerline_fonts', ['off','on'])
+    call te#feat#init_var('g:enable_auto_plugin_install', ['on','off'])
     call te#feat#init_var('g:vinux_plugin_dir', [$VIMFILES.'/bundle/', $HOME.'/plugged/'])
-
+    "off:no use cache when using ctrlp
+    "on: always use cache when using ctrlp
+    "limit:use cache when exceed the limit files
+    call te#feat#init_var('g:ctrlp_caching_type', ['limit', 'on', 'off'])
     if filereadable($VIMFILES.'/feature.vim')
         try
             execute ':source '.$VIMFILES.'/feature.vim'
@@ -254,7 +256,7 @@ function! te#feat#init_all() abort
     endif
 
     "update feature dict
-    for l:key in s:feature_dict
+    for l:key in keys(s:feature_dict)
         if type(l:key)
             let s:feature_dict[l:key]=string(eval(l:key))
         endif
