@@ -3,9 +3,17 @@
 
 export VIM_ACTION=":e!"
 
+
 if [ -n "${VIM_REMOTE}" ]; then
     if [ "${IN_VIM%m}"  != "nvi" ]; then
-        `$VIM_REMOTE --remote-send "N:e! $1<cr>"`
+        if [[ $1 = /*  ]]; then
+            #path already looks absolute...
+            absfilepath="$1"
+        else
+            #path not absolute,  lets prefix with pwd...
+            absfilepath="$PWD/${1#./}"
+        fi
+        `$VIM_REMOTE --remote-send "N:e! $absfilepath<cr>"`
     else
         `$VIM_REMOTE --remote $1`
     fi
