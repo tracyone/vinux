@@ -57,7 +57,7 @@ function! te#feat#gen_feature_vim(reset) abort
     endif
     let l:temp=te#feat#get_vim_version()
     if v:shell_error != 0
-	    let l:vinux_version='vinux V0.8.1'.' @'.l:temp[0].'.'.l:temp[1]
+	    let l:vinux_version='vinux V0.8.2'.' @'.l:temp[0].'.'.l:temp[1]
     else
         let l:vinux_version='vinux '.l:vinux_version[-1].' @'.l:temp[0].'.'.l:temp[1]
     endif
@@ -73,6 +73,10 @@ function! te#feat#gen_local_vim() abort
     call te#compatiable#writefile(['endfunction'], $VIMFILES.'/local.vim', 'a')
     call te#compatiable#writefile(['function! TVIM_plug_init()'], $VIMFILES.'/local.vim', 'a')
     call te#compatiable#writefile(['endfunction'], $VIMFILES.'/local.vim', 'a')
+endfunction
+
+function! te#feat#get_feature_dict() abort
+    return s:feature_dict
 endfunction
 
 function! te#feat#feat_dyn_enable(en) abort
