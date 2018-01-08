@@ -109,8 +109,6 @@ function! te#feat#feat_dyn_enable(en) abort
                 let s:feature_dict[l:key]=a:en
                 execute 'let '.l:key.'='.a:en
                 call te#feat#feat_enable(l:key,eval(s:feature_dict[l:key]))
-            else
-                let s:feature_dict[l:key]=string(eval(l:key))
             endif
         endfor
         call te#feat#gen_feature_vim(0)
@@ -221,3 +219,45 @@ function te#feat#edit_config() abort
     call te#utils#goto_cur_file(2)
 endfunction
 
+"init all vinux custom variable
+function! te#feat#init_all() abort
+    set nocompatible
+
+    if empty($VIMFILES)
+        if te#env#IsWindows()
+            let $VIMFILES = $HOME.'/vimfiles'
+        else
+            if te#env#IsNvim()
+                let $VIMFILES = $HOME.'/.config/nvim'
+            else
+                let $VIMFILES = $HOME.'/.vim'
+            endif
+        endif
+    endif
+    let $PATH = $VIMFILES.'/bin:'.$PATH
+
+    call te#feat#init_var('g:ctrlp_matcher_type',['py-matcher', 'cpsm'])
+    call te#feat#init_var('g:complete_plugin_type',['YouCompleteMe', 'clang_complete', 'neocomplete',
+                \ 'completor.vim', 'deoplete.nvim','supertab'])
+    call te#feat#init_var('g:fuzzysearcher_plugin_name', ['ctrlp', 'leaderf', 'fzf', 'denite.nvim'])
+    call te#feat#init_var('g:git_plugin_name',['vim-fugitive','gina.vim'])
+    call te#feat#init_var('g:enable_powerline_fonts', ['OFF','ON'])
+    call te#feat#init_var('g:enable_auto_plugin_install', ['ON','OFF'])
+    call te#feat#init_var('g:vinux_plugin_dir', [$VIMFILES.'/bundle/', $HOME.'/plugged/'])
+
+    if filereadable($VIMFILES.'/feature.vim')
+        try
+            execute ':source '.$VIMFILES.'/feature.vim'
+        catch /^Vim\%((\a\+)\)\=:E/	
+            call delete($VIMFILES.'/feature.vim')
+        endtry
+    endif
+
+    "update feature dict
+    for l:key in s:feature_dict
+        if type(l:key)
+            let s:feature_dict[l:key]=string(eval(l:key))
+        endif
+    endfor
+
+endfunction
