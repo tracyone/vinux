@@ -289,7 +289,7 @@ function! te#utils#quit_win(all)
     else
         " 0 or 1 listed buffer
         let l:no_of_listed_buffer=te#utils#has_listed_buffer()
-        if l:no_of_listed_buffer <= 1
+        if l:no_of_listed_buffer <= 1 && winnr('$') <= 1
             if !te#utils#is_listed_buffer() && l:no_of_listed_buffer == 1
                 :bdelete
             else
@@ -298,7 +298,11 @@ function! te#utils#quit_win(all)
                 endif
             endif
         else
-            :bdelete
+            if !te#utils#is_listed_buffer()
+                :bdelete
+            else 
+                :quit
+            endif
         endif
     endif
 endfunction
