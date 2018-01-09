@@ -535,9 +535,13 @@ function! te#utils#get_plugin_name(A,L,P) abort
     let l:temp=a:A.a:L.a:P
     let l:result=l:temp 
     let l:result=''
-    let l:dir = split(system('ls -d */'), '/')
+    if te#env#IsWindows()
+        let l:dir = te#compatiable#systemlist('dir /b /d')
+    else
+        let l:dir = te#compatiable#systemlist('find * -maxdepth 0 -type d')
+    endif
     for l:str in l:dir
-        let l:result.=l:str
+        let l:result.=l:str.nr2char(10)
     endfor
     return l:result
 endfunction
