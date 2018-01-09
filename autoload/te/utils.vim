@@ -551,6 +551,7 @@ function! te#utils#cd_to_plugin(path)
     let l:plugin_name = input('Please input the direcory name: ','','custom,te#utils#get_plugin_name')
     if !isdirectory(l:plugin_name)
         call te#utils#EchoWarning(l:plugin_name.' not found','err')
+        cd -
         return
     endif
     execute 'cd '.l:plugin_name 
