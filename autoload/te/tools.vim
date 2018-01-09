@@ -50,7 +50,7 @@ function! te#tools#vim_get_message()
 endfunction
 
 "update latest stable t_vim
-function! te#tools#update_t_vim() abort
+function! te#tools#update_vinux() abort
     if isdirectory('.git') && te#env#Executable('git')
         call te#utils#EchoWarning('Updating ...')
         let l:temp1=te#compatiable#systemlist('git rev-list --tags --max-count=1')
