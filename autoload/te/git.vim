@@ -161,6 +161,13 @@ function! te#git#show_log() abort
         if te#env#IsTmux()
             call te#tmux#run_command('tig', 0x4)
             return 0
+        elseif exists(':Gitv')
+            :Gitv --all
+            return 0
+        elseif exists(':Gina')
+            :tabnew
+            :Gina log --max-count=1000 --opener=vsplit
+            return 0
         elseif te#env#SupportTerminal()
             :tabnew
             if te#env#IsNvim()
@@ -173,16 +180,6 @@ function! te#git#show_log() abort
         endif
     endif
 
-    if exists(':Gitv')
-        :Gitv --all
-        return 0
-    endif
-
-    if exists(':Gina')
-        :tabnew
-        :Gina log --max-count=1000 --opener=vsplit
-        return 0
-    endif
     call te#utils#EchoWarning('Oooo somthing is wrong with your vim!', 'err')
     return 1
 endfunction
