@@ -298,7 +298,7 @@ function! te#utils#quit_win(all)
                 endif
             endif
         else
-            if !te#utils#is_listed_buffer()
+            if !te#utils#is_listed_buffer() || winnr('$') <= 1
                 :bdelete
             else 
                 :quit
