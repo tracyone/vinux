@@ -35,7 +35,7 @@ if !isdirectory(g:vinux_plugin_dir.cur_val)
 endif
 
 let &rtp=&rtp.','.$VIMFILES
-if empty(glob($VIMFILES.'/autoload/plug.vim'))
+if !filereadable($VIMFILES.'/autoload/plug.vim')
     if te#env#Executable('curl') && te#env#Executable('git')
         if te#env#IsWindows()
             silent! exec ':!mkdir -p '.$VIMFILES.'\\autoload'

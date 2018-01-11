@@ -231,11 +231,11 @@ function! te#feat#init_all() abort
             let $VIMFILES = $HOME.'/vimfiles'
             set pythonthreedll=$HOME\\AppData\\Local\\Programs\\Python\\Python36\\python36.dll
             set pythondll=$HOME\\AppData\\Local\\Programs\\Python\\Python27\\python27.dll
-            if !te#tools#is_file_exist(&pythondll)
-                set pythondll=python27.dll
+            if !filereadable(&pythondll)
+                set pythondll&
             endif
-            if !te#tools#is_file_exist(&pythonthreedll)
-                set pythondll=python27.dll
+            if !filereadable(&pythonthreedll)
+                set pythonthreedll&
             endif
         else
             if te#env#IsNvim()
