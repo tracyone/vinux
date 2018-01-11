@@ -227,8 +227,16 @@ function! te#feat#init_all() abort
     set nocompatible
 
     if empty($VIMFILES)
-        if te#env#IsWindows()
+        if has('win64') || has('win32')
             let $VIMFILES = $HOME.'/vimfiles'
+            set pythonthreedll=$HOME\\AppData\\Local\\Programs\\Python\\Python36\\python36.dll
+            set pythondll=$HOME\\AppData\\Local\\Programs\\Python\\Python27\\python27.dll
+            if !te#tools#is_file_exist(&pythondll)
+                set pythondll=python27.dll
+            endif
+            if !te#tools#is_file_exist(&pythonthreedll)
+                set pythondll=python27.dll
+            endif
         else
             if te#env#IsNvim()
                 let $VIMFILES = $HOME.'/.config/nvim'

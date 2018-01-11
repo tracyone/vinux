@@ -112,3 +112,7 @@ function! te#tools#buf_only(buffer, bang) abort
 
     call te#utils#EchoWarning(l:delete_count." buffers deleted")
 endfunction
+
+function! te#tools#is_file_exist(path) abort
+    return !empty(glob(a:path))
+endfunction
