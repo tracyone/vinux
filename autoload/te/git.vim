@@ -157,27 +157,25 @@ function! te#git#archive_my_vim_cfg(git_dir, out_name) abort
 endfunction
 
 function! te#git#show_log() abort
-    if te#env#Executable('tig') 
-        if te#env#IsTmux()
-            call te#tmux#run_command('tig', 0x4)
-            return 0
-        elseif exists(':Gitv')
-            :Gitv --all
-            return 0
-        elseif exists(':Gina')
-            :tabnew
-            :Gina log --max-count=1000 --opener=vsplit
-            return 0
-        elseif te#env#SupportTerminal()
-            :tabnew
-            if te#env#IsNvim()
-                :terminal tig
-            else
-                hi Terminal ctermbg=black ctermfg=white guibg=black guifg=white
-                :terminal ++curwin ++close tig
-            endif
-            return 0
+    if te#env#IsTmux() && te#env#Executable('tig') 
+        call te#tmux#run_command('tig', 0x4)
+        return 0
+    elseif exists(':Gitv')
+        :Gitv --all
+        return 0
+    elseif exists(':Gina')
+        :tabnew
+        :Gina log --max-count=1000 --opener=vsplit
+        return 0
+    elseif te#env#SupportTerminal()
+        :tabnew
+        if te#env#IsNvim()
+            :terminal tig
+        else
+            hi Terminal ctermbg=black ctermfg=white guibg=black guifg=white
+            :terminal ++curwin ++close tig
         endif
+        return 0
     endif
 
     call te#utils#EchoWarning('Oooo somthing is wrong with your vim!', 'err')
