@@ -208,14 +208,9 @@ function! te#feat#check_plugin_install() abort
     if !exists(':Plug')
         return
     endif
-    let l:plugs=values(g:plugs)
-    let l:plugs_need2install=''
-    if len(filter(l:plugs, '!isdirectory(v:val.dir)'))
-        for l:needle in l:plugs
-            let l:plugs_need2install.=fnamemodify(substitute(l:needle.dir,".$", '', "g"), ":t").' '
-        endfor
-        call te#utils#EchoWarning('Install the missing plugins! ')
-        execute ':PlugInstall '.l:plugs_need2install
+    if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+        call te#utils#EchoWarning('Install the missing plugins!')
+        PlugInstall --sync | q
     endif
 endfunction
 
