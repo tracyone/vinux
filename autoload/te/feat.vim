@@ -57,7 +57,7 @@ function! te#feat#gen_feature_vim(reset) abort
     endif
     let l:temp=te#feat#get_vim_version()
     if v:shell_error != 0
-	    let l:vinux_version='vinux V0.8.3'.' @'.l:temp[0].'.'.l:temp[1]
+	    let l:vinux_version='vinux V0.8.4'.' @'.l:temp[0].'.'.l:temp[1]
     else
         let l:vinux_version='vinux '.l:vinux_version[-1].' @'.l:temp[0].'.'.l:temp[1]
     endif
