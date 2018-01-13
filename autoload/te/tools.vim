@@ -5,22 +5,25 @@
 function! te#tools#shell_pop(option) abort
     " 38% height of current window
     call te#server#connect()
-    if and(a:option, 0x04)
-        :tabnew
-    endif
-    "any list buffer exist or buffer is startify
-    if bufexists(expand('%')) && &filetype !=# 'startify'
-                \ && &modified == 0
-        let l:fullbuffer=0
-        if and(a:option, 0x01)
-            let l:line=(38*&lines)/100
-            if  l:line < 10 | let l:line = 10 |endif
-            let l:fullbuffer=1
-            execute 'rightbelow '.l:line.'split'
-        elseif and(a:option, 0x02)
-            :botright vsplit
+    if !te#env#IsTmux()
+        if and(a:option, 0x04)
+            :tabnew
+        endif
+        "any list buffer exist or buffer is startify
+        if bufexists(expand('%')) && &filetype !=# 'startify'
+                    \ && &modified == 0
+            let l:fullbuffer=0
+            if and(a:option, 0x01)
+                let l:line=(38*&lines)/100
+                if  l:line < 10 | let l:line = 10 |endif
+                let l:fullbuffer=1
+                execute 'rightbelow '.l:line.'split'
+            elseif and(a:option, 0x02)
+                :botright vsplit
+            endif
         endif
     endif
+
     if te#env#IsGui() && te#env#IsUnix()
         let l:shell='bash'
     else
@@ -31,9 +34,6 @@ function! te#tools#shell_pop(option) abort
     elseif te#env#SupportTerminal() && te#env#IsNvim()
         :terminal
     elseif te#env#IsTmux()
-        if and(a:option, 0x04)
-            :q
-        endif
         call te#tmux#run_command(&shell, a:option)
     else 
         execute 'VimShell' 
