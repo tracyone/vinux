@@ -2,10 +2,17 @@
 "author:tracyone@live.cn
 
 function! s:GetColorSchemes()
-  return uniq(sort(map(
-        \  globpath(&runtimepath, "colors/*.vim", 0, 1),  
-        \  'fnamemodify(v:val, ":t:r")'
-        \)))
+    if !te#env#IsVim8() && !te#env#IsNvim()
+        return sort(map(
+                    \  split(globpath(&runtimepath, "colors/*.vim"), nr2char(10)),  
+                    \  'fnamemodify(v:val, ":t:r")'
+                    \))
+    else
+    return uniq(sort(map(
+                \  globpath(&runtimepath, "colors/*.vim", 0, 1),  
+                \  'fnamemodify(v:val, ":t:r")'
+                \)))
+    endif
 endfunction
 
 call add(g:ctrlp_ext_vars, {
@@ -18,7 +25,7 @@ call add(g:ctrlp_ext_vars, {
       \ 'specinput': 0,
       \ })
 
-let s:text = ''
+let s:text = []
 function! te#ctrlp#colorscheme#init() abort
   return s:text
 endfunction

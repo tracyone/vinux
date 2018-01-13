@@ -45,7 +45,7 @@ call add(g:ctrlp_ext_vars, {
       \ 'specinput': 0,
       \ })
 
-let s:text = ''
+let s:text = []
 function! te#ctrlp#git#init() abort
   return s:text
 endfunction

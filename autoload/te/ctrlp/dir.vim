@@ -12,7 +12,7 @@ call add(g:ctrlp_ext_vars, {
       \ 'specinput': 0,
       \ })
 
-let s:text = ''
+let s:text = []
 function! te#ctrlp#dir#init() abort
   return s:text
 endfunction
