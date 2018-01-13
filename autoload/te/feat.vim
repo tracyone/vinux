@@ -55,14 +55,14 @@ function! te#feat#gen_feature_vim(reset) abort
     if  l:temp !=# ''
         let l:vinux_version[-1]=l:temp.'-dev'
     endif
-    let l:temp=te#feat#get_vim_version()
+    let l:temp2=te#feat#get_vim_version()
     if v:shell_error != 0
-	    let l:vinux_version='vinux V0.8.4'.' @'.l:temp[0].'.'.l:temp[1]
+	    let g:vinux_version='vinux V0.8.4'.' @'.l:temp2[0].'.'.l:temp2[1]
     else
-        let l:vinux_version='vinux '.l:vinux_version[-1].' @'.l:temp[0].'.'.l:temp[1]
+        let g:vinux_version='vinux '.l:vinux_version[-1].' @'.l:temp2[0].'.'.l:temp2[1]
     endif
-    let g:vinux_version=string(l:vinux_version)
-    call te#compatiable#writefile(['let g:vinux_version='.string(l:vinux_version)], $VIMFILES.'/feature.vim', 'a')
+    let g:vinux_version=string(g:vinux_version)
+    call te#compatiable#writefile(['let g:vinux_version='.g:vinux_version], $VIMFILES.'/feature.vim', 'a')
     call te#utils#EchoWarning('Updated feature.vim successfully!', 'warn', 1)
 endfunction
 
