@@ -420,6 +420,16 @@ function! te#utils#check_health() abort
     call add(l:output, '')
     let l:i=l:i + 1
 
+    call add(l:output, printf("%26s:\t", "vim >= 7.3.1058"))
+    let l:i=l:i + 1
+    if te#env#check_requirement()
+        let l:output[l:i].='Yes'
+    else
+        let l:output[l:i].='[No]'
+    endif
+    call add(l:output, printf("%26s", "--------------------------------------------"))
+    let l:i=l:i + 1
+
 
     for needle in ['termguicolors', 'lua', 'perl', 'ruby', 'tcl', 
                 \ 'timers', 'python', 'python3', 'cscope', 

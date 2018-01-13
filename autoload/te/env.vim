@@ -124,3 +124,12 @@ function! te#env#SupportFeature(feature_name) abort
     return has(a:feature_name)
 endfunction
 
+function! te#env#check_requirement()
+    if v:version > 703
+        return 1
+    elseif v:version ==# 703
+        return has("patch1058")
+    else
+        return 0
+    endif
+endfunction
