@@ -5,6 +5,7 @@
 
 app_name='vinux'
 dot_localvim="$HOME/.vim/local.vim"
+dot_vimrc="$HOME/.vimrc"
 [ -z "$APP_PATH" ] && APP_PATH="$HOME/.vim"
 [ -z "$REPO_URI" ] && REPO_URI='https://github.com/tracyone/vinux.git'
 [ -z "$REPO_BRANCH" ] && REPO_BRANCH='master'
@@ -186,7 +187,7 @@ generate_dot_localvim(){
     then
         touch "$dot_localvim"
         (
-        cat <<DOTSPACEVIM
+        cat <<DOTLOCALVIM
 "system level init
 function! TVIM_pre_init()
 endfunction
@@ -205,8 +206,23 @@ function! TVIM_plug_init()
 "Plug 'someone/something'
 endfunction
 
-DOTSPACEVIM
+DOTLOCALVIM
 ) >"$dot_localvim"
+
+    fi
+}
+
+generate_dot_vimrc(){
+    if [ ! -f "$dot_vimrc" ];
+    then
+        touch "$dot_vimrc"
+        (
+        cat <<DOTVIMRC
+let \$MYVIMRC=\$HOME."/.vim/vimrc"
+source ~/.vim/vimrc
+
+DOTVIMRC
+) >"$dot_vimrc"
 
     fi
 }
@@ -215,6 +231,8 @@ DOTSPACEVIM
 program_must_exist "vim"
 program_must_exist "git"
 program_must_exist "curl"
+
+vim_version=$(vim --version | head -1 | grep -o '[0-9]\.[0-9]')
 
 backup          "$HOME/.vimrc"
 backup          "$HOME/.config/nvim/init.vim"
@@ -231,6 +249,10 @@ sync_vim_plug   "$VIM_PLUG_PATH" \
                 "$VIM_PLUG_URL"
 
 generate_dot_localvim
+
+if [[ ${vim_version} == "7.3" ]]; then
+    generate_dot_vimrc
+fi
 
 setup_vim_plug
 
