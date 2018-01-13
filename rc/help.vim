@@ -1,6 +1,10 @@
 " Help:Welcome screen, leader guide
 " Package info {{{
-Plug 'hecal3/vim-leader-guide'
+if v:version >= 704
+    Plug 'hecal3/vim-leader-guide'
+    nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
+endif
+
 Plug 'mhinz/vim-startify'
 " }}}
 " VimStartify {{{
@@ -40,5 +44,4 @@ nnoremap <Leader>sl :SLoad
 " Session delete
 nnoremap <Leader>sd :SDelete<cr>
 "}}}
-nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
