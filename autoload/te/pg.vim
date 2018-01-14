@@ -28,14 +28,14 @@ function! s:top_of_kernel_tree()
                 \ "fs", "init", "ipc", "kernel", "lib", "scripts"]
     for l:needle in l:tree_check
         if !isdirectory(l:needle) && !filereadable(l:needle)
-            return 1
+            return 0
         endif
     endfor
-    return 0
+    return 1
 endfunction
 
-function! te#pg#gen_cscope_kernel() abort
-    if s:top_of_kernel_tree()
+function! te#pg#gen_cscope_kernel(timerid) abort
+    if !s:top_of_kernel_tree()
         call te#pg#gen_cs_out()
         call te#utils#EchoWarning("Current directory is not in the top level of kernel tree")
     else

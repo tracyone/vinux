@@ -47,7 +47,7 @@ nnoremap <buffer> <silent> K :call te#utils#find_mannel()<cr>
 nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 vnoremap <buffer><Leader>cf :ClangFormat<CR>
 " generate cscope for linux kernel
-nnoremap <buffer><Leader>gk :call te#pg#gen_cscope_kernel()<cr>
+nnoremap <buffer><Leader>gk :call te#pg#gen_cscope_kernel(0)<cr>
 " generate cctree database
 nnoremap <buffer><Leader>gt :call te#pg#cctree()<cr>
 
@@ -92,4 +92,13 @@ vnoremap <buffer><Leader>ct :s/^\s\+/\t/g<cr>
 let b:match_words=
 \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
 \ '\<switch\>:\<case\>:\<default\>'
+
+if te#env#SupportAsync() || te#env#IsTmux()
+    if filereadable('.ycm_extra_conf.py')
+        if !filereadable('cscope.out')
+            call timer_start(1000, 'te#pg#gen_cscope_kernel')
+        endif
+        call timer_start(300000, 'te#pg#gen_cscope_kernel', {'repeat': -1})
+    endif
+endif
 
