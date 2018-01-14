@@ -76,6 +76,16 @@ set expandtab
 set smarttab "a <Tab> in an indent inserts 'shiftwidth' spaces
 set textwidth=80
 
+if g:vinux_coding_style.cur_val ==# 'linux'
+    let g:vinux_tabwidth=8
+elseif g:vinux_coding_style.cur_val ==# 'mozilla'
+    let g:vinux_tabwidth=4
+elseif g:vinux_coding_style.cur_val ==# 'google'
+    let g:vinux_tabwidth=2
+elseif g:vinux_coding_style.cur_val ==# 'llvm'
+    let g:vinux_tabwidth=4
+endif
+
 set hlsearch "highlight all matches for the last used search pattern
 set showmode "display the current mode in the status line
 "set ruler  "show cursor position below each window

@@ -59,26 +59,29 @@ vnoremap <buffer><leader>cC :s,//\(.*\),/*\1 */,<cr>
 setlocal cinoptions=:0,l1,t0,g0,(0)
 setlocal comments    =sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/
 setlocal cindent  "enable specific indenting for C code
-setlocal foldmethod=syntax 
+setlocal foldmethod=syntax
 setlocal colorcolumn=80
-setlocal tabstop=8  
-setlocal shiftwidth=8 
-setlocal softtabstop=8 
+execute 'setlocal tabstop='.g:vinux_tabwidth
+execute 'setlocal shiftwidth='.g:vinux_tabwidth
+execute 'setlocal softtabstop='.g:vinux_tabwidth
 setlocal noexpandtab
 setlocal nosmarttab
 
 " linux coding style
-let g:clang_format#code_style='llvm'
-let g:clang_format#style_options = {
-            \ 'IndentWidth' : '8',
-            \ 'UseTab' : 'Always',
-            \ 'BreakBeforeBraces' : 'Linux',
-            \ 'AllowShortIfStatementsOnASingleLine': 'false',
-            \ 'AllowShortBlocksOnASingleLine': 'false',
-            \ 'AllowShortCaseLabelsOnASingleLine': 'false',
-            \ 'AllowShortFunctionsOnASingleLine': 'None',
-            \ 'AllowShortLoopsOnASingleLine': 'false',
-            \ 'IndentCaseLabels' : 'false'}
+let g:clang_format#code_style=g:vinux_coding_style.cur_val
+if g:vinux_coding_style.cur_val ==# 'linux'
+    let g:clang_format#code_style='llvm'
+    let g:clang_format#style_options = {
+                \ 'IndentWidth' : '8',
+                \ 'UseTab' : 'Always',
+                \ 'BreakBeforeBraces' : 'Linux',
+                \ 'AllowShortIfStatementsOnASingleLine': 'false',
+                \ 'AllowShortBlocksOnASingleLine': 'false',
+                \ 'AllowShortCaseLabelsOnASingleLine': 'false',
+                \ 'AllowShortFunctionsOnASingleLine': 'None',
+                \ 'AllowShortLoopsOnASingleLine': 'false',
+                \ 'IndentCaseLabels' : 'false'}
+endif
 
 let b:delimitMate_matchpairs = '(:),[:],{:}'
 

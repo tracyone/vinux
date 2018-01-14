@@ -259,6 +259,8 @@ function! te#feat#init_all() abort
     "on: always use cache when using ctrlp
     "limit:use cache when exceed the limit files
     call te#feat#init_var('g:ctrlp_caching_type', ['limit', 'on', 'off'])
+    "c & cpp coding style
+    call te#feat#init_var('g:vinux_coding_style', ['linux', 'mozilla', 'google', 'llvm'])
     if filereadable($VIMFILES.'/feature.vim')
         try
             execute ':source '.$VIMFILES.'/feature.vim'
