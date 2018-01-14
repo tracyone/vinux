@@ -1,3 +1,9 @@
+"avoid source twice
+if exists("b:did_vinux_ftplugin") 
+    finish
+endif
+let b:did_vinux_ftplugin = 1
+
 if get(g:, 'feat_enable_c') != 1
     :finish
 endif
@@ -101,4 +107,3 @@ if te#env#SupportAsync() || te#env#IsTmux()
         call timer_start(300000, 'te#pg#gen_cscope_kernel', {'repeat': -1})
     endif
 endif
-
