@@ -5,7 +5,7 @@
 function! te#tools#shell_pop(option) abort
     " 38% height of current window
     call te#server#connect()
-    if !te#env#IsTmux()
+    if !te#env#IsTmux() || te#env#SupportTerminal()
         if and(a:option, 0x04)
             :tabnew
         endif
