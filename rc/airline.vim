@@ -62,6 +62,7 @@ let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_symbols.crypt = '🔒'
+set noshowmode 
 
 function! s:airline_setting()
     if te#env#SupportAsync()
