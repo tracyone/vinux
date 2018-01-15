@@ -99,13 +99,14 @@ let b:match_words=
 \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
 \ '\<switch\>:\<case\>:\<default\>'
 
-if te#env#SupportTimer() &&
-            \ (te#env#IsTmux() || te#env#SupportAsync)
-    if filereadable('.ycm_extra_conf.py') || filereadable('.clang_complete')
-                \ filereadable('.project')
-        if !filereadable('cscope.out')
+if !exists("g:vinux_auto_gen_cscope") 
+    if te#env#SupportTimer() &&
+                \ (te#env#IsTmux() || te#env#SupportAsync)
+        if filereadable('.ycm_extra_conf.py') || filereadable('.clang_complete')
+                    \ || filereadable('.project')
             call timer_start(3000, 'te#pg#gen_cscope_kernel')
+            call timer_start(300000, 'te#pg#gen_cscope_kernel', {'repeat': -1})
         endif
-        call timer_start(300000, 'te#pg#gen_cscope_kernel', {'repeat': -1})
     endif
+    let g:vinux_auto_gen_cscope=1
 endif
