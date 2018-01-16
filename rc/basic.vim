@@ -56,7 +56,7 @@ else
         execute 'normal '."\<plug>EgMapGrepCurrentWord_v"
         let g:EasyGrepMode=0
     endfunction
-    function! s:easygrep_mapping()
+    function! Easygrep_mapping()
         map <silent> <Leader>vV <plug>EgMapGrepCurrentWord_v
         vmap <silent> <Leader>vV <plug>EgMapGrepSelection_v
         map <silent> <Leader>vv <plug>EgMapGrepCurrentWord_V
@@ -69,7 +69,7 @@ else
         map <silent> <Leader>vo <plug>EgMapGrepOptions
         nnoremap  <Leader>vs :Grep 
     endfunction
-    call te#feat#register_vim_enter_setting(function('<SID>easygrep_mapping'))
+    call te#feat#register_vim_enter_setting(function('Easygrep_mapping'))
 endif
 if get(g:, 'feat_enable_help') == 0
     Plug 'xolox/vim-session', {'on': ['OpenSession', 'SaveSession', 'DeleteSession']}

@@ -51,14 +51,14 @@ function! te#feat#gen_feature_vim(reset) abort
 	   call te#compatiable#writefile(['let '.l:key.'='.s:feature_dict[l:key]], $VIMFILES.'/feature.vim', 'a')
 	endfor
     let l:vinux_version=te#compatiable#systemlist('git describe')
-    let l:temp = matchstr(l:vinux_version[-1],'.*\(-\d\+-\w\+\)\@=')
-    if  l:temp !=# ''
-        let l:vinux_version[-1]=l:temp.'-dev'
-    endif
     let l:temp2=te#feat#get_vim_version()
     if v:shell_error != 0
 	    let g:vinux_version='vinux V0.8.8'.' @'.l:temp2[0].'.'.l:temp2[1]
     else
+        let l:temp = matchstr(l:vinux_version[-1],'.*\(-\d\+-\w\+\)\@=')
+        if  l:temp !=# ''
+            let l:vinux_version[-1]=l:temp.'-dev'
+        endif
         let g:vinux_version='vinux '.l:vinux_version[-1].' @'.l:temp2[0].'.'.l:temp2[1]
     endif
     let g:vinux_version=string(g:vinux_version)
