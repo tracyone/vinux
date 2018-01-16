@@ -1,7 +1,16 @@
 " basic package
 " Package info {{{
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle','NERDTreeFind'] }
-Plug 'majutsushi/tagbar'
+if te#env#check_requirement()
+    Plug 'majutsushi/tagbar'
+    " Open tagbar
+    nnoremap <silent><F9> :TagbarToggle<CR>
+    nnoremap <leader>tt :TagbarToggle<CR>
+else
+    Plug 'tracyone/vim-taglist'
+    nnoremap <silent><F9> :TlistToggle<CR>
+    nnoremap <leader>tt :TlistToggle<CR>
+endif
 if te#env#IsMac()
     Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
 elseif te#env#IsUnix()
@@ -86,9 +95,6 @@ if get(g:, 'feat_enable_help') == 0
 endif
 "}}}
 " Tagbar {{{
-nnoremap <silent><F9> :TagbarToggle<CR>
-" Open tagbar
-nnoremap <leader>tt :TagbarToggle<CR>
 let g:tagbar_left=0
 let g:tagbar_width=30
 let g:tagbar_sort=0

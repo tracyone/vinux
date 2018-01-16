@@ -106,6 +106,11 @@ if g:enable_powerline_fonts.cur_val ==# 'on'
 else
     let s:seperator=' | '
 endif
+if te#env#check_requirement()
+    let s:function_name="%{exists(':TagbarToggle')?\ tagbar#currenttag('%s".s:seperator."'".",'')\ :\ ''}"
+else
+    let s:function_name="%{Tlist_Get_Tagname_By_Line()}"
+endif
 
 "statuslne
 if get(g:,'feat_enable_airline') != 1
@@ -116,7 +121,7 @@ if get(g:,'feat_enable_airline') != 1
         endif
         if a:type == 1
             let l:mystatus_line.="%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}%= "
-            let l:mystatus_line.="%{exists(':TagbarToggle')?\ tagbar#currenttag('%s".s:seperator."'".",'')\ :\ ''}"
+            let l:mystatus_line.=s:function_name
             let l:mystatus_line.="%{&ft}".s:seperator."%{(&fenc!=''?&fenc:&enc)}[%{&ff}]".s:seperator."%p%%[%l,%v]"
             let l:mystatus_line.=s:seperator."%{strftime(\"%m/%d\-\%H:%M\")} "
         elseif a:type == 3
