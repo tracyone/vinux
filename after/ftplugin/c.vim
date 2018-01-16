@@ -101,7 +101,7 @@ let b:match_words=
 
 if !exists("g:vinux_auto_gen_cscope") 
     if te#env#SupportTimer() &&
-                \ (te#env#IsTmux() || te#env#SupportAsync)
+                \ (te#env#IsTmux() || te#env#SupportAsync())
         if filereadable('.ycm_extra_conf.py') || filereadable('.clang_complete')
                     \ || filereadable('.project')
             call timer_start(3000, 'te#pg#gen_cscope_kernel')
