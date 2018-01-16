@@ -7,7 +7,7 @@ call add(g:ctrlp_ext_vars, {
       \ 'lname': 'feature',
       \ 'sname': 'feat',
       \ 'type': 'line',
-      \ 'sort': 0,
+      \ 'sort': 1,
       \ 'specinput': 0,
       \ })
 

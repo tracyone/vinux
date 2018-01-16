@@ -3,15 +3,15 @@
 
 function! s:GetColorSchemes()
     if !te#env#IsVim8() && !te#env#IsNvim()
-        return sort(map(
+        return map(
                     \  split(globpath(&runtimepath, "colors/*.vim"), nr2char(10)),  
                     \  'fnamemodify(v:val, ":t:r")'
-                    \))
+                    \)
     else
-    return uniq(sort(map(
-                \  globpath(&runtimepath, "colors/*.vim", 0, 1),  
-                \  'fnamemodify(v:val, ":t:r")'
-                \)))
+        return uniq(map(
+                    \  globpath(&runtimepath, "colors/*.vim", 0, 1),  
+                    \  'fnamemodify(v:val, ":t:r")'
+                    \))
     endif
 endfunction
 
@@ -21,7 +21,7 @@ call add(g:ctrlp_ext_vars, {
       \ 'lname': 'colorscheme',
       \ 'sname': 'color',
       \ 'type': 'line',
-      \ 'sort': 0,
+      \ 'sort': 1,
       \ 'specinput': 0,
       \ })
 
