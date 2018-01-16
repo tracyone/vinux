@@ -29,7 +29,7 @@ call te#feat#register_vim_enter_setting(function('<SID>fun_setting'))
 
 " 25 mins in pomodoro mode
 let s:expires_time=1500000
-let s:rest_time=180000
+let s:rest_time=120000
 "let s:expires_time=8000
 "let s:rest_time=15000
 let s:main_timer=-1
@@ -79,7 +79,7 @@ if !filereadable($VIMFILES.'/.screenlock')
     let s:main_timer=timer_start(str2nr(s:expires_time), 'EnterScreensaver', {'repeat': 1})
     call writefile(['work'],$VIMFILES.'/.screenlock')
 elseif readfile($VIMFILES.'/.screenlock', 1)[0] ==# 'rest'
-    echom 'Have a break (5 mins)'
+    echom 'Have a break (2 mins)'
     :qa
 endif
 
