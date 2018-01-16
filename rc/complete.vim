@@ -238,7 +238,7 @@ else
     let g:SuperTabCrMapping = 0
     let g:SuperTabDefaultCompletionType = 'context'
     let g:SuperTabContextDefaultCompletionType = '<c-x><c-o>'
-    function! s:supertab_change_complete_type()
+    function! Supertab_change_complete_type()
         if &omnifunc ==# '' && &completefunc ==# ''
             call SuperTabSetDefaultCompletionType("<c-p>")
         elseif &omnifunc !=# ''
@@ -249,7 +249,7 @@ else
             call SuperTabChain(&completefunc, "<c-p>") |
         endif
     endfunction
-    let g:complete_plugin.enable_func=function('<SID>supertab_change_complete_type')
+    let g:complete_plugin.enable_func=function('Supertab_change_complete_type')
 endif
 call te#feat#register_vim_plug_insert_setting([g:complete_plugin.enable_func], 
             \ g:complete_plugin.name)
