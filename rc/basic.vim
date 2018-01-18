@@ -101,6 +101,9 @@ let g:tagbar_sort=0
 let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
 let g:tagbar_systemenc='cp936'
+let Tlist_Show_One_File = 1
+let Tlist_Use_Right_Window = 1
+let Tlist_GainFocus_On_ToggleOpen=1
 "}}}
 " Vimshell {{{
 if(!te#env#SupportTerminal())
