@@ -39,9 +39,9 @@ augroup filetype_group
                 \ | nnoremap <buffer> <c-t> <C-w><CR><C-w>T
                 \ | nnoremap <buffer> <c-v> <C-w><CR><C-w>L<C-w>p<C-w>J<C-w>p
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
-    autocmd FileType qfreplace setlocal nofoldenable | nmap <buffer> q :bdelete<cr>
     autocmd FileType gitcommit setlocal nofoldenable cursorline
-    autocmd FileType vimcalc,man setlocal nonu nornu | imap <buffer> <c-d> :q<cr>
+    autocmd FileType qfreplace,vimcalc,man setlocal nonu nornu nofoldenable | imap <buffer> <c-d> :q<cr>
+                \ | nmap <buffer> q :bdelete<cr>
     autocmd FileType vim-plug nnoremap <buffer> <silent> H :call te#plug#open_doc()<cr> 
                 \ | nnoremap <buffer> <silent> gx :call te#plug#browse_plugin_url()<cr>
                 \ | nnoremap <buffer> <silent> <c-t> :call te#plug#open_plugin_dir()<cr>
