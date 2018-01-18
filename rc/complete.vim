@@ -29,10 +29,11 @@ elseif g:complete_plugin_type.cur_val ==# 'deoplete.nvim'
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
 else
+    let g:complete_plugin_type.cur_val='supertab'
     let g:complete_plugin.name=["supertab"]
     Plug 'ervandew/supertab', { 'on': [] }
 endif
-if te#env#SupportPy()
+if te#env#SupportPy() && v:version >= 704
     Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets', { 'on': [] }
     call extend(g:complete_plugin.name, ['ultisnips', 'snippets'])
 endif
