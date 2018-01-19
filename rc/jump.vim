@@ -10,7 +10,7 @@ if g:fuzzysearcher_plugin_name.cur_val !=# 'ctrlp' && te#env#SupportAsync()
     nnoremap <c-k> :LeaderfFunction<cr>
     nnoremap <Leader>pk :LeaderfFunction<cr>
     " buffer 
-    nnoremap <Leader>pl :LeaderfBuffer<Cr>
+    nnoremap <Leader>pb :LeaderfBuffer<Cr>
     " recent file 
     nnoremap <c-l> :LeaderfMru<cr>
     nnoremap <Leader>pr :LeaderfMru<cr>
@@ -131,7 +131,7 @@ else
     " show global mark
     nnoremap <leader>pm :SignatureListGlobalMarks<Cr>
     " ctrlp buffer 
-    nnoremap <Leader>pl :CtrlPBuffer<Cr>
+    nnoremap <Leader>pb :CtrlPBuffer<Cr>
     nnoremap <c-l> :CtrlPMRUFiles<cr>
     "CtrlP mru
     nnoremap <Leader>pr :CtrlPMRUFiles<cr>

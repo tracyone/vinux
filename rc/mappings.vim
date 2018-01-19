@@ -348,6 +348,8 @@ elseif te#env#SupportTerminal()
 endif
 
 " Open plug status windows
-nnoremap <Leader>ap :PlugStatus<cr>
+nnoremap <Leader>ps :PlugStatus<cr>
 " update plugin
-nnoremap <Leader>au :PlugUpdate<cr>
+nnoremap <Leader>pu :PlugUpdate<cr>
+" list plugins
+nnoremap <Leader>pl :call te#plug#list()<cr>
