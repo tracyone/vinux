@@ -16,30 +16,33 @@ Plug 'ayu-theme/ayu-vim'
 " }}}
 "Gui releate{{{
 if te#env#IsGui()
-    if (te#env#IsMac())
-        set guifont=Consolas:h16
-    elseif te#env#IsUnix()
-        set guifont=Consolas\ 12
-        set guifontwide=YaHei_Mono_Hybird_Consolas\ 12.5
-    else
-        set guifont=Monaco:h12:cANSI
-        set guifontwide=YaHei_Mono:h12.5:cGB2312
-        if has("directx")
-            set renderoptions=type:directx
-        endif
-    endif
-    if g:enable_powerline_fonts.cur_val ==# 'on'
-        if te#env#IsMacVim()
-            set guifont=YaHei\ Consolas\ Hybrid:h14
-            set guifontwide=YaHei\ Consolas\ Hybrid:h14
+    try
+        if (te#env#IsMac())
+            set guifont=Consolas:h16
         elseif te#env#IsUnix()
-            set guifont=YaHei\ Consolas\ Hybrid\ 12
-            set guifontwide=YaHei\ Consolas\ Hybrid\ 12
+            set guifont=Consolas\ 12
+            set guifontwide=YaHei_Mono_Hybird_Consolas\ 12.5
         else
             set guifont=Monaco:h12:cANSI
-            set guifontwide=YaHei_Consolas_Hybrid:h12:cGB2312
+            set guifontwide=YaHei_Mono:h12.5:cGB2312
+            if has("directx")
+                set renderoptions=type:directx
+            endif
         endif
-    endif
+        if g:enable_powerline_fonts.cur_val ==# 'on'
+            if te#env#IsMacVim()
+                set guifont=YaHei\ Consolas\ Hybrid:h14
+                set guifontwide=YaHei\ Consolas\ Hybrid:h14
+            elseif te#env#IsUnix()
+                set guifont=YaHei\ Consolas\ Hybrid\ 12
+                set guifontwide=YaHei\ Consolas\ Hybrid\ 12
+            else
+                set guifont=Monaco:h12:cANSI
+                set guifontwide=YaHei_Consolas_Hybrid:h12:cGB2312
+            endif
+        endif
+    catch /^Vim\%((\a\+)\)\=:E/
+    endtry
     call te#feat#register_vim_enter_setting(function('te#tools#max_win'))
     " turn on this option as well
     set guioptions-=b
