@@ -101,6 +101,14 @@ noremap! <expr> <SID>transposition getcmdpos()>strlen(getcmdline())?"\<Left>":ge
 noremap! <expr> <SID>transpose "\<BS>\<Right>".matchstr(getcmdline()[0 : getcmdpos()-2], '.$')
 cmap   <script> <C-T> <SID>transposition<SID>transpose
 
+xnoremap <c-j> :m '>+1<CR>gv=gv
+xnoremap <c-k> :m '<-2<CR>gv=gv
+
+xnoremap <Leader>mj :m '>+1<CR>gv=gv
+xnoremap <Leader>mk :m '<-2<CR>gv=gv
+nnoremap <Leader>mj :m .+1<CR>==
+nnoremap <leader>mk :m .-2<CR>==
+
 " }}}
 "update the _vimrc
 nnoremap <leader>so :call te#utils#source_vimrc($MYVIMRC)<cr>
