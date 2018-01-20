@@ -198,6 +198,7 @@ function! te#feat#vim_plug_insert_enter() abort
         else
             execute l:Needle
         endif
+        unlet l:Needle
     endfor
 endfunction
 
