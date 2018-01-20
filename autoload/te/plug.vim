@@ -87,13 +87,14 @@ function! te#plug#list() abort
     let l:output=[]
     call add(l:output, 'Vinux plugins list:')
     call add(l:output, '====================')
-    let l:i=2
+    call add(l:output, '')
+    let l:i=3
 
     for l:needle in g:plugs_order
         call add(l:output, printf("- %s:%s", l:needle,' ('.g:plugs[l:needle].uri.')' ) )
         let l:i=l:i + 1
     endfor
-    let l:output[0].=l:i-2
+    let l:output[0].=l:i-3
     call append(0, l:output)
 
     setlocal nomodified
