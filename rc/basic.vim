@@ -164,13 +164,6 @@ if(!te#env#SupportTerminal())
     endif
 endif
 
-noremap <F4> :call te#tools#shell_pop(0x1)<cr>
-" Open vimshell or neovim's emulator in split window
-nnoremap <Leader>as :call te#tools#shell_pop(0x1)<cr>
-" Open vimshell or neovim's emulator in vertical window
-nnoremap <Leader>av :call te#tools#shell_pop(0x2)<cr>
-" Open vimshell or neovim's emulator in new tab
-nnoremap <Leader>ns :call te#tools#shell_pop(0x4)<cr>
 "}}}
 " Nerdtree {{{
 let g:NERDTreeShowLineNumbers=0	"don't show line number
@@ -221,7 +214,6 @@ endif
 " Save basic setting
 nnoremap <Leader>lo :Love<cr>
 nnoremap <Leader>sc :Neomake<cr>
-nnoremap <Leader>ch :call te#utils#check_health()<cr>
 "let g:neomake_open_list=2
 if !te#env#IsGui()
     let g:neomake_info_sign = {'text': 'i', 'texthl': 'NeomakeInfoSign'}
