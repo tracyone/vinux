@@ -64,7 +64,7 @@ let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_symbols.crypt = '🔒'
 set noshowmode 
 
-function! s:airline_setting()
+function! Airline_setting()
     if te#env#SupportAsync()
         let g:airline_section_error = airline#section#create_right(['%{neomakemp#run_status()}'])
     endif
@@ -79,5 +79,5 @@ endfunction
 "https://github.com/vim-airline/vim-airline/issues/399
 autocmd misc_group BufDelete * call airline#extensions#tabline#buflist#invalidate()
 
-call te#feat#register_vim_enter_setting(function('<SID>airline_setting'))
+call te#feat#register_vim_enter_setting(function('Airline_setting'))
 " }}}
