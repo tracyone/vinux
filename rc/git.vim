@@ -90,7 +90,7 @@ if te#env#SupportPy2()
     Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
 endif
 Plug 'rhysd/github-complete.vim',{'for': ['gitcommit', 'markdown']}
-if te#env#SupportFeature('sign')
+if te#env#SupportFeature('signs')
     Plug 'airblade/vim-gitgutter', { 'on': [] }
     call te#feat#register_vim_plug_insert_setting(['GitGutterEnable'], 
                 \ ['vim-gitgutter'])
