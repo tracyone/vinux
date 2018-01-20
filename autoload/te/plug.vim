@@ -33,7 +33,7 @@ function! te#plug#browse_plugin_url() abort
     if uri !~ 'github.com'
         return
     endif
-    let repo = matchstr(uri, '[^:/]*/'.name)
+    let repo = matchstr(uri, 'github.com/\zs.*'.name)
     let url  = empty(sha) ? 'https://github.com/'.repo
                 \ : printf('https://github.com/%s/commit/%s', repo, sha)
     call te#utils#open_url(url)
