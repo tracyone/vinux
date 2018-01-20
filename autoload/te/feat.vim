@@ -216,7 +216,11 @@ endfunction
 
 "open vim config and change directory.
 function te#feat#edit_config() abort
-    :tabedit $MYVIMRC
+    if te#utils#is_listed_buffer()
+        :tabedit $MYVIMRC
+    else
+        :e $MYVIMRC
+    endif
     execute 'vsplit '.fnamemodify($MYVIMRC, ":p:h").'/feature.vim'
     execute 'split '.fnamemodify($MYVIMRC, ":p:h").'/local.vim'
     call te#utils#goto_cur_file(2)
