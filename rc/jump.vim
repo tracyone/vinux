@@ -43,6 +43,7 @@ elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' && te#env#SupportPy
     nnoremap <Leader><Leader> :Denite file_rec<cr>
     nnoremap <c-j> :Denite buffer<cr>
     nnoremap <c-l> :Denite file_mru<cr>
+    nnoremap <c-k> :Denite outline<cr>
     nnoremap <Leader>pc :Denite colorscheme<cr>
     nnoremap <Leader>ff :Denite file<cr>
 else
