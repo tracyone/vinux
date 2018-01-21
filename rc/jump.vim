@@ -1,6 +1,6 @@
 " Package info {{{
 " jump to somewhere:file,mru,bookmark
-if g:fuzzysearcher_plugin_name.cur_val !=# 'ctrlp' && te#env#SupportAsync()
+if g:fuzzysearcher_plugin_name.cur_val ==# 'leaderf' && te#env#SupportAsync()
     Plug 'Yggdroot/LeaderF'
     Plug 'Yggdroot/LeaderF-marks',{'on': 'LeaderfMarks'}
     " show global mark
@@ -30,7 +30,24 @@ if g:fuzzysearcher_plugin_name.cur_val !=# 'ctrlp' && te#env#SupportAsync()
     let g:Lf_StlSeparator = { 'left': '', 'right': '' }
     let g:Lf_UseMemoryCache = 0
     nnoremap <Leader><Leader> :LeaderfFile<cr>
+elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' && te#env#SupportPy3() 
+            \ && te#env#SupportAsync()
+    Plug 'Shougo/denite.nvim'
+    Plug 'Shougo/neomru.vim'
+    function! s:source_denite_vim()
+        execute 'source '.$VIMFILES.'/rc/denite.vim'
+    endfunction
+    call te#feat#register_vim_enter_setting(function('<SID>source_denite_vim'))
+    "keymapping for denite
+    nnoremap <c-p> :Denite file_rec<cr>
+    nnoremap <Leader><Leader> :Denite file_rec<cr>
+    nnoremap <c-j> :Denite buffer<cr>
+    nnoremap <c-l> :Denite file_mru<cr>
+    nnoremap <Leader>pc :Denite colorscheme<cr>
+    nnoremap <Leader>ff :Denite file<cr>
 else
+    "fallback to ctrlp
+    let g:fuzzysearcher_plugin_name.cur_val = "ctrlp"
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
     Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
