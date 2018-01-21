@@ -24,6 +24,13 @@ function! te#plug#open_plugin_dir() abort
     endif
 endfunction
 
+function! te#plug#show_log() abort
+    let name = matchstr(getline('.'), '^[x-] \zs\S\+\ze:')
+    if has_key(g:plugs, name)
+       call te#git#show_log(g:plugs[name].dir)
+    endif
+endfunction
+
 function! te#plug#browse_plugin_url() abort
     let line = getline('.')
     let sha  = matchstr(line, '^  \X*\zs\x\{7,9}\ze ')
@@ -103,4 +110,5 @@ function! te#plug#list() abort
     setlocal filetype=vim-plug
     call s:syntax()
     :0
+    :f [Plugins]
 endfunction

@@ -85,7 +85,7 @@ else
     " Open github url
     nnoremap <Leader>gh :call te#git#git_browse()<cr>
 endif
-nnoremap <Leader>gl :call te#git#show_log()<cr>
+nnoremap <Leader>gl :call te#git#show_log(".")<cr>
 if te#env#SupportPy2()
     Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
 endif
