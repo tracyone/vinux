@@ -46,6 +46,18 @@ elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' && te#env#SupportPy
     nnoremap <c-k> :Denite outline<cr>
     nnoremap <Leader>pc :Denite colorscheme<cr>
     nnoremap <Leader>ff :Denite file<cr>
+    "mru
+    nnoremap <Leader>pr :Denite file_mru<cr>
+    "file
+    nnoremap <Leader>pp :Denite file_rec<cr>
+    "function
+    nnoremap <Leader>pp :Denite outline<cr>
+    "vim help
+    nnoremap <Leader>ph :Denite help<cr>
+    "command history
+    nnoremap <Leader>p: :Denite command_history<cr>
+    "fly on grep
+    nnoremap <Leader>pf :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
 else
     "fallback to ctrlp
     let g:fuzzysearcher_plugin_name.cur_val = "ctrlp"
