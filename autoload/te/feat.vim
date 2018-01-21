@@ -260,6 +260,8 @@ function! te#feat#init_all() abort
     call te#feat#init_var('g:enable_powerline_fonts', ['off','on'])
     call te#feat#init_var('g:enable_auto_plugin_install', ['on','off'])
     call te#feat#init_var('g:vinux_plugin_dir', [$VIMFILES.'/bundle/', $HOME.'/plugged/'])
+    "note this value will be override if not support this plugin
+    call te#feat#init_var('g:grepper_plugin', ["neomake-multiprocess", "vim-easygrep"])
     "off:no use cache when using ctrlp
     "on: always use cache when using ctrlp
     "limit:use cache when exceed the limit files

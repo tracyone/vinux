@@ -50,6 +50,9 @@ if te#env#IsVim8() || te#env#IsNvim()
     "set grepprg=ag\ --nogroup\ --nocolor
     "set grepformat=%f:%l:%c%m
 else
+    let g:grepper_plugin.cur_val = 'vim-easygrep'
+endif
+if g:grepper_plugin.cur_val ==# 'vim-easygrep'
     Plug 'dkprice/vim-easygrep'
     let g:EasyGrepRecursive=1
     if te#env#Executable('rg')
