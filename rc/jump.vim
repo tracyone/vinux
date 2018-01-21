@@ -64,6 +64,7 @@ else
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
     Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
+    Plug 'zeero/vim-ctrlp-help',{'on': 'CtrlPHelp'}
     "ctrlp thirdparty matchers
     if te#env#SupportPy()
         if g:ctrlp_matcher_type.cur_val ==# 'cpsm'
@@ -186,6 +187,8 @@ else
     nnoremap <Leader>pgc :call te#ctrlp#git#start(3)<cr>
     "CtrlP git remote branch
     nnoremap <Leader>pgr :call te#ctrlp#git#start(4)<cr>
+    "vim help
+    nnoremap <Leader>ph :CtrlPHelp<cr>
     "}}}
 endif
 Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
