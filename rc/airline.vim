@@ -51,8 +51,6 @@ if g:enable_powerline_fonts.cur_val ==# 'on'
     let g:airline_symbols.readonly = ''
     let g:airline_powerline_fonts = 1
 else
-    let g:airline_left_sep = '▶'
-    let g:airline_right_sep = '◀'
     let g:airline_symbols.branch = '⎇'
 endif
 let g:airline_symbols.maxlinenr = '☰'
