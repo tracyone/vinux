@@ -495,6 +495,7 @@ function! te#utils#check_health() abort
     setlocal bufhidden=delete
     highlight health ctermbg=red guibg=red
     call matchadd("health", ".*No.*")
+    :f [Health]
 endfunction
 
 "te#utils#run_command (command [, callback] [,arglist] [, flag)
