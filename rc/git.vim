@@ -1,5 +1,5 @@
 if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
-    Plug 'lambdalisue/gina.vim'
+    Plug 'lambdalisue/gina.vim', {'commit': '3d59045701767e4755d63eb90bcb8856c806e448'}
     nnoremap <F3> :Gina status<cr>
     " Open git status window
     nnoremap <Leader>gs :Gina status<cr>
