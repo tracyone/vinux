@@ -3,15 +3,18 @@ scriptencoding utf-8
 if te#env#IsMacVim()
     let s:alt_char={1:'¡',2:'™',3:'£',4:'¢',5:'∞',6:'§',7:'¶',8:'•',9:'ª'
                 \,'t':'†','q':'œ','a':'å','=':'≠','h':'˙','l':'¬','j':'∆','k':'˚'
-                \,'o':'ø','-':'–','b':'∫','f':'ƒ','m':'µ','w':'∑','p':'π','n':'˜'}
+                \,'o':'ø','-':'–','b':'∫','f':'ƒ','m':'µ','w':'∑','p':'π','n':'˜'
+                \,'u':'¨','d':'∂'}
 elseif te#env#IsUnix() && !te#env#IsNvim() && !te#env#IsGui()
     let s:alt_char={1:'±' ,2:'²',3:'³',4:'´',5:'µ',6:'¶',7:'·',8:'¸',9:'¹'
                 \,'t':'ô','q':'ñ','a':'á','=':'½','h':'è','l':'ì','j':'ê','k':'ë'
-                \,'o':'ï','-':'­','b':'â','f':'æ','m':'í','w':'÷','p':'ð','n':'î'}
+                \,'o':'ï','-':'­','b':'â','f':'æ','m':'í','w':'÷','p':'ð','n':'î'
+                \,'u':'õ','d':'ä'}
 elseif te#env#IsGui() || te#env#IsNvim()
     let s:alt_char={1:'<m-1>',2:'<m-2>',3:'<m-3>',4:'<m-4>',5:'<m-5>',6:'<m-6>',7:'<m-7>',8:'<m-8>',9:'<m-9>'
                 \,'t':'<m-t>','q':'<m-q>','a':'<m-a>','=':'<m-=>','h':'<m-h>','l':'<m-l>','j':'<m-j>','k':'<m-k>'
-                \,'o':'<m-o>','-':'<m-->','b':'<m-b>','f':'<m-f>','m':'<m-m>','w':'<m-w>','p':'<c-p>','n':'<c-n>'}
+                \,'o':'<m-o>','-':'<m-->','b':'<m-b>','f':'<m-f>','m':'<m-m>','w':'<m-w>','p':'<m-p>','n':'<m-n>'
+                \,'u':'<m-u>','d':'<m-d>'}
 endif
 
 function! te#meta#init() abort
@@ -36,5 +39,5 @@ function! te#meta#init() abort
 endfunction
 
 function! te#meta#map(maptype,keycodes,action) abort
-    execute a:maptype.' '.s:alt_char[a:keycodes].' '.a:action
+    execute a:maptype.' <silent> '.s:alt_char[a:keycodes].' '.a:action
 endfunction

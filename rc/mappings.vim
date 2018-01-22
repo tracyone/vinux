@@ -337,10 +337,10 @@ elseif te#env#SupportTerminal()
     "terminal-emulator setting
     "execute 'tnoremap <Esc> <C-\><C-n>' "effect <a-> key?
     silent! execute 'tnoremap <Esc><Esc> '.&termkey.'N'
-    call te#meta#map('tmap <silent>','h',&termkey.'h')
-    call te#meta#map('tmap <silent>','j',&termkey.'j')
-    call te#meta#map('tmap <silent>','k',&termkey.'k')
-    call te#meta#map('tmap <silent>','l',&termkey.'l')
+    call te#meta#map('tmap','h',&termkey.'h')
+    call te#meta#map('tmap','j',&termkey.'j')
+    call te#meta#map('tmap','k',&termkey.'k')
+    call te#meta#map('tmap','l',&termkey.'l')
     silent! execute 'tmap <c-v> '.&termkey.'"*'
     call te#meta#map('tnoremap','b','<C-left>')
     call te#meta#map('tnoremap','f','<C-right>')
@@ -362,3 +362,12 @@ noremap <F4> :call te#tools#shell_pop(0x1)<cr>
 nnoremap <Leader>av :call te#tools#shell_pop(0x2)<cr>
 " Open vimshell or neovim's emulator in new tab
 nnoremap <Leader>ns :call te#tools#shell_pop(0x4)<cr>
+
+call te#meta#map('inoremap','u','<c-\><c-o>:call te#tools#PreviousCursor(6)<cr>')
+call te#meta#map('inoremap','d','<c-\><c-o>:call te#tools#PreviousCursor(7)<cr>')
+call te#meta#map('nnoremap','d',':call te#tools#PreviousCursor(7)<cr>')
+call te#meta#map('nnoremap','u',':call te#tools#PreviousCursor(6)<cr>')
+call te#meta#map('inoremap','m','<c-\><c-o>:call te#tools#PreviousCursor(0)<cr>')
+call te#meta#map('inoremap','n','<c-\><c-o>:call te#tools#PreviousCursor(1)<cr>')
+call te#meta#map('nnoremap','m',':call te#tools#PreviousCursor(0)<cr>')
+call te#meta#map('nnoremap','n',':call te#tools#PreviousCursor(1)<cr>')
