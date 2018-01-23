@@ -33,9 +33,19 @@ else
     let g:complete_plugin.name=["supertab"]
     Plug 'ervandew/supertab', { 'on': [] }
 endif
+Plug 'tracyone/snippets', { 'on': [] }
 if te#env#SupportPy() && v:version >= 704
-    Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'tracyone/snippets', { 'on': [] }
+    Plug 'SirVer/ultisnips', { 'on': [] }  
     call extend(g:complete_plugin.name, ['ultisnips', 'snippets'])
+else
+    Plug 'MarcWeber/vim-addon-mw-utils', { 'on': [] } 
+    Plug 'tomtom/tlib_vim', { 'on': [] } 
+    Plug 'garbas/vim-snipmate', { 'on': [] } 
+    call extend(g:complete_plugin.name, ['vim-addon-mw-utils', 'tlib_vim', 'vim-snipmate', 'snippets'])
+    :imap <C-J> <Plug>snipMateNextOrTrigger
+    :smap <C-J> <Plug>snipMateNextOrTrigger
+    :imap <C-k> <Plug>snipMateBack
+    :smap <C-k> <Plug>snipMateBack
 endif
 
 " Complete ------------------------{{{
@@ -266,6 +276,6 @@ let g:UltiSnipsExpandTrigger='<c-j>'
 let g:UltiSnipsListSnippets ='<c-tab>'
 let g:UltiSnipsJumpForwardTrigge='<c-j>'
 let g:UltiSnipsJumpBackwardTrigge='<c-k>'
-let g:UltiSnipsSnippetDirectories=['bundle/snippets']
+let g:UltiSnipsSnippetDirectories=['bundle/snippets/ultisnips']
 let g:UltiSnipsSnippetsDir=g:vinux_plugin_dir.cur_val.'/snippets'
 "}}}
