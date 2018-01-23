@@ -65,6 +65,8 @@ else
     Plug 'tacahiroy/ctrlp-funky',{'on': 'CtrlPFunky'}
     Plug 'fisadev/vim-ctrlp-cmdpalette',{'on': 'CtrlPCmdPalette'}
     Plug 'zeero/vim-ctrlp-help',{'on': 'CtrlPHelp'}
+    nnoremap <Leader>fe :call te#ctrlp#feat#start(1)<cr>
+    nnoremap <Leader>fd :call te#ctrlp#feat#start(0)<cr>
     "ctrlp thirdparty matchers
     if te#env#SupportPy()
         if g:ctrlp_matcher_type.cur_val ==# 'cpsm'

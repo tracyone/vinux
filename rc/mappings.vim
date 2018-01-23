@@ -287,13 +287,8 @@ nnoremap <Leader>tw :call te#utils#OptionToggle('textwidth',[80,0])<cr>
 nnoremap <Leader>tc :call te#utils#OptionToggle('cursorline',[1,0])<cr>
 " feature enable
 "nnoremap <Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
-if g:fuzzysearcher_plugin_name.cur_val ==# 'ctrlp' && get(g:, 'feat_enable_jump')
-    nnoremap <Leader>fe :call te#ctrlp#feat#start(1)<cr>
-    nnoremap <Leader>fd :call te#ctrlp#feat#start(0)<cr>
-else
-    nnoremap <Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
-    nnoremap <Leader>fd :call te#feat#feat_dyn_enable(0)<cr>
-endif
+nnoremap <Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
+nnoremap <Leader>fd :call te#feat#feat_dyn_enable(0)<cr>
 
 " feature update
 nnoremap <Leader>fu :call te#feat#gen_feature_vim(0)<cr>
