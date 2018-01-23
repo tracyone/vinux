@@ -231,26 +231,30 @@ endfunction
 function! te#feat#init_all() abort
     set nocompatible
 
-    if empty($VIMFILES)
-        if has('win64') || has('win32')
+    if has('win64') || has('win32')
+        if empty($VIMFILES)
             let $VIMFILES = $HOME.'/vimfiles'
-            set pythonthreedll=$HOME\\AppData\\Local\\Programs\\Python\\Python36\\python36.dll
-            set pythondll=$HOME\\AppData\\Local\\Programs\\Python\\Python27\\python27.dll
-            if !filereadable(&pythondll)
-                set pythondll&
-            endif
-            if !filereadable(&pythonthreedll)
-                set pythonthreedll&
-            endif
-        else
+        endif
+        set pythonthreedll=$HOME\\AppData\\Local\\Programs\\Python\\Python36\\python36.dll
+        set pythondll=$HOME\\AppData\\Local\\Programs\\Python\\Python27\\python27.dll
+        if !filereadable(&pythondll)
+            set pythondll&
+        endif
+        if !filereadable(&pythonthreedll)
+            set pythonthreedll&
+        endif
+        let $PATH = $VIMFILES.'/bin;'.$PATH
+    else
+        if empty($VIMFILES)
             if te#env#IsNvim()
                 let $VIMFILES = $HOME.'/.config/nvim'
             else
                 let $VIMFILES = $HOME.'/.vim'
             endif
         endif
+        let $PATH = $VIMFILES.'/bin:'.$PATH
     endif
-    let $PATH = $VIMFILES.'/bin:'.$PATH
+
 
     call te#feat#init_var('g:ctrlp_matcher_type',['py-matcher', 'cpsm'])
     call te#feat#init_var('g:complete_plugin_type',['YouCompleteMe', 'clang_complete', 'neocomplete',
