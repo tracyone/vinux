@@ -46,17 +46,6 @@ function! te#server#connect()
     endif
 endfunction
 
-
-function! te#server#export_server()
-    if executable('export')
-        call system('export $TEST_SPACEVIM="test"') 
-    endif
-endfunction
-
-function! te#server#terminate()
-
-endfunction
-
 function! te#server#list()
     if has('nvim')
         return join(serverlist(), "\n")
