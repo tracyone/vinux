@@ -9,6 +9,7 @@ function! te#plug#open_doc() abort
         for doc in split(globpath(g:plugs[name].dir, 'doc/*.txt'), '\n')
             let l:found=1
             execute 'tabe' doc
+            setlocal ft=help
         endfor
     endif
     if l:found == 0
