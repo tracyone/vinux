@@ -59,6 +59,7 @@ endfunction
 function! te#plug#extra_key() abort
     nnoremap <silent> <buffer> J :call <sid>scroll_preview(1)<cr>
     nnoremap <silent> <buffer> K :call <sid>scroll_preview(0)<cr>
+    nnoremap <silent> <buffer> U :execute ':PlugUpdate '.matchstr(getline('.'), '^[x-] \zs\S\+\ze:')<cr>
     nnoremap <silent> <buffer> <c-n> :call search('^  \X*\zs\x')<cr>
     nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
     nmap <silent> <buffer> <c-j> <c-n>o
