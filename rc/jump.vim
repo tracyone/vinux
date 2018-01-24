@@ -69,7 +69,7 @@ else
     nnoremap <Leader>fd :call te#ctrlp#feat#start(0)<cr>
     "ctrlp thirdparty matchers
     if te#env#SupportPy()
-        if g:ctrlp_matcher_type.cur_val ==# 'cpsm'
+        if g:ctrlp_matcher_type.cur_val ==# 'cpsm' && v:version >= 704
             if te#env#SupportPy2()
                 Plug 'nixprime/cpsm', {'do':'PY3=OFF ./install.sh'}
             else
@@ -78,6 +78,8 @@ else
             endif
             let g:ctrlp_match_func ={'match': 'cpsm#CtrlPMatch'}
         else
+            "fallback
+            let g:ctrlp_matcher_type.cur_val='py-matcher'
             Plug 'FelikZ/ctrlp-py-matcher'
             let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
         endif
