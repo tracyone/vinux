@@ -70,9 +70,9 @@ else
     Plug 'tpope/vim-fugitive'
     Plug 'gregsexton/gitv', { 'on': 'Gitv' }
     let g:fugitive_no_maps=0
-    nnoremap <F3> :Gstatus<cr>
+    nnoremap <F3> :only<cr>:Gstatus<cr>
     " Open git status window
-    nnoremap <Leader>gs :Gstatus<cr>gg<C-n>
+    nnoremap <Leader>gs :only<cr>:Gstatus<cr>gg<C-n>
     " Open git log( browser mode)
     " Open git log(file mode)
     nnoremap <Leader>gL :Gitv! --all<cr>

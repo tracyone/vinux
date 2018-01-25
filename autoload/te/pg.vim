@@ -152,7 +152,7 @@ function! te#pg#do_make()
             call neomake#Make(0,['make'])
         else
             :make
-            :copen
+            :botright copen
         endif
     endif
 endfunction

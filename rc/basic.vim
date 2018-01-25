@@ -1,15 +1,18 @@
 " basic package
 " Package info {{{
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle','NERDTreeFind'] }
+let s:sexy_command=[':NERDTreeToggle']
 if te#env#check_requirement()
     Plug 'majutsushi/tagbar'
     " Open tagbar
     nnoremap <silent><F9> :TagbarToggle<CR>
     nnoremap <leader>tt :TagbarToggle<CR>
+    call add(s:sexy_command, 'TagbarOpen')
 else
     Plug 'tracyone/vim-taglist'
     nnoremap <silent><F9> :TlistToggle<CR>
     nnoremap <leader>tt :TlistToggle<CR>
+    call add(s:sexy_command, ':TlistToggle')
 endif
 if te#env#IsMac()
     Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
@@ -104,6 +107,7 @@ let g:tagbar_sort=0
 let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
 let g:tagbar_systemenc='cp936'
+let g:tagbar_iconchars = ['+', '-']
 let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
 let Tlist_GainFocus_On_ToggleOpen=1
@@ -181,7 +185,7 @@ nnoremap <leader>te :NERDTreeToggle .<CR>
 nnoremap <leader>nf :NERDTreeFind<CR> 
 "map <2-LeftMouse>  *N "double click highlight the current cursor word 
 inoremap <F12> <ESC> :NERDTreeToggle<CR>
-autocmd misc_group VimEnter * :let g:cursorword = 0
+let g:cursorword = 0
 
 "remove mapping of * and # in mark.vim
 nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
@@ -230,5 +234,15 @@ if !te#env#IsGui()
                 \ }
 endif
 
+if g:enable_sexy_mode.cur_val ==# 'on'
+    function! SexyCommnad()
+        for l:n in s:sexy_command
+            silent! execute l:n
+        endfor
+        silent! execute '2 wincmd w'
+    endfunction
+    call te#feat#register_vim_enter_setting(function('SexyCommnad'))
+endif
+
+
 " }}}
-" vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
