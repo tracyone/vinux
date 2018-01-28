@@ -19,11 +19,11 @@ if(!te#env#IsWindows())
             inoremap <c-v>	<C-o>:call te#tmux#tmux2reg()<cr><C-o>p
         endif
         let g:tmux_navigator_no_mappings = 1
-        call te#meta#map('nnoremap <silent>','l',':TmuxNavigateRight<cr>')
-        call te#meta#map('nnoremap <silent>','h',':TmuxNavigateLeft<cr>')
-        call te#meta#map('nnoremap <silent>','j',':TmuxNavigateDown<cr>')
-        call te#meta#map('nnoremap <silent>','k',':TmuxNavigateUp<cr>')
-        call te#meta#map('nnoremap <silent>','w',':TmuxNavigatePrevious<cr>')
+        call te#meta#map('nnoremap ','l',':TmuxNavigateRight<cr>')
+        call te#meta#map('nnoremap ','h',':TmuxNavigateLeft<cr>')
+        call te#meta#map('nnoremap ','j',':TmuxNavigateDown<cr>')
+        call te#meta#map('nnoremap ','k',':TmuxNavigateUp<cr>')
+        call te#meta#map('nnoremap ','w',':TmuxNavigatePrevious<cr>')
         "rename windows
         nnoremap <Leader>uw :call te#tmux#rename_win('')<cr>
     endif

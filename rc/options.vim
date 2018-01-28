@@ -111,7 +111,7 @@ if get(g:,'feat_enable_basic') == 1
     if te#env#check_requirement()
         let s:function_name="%{exists(':TagbarToggle')?\ tagbar#currenttag('%s".s:seperator."'".",'')\ :\ ''}"
     else
-        let s:function_name="%{Tlist_Get_Tagname_By_Line()}"
+        let s:function_name="%{Tlist_Get_Tagname_By_Line()}".s:seperator
     endif
 else
     let s:function_name=""
