@@ -1,5 +1,5 @@
 if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
-    Plug 'lambdalisue/gina.vim', {'commit': '3d59045701767e4755d63eb90bcb8856c806e448'}
+    Plug 'lambdalisue/gina.vim'
     nnoremap <F3> :Gina status<cr>
     " Open git status window
     nnoremap <Leader>gs :Gina status<cr>
@@ -33,6 +33,10 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
     endfunction
 
     function s:gina_setting()
+        call gina#custom#command#option('status', '--opener', &previewheight . 'split')
+        call gina#custom#command#option('commit', '--opener', &previewheight . 'split')
+        call gina#custom#command#option('status', '--group', 'short')
+        call gina#custom#command#option('commit', '--group', 'short')
         "log windows
         silent! call gina#custom#mapping#nmap(
                     \ 'log', 'yy',
@@ -76,6 +80,11 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
                     \ ':call gina#action#call(''index:toggle'')<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
+        silent! call gina#custom#mapping#nmap(
+                    \ 'status', 'e',
+                    \ ':call gina#action#call(''diff'')<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
         silent! call gina#custom#mapping#vmap(
                     \ 'status', '-',
                     \ ':call gina#action#call(''index:toggle'')<CR>',
@@ -83,6 +92,11 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
                     \)
         silent! call gina#custom#mapping#nmap(
                     \ 'status', '<c-n>',
+                    \ ':<C-U>execute StageNext(v:count1)<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
+        silent! call gina#custom#mapping#nmap(
+                    \ 'status', '<tab>',
                     \ ':<C-U>execute StageNext(v:count1)<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
