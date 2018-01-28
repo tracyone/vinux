@@ -167,7 +167,8 @@ function! te#git#show_log(dir) abort
         cd -
         return 0
     elseif exists(':Gina')
-        :Gina log --all --max-count=300 --opener=tabnew
+        :tabnew
+        :Gina log --all --max-count=300
         cd -
         return 0
     elseif te#env#SupportTerminal()

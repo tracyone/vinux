@@ -62,6 +62,7 @@ function! te#plug#extra_key() abort
     nnoremap <silent> <buffer> U :execute ':PlugUpdate '.matchstr(getline('.'), '^[x-] \zs\S\+\ze:')<cr>
     nnoremap <silent> <buffer> <c-n> :call search('^  \X*\zs\x')<cr>
     nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
+    nmap <silent> <buffer> dd <nop>
     nmap <silent> <buffer> <c-j> <c-n>o
     nmap <silent> <buffer> <c-k> <c-p>o
 endfunction
