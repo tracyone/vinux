@@ -3,7 +3,7 @@
 **Quick Install**
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/tracyone/vinux/master/install.sh)"
+bash -c "$(curl -fsSL https://git.io/vNDOQ)"
 ```
 
 **Wiki**
