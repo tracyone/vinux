@@ -5,8 +5,6 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
     nnoremap <Leader>gs :Gina status<cr>
     " Open github url
     nnoremap <Leader>gh :Gina browse<cr>
-    " Open git log( browser mode)
-    nnoremap <Leader>gl :tabnew<cr>:Gina log --max-count=1000 --opener=vsplit <cr>
     " Open git blame windows
     nnoremap <Leader>gb :Gina blame --use-author-instead :<cr>
     " show branch
@@ -15,26 +13,102 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
     nnoremap <Leader>gd :Gina compare :<cr>
     " git cd
     nnoremap <Leader>gc :Gina cd<cr>:call te#utils#EchoWarning(getcwd())<cr>
-    " list git issue
+
+    function! StageNext(count) abort
+        for i in range(a:count)
+            call search('^\t.*','W')
+        endfor
+        return '.'
+    endfunction
+
+    function! StagePrevious(count) abort
+        if line('.') == 1 && exists(':CtrlP') && get(g:, 'ctrl_p_map') =~? '^<c-p>$'
+            return 'CtrlP '.fnameescape(s:repo().tree())
+        else
+            for i in range(a:count)
+                call search('^\t.*','Wbe')
+            endfor
+            return '.'
+        endif
+    endfunction
+
     function s:gina_setting()
+        "log windows
+        silent! call gina#custom#mapping#nmap(
+                    \ 'log', 'yy',
+                    \ ':call gina#action#call(''yank:rev'')<CR>',
+                    \ {'noremap': 1, 'silent': 0},
+                    \)
+        silent! call gina#custom#mapping#nmap(
+                    \ 'log', '<c-n>',
+                    \ 'j:call gina#action#call(''show:preview'')<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
+        silent! call gina#custom#mapping#nmap(
+                    \ 'log', '<c-p>',
+                    \ 'k:call gina#action#call(''show:preview'')<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
+        silent! call gina#custom#mapping#nmap(
+                    \ 'log', '<cr>',
+                    \ ':call gina#action#call(''show:rightest'')<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
+        "status windows
+        let g:gina#command#status#use_default_mappings=0
         silent! call gina#custom#mapping#nmap(
                     \ 'status', 'cc',
                     \ ':<C-u>Gina commit<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
         silent! call gina#custom#mapping#nmap(
+                    \ 'status', '<cr>',
+                    \ ':call gina#action#call(''edit'')<CR>',
+                    \ {'noremap': 1, 'silent': 0},
+                    \)
+        silent! call gina#custom#mapping#nmap(
+                    \ 'status', 'yy',
+                    \ ':call gina#action#call(''yank:path'')<CR>',
+                    \ {'noremap': 1, 'silent': 0},
+                    \)
+        silent! call gina#custom#mapping#nmap(
+                    \ 'status', '-',
+                    \ ':call gina#action#call(''index:toggle'')<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
+        silent! call gina#custom#mapping#vmap(
+                    \ 'status', '-',
+                    \ ':call gina#action#call(''index:toggle'')<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
+        silent! call gina#custom#mapping#nmap(
+                    \ 'status', '<c-n>',
+                    \ ':<C-U>execute StageNext(v:count1)<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
+        silent! call gina#custom#mapping#nmap(
+                    \ 'status', '<c-p>',
+                    \ ':<C-U>execute StagePrevious(v:count1)<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
+        silent! call gina#custom#mapping#nmap(
                     \ 'status', 'ca',
-                    \ ':<C-u>Gina commit --amend<CR>',
+                    \ ':<C-u>Gina commit --amend<CR>:0<cr>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
         silent! call gina#custom#mapping#nmap(
                     \ 'commit', 'cc',
-                    \ ':<C-u>Gina status<CR>',
+                    \ ':<C-u>Gina status<CR>:0<cr>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
         silent! call gina#custom#mapping#nmap(
                     \ 'status', 'U',
                     \ ':call gina#action#call(''index:discard'')<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
+        silent! call gina#custom#mapping#nmap(
+                    \ 'status', 'u',
+                    \ ':call gina#action#call(''checkout'')<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
         silent! call gina#custom#mapping#nmap(
@@ -49,7 +123,7 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
                     \)
         silent! call gina#custom#mapping#nmap(
                     \ '/.*', 'q',
-                    \ ':q<cr>',
+                    \ ':call te#utils#quit_win(0)<cr>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
         "let g:gina#command#status#use_default_mappings=0

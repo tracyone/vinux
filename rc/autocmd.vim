@@ -41,7 +41,7 @@ augroup filetype_group
                 \ | nnoremap <buffer> <c-o> :colder<cr>
                 \ | nnoremap <buffer> <c-i> :cnewer<cr>
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
-    autocmd FileType gitcommit setlocal nofoldenable cursorline
+    autocmd FileType gitcommit,gina-status,gina-commit setlocal nofoldenable cursorline
     autocmd FileType qfreplace,vimcalc,man setlocal nonu nornu nofoldenable | imap <buffer> <c-d> :q<cr>
                 \ | nmap <buffer> q :bdelete<cr>
     autocmd FileType vim-plug nnoremap <buffer> <silent> H :call te#plug#open_doc()<cr> 
