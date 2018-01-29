@@ -63,9 +63,16 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
                     \ '<c-w>w',
                     \ {'noremap': 1, 'silent': 1},
                     \)
+        "blame windows
         silent! call gina#custom#mapping#nmap(
                     \ 'blame', '<cr>',
                     \ ':call gina#action#call(''show:commit:tab'')<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
+        "branch windows
+        silent! call gina#custom#mapping#nmap(
+                    \ 'branch', 'cc',
+                    \ ':call gina#action#call(''checkout:track'')<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
         "status windows
