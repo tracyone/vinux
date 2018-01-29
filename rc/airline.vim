@@ -73,6 +73,9 @@ function! Airline_setting()
         :AirlineTheme violet
     endif
   let g:airline#extensions#disable_rtp_load = 1
+  if g:git_plugin_name.cur_val ==# 'gina.vim' && get(g:, 'feat_enable_git')
+      let g:airline_section_b = airline#section#create_left([g:airline_symbols.branch.' '.gina#component#repo#branch()])
+  endif
 endfunction
 "https://github.com/vim-airline/vim-airline/issues/399
 autocmd misc_group BufDelete * call airline#extensions#tabline#buflist#invalidate()

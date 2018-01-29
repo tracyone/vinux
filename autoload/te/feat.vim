@@ -177,7 +177,7 @@ endfunction
 
 function! te#feat#run_vim_enter_setting() abort
     for l:Needle in s:plugin_func_list
-        call l:Needle()
+        silent! call l:Needle()
     endfor
 endfunction
 

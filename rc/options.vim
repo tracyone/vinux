@@ -117,6 +117,12 @@ else
     let s:function_name=""
 endif
 
+if g:git_plugin_name.cur_val ==# 'gina.vim'
+    let s:git_branch="[%{gina#component#repo#branch()}]%= "
+else
+    let s:git_branch="%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}%= "
+endif
+
 "statuslne
 if get(g:,'feat_enable_airline') != 1
     function! MyStatusLine(type) abort
@@ -125,13 +131,13 @@ if get(g:,'feat_enable_airline') != 1
             return l:mystatus_line
         endif
         if a:type == 1
-            let l:mystatus_line.="%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}%= "
+            let l:mystatus_line.=s:git_branch
             let l:mystatus_line.=s:function_name
             let l:mystatus_line.="%{&ft}".s:seperator."%{(&fenc!=''?&fenc:&enc)}[%{&ff}]".s:seperator."%p%%[%l,%v]"
             let l:mystatus_line.=s:seperator."%{strftime(\"%m/%d\-\%H:%M\")} "
         elseif a:type == 3
             "for win32 ctags make gvim slow...
-            let l:mystatus_line.="%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}%= "
+            let l:mystatus_line.=s:git_branch
             let l:mystatus_line.="%{&ft}".s:seperator."%{(&fenc!=''?&fenc:&enc)}[%{&ff}]".s:seperator."%p%%[%l,%v]"
             let l:mystatus_line.=s:seperator."%{strftime(\"%m/%d\-\%H:%M\")} "
         endif
