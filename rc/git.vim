@@ -9,6 +9,8 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
     nnoremap <Leader>gb :Gina blame --use-author-instead :<cr>
     " show branch
     nnoremap <Leader>sb :Gina branch -a<cr>
+    " show tag
+    nnoremap <Leader>st :Gina tag<cr>
     " git diff current file
     nnoremap <Leader>gd :Gina compare :<cr>
     " git cd
