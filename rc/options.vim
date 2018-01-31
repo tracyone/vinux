@@ -123,6 +123,8 @@ if get(g:,'feat_enable_git') == 1
     else
         let s:git_branch="%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}%= "
     endif
+else
+    let s:git_branch='%= '
 endif
 
 
