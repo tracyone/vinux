@@ -146,7 +146,6 @@ create_symlinks() {
 
     mkdir -p ${target_path}
 
-    lnif "$source_path/vimrc"            "$target_path/init.vim"
     lnif "$source_path/autoload"      "$target_path/"
     lnif "$source_path/bundle"      "$target_path/"
     lnif "$source_path/after"      "$target_path/"

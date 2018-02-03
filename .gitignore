@@ -20,6 +20,5 @@ org/
 .screenlock
 autoload/plug.vim
 .LfCache/
-init.vim
 *.swn
 *.swo
