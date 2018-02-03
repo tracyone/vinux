@@ -6,6 +6,25 @@
 "Website    http://onetracy.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+set nocompatible
+let $MYVIMRC=fnamemodify(expand('<sfile>'), ":p")
+let $VIMFILES=fnamemodify(expand('<sfile>'), ":p:h")
+set runtimepath^=$VIMFILES
+set runtimepath+=$VIMFILES."/after"
+if has('win64') || has('win32')
+    set pythonthreedll=$HOME\\AppData\\Local\\Programs\\Python\\Python36\\python36.dll
+    set pythondll=$HOME\\AppData\\Local\\Programs\\Python\\Python27\\python27.dll
+    if !filereadable(&pythondll)
+        set pythondll&
+    endif
+    if !filereadable(&pythonthreedll)
+        set pythonthreedll&
+    endif
+    let $PATH = $VIMFILES.'/bin;'.$PATH
+else
+    let $PATH = $VIMFILES.'/bin:'.$PATH
+endif
+
 call te#feat#init_all()
 call te#feat#source_rc('autocmd.vim')
 call te#feat#source_rc('options.vim')
