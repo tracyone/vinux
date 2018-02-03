@@ -146,10 +146,7 @@ create_symlinks() {
 
     mkdir -p ${target_path}
 
-    lnif "$source_path/autoload"      "$target_path/"
     lnif "$source_path/bundle"      "$target_path/"
-    lnif "$source_path/after"      "$target_path/"
-    lnif "$source_path/rc"      "$target_path/"
 
     ret="$?"
     success "Setting up neovim symlinks."
@@ -241,8 +238,17 @@ sync_repo       "$APP_PATH" \
                 "$REPO_BRANCH" \
                 "$app_name"
 
-create_symlinks "$APP_PATH" \
-                "$HOME/.config/nvim"
+if program_exists "nvim";
+then
+    sync_repo       "$HOME/.config/nvim" \
+        "$REPO_URI" \
+        "$REPO_BRANCH" \
+        "$app_name"
+
+    #share plugin between vim and neovim
+    create_symlinks "$APP_PATH" \
+        "$HOME/.config/nvim"
+fi
 
 sync_vim_plug   "$VIM_PLUG_PATH" \
                 "$VIM_PLUG_URL"
