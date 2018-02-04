@@ -171,6 +171,11 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
                     \)
         "let g:gina#command#status#use_default_mappings=0
         silent! call gina#custom#mapping#nmap(
+                    \ 'blame', 'yy',
+                    \ ':call gina#action#call(''yank:rev'')<CR>',
+                    \ {'noremap': 1, 'silent': 0},
+                    \)
+        silent! call gina#custom#mapping#nmap(
                     \ 'blame', 'j',
                     \ 'j<Plug>(gina-blame-echo)'
                     \)
