@@ -149,6 +149,11 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
                     \ ':call gina#action#call(''checkout'')<CR>',
                     \ {'noremap': 1, 'silent': 1},
                     \)
+        silent! call gina#custom#mapping#vmap(
+                    \ 'status', 'u',
+                    \ ':call gina#action#call(''checkout'')<CR>',
+                    \ {'noremap': 1, 'silent': 1},
+                    \)
         silent! call gina#custom#mapping#nmap(
                     \ 'status', 'd',
                     \ ':call gina#action#call(''patch'')<CR>',

@@ -163,12 +163,12 @@ function! te#git#show_log(dir) abort
         cd -
         return 0
     elseif exists(':Gitv')
-        :Gitv --all
+        :Gitv
         cd -
         return 0
     elseif exists(':Gina')
         :tabnew
-        :Gina log --all --max-count=300
+        :Gina log --max-count=300
         cd -
         return 0
     elseif te#env#SupportTerminal()
