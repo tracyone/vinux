@@ -68,4 +68,7 @@ xnoremap gl Utl o v<CR>
 " copy/yank link
 nnoremap gL Utl cl<CR>
 xnoremap gL Utl cl v<CR>
+xnoremap <Leader>nl :NR<cr>
+nnoremap <Leader>nl vip:NR<cr>
+nnoremap <Leader>nw :NW<cr>
 
