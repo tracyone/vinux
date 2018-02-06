@@ -10,7 +10,7 @@ set nocompatible
 let $MYVIMRC=fnamemodify(expand('<sfile>'), ":p")
 let $VIMFILES=fnamemodify(expand('<sfile>'), ":p:h")
 set runtimepath^=$VIMFILES
-set runtimepath+=$VIMFILES."/after"
+set runtimepath+=$VIMFILES/after
 if has('win64') || has('win32')
     set pythonthreedll=$HOME\\AppData\\Local\\Programs\\Python\\Python36\\python36.dll
     set pythondll=$HOME\\AppData\\Local\\Programs\\Python\\Python27\\python27.dll
