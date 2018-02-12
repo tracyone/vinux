@@ -59,9 +59,13 @@ if g:grepper_plugin.cur_val ==# 'vim-easygrep'
     Plug 'dkprice/vim-easygrep'
     let g:EasyGrepRecursive=1
     if te#env#Executable('rg')
+        set grepprg=rg\ -H\ --no-heading\ --vimgrep\ $*
         let g:EasyGrepCommand="rg"
+        set grepformat=%f:%l:%c:%m
     elseif te#env#Executable('ag')
+        set grepprg=ag\ --nocolor\ --nogroup\ --vimgrep\ $*
         let g:EasyGrepCommand="ag"
+        set grepformat=%f:%l:%c:%m
     elseif te#env#Executable('grep')
         set grepprg=grep\ -n\ $*\ /dev/null
         let g:EasyGrepCommand=1
