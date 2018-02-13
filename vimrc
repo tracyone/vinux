@@ -22,6 +22,11 @@ if has('win64') || has('win32')
     endif
     let $PATH = $VIMFILES.'/bin;'.$PATH
 else
+    "remove default folder from rtp
+    if $VIMFILES !=# $HOME.'/.vim'
+        set runtimepath-=$HOME/.vim
+        set runtimepath-=$HOME/.vim/after
+    endif
     let $PATH = $VIMFILES.'/bin:'.$PATH
 endif
 
