@@ -106,7 +106,11 @@ if te#env#IsGui()
     set mousemodel=popup_setpos
     amenu PopUp.&Undo :UndotreeToggle<CR>
     amenu PopUp.&Goto\ Definition ::call te#complete#goto_def("")<cr>
-    amenu PopUp.&Find\ Text :call neomakemp#global_search('\b'.expand("<cword>").'\b',0x1)<cr>
+    if g:grepper_plugin.cur_val ==# 'vim-easygrep'
+        amenu PopUp.&Find\ Text :execute "normal "."\<Plug>EgMapGrepCurrentWord_V"<cr>
+    else
+        amenu PopUp.&Find\ Text :execute "normal "."\<Plug>\(neomakemp_global_search\)"<cr>
+    endif
     amenu PopUp.&Open\ Header/Source :AT<cr>
     amenu PopUp.&Hightlight :execute "normal ". "\<Plug>MarkSet"<cr>
     "}}}
