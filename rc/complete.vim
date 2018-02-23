@@ -323,5 +323,5 @@ let g:UltiSnipsListSnippets ='<c-tab>'
 let g:UltiSnipsJumpForwardTrigge='<c-j>'
 let g:UltiSnipsJumpBackwardTrigge='<c-k>'
 let g:UltiSnipsSnippetDirectories=['bundle/snippets/ultisnips']
-let g:UltiSnipsSnippetsDir=g:vinux_plugin_dir.cur_val.'/snippets'
+let g:UltiSnipsSnippetsDir=g:vinux_plugin_dir.cur_val.'/snippets/ultisnips'
 "}}}
