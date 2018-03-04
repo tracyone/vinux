@@ -67,6 +67,7 @@ set smartcase  "override 'ignorecase' when pattern has upper case characters
 set confirm  "start a dialog when a command fails
 set smartindent "do clever autoindenting
 "set nowrap   "don't auto linefeed
+set showcmd "show (partial) command keys in the status line
 
 "linux kernel coding stype
 set tabstop=4  "number of spaces a <Tab> in the text stands for
