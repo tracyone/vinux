@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# vinux client mode
+
+export VIM_ACTION=":tabnew"
+
+if [ -n "${VIM_REMOTE}" ]; then
+    `$VIM_REMOTE --remote-tab-silent $@`
+else
+    v.sh $@
+fi

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# vinux client mode
+
+export VIM_ACTION=":e!"
+
+
+if [ -n "${VIM_REMOTE}" ]; then
+    if [ "${IN_VIM%m}"  != "nvi" ]; then
+        if [[ $1 = /*  ]]; then
+            #path already looks absolute...
+            absfilepath="$1"
+        else
+            #path not absolute,  lets prefix with pwd...
+            absfilepath="$PWD/${1#./}"
+        fi
+        `$VIM_REMOTE --remote-send "N:e! $absfilepath<cr>"`
+    else
+        `$VIM_REMOTE --remote $1`
+    fi
+else
+    v.sh $1
+fi
