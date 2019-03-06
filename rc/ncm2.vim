@@ -25,7 +25,9 @@ Plug 'othree/jspc.vim', {'for': 'javascript'}
 
 set shortmess+=c
 if !te#env#IsNvim()
-  Plug 'roxma/vim-hug-neovim-rpc', { 'do':'pip3 install --user pynvim'}
+    Plug 'roxma/vim-hug-neovim-rpc', { 'do':'pip3 install --user pynvim'}
+else
+    Plug 'ncm2/float-preview.nvim'
 endif
 
 function! Ncm2_source_register()
