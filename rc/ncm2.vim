@@ -91,7 +91,7 @@ if executable('pyls')
                 \ 'whitelist': ['python'],
                 \ })
 else
-    Plug 'ncm2/ncm2-jedi', { 'for': ['python']}
+    Plug 'ncm2/ncm2-jedi', { 'for': ['python'], 'do': 'pip3 install --user jedi'}
 endif
 
 if executable('typescript-language-server')
