@@ -231,6 +231,10 @@ if te#env#SupportFeature('signs')
     call te#feat#register_vim_plug_insert_setting(['GitGutterEnable'], 
                 \ ['vim-gitgutter'])
 endif
+if te#env#SupportAsync()
+    Plug 'rhysd/git-messenger.vim'
+    nmap <Leader>gn <Plug>(git-messenger)
+endif
 
 " Git releate ---------------------{{{
 " list git issue
