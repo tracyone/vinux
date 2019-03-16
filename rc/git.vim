@@ -232,7 +232,7 @@ if te#env#SupportFeature('signs')
                 \ ['vim-gitgutter'])
 endif
 if te#env#SupportAsync()
-    Plug 'rhysd/git-messenger.vim'
+    Plug 'rhysd/git-messenger.vim',{'on': '<Plug>(git-messenger)'}
     nmap <Leader>gn <Plug>(git-messenger)
 endif
 
