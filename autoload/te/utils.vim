@@ -54,7 +54,7 @@ function! te#utils#EchoWarning(str,...) abort
         call add(s:global_echo_str, a:str)
         return
     endif
-    if te#env#IsNvim()
+    if te#env#IsNvim() && exists('*nvim_open_win') && exists('*nvim_win_set_config')
         let l:str='['.l:prompt.'] '.a:str
         let l:bufnr = nvim_create_buf(v:false, v:false)
         let l:opts = {'relative': 'editor', 'width': strlen(l:str)+3, 'height': 1, 'col': &columns,
