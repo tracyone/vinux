@@ -23,12 +23,14 @@ let s:global_echo_str=[]
 
 function! NvimCloseWin(timer) abort
     call timer_info(a:timer)
+    let l:flag=0
     try
         call nvim_win_close(s:win_list[0], v:true)
     catch
-        let s:win_list=[]
+        call remove(s:win_list, 0)
+        let l:flag=1
     endtry
-    if !empty(s:win_list)
+    if !empty(s:win_list) && l:flag == 0
         call remove(s:win_list, 0)
     endif
 endfunction
