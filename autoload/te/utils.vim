@@ -18,13 +18,19 @@ function! te#utils#GetError(command,err_str) abort
     endif
 endfunction
 
-
+let s:win_list=[]
 let s:global_echo_str=[]
+
+function! NvimCloseWin(timer) abort
+    call timer_info(a:timer)
+    call nvim_win_close(s:win_list[0], v:true)
+    call remove(s:win_list, 0)
+endfunction
+
 "echo warning messag
 "a:1-->err or warn or info,default is warn
 "a:2-->flag of VimEnter,0 or 1
 function! te#utils#EchoWarning(str,...) abort
-    redraw!
     let l:level='WarningMsg'
     let l:prompt='warn'
     let l:flag=0
@@ -44,10 +50,30 @@ function! te#utils#EchoWarning(str,...) abort
             endif
         endfor
     endif
-    if l:flag == 0 || !has('vim_starting')
-        execut 'echohl '.l:level | echom '['.l:prompt.'] '.a:str | echohl None
-    else
+    if l:flag != 0 || has('vim_starting')
         call add(s:global_echo_str, a:str)
+        return
+    endif
+    if te#env#IsNvim()
+        let l:str='['.l:prompt.'] '.a:str
+        let l:bufnr = nvim_create_buf(v:false, v:false)
+        let l:opts = {'relative': 'editor', 'width': strlen(l:str)+3, 'height': 1, 'col': &columns,
+                    \ 'row': 3+len(s:win_list), 'anchor': 'NW'}
+        let l:win=nvim_open_win(l:bufnr, v:false,l:opts)
+        call nvim_buf_set_lines(l:bufnr, 0, -1, v:false, [l:str])
+        hi def NvimFloatingWindow  term=None guifg=black guibg=#f94e3e ctermfg=black ctermbg=210
+        call nvim_win_set_option(l:win, 'winhl', 'Normal:NvimFloatingWindow')
+        call nvim_win_set_option(l:win, 'number', v:false)
+        call nvim_win_set_option(l:win, 'relativenumber', v:false)
+        call nvim_buf_set_option(l:bufnr, 'buftype', 'nofile')
+        call nvim_buf_set_option(l:bufnr, 'bufhidden', 'wipe')
+        call nvim_buf_set_option(l:bufnr, 'modified', v:false)
+        call nvim_buf_set_option(l:bufnr, 'buflisted', v:false)
+        call add(s:win_list, l:win)
+        call timer_start(5000, 'NvimCloseWin', {'repeat': 1})
+    else
+        redraw!
+        execut 'echohl '.l:level | echom '['.l:prompt.'] '.a:str | echohl None
     endif
 endfunction
 
