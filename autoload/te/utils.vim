@@ -23,8 +23,14 @@ let s:global_echo_str=[]
 
 function! NvimCloseWin(timer) abort
     call timer_info(a:timer)
-    call nvim_win_close(s:win_list[0], v:true)
-    call remove(s:win_list, 0)
+    try
+        call nvim_win_close(s:win_list[0], v:true)
+    catch
+        let s:win_list=[]
+    endtry
+    if !empty(s:win_list)
+        call remove(s:win_list, 0)
+    endif
 endfunction
 
 "echo warning messag
