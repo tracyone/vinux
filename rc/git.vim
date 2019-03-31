@@ -234,6 +234,7 @@ endif
 if te#env#SupportAsync()
     Plug 'rhysd/git-messenger.vim',{'on': '<Plug>(git-messenger)'}
     nmap <Leader>gn <Plug>(git-messenger)
+    let g:git_messenger_no_default_mappings=v:true
 endif
 
 " Git releate ---------------------{{{
