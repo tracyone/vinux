@@ -458,6 +458,16 @@ function! te#utils#check_health() abort
     call add(l:output, printf('%26s', '--------------------------------------------'))
     let l:i=l:i + 1
 
+    call add(l:output, printf("%26s:\t",'Floating window support'))
+    let l:i=l:i + 1
+    if te#env#SupportFloatingWindows()
+        let l:output[l:i].='Yes'
+    else
+        let l:output[l:i].='[No]'
+    endif
+    call add(l:output, printf('%26s', '--------------------------------------------'))
+    let l:i=l:i + 1
+
     for needle in ['cscope', 'ctags', 'ag', 'rg', 'git', 'gtags',
                 \ 'clang', 'curl', 'bear', 'pbcopy', 'xsel', 'xclip', 'nvr', 'yapf', 'autopep8']
         call add(l:output, printf("%26s:\t", ''.needle.''.' exist'))
