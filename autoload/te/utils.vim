@@ -21,6 +21,12 @@ endfunction
 let s:win_list=[]
 let s:global_echo_str=[]
 
+function! VimCloseWin(winid, result) abort
+    if !empty(s:win_list) && a:winid == s:win_list[0]
+        call remove(s:win_list, 0)
+    endif
+endfunction
+
 function! NvimCloseWin(timer) abort
     call timer_info(a:timer)
     let l:flag=0
@@ -79,6 +85,19 @@ function! te#utils#EchoWarning(str,...) abort
         call nvim_buf_set_option(l:bufnr, 'buflisted', v:false)
         call add(s:win_list, l:win)
         call timer_start(5000, 'NvimCloseWin', {'repeat': 1})
+    elseif exists('*popup_create')
+        let l:str='['.l:prompt.'] '.a:str
+			let l:win = popup_create(l:str, {
+				\ 'line': 3+len(s:win_list)*3,
+				\ 'col': &columns-strlen(l:str)-3,
+				\ 'time': 5000,
+				\ 'tab': -1,
+				\ 'zindex': 200,
+				\ 'highlight': l:level,
+				\ 'border': [],
+				\ 'callback': 'VimCloseWin',
+				\ })
+        call add(s:win_list, l:win)
     else
         redraw!
         execut 'echohl '.l:level | echom '['.l:prompt.'] '.a:str | echohl None
