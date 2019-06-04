@@ -160,7 +160,7 @@ nnoremap dm :%s/\r\(\n\)/\1/g<CR>
 
 
 "cd to current buffer's path
-nnoremap <silent> <leader>fc :call te#utils#goto_cur_file(2)<cr> 
+nnoremap <silent><leader>fc :call te#utils#goto_cur_file(2)<cr> 
 nnoremap <silent> <c-F7> :call te#utils#goto_cur_file(2)<cr> 
 
 nnoremap <F7> :call te#utils#OptionToggle('ff',['dos', 'unix'])<cr>
@@ -299,7 +299,7 @@ nnoremap <Leader>fr :call te#feat#gen_feature_vim(1)<cr>
 
 nnoremap <Leader>dj <c-u>
 nnoremap <Leader>dd <c-d>
-nnoremap <Leader>pw :call te#utils#EchoWarning(getcwd())<cr>
+nnoremap <silent><Leader>pw :call te#utils#EchoWarning(getcwd())<cr>
 " cd to any plugin directory
 nnoremap <Leader>cp :call te#utils#cd_to_plugin(g:vinux_plugin_dir.cur_val)<cr>
 nnoremap <silent> <BS> <C-o>

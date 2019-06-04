@@ -14,7 +14,7 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
     " git diff current file
     nnoremap <Leader>gd :Gina compare :<cr>
     " git cd
-    nnoremap <Leader>gc :Gina cd<cr>:call te#utils#EchoWarning(getcwd())<cr>
+    nnoremap <silent><Leader>gc :Gina cd<cr>:call te#utils#EchoWarning(getcwd())<cr>
 
     function! StageNext(count) abort
         for i in range(a:count)

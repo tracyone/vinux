@@ -90,7 +90,10 @@ function! te#utils#EchoWarning(str,...) abort
         let l:win={}
         if strlen(l:str) > (&columns/3)
             let l:str_len = &columns/3
-            let l:win.str_width = strlen(l:str) / (&columns/3) + 1
+            let l:win.str_width = strlen(l:str) / (&columns/3)
+            if (strlen(l:str) % (&columns/3)) != 0
+                let l:win.str_width += 1
+            endif
         else
             let l:str_len = strlen(l:str)
             let l:win.str_width = 1
