@@ -22,7 +22,7 @@ let s:win_list=[]
 let s:global_echo_str=[]
 
 function! VimCloseWin(winid, result) abort
-    if !empty(s:win_list) && a:winid == s:win_list[0]
+    if !empty(s:win_list) && a:winid == s:win_list[0].id
         call remove(s:win_list, 0)
     endif
 endfunction
@@ -87,16 +87,30 @@ function! te#utils#EchoWarning(str,...) abort
         call timer_start(5000, 'NvimCloseWin', {'repeat': 1})
     elseif exists('*popup_create')
         let l:str='['.l:prompt.'] '.a:str
-			let l:win = popup_create(l:str, {
-				\ 'line': 3+len(s:win_list)*3,
-				\ 'col': &columns-strlen(l:str)-3,
-				\ 'time': 5000,
-				\ 'tab': -1,
-				\ 'zindex': 200,
-				\ 'highlight': l:level,
-				\ 'border': [],
-				\ 'callback': 'VimCloseWin',
-				\ })
+        let l:win={}
+        if strlen(l:str) > (&columns/3)
+            let l:str_len = &columns/3
+            let l:win.str_width = strlen(l:str) / (&columns/3) + 1
+        else
+            let l:str_len = strlen(l:str)
+            let l:win.str_width = 1
+        endif
+        if empty(s:win_list)
+            let l:win.line=3
+        else
+            let l:win.line=s:win_list[-1].line + 2 +s:win_list[-1].str_width
+        endif
+        let l:win.id = popup_create(l:str, {
+                    \ 'line': l:win.line,
+                    \ 'col': &columns-l:str_len-3,
+                    \ 'time': 5000,
+                    \ 'tab': -1,
+                    \ 'zindex': 200,
+                    \ 'highlight': l:level,
+                    \ 'maxwidth': &columns/3,
+                    \ 'border': [],
+                    \ 'callback': 'VimCloseWin',
+                    \ })
         call add(s:win_list, l:win)
     else
         redraw!
