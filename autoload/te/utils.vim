@@ -22,8 +22,12 @@ let s:win_list=[]
 let s:global_echo_str=[]
 
 function! VimCloseWin(winid, result) abort
-    if !empty(s:win_list) && a:winid == s:win_list[0].id
-        call remove(s:win_list, 0)
+    if !empty(s:win_list)
+        if a:winid == s:win_list[0].id
+            call remove(s:win_list, 0)
+        else
+            let s:win_list=[]
+        endif
     endif
 endfunction
 
