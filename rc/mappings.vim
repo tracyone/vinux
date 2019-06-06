@@ -235,8 +235,8 @@ nnoremap <silent> <Left> :call te#utils#tab_buf_switch(0)<cr>
 nnoremap <silent> <Right> :call te#utils#tab_buf_switch(-1)<cr>
 
 "move
-nnoremap <Up> <C-b>
-nnoremap <Down> <C-f>
+"nnoremap <Up> <C-b>
+"nnoremap <Down> <C-f>
 
 " vertical open window
 nnoremap <Leader>wv :vsp<cr>
