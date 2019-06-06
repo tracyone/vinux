@@ -106,18 +106,6 @@ if te#env#IsGui()
     "mouse ------------------- {{{
     " Set up the gui cursor to look nice
     set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
-    amenu PopUp.-SEP3-	<Nop>
-    ""extend", "popup" or "popup_setpos"; what the right
-    set mousemodel=popup_setpos
-    amenu PopUp.&Undo :UndotreeToggle<CR>
-    amenu PopUp.&Goto\ Definition ::call te#complete#goto_def("")<cr>
-    if g:grepper_plugin.cur_val ==# 'vim-easygrep'
-        amenu PopUp.&Find\ Text :execute "normal "."\<Plug>EgMapGrepCurrentWord_V"<cr>
-    else
-        amenu PopUp.&Find\ Text :execute "normal "."\<Plug>\(neomakemp_global_search\)"<cr>
-    endif
-    amenu PopUp.&Open\ Header/Source :AT<cr>
-    amenu PopUp.&Hightlight :execute "normal ". "\<Plug>MarkSet"<cr>
     "}}}
     call te#meta#map('map', 'o',':Fontzoom!<cr>')
     call te#meta#map('map','-','<Plug>(fontzoom-smaller)')
@@ -129,6 +117,28 @@ else
     set t_ut=
     "highlight the screen line of the cursor
     set t_Co=256
+endif
+
+if te#env#IsGui() || exists('*popup_create')
+    set mousemodel=popup_setpos
+    if !te#env#IsGui()
+        if te#env#IsTmux()
+            amenu PopUp.&Paste <C-o>:call te#tmux#tmux2reg()<cr><C-o>p
+        else
+            amenu PopUp.&Paste "+p
+        endif
+    endif
+    amenu PopUp.&====sep==== <Nop>
+    amenu PopUp.&Undo :UndotreeToggle<CR>
+    amenu PopUp.&Goto\ Definition ::call te#complete#goto_def("")<cr>
+    if g:grepper_plugin.cur_val ==# 'vim-easygrep'
+        amenu PopUp.&Find\ Text :execute "normal "."\<Plug>EgMapGrepCurrentWord_V"<cr>
+    else
+        amenu PopUp.&Find\ Text :execute "normal "."\<Plug>\(neomakemp_global_search\)"<cr>
+    endif
+    amenu PopUp.&Open\ Header/Source :AT<cr>
+    amenu PopUp.&Hightlight :execute "normal ". "\<Plug>MarkSet"<cr>
+    amenu PopUp.&====sep===== <Nop>
 endif
 
 "{{{colorscheme
