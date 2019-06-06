@@ -35,7 +35,7 @@ function! NvimCloseWin(timer) abort
     call timer_info(a:timer)
     let l:flag=0
     try
-        call nvim_win_close(s:win_list[0], v:true)
+        call nvim_win_close(s:win_list[0].id, v:true)
     catch
         call remove(s:win_list, 0)
         let l:flag=1
@@ -74,15 +74,31 @@ function! te#utils#EchoWarning(str,...) abort
     endif
     if te#env#IsNvim() && exists('*nvim_open_win') && exists('*nvim_win_set_config')
         let l:str='['.l:prompt.'] '.a:str
+        let l:win={}
         let l:bufnr = nvim_create_buf(v:false, v:false)
-        let l:opts = {'relative': 'editor', 'width': strlen(l:str)+3, 'height': 1, 'col': &columns,
-                    \ 'row': 3+len(s:win_list), 'anchor': 'NW'}
-        let l:win=nvim_open_win(l:bufnr, v:false,l:opts)
+        if strlen(l:str) > (&columns/3)
+            let l:str_len = &columns/3
+            let l:win.str_width = strlen(l:str) / (&columns/3)
+            if (strlen(l:str) % (&columns/3)) != 0
+                let l:win.str_width += 1
+            endif
+        else
+            let l:str_len = strlen(l:str) + 3
+            let l:win.str_width = 1
+        endif
+        if empty(s:win_list)
+            let l:win.line=3
+        else
+            let l:win.line=s:win_list[-1].line + 1 + s:win_list[-1].str_width
+        endif
+        let l:opts = {'relative': 'editor', 'width': l:str_len, 'height': l:win.str_width, 'col': &columns,
+                    \ 'row': l:win.line, 'anchor': 'NW'}
+        let l:win.id=nvim_open_win(l:bufnr, v:false,l:opts)
         call nvim_buf_set_lines(l:bufnr, 0, -1, v:false, [l:str])
         hi def NvimFloatingWindow  term=None guifg=black guibg=#f94e3e ctermfg=black ctermbg=210
-        call nvim_win_set_option(l:win, 'winhl', 'Normal:NvimFloatingWindow')
-        call nvim_win_set_option(l:win, 'number', v:false)
-        call nvim_win_set_option(l:win, 'relativenumber', v:false)
+        call nvim_win_set_option(l:win.id, 'winhl', 'Normal:NvimFloatingWindow')
+        call nvim_win_set_option(l:win.id, 'number', v:false)
+        call nvim_win_set_option(l:win.id, 'relativenumber', v:false)
         call nvim_buf_set_option(l:bufnr, 'buftype', 'nofile')
         call nvim_buf_set_option(l:bufnr, 'bufhidden', 'wipe')
         call nvim_buf_set_option(l:bufnr, 'modified', v:false)
