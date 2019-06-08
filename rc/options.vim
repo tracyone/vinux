@@ -199,10 +199,9 @@ if te#env#IsNvim()
         syntax off
     endif
 
-    if has('nvim-0.3.1')
-        set fillchars+=msgsep:‾
-        hi MsgSeparator ctermbg=black ctermfg=white
-    endif
+    set fillchars+=msgsep:‾
+    hi MsgSeparator ctermbg=black ctermfg=white
+    set wildoptions+=pum
 else
     command! -nargs=? UpdateRemotePlugins call te#utils#EchoWarning("It is neovim's command")
 endif
