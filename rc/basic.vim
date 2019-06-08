@@ -143,14 +143,15 @@ endif
 
 if g:complete_plugin_type.cur_val ==# 'ncm2'
     Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc', { 'do':'pip3 install --user pynvim'}
 endif
 
 if !te#env#IsNvim() && (g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' ||
             \ g:complete_plugin_type.cur_val ==# 'deoplete.nvim')
     if g:complete_plugin_type.cur_val !=# 'ncm2'
         Plug 'roxma/nvim-yarp'
+        Plug 'roxma/vim-hug-neovim-rpc', { 'do':'pip3 install --user pynvim'}
     endif
-    Plug 'roxma/vim-hug-neovim-rpc', { 'do':'pip3 install --user pynvim'}
 endif
 "}}}
 " Tagbar {{{
