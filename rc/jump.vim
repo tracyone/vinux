@@ -54,7 +54,7 @@ let g:Lf_Extensions = {
 			\}
 elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' && te#env#SupportPy3() 
             \ && te#env#SupportAsync()
-    Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
+    Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins','commit': '29bfd4c53271c7a150def2388e059746ae4c1713'}
     Plug 'Shougo/neomru.vim'
     function! s:source_denite_vim()
         execute 'source '.$VIMFILES.'/rc/denite.vim'

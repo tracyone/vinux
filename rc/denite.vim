@@ -9,6 +9,9 @@ let s:denite_options = {
       \ 'direction': 'botright',
       \ 'statusline' : has('patch-7.4.1154') ? v:true : v:false,
       \ 'prompt' : '>',
+      \ 'highlight_filter_background': 'CursorLine',
+      \ 'source_names': 'short',
+      \ 'split': 'floating',
       \ }}
 
 function! s:profile(opts) abort
@@ -131,11 +134,5 @@ endfor
 for s:m in s:normal_mode_mappings
   call denite#custom#map('normal', s:m[0], s:m[1], s:m[2])
 endfor
-
-call denite#custom#option('default', {
-      \ 'highlight_filter_background': 'CursorLine',
-      \ 'source_names': 'short',
-      \ 'split': 'floating',
-      \ })
 
 unlet s:m s:insert_mode_mappings s:normal_mode_mappings
