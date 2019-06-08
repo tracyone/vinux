@@ -1,6 +1,5 @@
 "https://github.com/ncm2/ncm2/wiki
 Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
 " NOTE: you need to install completion sources to get completions. Check
 " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
 Plug 'ncm2/ncm2-bufword'
@@ -24,9 +23,7 @@ Plug 'ncm2/ncm2-cssomni', {'for': ['css']}
 Plug 'othree/jspc.vim', {'for': 'javascript'}
 
 set shortmess+=c
-if !te#env#IsNvim()
-    Plug 'roxma/vim-hug-neovim-rpc', { 'do':'pip3 install --user pynvim'}
-else
+if te#env#IsNvim()
     Plug 'ncm2/float-preview.nvim'
 endif
 

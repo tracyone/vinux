@@ -140,6 +140,12 @@ if get(g:, 'feat_enable_help') == 0
     nnoremap <Leader>sd :DeleteSession<cr>
     let g:session_directory=$VIMFILES.'/sessions'
 endif
+if !te#env#IsNvim() && (g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' ||
+            \ g:complete_plugin_type.cur_val ==# 'deoplete.nvim' ||
+            \ g:complete_plugin_type.cur_val ==# 'ncm2')
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc', { 'do':'pip3 install --user pynvim'}
+endif
 "}}}
 " Tagbar {{{
 let g:tagbar_left=0

@@ -1,9 +1,5 @@
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins', 'on': []}
 Plug 'zchee/deoplete-clang',{'for':['c', 'cpp']}
-if !te#env#IsNvim()
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-endif
 
 function! s:config_deoplete()
     if te#env#IsMac()
