@@ -31,12 +31,12 @@ if !te#env#IsWindows()
   if executable('rg')
     " For ripgrep
     " Note: It is slower than ag
-    call denite#custom#var('file_rec', 'command',
+    call denite#custom#var('file/rec', 'command',
           \ ['rg', '--hidden', '--files', '--glob', '!.git', '--glob', '']
           \ )
   elseif executable('ag')
     " Change file_rec command.
-    call denite#custom#var('file_rec', 'command',
+    call denite#custom#var('file/rec', 'command',
           \ ['ag' , '--nocolor', '--nogroup', '-g', '']
           \ )
   endif
@@ -44,13 +44,13 @@ else
   if executable('pt')
     " For Pt(the platinum searcher)
     " NOTE: It also supports windows.
-    call denite#custom#var('file_rec', 'command',
+    call denite#custom#var('file/rec', 'command',
           \ ['pt', '--follow', '--nocolor', '--nogroup', '-g:', ''])
   endif
 endif
 
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command',
+call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+call denite#custom#var('file/rec/git', 'command',
     \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
 " FIND and GREP COMMANDS
