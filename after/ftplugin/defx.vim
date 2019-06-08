@@ -1,7 +1,7 @@
 function! s:defx_my_settings() abort
     " Define mappings
     nnoremap <silent><buffer><expr> <CR>
-                \ defx#do_action('drop')
+                \ defx#async_action('drop')
     nnoremap <silent><buffer><expr> yy 
                 \ defx#do_action('copy')
     nnoremap <silent><buffer><expr> m
@@ -9,7 +9,7 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> p
                 \ defx#do_action('paste')
     nnoremap <silent><buffer><expr> l
-                \ defx#do_action('open')
+                \ defx#async_action('open')
     nnoremap <silent><buffer><expr> <c-t>
                 \ defx#do_action('open', 'tabnew')
     nnoremap <silent><buffer><expr> <c-v>
@@ -29,12 +29,12 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> .
                 \ defx#do_action('toggle_ignored_files')
     nnoremap <silent><buffer><expr> h
-                \ defx#do_action('cd', ['..'])
+                \ defx#async_action('cd', ['..'])
     nnoremap <silent><buffer><expr> ~
-                \ defx#do_action('cd')
+                \ defx#async_action('cd')
     nnoremap <silent><buffer><expr> q
                 \ defx#do_action('quit')
-    nnoremap <silent><buffer><expr> <c-z>
+    nnoremap <silent><buffer><expr> <Space>
                 \ defx#do_action('toggle_select') . 'j'
     nnoremap <silent><buffer><expr> *
                 \ defx#do_action('toggle_select_all')
@@ -53,6 +53,14 @@ function! s:defx_my_settings() abort
                 \ defx#do_action('cd', getcwd())
     nnoremap <silent><buffer><expr> c
                 \ defx#do_action('yank_path')
+    nnoremap <silent><buffer><expr> o
+                \ defx#async_action('open_or_close_tree')
+    nnoremap <silent><buffer><expr> O
+                \ defx#async_action('open_tree_recursive')
+    nnoremap <silent><buffer><expr> M
+                \ defx#do_action('new_multiple_files')
+    xnoremap <silent><buffer><expr> <Space>
+                \ defx#do_action('toggle_select_visual')
 endfunction
 
 call s:defx_my_settings()
