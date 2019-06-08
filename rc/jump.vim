@@ -61,8 +61,8 @@ elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' && te#env#SupportPy
     endfunction
     call te#feat#register_vim_enter_setting(function('<SID>source_denite_vim'))
     "keymapping for denite
-    nnoremap <c-p> :Denite file_rec<cr>
-    nnoremap <Leader><Leader> :Denite file_rec<cr>
+    nnoremap <c-p> :Denite file/rec<cr>
+    nnoremap <Leader><Leader> :Denite file/rec<cr>
     nnoremap <c-j> :Denite buffer<cr>
     nnoremap <c-l> :Denite file_mru<cr>
     nnoremap <c-k> :Denite outline<cr>
@@ -71,7 +71,7 @@ elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' && te#env#SupportPy
     "mru
     nnoremap <Leader>pr :Denite file_mru<cr>
     "file
-    nnoremap <Leader>pp :Denite file_rec<cr>
+    nnoremap <Leader>pp :Denite file/rec<cr>
     "function
     nnoremap <Leader>pp :Denite outline<cr>
     "vim help
