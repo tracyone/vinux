@@ -24,6 +24,7 @@ function! te#ctrlp#dir#accept(mode, str) abort
     "enter will cd else open netrw
     if isdirectory(l:file_or_dir) && a:mode ==# 'e' 
         call ctrlp#exit()
+        call te#utils#EchoWarning('Cd to '.fnamemodify(l:file_or_dir, ":p:h"))
         execute 'cd 'l:file_or_dir
         call te#ctrlp#dir#start()
     else
