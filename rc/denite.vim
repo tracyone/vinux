@@ -133,6 +133,7 @@ let s:denite_options = {
       \ 'source_names': 'short',
       \ 'direction': 'botright',
       \ 'highlight_filter_background': 'CursorLine',
+      \ 'highlight_matched_char': 'Type',
       \ }
 
 call denite#custom#option('default', s:denite_options)
