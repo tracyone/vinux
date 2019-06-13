@@ -35,10 +35,10 @@ function! s:denite_filter_my_settings() abort
                 \ denite#do_map('do_action', 'split')
     inoremap <silent><buffer><expr> <esc>
                 \ denite#do_map('quit')
-    inoremap <silent><buffer><expr> <c-j>
-                \ denite#do_map('do_action', 'vsplit')
-    inoremap <silent><buffer><expr> <c-k>
-                \ denite#do_map('do_action', 'vsplit')
+    inoremap <silent><buffer> <C-j>
+                \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+    inoremap <silent><buffer> <C-k>
+                \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
 endfunction
 
 
