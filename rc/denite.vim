@@ -18,14 +18,27 @@ function! s:denite_my_settings() abort
                 \ denite#do_map('quit')
     nnoremap <silent><buffer><expr> i
                 \ denite#do_map('open_filter_buffer')
-    nnoremap <silent><buffer><expr> <Space>
+    nnoremap <silent><buffer><expr> V
                 \ denite#do_map('toggle_select').'j'
 endfunction
 
 
 autocmd FileType denite-filter call s:denite_filter_my_settings()
 function! s:denite_filter_my_settings() abort
-    imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
+    imap <silent><buffer> <tab> <Plug>(denite_filter_quit)
+    inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+    inoremap <silent><buffer><expr> <c-t>
+                \ denite#do_map('do_action', 'tabopen')
+    inoremap <silent><buffer><expr> <c-v>
+                \ denite#do_map('do_action', 'vsplit')
+    inoremap <silent><buffer><expr> <c-x>
+                \ denite#do_map('do_action', 'split')
+    inoremap <silent><buffer><expr> <esc>
+                \ denite#do_map('quit')
+    inoremap <silent><buffer><expr> <c-j>
+                \ denite#do_map('do_action', 'vsplit')
+    inoremap <silent><buffer><expr> <c-k>
+                \ denite#do_map('do_action', 'vsplit')
 endfunction
 
 
