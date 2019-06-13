@@ -27,20 +27,18 @@ if te#env#IsNvim()
     Plug 'ncm2/float-preview.nvim'
 endif
 
-function! Ncm2_source_register()
-    call ncm2#register_source({
-                \ 'name' : 'css',
-                \ 'priority': 9, 
-                \ 'subscope_enable': 1,
-                \ 'scope': ['css','scss'],
-                \ 'mark': 'css',
-                \ 'word_pattern': '[\w\-]+',
-                \ 'complete_pattern': ':\s*',
-                \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-                \ })
+function! Ncm2_enable_buffer() abort
+    let l:black_list_ft = ['denite-filter']
+    for l:item in l:black_list_ft
+        if &filetype ==# l:item
+            call ncm2#disable_for_buffer()
+        else
+            call ncm2#enable_for_buffer()
+        endif
+    endfor
 endfunction
 
-autocmd misc_group InsertEnter * call ncm2#enable_for_buffer()
+autocmd misc_group InsertEnter *  call Ncm2_enable_buffer()
 au misc_group TextChangedI * call ncm2#auto_trigger()
 
 function! s:ncm2_setup()
@@ -60,7 +58,16 @@ function! s:ncm2_setup()
     " add 180ms delay before the omni wrapper:
     "  'on_complete': ['ncm2#on_complete#delay', 180,
     "               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-    au User Ncm2Plugin call Ncm2_source_register()
+    au User Ncm2Plugin call ncm2#register_source({
+                \ 'name' : 'css',
+                \ 'priority': 9, 
+                \ 'subscope_enable': 1,
+                \ 'scope': ['css','scss'],
+                \ 'mark': 'css',
+                \ 'word_pattern': '[\w\-]+',
+                \ 'complete_pattern': ':\s*',
+                \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+                \ })
     if te#env#IsMac()
         let g:ncm2_pyclang#library_path='/Library/Developer/CommandLineTools/usr/lib'
     elseif te#env#IsUnix()
