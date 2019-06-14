@@ -132,6 +132,8 @@ function! te#utils#EchoWarning(str,...) abort
                     \ 'highlight': l:level,
                     \ 'maxwidth': &columns/3,
                     \ 'border': [],
+                    \ 'borderchars':['-', '|', '-', '|', '+', '+', '+', '+'],
+                    \ 'drag': 1,
                     \ 'callback': 'VimCloseWin',
                     \ })
         call add(s:win_list, l:win)
