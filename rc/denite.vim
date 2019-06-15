@@ -134,7 +134,6 @@ let s:denite_options = {
       \ 'prompt' : '>',
       \ 'split': 'floating',
       \ 'start_filter': 1,
-      \ 'auto_resize': 1,
       \ 'source_names': 'short',
       \ 'direction': 'botright',
       \ 'highlight_filter_background': 'CursorLine',
