@@ -54,6 +54,11 @@ call denite#custom#source('file/old', 'converters',
 call denite#custom#source(
 \ 'file/rec', 'sorters', ['sorter/sublime'])
 
+if g:fuzzy_matcher_type.cur_val ==# 'cpsm'
+    call denite#custom#source(
+                \ 'file/rec', 'matchers', ['matcher/cpsm'])
+endif
+
 
 " Ag command on grep source
 if te#env#Executable('ag')

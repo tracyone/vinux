@@ -56,6 +56,11 @@ elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' && te#env#SupportPy
             \ && te#env#SupportAsync()
     Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
     Plug 'Shougo/neomru.vim'
+    if g:fuzzy_matcher_type.cur_val ==# 'cpsm'
+        Plug 'nixprime/cpsm', {'dir': g:vinux_plugin_dir.cur_val.'/cpsm_py3/',
+                    \ 'do':'PY3=ON ./install.sh'}
+    endif
+
     function! s:source_denite_vim()
         execute 'source '.$VIMFILES.'/rc/denite.vim'
     endfunction
@@ -91,7 +96,7 @@ else
     nnoremap <Leader>fd :call te#ctrlp#feat#start(0)<cr>
     "ctrlp thirdparty matchers
     if te#env#SupportPy()
-        if g:ctrlp_matcher_type.cur_val ==# 'cpsm' && v:version >= 704
+        if g:fuzzy_matcher_type.cur_val ==# 'cpsm' && v:version >= 704
             if te#env#SupportPy2()
                 Plug 'nixprime/cpsm', {'do':'PY3=OFF ./install.sh'}
             else
@@ -101,7 +106,7 @@ else
             let g:ctrlp_match_func ={'match': 'cpsm#CtrlPMatch'}
         else
             "fallback
-            let g:ctrlp_matcher_type.cur_val='py-matcher'
+            let g:fuzzy_matcher_type.cur_val='py-matcher'
             Plug 'FelikZ/ctrlp-py-matcher'
             let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
         endif

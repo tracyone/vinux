@@ -234,7 +234,7 @@ endfunction
 "init all vinux custom variable
 function! te#feat#init_all() abort
 
-    call te#feat#init_var('g:ctrlp_matcher_type',['py-matcher', 'cpsm'])
+    call te#feat#init_var('g:fuzzy_matcher_type',['py-matcher', 'cpsm'])
     call te#feat#init_var('g:complete_plugin_type',['YouCompleteMe', 'clang_complete', 'neocomplete',
                 \ 'asyncomplete.vim', 'deoplete.nvim','ncm2', 'supertab'])
     call te#feat#init_var('g:fuzzysearcher_plugin_name', ['ctrlp', 'leaderf', 'denite.nvim'])
