@@ -119,7 +119,7 @@ else
     set t_Co=256
 endif
 
-if te#env#IsGui() || exists('*popup_create')
+if te#env#IsGui() || te#env#SupportFloatingWindows()
     set mousemodel=popup_setpos
     if !te#env#IsGui()
         if te#env#IsTmux()

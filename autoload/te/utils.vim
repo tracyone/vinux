@@ -72,7 +72,7 @@ function! te#utils#EchoWarning(str,...) abort
         call add(s:global_echo_str, a:str)
         return
     endif
-    if te#env#IsNvim() && exists('*nvim_open_win') && exists('*nvim_win_set_config')
+    if te#env#IsNvim() && te#env#SupportFloatingWindows() == 2
         let l:str='['.l:prompt.'] '.a:str
         let l:win={}
         let l:bufnr = nvim_create_buf(v:false, v:false)
@@ -105,7 +105,7 @@ function! te#utils#EchoWarning(str,...) abort
         call nvim_buf_set_option(l:bufnr, 'buflisted', v:false)
         call add(s:win_list, l:win)
         call timer_start(5000, 'NvimCloseWin', {'repeat': 1})
-    elseif exists('*popup_create')
+    elseif te#env#SupportFloatingWindows() == 1
         let l:str='['.l:prompt.'] '.a:str
         let l:win={}
         if strlen(l:str) > (&columns/3)

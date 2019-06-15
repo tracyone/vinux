@@ -142,10 +142,9 @@ function! te#env#get_termwinkey() abort
     endif
 endfunction
 
-
 function! te#env#SupportFloatingWindows() abort
     if !te#env#IsNvim()
-        return 0
+        return exists('*popup_create')
     endif
 
     if !exists('*nvim_win_set_config')
@@ -164,5 +163,5 @@ function! te#env#SupportFloatingWindows() abort
     catch /^Vim\%((\a\+)\)\=:E118/
         return 0
     endtry
-    return 1
+    return 2
 endfunction

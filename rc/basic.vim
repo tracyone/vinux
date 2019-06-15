@@ -242,11 +242,19 @@ nmap <leader>m? <Plug>MarkSearchAnyPrev
 nmap <leader>m/ <Plug>MarkSearchAnyNext
 "}}}
 " Quickrun {{{
+if te#env#SupportFloatingWindows() == 1
 let g:quickrun_config = {
             \   '_' : {
-            \       'outputter' : 'message',
+            \       'outputter' : 'popup',
             \   },
             \}
+else
+let g:quickrun_config = {
+            \   '_' : {
+            \       'outputter' : 'quickfix',
+            \   },
+            \}
+endif
 
 let g:quickrun_no_default_key_mappings = 1
 map <F6> <Plug>(quickrun)
