@@ -219,9 +219,9 @@ if te#env#IsVim8()
     let g:t_channel=v:t_channel
     if te#env#SupportTerminal()
         if has('patch-8.0.1743')
-            set termwinkey=<s-n>
+            set termwinkey=<c-y>
         else
-            set termkey=<s-n>
+            set termkey=<c-y>
         endif
     endif
 else

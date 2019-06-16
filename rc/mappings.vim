@@ -324,7 +324,7 @@ nnoremap si zi
 map <Leader>ba :bufdo bd<cr>
 if te#env#IsNvim()
     "terminal-emulator setting
-    execute 'tnoremap <Esc> <C-\><C-n>'
+    execute 'tnoremap <Esc><Esc> <C-\><C-n>'
     execute 'tnoremap <A-h> <C-\><C-n><C-w>h'
     execute 'tnoremap <A-j> <C-\><C-n><C-w>j'
     execute 'tnoremap <A-k> <C-\><C-n><C-w>k'
