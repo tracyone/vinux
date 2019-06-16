@@ -8,6 +8,37 @@ nnoremap <Leader><Leader> :Files<cr>
 "mru
 nnoremap <c-l> :History<cr>
 nnoremap <Leader>pr :History<cr>
+"command history
+nnoremap <Leader>p: :History:<cr>
+" git log checkout
+nnoremap <Leader>pgc :Commits<cr>
+nnoremap <Leader>ps :Snippets<cr>
+"vim help
+nnoremap <Leader>ph :Helptags<cr>
+"spacemacs :SPC ff
+function! s:edit_file(item)
+    let l:pos = stridx(a:item, ' ')
+    let l:file_path = a:item[pos+1:-1]
+    if isdirectory(l:file_path)
+        call te#utils#EchoWarning('Cd to '.fnamemodify(l:file_path, ":p:h"))
+        :redraw!
+        execute 'cd 'l:file_path
+        :call fzf#run({
+                    \ 'source': 'ls -a -F', 
+                    \ 'sink': function('<SID>edit_file'),
+                    \ 'down':'40%' ,
+                    \ })
+        :redraw!
+    else
+        execute 'silent e' l:file_path
+    endif
+endfunction
+nnoremap <Leader>ff :call fzf#run({
+            \ 'source': 'ls -a -F', 
+            \ 'sink': function('<SID>edit_file'),
+            \ 'down':'40%' ,
+            \ })<cr>
+
 
 "ag
 if te#env#Executable('ag')
@@ -28,10 +59,6 @@ elseif te#env#Executable('rg')
     nnoremap <Leader>pf :Rg<cr>
     let $FZF_DEFAULT_COMMAND=s:fzf_custom_command
 endif
-"command history
-nnoremap <Leader>p: :History:<cr>
-" git log checkout
-nnoremap <Leader>pgc :Commits<cr>
 
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
