@@ -85,6 +85,10 @@ elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' && te#env#SupportPy
     nnoremap <Leader>p: :Denite command_history<cr>
     "fly on grep
     nnoremap <Leader>pf :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
+elseif g:fuzzysearcher_plugin_name.cur_val ==# 'fzf'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf.vim'
+    execute 'source '.$VIMFILES.'/rc/fzf.vim'
 else
     "fallback to ctrlp
     let g:fuzzysearcher_plugin_name.cur_val = 'ctrlp'
