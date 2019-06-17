@@ -9,7 +9,8 @@ nnoremap <Leader><Leader> :Files<cr>
 nnoremap <c-l> :History<cr>
 nnoremap <Leader>pr :History<cr>
 "command history
-nnoremap <Leader>p: :History:<cr>
+nnoremap <leader>qc :History:<cr>
+nnoremap <leader>q/ :History/<cr>
 " git log checkout
 nnoremap <Leader>pgc :Commits<cr>
 nnoremap <Leader>ps :Snippets<cr>

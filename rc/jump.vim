@@ -82,7 +82,7 @@ elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' && te#env#SupportPy
     "vim help
     nnoremap <Leader>ph :Denite help<cr>
     "command history
-    nnoremap <Leader>p: :Denite command_history<cr>
+    nnoremap <Leader>q: :Denite command_history<cr>
     "fly on grep
     nnoremap <Leader>pf :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
 elseif g:fuzzysearcher_plugin_name.cur_val ==# 'fzf'
