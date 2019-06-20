@@ -53,6 +53,7 @@ function! s:edit_file(item)
 endfunction
 
 function! te#fzf#feat#start(en) abort
+    let s:text = []
     for l:key in keys(te#feat#get_feature_dict())
         call add(s:text, l:key)
     endfor
