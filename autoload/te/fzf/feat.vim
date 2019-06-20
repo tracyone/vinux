@@ -63,5 +63,6 @@ function! te#fzf#feat#start(en) abort
                 \ 'source': s:text, 
                 \ 'sink': function('<SID>edit_file'),
                 \ 'down':'40%' ,
+                \ 'window':'call FloatingFZF()'
                 \ })
 endfunction
