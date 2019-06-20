@@ -17,29 +17,11 @@ nnoremap <Leader>ps :Snippets<cr>
 "vim help
 nnoremap <Leader>ph :Helptags<cr>
 "spacemacs :SPC ff
-function! s:edit_file(item)
-    let l:pos = stridx(a:item, ' ')
-    let l:file_path = a:item[pos+1:-1]
-    if isdirectory(l:file_path)
-        call te#utils#EchoWarning('Cd to '.fnamemodify(l:file_path, ":p:h"))
-        :redraw!
-        execute 'cd 'l:file_path
-        :call fzf#run({
-                    \ 'source': 'ls -a -F', 
-                    \ 'sink': function('<SID>edit_file'),
-                    \ 'down':'40%' ,
-                    \ })
-        :redraw!
-    else
-        execute 'silent e' l:file_path
-    endif
-endfunction
-nnoremap <Leader>ff :call fzf#run({
-            \ 'source': 'ls -a -F', 
-            \ 'sink': function('<SID>edit_file'),
-            \ 'down':'40%' ,
-            \ })<cr>
-
+nnoremap <Leader>ff :call te#fzf#dir#start()<cr>
+"feature enable
+nnoremap <Leader>fe :call te#fzf#feat#start(1)<cr>
+"feature disable
+nnoremap <Leader>fd :call te#fzf#feat#start(0)<cr>
 
 "ag
 if te#env#Executable('ag')
