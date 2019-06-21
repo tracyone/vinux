@@ -1,3 +1,7 @@
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'tracyone/fzf-funky',{'on': 'CtrlPFunky'}
+
 "buffer
 nnoremap <c-j> :Buffers<Cr>
 nnoremap <Leader>fw :Windows<cr>
@@ -22,6 +26,8 @@ nnoremap <Leader>ff :call te#fzf#dir#start()<cr>
 nnoremap <Leader>fe :call te#fzf#feat#start(1)<cr>
 "feature disable
 nnoremap <Leader>fd :call te#fzf#feat#start(0)<cr>
+
+nnoremap <c-k> :CtrlPFunky<cr>
 
 "ag
 if te#env#Executable('ag')
