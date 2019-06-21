@@ -12,6 +12,7 @@ function! s:edit_file(item)
                     \ 'source': 'ls -a -F', 
                     \ 'sink': function('<SID>edit_file'),
                     \ 'down':'40%' ,
+                    \ 'window':'call FloatingFZF()'
                     \ })
         :redraw!
     else
@@ -24,5 +25,6 @@ function! te#fzf#dir#start() abort
                 \ 'source': 'ls -a -F', 
                 \ 'sink': function('<SID>edit_file'),
                 \ 'down':'40%' ,
+                \ 'window':'call FloatingFZF()'
                 \ })
 endfunction

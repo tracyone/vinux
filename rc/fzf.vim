@@ -90,6 +90,9 @@ if te#env#SupportFloatingWindows() == 2
                     \ nonumber
                     \ norelativenumber
                     \ signcolumn=no
+        if mode() ==# 't'
+            call feedkeys('i')
+        endif
     endfunction
 else
     function! FloatingFZF()
