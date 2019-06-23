@@ -130,7 +130,7 @@ if te#env#IsGui() || te#env#SupportFloatingWindows()
     endif
     amenu PopUp.&====sep==== <Nop>
     amenu PopUp.&Undo :UndotreeToggle<CR>
-    amenu PopUp.&Goto\ Definition ::call te#complete#goto_def("")<cr>
+    amenu PopUp.&Goto\ Definition :call te#complete#goto_def("")<cr>
     if g:grepper_plugin.cur_val ==# 'vim-easygrep'
         amenu PopUp.&Find\ Text :execute "normal "."\<Plug>EgMapGrepCurrentWord_V"<cr>
     else
@@ -140,6 +140,8 @@ if te#env#IsGui() || te#env#SupportFloatingWindows()
     amenu PopUp.&Hightlight :execute "normal ". "\<Plug>MarkSet"<cr>
     amenu PopUp.&====sep===== <Nop>
 endif
+
+nnoremap <2-LeftMouse> :call te#complete#goto_def("")<cr>
 
 "{{{colorscheme
 let g:neosolarized_bold = 1
