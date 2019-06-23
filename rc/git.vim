@@ -15,6 +15,8 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
     nnoremap <Leader>gd :Gina compare :<cr>
     " git cd
     nnoremap <silent><Leader>gc :Gina cd<cr>:call te#utils#EchoWarning(getcwd())<cr>
+    " git config -e
+    nnoremap <Leader>ge :Gina cd<cr>:sp .git/config<cr>
 
     function! StageNext(count) abort
         for i in range(a:count)
@@ -211,6 +213,8 @@ else
     nnoremap <Leader>gd :Gdiff<cr>
     " git cd
     nnoremap <Leader>gc :Gcd<cr>:call te#utils#EchoWarning(getcwd())<cr>
+    " git config -e
+    nnoremap <Leader>ge :Gcd<cr>:sp .git/config<cr>
     " Open github url
     nnoremap <Leader>gh :call te#git#git_browse()<cr>
 endif
@@ -259,6 +263,4 @@ nnoremap <Leader>gp :call te#git#GitPush("heads")<cr>
 nnoremap <Leader>gg :call te#git#GitPush("for")<cr>
 " git fetch all
 nnoremap <Leader>gf :call te#utils#run_command('git fetch --all')<cr>
-" git config -e
-nnoremap <Leader>ge :sp .git/config<cr>
 "}}}
