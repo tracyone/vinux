@@ -49,6 +49,24 @@ function! EnterScreensaver(timer)
     endif
     :ScreenSaver largeclock
     call feedkeys("\<c-[>")
+    silent! call s:smile()
+endfunction
+
+function! s:smile()
+    if te#env#SupportFloatingWindows() == 1
+        let l:list=split(execute("smile"), '\n')
+        call add(l:list,"\t\t\t\t Today is ".strftime("%Y%m%d"))
+        silent call popup_create(l:list, {
+                    \ 'line': 0,
+                    \ 'col': 0,
+                    \ 'time': 5000,
+                    \ 'tab': -1,
+                    \ 'zindex': 200,
+                    \ 'highlight': 'pmenu',
+                    \ 'maxwidth': &columns,
+                    \ 'border': [0,0,0,0],
+                    \ })
+    endif
 endfunction
 
 let s:main_timer=timer_start(str2nr(s:expires_time), 'EnterScreensaver', {'repeat': 1})
