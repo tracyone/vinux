@@ -43,6 +43,8 @@ augroup filetype_group
                 \ | nnoremap <buffer> <silent> <c-t> :call te#plug#open_plugin_dir(1)<cr>
                 \ | nnoremap <buffer> <silent> D :call te#plug#show_log()<cr>
                 \ | call te#plug#extra_key()
+    autocmd  FileType fzf set laststatus=0 noshowmode noruler
+      \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 augroup END
 if te#env#IsNvim()
     autocmd misc_group TermOpen * setlocal nonu nornu signcolumn=no | :startinsert

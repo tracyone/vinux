@@ -106,16 +106,5 @@ if te#env#SupportFloatingWindows() == 2
             call feedkeys('i')
         endif
     endfunction
-else
-    function! FloatingFZF()
-        execute 'botright '.&lines*40/100.'new'
-        setlocal
-                    \ buftype=nofile
-                    \ nobuflisted
-                    \ bufhidden=hide
-                    \ nonumber
-                    \ norelativenumber
-                    \ signcolumn=no
-    endfunction
 endif
 

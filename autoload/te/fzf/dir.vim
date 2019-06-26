@@ -2,29 +2,43 @@
 "author:<tracyone tracyone@live.cn>
 
 function! s:edit_file(item)
-    let l:pos = stridx(a:item, ' ')
-    let l:file_path = a:item[pos+1:-1]
+    if len(a:item) < 2 | return | endif
+    let l:pos = stridx(a:item[1], ' ')
+    let l:file_path = a:item[1][pos+1:-1]
+    let l:cmd = get({'ctrl-x': 'split',
+                \ 'ctrl-v': 'vsplit',
+                \ 'ctrl-t': 'tabedit'}, a:item[0], 'e')
     if isdirectory(l:file_path)
-        call te#utils#EchoWarning('Cd to '.fnamemodify(l:file_path, ":p:h"))
         :redraw!
         execute 'cd 'l:file_path
-        :call fzf#run({
+        let l:run_dict = {
                     \ 'source': 'ls -a -F', 
-                    \ 'sink': function('<SID>edit_file'),
+                    \ 'sink*': function('<SID>edit_file'),
                     \ 'down':'40%' ,
-                    \ 'window':'call FloatingFZF()'
-                    \ })
+                    \ 'options' : ' --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : '.
+                    \              '-m --prompt "Dir> "',
+                    \ }
+        if te#env#IsNvim()
+            :call extend(l:run_dict, {'window':'call FloatingFZF()'})
+        endif
+        call fzf#run(l:run_dict)
         :redraw!
+        call te#utils#EchoWarning('Cd to '.fnamemodify(l:file_path, ":p:h"))
     else
-        execute 'silent e' l:file_path
+        execute 'silent  '.l:cmd.' ' . l:file_path
     endif
 endfunction
 
 function! te#fzf#dir#start() abort
-    call fzf#run({
-                \ 'source': 'ls -a -F', 
-                \ 'sink': function('<SID>edit_file'),
-                \ 'down':'40%' ,
-                \ 'window':'call FloatingFZF()'
-                \ })
+        let l:run_dict = {
+                    \ 'source': 'ls -a -F', 
+                    \ 'sink*': function('<SID>edit_file'),
+                    \ 'down':'40%' ,
+                    \ 'options' : ' --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : '.
+                    \              '-m --prompt "Dir> "',
+                    \ }
+        if te#env#IsNvim()
+            :call extend(l:run_dict, {'window':'call FloatingFZF()'})
+        endif
+        call fzf#run(l:run_dict)
 endfunction
