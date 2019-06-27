@@ -64,10 +64,14 @@ function! te#fzf#feat#start(en) abort
     endfor
     call add(s:text, 'all')
     let s:enable_flag=a:en
-    call fzf#run({
-                \ 'source': s:text, 
-                \ 'sink': function('<SID>edit_file'),
-                \ 'down':'40%' ,
-                \ 'window':'call FloatingFZF()'
-                \ })
+    let l:run_dict = {
+                    \ 'source': s:text, 
+                    \ 'sink': function('<SID>edit_file'),
+                    \ 'down':'40%' ,
+                    \ 'options' : '-m --prompt "Feat> "',
+                    \ }
+     if te#env#IsNvim()
+          :call extend(l:run_dict, {'window':'call FloatingFZF()'})
+     endif
+     call fzf#run(l:run_dict)
 endfunction
