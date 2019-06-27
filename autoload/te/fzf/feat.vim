@@ -30,13 +30,17 @@ function! s:edit_file(item)
             let l:feat_candidate=eval(matchstr(l:str,'.*\(\.cur_val\)\@=').'.candidate')
             call extend(s:var_candidate,l:feat_candidate)
             let s:var_value=l:str
-            call fzf#run({
-                        \ 'source': s:var_candidate, 
-                        \ 'sink': function('<SID>get_var_value'),
-                        \ 'down':'40%' ,
-                        \ 'window':'call FloatingFZF()'
-                        \ })
-            return
+            let l:run_dict = {
+                     \ 'source': s:var_candidate, 
+                     \ 'sink': function('<SID>get_var_value'),
+                     \ 'down':'40%' ,
+                     \ 'options' : '-m --prompt "Feat> "',
+                     \ }
+            if te#env#IsNvim()
+               :call extend(l:run_dict, {'window':'call FloatingFZF()'})
+            endif
+           call fzf#run(l:run_dict)
+           return
         else
             let l:feat_dict[l:str]=s:enable_flag
             execute 'let '.l:str.'='.s:enable_flag
