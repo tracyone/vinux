@@ -12,3 +12,4 @@ nnoremap <buffer> <c-t> <C-w><CR><C-w>T
 nnoremap <buffer> <c-v> <C-w><CR><C-w>L<C-w>p<C-w>J<C-w>p
 nnoremap <buffer> <c-o> :silent! colder<cr>:silent! :lolder<cr>
 nnoremap <buffer> <c-i> :silent! cnewer<cr>:silent! :lnewer<cr>
+execute 'nnoremap <buffer>  <2-LeftMouse> '. maparg('<Enter>')
