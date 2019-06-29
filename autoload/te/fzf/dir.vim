@@ -1,7 +1,13 @@
 "fzf dir
 "author:<tracyone tracyone@live.cn>
+"
 
-function! s:edit_file(item)
+function! s:start_fzf_dir(timer) abort
+    :call te#fzf#dir#start()
+    :redraw!
+endfunction
+
+function! s:edit_file(item) abort
     if len(a:item) < 2 | return | endif
     let l:pos = stridx(a:item[1], ' ')
     let l:file_path = a:item[1][pos+1:-1]
@@ -11,19 +17,24 @@ function! s:edit_file(item)
     if isdirectory(l:file_path)
         :redraw!
         execute 'cd 'l:file_path
-        let l:run_dict = {
-                    \ 'source': 'ls -a -F', 
-                    \ 'sink*': function('<SID>edit_file'),
-                    \ 'down':'40%' ,
-                    \ 'options' : ' --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : '.
-                    \              '-m --prompt "Dir> "',
-                    \ }
-        if te#env#IsNvim()
-            :call extend(l:run_dict, {'window':'call FloatingFZF()'})
-        endif
-        call fzf#run(l:run_dict)
-        :redraw!
         call te#utils#EchoWarning('Cd to '.fnamemodify(l:file_path, ":p:h"))
+        if te#env#SupportFeature('timers')
+            let l:id = timer_start(20, function('<SID>start_fzf_dir'))
+        else
+            let l:run_dict = {
+                        \ 'source': 'ls -a -F', 
+                        \ 'sink*': function('<SID>edit_file'),
+                        \ 'down':'40%' ,
+                        \ 'options' : ' --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : '.
+                        \              '-m --prompt "Dir> "',
+                        \ }
+            if te#env#IsNvim()
+                :call extend(l:run_dict, {'window':'call FloatingFZF()'})
+            endif
+            call fzf#run(l:run_dict)
+            :redraw!
+
+        endif
     else
         execute 'silent  '.l:cmd.' ' . l:file_path
     endif

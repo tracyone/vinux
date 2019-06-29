@@ -31,7 +31,7 @@ function! VimCloseWin(winid, result) abort
     endif
 endfunction
 
-function! NvimCloseWin(timer) abort
+function! s:nvim_close_win(timer) abort
     call timer_info(a:timer)
     let l:flag=0
     try
@@ -104,7 +104,7 @@ function! te#utils#EchoWarning(str,...) abort
         call nvim_buf_set_option(l:bufnr, 'modified', v:false)
         call nvim_buf_set_option(l:bufnr, 'buflisted', v:false)
         call add(s:win_list, l:win)
-        call timer_start(5000, 'NvimCloseWin', {'repeat': 1})
+        call timer_start(5000, function('<SID>nvim_close_win'), {'repeat': 1})
     elseif te#env#SupportFloatingWindows() == 1
         let l:str='['.l:prompt.'] '.a:str
         let l:win={}
