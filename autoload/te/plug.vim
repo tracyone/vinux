@@ -22,8 +22,10 @@ function! te#plug#open_plugin_dir(option) abort
     if has_key(g:plugs, name)
         if isdirectory(g:plugs[name].dir)
             if a:option == 2
-                call delete(g:plugs[name].dir, 'rf')
-                call te#utils#EchoWarning('Delete '.g:plugs[name].dir)
+                if (confirm('Delete '.g:plugs[name].dir.' directory??', "&Yes\n&No", 1)==1)
+                    call delete(g:plugs[name].dir, 'rf')
+                    call te#utils#EchoWarning('Delete '.g:plugs[name].dir)
+                endif
             else
                 execute 'cd '.g:plugs[name].dir
                 call te#utils#EchoWarning('cd '.g:plugs[name].dir)
