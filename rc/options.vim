@@ -249,6 +249,10 @@ if te#env#IsVim8()
     endif
 endif
 
+if has('patch-8.1.1600')
+    set signcolumn=number
+endif
+
 "{{{fold setting
 "folding type: manual, indent, expr, marker or syntax
 set foldenable                  " enable folding
