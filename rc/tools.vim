@@ -19,9 +19,9 @@ xnoremap <Leader>ac :<C-u>HowMuch =<cr>
 xnoremap <Leader>ar :<C-u>HowMuch r<cr>
 let g:HowMuch_scale = 16
 let g:HowMuch_auto_engines = ['py', 'vim', 'bc']
-Plug 'ianva/vim-youdao-translater', {'do': 'pip install requests --user','on': ['Ydc','Ydv']}
-command! -nargs=? Translate call te#trans#translate(<q-args>)
-command! -nargs=? -range TranslateReplace call te#trans#replace(<q-args>)
+Plug 'voldikss/vim-translate-me', {'on': ['TranslateW','TranslateR', 'Translate']}
+command! -nargs=? Trans call te#trans#translate(<q-args>)
+command! -nargs=? -range TransR call te#trans#replace(<q-args>)
 Plug 'vim-scripts/DrawIt',{'on': 'DrawIt'}
 if te#env#IsNvim() && te#env#SupportPy3()
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -66,19 +66,19 @@ endfunction
 nnoremap <leader>tf :call FencToggle()<cr>
 "}}}
 " YouDao translate
-nnoremap <Leader>az :Translate en:zh-CN<cr>
+nnoremap <Leader>az :Trans en:zh-CN<cr>
 " YouDao translate (visual mode)
-vnoremap <Leader>az :TranslateReplace en:zh-CN<cr>
+vnoremap <Leader>az :TransR en:zh-CN<cr>
 " YouDao translate
-nnoremap <Leader>ae :Translate zh-CN:en<cr>
+nnoremap <Leader>ae :Trans zh-CN:en<cr>
 " YouDao translate (visual mode)
-vnoremap <Leader>ae :TranslateReplace zh-CN:en<cr>
-nnoremap <F10> <esc>:Ydc<cr>
-vnoremap <F10> <esc>:Ydv<cr>
+vnoremap <Leader>ae :TransR zh-CN:en<cr>
+nnoremap <F10> <esc>:TranslateW<cr>
+vmap <F10> <Plug>TranslateWV
 " YouDao translate
-nnoremap <Leader>ay <esc>:Ydc<cr>
+nnoremap <silent><Leader>ay <esc>:TranslateW<cr>
 " YouDao translate (visual mode)
-vnoremap <Leader>ay <esc>:Ydv<cr>
+vnoremap <silent><Leader>ay <Plug>TranslateWV
 " open current file's position with default file explorer
 nmap <Leader>af gof
 " open current file's position with default terminal

@@ -138,6 +138,7 @@ if te#env#IsGui() || te#env#SupportFloatingWindows()
     endif
     amenu PopUp.&Open\ Header/Source :AT<cr>
     amenu PopUp.&Hightlight :execute "normal ". "\<Plug>MarkSet"<cr>
+    amenu PopUp.&Translate :TranslateW<cr>
     amenu PopUp.&====sep===== <Nop>
 endif
 
