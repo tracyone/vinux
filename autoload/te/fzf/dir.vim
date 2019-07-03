@@ -15,9 +15,9 @@ function! s:edit_file(item) abort
                 \ 'ctrl-v': 'vsplit',
                 \ 'ctrl-t': 'tabedit'}, a:item[0], 'e')
     if isdirectory(l:file_path)
+        call te#utils#EchoWarning('Cd to '.fnamemodify(l:file_path, ":p:h"))
         :redraw!
         execute 'cd 'l:file_path
-        call te#utils#EchoWarning('Cd to '.fnamemodify(l:file_path, ":p:h"))
         if te#env#SupportFeature('timers')
             let l:id = timer_start(20, function('<SID>start_fzf_dir'))
         else
@@ -30,10 +30,11 @@ function! s:edit_file(item) abort
                         \ }
             if te#env#IsNvim()
                 :call extend(l:run_dict, {'window':'call FloatingFZF()'})
+            else
+                :call extend(l:run_dict, {'window': 'botright '.&lines*40/100.'new'})
             endif
             call fzf#run(l:run_dict)
             :redraw!
-
         endif
     else
         execute 'silent  '.l:cmd.' ' . l:file_path
@@ -50,6 +51,8 @@ function! te#fzf#dir#start() abort
                     \ }
         if te#env#IsNvim()
             :call extend(l:run_dict, {'window':'call FloatingFZF()'})
+        else
+            :call extend(l:run_dict, {'window': 'botright '.&lines*40/100.'new'})
         endif
         call fzf#run(l:run_dict)
 endfunction

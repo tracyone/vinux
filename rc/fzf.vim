@@ -106,5 +106,7 @@ if te#env#SupportFloatingWindows() == 2
             call feedkeys('i')
         endif
     endfunction
+else
+    let g:fzf_layout = {'window': 'botright '.&lines*40/100.'new'}
 endif
 
