@@ -76,6 +76,10 @@ set softtabstop=4  "if non-zero, number of spaces to insert for a <Tab>
 set expandtab
 set smarttab "a <Tab> in an indent inserts 'shiftwidth' spaces
 set textwidth=80
+set completeopt=preview,menuone
+if has('patch-8.1.1880')
+    set completeopt+=popup
+endif
 
 if g:vinux_coding_style.cur_val ==# 'linux'
     let g:vinux_tabwidth=8

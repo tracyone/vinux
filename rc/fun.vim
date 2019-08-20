@@ -2,6 +2,7 @@
 Plug 'itchyny/thumbnail.vim',{'on': 'Thumbnail'}
 Plug 'itchyny/calendar.vim', { 'on': 'Calendar'}
 Plug 'johngrib/vim-game-code-break', {'on': 'VimGameCodeBreak'}
+Plug 'johngrib/vim-game-snake', {'on': 'VimGameSnake'}
 
 
 " open calendar
