@@ -79,6 +79,7 @@ set textwidth=80
 set completeopt=preview,menuone
 if has('patch-8.1.1880')
     set completeopt+=popup
+    set completepopup=height:10,width:60,highlight:Pmenu
 endif
 
 if g:vinux_coding_style.cur_val ==# 'linux'
