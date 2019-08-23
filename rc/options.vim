@@ -77,9 +77,9 @@ set expandtab
 set smarttab "a <Tab> in an indent inserts 'shiftwidth' spaces
 set textwidth=80
 set completeopt=preview,menuone
-if has('patch-8.1.1880')
+if has('patch-8.1.1902')
     set completeopt+=popup
-    set completepopup=height:10,width:60,highlight:Pmenu
+    set completepopup=height:10,width:60,highlight:Pmenu,border:off
 endif
 
 if g:vinux_coding_style.cur_val ==# 'linux'
