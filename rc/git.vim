@@ -1,22 +1,22 @@
 if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
     Plug 'lambdalisue/gina.vim'
-    nnoremap <F3> :Gina status<cr>
+    nnoremap  <silent><F3> :Gina status<cr>
     " Open git status window
-    nnoremap <Leader>gs :Gina status<cr>
+    nnoremap  <silent><Leader>gs :Gina status<cr>
     " Open github url
-    nnoremap <Leader>gh :Gina browse<cr>
+    nnoremap  <silent><Leader>gh :Gina browse<cr>
     " Open git blame windows
-    nnoremap <Leader>gb :Gina blame --use-author-instead :<cr>
+    nnoremap  <silent><Leader>gb :Gina blame --use-author-instead :<cr>
     " show branch
-    nnoremap <Leader>sb :Gina branch -a<cr>
+    nnoremap  <silent><Leader>sb :Gina branch -a<cr>
     " show tag
-    nnoremap <Leader>st :Gina tag<cr>
+    nnoremap  <silent><Leader>st :Gina tag<cr>
     " git diff current file
-    nnoremap <Leader>gd :Gina compare :<cr>
+    nnoremap  <silent><Leader>gd :Gina compare :<cr>
     " git cd
     nnoremap <silent><Leader>gc :Gina cd<cr>:call te#utils#EchoWarning(getcwd())<cr>
     " git config -e
-    nnoremap <Leader>ge :Gina cd<cr>:sp .git/config<cr>
+    nnoremap  <silent><Leader>ge :Gina cd<cr>:sp .git/config<cr>
 
     function! StageNext(count) abort
         for i in range(a:count)
@@ -198,25 +198,25 @@ else
     Plug 'gregsexton/gitv', { 'on': 'Gitv' }
     Plug 'sodapopcan/vim-twiggy', { 'on': 'Twiggy' }
     let g:fugitive_no_maps=0
-    nnoremap <Leader>sb :Twiggy<cr>
-    nnoremap <F3> :only<cr>:Gstatus<cr>
+    nnoremap  <silent><Leader>sb :Twiggy<cr>
+    nnoremap  <silent><F3> :only<cr>:Gstatus<cr>
     " Open git status window
-    nnoremap <Leader>gs :only<cr>:Gstatus<cr>gg<C-n>
+    nnoremap  <silent><Leader>gs :only<cr>:Gstatus<cr>gg<C-n>
     " Open git log( browser mode)
     " Open git log(file mode)
-    nnoremap <Leader>gL :Gitv! --all<cr>
+    nnoremap  <silent><Leader>gL :Gitv! --all<cr>
     " Open git log(file mode)
-    vnoremap <leader>gL :Gitv! --all<cr>
+    vnoremap  <silent><leader>gL :Gitv! --all<cr>
     " Open git blame windows
-    nnoremap <Leader>gb :Gblame<cr>
+    nnoremap  <silent><Leader>gb :Gblame<cr>
     " git diff current file (vimdiff)
-    nnoremap <Leader>gd :Gdiff<cr>
+    nnoremap  <silent><Leader>gd :Gdiff<cr>
     " git cd
-    nnoremap <Leader>gc :Gcd<cr>:call te#utils#EchoWarning(getcwd())<cr>
+    nnoremap  <silent><Leader>gc :Gcd<cr>:call te#utils#EchoWarning(getcwd())<cr>
     " git config -e
-    nnoremap <Leader>ge :Gcd<cr>:sp .git/config<cr>
+    nnoremap  <silent><Leader>ge :Gcd<cr>:sp .git/config<cr>
     " Open github url
-    nnoremap <Leader>gh :call te#git#git_browse()<cr>
+    nnoremap  <silent><Leader>gh :call te#git#git_browse()<cr>
 endif
 
 nnoremap gho :call te#git#browse_file(1)<cr>
@@ -225,7 +225,7 @@ xmap gho :<c-u>call te#git#browse_file(3)<cr>
 nnoremap ghc :call te#git#browse_file(0)<cr>
 xmap ghc :<c-u>call te#git#browse_file(2)<cr>
 
-nnoremap <Leader>gl :call te#git#show_log(".")<cr>
+nnoremap  <silent><Leader>gl :call te#git#show_log(".")<cr>
 if te#env#SupportPy2()
     Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
 endif
@@ -237,30 +237,30 @@ if te#env#SupportFeature('signs')
 endif
 if te#env#SupportAsync()
     Plug 'rhysd/git-messenger.vim',{'on': '<Plug>(git-messenger)'}
-    nmap <Leader>gn <Plug>(git-messenger)
+    nmap  <silent><Leader>gn <Plug>(git-messenger)
     let g:git_messenger_no_default_mappings=v:true
 endif
 
 " Git releate ---------------------{{{
 " list git issue
-nnoremap <Leader>gi :silent! Gissue<cr>
+nnoremap  <silent><Leader>gi :silent! Gissue<cr>
 " create new github issue
-nnoremap <Leader>ga :silent! Giadd<cr>
+nnoremap  <silent><Leader>ga :silent! Giadd<cr>
 " git merge
-nnoremap <Leader>gm :call te#git#git_merge()<cr>
+nnoremap  <silent><Leader>gm :call te#git#git_merge()<cr>
 " arhcive vim config.
-nnoremap <leader>gA :call te#git#archive_my_vim_cfg($VIMFILES,'vim_config')<cr>
+nnoremap  <silent><leader>gA :call te#git#archive_my_vim_cfg($VIMFILES,'vim_config')<cr>
 " archive current git repo with default name
-nnoremap <leader>gC :call te#git#archive_my_vim_cfg('.','')<cr>
+nnoremap  <silent><leader>gC :call te#git#archive_my_vim_cfg('.','')<cr>
 let g:gissues_lazy_load = 1
 let g:gissues_async_omni = 1
 if filereadable($VIMFILES.'/.github_token')
     let g:github_access_token = readfile($VIMFILES.'/.github_token', '')[0]
 endif
 " git push origin master
-nnoremap <Leader>gp :call te#git#GitPush("heads")<cr>
+nnoremap  <silent><Leader>gp :call te#git#GitPush("heads")<cr>
 " git push to gerrit
-nnoremap <Leader>gg :call te#git#GitPush("for")<cr>
+nnoremap  <silent><Leader>gg :call te#git#GitPush("for")<cr>
 " git fetch all
-nnoremap <Leader>gf :call te#utils#run_command('git fetch --all')<cr>
+nnoremap  <silent><Leader>gf :call te#utils#run_command('git fetch --all')<cr>
 "}}}

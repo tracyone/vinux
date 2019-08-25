@@ -18,4 +18,4 @@ setlocal softtabstop=4
 setlocal expandtab
 setlocal smarttab
 
-nnoremap <buffer> <leader>tt :Toc<cr>
+nnoremap  <silent><buffer> <leader>tt :Toc<cr>

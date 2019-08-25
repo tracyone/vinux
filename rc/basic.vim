@@ -11,9 +11,9 @@ if !te#env#IsNvim() || get(g:, 'feat_enable_tools') == 0
     let g:NERDTreeChDirMode=2
     noremap <F12> :NERDTreeToggle .<CR> 
     " Open nerd tree
-    nnoremap <leader>te :NERDTreeToggle .<CR> 
+    nnoremap  <silent><leader>te :NERDTreeToggle .<CR> 
     " Open nerd tree
-    nnoremap <leader>nf :NERDTreeFind<CR> 
+    nnoremap  <silent><leader>nf :NERDTreeFind<CR> 
     "map <2-LeftMouse>  *N "double click highlight the current cursor word 
     inoremap <F12> <ESC> :NERDTreeToggle<CR>
 else
@@ -23,12 +23,12 @@ if te#env#check_requirement()
     Plug 'majutsushi/tagbar'
     " Open tagbar
     nnoremap <silent><F9> :TagbarToggle<CR>
-    nnoremap <leader>tt :TagbarToggle<CR>
+    nnoremap  <silent><leader>tt :TagbarToggle<CR>
     call add(s:sexy_command, 'TagbarOpen')
 else
     Plug 'tracyone/vim-taglist'
     nnoremap <silent><F9> :TlistToggle<CR>
-    nnoremap <leader>tt :TlistToggle<CR>
+    nnoremap  <silent><leader>tt :TlistToggle<CR>
     call add(s:sexy_command, ':TlistToggle')
 endif
 if te#env#IsMac()
@@ -66,15 +66,15 @@ if te#env#IsVim8() || te#env#IsNvim()
     Plug 'neomake/neomake', { 'commit': '443dcc03b79b2402bd14600c9c4377266f07d1f4'}
     Plug 'tracyone/neomake-multiprocess'
     "ag search c family function
-    nnoremap <leader>vf :call neomakemp#global_search(expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]")<cr>
-    nnoremap <leader>nm :call te#tools#get_enabler_linter()<cr>
+    nnoremap  <silent><leader>vf :call neomakemp#global_search(expand("<cword>") . "\\s*\\([^()]*\\)\\s*[^;]")<cr>
+    nnoremap  <silent><leader>nm :call te#tools#get_enabler_linter()<cr>
     function! Neomake_setting()
         silent! call neomake#configure#automake('nrwi', 500)
         "disable linter of specified filetype by setting
         "g:neomake_ft_enabled_makers=[]
         "let g:neomake_vim_enabled_makers = []
         let g:neomake_c_enabled_makers = []
-        nnoremap <Leader>sc :Neomake<cr>
+        nnoremap  <silent><Leader>sc :Neomake<cr>
         "let g:neomake_open_list=2
         if !te#env#IsGui()
             let g:neomake_info_sign = {'text': 'i', 'texthl': 'NeomakeInfoSign'}
@@ -133,11 +133,11 @@ if get(g:, 'feat_enable_help') == 0
     let g:session_autoload=0
     let g:session_autosave='no'
     " Session save 
-    nnoremap <Leader>ss :SaveSession 
+    nnoremap  <silent><Leader>ss :SaveSession 
     " Session load
-    nnoremap <Leader>sl :OpenSession<cr> 
+    nnoremap  <silent><Leader>sl :OpenSession<cr> 
     " Session delete
-    nnoremap <Leader>sd :DeleteSession<cr>
+    nnoremap  <silent><Leader>sd :DeleteSession<cr>
     let g:session_directory=$VIMFILES.'/sessions'
 endif
 
@@ -194,11 +194,11 @@ if(!te#env#SupportTerminal())
     augroup vimshell_group
         autocmd!
         au FileType vimshell :imap <buffer> <HOME> <Plug>(vimshell_move_head) 
-                    \ | :imap <buffer> <c-l> <Plug>(vimshell_clear)
-                    \ | :imap <buffer> <c-k> <c-o>:stopinsert<cr>:call ctrlp#vimshell#start()<cr> 
-                    \ | :imap <buffer> <up> <c-o>:stopinsert<cr>:call ctrlp#vimshell#start()<cr>
-                    \ | :imap <buffer> <c-d> <Plug>(vimshell_exit)
-                    \ | :imap <buffer> <c-j> <Plug>(vimshell_enter) 
+                    \ | :imap  <silent><buffer> <c-l> <Plug>(vimshell_clear)
+                    \ | :imap  <silent><buffer> <c-k> <c-o>:stopinsert<cr>:call ctrlp#vimshell#start()<cr> 
+                    \ | :imap  <silent><buffer> <up> <c-o>:stopinsert<cr>:call ctrlp#vimshell#start()<cr>
+                    \ | :imap  <silent><buffer> <c-d> <Plug>(vimshell_exit)
+                    \ | :imap  <silent><buffer> <c-j> <Plug>(vimshell_enter) 
                     \ | setlocal completefunc=vimshell#complete#omnifunc omnifunc=vimshell#complete#omnifunc 
                     \ buftype= nonu nornu 
                     \ | call vimshell#altercmd#define('g', 'git') 
@@ -232,14 +232,14 @@ let g:cursorword = 0
 "remove mapping of * and # in mark.vim
 nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
 nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
-nmap <leader>mm <Plug>MarkSet
-xmap <Leader>mm <Plug>MarkSet
-nmap <leader>mr <Plug>MarkRegex
-xmap <Leader>mr <Plug>MarkRegex
-nmap <leader>mn <Plug>MarkClear
-xmap <leader>mn <Plug>MarkClear
-nmap <leader>m? <Plug>MarkSearchAnyPrev
-nmap <leader>m/ <Plug>MarkSearchAnyNext
+nmap  <silent><leader>mm <Plug>MarkSet
+xmap  <silent><Leader>mm <Plug>MarkSet
+nmap  <silent><leader>mr <Plug>MarkRegex
+xmap  <silent><Leader>mr <Plug>MarkRegex
+nmap  <silent><leader>mn <Plug>MarkClear
+xmap  <silent><leader>mn <Plug>MarkClear
+nmap  <silent><leader>m? <Plug>MarkSearchAnyPrev
+nmap  <silent><leader>m/ <Plug>MarkSearchAnyNext
 "}}}
 " Quickrun {{{
 if te#env#SupportFloatingWindows() == 1
@@ -257,19 +257,19 @@ let g:quickrun_config = {
 endif
 
 let g:quickrun_no_default_key_mappings = 1
-map <F6> <Plug>(quickrun)
-vnoremap <F6> :'<,'>QuickRun<cr>
+map  <silent><F6> <Plug>(quickrun)
+vnoremap  <silent><F6> :'<,'>QuickRun<cr>
 " run cunrrent file
-nmap <leader>yr <Plug>(quickrun)
+nmap  <silent><leader>yr <Plug>(quickrun)
 " run selection text
-vnoremap <leader>yr :'<,'>QuickRun<cr>
+vnoremap  <silent><leader>yr :'<,'>QuickRun<cr>
 " }}}
 " Misc {{{
 if te#env#SupportAsync()
     let g:love_support_option=['termguicolors']
 endif
 " Save basic setting
-nnoremap <Leader>lo :Love<cr>
+nnoremap  <silent><Leader>lo :Love<cr>
 
 if g:enable_sexy_mode.cur_val ==# 'on'
     function! SexyCommnad()
@@ -292,7 +292,7 @@ function! s:get_neomake_joblist()
         endif
 endfunction
 
-nnoremap <leader>nj :cexpr <SID>get_neomake_joblist()<cr>:botright copen<cr>
+nnoremap  <silent><leader>nj :cexpr <SID>get_neomake_joblist()<cr>:botright copen<cr>
 
 
 

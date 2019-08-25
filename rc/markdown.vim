@@ -15,11 +15,11 @@ else
 endif
 let g:vim_markdown_toc_autofit = 1
 " Markdown preview in browser
-nnoremap <leader>mp :MarkdownPreview<cr>
+nnoremap  <silent><leader>mp :MarkdownPreview<cr>
 " generate markdown TOC
-nnoremap <leader>mt :silent GenTocGFM<cr>
+nnoremap  <silent><leader>mt :silent GenTocGFM<cr>
 " update markdown TOC
-nnoremap <leader>mu :silent UpdateToc<cr>
+nnoremap  <silent><leader>mu :silent UpdateToc<cr>
 " Show toc sidebar
-nnoremap <leader>ms :Toc<cr>
+nnoremap  <silent><leader>ms :Toc<cr>
 "}}}

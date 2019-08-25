@@ -10,13 +10,13 @@ Plug 'gko/vim-coloresque'
 let g:html_use_css=1
 let g:user_emmet_leader_key = '<c-e>'
 
-autocmd filetype_group FileType javascript vnoremap <buffer> <Leader>cf :call RangeJsBeautify()<cr>
-autocmd filetype_group FileType json vnoremap <buffer>  <Leader>cf :call RangeJsonBeautify()<cr>
-autocmd filetype_group FileType html vnoremap <buffer> <Leader>cf :call RangeHtmlBeautify()<cr>
-autocmd filetype_group FileType css vnoremap <buffer> <Leader>cf :call RangeCSSBeautify()<cr>
+autocmd filetype_group FileType javascript vnoremap  <silent><buffer> <Leader>cf :call RangeJsBeautify()<cr>
+autocmd filetype_group FileType json vnoremap  <silent><buffer>  <Leader>cf :call RangeJsonBeautify()<cr>
+autocmd filetype_group FileType html vnoremap  <silent><buffer> <Leader>cf :call RangeHtmlBeautify()<cr>
+autocmd filetype_group FileType css vnoremap  <silent><buffer> <Leader>cf :call RangeCSSBeautify()<cr>
 
 " format the whole file
-autocmd filetype_group FileType javascript nnoremap <buffer>  <Leader>cf :call JsBeautify()<cr>
-autocmd filetype_group FileType json nnoremap <buffer>  <Leader>cf :call JsonBeautify()<cr>
-autocmd filetype_group FileType html nnoremap <buffer> <Leader>cf :call HtmlBeautify()<cr>
-autocmd filetype_group FileType css nnoremap <buffer> <Leader>cf :call CSSBeautify()<cr>
+autocmd filetype_group FileType javascript nnoremap  <silent><buffer>  <Leader>cf :call JsBeautify()<cr>
+autocmd filetype_group FileType json nnoremap  <silent><buffer>  <Leader>cf :call JsonBeautify()<cr>
+autocmd filetype_group FileType html nnoremap  <silent><buffer> <Leader>cf :call HtmlBeautify()<cr>
+autocmd filetype_group FileType css nnoremap  <silent><buffer> <Leader>cf :call CSSBeautify()<cr>

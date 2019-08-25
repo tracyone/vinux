@@ -468,7 +468,7 @@ function! te#utils#check_health() abort
         return
     endif
     tabnew
-    nnoremap <buffer> q :call te#utils#quit_win(0)<cr>
+    nnoremap  <silent><buffer> q :call te#utils#quit_win(0)<cr>
     setlocal wrap
     setlocal filetype=health
     setlocal conceallevel=2 concealcursor=nc

@@ -48,10 +48,10 @@ else
     Plug 'tomtom/tlib_vim', { 'on': [] } 
     Plug 'garbas/vim-snipmate', { 'on': [] } 
     call extend(g:complete_plugin.name, ['vim-addon-mw-utils', 'tlib_vim', 'vim-snipmate', 'snippets'])
-    :imap <C-J> <Plug>snipMateNextOrTrigger
-    :smap <C-J> <Plug>snipMateNextOrTrigger
-    :imap <C-k> <Plug>snipMateBack
-    :smap <C-k> <Plug>snipMateBack
+    :imap  <silent><C-J> <Plug>snipMateNextOrTrigger
+    :smap  <silent><C-J> <Plug>snipMateNextOrTrigger
+    :imap  <silent><C-k> <Plug>snipMateBack
+    :smap  <silent><C-k> <Plug>snipMateBack
 endif
 
 " Complete ------------------------{{{
@@ -72,11 +72,11 @@ if g:complete_plugin_type.cur_val ==# 'YouCompleteMe'
         call delete('.ycm_extra_conf.pyc')  | call youcompleteme#Enable() 
     endfunction
     let g:complete_plugin.enable_func=function('<SID>enable_ycm')
-    nnoremap <leader>yj :YcmCompleter GoTo<CR>
-    nnoremap <leader>yd :YcmDiags<cr>
-    nnoremap <leader>yt :YcmCompleter GetType<cr>
-    nnoremap <leader>yp :YcmCompleter GetParent<cr>
-    nnoremap <leader>yf :YcmCompleter FixIt<cr>
+    nnoremap  <silent><leader>yj :YcmCompleter GoTo<CR>
+    nnoremap  <silent><leader>yd :YcmDiags<cr>
+    nnoremap  <silent><leader>yt :YcmCompleter GetType<cr>
+    nnoremap  <silent><leader>yp :YcmCompleter GetParent<cr>
+    nnoremap  <silent><leader>yf :YcmCompleter FixIt<cr>
     "inoremap <silent><expr> ( complete_parameter#pre_complete("()")
     "smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
     "imap <c-j> <Plug>(complete_parameter#goto_next_parameter)

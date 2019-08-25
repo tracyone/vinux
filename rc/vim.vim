@@ -9,5 +9,5 @@ endif
 call te#feat#register_vim_plug_insert_setting([], 
             \ ['neco-vim'])
 
-nnoremap <Leader>vd :call te#tools#vim_get_message()<cr>
-nnoremap <Leader>sm :message<cr>
+nnoremap  <silent><Leader>vd :call te#tools#vim_get_message()<cr>
+nnoremap  <silent><Leader>sm :message<cr>

@@ -31,14 +31,14 @@ let g:startify_commands = [
 
 noremap <F8> :SSave<cr>
 " Open startify windows
-nnoremap <Leader>hh :Startify<cr>
+nnoremap  <silent><Leader>hh :Startify<cr>
 autocmd misc_group FileType startify setlocal buftype=
 " Session save 
-nnoremap <Leader>ss :SSave<cr>
+nnoremap  <silent><Leader>ss :SSave<cr>
 " Session load
-nnoremap <Leader>sl :SLoad 
+nnoremap  <silent><Leader>sl :SLoad 
 " Session delete
-nnoremap <Leader>sd :SDelete<cr>
+nnoremap  <silent><Leader>sd :SDelete<cr>
 "}}}
 "which-key {{{
 if v:version >= 704 && te#env#IsDisplay()

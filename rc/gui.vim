@@ -68,9 +68,9 @@ if te#env#IsGui()
         endif
     endfunc
     :call MenuToggle()
-    nnoremap <c-F8> :call MenuToggle()<cr>
+    nnoremap  <silent><c-F8> :call MenuToggle()<cr>
     " Menu and toolbar toggle(MacVIm and gvim)
-    nnoremap <Leader>tg :call MenuToggle()<cr>
+    nnoremap  <silent><Leader>tg :call MenuToggle()<cr>
     set cul
     "toolbar ----------------- {{{
     if has('toolbar')
@@ -142,7 +142,7 @@ if te#env#IsGui() || te#env#SupportFloatingWindows()
     amenu PopUp.&====sep===== <Nop>
 endif
 
-nnoremap <2-LeftMouse> :call te#complete#goto_def("")<cr>
+nnoremap  <silent><2-LeftMouse> :call te#complete#goto_def("")<cr>
 
 "{{{colorscheme
 let g:neosolarized_bold = 1
@@ -160,7 +160,7 @@ let g:jellybeans_overrides = {
 \}
 set background=dark
 " toggle background option.
-nnoremap <leader>tb :call te#utils#OptionToggle("bg",["dark","light"])<cr>
+nnoremap  <silent><leader>tb :call te#utils#OptionToggle("bg",["dark","light"])<cr>
 "}}}
 "}}}
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 

@@ -6,23 +6,23 @@ Plug 'chrisbra/NrrwRgn',{'on': 'NR'}
 Plug 'tracyone/utl.vim', { 'on': 'Utl'}
 
 " toggle free writing in vim (Goyo)
-nnoremap <Leader>to :Goyo<cr>
+nnoremap  <silent><Leader>to :Goyo<cr>
 " org open index.org
-nmap <Leader>ow :call <SID>open_index_org()<cr>
+nmap  <silent><Leader>ow :call <SID>open_index_org()<cr>
 " org show todo
-nmap <Leader>ot <Plug>OrgAgendaTodo
+nmap  <silent><Leader>ot <Plug>OrgAgendaTodo
 " org change todo type
-nmap <Leader>od <Plug>OrgTodoToggleInteractive
+nmap  <silent><Leader>od <Plug>OrgTodoToggleInteractive
 " org inster a new date
-nmap <Leader>os <Plug>OrgDateInsertTimestampInactiveCmdLine
+nmap  <silent><Leader>os <Plug>OrgDateInsertTimestampInactiveCmdLine
 " org new check box
-nmap <Leader>oc <Plug>OrgCheckBoxNewBelow
+nmap  <silent><Leader>oc <Plug>OrgCheckBoxNewBelow
 " org instert new url
-nmap <Leader>on <Plug>OrgHyperlinkInsert
+nmap  <silent><Leader>on <Plug>OrgHyperlinkInsert
 " org checkbox toggle
-nmap <Leader>ob <Plug>OrgCheckBoxToggle
+nmap  <silent><Leader>ob <Plug>OrgCheckBoxToggle
 " org checkbox update
-nmap <Leader>ou <Plug>OrgCheckBoxUpdate
+nmap  <silent><Leader>ou <Plug>OrgCheckBoxUpdate
 
 
 
@@ -68,7 +68,7 @@ xnoremap gl Utl o v<CR>
 " copy/yank link
 nnoremap gL Utl cl<CR>
 xnoremap gL Utl cl v<CR>
-xnoremap <Leader>nl :NR<cr>
-nnoremap <Leader>nl vip:NR<cr>
-nnoremap <Leader>nw :NW<cr>
+xnoremap  <silent><Leader>nl :NR<cr>
+nnoremap  <silent><Leader>nl vip:NR<cr>
+nnoremap  <silent><Leader>nw :NW<cr>
 

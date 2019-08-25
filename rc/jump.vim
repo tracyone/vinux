@@ -4,26 +4,26 @@ if g:fuzzysearcher_plugin_name.cur_val ==# 'leaderf' && te#env#SupportAsync()
     Plug 'Yggdroot/LeaderF'
     Plug 'Yggdroot/LeaderF-marks',{'on': 'LeaderfMarks'}
     " show global mark
-    nnoremap <leader>pm :LeaderfMarks<Cr>
+    nnoremap  <silent><leader>pm :LeaderfMarks<Cr>
 
     "function
-    nnoremap <c-k> :LeaderfFunction<cr>
-    nnoremap <Leader>pk :LeaderfFunction<cr>
+    nnoremap  <silent><c-k> :LeaderfFunction<cr>
+    nnoremap  <silent><Leader>pk :LeaderfFunction<cr>
     " buffer 
-    nnoremap <Leader>pb :LeaderfBuffer<Cr>
+    nnoremap  <silent><Leader>pb :LeaderfBuffer<Cr>
     " recent file 
-    nnoremap <c-l> :LeaderfMru<cr>
-    nnoremap <Leader>pr :LeaderfMru<cr>
+    nnoremap  <silent><c-l> :LeaderfMru<cr>
+    nnoremap  <silent><Leader>pr :LeaderfMru<cr>
     "file
-    nnoremap <Leader>pp :LeaderfFile<cr>
+    nnoremap  <silent><Leader>pp :LeaderfFile<cr>
     "leaderf cmd
-    nnoremap <Leader>ps :LeaderfSelf<cr>
-    nnoremap <Leader>pt :LeaderfBufTag<cr>
+    nnoremap  <silent><Leader>ps :LeaderfSelf<cr>
+    nnoremap  <silent><Leader>pt :LeaderfBufTag<cr>
     "colorsceme
-    nnoremap <Leader>pc :LeaderfColorscheme<cr>
-    nnoremap <Leader>ff :Leaderf dir<cr>
-    nnoremap <Leader>fe :Leaderf feat -e<cr>
-    nnoremap <Leader>fd :Leaderf feat<cr>
+    nnoremap  <silent><Leader>pc :LeaderfColorscheme<cr>
+    nnoremap  <silent><Leader>ff :Leaderf dir<cr>
+    nnoremap  <silent><Leader>fe :Leaderf feat -e<cr>
+    nnoremap  <silent><Leader>fd :Leaderf feat<cr>
     "CtrlP cmd
     let g:Lf_ShortcutF = '<C-P>'
     let g:Lf_ShortcutB = '<C-j>'
@@ -33,7 +33,7 @@ if g:fuzzysearcher_plugin_name.cur_val ==# 'leaderf' && te#env#SupportAsync()
     let g:Lf_StlSeparator = { 'left': '', 'right': '' }
     let g:Lf_UseMemoryCache = 0
     let g:Lf_ReverseOrder = 1
-    nnoremap <Leader><Leader> :LeaderfFile<cr>
+    nnoremap  <silent><Leader><Leader> :LeaderfFile<cr>
 let g:Lf_Extensions = {
 			\ 'dir': {
 			\       'source': function('te#leaderf#dir#source'),
@@ -66,25 +66,25 @@ elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' && te#env#SupportPy
     endfunction
     call te#feat#register_vim_enter_setting(function('<SID>source_denite_vim'))
     "keymapping for denite
-    nnoremap <c-p> :Denite file/rec<cr>
-    nnoremap <Leader><Leader> :Denite file/rec<cr>
-    nnoremap <c-j> :Denite buffer<cr>
-    nnoremap <c-l> :Denite file_mru<cr>
-    nnoremap <c-k> :Denite outline<cr>
-    nnoremap <Leader>pc :Denite colorscheme -post-action=open<cr>
-    nnoremap <Leader>ff :Denite file<cr>
+    nnoremap  <silent><c-p> :Denite file/rec<cr>
+    nnoremap  <silent><Leader><Leader> :Denite file/rec<cr>
+    nnoremap  <silent><c-j> :Denite buffer<cr>
+    nnoremap  <silent><c-l> :Denite file_mru<cr>
+    nnoremap  <silent><c-k> :Denite outline<cr>
+    nnoremap  <silent><Leader>pc :Denite colorscheme -post-action=open<cr>
+    nnoremap  <silent><Leader>ff :Denite file<cr>
     "mru
-    nnoremap <Leader>pr :Denite file_mru<cr>
+    nnoremap  <silent><Leader>pr :Denite file_mru<cr>
     "file
-    nnoremap <Leader>pp :Denite file/rec<cr>
+    nnoremap  <silent><Leader>pp :Denite file/rec<cr>
     "function
-    nnoremap <Leader>pp :Denite outline<cr>
+    nnoremap  <silent><Leader>pp :Denite outline<cr>
     "vim help
-    nnoremap <Leader>ph :Denite help<cr>
+    nnoremap  <silent><Leader>ph :Denite help<cr>
     "command history
-    nnoremap <Leader>qc :Denite command_history<cr>
+    nnoremap  <silent><Leader>qc :Denite command_history<cr>
     "fly on grep
-    nnoremap <Leader>pf :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
+    nnoremap  <silent><Leader>pf :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
 elseif g:fuzzysearcher_plugin_name.cur_val ==# 'fzf'
     execute 'source '.$VIMFILES.'/rc/fzf.vim'
 else
@@ -103,10 +103,10 @@ if get(g:,'feat_enable_airline') == 0
     let g:buftabline_indicators=1
 endif
 Plug 'ronakg/quickr-preview.vim', { 'for': ['qf']}
-autocmd filetype_group FileType qf nmap <buffer> <down> <down><plug>(quickr_preview)
-autocmd filetype_group FileType qf nmap <buffer> <up> <up><plug>(quickr_preview)
+autocmd filetype_group FileType qf nmap  <silent><buffer> <down> <down><plug>(quickr_preview)
+autocmd filetype_group FileType qf nmap  <silent><buffer> <up> <up><plug>(quickr_preview)
 let g:quickr_preview_keymaps = 0
-autocmd filetype_group FileType qf nmap <buffer> <Space><Space>  <plug>(quickr_preview)
+autocmd filetype_group FileType qf nmap  <silent><buffer> <Space><Space>  <plug>(quickr_preview)
 " }}}
 " Matchit.vim {{{
 "extend %
@@ -119,25 +119,25 @@ set matchpairs+=":"
 map W <Plug>(easymotion-lineforward)
 map B <Plug>(easymotion-linebackward)
 " MultiWindow easymotion for word
-nmap <Leader>jw <Plug>(easymotion-overwin-w)
-xmap <Leader>jw <Plug>(easymotion-bd-w)
-omap <Leader>jw <Plug>(easymotion-bd-w)
+nmap  <silent><Leader>jw <Plug>(easymotion-overwin-w)
+xmap  <silent><Leader>jw <Plug>(easymotion-bd-w)
+omap  <silent><Leader>jw <Plug>(easymotion-bd-w)
 " Multi Input Find Motion:s
-nmap <Leader>js <Plug>(easymotion-sn)
-xmap <Leader>js <Plug>(easymotion-sn)
-omap <Leader>js <Plug>(easymotion-sn)
+nmap  <silent><Leader>js <Plug>(easymotion-sn)
+xmap  <silent><Leader>js <Plug>(easymotion-sn)
+omap  <silent><Leader>js <Plug>(easymotion-sn)
 " Multi Input Find Motion:t
-nmap <Leader>jt <Plug>(easymotion-tn)
-xmap <Leader>jt <Plug>(easymotion-tn)
-omap <Leader>jt <Plug>(easymotion-tn)
+nmap  <silent><Leader>jt <Plug>(easymotion-tn)
+xmap  <silent><Leader>jt <Plug>(easymotion-tn)
+omap  <silent><Leader>jt <Plug>(easymotion-tn)
 " MultiWindow easymotion for line
-nmap <Leader>jl <Plug>(easymotion-overwin-line)
-xmap <Leader>jl <Plug>(easymotion-bd-jk)
-omap <Leader>jl <Plug>(easymotion-bd-jk)
+nmap  <silent><Leader>jl <Plug>(easymotion-overwin-line)
+xmap  <silent><Leader>jl <Plug>(easymotion-bd-jk)
+omap  <silent><Leader>jl <Plug>(easymotion-bd-jk)
 " MultiWindow easymotion for char
-nmap <Leader>jj <Plug>(easymotion-overwin-f)
-xmap <Leader>jj <Plug>(easymotion-bd-f)
-omap <Leader>jj <Plug>(easymotion-bd-f)
+nmap  <silent><Leader>jj <Plug>(easymotion-overwin-f)
+xmap  <silent><Leader>jj <Plug>(easymotion-bd-f)
+omap  <silent><Leader>jj <Plug>(easymotion-bd-f)
 map <LocalLeader><LocalLeader> <Plug>(easymotion-prefix)
 
 let g:EasyMotion_startofline = 0
@@ -152,19 +152,19 @@ let g:bookmark_sign = '>>'
 let g:bookmark_annotation_sign = '##'
 let g:bookmark_auto_close = 1
 "Bookmark annotate
-nnoremap <leader>mi :BookmarkAnnotate<CR>
+nnoremap  <silent><leader>mi :BookmarkAnnotate<CR>
 "Bookmark toggle
-nnoremap <leader>ma :BookmarkToggle<cr>
+nnoremap  <silent><leader>ma :BookmarkToggle<cr>
 "Bookmark annotate 
-vnoremap <leader>mi :<c-u>exec ':BookmarkAnnotate '.getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>
+vnoremap  <silent><leader>mi :<c-u>exec ':BookmarkAnnotate '.getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]<cr>
 "Bookmark clear
-nnoremap <leader>mc :BookmarkClear<cr>
+nnoremap  <silent><leader>mc :BookmarkClear<cr>
 "Bookmark show all
-nnoremap <leader>mb :BookmarkShowAll<CR>
+nnoremap  <silent><leader>mb :BookmarkShowAll<CR>
 " }}}
 " Misc {{{
 let g:SignatureEnabledAtStartup=1
 let g:choosewin_overlay_enable = 1
 " Choose windows
-nmap <Leader>wc <Plug>(choosewin)
+nmap  <silent><Leader>wc <Plug>(choosewin)
 " }}}

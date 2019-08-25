@@ -120,10 +120,10 @@ function! te#plug#list() abort
         return
     endif
     tabnew
-    nnoremap <buffer> q :call te#utils#quit_win(0)<cr>
-    nnoremap <buffer> <2-LeftMouse> :call te#plug#open_doc()<cr>
-    nnoremap <buffer> <s-LeftMouse> :call te#plug#browse_plugin_url()<cr>
-    nnoremap <buffer> <RightMouse> :call te#plug#open_plugin_dir(1)<cr>
+    nnoremap  <silent><buffer> q :call te#utils#quit_win(0)<cr>
+    nnoremap  <silent><buffer> <2-LeftMouse> :call te#plug#open_doc()<cr>
+    nnoremap  <silent><buffer> <s-LeftMouse> :call te#plug#browse_plugin_url()<cr>
+    nnoremap  <silent><buffer> <RightMouse> :call te#plug#open_plugin_dir(1)<cr>
     setlocal wrap
     setlocal mouse=a
     setlocal conceallevel=2 concealcursor=nc

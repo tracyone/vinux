@@ -2,42 +2,42 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 "buffer
-nnoremap <c-j> :Buffers<Cr>
-nnoremap <Leader>fw :Windows<cr>
+nnoremap  <silent><c-j> :Buffers<Cr>
+nnoremap  <silent><Leader>fw :Windows<cr>
 "colorsceme
-nnoremap <Leader>pc :Colors<cr>
+nnoremap  <silent><Leader>pc :Colors<cr>
 "file cmd
-nnoremap <Leader><Leader> :Files<cr>
+nnoremap  <silent><Leader><Leader> :Files<cr>
 "mru
-nnoremap <c-l> :History<cr>
-nnoremap <Leader>pr :History<cr>
+nnoremap  <silent><c-l> :History<cr>
+nnoremap  <silent><Leader>pr :History<cr>
 "command history
-nnoremap <leader>qc :History:<cr>
-nnoremap <leader>q/ :History/<cr>
+nnoremap  <silent><leader>qc :History:<cr>
+nnoremap  <silent><leader>q/ :History/<cr>
 " git log checkout
-nnoremap <Leader>pgc :Commits<cr>
-nnoremap <Leader>ps :Snippets<cr>
+nnoremap  <silent><Leader>pgc :Commits<cr>
+nnoremap  <silent><Leader>ps :Snippets<cr>
 "vim help
-nnoremap <Leader>ph :Helptags<cr>
+nnoremap  <silent><Leader>ph :Helptags<cr>
 "spacemacs :SPC ff
-nnoremap <Leader>ff :call te#fzf#dir#start()<cr>
+nnoremap  <silent><Leader>ff :call te#fzf#dir#start()<cr>
 "feature enable
-nnoremap <Leader>fe :call te#fzf#feat#start(1)<cr>
+nnoremap  <silent><Leader>fe :call te#fzf#feat#start(1)<cr>
 "feature disable
-nnoremap <Leader>fd :call te#fzf#feat#start(0)<cr>
+nnoremap  <silent><Leader>fd :call te#fzf#feat#start(0)<cr>
 
 if !te#env#Executable('ctags')
     Plug 'tracyone/fzf-funky',{'on': 'CtrlPFunky'}
-    nnoremap <Leader>pk :CtrlPFunky<cr>
-    nnoremap <c-k> :CtrlPFunky<cr>
+    nnoremap  <silent><Leader>pk :CtrlPFunky<cr>
+    nnoremap  <silent><c-k> :CtrlPFunky<cr>
 else
-    nnoremap <Leader>pk :BTags<cr>
-    nnoremap <c-k> :BTags<cr>
+    nnoremap  <silent><Leader>pk :BTags<cr>
+    nnoremap  <silent><c-k> :BTags<cr>
 endif
 
 "ag
 if te#env#Executable('ag')
-    nnoremap <Leader>pf :Ag<cr>
+    nnoremap  <silent><Leader>pf :Ag<cr>
     let s:fzf_custom_command = 'ag --hidden -l --nocolor --nogroup '.'
                 \ --ignore "*.[odODaA]"
                 \ --ignore "*.exe"
@@ -51,7 +51,7 @@ if te#env#Executable('ag')
     let $FZF_DEFAULT_COMMAND=s:fzf_custom_command
 elseif te#env#Executable('rg')
     let s:fzf_custom_command = 'rg --hidden --files --color=never --glob "!.git"'
-    nnoremap <Leader>pf :Rg<cr>
+    nnoremap  <silent><Leader>pf :Rg<cr>
     let $FZF_DEFAULT_COMMAND=s:fzf_custom_command
 endif
 

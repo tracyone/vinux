@@ -6,8 +6,8 @@ Plug 'johngrib/vim-game-snake', {'on': 'VimGameSnake'}
 
 
 " open calendar
-nnoremap <Leader>ad :Calendar<cr>
-nnoremap <Leader>ab :Thumbnail<cr>
+nnoremap  <silent><Leader>ad :Calendar<cr>
+nnoremap  <silent><Leader>ab :Thumbnail<cr>
 
 if !te#env#SupportTimer()
     :finish
@@ -20,7 +20,7 @@ function! s:fun_setting()
     let g:screensaver_password = 1
     let s:password=strftime('%Y%m%d')
     silent! call screensaver#source#password#set(sha256(s:password))
-    nnoremap <Leader>ar :call <SID>enter_screen_saver(0)<cr>
+    nnoremap  <silent><Leader>ar :call <SID>enter_screen_saver(0)<cr>
 endfunction
 call te#feat#register_vim_enter_setting(function('<SID>fun_setting'))
 

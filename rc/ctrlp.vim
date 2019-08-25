@@ -107,42 +107,42 @@ let g:ctrlp_funky_matchtype = 'path'
 
 "{{{ keymapping
 
-nnoremap <c-k> :call <SID>ctrlp_funky()<cr>
-nnoremap <c-j> :CtrlPBuffer<Cr>
-nnoremap <leader>ti :call te#utils#OptionToggle('g:ctrlp_search_hidden',["", "--hidden"])<cr>:call <SID>update_ctrlp_command()<cr>
+nnoremap  <silent><c-k> :call <SID>ctrlp_funky()<cr>
+nnoremap  <silent><c-j> :CtrlPBuffer<Cr>
+nnoremap  <silent><leader>ti :call te#utils#OptionToggle('g:ctrlp_search_hidden',["", "--hidden"])<cr>:call <SID>update_ctrlp_command()<cr>
 " show global mark
-nnoremap <leader>pm :SignatureListGlobalMarks<Cr>
+nnoremap  <silent><leader>pm :SignatureListGlobalMarks<Cr>
 " ctrlp buffer 
-nnoremap <Leader>pb :CtrlPBuffer<Cr>
-nnoremap <c-l> :CtrlPMRUFiles<cr>
+nnoremap  <silent><Leader>pb :CtrlPBuffer<Cr>
+nnoremap  <silent><c-l> :CtrlPMRUFiles<cr>
 "CtrlP mru
-nnoremap <Leader>pr :CtrlPMRUFiles<cr>
+nnoremap  <silent><Leader>pr :CtrlPMRUFiles<cr>
 "CtrlP file
-nnoremap <Leader>pp :CtrlP<cr>
+nnoremap  <silent><Leader>pp :CtrlP<cr>
 " narrow the list down with a word under cursor
 "CtrlP function 
-nnoremap <Leader>pU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+nnoremap  <silent><Leader>pU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 "CtrlP colorsceme
-nnoremap <Leader>pc :call te#ctrlp#colorscheme#start()<cr>
+nnoremap  <silent><Leader>pc :call te#ctrlp#colorscheme#start()<cr>
 "CtrlP function
-nnoremap <Leader>pk :CtrlPFunky<cr>
+nnoremap  <silent><Leader>pk :CtrlPFunky<cr>
 "CtrlP cmd
-nnoremap <Leader><Leader> :CtrlP<cr>
+nnoremap  <silent><Leader><Leader> :CtrlP<cr>
 "spacemacs :SPC ff
-nnoremap <Leader>ff :call te#ctrlp#dir#start()<cr>
+nnoremap  <silent><Leader>ff :call te#ctrlp#dir#start()<cr>
 "CtrlP git branch
-nnoremap <Leader>pgb :call te#ctrlp#git#start(1)<cr>
+nnoremap  <silent><Leader>pgb :call te#ctrlp#git#start(1)<cr>
 "CtrlP git show diff of specified commit
-nnoremap <Leader>pgl :call te#ctrlp#git#start(2)<cr>
+nnoremap  <silent><Leader>pgl :call te#ctrlp#git#start(2)<cr>
 "CtrlP git log checkout
-nnoremap <Leader>pgc :call te#ctrlp#git#start(3)<cr>
+nnoremap  <silent><Leader>pgc :call te#ctrlp#git#start(3)<cr>
 "CtrlP git remote branch
-nnoremap <Leader>pgr :call te#ctrlp#git#start(4)<cr>
+nnoremap  <silent><Leader>pgr :call te#ctrlp#git#start(4)<cr>
 "vim help
-nnoremap <Leader>ph :CtrlPHelp<cr>
-nnoremap <Leader>fe :call te#ctrlp#feat#start(1)<cr>
-nnoremap <Leader>fd :call te#ctrlp#feat#start(0)<cr>
+nnoremap  <silent><Leader>ph :CtrlPHelp<cr>
+nnoremap  <silent><Leader>fe :call te#ctrlp#feat#start(1)<cr>
+nnoremap  <silent><Leader>fd :call te#ctrlp#feat#start(0)<cr>
 
-nnoremap <Leader>qc :call te#ctrlp#history#start(':')<cr>
-nnoremap <Leader>q/ :call te#ctrlp#history#start('/')<cr>
+nnoremap  <silent><Leader>qc :call te#ctrlp#history#start(':')<cr>
+nnoremap  <silent><Leader>q/ :call te#ctrlp#history#start('/')<cr>
 "}}}

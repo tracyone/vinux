@@ -104,22 +104,22 @@ cmap   <script> <C-T> <SID>transposition<SID>transpose
 call te#meta#map('xnoremap','j',":m '>+1<CR>gv=gv")
 call te#meta#map('xnoremap','k',":m '<-2<CR>gv=gv")
 
-xnoremap <Leader>mj :m '>+1<CR>gv=gv
-xnoremap <Leader>mk :m '<-2<CR>gv=gv
-nnoremap <Leader>mj :m .+1<CR>==
-nnoremap <leader>mk :m .-2<CR>==
+xnoremap  <silent><Leader>mj :m '>+1<CR>gv=gv
+xnoremap  <silent><Leader>mk :m '<-2<CR>gv=gv
+nnoremap  <silent><Leader>mj :m .+1<CR>==
+nnoremap  <silent><leader>mk :m .-2<CR>==
 
 " }}}
 "update the _vimrc
-nnoremap <leader>so :call te#utils#source_vimrc($MYVIMRC)<cr>
+nnoremap  <silent><leader>so :call te#utils#source_vimrc($MYVIMRC)<cr>
 "open the vimrc in tab
-nnoremap <leader>vc :call te#feat#edit_config()<cr>
+nnoremap  <silent><leader>vc :call te#feat#edit_config()<cr>
 "open quickfix windows
-nnoremap <leader>qf :botright copen<cr>
+nnoremap  <silent><leader>qf :botright copen<cr>
 "open location windows
-nnoremap <leader>ql :botright lopen<cr>
-nnoremap <leader>qc q:
-nnoremap <leader>q/ q/
+nnoremap  <silent><leader>ql :botright lopen<cr>
+nnoremap  <silent><leader>qc q:
+nnoremap  <silent><leader>q/ q/
 
 "clear search result
 
@@ -165,68 +165,68 @@ nnoremap <silent> <c-F7> :call te#utils#goto_cur_file(2)<cr>
 
 nnoremap <F7> :call te#utils#OptionToggle('ff',['dos', 'unix'])<cr>
 " dos to unix or unix to dos
-nnoremap <Leader>td :call te#utils#OptionToggle('ff',['dos', 'unix'])<cr>
+nnoremap  <silent><Leader>td :call te#utils#OptionToggle('ff',['dos', 'unix'])<cr>
 " open url on cursor with default browser
-nnoremap <leader>ol :call te#utils#open_url("")<cr>
+nnoremap  <silent><leader>ol :call te#utils#open_url("")<cr>
 " linu number toggle
-nnoremap <Leader>tn :call te#utils#nu_toggle()<cr>
+nnoremap  <silent><Leader>tn :call te#utils#nu_toggle()<cr>
 " realtime underline word toggle
-nnoremap <leader>th :call te#utils#OptionToggle("g:cursorword",[0,1])<cr>
+nnoremap  <silent><leader>th :call te#utils#OptionToggle("g:cursorword",[0,1])<cr>
 " next buffer or tab
-nnoremap <Leader>bn :call te#utils#tab_buf_switch(-1)<cr>
+nnoremap  <silent><Leader>bn :call te#utils#tab_buf_switch(-1)<cr>
 " previous buffer or tab
-nnoremap <Leader>bp :call te#utils#tab_buf_switch(0)<cr>
+nnoremap  <silent><Leader>bp :call te#utils#tab_buf_switch(0)<cr>
 " delete buffer
-nnoremap <Leader>bk :bdelete<cr>
+nnoremap  <silent><Leader>bk :bdelete<cr>
 "buffer only
-nnoremap <leader>bo :call te#tools#buf_only('', '')<cr>
+nnoremap  <silent><leader>bo :call te#tools#buf_only('', '')<cr>
 " save file
-nnoremap <Leader>fs :call te#utils#SaveFiles()<cr>
+nnoremap  <silent><Leader>fs :call te#utils#SaveFiles()<cr>
 " save all
-nnoremap <Leader>fS :wa<cr>
+nnoremap  <silent><Leader>fS :wa<cr>
 " manpage or vimhelp on current curosr word
-nnoremap <Leader>hm :call te#utils#find_mannel()<cr>
+nnoremap  <silent><Leader>hm :call te#utils#find_mannel()<cr>
 " open eval.txt
-nnoremap <Leader>he :tabnew<cr>:h eval.txt<cr>:only<cr>
+nnoremap  <silent><Leader>he :tabnew<cr>:h eval.txt<cr>:only<cr>
 " open vim script help
-nnoremap <Leader>hp :tabnew<cr>:h usr_41.txt<cr>:only<cr>
+nnoremap  <silent><Leader>hp :tabnew<cr>:h usr_41.txt<cr>:only<cr>
 " open vim function list
-nnoremap <Leader>hf :tabnew<cr>:h function-list<cr>:only<cr>
+nnoremap  <silent><Leader>hf :tabnew<cr>:h function-list<cr>:only<cr>
 
 "update t_vim
 
-nnoremap <Leader>ud :cd $VIMFILES<cr>:call te#utils#run_command('git fetch --all',function('te#tools#update_vinux'))<cr>
+nnoremap  <silent><Leader>ud :cd $VIMFILES<cr>:call te#utils#run_command('git fetch --all',function('te#tools#update_vinux'))<cr>
     
 
 " quit all
-nnoremap <Leader>qa :call te#utils#quit_win(1)<cr>
-nnoremap <Leader>qq :call te#utils#quit_win(0)<cr>
+nnoremap  <silent><Leader>qa :call te#utils#quit_win(1)<cr>
+nnoremap  <silent><Leader>qq :call te#utils#quit_win(0)<cr>
 " quit current tab
-nnoremap <Leader>qw :tabclose<cr>
+nnoremap  <silent><Leader>qw :tabclose<cr>
 " quit all without save
-nnoremap <Leader>qQ :qa!<cr>
+nnoremap  <silent><Leader>qQ :qa!<cr>
 " save and quit all
-nnoremap <Leader>qs :wqa<cr>
+nnoremap  <silent><Leader>qs :wqa<cr>
 " switch to last open tab or buffer
-nnoremap <Leader><tab> :call te#utils#tab_buf_switch(-2)<cr>
+nnoremap  <silent><Leader><tab> :call te#utils#tab_buf_switch(-2)<cr>
 " tab 1
-nnoremap <leader>1 :call te#utils#tab_buf_switch(1)<cr>
+nnoremap  <silent><leader>1 :call te#utils#tab_buf_switch(1)<cr>
 " tab 2
-nnoremap <leader>2 :call te#utils#tab_buf_switch(2)<cr>
+nnoremap  <silent><leader>2 :call te#utils#tab_buf_switch(2)<cr>
 " tab 3
-nnoremap  <leader>3 :call te#utils#tab_buf_switch(3)<cr>
+nnoremap   <silent><leader>3 :call te#utils#tab_buf_switch(3)<cr>
 " tab 4
-nnoremap  <leader>4 :call te#utils#tab_buf_switch(4)<cr>
+nnoremap   <silent><leader>4 :call te#utils#tab_buf_switch(4)<cr>
 " tab 5
-nnoremap  <leader>5 :call te#utils#tab_buf_switch(5)<cr>
+nnoremap   <silent><leader>5 :call te#utils#tab_buf_switch(5)<cr>
 " tab 6
-nnoremap  <leader>6 :call te#utils#tab_buf_switch(6)<cr>
+nnoremap   <silent><leader>6 :call te#utils#tab_buf_switch(6)<cr>
 " tab 7
-nnoremap  <leader>7 :call te#utils#tab_buf_switch(7)<cr>
+nnoremap   <silent><leader>7 :call te#utils#tab_buf_switch(7)<cr>
 " tab 8
-nnoremap  <leader>8 :call te#utils#tab_buf_switch(8)<cr>
+nnoremap   <silent><leader>8 :call te#utils#tab_buf_switch(8)<cr>
 " tab 9
-nnoremap  <leader>9 :call te#utils#tab_buf_switch(9)<cr>
+nnoremap   <silent><leader>9 :call te#utils#tab_buf_switch(9)<cr>
 
 "switch previous tab or buftab
 nnoremap <silent> <Left> :call te#utils#tab_buf_switch(0)<cr>
@@ -239,80 +239,80 @@ nnoremap <silent> <Right> :call te#utils#tab_buf_switch(-1)<cr>
 "nnoremap <Down> <C-f>
 
 " vertical open window
-nnoremap <Leader>wv :vsp<cr>
+nnoremap  <silent><Leader>wv :vsp<cr>
 " vertical open window then focus the new one
-nnoremap <Leader>wV :vsp<cr><C-w>l
+nnoremap  <silent><Leader>wV :vsp<cr><C-w>l
 " horizontal open window 
-nnoremap <Leader>ws :sp<cr>
+nnoremap  <silent><Leader>ws :sp<cr>
 " horizontal open window then focus the new one
-nnoremap <Leader>wS :sp<cr><C-w>j
+nnoremap  <silent><Leader>wS :sp<cr><C-w>j
 " maxsize of current windows
-nnoremap <Leader>wo :only<cr>
+nnoremap  <silent><Leader>wo :only<cr>
 " quit current windows
-nnoremap <Leader>wd :q<cr>
+nnoremap  <silent><Leader>wd :q<cr>
 " switch between two windows alternately
-nnoremap <Leader>w<tab> <C-w><C-p>
+nnoremap  <silent><Leader>w<tab> <C-w><C-p>
 " switch between two windows.
-nnoremap <Leader>ww <C-w><C-w>
+nnoremap  <silent><Leader>ww <C-w><C-w>
 " move to left win
-nnoremap <Leader>wh <C-w>h
+nnoremap  <silent><Leader>wh <C-w>h
 " move to right win
-nnoremap <Leader>wl <C-w>l
+nnoremap  <silent><Leader>wl <C-w>l
 " move down win
-nnoremap <Leader>wj <C-w>j
+nnoremap  <silent><Leader>wj <C-w>j
 " move up win
-nnoremap <Leader>wk <C-w>k
+nnoremap  <silent><Leader>wk <C-w>k
 " move to very left win
-nnoremap <Leader>wH <C-w>H
+nnoremap  <silent><Leader>wH <C-w>H
 " move to very right win
-nnoremap <Leader>wL <C-w>L
+nnoremap  <silent><Leader>wL <C-w>L
 " move to very down win
-nnoremap <Leader>wJ <C-w>J
+nnoremap  <silent><Leader>wJ <C-w>J
 " move to very up win
-nnoremap <Leader>wK <C-w>K
+nnoremap  <silent><Leader>wK <C-w>K
 " rotate the window backward
-nnoremap <Leader>wR <C-w>R
+nnoremap  <silent><Leader>wR <C-w>R
 " rotate the window forward
-nnoremap <Leader>wr <C-w>r
+nnoremap  <silent><Leader>wr <C-w>r
 " Move the current window to a new tab page.
-nnoremap <Leader>wt <C-w>T
+nnoremap  <silent><Leader>wt <C-w>T
 " toggle focus coding
-nnoremap <leader>tv :call te#utils#focus_coding()<cr>
+nnoremap  <silent><leader>tv :call te#utils#focus_coding()<cr>
 " toggle paste option
 " toggle paste option
-nnoremap <leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
+nnoremap  <silent><leader>tp :call te#utils#OptionToggle("paste",[1,0])<cr>
 " Toggle termguicolors
-nnoremap <Leader>tl :call te#utils#OptionToggle('termguicolors',[1,0])<cr>
+nnoremap  <silent><Leader>tl :call te#utils#OptionToggle('termguicolors',[1,0])<cr>
 "textwidth between 0 and 80
-nnoremap <Leader>tw :call te#utils#OptionToggle('textwidth',[80,0])<cr>
+nnoremap  <silent><Leader>tw :call te#utils#OptionToggle('textwidth',[80,0])<cr>
 " cursorline toggle
-nnoremap <Leader>tc :call te#utils#OptionToggle('cursorline',[1,0])<cr>
+nnoremap  <silent><Leader>tc :call te#utils#OptionToggle('cursorline',[1,0])<cr>
 " feature enable
-"nnoremap <Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
-nnoremap <Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
-nnoremap <Leader>fd :call te#feat#feat_dyn_enable(0)<cr>
+"nnoremap  <silent><Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
+nnoremap  <silent><Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
+nnoremap  <silent><Leader>fd :call te#feat#feat_dyn_enable(0)<cr>
 
 " feature update
-nnoremap <Leader>fu :call te#feat#gen_feature_vim(0)<cr>
+nnoremap  <silent><Leader>fu :call te#feat#gen_feature_vim(0)<cr>
 " reset feature
-nnoremap <Leader>fr :call te#feat#gen_feature_vim(1)<cr>
+nnoremap  <silent><Leader>fr :call te#feat#gen_feature_vim(1)<cr>
 
-nnoremap <Leader>dj <c-u>
-nnoremap <Leader>dd <c-d>
+nnoremap  <silent><Leader>dj <c-u>
+nnoremap  <silent><Leader>dd <c-d>
 nnoremap <silent><Leader>pw :call te#utils#EchoWarning(getcwd())<cr>
 " cd to any plugin directory
-nnoremap <Leader>cp :call te#utils#cd_to_plugin(g:vinux_plugin_dir.cur_val)<cr>
+nnoremap  <silent><Leader>cp :call te#utils#cd_to_plugin(g:vinux_plugin_dir.cur_val)<cr>
 nnoremap <silent> <BS> <C-o>
 "newtab
-nnoremap <Leader>nt :tabnew<cr>
+nnoremap  <silent><Leader>nt :tabnew<cr>
 
 "generate tags and cscope
-nnoremap <LocalLeader>u :call te#pg#gen_cs_out()<cr>
+nnoremap  <silent><LocalLeader>u :call te#pg#gen_cs_out()<cr>
 
-nnoremap <leader>wm :call te#tools#max_win()<cr>
+nnoremap  <silent><leader>wm :call te#tools#max_win()<cr>
 
 "run command from input
-nnoremap <leader>rc :call te#utils#run_command("", 1)<cr>
+nnoremap  <silent><leader>rc :call te#utils#run_command("", 1)<cr>
             
 nmap s <Sop>
 nnoremap sj za
@@ -344,11 +344,11 @@ elseif te#env#SupportTerminal()
 endif
 
 " Open plug status windows
-nnoremap <Leader>ps :PlugStatus<cr>
+nnoremap  <silent><Leader>ps :PlugStatus<cr>
 " update plugin
-nnoremap <Leader>pu :PlugUpdate<cr>
+nnoremap  <silent><Leader>pu :PlugUpdate<cr>
 " list plugins
-nnoremap <Leader>pl :call te#plug#list()<cr>
+nnoremap  <silent><Leader>pl :call te#plug#list()<cr>
 "checkhealth
 nnoremap <silent> <Leader>ch :call te#utils#check_health()<cr>
 " Open vimshell or neovim's emulator in split window
