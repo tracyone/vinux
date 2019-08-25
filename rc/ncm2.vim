@@ -45,7 +45,7 @@ function! s:ncm2_setup()
     " enable ncm2 for all buffers
 
     " IMPORTANT: :help Ncm2PopupOpen for more information
-    set completeopt=noinsert,menuone,noselect
+    set completeopt+=noinsert,menuone,noselect
     inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
     " Use <TAB> to select the popup menu:
