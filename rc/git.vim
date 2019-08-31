@@ -194,7 +194,7 @@ if g:git_plugin_name.cur_val ==# 'gina.vim' && te#env#SupportAsync()
 else
     "fallback option
     let g:git_plugin_name.cur_val = 'vim-fugitive'
-    Plug 'tracyone/vim-fugitive'
+    Plug 'tpope/vim-fugitive'
     Plug 'gregsexton/gitv', { 'on': 'Gitv' }
     Plug 'sodapopcan/vim-twiggy', { 'on': 'Twiggy' }
     let g:fugitive_no_maps=0
