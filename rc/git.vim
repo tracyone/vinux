@@ -201,7 +201,7 @@ else
     nnoremap  <silent><Leader>sb :Twiggy<cr>
     nnoremap  <silent><F3> :only<cr>:Gstatus<cr>
     " Open git status window
-    nnoremap  <silent><Leader>gs :only<cr>:Gstatus<cr>gg<C-n>
+    nnoremap  <silent><Leader>gs :silent! only<cr>:Gstatus<cr>:call feedkeys(']]')<cr>
     " Open git log( browser mode)
     " Open git log(file mode)
     nnoremap  <silent><Leader>gL :Gitv! --all<cr>
