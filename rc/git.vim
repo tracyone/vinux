@@ -199,7 +199,7 @@ else
     Plug 'sodapopcan/vim-twiggy', { 'on': 'Twiggy' }
     let g:fugitive_no_maps=0
     nnoremap  <silent><Leader>sb :Twiggy<cr>
-    nnoremap  <silent><F3> :only<cr>:Gstatus<cr>
+    nnoremap  <silent><F3> :silent! only<cr>:Gstatus<cr>:call feedkeys(']]')<cr>
     " Open git status window
     nnoremap  <silent><Leader>gs :silent! only<cr>:Gstatus<cr>:call feedkeys(']]')<cr>
     " Open git log( browser mode)

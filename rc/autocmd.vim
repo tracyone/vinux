@@ -33,6 +33,7 @@ augroup filetype_group
     autocmd BufRead,BufNewFile *.fex setlocal filetype=dosini
 
     autocmd FileType crontab setlocal nobackup nowritebackup
+    autocmd FileType fugitiveblame nnoremap <silent><buffer> q :call feedkeys('gq')<cr>
 
     " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
     autocmd FileType gitcommit setlocal nofoldenable cursorline
