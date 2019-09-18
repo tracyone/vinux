@@ -102,11 +102,6 @@ if get(g:,'feat_enable_airline') == 0
     let g:buftabline_show=1
     let g:buftabline_indicators=1
 endif
-Plug 'ronakg/quickr-preview.vim', { 'for': ['qf']}
-autocmd filetype_group FileType qf nmap  <silent><buffer> <down> <down><plug>(quickr_preview)
-autocmd filetype_group FileType qf nmap  <silent><buffer> <up> <up><plug>(quickr_preview)
-let g:quickr_preview_keymaps = 0
-autocmd filetype_group FileType qf nmap  <silent><buffer> <Space><Space>  <plug>(quickr_preview)
 " }}}
 " Matchit.vim {{{
 "extend %

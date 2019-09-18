@@ -369,4 +369,4 @@ call te#meta#map('nnoremap','m',':call te#tools#PreviousCursor(0)<cr>')
 call te#meta#map('nnoremap','n',':call te#tools#PreviousCursor(1)<cr>')
 nnoremap <C-\>g :call te#complete#goto_def("sp")<cr>
 nnoremap <LocalLeader>g :call te#complete#goto_def("")<cr>
-nnoremap <silent> <Enter> :call te#complete#goto_def("")<cr>
+nnoremap <expr><silent> <Enter> &buftype ==# 'quickfix' ? "\<CR>" : ":call te#complete#goto_def(\"\")\<cr>"
