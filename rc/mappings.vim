@@ -18,6 +18,7 @@ cnoremap j<Space>     j
 
 vnoremap [p "0p
 
+vmap * y:let @/ = @"<CR>
 "visual mode hit tab forward indent ,hit shift-tab backward indent
 vnoremap <TAB>  >gv  
 vnoremap <s-TAB>  <gv 

@@ -35,7 +35,6 @@ augroup filetype_group
     autocmd FileType crontab setlocal nobackup nowritebackup
     autocmd FileType fugitiveblame nnoremap <silent><buffer> q :call feedkeys('gq')<cr>
 
-    " quickfix window  s/v to open in split window,  ,gd/,jd => quickfix window => open it
     autocmd FileType gitcommit setlocal nofoldenable cursorline
     autocmd FileType qfreplace,vimcalc,man setlocal nonu nornu nofoldenable | imap <buffer> <c-d> :q<cr>
                 \ | nmap <buffer> q :bdelete<cr> | setlocal matchpairs-=<:>

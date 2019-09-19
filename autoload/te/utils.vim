@@ -660,3 +660,13 @@ function! te#utils#cd_to_plugin(path) abort
     execute 'cd '.l:plugin_name 
     call te#utils#EchoWarning('cd to '.l:plugin_name)
 endfunction
+
+function! te#utils#pedit()
+    if &buftype != 'quickfix'
+        call te#utils#EchoWarning('Not quickfix window')
+        return
+    endif
+    let l:list_index=line(".")-1
+    let l:list=getqflist()[l:list_index]
+    execute ':pedit +'.l:list.lnum." ".bufname(l:list.bufnr)
+endfunction
