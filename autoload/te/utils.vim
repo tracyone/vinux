@@ -667,6 +667,9 @@ function! te#utils#pedit()
         return
     endif
     let l:list_index=line(".")-1
-    let l:list=getqflist()[l:list_index]
-    execute ':pedit +'.l:list.lnum." ".bufname(l:list.bufnr)
+    let l:list=getqflist()
+    if len(l:list)
+        let l:list = l:list[l:list_index]
+        execute ':pedit +'.l:list.lnum." ".bufname(l:list.bufnr)
+    endif
 endfunction
