@@ -8,6 +8,7 @@ noremap  <silent><buffer> r :<C-u>:q<cr>:silent! Qfreplace<CR>:pclose<cr>
 noremap  <silent><buffer> <c-x> <C-w><Enter><C-w>K
 nnoremap  <silent><buffer> q :ccl<cr>:lcl<cr>:pclose<cr>
 nnoremap  <silent><buffer> o <CR><C-w>p
+nnoremap  <silent><buffer> <CR> <CR>:pclose<cr>
 nnoremap  <silent><buffer> p :call te#utils#pedit()<cr>
 nnoremap  <silent><buffer> <c-j> <CR><C-w>p
 nnoremap  <silent><buffer> <c-t> <C-w><CR><C-w>T
