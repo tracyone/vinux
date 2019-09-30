@@ -7,8 +7,12 @@ Plug 'maksimr/vim-jsbeautify', {'for': ['html', 'javascript', 'css', 'json', 'ht
 Plug 'tmhedberg/SimpylFold',    { 'for': 'python','do': 'pip install --user autopep8 yapf' }
 Plug 'vim-scripts/indentpython.vim', {'for': 'python'}
 Plug 'gko/vim-coloresque'
+Plug 'rbtnn/vim-coloredit', {'on': 'ColorEdit'}
 let g:html_use_css=1
 let g:user_emmet_leader_key = '<c-e>'
+
+
+nnoremap <Leader>ce :ColorEdit<cr>
 
 autocmd filetype_group FileType javascript vnoremap  <silent><buffer> <Leader>cf :call RangeJsBeautify()<cr>
 autocmd filetype_group FileType json vnoremap  <silent><buffer>  <Leader>cf :call RangeJsonBeautify()<cr>
