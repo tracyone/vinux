@@ -1,92 +1,13 @@
 " Package info {{{
 " jump to somewhere:file,mru,bookmark
 if g:fuzzysearcher_plugin_name.cur_val ==# 'leaderf' && te#env#SupportAsync()
-    Plug 'Yggdroot/LeaderF'
-    Plug 'Yggdroot/LeaderF-marks',{'on': 'LeaderfMarks'}
-    " show global mark
-    nnoremap  <silent><leader>pm :LeaderfMarks<Cr>
-
-    "function
-    nnoremap  <silent><c-k> :LeaderfFunction<cr>
-    nnoremap  <silent><Leader>pk :LeaderfFunction<cr>
-    " buffer 
-    nnoremap  <silent><Leader>pb :LeaderfBuffer<Cr>
-    " recent file 
-    nnoremap  <silent><c-l> :LeaderfMru<cr>
-    nnoremap  <silent><Leader>pr :LeaderfMru<cr>
-    "file
-    nnoremap  <silent><Leader>pp :LeaderfFile<cr>
-    "leaderf cmd
-    nnoremap  <silent><Leader>ps :LeaderfSelf<cr>
-    nnoremap  <silent><Leader>pt :LeaderfBufTag<cr>
-    "colorsceme
-    nnoremap  <silent><Leader>pc :LeaderfColorscheme<cr>
-    nnoremap  <silent><Leader>ff :Leaderf dir<cr>
-    nnoremap  <silent><Leader>fe :Leaderf feat -e<cr>
-    nnoremap  <silent><Leader>fd :Leaderf feat<cr>
-    "CtrlP cmd
-    let g:Lf_ShortcutF = '<C-P>'
-    let g:Lf_ShortcutB = '<C-j>'
-    let g:Lf_CacheDiretory=$VIMFILES
-    let g:Lf_DefaultMode='FullPath'
-    let g:Lf_StlColorscheme = 'default'
-    let g:Lf_StlSeparator = { 'left': '', 'right': '' }
-    let g:Lf_UseMemoryCache = 0
-    let g:Lf_ReverseOrder = 1
-    nnoremap  <silent><Leader><Leader> :LeaderfFile<cr>
-let g:Lf_Extensions = {
-			\ 'dir': {
-			\       'source': function('te#leaderf#dir#source'),
-			\       'accept': function('te#leaderf#dir#accept'),
-            \ 'need_exit': function('te#leaderf#dir#needExit'),
-			\       'supports_name_only': 1,
-			\       'supports_multi': 0,
-			\ },
-			\ 'feat': {
-			\       'source': function('te#leaderf#feat#source'),
-			\       'accept': function('te#leaderf#feat#accept'),
-            \ 'arguments': [
-            \  { 'name': ["-e"], 'nargs': 0, 'help': 'Enable'},
-            \ ],
-			\       'supports_name_only': 1,
-			\       'supports_multi': 0,
-			\ },
-			\}
-elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' && te#env#SupportPy3() 
-            \ && te#env#SupportAsync()
-    Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
-    Plug 'Shougo/neomru.vim'
-    if g:fuzzy_matcher_type.cur_val ==# 'cpsm'
-        Plug 'nixprime/cpsm', {'dir': g:vinux_plugin_dir.cur_val.'/cpsm_py3/',
-                    \ 'do':'PY3=ON ./install.sh'}
-    endif
-
-    function! s:source_denite_vim()
-        execute 'source '.$VIMFILES.'/rc/denite.vim'
-    endfunction
-    call te#feat#register_vim_enter_setting(function('<SID>source_denite_vim'))
-    "keymapping for denite
-    nnoremap  <silent><c-p> :Denite file/rec<cr>
-    nnoremap  <silent><Leader><Leader> :Denite file/rec<cr>
-    nnoremap  <silent><c-j> :Denite buffer<cr>
-    nnoremap  <silent><c-l> :Denite file_mru<cr>
-    nnoremap  <silent><c-k> :Denite outline<cr>
-    nnoremap  <silent><Leader>pc :Denite colorscheme -post-action=open<cr>
-    nnoremap  <silent><Leader>ff :Denite file<cr>
-    "mru
-    nnoremap  <silent><Leader>pr :Denite file_mru<cr>
-    "file
-    nnoremap  <silent><Leader>pp :Denite file/rec<cr>
-    "function
-    nnoremap  <silent><Leader>pp :Denite outline<cr>
-    "vim help
-    nnoremap  <silent><Leader>ph :Denite help<cr>
-    "command history
-    nnoremap  <silent><Leader>qc :Denite command_history<cr>
-    "fly on grep
-    nnoremap  <silent><Leader>pf :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
+    execute 'source '.$VIMFILES.'/rc/leaderf.vim'
+elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim'
+    execute 'source '.$VIMFILES.'/rc/denite.vim'
 elseif g:fuzzysearcher_plugin_name.cur_val ==# 'fzf'
     execute 'source '.$VIMFILES.'/rc/fzf.vim'
+elseif g:fuzzysearcher_plugin_name.cur_val ==# 'vim-clap'
+    execute 'source '.$VIMFILES.'/rc/vim-clap.vim'
 else
     execute 'source '.$VIMFILES.'/rc/ctrlp.vim'
 endif
