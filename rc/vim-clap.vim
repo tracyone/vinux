@@ -3,6 +3,7 @@ if !has('patch-8.1.1967') && !has('nvim-0.4')
     finish
 endif
 Plug 'liuchengxu/vim-clap', {'on':'Clap'}
+Plug 'tamago324/vim-clap-help'
 
 nnoremap <C-C> <C-[>
 
@@ -33,7 +34,7 @@ nnoremap  <silent><Leader>pgl :Clap commits<cr>
 "CtrlP git remote branch
 "nnoremap  <silent><Leader>pgr :call te#ctrlp#git#start(4)<cr>
 "vim help
-"nnoremap  <silent><Leader>ph :CtrlPHelp<cr>
+nnoremap  <silent><Leader>ph :Clap help<cr>
 "nnoremap  <silent><Leader>fe :call te#ctrlp#feat#start(1)<cr>
 "nnoremap  <silent><Leader>fd :call te#ctrlp#feat#start(0)<cr>
 
