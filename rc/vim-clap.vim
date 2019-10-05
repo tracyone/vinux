@@ -1,11 +1,10 @@
-if !has('patch-8.1.1967') && !has('nvim-0.4')
-    call te#utils#EchoWarning('vim-clap.vim require vim with patch-8.1.1967 or nvim-0.4!', 1)
+if !has('patch-8.1.2114') && !has('nvim-0.4')
+    call te#utils#EchoWarning('vim-clap.vim require vim with patch-8.1.2114 or nvim-0.4!', 1)
     finish
 endif
 Plug 'liuchengxu/vim-clap', {'on':'Clap'}
 Plug 'tamago324/vim-clap-help'
 
-nnoremap <C-C> <C-[>
 
 nnoremap  <silent><c-k> :Clap tags<cr>
 nnoremap  <silent><c-j> :Clap buffers<Cr>
