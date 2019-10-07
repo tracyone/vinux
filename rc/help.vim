@@ -123,6 +123,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'p' : "git push to selected branch ",
                     \ 's' : 'Open git status window',
                     \ 'g' : 'Gerrit push',
+                    \ 'n' : "Show git commit message of current line",
                     \ }
         let g:which_key_map.h = { 
                     \ 'name' : '+help',
