@@ -1,6 +1,6 @@
 " Package info {{{
 " jump to somewhere:file,mru,bookmark
-if g:fuzzysearcher_plugin_name.cur_val ==# 'leaderf' && te#env#SupportAsync()
+if g:fuzzysearcher_plugin_name.cur_val ==# 'leaderf' 
     execute 'source '.$VIMFILES.'/rc/leaderf.vim'
 elseif g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim'
     execute 'source '.$VIMFILES.'/rc/denite.vim'
@@ -8,8 +8,11 @@ elseif g:fuzzysearcher_plugin_name.cur_val ==# 'fzf'
     execute 'source '.$VIMFILES.'/rc/fzf.vim'
 elseif g:fuzzysearcher_plugin_name.cur_val ==# 'vim-clap'
     execute 'source '.$VIMFILES.'/rc/vim-clap.vim'
-else
-    execute 'source '.$VIMFILES.'/rc/ctrlp.vim'
+endif
+
+"fallback option
+if g:fuzzysearcher_plugin_name.cur_val ==# 'ctrlp'
+execute 'source '.$VIMFILES.'/rc/ctrlp.vim'
 endif
 
 Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',

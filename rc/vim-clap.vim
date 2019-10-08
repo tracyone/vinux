@@ -1,5 +1,6 @@
 if !has('patch-8.1.2114') && !has('nvim-0.4')
     call te#utils#EchoWarning('vim-clap.vim require vim with patch-8.1.2114 or nvim-0.4!', 1)
+    let g:fuzzysearcher_plugin_name.cur_val='ctrlp'
     finish
 endif
 Plug 'liuchengxu/vim-clap', {'on':'Clap'}

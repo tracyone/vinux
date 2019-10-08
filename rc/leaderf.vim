@@ -1,3 +1,9 @@
+
+if !has('patch-7.4.330') || !te#env#SupportAsync() || !te#env#SupportPy()
+    call te#utils#EchoWarning('leaderf require python , patch-7.4.330 and async api support!', 1)
+    let g:fuzzysearcher_plugin_name.cur_val='ctrlp'
+    finish
+endif
 Plug 'Yggdroot/LeaderF'
 Plug 'Yggdroot/LeaderF-marks',{'on': 'LeaderfMarks'}
 " show global mark

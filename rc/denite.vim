@@ -2,6 +2,7 @@ scriptencoding utf-8
 
 if !te#env#SupportPy3() ||  !te#env#SupportAsync()
     call te#utils#EchoWarning('denite.nvim require python3 and async api support!', 1)
+    let g:fuzzysearcher_plugin_name.cur_val='ctrlp'
     finish
 endif
 
