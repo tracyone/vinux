@@ -20,6 +20,10 @@ Feature:
 - Compatiable with Vim 7.3.
 - Optimize for Linux kernel and uboot development.
 
+# Todo list before next release
+
+- [] Open terminal in neovim's floating window and make it transparent
+
 # Buy me a coffee
 
 ![donation](https://cloud.githubusercontent.com/assets/4246425/24827592/553bc732-1c7f-11e7-8207-284cccbc2e5c.jpg)
