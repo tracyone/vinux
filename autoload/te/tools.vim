@@ -9,16 +9,31 @@ function! te#tools#shell_pop(option) abort
         if and(a:option, 0x04)
             :tabnew
         endif
-        "any list buffer exist or buffer is startify
-        if bufexists(expand('%')) && &filetype !=# 'startify'
-            let l:fullbuffer=0
+        if te#env#SupportFloatingWindows() == 2
+            let l:line=(38*&lines)/100
+            if  l:line < 10 | let l:line = 10 |endif
             if and(a:option, 0x01)
-                let l:line=(38*&lines)/100
-                if  l:line < 10 | let l:line = 10 |endif
-                let l:fullbuffer=1
-                execute 'rightbelow '.l:line.'split'
+                let l:row=&lines-l:line
+                let l:width=&columns
             elseif and(a:option, 0x02)
-                :botright vsplit
+                let l:row=0
+                let l:width=&columns/2
+            endif
+            let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': &columns/2-1,
+                        \ 'row': l:row, 'anchor': 'NW'}
+            let l:win_id=nvim_open_win(winbufnr(0), v:true, l:opts)
+            call nvim_win_set_option(l:win_id, 'winblend', 30)
+        else
+            if bufexists(expand('%')) && &filetype !=# 'startify'
+                let l:fullbuffer=0
+                if and(a:option, 0x01)
+                    let l:line=(38*&lines)/100
+                    if  l:line < 10 | let l:line = 10 |endif
+                    let l:fullbuffer=1
+                    execute 'rightbelow '.l:line.'split'
+                elseif and(a:option, 0x02)
+                    :botright vsplit
+                endif
             endif
         endif
     endif
