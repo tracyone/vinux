@@ -5,6 +5,7 @@ if !has('patch-8.1.2114') && !has('nvim-0.4')
 endif
 Plug 'liuchengxu/vim-clap', {'on':'Clap'}
 Plug 'tamago324/vim-clap-help'
+Plug 'liuchengxu/vista.vim', {'on':'Clap'}
 
 
 nnoremap  <silent><c-k> :Clap tags<cr>

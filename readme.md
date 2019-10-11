@@ -20,9 +20,9 @@ Feature:
 - Compatiable with Vim 7.3.
 - Optimize for Linux kernel and uboot development.
 
-# Todo list before next release
+# Todo list
 
-- [] Open terminal in neovim's floating window and make it transparent
+- [x] Open terminal in neovim's floating window and make it transparent(done in V1.1.8)
 
 # Buy me a coffee
 
