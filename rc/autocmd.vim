@@ -49,6 +49,7 @@ if te#env#IsNvim()
     "auto close terminal buffer
     autocmd misc_group TermClose * exe expand('<abuf>').'bd!'
     autocmd misc_group  FileType fzf tnoremap <buffer> <c-v> <c-v>
+    autocmd misc_group User Startified setlocal buflisted
 else
     autocmd misc_group  FileType fzf set laststatus=0 noshowmode noruler
                 \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
