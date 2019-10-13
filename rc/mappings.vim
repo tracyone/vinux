@@ -323,6 +323,7 @@ nnoremap si zi
 
 " close all buffer
 map <Leader>ba :bufdo bd<cr>
+nnoremap  <silent><leader>jf :call te#tools#jump_to_floating_win()<cr>
 if te#env#IsNvim()
     "terminal-emulator setting
     execute 'tnoremap <Esc><Esc> <C-\><C-n>'
@@ -330,7 +331,6 @@ if te#env#IsNvim()
     execute 'tnoremap <A-j> <C-\><C-n><C-w>j'
     execute 'tnoremap <A-k> <C-\><C-n><C-w>k'
     execute 'tnoremap <A-l> <C-\><C-n><C-w>l'
-    nnoremap  <silent><leader>jf :call te#tools#jump_to_floating_win()<cr>
     silent! execute 'tmap <c-v> <C-\><C-n>"*pa'
 elseif te#env#SupportTerminal()
     "terminal-emulator setting

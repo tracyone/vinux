@@ -9,6 +9,12 @@ function! te#tools#jump_to_floating_win() abort
                 call nvim_set_current_win(win_findbuf(l:n)[0])
                 startinsert
                 break
+            elseif getbufvar(l:n, '&buftype', 'ERROR') ==# 'terminal'
+                call win_gotoid(win_findbuf(l:n)[0])
+                if mode() != 't'
+                    call feedkeys('a')
+                endif
+                break
             endif
         endif
         let l:n = l:n+1
