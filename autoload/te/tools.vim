@@ -1,3 +1,20 @@
+function! te#tools#jump_to_floating_win() abort
+    let l:last_buffer = bufnr('$')
+	let l:n = 1
+
+	while l:n <= l:last_buffer
+        if buflisted(l:n)
+            let l:name=bufname(l:n)
+            if strlen(matchstr(l:name, 'term://'))
+                call nvim_set_current_win(win_findbuf(l:n)[0])
+                startinsert
+                break
+            endif
+        endif
+        let l:n = l:n+1
+    endwhile
+
+endfunction
 "pop vimshell
 "option:0x04 open terminal in a new tab
 "option:0x01 open terminal in a split window
