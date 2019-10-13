@@ -32,7 +32,7 @@ function! te#tools#shell_pop(option) abort
         if and(a:option, 0x04)
             :tabnew
         endif
-        if te#env#SupportFloatingWindows() == 2
+        if te#env#SupportFloatingWindows() == 2 && !and(a:option, 0x04)
             let l:line=(38*&lines)/100
             if  l:line < 10 | let l:line = 10 |endif
             if and(a:option, 0x01)
