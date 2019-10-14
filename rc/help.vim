@@ -140,6 +140,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 's' : 'easymotion:search multiple previous char ',
                     \ 't' : 'easymotion:search multiple next char',
                     \ 'w' : 'easymotion:word',
+                    \ 'f' : 'Move cursor to first terminal window',
                     \ }
         let g:which_key_map.l = { 
                     \ 'name' : '+love',

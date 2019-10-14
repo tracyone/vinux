@@ -19,6 +19,9 @@ function! te#tools#jump_to_floating_win() abort
         endif
         let l:n = l:n+1
     endwhile
+    if l:n > l:last_buffer
+        call te#utils#EchoWarning("No terminal window found!")
+    endif
 
 endfunction
 "pop vimshell
