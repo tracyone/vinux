@@ -8,7 +8,11 @@ Plug 'vim-airline/vim-airline-themes'
 " Config {{{
 let g:airline_extensions = []
 
-let g:airline_extensions = ['tabline', 'tagbar']
+if te#env#check_requirement()
+    let g:airline_extensions = ['tabline', 'tagbar']
+else
+    let g:airline_extensions = ['tabline']
+endif
 if g:git_plugin_name.cur_val ==# 'vim-fugitive' && get(g:, 'feat_enable_git')
     call add(g:airline_extensions, 'branch')
 endif

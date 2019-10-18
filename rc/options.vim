@@ -56,9 +56,14 @@ set belloff=all
 endif
 set matchtime=2  
 set report=0  "Threshold for reporting number of lines changed
-set lazyredraw  " Don't update the display while executing macros
 set helplang=en,cn  "set helplang=en
-set autoread   "autoread when a file is changed from the outside
+
+"stuck vim 7.3
+if te#env#check_requirement()
+    set autoread   "autoread when a file is changed from the outside
+    set lazyredraw  " Don't update the display while executing macros
+endif
+
 set relativenumber number "show the line number for each line
 set cmdheight=1  "number of lines used for the command-line
 set showmatch "when inserting a bracket, briefly jump to its match
