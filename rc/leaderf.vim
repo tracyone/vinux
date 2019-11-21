@@ -41,18 +41,15 @@ let g:Lf_WindowPosition ='popup'
 nnoremap  <silent><Leader><Leader> :LeaderfFile<cr>
 let g:Lf_Extensions = {
             \ 'dir': {
-            \       'source': function('te#leaderf#dir#source'),
-            \       'accept': function('te#leaderf#dir#accept'),
-            \ 'need_exit': function('te#leaderf#dir#needExit'),
+            \       'source': 'te#leaderf#dir#source',
+            \       'accept': 'te#leaderf#dir#accept',
+            \ 'need_exit': 'te#leaderf#dir#needExit',
             \       'supports_name_only': 1,
             \       'supports_multi': 0,
             \ },
             \ 'feat': {
-            \       'source': function('te#leaderf#feat#source'),
-            \       'accept': function('te#leaderf#feat#accept'),
-            \ 'arguments': [
-            \  { 'name': ["-e"], 'nargs': 0, 'help': 'Enable'},
-            \ ],
+            \       'source': "te#leaderf#feat#source",
+            \       'accept': 'te#leaderf#feat#accept',
             \       'supports_name_only': 1,
             \       'supports_multi': 0,
             \ },
