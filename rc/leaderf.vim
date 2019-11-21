@@ -36,6 +36,8 @@ let g:Lf_StlColorscheme = 'default'
 let g:Lf_StlSeparator = { 'left': '', 'right': '' }
 let g:Lf_UseMemoryCache = 0
 let g:Lf_ReverseOrder = 1
+let g:Lf_PreviewInPopup = 1
+let g:Lf_WindowPosition ='popup'
 nnoremap  <silent><Leader><Leader> :LeaderfFile<cr>
 let g:Lf_Extensions = {
             \ 'dir': {
