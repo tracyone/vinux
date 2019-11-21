@@ -123,7 +123,7 @@ if g:complete_plugin_type.cur_val ==# 'YouCompleteMe'
                 \ 'infolog' : 1,
                 \ 'mail' : 1
                 \}
-    let g:ycm_global_ycm_extra_conf = g:vinux_plugin_dir.cur_val.'/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf = $VIMFILES.'/rc/ycm_conf_for_c.py'
 elseif g:complete_plugin_type.cur_val ==# 'neocomplete'
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
