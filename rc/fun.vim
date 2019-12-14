@@ -3,7 +3,7 @@ Plug 'itchyny/thumbnail.vim',{'on': 'Thumbnail'}
 Plug 'itchyny/calendar.vim', { 'on': 'Calendar'}
 Plug 'johngrib/vim-game-code-break', {'on': 'VimGameCodeBreak'}
 Plug 'johngrib/vim-game-snake', {'on': 'VimGameSnake'}
-
+Plug 'vim/killersheep', {'on': 'KillKillKill'}
 
 " open calendar
 nnoremap  <silent><Leader>ad :Calendar<cr>
