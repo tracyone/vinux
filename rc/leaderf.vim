@@ -24,9 +24,9 @@ nnoremap  <silent><Leader>ps :LeaderfSelf<cr>
 nnoremap  <silent><Leader>pt :LeaderfBufTag<cr>
 "colorsceme
 nnoremap  <silent><Leader>pc :LeaderfColorscheme<cr>
-"nnoremap  <silent><Leader>ff :Leaderf dir<cr>
-"nnoremap  <silent><Leader>fe :Leaderf feat -e<cr>
-"nnoremap  <silent><Leader>fd :Leaderf feat<cr>
+nnoremap  <silent><Leader>ff :Leaderf dir<cr>
+nnoremap  <silent><Leader>fe :Leaderf feat<cr>
+nnoremap  <silent><Leader>fd :Leaderf feat<cr>
 "CtrlP cmd
 let g:Lf_ShortcutF = '<C-P>'
 let g:Lf_ShortcutB = '<C-j>'
