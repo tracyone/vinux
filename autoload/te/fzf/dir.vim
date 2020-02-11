@@ -31,7 +31,7 @@ function! s:edit_file(item) abort
             if te#env#IsNvim()
                 :call extend(l:run_dict, {'window':'call FloatingFZF()'})
             else
-                :call extend(l:run_dict, {'window': 'botright '.&lines*40/100.'new'})
+                :call extend(l:run_dict, {'window': { 'width': 0.6, 'height': 0.4 }})
             endif
             call fzf#run(l:run_dict)
             :redraw!
@@ -52,7 +52,7 @@ function! te#fzf#dir#start() abort
         if te#env#IsNvim()
             :call extend(l:run_dict, {'window':'call FloatingFZF()'})
         else
-            :call extend(l:run_dict, {'window': 'botright '.&lines*40/100.'new'})
+            :call extend(l:run_dict, {'window': { 'width': 0.6, 'height': 0.4 }})
         endif
         call fzf#run(l:run_dict)
 endfunction

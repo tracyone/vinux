@@ -107,6 +107,6 @@ if te#env#SupportFloatingWindows() == 2
         endif
     endfunction
 else
-    let g:fzf_layout = {'window': 'botright '.&lines*40/100.'new'}
+    let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.4 } }
 endif
 
