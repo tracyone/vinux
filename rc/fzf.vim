@@ -27,9 +27,9 @@ nnoremap  <silent><Leader>fe :call te#fzf#feat#start(1)<cr>
 nnoremap  <silent><Leader>fd :call te#fzf#feat#start(0)<cr>
 
 if !te#env#Executable('ctags')
-    Plug 'tracyone/fzf-funky',{'on': 'CtrlPFunky'}
-    nnoremap  <silent><Leader>pk :CtrlPFunky<cr>
-    nnoremap  <silent><c-k> :CtrlPFunky<cr>
+    Plug 'tracyone/fzf-funky',{'on': 'FzfFunky'}
+    nnoremap  <silent><Leader>pk :FzfFunky<cr>
+    nnoremap  <silent><c-k> :FzfFunky<cr>
 else
     nnoremap  <silent><Leader>pk :BTags<cr>
     nnoremap  <silent><c-k> :BTags<cr>
@@ -107,6 +107,6 @@ if te#env#SupportFloatingWindows() == 2
         endif
     endfunction
 else
-    let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.4 } }
+    let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.4 }, 'down': '~40%' }
 endif
 
