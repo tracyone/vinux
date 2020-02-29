@@ -69,7 +69,7 @@ function! te#git#get_remote_name(A, L, P) abort
     endif
     let l:result=''
     for l:str in l:remote_name
-        let l:result.=l:str
+        let l:result.=l:str..nr2char(10)
     endfor
     return l:result
 endfunction
