@@ -22,7 +22,8 @@ Feature:
 
 # Todo list
 
-- [x] Open terminal in neovim's floating window and make it transparent(done in V1.1.8)
+- [] C++ Support
+- [] Android Framework support
 
 # Buy me a coffee
 
