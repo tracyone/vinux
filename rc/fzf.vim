@@ -1,38 +1,45 @@
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+function! FzfStartEntry(cmd)
+    if te#env#SupportFloatingWindows() == 1
+        call popup_clear()
+    endif
+    execute a:cmd
+endfunction
+
 "buffer
-nnoremap  <silent><c-j> :Buffers<Cr>
-nnoremap  <silent><Leader>fw :Windows<cr>
+nnoremap  <silent><c-j> :call FzfStartEntry('Buffers')<Cr>
+nnoremap  <silent><Leader>fw :call FzfStartEntry('Windows')<cr>
 "colorsceme
-nnoremap  <silent><Leader>pc :Colors<cr>
+nnoremap  <silent><Leader>pc :call FzfStartEntry('Colors')<cr>
 "file cmd
-nnoremap  <silent><Leader><Leader> :Files<cr>
+nnoremap  <silent><Leader><Leader> :call FzfStartEntry("Files")<cr>
 "mru
-nnoremap  <silent><c-l> :History<cr>
-nnoremap  <silent><Leader>pr :History<cr>
+nnoremap  <silent><c-l>  :call FzfStartEntry('History')<cr>
+nnoremap  <silent><Leader>pr  :call FzfStartEntry('History')<cr>
 "command history
-nnoremap  <silent><leader>qc :History:<cr>
-nnoremap  <silent><leader>q/ :History/<cr>
+nnoremap  <silent><leader>qc :call FzfStartEntry('History')<cr>
+nnoremap  <silent><leader>q/  :call FzfStartEntry('History/')<cr>
 " git log checkout
-nnoremap  <silent><Leader>pgc :Commits<cr>
-nnoremap  <silent><Leader>ps :Snippets<cr>
+nnoremap  <silent><Leader>pgc  :call FzfStartEntry('Commits')<cr>
+nnoremap  <silent><Leader>ps  :call FzfStartEntry('Snippets')<cr>
 "vim help
-nnoremap  <silent><Leader>ph :Helptags<cr>
+nnoremap  <silent><Leader>ph  :call FzfStartEntry('Helptags')<cr>
 "spacemacs :SPC ff
-nnoremap  <silent><Leader>ff :call te#fzf#dir#start()<cr>
+nnoremap  <silent><Leader>ff  :call FzfStartEntry('call te#fzf#dir#start()')<cr>
 "feature enable
-nnoremap  <silent><Leader>fe :call te#fzf#feat#start(1)<cr>
+nnoremap  <silent><Leader>fe  :call FzfStartEntry(':call te#fzf#feat#start(1)')<cr>
 "feature disable
-nnoremap  <silent><Leader>fd :call te#fzf#feat#start(0)<cr>
+nnoremap  <silent><Leader>fd  :call FzfStartEntry(':call te#fzf#feat#start(0)')<cr>
 
 if !te#env#Executable('ctags')
     Plug 'tracyone/fzf-funky',{'on': 'FzfFunky'}
-    nnoremap  <silent><Leader>pk :FzfFunky<cr>
-    nnoremap  <silent><c-k> :FzfFunky<cr>
+    nnoremap  <silent><Leader>pk  :call FzfStartEntry('FzfFunky')<cr>
+    nnoremap  <silent><c-k>  :call FzfStartEntry('FzfFunky')<cr>
 else
-    nnoremap  <silent><Leader>pk :BTags<cr>
-    nnoremap  <silent><c-k> :BTags<cr>
+    nnoremap  <silent><Leader>pk  :call FzfStartEntry('BTags')<cr>
+    nnoremap  <silent><c-k>  :call FzfStartEntry('BTags')<cr>
 endif
 
 "ag
@@ -51,7 +58,7 @@ if te#env#Executable('ag')
     let $FZF_DEFAULT_COMMAND=s:fzf_custom_command
 elseif te#env#Executable('rg')
     let s:fzf_custom_command = 'rg --hidden --files --color=never --glob "!.git"'
-    nnoremap  <silent><Leader>pf :Rg<cr>
+    nnoremap  <silent><Leader>pf  :call FzfStartEntry('Rg')<cr>
     let $FZF_DEFAULT_COMMAND=s:fzf_custom_command
 endif
 

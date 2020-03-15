@@ -72,6 +72,12 @@ function! te#utils#EchoWarning(str,...) abort
         call add(s:global_echo_str, a:str)
         return
     endif
+
+    if getbufvar(bufnr("%"), '&buftype', 'ERROR') ==# 'terminal'
+        redraw!
+        execut 'echohl '.l:level | echom '['.l:prompt.'] '.a:str | echohl None
+        return
+    endif
     if te#env#IsNvim() && te#env#SupportFloatingWindows() == 2
         let l:str='['.l:prompt.'] '.a:str
         let l:win={}
