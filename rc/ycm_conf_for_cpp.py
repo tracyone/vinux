@@ -56,28 +56,62 @@ flags = [
     '-std=c++11',
     '-x',
     'c++',
-    '-I', 'system/core/include',
-    '-I', 'hardware/libhardware/include',
-    '-I', 'hardware/libhardware/include',
-    '-I', 'hardware/libhardware_legacy/include',
-    '-I', 'hardware/ril/include',
-    '-I', 'libnativehelper/include',
-    '-I', 'bionic/libc/arch-arm/include',
-    '-I', 'bionic/libc/include',
-    '-I', 'bionic/libc/kernel/common',
-    '-I', 'bionic/libc/kernel/arch-arm',
-    '-I', 'bionic/libstdc++/include',
-    '-I', 'bionic/libstdc++/include',
-    '-I', 'bionic/libm/include',
-    '-I', 'bionic/libm/include/arm',
-    '-I', 'bionic/libthread_db/include',
-    '-I', 'frameworks/native/include',
-    '-I', 'frameworks/native/opengl/include',
-    '-I', 'frameworks/av/include',
-    '-I', 'frameworks/base/include',
-    '-I', 'kernel/include/uapi'
+    '-I', 'include',
 ]
 
+
+includedirs_android = [
+'system/core/include',
+'hardware/libhardware/include',
+'hardware/libhardware_legacy/include',
+'hardware/ril/include',
+'libnativehelper/include',
+'bionic/libc/arch-arm/include',
+'bionic/libc/include',
+'bionic/libc/kernel/common',
+'bionic/libc/kernel/arch-arm',
+'bionic/libstdc++/include',
+'bionic/libstdc++/include',
+'bionic/libm/include',
+'bionic/libm/include/arm',
+'bionic/libthread_db/include',
+'frameworks/native/include',
+'frameworks/native/opengl/include',
+'frameworks/av/include',
+'frameworks/base/include',
+'kernel/include/uapi' 
+#Add more header locations that you're interested in
+]
+
+def GetRoot(filename, marker_dir):
+    path = os.path.dirname(os.path.abspath(filename))
+    while True:
+        if os.path.ismount(path):
+            return None
+        if os.path.isdir(os.path.join(path, marker_dir)):
+            return path
+        path = os.path.dirname(path)
+
+def AppendIncludes(filename):
+    root = GetRoot(filename, ".repo")
+    if root == None:
+        cpp_compiler_version = os.popen("g++ -dumpversion").read().strip('\n')
+        cpp_compiler_machine = os.popen("g++ -dumpmachine").read().strip('\n')
+        cpp_path = os.path.dirname(os.popen("which g++").read()).strip('\n')
+        include_path = cpp_path[:-3] + "include/c++/" + cpp_compiler_version
+        include_path2 = include_path + "/bits"
+        lib_path = cpp_path[:-3] + "lib/gcc/" + cpp_compiler_machine + "/" + cpp_compiler_version + "/include/"
+        flags.append('-isystem')
+        flags.append(include_path)
+        flags.append('-isystem')
+        flags.append(lib_path)
+        flags.append('-isystem')
+        flags.append(include_path2)
+        return None
+    else:
+        for includedir in includedirs_android:
+            flags.append('-isystem')
+            flags.append(os.path.join(root, includedir))
 
 
 # Clang automatically sets the '-std=' flag to 'c++14' for MSVC 2015 or later,
@@ -132,7 +166,10 @@ def FlagsForFile( filename, **kwargs ):
   # In addition, use this source file as the translation unit. This makes it
   # possible to jump from a declaration in the header file to its definition in
   # the corresponding source file.
+  AppendIncludes(filename)
+
   filename = FindCorrespondingSourceFile( filename )
+
 
   if not database:
     return {
