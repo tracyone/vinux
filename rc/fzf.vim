@@ -114,6 +114,10 @@ if te#env#SupportFloatingWindows() == 2
         endif
     endfunction
 else
-    let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.4 }, 'down': '~40%' }
+    if has('patch-8.2.191')
+        let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.4 }, 'down': '~40%' }
+    else
+        let g:fzf_layout = {'window': 'botright '.&lines*40/100.'new'}
+    endif
 endif
 
