@@ -51,6 +51,7 @@ if te#env#IsNvim()
     autocmd misc_group  FileType fzf tnoremap <buffer> <c-v> <c-v>
     autocmd misc_group User Startified setlocal buflisted
 else
+    autocmd misc_group  FileType fzf tnoremap <buffer> <c-z> <tab><c-k>
     if te#env#IsMacVim()
         autocmd misc_group FocusGained * :redraw!
     endif
