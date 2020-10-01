@@ -115,12 +115,8 @@ if te#env#SupportFloatingWindows() == 2
     endfunction
 else
     if has('patch-8.2.191')
-        autocmd misc_group  FileType fzf tnoremap <buffer> <c-v> <c-v>
-        let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.4 }, 'down': '~40%' }
+        let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.4 }, 'down': '~40%' }
     else
-        autocmd misc_group  FileType fzf set laststatus=0 noshowmode noruler
-                    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-                    \| tnoremap <buffer> <c-v> <c-v>
         let g:fzf_layout = {'window': 'botright '.&lines*40/100.'new'}
     endif
 endif
