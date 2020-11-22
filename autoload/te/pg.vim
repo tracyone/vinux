@@ -172,11 +172,15 @@ function! te#pg#do_make() abort
     :call te#utils#EchoWarning('making ...')
     :wa
     if empty(glob('makefile')) && empty(glob('Makefile'))
+        let l:cc = 'gcc '
+        if &ft == 'cpp'
+            let l:cc = 'g++ --std=c++11 '
+        endif
         if te#env#IsWindows()
-            :call te#utils#run_command('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && '
+            :call te#utils#run_command(l:cc.expand('%').' -o'.fnamemodify(expand('%'),':r').' && '
                         \.fnamemodify(expand('%'),':r'),1)
         else
-            :call te#utils#run_command('gcc '.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
+            :call te#utils#run_command(l:cc.expand('%').' -o'.fnamemodify(expand('%'),':r').' && ./'
                         \.fnamemodify(expand('%'),':r'),1)
         endif
     else
