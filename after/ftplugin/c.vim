@@ -68,10 +68,6 @@ setlocal cinoptions=:0,l1,t0,g0,(0)
 setlocal comments    =sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/
 setlocal cindent  "enable specific indenting for C code
 setlocal foldmethod=syntax
-setlocal colorcolumn=80
-execute 'setlocal tabstop='.g:vinux_tabwidth
-execute 'setlocal shiftwidth='.g:vinux_tabwidth
-execute 'setlocal softtabstop='.g:vinux_tabwidth
 setlocal noexpandtab
 setlocal nosmarttab
 
@@ -89,6 +85,15 @@ if g:vinux_coding_style.cur_val ==# 'linux'
                 \ 'AllowShortFunctionsOnASingleLine': 'None',
                 \ 'AllowShortLoopsOnASingleLine': 'false',
                 \ 'IndentCaseLabels' : 'false'}
+endif
+
+if &ft == 'cpp'
+    execute 'source '.$VIMFILES.'/after/ftplugin/cpp.vim'
+else
+setlocal colorcolumn=80
+execute 'setlocal tabstop='.g:vinux_tabwidth
+execute 'setlocal shiftwidth='.g:vinux_tabwidth
+execute 'setlocal softtabstop='.g:vinux_tabwidth
 endif
 
 let b:delimitMate_matchpairs = '(:),[:],{:}'

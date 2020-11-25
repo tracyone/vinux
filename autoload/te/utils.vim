@@ -309,6 +309,8 @@ function! te#utils#find_mannel() abort
     let l:cur_word=expand('<cword>')
     if &filetype ==# 'sh'
         let l:ret = te#utils#GetError(l:man_cmd.' '.l:cur_word,'\cno \(manual\|entry\).*')
+    elseif &filetype ==# 'cpp'
+        let l:ret = te#utils#GetError(l:man_cmd.' '.l:cur_word,'\cno \(manual\|entry\).*')
     else
         let l:ret = te#utils#GetError(l:man_cmd.' 2 '.l:cur_word,'\cno \(manual\|entry\).*')
         if l:ret != 0
