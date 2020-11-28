@@ -121,3 +121,7 @@ else
     endif
 endif
 
+"disable preview window
+"let g:fzf_preview_window = ''
+"let g:fzf_preview_window = 'right:50%'
+
