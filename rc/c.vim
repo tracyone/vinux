@@ -2,6 +2,7 @@
 Plug 'tracyone/a.vim',{'for': ['c', 'cpp']}
 Plug 'rhysd/vim-clang-format',{'for': ['c', 'cpp']}
 Plug 'hari-rangarajan/CCTree',{'for': ['c', 'cpp']}
+Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
 if(te#env#IsLinux())
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
 endif
@@ -44,6 +45,12 @@ let g:neomake_make_maker = {
             \ 'args': ['-j8'],
             \ 'errorformat': '%f:%l:%c: %m',
             \ }
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+let g:cpp_no_function_highlight = 1
 
 "}}}
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 

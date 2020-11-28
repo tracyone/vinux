@@ -27,7 +27,6 @@ augroup filetype_group
     autocmd BufRead,BufNewFile *.mk setlocal filetype=make
     autocmd BufRead,BufNewFile *.make setlocal filetype=make
     autocmd BufRead,BufNewFile *.veo setlocal filetype=verilog
-    autocmd BufRead,BufNewFile *.h setlocal filetype=c
     autocmd BufRead,BufNewFile * let $CurBufferDir=expand('%:p:h')
     autocmd BufRead,BufNewFile *.hex,*.out,*.o,*.a,*.bin Vinarise
     autocmd BufRead,BufNewFile *.fex setlocal filetype=dosini
