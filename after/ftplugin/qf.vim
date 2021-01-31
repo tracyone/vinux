@@ -18,4 +18,8 @@ nnoremap  <silent><buffer> <c-i> :silent! cnewer<cr>:silent! :lnewer<cr>
 execute 'nnoremap  <silent><buffer>  <2-LeftMouse> '. maparg('<Enter>')
 nnoremap  <silent><buffer> <down> j:call te#utils#pedit()<cr>
 nnoremap  <silent><buffer> <up> k:call te#utils#pedit()<cr>
+
+
+highlight mypre ctermbg=red guibg=red
 silent! execute 'silent! set previewpopup=height:'.&lines/4.',width:'.&columns.',highlight:Pmenu,border:off'
+

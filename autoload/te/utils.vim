@@ -667,6 +667,12 @@ function! te#utils#cd_to_plugin(path) abort
     call te#utils#EchoWarning('cd to '.l:plugin_name)
 endfunction
 
+function! s:pedit(line)
+    setlocal nofoldenable
+    execute a:line
+    call matchaddpos('mypre', [a:line])
+endfunction
+
 function! te#utils#pedit()
     if &buftype != 'quickfix'
         call te#utils#EchoWarning('Not quickfix window')
@@ -676,6 +682,6 @@ function! te#utils#pedit()
     let l:list=getqflist()
     if len(l:list)
         let l:list = l:list[l:list_index]
-        execute ':pedit +'.l:list.lnum." ".bufname(l:list.bufnr)
+        execute ':pedit +call\ s:pedit('.l:list.lnum.')'." ".bufname(l:list.bufnr)
     endif
 endfunction
