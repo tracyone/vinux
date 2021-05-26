@@ -3,13 +3,6 @@ if exists('b:did_vinux_ftplugin')
     finish
 endif
 let b:did_vinux_ftplugin = 1
-setlocal tabstop=4
-setlocal softtabstop=4
-setlocal shiftwidth=4
-setlocal textwidth=79
-setlocal expandtab
-setlocal autoindent
-setlocal fileformat=unix
 
 nnoremap  <silent><buffer> <LocalLeader>c :call te#complete#lookup_reference()<cr>
 "nnoremap  <silent><buffer> K :call te#complete#lookup_doc()<cr>
