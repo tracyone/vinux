@@ -185,7 +185,7 @@ function! te#pg#do_make() abort
         endif
     else
         if get(g:,'feat_enable_basic') && te#env#SupportAsync()
-            call neomake#Make(0,['make'])
+            :call te#utils#run_command("make", 1)
         else
             :make
             :botright copen
