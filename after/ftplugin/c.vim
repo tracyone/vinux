@@ -87,11 +87,14 @@ if g:vinux_coding_style.cur_val ==# 'linux'
                 \ 'AllowShortLoopsOnASingleLine': 'false',
                 \ 'IndentCaseLabels' : 'false'}
 endif
-
+if &ft == 'cpp'
+    execute 'source '.$VIMFILES.'/after/ftplugin/cpp.vim'
+else
 setlocal colorcolumn=80
 execute 'setlocal tabstop='.g:vinux_tabwidth
 execute 'setlocal shiftwidth='.g:vinux_tabwidth
 execute 'setlocal softtabstop='.g:vinux_tabwidth
+endif
 
 let b:delimitMate_matchpairs = '(:),[:],{:}'
 
