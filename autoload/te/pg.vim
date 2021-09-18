@@ -174,7 +174,7 @@ function! te#pg#do_make() abort
     if empty(glob('makefile')) && empty(glob('Makefile'))
         let l:cc = 'gcc '
         if &ft == 'cpp'
-            let l:cc = 'g++ --std=c++11 '
+            let l:cc = 'g++ --std=c++14 '
         endif
         if te#env#IsWindows()
             :call te#utils#run_command(l:cc.expand('%').' -o'.fnamemodify(expand('%'),':r').' && '
