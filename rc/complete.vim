@@ -41,7 +41,7 @@ else
 endif
 Plug 'tracyone/snippets', { 'on': [] }
 if te#env#SupportPy() && v:version >= 704
-    Plug 'SirVer/ultisnips', { 'on': [] }  
+    Plug 'SirVer/ultisnips', { 'on': [], 'tag': '3.2' }  
     call extend(g:complete_plugin.name, ['ultisnips', 'snippets'])
 else
     Plug 'MarcWeber/vim-addon-mw-utils', { 'on': [] } 
