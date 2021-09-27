@@ -4,7 +4,7 @@ Plug 'itchyny/calendar.vim', { 'on': 'Calendar'}
 Plug 'johngrib/vim-game-code-break', {'on': 'VimGameCodeBreak'}
 Plug 'johngrib/vim-game-snake', {'on': 'VimGameSnake'}
 Plug 'vim/killersheep', {'on': 'KillKillKill'}
-Plug 'iqxd/vim-mine-sweeping', {'on': 'MineSweep'}
+Plug 'iqxd/vim-mine-sweeping', {'on': 'MineSweep', 'branch': 'main'}
 
 " open calendar
 nnoremap  <silent><Leader>ad :Calendar<cr>
