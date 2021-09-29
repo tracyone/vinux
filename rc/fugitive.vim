@@ -4,7 +4,11 @@ if !te#env#check_requirement()
     nnoremap  <silent><F3> :silent! only<cr>:Gstatus<cr>
     nnoremap  <silent><Leader>gs :silent! only<cr>:Gstatus<cr>
 else
-    Plug 'tpope/vim-fugitive', {'tag': 'v3.2'}
+    if te#env#IsNvim()
+        Plug 'tpope/vim-fugitive', {'dir': g:vinux_plugin_dir.cur_val.'/vim-fugitive-latest/',
+    else
+        Plug 'tpope/vim-fugitive', {'tag': 'v3.2'}
+    endif
     " Open git status window
     nnoremap  <silent><F3> :silent! only<cr>:G<cr>:call feedkeys(']]')<cr>
     nnoremap  <silent><Leader>gs :silent! only<cr>:G<cr>:call feedkeys(']]')<cr>
