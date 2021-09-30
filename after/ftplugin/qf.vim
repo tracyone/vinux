@@ -18,8 +18,9 @@ nnoremap  <silent><buffer> <c-i> :silent! cnewer<cr>:silent! :lnewer<cr>
 execute 'nnoremap  <silent><buffer>  <2-LeftMouse> '. maparg('<Enter>')
 nnoremap  <silent><buffer> <down> j:call te#utils#pedit()<cr>
 nnoremap  <silent><buffer> <up> k:call te#utils#pedit()<cr>
-nnoremap  <silent><buffer> <Left> <Left>
-nnoremap  <silent><buffer> <Right> <Right>
+nnoremap  <silent><buffer> <left> h:call te#utils#pedit()<cr>
+nnoremap  <silent><buffer> <right> l:call te#utils#pedit()<cr>
+nnoremap  <silent><buffer> <C-c> :pclose<cr>
 
 
 highlight mypre ctermbg=red guibg=red
