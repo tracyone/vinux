@@ -4,7 +4,7 @@ if !te#env#check_requirement()
     nnoremap  <silent><F3> :silent! only<cr>:Gstatus<cr>
     nnoremap  <silent><Leader>gs :silent! only<cr>:Gstatus<cr>
 else
-    if te#env#IsNvim()
+    if te#env#IsNvim() || has('patch-8.2.3141')
         Plug 'tpope/vim-fugitive', {'dir': g:vinux_plugin_dir.cur_val.'/vim-fugitive-latest/'}
     else
         Plug 'tpope/vim-fugitive', {'tag': 'v3.2'}
