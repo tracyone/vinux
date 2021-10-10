@@ -25,6 +25,7 @@ if get(g:,'feat_enable_airline') == 0
     let g:buftabline_numbers=2
     let g:buftabline_show=1
     let g:buftabline_indicators=1
+    let g:buftabline_separators = 1
 endif
 " }}}
 " Matchit.vim {{{
