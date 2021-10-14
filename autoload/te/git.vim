@@ -195,7 +195,7 @@ function! te#git#show_log(dir) abort
         return 0
     elseif te#env#SupportTerminal()
         :tabnew
-        if te#env#IsNvim()
+        if te#env#IsNvim() != 0
             :terminal tig
         else
             hi Terminal ctermbg=black ctermfg=white guibg=black guifg=white

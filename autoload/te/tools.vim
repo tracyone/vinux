@@ -71,7 +71,7 @@ function! te#tools#shell_pop(option) abort
     endif
     if te#env#SupportTerminal()  && te#env#IsVim8()
         execute ':terminal ++close ++curwin '.l:shell
-    elseif te#env#SupportTerminal() && te#env#IsNvim()
+    elseif te#env#SupportTerminal() && te#env#IsNvim() != 0
         :terminal
     elseif te#env#IsTmux()
         call te#tmux#run_command(&shell, a:option)

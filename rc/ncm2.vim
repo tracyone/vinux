@@ -23,7 +23,7 @@ Plug 'ncm2/ncm2-cssomni', {'for': ['css']}
 Plug 'othree/jspc.vim', {'for': 'javascript'}
 
 set shortmess+=c
-if te#env#IsNvim()
+if te#env#IsNvim() != 0
     Plug 'ncm2/float-preview.nvim'
 endif
 

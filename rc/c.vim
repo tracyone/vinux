@@ -2,7 +2,7 @@
 Plug 'tracyone/a.vim',{'for': ['c', 'cpp']}
 Plug 'rhysd/vim-clang-format',{'for': ['c', 'cpp']}
 Plug 'hari-rangarajan/CCTree',{'for': ['c', 'cpp']}
-Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
+"Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
 if(te#env#IsLinux())
     Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
 endif

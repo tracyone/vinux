@@ -20,7 +20,7 @@ function! s:git_show_diff(mode, commid_id) abort
                 call te#tmux#run_command('git show '.a:commid_id, 0x1)
             endif
         elseif te#env#SupportTerminal()
-            if te#env#IsNvim()
+            if te#env#IsNvim() != 0
                 let l:termina='terminal'
             else
                 hi Terminal ctermbg=black ctermfg=white guibg=black guifg=white

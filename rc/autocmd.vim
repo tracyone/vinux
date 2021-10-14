@@ -43,7 +43,7 @@ augroup filetype_group
                 \ | nnoremap <buffer> <silent> D :call te#plug#show_log()<cr>
                 \ | call te#plug#extra_key()
 augroup END
-if te#env#IsNvim()
+if te#env#IsNvim() != 0
     autocmd misc_group TermOpen * setlocal nonu nornu signcolumn=no | :startinsert
     "auto close terminal buffer
     autocmd misc_group TermClose * exe expand('<abuf>').'bd!'

@@ -2,10 +2,6 @@ function! te#complete#goto_def(open_type) abort
     let l:cword=expand('<cword>')
     let l:ret = -1
     execute a:open_type
-    if &filetype == 'vim'
-        :call lookup#lookup()
-        return 0
-    endif
     if get(g:, 'feat_enable_complete', 0)
         if te#env#SupportYcm() && g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
             let l:ret=s:YcmGotoDef()
@@ -14,6 +10,10 @@ function! te#complete#goto_def(open_type) abort
         endif
     endif
     if l:ret < 0
+        if &filetype == 'vim'
+            :call lookup#lookup()
+            return 0
+        endif
         try
             execute 'cs find g '.l:cword
         catch /^Vim\%((\a\+)\)\=:E/	
@@ -86,12 +86,17 @@ function! s:YcmGotoDef() abort
 endfunction
 
 
-function te#complete#lookup_reference() abort
+function te#complete#lookup_reference(open_type) abort
     if get(g:, 'feat_enable_complete', 0)
+        execute a:open_type
         if te#env#SupportYcm() && g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
             :YcmCompleter GoToReferences
         else
             let l:ret=te#lsp#references()
+            if l:ret == -1
+                " use ctags or cscope
+                :cs find c <C-R>=expand("<cword>")<CR><CR>:botright cw 7
+            endif
         endif
         return 0
     endif

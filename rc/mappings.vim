@@ -324,7 +324,7 @@ nnoremap si zi
 " close all buffer
 map <Leader>ba :bufdo bd<cr>
 nnoremap  <silent><leader>jf :call te#tools#jump_to_floating_win()<cr>
-if te#env#IsNvim()
+if te#env#IsNvim() != 0
     "terminal-emulator setting
     execute 'tnoremap <Esc><Esc> <C-\><C-n>'
     execute 'tnoremap <A-h> <C-\><C-n><C-w>h'
@@ -369,6 +369,14 @@ call te#meta#map('inoremap','m','<c-\><c-o>:call te#tools#PreviousCursor(0)<cr>'
 call te#meta#map('inoremap','n','<c-\><c-o>:call te#tools#PreviousCursor(1)<cr>')
 call te#meta#map('nnoremap','m',':call te#tools#PreviousCursor(0)<cr>')
 call te#meta#map('nnoremap','n',':call te#tools#PreviousCursor(1)<cr>')
-nnoremap <C-\>g :call te#complete#goto_def("sp")<cr>
-nnoremap <LocalLeader>g :call te#complete#goto_def("")<cr>
+
+nnoremap <silent><C-\>g :call te#complete#goto_def("sp")<cr>
+nnoremap <silent><LocalLeader>g :call te#complete#goto_def("")<cr>
+
+nnoremap <silent><LocalLeader>c :call te#complete#lookup_reference("")<cr>
+nnoremap <silent><c-\>c :call te#complete#lookup_reference("sp")<cr>
+vnoremap  <silent><Leader>cf :call te#lsp#format_document()<CR>
+
+nnoremap  <silent> <silent> K :call te#utils#find_mannel()<cr>
+
 nnoremap <expr><silent> <Enter> &buftype ==# 'quickfix' ? "\<CR>" : ":call te#complete#goto_def(\"\")\<cr>"

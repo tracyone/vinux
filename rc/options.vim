@@ -194,7 +194,7 @@ set sessionoptions-=options
 set fileformats=unix,dos,mac
 set diffopt=vertical
 set shortmess=filnxtToOI
-if te#env#IsNvim()
+if te#env#IsNvim() != 0
     " Use cursor shape feature
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 

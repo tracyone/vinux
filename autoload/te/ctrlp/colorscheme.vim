@@ -2,7 +2,7 @@
 "author:tracyone@live.cn
 
 function! s:GetColorSchemes()
-    if !te#env#IsVim8() && !te#env#IsNvim()
+    if !te#env#IsVim8() && te#env#IsNvim() == 0
         return map(
                     \  split(globpath(&runtimepath, "colors/*.vim"), nr2char(10)),  
                     \  'fnamemodify(v:val, ":t:r")'

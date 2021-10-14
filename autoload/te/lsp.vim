@@ -4,10 +4,13 @@ function! te#lsp#gotodefinion() abort
     if exists(':LspDefinition') == 2
         :LspDefinition
         return 0
+    elseif te#env#IsNvim() >= 0.5
+        :lua vim.lsp.buf.definition()
     else
         call te#utils#EchoWarning('NOT support command!')
         return -1
     endif
+    return 0
 endfunction
 
 "format entire document
@@ -15,10 +18,13 @@ function! te#lsp#format_document() abort
     if exists(':LspDocumentFormatSync') == 2
         :LspDocumentFormatSync
         return 0
+    elseif te#env#IsNvim() >= 0.5
+        :lua vim.lsp.buf.range_formatting()
     else
         call te#utils#EchoWarning('NOT support command!')
         return -1
     endif
+    return 0
 endfunction
 
 function! te#lsp#format_document_range() abort
@@ -65,10 +71,13 @@ function! te#lsp#references() abort
     if exists(':LspReferences') == 2
         :LspReferences
         return 0
+    elseif te#env#IsNvim() >= 0.5
+        :lua vim.lsp.buf.references()
     else
         call te#utils#EchoWarning('NOT support command!')
         return -1
     endif
+    return 0
 endfunction
 
 function! te#lsp#rename() abort

@@ -16,4 +16,3 @@ else
     setlocal shell=bash
     setlocal omnifunc=te#bashcomplete#omnicomplete
 endif
-nnoremap <buffer> <silent> K :call te#utils#find_mannel()<cr>

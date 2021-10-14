@@ -34,6 +34,26 @@ elseif g:complete_plugin_type.cur_val ==# 'deoplete.nvim'
     execute 'source '.$VIMFILES.'/rc/deoplete.vim'
 elseif g:complete_plugin_type.cur_val ==# 'ncm2' && te#env#SupportPy3()
     execute 'source '.$VIMFILES.'/rc/ncm2.vim'
+elseif g:complete_plugin_type.cur_val ==# 'nvim-lspconfig' && te#env#IsNvim() >= 0.5
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'kabouzeid/nvim-lspinstall', {'branch': 'main' }
+    Plug 'hrsh7th/cmp-nvim-lsp', {'branch': 'main' }
+    Plug 'hrsh7th/cmp-buffer', {'branch': 'main' }
+    Plug 'hrsh7th/nvim-cmp', {'branch': 'main' }
+    Plug 'hrsh7th/cmp-path', {'branch': 'main' }
+    Plug 'hrsh7th/cmp-nvim-lua',{'branch': 'main'}
+    Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main' }
+    "Plug 'octaltree/cmp-look',{'for': ['text', 'markdown']}
+    "Plug 'onsails/lspkind-nvim'
+    "Plug 'tamago324/cmp-zsh',{'for':['bash','zsh'], 'branch': 'main'}
+
+function! s:enable_nvim_lsp()
+lua << EOF
+require('nvim_lsp')
+EOF
+endfunction
+"Important config neovim lsp and cmp when vim enter
+call te#feat#register_vim_enter_setting(function('<SID>enable_nvim_lsp'))
 else
     let g:complete_plugin_type.cur_val='supertab'
     let g:complete_plugin.name=['supertab']

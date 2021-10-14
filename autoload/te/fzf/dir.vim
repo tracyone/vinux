@@ -28,7 +28,7 @@ function! s:edit_file(item) abort
                         \ 'options' : ' --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : '.
                         \              '-m --prompt "Dir> "',
                         \ }
-            if te#env#IsNvim()
+            if te#env#IsNvim() != 0
                 :call extend(l:run_dict, {'window':'call FloatingFZF()'})
             else
                 :call extend(l:run_dict, g:fzf_layout)
@@ -49,7 +49,7 @@ function! te#fzf#dir#start() abort
                     \ 'options' : ' --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : '.
                     \              '-m --prompt "Dir> "',
                     \ }
-        if te#env#IsNvim()
+        if te#env#IsNvim() != 0
             :call extend(l:run_dict, {'window':'call FloatingFZF()'})
         else
             :call extend(l:run_dict, g:fzf_layout)

@@ -44,7 +44,10 @@ function! te#env#IsWin32() abort
 endfunction
 
 function! te#env#IsNvim() abort
-    if s:is_nvim | return 1 | endif
+    if s:is_nvim 
+        let v = api_info().version
+        return v.major + v.minor/10.0
+    endif
     return 0
 endfunction
 
@@ -117,7 +120,7 @@ function! te#env#SupportTimer() abort
 endfunction
 
 function! te#env#SupportTerminal() abort
-    return te#env#IsNvim() || (has('patch-8.0.1108') && has('terminal'))
+    return te#env#IsNvim() != 0 || (has('patch-8.0.1108') && has('terminal'))
 endfunction
 
 function! te#env#SupportFeature(feature_name) abort
@@ -143,7 +146,7 @@ function! te#env#get_termwinkey() abort
 endfunction
 
 function! te#env#SupportFloatingWindows() abort
-    if !te#env#IsNvim()
+    if te#env#IsNvim() == 0
         return exists('*popup_create')
     endif
 

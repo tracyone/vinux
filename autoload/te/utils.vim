@@ -78,7 +78,7 @@ function! te#utils#EchoWarning(str,...) abort
         execut 'echohl '.l:level | echom '['.l:prompt.'] '.a:str | echohl None
         return
     endif
-    if te#env#IsNvim() && te#env#SupportFloatingWindows() == 2
+    if te#env#IsNvim() != 0 && te#env#SupportFloatingWindows() == 2
         let l:str='['.l:prompt.'] '.a:str
         let l:win={}
         let l:bufnr = nvim_create_buf(v:false, v:false)

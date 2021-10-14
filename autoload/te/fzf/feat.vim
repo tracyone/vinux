@@ -36,7 +36,7 @@ function! s:edit_file(item)
                      \ 'down':'40%' ,
                      \ 'options' : '-m --prompt "Feat> "',
                      \ }
-            if te#env#IsNvim()
+            if te#env#IsNvim() != 0
                :call extend(l:run_dict, {'window':'call FloatingFZF()'})
            else
                :call extend(l:run_dict, g:fzf_layout)
@@ -76,7 +76,7 @@ function! te#fzf#feat#start(en) abort
                     \ 'down':'40%' ,
                     \ 'options' : '-m --prompt "Feat> "',
                     \ }
-     if te#env#IsNvim()
+     if te#env#IsNvim() != 0
           :call extend(l:run_dict, {'window':'call FloatingFZF()'})
       else
           :call extend(l:run_dict, g:fzf_layout)

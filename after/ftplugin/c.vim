@@ -31,7 +31,6 @@ set cscopeverbose
 " show msg when any other cscope db added
 nnoremap  <silent><buffer> <LocalLeader>s :cs find s <C-R>=expand("<cword>")<CR><CR>:botright cw 7<cr>
 nnoremap  <silent><buffer> <LocalLeader>d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:botright cw 7<cr>
-nnoremap  <silent><buffer> <LocalLeader>c :cs find c <C-R>=expand("<cword>")<CR><CR>:botright cw 7<cr>
 nnoremap  <silent><buffer> <LocalLeader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:botright cw 7<cr>
 nnoremap  <silent><buffer> <LocalLeader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:botright cw 7<cr>
 "nnoremap ,f :cs find f <C-R>=expand("<cfile>")<CR><CR>:cw 7<cr>
@@ -53,7 +52,6 @@ nnoremap  <silent><buffer> <LocalLeader>k :cs kill cscope.out<cr>
 " make
 nnoremap  <silent><buffer> <leader>am :call te#pg#do_make()<cr>
 nnoremap  <silent><buffer> <F5> :call te#pg#do_make()<CR>
-nnoremap  <silent><buffer> <silent> K :call te#utils#find_mannel()<cr>
 nnoremap  <silent><buffer><Leader>cf :<C-u>ClangFormat<CR>
 vnoremap  <silent><buffer><Leader>cf :ClangFormat<CR>
 " generate cscope for linux kernel

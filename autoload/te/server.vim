@@ -12,7 +12,7 @@ function! te#server#connect() abort
         if empty($TVIM_SERVER_ADDRESS)
             let $TVIM_SERVER_ADDRESS = fnamemodify('/tmp/' . (has('nvim') ? 'nvim_' : 'vim_') . 'server', ':p')
         endif
-        if te#env#IsNvim()
+        if te#env#IsNvim() != 0
             let $IN_VIM='nvim'
             try
                 call serverstart($TVIM_SERVER_ADDRESS)

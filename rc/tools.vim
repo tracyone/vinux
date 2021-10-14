@@ -23,7 +23,7 @@ Plug 'voldikss/vim-translate-me', {'on': ['TranslateW','TranslateR', 'Translate'
 command! -nargs=? Trans call te#trans#translate(<q-args>)
 command! -nargs=? -range TransR call te#trans#replace(<q-args>)
 Plug 'vim-scripts/DrawIt',{'on': 'DrawIt'}
-if te#env#IsNvim() && te#env#SupportPy3()
+if te#env#IsNvim() != 0 && te#env#SupportPy3()
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
     " Open Vim File Explorer
     nnoremap  <silent><Leader>fj :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>

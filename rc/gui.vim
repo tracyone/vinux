@@ -147,7 +147,7 @@ nnoremap  <silent><2-LeftMouse> :call te#complete#goto_def("")<cr>
 "{{{colorscheme
 let g:neosolarized_bold = 1
 let g:neosolarized_underline = 1
-if te#env#IsNvim()
+if te#env#IsNvim() != 0
     let g:neosolarized_italic = 0
     let g:jellybeans_use_term_italics = 0
     let g:jellybeans_use_gui_italics = 0

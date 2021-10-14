@@ -1,7 +1,7 @@
 " basic package
 " Package info {{{
 let s:sexy_command=[]
-if !te#env#IsNvim() || get(g:, 'feat_enable_tools') == 0
+if te#env#IsNvim() == 0 || get(g:, 'feat_enable_tools') == 0
     Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle','NERDTreeFind'] }
     call add(s:sexy_command, 'NERDTreeToggle')
     let g:NERDTreeShowLineNumbers=0	"don't show line number
@@ -48,7 +48,7 @@ Plug 'itchyny/vim-cursorword'
 Plug 'thinca/vim-quickrun',{'on': '<Plug>(quickrun)'}
 if(!te#env#IsWindows())
     Plug 'vim-scripts/sudo.vim', {'on': ['SudoRead', 'SudoWrite']}
-    if !te#env#IsNvim() 
+    if te#env#IsNvim() == 0
         Plug 'lambdalisue/vim-manpager'
     endif
     if te#env#IsMac()
@@ -62,7 +62,7 @@ if(!te#env#IsWindows())
     call te#feat#register_vim_plug_insert_setting([], 
                 \ ['fcitx-vim-osx'])
 endif
-if te#env#IsVim8() || te#env#IsNvim()
+if te#env#IsVim8() || te#env#IsNvim() != 0
     Plug 'neomake/neomake', { 'commit': '443dcc03b79b2402bd14600c9c4377266f07d1f4'}
     Plug 'tracyone/neomake-multiprocess'
     "ag search c family function
@@ -146,7 +146,7 @@ if g:complete_plugin_type.cur_val ==# 'ncm2'
     Plug 'roxma/vim-hug-neovim-rpc', { 'do':'pip3 install --user pynvim'}
 endif
 
-if !te#env#IsNvim() && (g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' ||
+if te#env#IsNvim() == 0 && (g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' ||
             \ g:complete_plugin_type.cur_val ==# 'deoplete.nvim')
     if g:complete_plugin_type.cur_val !=# 'ncm2'
         Plug 'roxma/nvim-yarp'
@@ -291,6 +291,7 @@ function! s:get_neomake_joblist()
             return l:msg
         endif
 endfunction
+
 
 nnoremap  <silent><leader>nj :cexpr <SID>get_neomake_joblist()<cr>:botright copen<cr>
 

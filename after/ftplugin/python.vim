@@ -4,7 +4,6 @@ if exists('b:did_vinux_ftplugin')
 endif
 let b:did_vinux_ftplugin = 1
 
-nnoremap  <silent><buffer> <LocalLeader>c :call te#complete#lookup_reference()<cr>
 "nnoremap  <silent><buffer> K :call te#complete#lookup_doc()<cr>
 
 "sudo pip3 install yapf
