@@ -43,7 +43,7 @@ elseif g:complete_plugin_type.cur_val ==# 'nvim-lspconfig' && te#env#IsNvim() >=
     Plug 'hrsh7th/cmp-path', {'branch': 'main' }
     Plug 'hrsh7th/cmp-nvim-lua',{'branch': 'main'}
     Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main' }
-    "Plug 'octaltree/cmp-look',{'for': ['text', 'markdown']}
+    Plug 'octaltree/cmp-look'
     "Plug 'onsails/lspkind-nvim'
     "Plug 'tamago324/cmp-zsh',{'for':['bash','zsh'], 'branch': 'main'}
 

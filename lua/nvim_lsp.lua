@@ -136,7 +136,6 @@ cmp.setup({
     sources = {
         { name = 'nvim_lsp' },
          { name = 'path' },
-         {name='look', keyword_length=2},
          --{ name = 'zsh' },
          { name = 'nvim_lua' },
 
