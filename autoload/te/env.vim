@@ -46,7 +46,7 @@ endfunction
 function! te#env#IsNvim() abort
     if s:is_nvim 
         let v = api_info().version
-        return v.major + v.minor/10.0
+        return v.major + v.minor/10.0 + v.patch / 100.0
     endif
     return 0
 endfunction
