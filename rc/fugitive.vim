@@ -23,7 +23,7 @@ nnoremap  <silent><Leader>gL :Gitv! --all<cr>
 " Open git log(file mode)
 vnoremap  <silent><leader>gL :Gitv! --all<cr>
 " Open git blame windows
-nnoremap  <silent><Leader>gb :Gblame<cr>
+nnoremap  <silent><Leader>gb :Git blame<cr>
 " git diff current file (vimdiff)
 nnoremap  <silent><Leader>gd :Gdiff<cr>
 " git cd
