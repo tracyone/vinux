@@ -35,11 +35,21 @@ if te#env#check_requirement()
     nnoremap <silent><F9> :TagbarToggle<CR>
     nnoremap  <silent><leader>tt :TagbarToggle<CR>
     call add(s:sexy_command, 'TagbarOpen')
+    let g:tagbar_left=0
+    let g:tagbar_width=30
+    let g:tagbar_sort=0
+    let g:tagbar_autofocus = 1
+    let g:tagbar_compact = 1
+    let g:tagbar_systemenc='cp936'
+    let g:tagbar_iconchars = ['+', '-']
 else
     Plug 'tracyone/vim-taglist'
     nnoremap <silent><F9> :TlistToggle<CR>
     nnoremap  <silent><leader>tt :TlistToggle<CR>
     call add(s:sexy_command, ':TlistToggle')
+    let Tlist_Show_One_File = 1
+    let Tlist_Use_Right_Window = 1
+    let Tlist_GainFocus_On_ToggleOpen=1
 endif
 if te#env#IsMac()
     Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
@@ -163,18 +173,6 @@ if te#env#IsNvim() == 0 && (g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim
         Plug 'roxma/vim-hug-neovim-rpc', { 'do':'pip3 install --user pynvim'}
     endif
 endif
-"}}}
-" Tagbar {{{
-let g:tagbar_left=0
-let g:tagbar_width=30
-let g:tagbar_sort=0
-let g:tagbar_autofocus = 1
-let g:tagbar_compact = 1
-let g:tagbar_systemenc='cp936'
-let g:tagbar_iconchars = ['+', '-']
-let Tlist_Show_One_File = 1
-let Tlist_Use_Right_Window = 1
-let Tlist_GainFocus_On_ToggleOpen=1
 "}}}
 " Vimshell {{{
 if(!te#env#SupportTerminal())
