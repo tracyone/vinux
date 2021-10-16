@@ -1,5 +1,7 @@
 Plug 'terryma/vim-multiple-cursors'
-Plug 'terryma/vim-expand-region'
+if te#env#IsNvim() < 0.5
+    Plug 'terryma/vim-expand-region'
+endif
 Plug 'Raimondi/delimitMate',{'on':[]}
 Plug 'thinca/vim-qfreplace',{'on': 'Qfreplace'}
 Plug 'scrooloose/nerdcommenter'

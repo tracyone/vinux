@@ -17,6 +17,16 @@ if te#env#IsNvim() == 0 || get(g:, 'feat_enable_tools') == 0
     "map <2-LeftMouse>  *N "double click highlight the current cursor word 
     inoremap <F12> <ESC> :NERDTreeToggle<CR>
 else
+    if te#env#IsNvim() >= 0.5
+        Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
+        function! s:treesitter_setup()
+lua << EOF
+            require('treesittier_nvim')
+EOF
+        endfunction
+
+        call te#feat#register_vim_enter_setting(function('<SID>treesitter_setup'))
+    endif
     call add(s:sexy_command, ':Defx -toggle -split=vertical -winwidth=50 -direction=topleft')
 endif
 if te#env#check_requirement()
