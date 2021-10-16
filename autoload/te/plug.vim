@@ -11,6 +11,13 @@ function! te#plug#open_doc() abort
             execute 'tabe' doc
             setlocal filetype=help
         endfor
+        if l:found == 0
+            for doc in split(globpath(g:plugs[name].dir, './*.md'), '\n')
+                let l:found=1
+                execute 'tabe' doc
+            endfor
+            call te#utils#EchoWarning('Can not find '.name."'s txt document try to find markdown document")
+        endif
     endif
     if l:found == 0
         call te#utils#EchoWarning('Can not find '.name."'s document")
@@ -150,6 +157,7 @@ function! te#plug#list() abort
     setlocal nomodifiable
     setlocal bufhidden=delete
     setlocal filetype=vim-plug
+    setlocal noswapfile
     call s:syntax()
     :0
     :f [plugins_list]

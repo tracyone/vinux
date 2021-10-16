@@ -18,4 +18,8 @@ setlocal softtabstop=4
 setlocal expandtab
 setlocal smarttab
 
-nnoremap  <silent><buffer> <leader>tt :Toc<cr>
+if te#env#IsNvim() >= 0.5
+    nnoremap  <silent><buffer> <leader>tt :Vista toc<cr>
+else
+    nnoremap  <silent><buffer> <leader>tt :Toc<cr>
+endif

@@ -22,7 +22,6 @@ Feature:
 
 # Todo list
 
-- [ ] C++ Support
 - [ ] Android Framework support
 
 # Buy me a coffee
