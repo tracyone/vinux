@@ -32,7 +32,7 @@ EOF
     endif
     call add(s:sexy_command, ':Defx -toggle -split=vertical -winwidth=50 -direction=topleft')
 endif
-if te#env#IsNvim() >= 0.5
+if te#env#IsNvim() >= 0.5 || has('patch-8.1.2114')
     Plug 'liuchengxu/vista.vim'
     function! s:vista_setup()
         " How each level is indented and what to prepend.
@@ -75,8 +75,13 @@ if te#env#IsNvim() >= 0.5
 
     endfunction
     call te#feat#register_vim_enter_setting(function('<SID>vista_setup'))
-    nnoremap <silent><F9> :Vista nvim_lsp<CR>
-    nnoremap  <silent><leader>tt :Vista nvim_lsp<CR>
+    if te#env#IsNvim() == 0
+        nnoremap <silent><F9> :Vista<CR>
+        nnoremap  <silent><leader>tt :Vista<CR>
+    else
+        nnoremap <silent><F9> :Vista nvim_lsp<CR>
+        nnoremap  <silent><leader>tt :Vista nvim_lsp<CR>
+    endif
 else
     if te#env#check_requirement()
         Plug 'majutsushi/tagbar'

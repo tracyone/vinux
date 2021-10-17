@@ -42,3 +42,11 @@ nnoremap  <silent><Leader>ph :Clap help<cr>
 nnoremap  <silent><Leader>qc :Clap hist:<cr>
 "nnoremap  <silent><Leader>q/ :call te#ctrlp#history#start('/')<cr>
 nnoremap  <silent><Leader>pf :Clap grep<cr>
+
+  let g:clap_popup_move_manager = {
+      \ "\<C-z>": "\<Tab>",
+      \ }
+
+
+"atom_dark.vim  material_design_dark.vim  nord.vim  onehalfdark.vim  onehalflight.vim  solarized_dark.vim  solarized_light.vim
+let g:clap_theme = 'atom_dark'
