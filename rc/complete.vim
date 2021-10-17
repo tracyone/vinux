@@ -34,9 +34,7 @@ elseif g:complete_plugin_type.cur_val ==# 'deoplete.nvim'
     execute 'source '.$VIMFILES.'/rc/deoplete.vim'
 elseif g:complete_plugin_type.cur_val ==# 'ncm2' && te#env#SupportPy3()
     execute 'source '.$VIMFILES.'/rc/ncm2.vim'
-elseif g:complete_plugin_type.cur_val ==# 'nvim-lspconfig' && te#env#IsNvim() >= 0.5
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'kabouzeid/nvim-lspinstall', {'branch': 'main' }
+elseif g:complete_plugin_type.cur_val ==# 'nvim-cmp' && te#env#IsNvim() >= 0.5
     Plug 'hrsh7th/cmp-nvim-lsp', {'branch': 'main' }
     Plug 'hrsh7th/cmp-buffer', {'branch': 'main' }
     Plug 'hrsh7th/nvim-cmp', {'branch': 'main' }
@@ -49,7 +47,7 @@ elseif g:complete_plugin_type.cur_val ==# 'nvim-lspconfig' && te#env#IsNvim() >=
 
 function! s:enable_nvim_lsp()
 lua << EOF
-require('nvim_lsp')
+require('nvim_cmp')
 EOF
 endfunction
 "Important config neovim lsp and cmp when vim enter

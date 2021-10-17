@@ -301,12 +301,17 @@ function! te#utils#nu_toggle() abort
 endfunction
 
 function! te#utils#find_mannel() abort
+    "open help in vim
+    let l:cur_word=expand('<cword>')
+    if &filetype == 'vim'
+        execute 'silent! help '.l:cur_word
+        return 0
+    endif
     let l:man_cmd=':Man'
     if !exists(l:man_cmd)
         call te#utils#EchoWarning('You must install lambdalisue/vim-manpager first!')
         return -1
     endif
-    let l:cur_word=expand('<cword>')
     if &filetype =~# '\<sh\>\|\<cpp\>'
         let l:ret = te#utils#GetError(l:man_cmd.' '.l:cur_word,'\cno \(manual\|entry\).*')
     else
@@ -319,10 +324,6 @@ function! te#utils#find_mannel() abort
                 let l:ret = te#utils#GetError(l:man_cmd.' 9 '.l:cur_word,'\cno \(manual\|entry\).*')
             endif
         endif
-    endif
-    "open help in vim
-    if l:ret != 0
-        execute 'silent! help '.l:cur_word
     endif
 endfunction
 
