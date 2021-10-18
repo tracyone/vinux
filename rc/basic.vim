@@ -32,7 +32,7 @@ EOF
     endif
     call add(s:sexy_command, ':Defx -toggle -split=vertical -winwidth=50 -direction=topleft')
 endif
-if te#env#IsNvim() >= 0.5 || has('patch-8.1.2114')
+if te#env#IsNvim() >= 0.5 && te#env#IsDisplay()
     Plug 'liuchengxu/vista.vim'
     function! s:vista_setup()
         " How each level is indented and what to prepend.

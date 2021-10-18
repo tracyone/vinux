@@ -4,16 +4,17 @@ function! te#complete#goto_def(open_type) abort
     execute a:open_type
     if get(g:, 'feat_enable_complete', 0)
         if te#env#SupportYcm() && g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
-            let l:ret=s:YcmGotoDef()
+            if &filetype == 'vim'
+                :call lookup#lookup()
+                return 0
+            else
+                let l:ret=s:YcmGotoDef()
+            endif
         else
             let l:ret=te#lsp#gotodefinion()
         endif
     endif
     if l:ret < 0
-        if &filetype == 'vim'
-            :call lookup#lookup()
-            return 0
-        endif
         try
             execute 'cs find g '.l:cword
         catch /^Vim\%((\a\+)\)\=:E/	
