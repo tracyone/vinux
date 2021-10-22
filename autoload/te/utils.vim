@@ -408,17 +408,7 @@ function! te#utils#tab_buf_switch(num) abort
             execute 'normal '."\<Plug>AirlineSelectTab".a:num
         endif
     else
-        if exists('g:buftabline_numbers') && g:buftabline_numbers == 2
-            if a:num == 0
-                :bprev
-            elseif a:num == -1
-                :bnext
-            elseif a:num == -2
-                :b#
-            else
-                execute 'normal '."\<Plug>BufTabLine.Go(".a:num.')'
-            endif
-        elseif exists( '*tabpagenr' ) && tabpagenr('$') != 1
+        if exists( '*tabpagenr' ) && tabpagenr('$') != 1
             " Tab support && tabs open
             if a:num == 0
                 :tabprev
@@ -428,6 +418,16 @@ function! te#utils#tab_buf_switch(num) abort
                 execute 'normal '.s:lastopen_tab.'gt'
             else
                 execute 'normal '.a:num.'gt'
+            endif
+        elseif exists('g:buftabline_numbers') && g:buftabline_numbers == 2
+            if a:num == 0
+                :bprev
+            elseif a:num == -1
+                :bnext
+            elseif a:num == -2
+                :b#
+            else
+                execute 'normal '."\<Plug>BufTabLine.Go(".a:num.')'
             endif
         else
             if a:num == 0
