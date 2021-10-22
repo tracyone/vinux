@@ -19,6 +19,7 @@ if te#env#IsNvim() == 0 || get(g:, 'feat_enable_tools') == 0
 else
     if te#env#IsNvim() >= 0.5
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
+        Plug 'nvim-treesitter/nvim-treesitter-refactor'
         Plug 'neovim/nvim-lspconfig'
         Plug 'kabouzeid/nvim-lspinstall', {'branch': 'main' }
         function! s:treesitter_setup()
