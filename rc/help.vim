@@ -27,6 +27,7 @@ let g:startify_custom_header = []
 let g:startify_commands = [
             \ {'o': [g:vinux_version, 'call te#utils#open_url("https://github.com/tracyone/vinux")']},
             \ {'v': ['Open vimrc', 'call feedkeys("\<Space>vc")']},
+            \ {'f': ['Find File', 'call feedkeys("\<Space>\<Space>")']},
             \ ]
 
 noremap <F8> :SSave<cr>
