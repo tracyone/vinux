@@ -18,6 +18,7 @@ elseif g:complete_plugin_type.cur_val ==# 'clang_complete'
 elseif g:complete_plugin_type.cur_val ==# 'asyncomplete.vim' && te#env#SupportAsync()
     Plug 'prabirshrestha/async.vim'
     Plug 'prabirshrestha/vim-lsp'
+    Plug 'mattn/vim-lsp-settings'
     Plug 'prabirshrestha/asyncomplete.vim'
     Plug 'prabirshrestha/asyncomplete-lsp.vim'
     "Plug 'prabirshrestha/asyncomplete-ultisnips.vim', { 'on': [] }

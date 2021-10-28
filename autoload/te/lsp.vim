@@ -37,6 +37,17 @@ function! te#lsp#format_document_range() abort
     endif
 endfunction
 
+function! te#lsp#hover() abort
+    if exists(':LspHover') == 2
+        :LspHover
+        return 0
+    elseif te#env#IsNvim() >= 0.5
+        :lua vim.lsp.buf.hover()
+    else
+        call te#utils#EchoWarning('NOT support command!')
+        return -1
+    endif
+endfunction
 function! te#lsp#get_doc_symbol() abort
     if exists(':LspDocumentSymbol') == 2
         :LspDocumentSymbol
