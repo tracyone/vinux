@@ -379,5 +379,6 @@ vnoremap  <silent><Leader>cf :call te#lsp#format_document()<CR>
 
 nnoremap  <silent> <silent> KK :call te#utils#find_mannel()<cr>
 nnoremap  <silent> <silent> K :call te#lsp#hover()<cr>
+nnoremap  <silent><Leader>rn  :call te#lsp#rename()<cr>
 
 nnoremap <expr><silent> <Enter> &buftype ==# 'quickfix' ? "\<CR>" : ":call te#complete#goto_def(\"\")\<cr>"
