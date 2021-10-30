@@ -1,8 +1,5 @@
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins', 'on': []}
 Plug 'zchee/deoplete-clang',{'for':['c', 'cpp']}
-Plug 'lighttiger2505/deoplete-vim-lsp'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
 
 function! s:config_deoplete()
     if te#env#IsMac()

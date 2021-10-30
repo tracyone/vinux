@@ -17,8 +17,6 @@ elseif g:complete_plugin_type.cur_val ==# 'clang_complete'
     Plug 'Rip-Rip/clang_complete', { 'on': [] }
 elseif g:complete_plugin_type.cur_val ==# 'asyncomplete.vim' && te#env#SupportAsync()
     Plug 'prabirshrestha/async.vim'
-    Plug 'prabirshrestha/vim-lsp'
-    Plug 'mattn/vim-lsp-settings'
     Plug 'prabirshrestha/asyncomplete.vim'
     Plug 'prabirshrestha/asyncomplete-lsp.vim'
     "Plug 'prabirshrestha/asyncomplete-ultisnips.vim', { 'on': [] }
@@ -267,29 +265,6 @@ elseif g:complete_plugin_type.cur_val ==# 'asyncomplete.vim'
                     \ }))
         let g:asyncomplete_min_chars = 2
     endfunction
-    if executable('clangd')
-        au misc_group User lsp_setup call lsp#register_server({
-                    \ 'name': 'clangd',
-                    \ 'cmd': {server_info->['clangd']},
-                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-                    \ })
-    endif
-	if executable('pyls')
-		" pip install python-language-server
-		au misc_group User lsp_setup call lsp#register_server({
-					\ 'name': 'pyls',
-					\ 'cmd': {server_info->['pyls']},
-					\ 'whitelist': ['python'],
-					\ })
-	endif
-    if executable('typescript-language-server')
-        au misc_group User lsp_setup call lsp#register_server({
-                    \ 'name': 'javascript support using typescript-language-server',
-                    \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-                    \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
-                    \ 'whitelist': ['javascript', 'javascript.jsx']
-                    \ })
-    endif
     let g:complete_plugin.enable_func=function('<SID>asyncomplete_setup')
     function! s:check_back_space() abort
         let col = col('.') - 1
