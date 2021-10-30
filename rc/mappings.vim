@@ -377,9 +377,5 @@ nnoremap <silent><LocalLeader>c :call te#complete#lookup_reference("")<cr>
 nnoremap <silent><c-\>c :call te#complete#lookup_reference("sp")<cr>
 
 nnoremap  <silent> <silent> KK :call te#utils#find_mannel()<cr>
-"lsp setting
-vnoremap  <silent><Leader>df :call te#lsp#format_document_range()<CR>
-nnoremap  <silent> <silent> K :call te#lsp#hover()<cr>
-nnoremap  <silent><Leader>rn  :call te#lsp#rename()<cr>
 
 nnoremap <expr><silent> <Enter> &buftype ==# 'quickfix' ? "\<CR>" : ":call te#complete#goto_def(\"\")\<cr>"
