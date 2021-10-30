@@ -265,6 +265,7 @@ elseif g:complete_plugin_type.cur_val ==# 'asyncomplete.vim'
                     \ 'blacklist': ['go'],
                     \ 'completor': function('asyncomplete#sources#buffer#completor'),
                     \ }))
+        let g:asyncomplete_min_chars = 2
     endfunction
     if executable('clangd')
         au misc_group User lsp_setup call lsp#register_server({
