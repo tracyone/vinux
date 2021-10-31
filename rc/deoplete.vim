@@ -109,9 +109,14 @@ function! s:config_deoplete()
 endfunction
 
 if g:feat_enable_lsp == 1
-    Plug 'lighttiger2505/deoplete-vim-lsp', {'on': []}
-    call extend(g:complete_plugin.name, ['deoplete-vim-lsp'])
+    if te#env#IsNvim() >= 0.5
+        Plug 'deoplete-plugins/deoplete-lsp'
+    else
+        Plug 'lighttiger2505/deoplete-vim-lsp', {'on': []}
+        call extend(g:complete_plugin.name, ['deoplete-vim-lsp'])
+    endif
 endif
+
 
 
 let g:complete_plugin.enable_func=function('<SID>config_deoplete')
