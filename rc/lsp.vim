@@ -14,29 +14,6 @@ EOF
 else
     Plug 'prabirshrestha/vim-lsp'
     Plug 'mattn/vim-lsp-settings'
-    if executable('clangd')
-        au misc_group User lsp_setup call lsp#register_server({
-                    \ 'name': 'clangd',
-                    \ 'cmd': {server_info->['clangd']},
-                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-                    \ })
-    endif
-    if executable('pyls')
-        " pip install python-language-server
-        au misc_group User lsp_setup call lsp#register_server({
-                    \ 'name': 'pyls',
-                    \ 'cmd': {server_info->['pyls']},
-                    \ 'whitelist': ['python'],
-                    \ })
-    endif
-    if executable('typescript-language-server')
-        au misc_group User lsp_setup call lsp#register_server({
-                    \ 'name': 'javascript support using typescript-language-server',
-                    \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-                    \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
-                    \ 'whitelist': ['javascript', 'javascript.jsx']
-                    \ })
-    endif
     nnoremap <silent><F9> :Vista vim_lsp<CR>
     nnoremap  <silent><leader>tt :Vista vim_lsp<CR>
     nnoremap  <silent><c-k>  :Vista finder vim_lsp<cr>
