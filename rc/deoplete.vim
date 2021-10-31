@@ -110,7 +110,8 @@ endfunction
 
 if g:feat_enable_lsp == 1
     if te#env#IsNvim() >= 0.5
-        Plug 'deoplete-plugins/deoplete-lsp'
+        Plug 'deoplete-plugins/deoplete-lsp', {'on': []}
+        call extend(g:complete_plugin.name, ['deoplete-lsp'])
     else
         Plug 'lighttiger2505/deoplete-vim-lsp', {'on': []}
         call extend(g:complete_plugin.name, ['deoplete-vim-lsp'])
