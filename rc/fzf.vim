@@ -117,7 +117,7 @@ else
     if has('patch-8.2.191')
         let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.4 }, 'down': '~40%' }
     else
-        let g:fzf_layout = {'window': 'botright '.&lines*40/100.'new'}
+        let g:fzf_layout = { 'down': '~40%' }
     endif
 endif
 
