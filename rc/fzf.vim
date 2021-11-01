@@ -23,7 +23,7 @@ nnoremap  <silent><leader>qc :call FzfStartEntry('History')<cr>
 nnoremap  <silent><leader>q/  :call FzfStartEntry('History/')<cr>
 " git log checkout
 nnoremap  <silent><Leader>pgc  :call FzfStartEntry('Commits')<cr>
-nnoremap  <silent><Leader>ps  :call FzfStartEntry('Snippets')<cr>
+nnoremap  <silent><Leader>sp  :call FzfStartEntry('Snippets')<cr>
 "vim help
 nnoremap  <silent><Leader>ph  :call FzfStartEntry('Helptags')<cr>
 "spacemacs :SPC ff
