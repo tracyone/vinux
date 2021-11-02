@@ -14,9 +14,10 @@ Plug 'ncm2/ncm2-ultisnips'
 Plug 'ncm2/ncm2-tagprefix'
 Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
 Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm2'}
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/async.vim'
-Plug 'ncm2/ncm2-vim-lsp'
+if g:feat_enable_lsp == 1 && te#env#IsNvim() < 0.5
+    Plug 'prabirshrestha/vim-lsp'
+    Plug 'ncm2/ncm2-vim-lsp'
+endif
 Plug 'ncm2/ncm2-html-subscope',{'for': ['html', 'jsp', 'htmldjango']}
 Plug 'ncm2/ncm2-markdown-subscope', {'for': 'markdown'}
 Plug 'ncm2/ncm2-cssomni', {'for': ['css']}
@@ -78,46 +79,20 @@ function! s:ncm2_setup()
     let g:ncm2_pyclang#args_file_path = ['.clang_complete']
 endfunction
 
-if executable('clangd')
-    au misc_group User lsp_setup call lsp#register_server({
-                \ 'name': 'clangd',
-                \ 'cmd': {server_info->['clangd']},
-                \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-                \ })
-else
+if !executable('clangd')
     Plug 'ncm2/ncm2-pyclang', { 'for': ['c', 'cpp']}
 endif
-if executable('pyls')
-    " pip install python-language-server
-    au misc_group User lsp_setup call lsp#register_server({
-                \ 'name': 'pyls',
-                \ 'cmd': {server_info->['pyls']},
-                \ 'whitelist': ['python'],
-                \ })
-else
+if !executable('pyls')
     Plug 'ncm2/ncm2-jedi', { 'for': ['python'], 'do': 'pip3 install --user jedi'}
 endif
 
-if executable('typescript-language-server')
-    au misc_group User lsp_setup call lsp#register_server({
-                \ 'name': 'javascript support using typescript-language-server',
-                \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-                \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
-                \ 'whitelist': ['javascript', 'javascript.jsx']
-                \ })
-else
+if !executable('typescript-language-server')
     Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
 endif
 let g:complete_plugin.enable_func=function('<SID>ncm2_setup')
 
 "go get -u golang.org/x/tools/cmd/golsp
 "go get -u github.com/sourcegraph/go-langserver
-if executable('golsp')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'golsp',
-        \ 'cmd': {server_info->['golsp', '-mode', 'stdio']},
-        \ 'whitelist': ['go'],
-        \ })
-else
+if !executable('golsp')
     Plug 'ncm2/ncm2-go', {'for': ['go']}
 endif
