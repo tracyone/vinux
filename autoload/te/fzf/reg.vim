@@ -8,7 +8,7 @@ function! s:edit_file(item) abort
     if !l:pos
         execute "normal! \"\"p"
     else
-        let l:str = a:str[0:pos-1]
+        let l:str = a:item[1][0:pos-1]
         execute "normal! \"".l:str."p"
     endif
 endfunction
