@@ -142,6 +142,8 @@ nnoremap  <silent><Leader>pgr :call te#ctrlp#git#start(4)<cr>
 nnoremap  <silent><Leader>ph :CtrlPHelp<cr>
 nnoremap  <silent><Leader>fe :call te#ctrlp#feat#start(1)<cr>
 nnoremap  <silent><Leader>fd :call te#ctrlp#feat#start(0)<cr>
+nnoremap " :call te#ctrlp#reg#start()<cr> 
+inoremap <c-r> <c-o>:stopinsert<cr>:call te#ctrlp#reg#start()<cr> 
 
 nnoremap  <silent><Leader>qc :call te#ctrlp#history#start(':')<cr>
 nnoremap  <silent><Leader>q/ :call te#ctrlp#history#start('/')<cr>

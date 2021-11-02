@@ -34,6 +34,7 @@ nnoremap  <silent><Leader>fe  :call FzfStartEntry(':call te#fzf#feat#start(1)')<
 nnoremap  <silent><Leader>fd  :call FzfStartEntry(':call te#fzf#feat#start(0)')<cr>
 
 nnoremap " :call FzfStartEntry('call te#fzf#reg#start()')<cr> 
+inoremap <c-r> <c-o>:stopinsert<cr>:call FzfStartEntry('call te#fzf#reg#start()')<cr> 
 
 if !te#env#Executable('ctags')
     Plug 'tracyone/fzf-funky',{'on': 'FzfFunky'}

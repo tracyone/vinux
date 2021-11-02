@@ -686,3 +686,16 @@ function! te#utils#pedit()
         execute ':pedit +call\ s:pedit('.l:list.lnum.')'." ".bufname(l:list.bufnr)
     endif
 endfunction
+
+function! te#utils#get_reg()
+    let l:result_list = []
+    let l:regs = map(range(0, 127),'nr2char(v:val)')
+
+    for i in l:regs
+        let l:tmp_str = getreg(i)
+        if !empty(l:tmp_str)
+            call add(l:result_list, i.":".l:tmp_str)
+        endif
+    endfor
+    return l:result_list
+endfunction
