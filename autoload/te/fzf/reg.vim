@@ -16,8 +16,13 @@ function! s:edit_file(item) abort
     else
         let l:cmd = "normal! "
     endif
-    if !l:pos
-        let l:cmd .= "\"\"p"
+    if l:pos == 0
+        let l:pos = stridx(a:item[1], '::')
+        if l:pos == 0
+            let l:cmd .= "\"\:p"
+        else
+            let l:cmd .= "\"\"p"
+        endif
     else
         let l:str = a:item[1][0:pos-1]
         let l:cmd .= "\"".l:str."p"
