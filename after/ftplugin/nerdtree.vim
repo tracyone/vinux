@@ -55,7 +55,25 @@ function! s:new_file()
     endtry
 endfunction
 
+function! s:open_file()
+    let l:node = g:NERDTreeFileNode.GetSelected()
+
+    if empty(l:node)
+        return
+    endif
+    if te#env#IsWindows()
+        call system('cmd /C start ' . shellescape(l:node.path.str()))
+    elseif te#env#IsMac()
+        call system("open '" . shellescape(l:node.path.str()) . "'")
+    else
+        call system("xdg-open '" . shellescape(l:node.path.str()) . "' &")
+    endif
+endfunction
+
+nnoremap <buffer> O :call <SID>open_file()<cr>
+
 nnoremap <buffer> dd :call <SID>delete_file()<cr>
 xnoremap <buffer> dd :<c-u>:call <SID>delete_file()<cr>
 nnoremap <buffer> N :call <SID>new_file()<cr>
+
 
