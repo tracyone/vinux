@@ -16,33 +16,6 @@ if te#env#IsNvim() == 0 || get(g:, 'feat_enable_tools') == 0
     nnoremap  <silent><leader>nf :NERDTreeFind<CR> 
     "map <2-LeftMouse>  *N "double click highlight the current cursor word 
     inoremap <F12> <ESC> :NERDTreeToggle<CR>
-    function! NerdTreeDeleteFile()
-        let l:file = g:NERDTreeFileNode.GetSelected()
-        if !empty(l:file)
-            if !empty(l:file.path)
-                if (confirm("Delete ".l:file.path.str(), "&Yes\n&No", 2)==1)
-                    try 
-                        call l:file.delete()
-                    catch
-                        call te#utils#EchoWarning("Delete ".l:file.path.str()." fail")
-                    endtry
-                    call l:file.parent.refresh()
-                    call NERDTreeRender()
-                endif
-            endif
-        endif
-        echom 
-    endfunction
-
-    function! NerdTreeNewFile()
-    endfunction
-
-    function! s:nerd_keymap_setting()
-        nnoremap <buffer> dd :call NerdTreeDeleteFile()<cr>
-        nnoremap <buffer> N :call NerdTreeNewFile()<cr>
-    endfunction
-
-    autocmd filetype_group FileType nerdtree :call <SID>nerd_keymap_setting()
 else
     if te#env#IsNvim() >= 0.5
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
