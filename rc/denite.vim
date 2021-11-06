@@ -170,7 +170,7 @@ nnoremap  <silent><c-k> :Denite outline<cr>
 nnoremap  <silent><Leader>pc :Denite colorscheme -post-action=open<cr>
 nnoremap  <silent><Leader>ff :Denite file<cr>
 "mru
-nnoremap  <silent><Leader>pr :Denite file_mru<cr>
+nnoremap  <silent><Leader>pm :Denite file_mru<cr>
 "file
 nnoremap  <silent><Leader>pp :Denite file/rec<cr>
 "function

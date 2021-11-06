@@ -32,10 +32,6 @@ if te#env#IsNvim() != 0 && te#env#SupportPy3()
     nnoremap  <silent><leader>te :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
     " Open nerd tree
     nnoremap  <silent><leader>nf :Defx -toggle -split=vertical -winwidth=50 -direction=topleft `expand('%:p:h')` -search=`expand('%:p')`<CR> 
-else
-    Plug 'mbbill/VimExplorer',{'on': 'VE'}
-    " Open Vim File Explorer
-    nnoremap  <silent><Leader>fj :silent! VE .<cr>
 endif
 Plug 'qpkorr/vim-renamer',{'on': 'Ren'}
 Plug 'Shougo/vinarise.vim',{'on': 'Vinarise'}

@@ -17,7 +17,7 @@ nnoremap  <silent><Leader>pc :call FzfStartEntry('Colors')<cr>
 nnoremap  <silent><Leader><Leader> :call FzfStartEntry("Files")<cr>
 "mru
 nnoremap  <silent><c-l>  :call FzfStartEntry('History')<cr>
-nnoremap  <silent><Leader>pr  :call FzfStartEntry('History')<cr>
+nnoremap  <silent><Leader>pm  :call FzfStartEntry('History')<cr>
 "command history
 nnoremap  <silent><leader>qc :call FzfStartEntry('History')<cr>
 nnoremap  <silent><leader>q/  :call FzfStartEntry('History/')<cr>
@@ -33,9 +33,9 @@ nnoremap  <silent><Leader>fe  :call FzfStartEntry(':call te#fzf#feat#start(1)')<
 "feature disable
 nnoremap  <silent><Leader>fd  :call FzfStartEntry(':call te#fzf#feat#start(0)')<cr>
 
-nnoremap " :call FzfStartEntry('call te#fzf#reg#start(0)')<cr> 
-inoremap <c-r> <c-o>:stopinsert<cr>:call FzfStartEntry('call te#fzf#reg#start(0)')<cr> 
-xnoremap " :call FzfStartEntry('call te#fzf#reg#start(1)')<cr> 
+nnoremap <silent><leader>pr :call FzfStartEntry('call te#fzf#reg#start(0)')<cr> 
+inoremap <silent><c-r> <c-o>:stopinsert<cr>:call FzfStartEntry('call te#fzf#reg#start(0)')<cr> 
+xnoremap <silent><leader>pr :call FzfStartEntry('call te#fzf#reg#start(1)')<cr> 
 
 if !te#env#Executable('ctags')
     Plug 'tracyone/fzf-funky',{'on': 'FzfFunky'}

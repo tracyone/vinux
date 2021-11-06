@@ -13,7 +13,7 @@ nnoremap  <silent><c-j> :Clap buffers<Cr>
 nnoremap  <silent><Leader>pb :Clap buffers<Cr>
 "nnoremap  <silent><c-l> :CtrlPMRUFiles<cr>
 "CtrlP mru
-nnoremap  <silent><Leader>pr :Clap history<Cr>
+nnoremap  <silent><Leader>pm :Clap history<Cr>
 nnoremap  <silent><c-l> :Clap history<Cr>
 "File
 nnoremap  <silent><Leader>pp :Clap files<cr>

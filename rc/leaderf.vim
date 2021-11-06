@@ -7,7 +7,7 @@ endif
 Plug 'Yggdroot/LeaderF'
 Plug 'Yggdroot/LeaderF-marks',{'on': 'LeaderfMarks'}
 " show global mark
-nnoremap  <silent><leader>pm :LeaderfMarks<Cr>
+"nnoremap  <silent><leader>pm :LeaderfMarks<Cr>
 
 "function
 nnoremap  <silent><c-k> :LeaderfFunction<cr>
@@ -16,7 +16,7 @@ nnoremap  <silent><Leader>pk :LeaderfFunction<cr>
 nnoremap  <silent><Leader>pb :LeaderfBuffer<Cr>
 " recent file 
 nnoremap  <silent><c-l> :LeaderfMru<cr>
-nnoremap  <silent><Leader>pr :LeaderfMru<cr>
+nnoremap  <silent><Leader>pm :LeaderfMru<cr>
 "file
 nnoremap  <silent><Leader>pp :LeaderfFile<cr>
 "leaderf cmd

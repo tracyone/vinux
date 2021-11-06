@@ -142,6 +142,24 @@ function! s:paste_file()
     call NERDTreeRender()
 endfunction
 
+function! s:rename_file()
+    let l:node = g:NERDTreeFileNode.GetSelected()
+    let l:newNodeName = input("Please input a new filename: ", l:node.path.str(), 'file')
+
+    if l:newNodeName ==# ''
+        call te#utils#EchoWarning('Empty filename!')
+        return
+    endif
+    let l:ret = rename(l:node.path.str(), l:newNodeName)
+    if l:ret
+        call te#utils#EchoWarning("Rename file from ".l:node.path.str()." to ".l:newNodeName." fail")
+    else
+        call te#utils#EchoWarning("Rename file finish")
+    endif
+    call l:node.parent.refresh()
+    call NERDTreeRender()
+endfunction
+
 nnoremap <silent><buffer> O :call <SID>open_file()<cr>
 nnoremap <silent><buffer> dd :call <SID>delete_file()<cr>
 xnoremap <silent><buffer> dd :<c-u>:call <SID>delete_file()<cr>
@@ -149,5 +167,6 @@ nnoremap <silent><buffer> N :call <SID>new_file()<cr>
 nnoremap <silent><buffer> yy :call <SID>copy_file()<cr>
 nnoremap <silent><buffer> m :call <SID>move_file()<cr>
 nnoremap <silent><buffer> p :call <SID>paste_file()<cr>
+nnoremap <silent><buffer> r :call <SID>rename_file()<cr>
 
 

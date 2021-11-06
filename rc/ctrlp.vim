@@ -116,7 +116,7 @@ nnoremap  <silent><leader>pm :SignatureListGlobalMarks<Cr>
 nnoremap  <silent><Leader>pb :CtrlPBuffer<Cr>
 nnoremap  <silent><c-l> :CtrlPMRUFiles<cr>
 "CtrlP mru
-nnoremap  <silent><Leader>pr :CtrlPMRUFiles<cr>
+nnoremap  <silent><Leader>pm :CtrlPMRUFiles<cr>
 "CtrlP file
 nnoremap  <silent><Leader>pp :CtrlP<cr>
 " narrow the list down with a word under cursor
@@ -142,9 +142,9 @@ nnoremap  <silent><Leader>pgr :call te#ctrlp#git#start(4)<cr>
 nnoremap  <silent><Leader>ph :CtrlPHelp<cr>
 nnoremap  <silent><Leader>fe :call te#ctrlp#feat#start(1)<cr>
 nnoremap  <silent><Leader>fd :call te#ctrlp#feat#start(0)<cr>
-nnoremap " :call te#ctrlp#reg#start(0)<cr> 
+nnoremap <silent><Leader>pr :call te#ctrlp#reg#start(0)<cr> 
 inoremap <c-r> <c-o>:stopinsert<cr>:call te#ctrlp#reg#start(0)<cr> 
-xnoremap " :call te#ctrlp#reg#start(1)<cr> 
+xnoremap <silent><Leader>pr :call te#ctrlp#reg#start(1)<cr> 
 
 nnoremap  <silent><Leader>qc :call te#ctrlp#history#start(':')<cr>
 nnoremap  <silent><Leader>q/ :call te#ctrlp#history#start('/')<cr>
