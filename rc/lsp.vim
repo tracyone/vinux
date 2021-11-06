@@ -21,6 +21,7 @@ else
     if g:fuzzysearcher_plugin_name.cur_val == 'fzf'
         nnoremap  <silent><c-k>  :Vista finder vim_lsp<cr>
     endif
+    nnoremap  <silent><leader>ql :LspDocumentDiagnostics<cr>
 endif
 
 function! s:vista_setup()
