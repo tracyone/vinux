@@ -2,14 +2,13 @@ function! te#complete#goto_def(open_type) abort
     let l:cword=expand('<cword>')
     let l:ret = -1
     execute a:open_type
+    if &filetype == 'vim'
+        :call lookup#lookup()
+        return 0
+    endif
     if get(g:, 'feat_enable_complete', 0)
         if te#env#SupportYcm() && g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
-            if &filetype == 'vim'
-                :call lookup#lookup()
-                return 0
-            else
-                let l:ret=s:YcmGotoDef()
-            endif
+            let l:ret=s:YcmGotoDef()
         else
             let l:ret=te#lsp#gotodefinion()
         endif
