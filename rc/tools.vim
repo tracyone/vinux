@@ -93,9 +93,6 @@ function! s:drawit_toggle()
 endfunction
 " draw it
 nnoremap  <silent><leader>aw :call <SID>drawit_toggle()<cr>
-" VimExplorer ---------------------{{{
-let g:VEConf_systemEncoding = 'cp936'
-noremap  <silent><F11> :silent! VE .<cr>
 "}}}
 " Renamer -------------------------{{{
 noremap  <silent><F2> :Ren<cr>

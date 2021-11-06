@@ -7,8 +7,6 @@ lua << EOF
         require('nvim_lsp')
 EOF
     endfunction
-    nnoremap <silent><F9> :Vista nvim_lsp<CR>
-    nnoremap  <silent><leader>tt :Vista nvim_lsp<CR>
     if g:fuzzysearcher_plugin_name.cur_val == 'fzf'
         nnoremap  <silent><c-k>  :Vista finder nvim_lsp<cr>
     endif
@@ -16,8 +14,6 @@ EOF
 else
     Plug 'prabirshrestha/vim-lsp'
     Plug 'mattn/vim-lsp-settings'
-    nnoremap <silent><F9> :Vista vim_lsp<CR>
-    nnoremap  <silent><leader>tt :Vista vim_lsp<CR>
     if g:fuzzysearcher_plugin_name.cur_val == 'fzf'
         nnoremap  <silent><c-k>  :Vista finder vim_lsp<cr>
     endif
