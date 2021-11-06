@@ -26,7 +26,7 @@ function! s:new_file()
     let l:newNodeName = input("Please input a new filename: ", "", 'file')
 
     if l:newNodeName ==# ''
-        call te#utils#EchoWarning('Node Creation Aborted.')
+        call te#utils#EchoWarning('Empty filename!')
         return
     endif
 
@@ -70,10 +70,84 @@ function! s:open_file()
     endif
 endfunction
 
-nnoremap <buffer> O :call <SID>open_file()<cr>
+function! s:copy_file()
+    let l:node = g:NERDTreeFileNode.GetSelected()
+    if l:node.path.isDirectory
+        call te#utils#EchoWarning("Not support directory")
+    else
+        let s:copy_file_path = substitute(l:node.path.str(), '\/$', '', '')
+        call te#utils#EchoWarning("Copy to clipboard : ".s:copy_file_path)
+    endif
+    call setreg('"', l:node.path.str())
+endfunction
 
-nnoremap <buffer> dd :call <SID>delete_file()<cr>
-xnoremap <buffer> dd :<c-u>:call <SID>delete_file()<cr>
-nnoremap <buffer> N :call <SID>new_file()<cr>
+function! s:move_file()
+    let l:node = g:NERDTreeFileNode.GetSelected()
+    if l:node.path.isDirectory
+        call te#utils#EchoWarning("Not support directory")
+    else
+        let s:move_file_path = substitute(l:node.path.str(), '\/$', '', '')
+        call te#utils#EchoWarning("Copy to clipboard : ".s:move_file_path)
+    endif
+endfunction
+
+function! s:paste_file()
+    let l:node = g:NERDTreeFileNode.GetSelected()
+    let l:confirm = 1
+    if exists("s:copy_file_path") && !empty(s:copy_file_path)
+        let l:dst_file = fnamemodify(l:node.path.str(), ":p:h")."/".fnamemodify(s:copy_file_path, ":t")
+        if filereadable(s:copy_file_path)
+            if filereadable(l:dst_file)
+                if confirm(l:dst_file." is exist! override?", "&Yes\n&No", 2) == 2
+                    call te#utils#EchoWarning("Copy file abort")
+                    let l:confirm = 0
+                endif
+            endif
+            if l:confirm == 1
+                let l:ret = writefile(readblob(s:copy_file_path), l:dst_file, "s")
+                if l:ret == -1
+                    call te#utils#EchoWarning("Copy ".s:copy_file_path. " fail")
+                else
+                    call te#utils#EchoWarning("Copy file finish")
+                endif
+            endif
+        else
+            call te#utils#EchoWarning(s:copy_file_path." is not exist")
+        endif
+        let s:copy_file_path = ""
+    endif
+
+    if exists("s:move_file_path") && !empty(s:move_file_path)
+        let l:dst_file = fnamemodify(l:node.path.str(), ":p:h")."/".fnamemodify(s:move_file_path, ":t")
+        if exists("s:move_file_path")
+            if filereadable(l:dst_file)
+                if confirm(l:dst_file." is exist! override?", "&Yes\n&No", 2) == 2
+                    call te#utils#EchoWarning("Move file abort")
+                    let l:confirm = 0
+                endif
+            endif
+            if l:confirm == 1
+                let l:ret = rename(s:move_file_path, l:dst_file)
+                if l:ret
+                    call te#utils#EchoWarning("Move file to".l:dst_file." fail!!")
+                else
+                    call te#utils#EchoWarning("Move file finish")
+                endif
+            endif
+        endif
+        let s:move_file_path = ""
+    endif
+    call b:NERDTree.root.refresh()
+    "call l:node.parent.refresh()
+    call NERDTreeRender()
+endfunction
+
+nnoremap <silent><buffer> O :call <SID>open_file()<cr>
+nnoremap <silent><buffer> dd :call <SID>delete_file()<cr>
+xnoremap <silent><buffer> dd :<c-u>:call <SID>delete_file()<cr>
+nnoremap <silent><buffer> N :call <SID>new_file()<cr>
+nnoremap <silent><buffer> yy :call <SID>copy_file()<cr>
+nnoremap <silent><buffer> m :call <SID>move_file()<cr>
+nnoremap <silent><buffer> p :call <SID>paste_file()<cr>
 
 
