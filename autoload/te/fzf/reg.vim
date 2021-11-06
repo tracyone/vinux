@@ -5,11 +5,10 @@ let s:start_col = 0
 let s:end_col = 0
 
 function! s:edit_file(item) abort
-    if len(a:item) < 2 | return | endif
     "let l:pos = stridx(a:item[1], ':')
     "let l:str = a:item[1][pos+1:-1]
     "call setline(".", l:str)
-    let l:pos = stridx(a:item[1], ':')
+    let l:pos = stridx(a:item[0], ':')
     let l:cmd = ""
     if s:is_v_mode == 1
         let l:cmd = "normal! ".s:start_col."|"."v".s:end_col."|"
@@ -17,14 +16,14 @@ function! s:edit_file(item) abort
         let l:cmd = "normal! "
     endif
     if l:pos == 0
-        let l:pos = stridx(a:item[1], '::')
+        let l:pos = stridx(a:item[0], '::')
         if l:pos == 0
             let l:cmd .= "\"\:p"
         else
             let l:cmd .= "\"\"p"
         endif
     else
-        let l:str = a:item[1][0:pos-1]
+        let l:str = a:item[0][0:pos-1]
         let l:cmd .= "\"".l:str."p"
     endif
     execute l:cmd
@@ -42,8 +41,7 @@ function! te#fzf#reg#start(is_v_mode) abort
                 \ 'source': te#utils#get_reg(),
                 \ 'sink*': function('<SID>edit_file'),
                 \ 'down':'40%' ,
-                \ 'options' : ' --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : '.
-                \              '-m --prompt "Reg> "',
+                \ 'options' : '-m --prompt "Reg> "',
                 \ }
     if te#env#IsNvim() != 0
         :call extend(l:run_dict, {'window':'call FloatingFZF()'})
