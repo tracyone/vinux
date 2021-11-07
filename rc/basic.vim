@@ -22,7 +22,7 @@ else
         Plug 'nvim-treesitter/nvim-treesitter-refactor'
         function! s:treesitter_setup()
 lua << EOF
-            require('nvim_lsp')
+            require('treesittier_nvim')
 EOF
         endfunction
 
