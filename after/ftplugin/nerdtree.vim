@@ -1,6 +1,10 @@
 function! s:delete_file()
     let l:lastline = line("'>")
     let l:curLine = line("'<")
+    if l:curLine == l:lastline
+        let l:curLine = line(".")
+        let l:lastline = l:curLine
+    endif
     while l:curLine <= l:lastline
         call cursor(l:curLine, 1)
         let l:file = g:NERDTreeFileNode.GetSelected()
