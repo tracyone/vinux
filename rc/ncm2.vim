@@ -15,7 +15,6 @@ Plug 'ncm2/ncm2-tagprefix'
 Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
 Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm2'}
 if g:feat_enable_lsp == 1 && te#env#IsNvim() < 0.5
-    Plug 'prabirshrestha/vim-lsp'
     Plug 'ncm2/ncm2-vim-lsp'
 endif
 Plug 'ncm2/ncm2-html-subscope',{'for': ['html', 'jsp', 'htmldjango']}
