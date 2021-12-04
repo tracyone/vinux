@@ -5,15 +5,27 @@ if te#env#IsGui()
 endif
 "some awesome vim colour themes
 Plug 'sjl/badwolf'
-Plug 'iCyMind/NeoSolarized'
 Plug 'tomasr/molokai'
-Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'nanotech/jellybeans.vim'
+if te#env#IsNvim() >= 0.5
+    Plug 'rktjmp/lush.nvim'
+    Plug 'metalelf0/jellybeans-nvim'
+    "Plug 'ellisonleao/gruvbox.nvim'
+    Plug 'kunzaatko/nord.nvim'
+    Plug 'ishan9299/nvim-solarized-lua'
+    Plug 'Th3Whit3Wolf/space-nvim'
+    Plug 'sainnhe/gruvbox-material'
+    Plug 'folke/tokyonight.nvim'
+    let g:gruvbox_material_background = 'soft'
+else
+    Plug 'nanotech/jellybeans.vim'
+    Plug 'arcticicestudio/nord-vim'
+    Plug 'iCyMind/NeoSolarized'
+    Plug 'liuchengxu/space-vim-dark'
+endif
+Plug 'morhetz/gruvbox'
 Plug 'vim-scripts/desert256.vim'
-Plug 'liuchengxu/space-vim-dark'
 Plug 'ayu-theme/ayu-vim'
-Plug 'arcticicestudio/nord-vim'
 Plug 'srcery-colors/srcery-vim'
 " }}}
 "Gui releate{{{

@@ -262,6 +262,9 @@ endif
 if has('patch-8.1.1600')
     set signcolumn=number
 endif
+if has('termguicolors')
+    set termguicolors
+endif
 
 "{{{fold setting
 "folding type: manual, indent, expr, marker or syntax

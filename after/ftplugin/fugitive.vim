@@ -4,6 +4,7 @@ nnoremap <silent><buffer> <c-t> :call feedkeys('O')<cr>
 nnoremap <silent><buffer> t :call feedkeys('O')<cr>
 nnoremap <silent><buffer> <c-x> :call feedkeys('o')<cr>
 nnoremap <silent><buffer> q :call feedkeys('gq')<cr>
+nnoremap <silent><buffer> D :call feedkeys('dd')<cr>
 nnoremap <silent><buffer> U :call feedkeys('X')<cr>
 xnoremap <silent><buffer> U :call feedkeys('X')<cr>
 nnoremap <silent><buffer> cc :<C-U>Git commit --signoff<CR>
