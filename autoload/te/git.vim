@@ -180,8 +180,14 @@ endfunction
 
 function! te#git#show_log(dir) abort
     execute 'cd '.a:dir
-    if te#env#IsTmux() && te#env#Executable('tig') 
-        call te#tmux#run_command('tig', 0x4)
+    if te#env#SupportTerminal()
+        :tabnew
+        if te#env#IsNvim() != 0
+            :terminal tig
+        else
+            hi Terminal ctermbg=black ctermfg=white guibg=black guifg=white
+            :terminal ++curwin ++close tig
+        endif
         cd -
         return 0
     elseif exists(':Gitv')
@@ -191,16 +197,6 @@ function! te#git#show_log(dir) abort
     elseif exists(':Gina')
         :tabnew
         :Gina log --max-count=300
-        cd -
-        return 0
-    elseif te#env#SupportTerminal()
-        :tabnew
-        if te#env#IsNvim() != 0
-            :terminal tig
-        else
-            hi Terminal ctermbg=black ctermfg=white guibg=black guifg=white
-            :terminal ++curwin ++close tig
-        endif
         cd -
         return 0
     endif
