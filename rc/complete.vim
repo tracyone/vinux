@@ -48,6 +48,13 @@ function! s:enable_nvim_lsp()
 lua << EOF
 require('nvim_cmp')
 EOF
+autocmd FileType markdown,gitcommit lua require'cmp'.setup.buffer {
+            \   sources = {
+                \     {name='look', keyword_length=2},
+                \ { name = 'ultisnips' },
+                \ { name = 'buffer' },
+                \   },
+                \ }
 endfunction
 "Important config neovim lsp and cmp when vim enter
 call te#feat#register_vim_enter_setting(function('<SID>enable_nvim_lsp'))

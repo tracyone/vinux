@@ -51,9 +51,6 @@ endif
 "}}}
 "do not Ring the bell (beep or screen flash) for error messages
 set noerrorbells
-if te#env#IsVim8()
-set belloff=all
-endif
 set matchtime=2  
 set report=0  "Threshold for reporting number of lines changed
 set helplang=en,cn  "set helplang=en
@@ -194,6 +191,22 @@ set sessionoptions-=options
 set fileformats=unix,dos,mac
 set diffopt=vertical
 set shortmess=filnxtToOI
+"disable some builtin vim plugins
+let g:loaded_logiPat           = 1
+let g:loaded_rrhelper          = 1
+let g:loaded_tarPlugin         = 1
+let g:loaded_gzip              = 1
+let g:loaded_zipPlugin         = 1
+let g:loaded_2html_plugin      = 1
+let g:loaded_shada_plugin      = 1
+let g:loaded_spellfile_plugin  = 1
+let g:loaded_netrw             = 1
+let g:loaded_netrwPlugin       = 1
+let g:loaded_tutor_mode_plugin = 1
+let g:loaded_netrwSettings = 1
+let g:loaded_netrwFileHandlers = 1
+
+
 if te#env#IsNvim() != 0
     " Use cursor shape feature
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
@@ -217,6 +230,7 @@ else
 endif
 
 if te#env#IsVim8()
+    set belloff=all
     let g:t_number=v:t_number
     let g:t_string=v:t_string
     let g:t_func=v:t_func
@@ -234,6 +248,15 @@ if te#env#IsVim8()
             set termkey=<c-y>
         endif
     endif
+    if empty($TMUX)
+      let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+      let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+      let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+    else
+      let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+      let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+      let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+    endif
 else
     let g:t_number=0
     let g:t_string=1
@@ -245,18 +268,6 @@ else
     let g:t_none=7
     let g:t_job=8
     let g:t_channel=9
-endif
-
-if te#env#IsVim8()
-    if empty($TMUX)
-      let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-      let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-      let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-    else
-      let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-      let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-      let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-    endif
 endif
 
 if has('patch-8.1.1600')

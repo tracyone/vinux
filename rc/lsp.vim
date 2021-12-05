@@ -1,7 +1,7 @@
 Plug 'liuchengxu/vista.vim'
 if te#env#IsNvim() >= 0.5
     Plug 'neovim/nvim-lspconfig'
-    Plug 'kabouzeid/nvim-lspinstall', {'branch': 'main' }
+    Plug 'williamboman/nvim-lsp-installer'
     function! s:lsp_setup()
 lua << EOF
         require('nvim_lsp')

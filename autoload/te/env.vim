@@ -1,4 +1,9 @@
 "environment check
+"following global variable is for neovim only
+"for providing a path of python3 we can speedup start time of neovim
+let g:loaded_python_provider = 0
+let g:python3_host_prog = 'python3'
+
 let s:is_unix     =  (has('mac') || has('osx')) + has('unix')
 let s:is_win      = has('win32') + has('win64')
 let s:is_nvim     = has('nvim')
