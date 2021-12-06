@@ -22,8 +22,8 @@ else
     Plug 'arcticicestudio/nord-vim'
     Plug 'iCyMind/NeoSolarized'
     Plug 'liuchengxu/space-vim-dark'
+    Plug 'morhetz/gruvbox'
 endif
-Plug 'morhetz/gruvbox'
 Plug 'vim-scripts/desert256.vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'srcery-colors/srcery-vim'

@@ -22,6 +22,10 @@ if has('win64') || has('win32')
     let $PATH = $VIMFILES.'/bin;'.$PATH
 else
     "remove default folder from rtp
+    "following global variable is for neovim only
+    "for providing a path of python3 we can speedup start time of neovim
+    let g:loaded_python_provider = 0
+    let g:python3_host_prog = 'python3'
     if $VIMFILES !=# $HOME.'/.vim'
         set runtimepath-=$HOME/.vim
         set runtimepath-=$HOME/.vim/after
