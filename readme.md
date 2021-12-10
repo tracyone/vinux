@@ -1,8 +1,6 @@
 # 🍎 vinux
 
-Vim配置就像人的内裤一样私密，但是总有痴汉想偷我的内裤！！
-
-Vim config just like my panties，But there are chikans want to steal my chikan!!! 
+Vim config just like my panties，But there are chikans(痴汉) want to steal my panties!!! 
 
 **Quick Install**
 
