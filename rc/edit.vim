@@ -4,7 +4,7 @@ if te#env#IsNvim() < 0.5
 endif
 Plug 'Raimondi/delimitMate',{'on':[]}
 Plug 'thinca/vim-qfreplace',{'on': 'Qfreplace'}
-Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter',{'on':[]}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat' "repeat enhance
 Plug 'junegunn/vim-easy-align',{'on': [ '<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)' ]}
@@ -26,8 +26,8 @@ endif
 Plug 'haya14busa/vim-asterisk'
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
 Plug 'tweekmonster/spellrotate.vim', {'on': ['<Plug>(SpellRotateForward)']}
-call te#feat#register_vim_plug_insert_setting([], 
-            \ ['delimitMate'])
+call te#feat#register_vim_enter_setting2([0], 
+            \ ['delimitMate', 'nerdcommenter'])
 nmap <silent> <leader>zn :set spell<cr><Plug>(SpellRotateForward)
 nmap <silent> <leader>zp :set spell<cr><Plug>(SpellRotateBackward)
 xmap <silent> <leader>zn <Plug>(SpellRotateForwardV)

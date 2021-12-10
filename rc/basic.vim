@@ -31,7 +31,7 @@ EOF
     call add(s:sexy_command, ':Defx -toggle -split=vertical -winwidth=50 -direction=topleft')
 endif
 if te#env#check_requirement()
-    Plug 'majutsushi/tagbar'
+    Plug 'majutsushi/tagbar',{'on': []}
     " Open tagbar
     nnoremap <silent><F9> :TagbarToggle<CR>
     nnoremap  <silent><leader>tt :TagbarToggle<CR>
@@ -43,6 +43,7 @@ if te#env#check_requirement()
     let g:tagbar_compact = 1
     let g:tagbar_systemenc='cp936'
     let g:tagbar_iconchars = ['+', '-']
+    call te#feat#register_vim_enter_setting2([0], ['tagbar'])
 else
     Plug 'tracyone/vim-taglist'
     nnoremap <silent><F9> :TlistToggle<CR>

@@ -19,7 +19,7 @@ endif
 Plug 'rhysd/github-complete.vim',{'for': ['gitcommit', 'markdown', 'gina-commit']}
 if te#env#SupportFeature('signs')
     Plug 'airblade/vim-gitgutter', { 'on': [] }
-    call te#feat#register_vim_plug_insert_setting(['GitGutterEnable'], 
+    call te#feat#register_vim_enter_setting2(['GitGutterEnable'], 
                 \ ['vim-gitgutter'])
 endif
 if te#env#SupportAsync()

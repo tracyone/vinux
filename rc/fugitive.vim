@@ -1,18 +1,19 @@
 
 if !te#env#check_requirement()
-    Plug 'tpope/vim-fugitive', {'tag': 'v2.2'}
+    Plug 'tpope/vim-fugitive', {'tag': 'v2.2', 'on': []}
     nnoremap  <silent><F3> :silent! only<cr>:Gstatus<cr>
     nnoremap  <silent><Leader>gs :silent! only<cr>:Gstatus<cr>
 else
     if te#env#IsNvim() != 0 || has('patch-8.2.3141')
-        Plug 'tpope/vim-fugitive', {'dir': g:vinux_plugin_dir.cur_val.'/vim-fugitive-latest/'}
+        Plug 'tpope/vim-fugitive', {'dir': g:vinux_plugin_dir.cur_val.'/vim-fugitive-latest/', 'on': []}
     else
-        Plug 'tpope/vim-fugitive', {'tag': 'v3.2'}
+        Plug 'tpope/vim-fugitive', {'tag': 'v3.2', 'on': []}
     endif
     " Open git status window
     nnoremap  <silent><F3> :silent! only<cr>:G<cr>:call feedkeys(']]')<cr>
     nnoremap  <silent><Leader>gs :silent! only<cr>:G<cr>:call feedkeys(']]')<cr>
 endif
+call te#feat#register_vim_enter_setting2([0], ['vim-fugitive'])
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'sodapopcan/vim-twiggy', { 'on': 'Twiggy' }
 let g:fugitive_no_maps=0

@@ -7,7 +7,9 @@ augroup misc_group
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") |
                 \ exe "normal! g'\"" |
                 \ endif "jump to last position last open in vim
-    autocmd VimEnter * call te#feat#run_vim_enter_setting()
+    if !te#env#SupportTimer()
+        autocmd VimEnter * call te#feat#run_vim_enter_setting(0)
+    endif
     autocmd FileChangedRO * setlocal noreadonly | call te#utils#EchoWarning('Changing readonly file ...')
 augroup END
 

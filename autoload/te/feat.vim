@@ -174,12 +174,32 @@ endfunction
 
 let s:plugin_func_list=[]
 
+if te#env#SupportTimer()
+    let s:vim_enter_timer=timer_start(500, function('te#feat#run_vim_enter_setting'), {'repeat': 1})
+endif
 "funcref must be a funcref variable
 function! te#feat#register_vim_enter_setting(funcref) abort
     call add(s:plugin_func_list, a:funcref)
 endfunction
 
-function! te#feat#run_vim_enter_setting() abort
+let s:pluin_list_load_vim_enter = []
+let s:plugin_func_list_vim_enter = []
+function! te#feat#register_vim_enter_setting2(funcref, plug_name) abort
+    call extend(s:pluin_list_load_vim_enter, a:plug_name)
+    call extend(s:plugin_func_list_vim_enter, a:funcref)
+endfunction
+
+function! te#feat#run_vim_enter_setting(timer) abort
+    call plug#load(s:pluin_list_load_vim_enter)
+    for l:Needle in s:plugin_func_list_vim_enter
+        silent! call l:Needle()
+        if type(l:Needle) == g:t_func
+            silent! call l:Needle()
+        elseif type(l:Needle) == g:t_string
+            silent! execute l:Needle
+        endif
+        unlet l:Needle
+    endfor
     for l:Needle in s:plugin_func_list
         silent! call l:Needle()
     endfor
