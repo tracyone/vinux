@@ -20,9 +20,9 @@ if te#env#IsNvim() >= 0.5
 else
     Plug 'nanotech/jellybeans.vim'
     Plug 'arcticicestudio/nord-vim'
-    Plug 'iCyMind/NeoSolarized'
+    Plug 'lifepillar/vim-solarized8'
     Plug 'liuchengxu/space-vim-dark'
-    Plug 'morhetz/gruvbox'
+    Plug 'lifepillar/vim-gruvbox8'
 endif
 Plug 'vim-scripts/desert256.vim'
 Plug 'ayu-theme/ayu-vim'
