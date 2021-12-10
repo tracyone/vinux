@@ -18,7 +18,8 @@ endif
 Plug 'easymotion/vim-easymotion', { 'on': [ '<Plug>(easymotion-lineforward)',
             \ '<Plug>(easymotion-linebackward)','<Plug>(easymotion-overwin-w)' ]}
 Plug 't9md/vim-choosewin',{'on': '<Plug>(choosewin)'}
-Plug 'kshenoy/vim-signature'
+Plug 'kshenoy/vim-signature',{'on':[]}
+call te#feat#register_vim_enter_setting2(['let g:SignatureEnabledAtStartup=1'],['vim-signature'])
 Plug 'MattesGroeger/vim-bookmarks', { 'on': ['BookmarkShowAll', 'BookmarkToggle', 'BookmarkAnnotate']}
 if get(g:,'feat_enable_airline') == 0
     Plug 'tracyone/vim-buftabline'
@@ -87,7 +88,6 @@ nnoremap  <silent><leader>mc :BookmarkClear<cr>
 nnoremap  <silent><leader>mb :BookmarkShowAll<CR>
 " }}}
 " Misc {{{
-let g:SignatureEnabledAtStartup=1
 let g:choosewin_overlay_enable = 1
 " Choose windows
 nmap  <silent><Leader>wc <Plug>(choosewin)
