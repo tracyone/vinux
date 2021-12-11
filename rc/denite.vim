@@ -6,9 +6,25 @@ if !te#env#SupportPy3() ||  !te#env#SupportAsync()
     finish
 endif
 
+function! s:denite_filter_my_settings() abort
+    imap <silent><buffer> <tab> <Plug>(denite_filter_quit)
+    inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+    inoremap <silent><buffer><expr> <c-t>
+                \ denite#do_map('do_action', 'tabopen')
+    inoremap <silent><buffer><expr> <c-v>
+                \ denite#do_map('do_action', 'vsplit')
+    inoremap <silent><buffer><expr> <c-x>
+                \ denite#do_map('do_action', 'split')
+    inoremap <silent><buffer><expr> <esc>
+                \ denite#do_map('quit')
+    inoremap <silent><buffer> <C-j>
+                \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+    inoremap <silent><buffer> <C-k>
+                \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+endfunction
+
 "{{{ denite setting function
 function! s:denite_nvim_setting() abort
-
     autocmd FileType denite call s:denite_my_settings()
     function! s:denite_my_settings() abort
         nnoremap <silent><buffer><expr> <CR>
@@ -33,22 +49,6 @@ function! s:denite_nvim_setting() abort
 
 
     autocmd FileType denite-filter call s:denite_filter_my_settings()
-    function! s:denite_filter_my_settings() abort
-        imap <silent><buffer> <tab> <Plug>(denite_filter_quit)
-        inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-        inoremap <silent><buffer><expr> <c-t>
-                    \ denite#do_map('do_action', 'tabopen')
-        inoremap <silent><buffer><expr> <c-v>
-                    \ denite#do_map('do_action', 'vsplit')
-        inoremap <silent><buffer><expr> <c-x>
-                    \ denite#do_map('do_action', 'split')
-        inoremap <silent><buffer><expr> <esc>
-                    \ denite#do_map('quit')
-        inoremap <silent><buffer> <C-j>
-                    \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
-        inoremap <silent><buffer> <C-k>
-                    \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
-    endfunction
 
 
     " Change matchers.
@@ -141,7 +141,6 @@ function! s:denite_nvim_setting() abort
 
     let s:denite_options = {
                 \ 'prompt' : '>',
-                \ 'split': 'floating',
                 \ 'start_filter': 1,
                 \ 'auto_resize': 1,
                 \ 'source_names': 'short',
@@ -149,38 +148,39 @@ function! s:denite_nvim_setting() abort
                 \ 'highlight_filter_background': 'CursorLine',
                 \ 'highlight_matched_char': 'Type',
                 \ }
+    if te#env#SupportFloatingWindows() == 2
+        call extend(s:denite_options, {'split': 'floating'})
+    endif
 
     call denite#custom#option('default', s:denite_options)
+    "keymapping for denite
+    nnoremap  <silent><c-p> :Denite file/rec<cr>
+    nnoremap  <silent><Leader><Leader> :Denite file/rec<cr>
+    nnoremap  <silent><c-j> :Denite buffer<cr>
+    nnoremap  <silent><c-l> :Denite file_mru<cr>
+    nnoremap  <silent><c-k> :Denite outline<cr>
+    nnoremap  <silent><Leader>pc :Denite colorscheme -post-action=open<cr>
+    nnoremap  <silent><Leader>ff :Denite file<cr>
+    "mru
+    nnoremap  <silent><Leader>pm :Denite file_mru<cr>
+    "file
+    nnoremap  <silent><Leader>pp :Denite file/rec<cr>
+    "function
+    nnoremap  <silent><Leader>pp :Denite outline<cr>
+    "vim help
+    nnoremap  <silent><Leader>ph :Denite help<cr>
+    "command history
+    nnoremap  <silent><Leader>qc :Denite command_history<cr>
+    "fly on grep
+    nnoremap  <silent><Leader>pf :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
 endfunction
 "}}}
 
-Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
-Plug 'Shougo/neomru.vim'
+Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins', 'on': []}
+Plug 'Shougo/neomru.vim',{'on': []}
 if g:fuzzy_matcher_type.cur_val ==# 'cpsm'
     Plug 'nixprime/cpsm', {'dir': g:vinux_plugin_dir.cur_val.'/cpsm_py3/',
                 \ 'do':'PY3=ON ./install.sh'}
 endif
 
-"keymapping for denite
-nnoremap  <silent><c-p> :Denite file/rec<cr>
-nnoremap  <silent><Leader><Leader> :Denite file/rec<cr>
-nnoremap  <silent><c-j> :Denite buffer<cr>
-nnoremap  <silent><c-l> :Denite file_mru<cr>
-nnoremap  <silent><c-k> :Denite outline<cr>
-nnoremap  <silent><Leader>pc :Denite colorscheme -post-action=open<cr>
-nnoremap  <silent><Leader>ff :Denite file<cr>
-"mru
-nnoremap  <silent><Leader>pm :Denite file_mru<cr>
-"file
-nnoremap  <silent><Leader>pp :Denite file/rec<cr>
-"function
-nnoremap  <silent><Leader>pp :Denite outline<cr>
-"vim help
-nnoremap  <silent><Leader>ph :Denite help<cr>
-"command history
-nnoremap  <silent><Leader>qc :Denite command_history<cr>
-"fly on grep
-nnoremap  <silent><Leader>pf :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
-
-
-call te#feat#register_vim_enter_setting(function('<SID>denite_nvim_setting'))
+call te#feat#register_vim_enter_setting2([function('<SID>denite_nvim_setting')], ['denite.nvim', 'neomru.vim'])

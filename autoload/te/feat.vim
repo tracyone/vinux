@@ -172,14 +172,12 @@ function! te#feat#init_var(val, default)
     let s:feature_dict[a:val.'.cur_val']=string(a:default[0])
 endfunction
 
-let s:plugin_func_list=[]
-
 if te#env#SupportTimer()
     let s:vim_enter_timer=timer_start(500, function('te#feat#run_vim_enter_setting'), {'repeat': 1})
 endif
 "funcref must be a funcref variable
 function! te#feat#register_vim_enter_setting(funcref) abort
-    call add(s:plugin_func_list, a:funcref)
+    call add(s:plugin_func_list_vim_enter, a:funcref)
 endfunction
 
 let s:pluin_list_load_vim_enter = []
@@ -192,7 +190,6 @@ endfunction
 function! te#feat#run_vim_enter_setting(timer) abort
     call plug#load(s:pluin_list_load_vim_enter)
     for l:Needle in s:plugin_func_list_vim_enter
-        silent! call l:Needle()
         if type(l:Needle) == g:t_func
             silent! call l:Needle()
         elseif type(l:Needle) == g:t_string
@@ -200,9 +197,7 @@ function! te#feat#run_vim_enter_setting(timer) abort
         endif
         unlet l:Needle
     endfor
-    for l:Needle in s:plugin_func_list
-        silent! call l:Needle()
-    endfor
+    call te#utils#EchoWarning("Load plugins finish ...")
 endfunction
 
 let s:pluin_list_load_after_insert = []

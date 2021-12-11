@@ -1,12 +1,8 @@
 scriptencoding utf-8
 
-set timeout timeoutlen=1000 ttimeoutlen=100
 
 call te#meta#init()
 
-"leader key
-let g:mapleader="\<Space>"
-let g:maplocalleader=','
 
 "map jj to esc..
 inoremap jj <c-[>

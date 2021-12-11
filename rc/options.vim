@@ -1,5 +1,10 @@
 "Vim options setting
 
+set timeout timeoutlen=1000 ttimeoutlen=100
+"leader key
+let g:mapleader="\<Space>"
+let g:maplocalleader=','
+
 set filetype=text
 if te#env#IsWindows()
     set makeprg=mingw32-make

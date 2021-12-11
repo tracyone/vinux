@@ -1,33 +1,34 @@
-Plug 'terryma/vim-multiple-cursors'
+let s:edit_plugins = ['vim-multiple-cursors', 'delimitMate', 'nerdcommenter', 'vim-surround', 'vim-repeat', 'vim-asterisk']
+Plug 'terryma/vim-multiple-cursors',{'on': []}
 if te#env#IsNvim() < 0.5
-    Plug 'terryma/vim-expand-region'
+    Plug 'terryma/vim-expand-region',{'on': []}
+    call add(s:edit_plugins, 'vim-expand-region')
 endif
 Plug 'Raimondi/delimitMate',{'on':[]}
 Plug 'thinca/vim-qfreplace',{'on': 'Qfreplace'}
 Plug 'scrooloose/nerdcommenter',{'on':[]}
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat' "repeat enhance
+Plug 'tpope/vim-surround',{'on':[]}
+Plug 'tpope/vim-repeat',{'on':[]}
 Plug 'junegunn/vim-easy-align',{'on': [ '<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)' ]}
 if te#env#IsNvim() == 0
     Plug 'osyo-manga/vim-over',{'on': 'OverCommandLine'}
 endif
 if !has('patch-8.1.1270')
-Plug 'haya14busa/incsearch.vim'
-" Incsearch -----------------------{{{
-let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)zz
-map N  <Plug>(incsearch-nohl-N)zz
-map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
-map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
-map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
-map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
+    Plug 'haya14busa/incsearch.vim',{'on': []}
+    " Incsearch -----------------------{{{
+    let g:incsearch#auto_nohlsearch = 1
+    map n  <Plug>(incsearch-nohl-n)zz
+    map N  <Plug>(incsearch-nohl-N)zz
+    map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
+    map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
+    map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
+    map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
+    call add(s:edit_plugins, 'incsearch.vim')
 " }}}
 endif
-Plug 'haya14busa/vim-asterisk'
+Plug 'haya14busa/vim-asterisk',{'on':[]}
 Plug 'mbbill/undotree',  { 'on': 'UndotreeToggle'   }
 Plug 'tweekmonster/spellrotate.vim', {'on': ['<Plug>(SpellRotateForward)']}
-call te#feat#register_vim_enter_setting2([0], 
-            \ ['delimitMate', 'nerdcommenter'])
 nmap <silent> <leader>zn :set spell<cr><Plug>(SpellRotateForward)
 nmap <silent> <leader>zp :set spell<cr><Plug>(SpellRotateBackward)
 xmap <silent> <leader>zn <Plug>(SpellRotateForwardV)
@@ -72,12 +73,8 @@ else
     "vnoremap : :s//<left>
 endif
 " undo tree window toggle
-nnoremap  <silent><leader>tu :UndotreeToggle<cr>
+nnoremap  <silent><leader>tu :UndotreeToggle<cr>:UndotreeFocus<cr>
 "repeat some command
-silent! call repeat#set("\<plug>NERDCommenterComment", v:count)
-silent! call repeat#set("\<plug>NERDCommenterAppend", v:count)
-silent! call repeat#set("\<plug>NERDCommenterUncomment", v:count)
-silent! call repeat#set("\<Plug>(SpellRotateForward)", v:count)
-silent! call repeat#set("\<Plug>(SpellRotateBackward)", v:count)
+call te#feat#register_vim_enter_setting2([0], s:edit_plugins)
 " vim: set fdm=marker foldlevel=0 foldmarker& filetype=vim: 
 
