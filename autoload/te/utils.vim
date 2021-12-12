@@ -95,20 +95,15 @@ function! te#utils#EchoWarning(str,...) abort
         if empty(s:win_list)
             let l:win.line=3
         else
-            let l:win.line=s:win_list[-1].line + 1 + s:win_list[-1].str_width
+            let l:win.line=s:win_list[-1].line + 2 + s:win_list[-1].str_width
         endif
         let l:opts = {'relative': 'editor', 'width': l:str_len, 'height': l:win.str_width, 'col': &columns,
-                    \ 'row': l:win.line, 'anchor': 'NW'}
+                    \ 'row': l:win.line, 'anchor': 'NW', 'border': 'single', 'style': 'minimal'}
         let l:win.id=nvim_open_win(l:bufnr, v:false,l:opts)
         call nvim_buf_set_lines(l:bufnr, 0, -1, v:false, [l:str])
-        hi def NvimFloatingWindow  term=None guifg=black guibg=#f94e3e ctermfg=black ctermbg=210
-        call nvim_win_set_option(l:win.id, 'winhl', 'Normal:NvimFloatingWindow')
-        call nvim_win_set_option(l:win.id, 'number', v:false)
-        call nvim_win_set_option(l:win.id, 'relativenumber', v:false)
+        call nvim_win_set_option(l:win.id, 'winhl', 'Normal:'.l:level)
         call nvim_buf_set_option(l:bufnr, 'buftype', 'nofile')
         call nvim_buf_set_option(l:bufnr, 'bufhidden', 'wipe')
-        call nvim_buf_set_option(l:bufnr, 'modified', v:false)
-        call nvim_buf_set_option(l:bufnr, 'buflisted', v:false)
         call add(s:win_list, l:win)
         call timer_start(5000, function('<SID>nvim_close_win'), {'repeat': 1})
     elseif te#env#SupportFloatingWindows() == 1
