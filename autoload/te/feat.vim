@@ -173,7 +173,7 @@ function! te#feat#init_var(val, default)
 endfunction
 
 if te#env#SupportTimer()
-    let s:vim_enter_timer=timer_start(500, function('te#feat#run_vim_enter_setting'), {'repeat': 1})
+    let s:vim_enter_timer=timer_start(300, function('te#feat#run_vim_enter_setting'), {'repeat': 1})
 endif
 "funcref must be a funcref variable
 function! te#feat#register_vim_enter_setting(funcref) abort

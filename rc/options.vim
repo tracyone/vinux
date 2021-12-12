@@ -134,14 +134,13 @@ endif
 
 if get(g:,'feat_enable_git') == 1
     if g:git_plugin_name.cur_val ==# 'gina.vim'
-        let s:git_branch='[%{gina#component#repo#branch()}]%= '
+        let s:git_branch="%{exists('*gina#component#repo#branch')?\ gina#component#repo#branch()\ :\ ''}%= "
     else
         let s:git_branch="%{exists('*fugitive#statusline')?\ fugitive#statusline()\ :\ ''}%= "
     endif
 else
     let s:git_branch='%= '
 endif
-
 
 "statuslne
 if get(g:,'feat_enable_airline') != 1

@@ -1,21 +1,4 @@
-Plug 'lambdalisue/gina.vim'
-nnoremap  <silent><F3> :Gina status<cr>
-" Open git status window
-nnoremap  <silent><Leader>gs :Gina status<cr>
-" Open github url
-nnoremap  <silent><Leader>gh :Gina browse<cr>
-" Open git blame windows
-nnoremap  <silent><Leader>gb :Gina blame --use-author-instead :<cr>
-" show branch
-nnoremap  <silent><Leader>sb :Gina branch -a<cr>
-" show tag
-nnoremap  <silent><Leader>st :Gina tag<cr>
-" git diff current file
-nnoremap  <silent><Leader>gd :Gina compare :<cr>
-" git cd
-nnoremap <silent><Leader>gc :Gina cd<cr>:call te#utils#EchoWarning(getcwd())<cr>
-" git config -e
-nnoremap  <silent><Leader>ge :Gina cd<cr>:sp .git/config<cr>
+Plug 'lambdalisue/gina.vim', {'on': []}
 
 function! StageNext(count) abort
     for i in range(a:count)
@@ -36,6 +19,23 @@ function! StagePrevious(count) abort
 endfunction
 
 function s:gina_setting()
+    nnoremap  <silent><F3> :Gina status<cr>
+    " Open git status window
+    nnoremap  <silent><Leader>gs :Gina status<cr>
+    " Open github url
+    nnoremap  <silent><Leader>gh :Gina browse<cr>
+    " Open git blame windows
+    nnoremap  <silent><Leader>gb :Gina blame --use-author-instead :<cr>
+    " show branch
+    nnoremap  <silent><Leader>sb :Gina branch -a<cr>
+    " show tag
+    nnoremap  <silent><Leader>st :Gina tag<cr>
+    " git diff current file
+    nnoremap  <silent><Leader>gd :Gina compare :<cr>
+    " git cd
+    nnoremap <silent><Leader>gc :Gina cd<cr>:call te#utils#EchoWarning(getcwd())<cr>
+    " git config -e
+    nnoremap  <silent><Leader>ge :Gina cd<cr>:sp .git/config<cr>
     call gina#custom#command#option('status', '--opener', &previewheight . 'split')
     call gina#custom#command#option('commit', '--opener', &previewheight . 'split')
     call gina#custom#command#option('status', '--group', 'short')
@@ -90,6 +90,13 @@ function s:gina_setting()
                 \ ':<C-u>Gina commit --signoff<CR>',
                 \ {'noremap': 1, 'silent': 1},
                 \)
+
+    silent! call gina#custom#mapping#nmap(
+                \ 'status', '=',
+                \ ':call gina#action#call(''diff:top'')<CR>',
+                \ {'noremap': 1, 'silent': 0},
+                \)
+
     silent! call gina#custom#mapping#nmap(
                 \ 'status', '<cr>',
                 \ ':call gina#action#call(''edit'')<CR>',
@@ -187,6 +194,7 @@ function s:gina_setting()
     call gina#custom#execute('commit', 'setlocal omnifunc=github_complete#complete nofoldenable cursorline')
     call gina#custom#execute('status', 'setlocal nofoldenable cursorline')
     let g:gina#component#repo#commit_length=6
+    call gina#component#repo#branch()
 endfunction
 
-call te#feat#register_vim_enter_setting(function('<SID>gina_setting'))
+call te#feat#register_vim_enter_setting2([function('<SID>gina_setting')], ['gina.vim'])

@@ -356,6 +356,15 @@ function! te#utils#quit_win(all) abort
         endif
         return
     endif
+    if te#env#IsNvim() > 0
+        for l:win in nvim_tabpage_list_wins(0)
+            let l:config = nvim_win_get_config(l:win)
+            " close all Floating window
+            if !empty(l:config.relative)
+                call nvim_win_close(l:win, v:true)
+            endif
+        endfor
+    endif
     "multiple tab
     if tabpagenr('$') != 1
         :quit

@@ -14,7 +14,6 @@ if te#env#IsNvim() >= 0.5
     Plug 'kunzaatko/nord.nvim'
     Plug 'ishan9299/nvim-solarized-lua'
     Plug 'Th3Whit3Wolf/space-nvim'
-    Plug 'sainnhe/gruvbox-material'
     Plug 'folke/tokyonight.nvim'
     let g:gruvbox_material_background = 'soft'
 else
@@ -22,8 +21,8 @@ else
     Plug 'arcticicestudio/nord-vim'
     Plug 'lifepillar/vim-solarized8'
     Plug 'liuchengxu/space-vim-dark'
-    Plug 'lifepillar/vim-gruvbox8'
 endif
+Plug 'lifepillar/vim-gruvbox8'
 Plug 'vim-scripts/desert256.vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'srcery-colors/srcery-vim'
