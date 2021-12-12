@@ -104,6 +104,7 @@ function! te#utils#EchoWarning(str,...) abort
         call nvim_win_set_option(l:win.id, 'winhl', 'Normal:'.l:level)
         call nvim_buf_set_option(l:bufnr, 'buftype', 'nofile')
         call nvim_buf_set_option(l:bufnr, 'bufhidden', 'wipe')
+        call nvim_win_set_option(l:win.id, 'winblend', 30)
         call add(s:win_list, l:win)
         call timer_start(5000, function('<SID>nvim_close_win'), {'repeat': 1})
     elseif te#env#SupportFloatingWindows() == 1
