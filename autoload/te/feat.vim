@@ -197,7 +197,7 @@ function! te#feat#run_vim_enter_setting(timer) abort
         endif
         unlet l:Needle
     endfor
-    call te#utils#EchoWarning("Load plugins finish ...")
+    call te#utils#EchoWarning("Load plugins finish ...", 'info')
 endfunction
 
 let s:pluin_list_load_after_insert = []

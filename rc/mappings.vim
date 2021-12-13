@@ -296,7 +296,7 @@ nnoremap  <silent><Leader>fr :call te#feat#gen_feature_vim(1)<cr>
 
 nnoremap  <silent><Leader>dj <c-u>
 nnoremap  <silent><Leader>dd <c-d>
-nnoremap <silent><Leader>pw :call te#utils#EchoWarning(getcwd())<cr>
+nnoremap <silent><Leader>pw :call te#utils#EchoWarning(getcwd(), 'info')<cr>
 " cd to any plugin directory
 nnoremap  <silent><Leader>cp :call te#utils#cd_to_plugin(g:vinux_plugin_dir.cur_val)<cr>
 nnoremap <silent> <BS> <C-o>
