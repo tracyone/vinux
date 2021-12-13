@@ -57,7 +57,7 @@ function! te#feat#gen_feature_vim(reset) abort
     endif
     let l:temp2=te#feat#get_vim_version()
     if v:shell_error != 0
-	    let g:vinux_version='vinux V1.3.3'.' @'.l:temp2[0].'.'.l:temp2[1]
+	    let g:vinux_version='vinux V1.3.4'.' @'.l:temp2[0].'.'.l:temp2[1]
     else
         let l:temp = matchstr(l:vinux_version[-1],'.*\(-\d\+-\w\+\)\@=')
         if  l:temp !=# ''
@@ -103,7 +103,7 @@ function! te#feat#feat_dyn_enable(en) abort
             let s:feature_dict[l:feat]=string(l:str)
             execute 'let '.l:feat.'='.string(l:str)
             call te#feat#gen_feature_vim(0)
-            call te#utils#EchoWarning('Set '.l:feat.' to '.string(l:str).' successfully!')
+            call te#utils#EchoWarning('Set '.l:feat.' to '.string(l:str).' successfully!', 'info')
             return
         else
             let s:feature_dict[l:feat]=a:en
@@ -122,7 +122,7 @@ function! te#feat#feat_dyn_enable(en) abort
         call te#feat#gen_feature_vim(0)
     endif
     if a:en == 1 | :PlugInstall --sync | q | endif
-    call te#utils#EchoWarning(l:enable.' '.l:feat.' successfully!')
+    call te#utils#EchoWarning(l:enable.' '.l:feat.' successfully!', 'info')
 endfunction
 
 function! te#feat#source_rc(path, ...) abort

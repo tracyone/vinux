@@ -12,7 +12,7 @@ function! s:get_var_value(item) abort
     let l:feat_dict[s:var_value]=string(l:str)
     execute 'let '.s:var_value.'='.string(l:str)
     call te#feat#gen_feature_vim(0)
-    call te#utils#EchoWarning('Set '.s:var_value.' to '.string(l:str).' successfully!')
+    call te#utils#EchoWarning('Set '.s:var_value.' to '.string(l:str).' successfully!', 'info')
 endfunction
 
 function! s:edit_file(item)
@@ -60,7 +60,7 @@ function! s:edit_file(item)
         call te#feat#gen_feature_vim(0)
     endif
     if s:enable_flag == 1 | :PlugInstall --sync | q | endif
-    call te#utils#EchoWarning(l:enable.' '.l:str.' successfully!')
+    call te#utils#EchoWarning(l:enable.' '.l:str.' successfully!', 'info')
 endfunction
 
 function! te#fzf#feat#start(en) abort
