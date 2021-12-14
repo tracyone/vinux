@@ -39,6 +39,7 @@ elseif g:complete_plugin_type.cur_val ==# 'nvim-cmp' && te#env#IsNvim() >= 0.5
     Plug 'hrsh7th/nvim-cmp', {'branch': 'main' }
     Plug 'hrsh7th/cmp-path', {'branch': 'main' }
     Plug 'hrsh7th/cmp-nvim-lua',{'branch': 'main'}
+    Plug 'hrsh7th/cmp-cmdline'
     Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main' }
     Plug 'octaltree/cmp-look'
     "Plug 'onsails/lspkind-nvim'
