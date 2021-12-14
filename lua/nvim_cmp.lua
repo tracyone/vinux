@@ -15,9 +15,9 @@ cmp.setup({
         end,
     },
     mapping = {
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+        ['<C-t>'] = cmp.mapping.complete(),
         ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
         ['<C-e>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
@@ -30,6 +30,7 @@ cmp.setup({
 
        { name = 'nvim_cpp' },
        { name = 'ultisnips' },
+       { name = 'calc' },
 
       { name = 'buffer' },
     }
