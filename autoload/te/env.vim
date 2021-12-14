@@ -154,17 +154,5 @@ function! te#env#SupportFloatingWindows() abort
         return 0
     endif
 
-    try
-        noautocmd let win_id = nvim_open_win(bufnr('%'), v:false, {
-                    \   'relative': 'editor',
-                    \   'row': 0,
-                    \   'col': 0,
-                    \   'width': 2,
-                    \   'height': 2,
-                    \ })
-        noautocmd call nvim_win_close(win_id, v:true)
-    catch /^Vim\%((\a\+)\)\=:E118/
-        return 0
-    endtry
     return 2
 endfunction
