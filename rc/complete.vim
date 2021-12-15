@@ -50,7 +50,7 @@ function! s:enable_nvim_lsp()
 lua << EOF
 require('nvim_cmp')
 EOF
-autocmd FileType markdown,gitcommit lua require'cmp'.setup.buffer {
+autocmd FileType markdown,gitcommit require'cmp'.setup.buffer {
             \   sources = {
                 \     {name='look', keyword_length=2},
                 \ { name = 'ultisnips' },

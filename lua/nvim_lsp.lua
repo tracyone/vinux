@@ -11,7 +11,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<C-x>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>ql', "<cmd>lua vim.diagnostic.setqflist({open = true})<CR>", opts)
+  buf_set_keymap('n', '<space>ql', "<cmd>Trouble<CR>", opts)
 
   -- Set some keybinds conditional on server capabilities
   --if client.resolved_capabilities.document_formatting then
@@ -32,6 +32,16 @@ local on_attach = function(client, bufnr)
   end
 end
 
+local function make_config()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  return {
+    -- enable snippet support
+    capabilities = capabilities,
+    -- map buffer local keybindings when the language server attaches
+    on_attach = on_attach,
+  }
+end
 -- Configure lua language server for neovim development
 local lua_settings = {
   Lua = {
@@ -54,12 +64,31 @@ local lua_settings = {
   }
 }
 
+require("trouble").setup {
+    icons = false,
+    fold_open = "v", -- icon used for open folds
+    fold_closed = ">", -- icon used for closed folds
+    indent_lines = false, -- add an indent guide below the fold icons
+    signs = {
+        -- icons / text used for a diagnostic
+        error = "error",
+        warning = "warn",
+        hint = "hint",
+        information = "info"
+    },
+    use_diagnostic_signs = false
+  }
+
 local lsp_installer = require("nvim-lsp-installer")
 
 -- Register a handler that will be called for all installed servers.
 -- Alternatively, you may also register handlers on specific server instances instead (see example below).
 lsp_installer.on_server_ready(function(server)
-    local opts = {}
+    local opts = make_config(server.name)
+
+    if server.name == "lua" then
+      opts.settings = lua_settings
+    end
 
     -- (optional) Customize the options passed to the server
     -- if server.name == "tsserver" then
