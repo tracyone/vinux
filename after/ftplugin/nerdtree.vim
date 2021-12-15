@@ -108,7 +108,11 @@ function! s:paste_file()
                 endif
             endif
             if l:confirm == 1
-                let l:ret = writefile(readblob(s:copy_file_path), l:dst_file, "s")
+                if !exists('*readblob')
+                    let l:ret = system('cp -a '.s:copy_file_path.' '.l:dst_file)
+                else
+                    let l:ret = writefile(readblob(s:copy_file_path), l:dst_file, "s")
+                endif
                 if l:ret == -1
                     call te#utils#EchoWarning("Copy ".s:copy_file_path. " fail")
                 else
