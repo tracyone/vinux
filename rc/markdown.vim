@@ -3,7 +3,9 @@ if te#env#IsDisplay()
     Plug 'iamcco/mathjax-support-for-mkdp',{'for': 'markdown'}
 endif
 Plug 'mzlogin/vim-markdown-toc',{'for': 'markdown'}
-Plug 'plasticboy/vim-markdown',{'for': 'markdown'}
+if te#env#IsNvim() < 0.6
+    Plug 'plasticboy/vim-markdown',{'for': 'markdown'}
+endif
 
 " Markdown ------------------------{{{
 if  te#env#IsMac()
