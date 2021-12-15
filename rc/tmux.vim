@@ -14,12 +14,12 @@ if(!te#env#IsWindows())
             "CtrlP tmux command interactively
             nnoremap  <silent><Leader>ui :CtrlPTmux ci<cr>
         endif
+        let g:tmux_navigator_no_mappings = 1
         function! s:tmux_setting()
             if !te#env#IsDisplay() || !te#env#SupportFeature('clipboard')
                 vnoremap  <silent><C-C> y:call te#tmux#reg2tmux()<cr>
                 inoremap  <silent><c-v>	<C-o>:call te#tmux#tmux2reg()<cr><C-o>p
             endif
-            let g:tmux_navigator_no_mappings = 1
             call te#meta#map('nnoremap <silent> ','l',':TmuxNavigateRight<cr>')
             call te#meta#map('nnoremap <silent> ','h',':TmuxNavigateLeft<cr>')
             call te#meta#map('nnoremap <silent> ','j',':TmuxNavigateDown<cr>')
