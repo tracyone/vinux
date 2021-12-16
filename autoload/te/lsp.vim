@@ -3,6 +3,15 @@
 function! te#lsp#is_server_running() abort
     if te#env#IsNvim() >= 0.5
         return v:lua.require('utils').is_lsp_running()
+    else
+        if exists("*lsp#get_server_status")
+            let l:ret = 0
+            let l:serve_name = lsp#get_allowed_servers()
+            for l:needle in l:serve_name
+                let l:ret += !empty(lsp#get_server_status(l:needle))
+            endfor
+            return l:ret
+        endif
     endif
     return 0
 endfunction
