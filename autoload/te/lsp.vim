@@ -8,7 +8,9 @@ function! te#lsp#is_server_running() abort
             let l:ret = 0
             let l:serve_name = lsp#get_allowed_servers()
             for l:needle in l:serve_name
-                let l:ret += !empty(lsp#get_server_status(l:needle))
+                if stridx(lsp#get_server_status(l:needle), 'running') != -1
+                    let l:ret += 1
+                endif
             endfor
             return l:ret
         endif
