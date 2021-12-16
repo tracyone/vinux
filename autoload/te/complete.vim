@@ -87,18 +87,16 @@ endfunction
 
 
 function te#complete#lookup_reference(open_type) abort
-    if get(g:, 'feat_enable_complete', 0)
-        execute a:open_type
-        if te#env#SupportYcm() && g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
-            :YcmCompleter GoToReferences
-        else
-            let l:ret=te#lsp#references()
-            if l:ret == -1
-                " use ctags or cscope
-                :cs find c <C-R>=expand("<cword>")<CR><CR>:botright cw 7
-            endif
-        endif
-        return 0
+    execute a:open_type
+    if g:feat_enable_lsp == 1
+        let l:ret=te#lsp#references()
+    elseif &ft == 'c'
+        " use ctags or cscope
+        :cs find c <C-R>=expand("<cword>")<CR><CR>:botright cw 7
+    elseif g:feat_enable_complete == 1 && g:complete_plugin_type.cur_val == "YouCompleteMe"
+        :YcmCompleter GoToReferences
+    else
+        call te#utils#EchoWarning("Enable lsp or youcompleteme")
     endif
-    return 1
+    return 0
 endfunction
