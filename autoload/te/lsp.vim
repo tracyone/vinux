@@ -1,5 +1,12 @@
 "lsp function wrapper
 
+function! te#lsp#is_server_running() abort
+    if te#env#IsNvim() >= 0.5
+        return v:lua.require('utils').is_lsp_running()
+    endif
+    return 0
+endfunction
+
 function! te#lsp#gotodefinion() abort
     if exists(':LspDefinition') == 2
         :LspDefinition
