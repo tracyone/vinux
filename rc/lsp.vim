@@ -11,7 +11,7 @@ EOF
 else
     Plug 'prabirshrestha/vim-lsp'
     Plug 'mattn/vim-lsp-settings',{'on': []}
-    nnoremap  <silent><leader>ql :LspDocumentDiagnostics<cr>
+    nnoremap  <silent><leader>ql :call te#lsp#show_diagnostics(0)<cr>
     call te#feat#register_vim_enter_setting2([0], ['vim-lsp-settings'])
 endif
 "lsp setting

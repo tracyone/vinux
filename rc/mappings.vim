@@ -114,7 +114,6 @@ nnoremap  <silent><leader>vc :call te#feat#edit_config()<cr>
 "open quickfix windows
 nnoremap  <silent><leader>qf :botright copen<cr>
 "open location windows
-nnoremap  <silent><leader>ql :botright lopen<cr>
 nnoremap  <silent><leader>qc q:
 nnoremap  <silent><leader>q/ q/
 

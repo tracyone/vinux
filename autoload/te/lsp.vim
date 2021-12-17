@@ -115,3 +115,17 @@ function! te#lsp#goto_type_def() abort
         return -1
     endif
 endfunction
+
+function! te#lsp#show_diagnostics(current_buffer)
+    if te#lsp#is_server_running() == 1
+        if exists(":LspDocumentDiagnostics") == 2 
+            if a:current_buffer == 1
+                :LspDocumentDiagnostics --buffers=*
+            else
+                :LspDocumentDiagnostics
+            endif
+        endif
+    else
+        :botright lopen
+    endif
+endfunction
