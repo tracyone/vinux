@@ -229,6 +229,7 @@ if te#env#IsNvim() != 0
     set fillchars+=msgsep:‾
     hi MsgSeparator ctermbg=black ctermfg=white
     set wildoptions+=pum
+    set signcolumn=number
 else
     command! -nargs=? UpdateRemotePlugins call te#utils#EchoWarning("It is neovim's command")
 endif
