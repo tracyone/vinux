@@ -82,9 +82,8 @@ function! s:fzf_vim_setting()
     "xmap <leader><tab> <plug>(fzf-maps-x)
     "omap <leader><tab> <plug>(fzf-maps-o)
     if te#env#SupportFloatingWindows() == 2
-        let $FZF_DEFAULT_OPTS='--layout=reverse'
-        let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-        let g:fzf_layout = get(g:, 'fzf_layout', {'down': '~40%'})
+        "let $FZF_DEFAULT_OPTS='--layout=reverse'
+        let g:fzf_layout = { 'window': 'call FloatingFZF()', 'down': '~40%' }
 
         function! FloatingFZF()
             let height = &lines - 3
@@ -98,22 +97,17 @@ function! s:fzf_vim_setting()
                         \ 'row': height * 0.3,
                         \ 'col': col + col_offset,
                         \ 'width': width * 2 / 3,
-                        \ 'height': height / 2
+                        \ 'height': height / 2,
+                        \ 'style': 'minimal',
+                        \ 'border': 'rounded'
                         \ }
 
             let buf = nvim_create_buf(v:false, v:true)
 
             let win = nvim_open_win(buf, v:true, opts)
 
-            call setwinvar(win, '&winhl', 'Normal:Pmenu')
+            call setwinvar(win, '&winhl', 'Normal:Tabline')
 
-            setlocal
-                        \ buftype=nofile
-                        \ nobuflisted
-                        \ bufhidden=hide
-                        \ nonumber
-                        \ norelativenumber
-                        \ signcolumn=no
             if mode() ==# 't'
                 call feedkeys('i')
             endif
