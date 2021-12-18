@@ -45,9 +45,6 @@ function! s:nvim_close_win(timer) abort
     endif
 endfunction
 
-hi def vinux_warn cterm=bold ctermfg=121 gui=bold guifg=#fabd2f
-hi def vinux_info cterm=bold ctermfg=118 gui=bold guifg=#A6E22E
-hi def vinux_border cterm=bold ctermfg=118 gui=bold guifg=#665c54
 
 "echo warning messag
 "a:1-->err or warn or info,default is warn

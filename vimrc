@@ -37,6 +37,7 @@ call te#feat#init_all()
 call te#feat#source_rc('autocmd.vim')
 call te#feat#source_rc('options.vim')
 call te#feat#register_vim_enter_setting("call te#feat#source_rc('mappings.vim')")
+call te#feat#register_vim_enter_setting("call te#feat#source_rc('colors.vim')")
 "user custom config file
 if filereadable($VIMFILES.'/local.vim')
     try

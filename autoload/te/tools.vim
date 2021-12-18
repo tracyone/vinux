@@ -10,11 +10,16 @@ function! te#tools#jump_to_floating_win() abort
                 startinsert
                 break
             elseif getbufvar(l:n, '&buftype', 'ERROR') ==# 'terminal'
-                call win_gotoid(win_findbuf(l:n)[0])
-                if mode() != 't'
-                    call feedkeys('a')
+                if len(win_findbuf(l:n))
+                    call win_gotoid(win_findbuf(l:n)[0])
+                    if mode() != 't'
+                        call feedkeys('a')
+                    endif
+                    break
+                else
+                    call te#tools#shell_pop(0x2, l:n)
+                    break
                 endif
-                break
             endif
         endif
         let l:n = l:n+1
@@ -28,9 +33,18 @@ endfunction
 "option:0x04 open terminal in a new tab
 "option:0x01 open terminal in a split window
 "option:0x02 open terminal in a vsplit window
-function! te#tools#shell_pop(option) abort
+function! te#tools#shell_pop(option,...) abort
     " 38% height of current window
+    if a:0 > 1
+        call te#utils#EchoWarning("Error argument!")
+        return
+    endif
     call te#server#connect()
+    if te#env#IsGui() && te#env#IsUnix()
+        let l:shell='bash'
+    else
+        let l:shell=&shell
+    endif
     if !te#env#IsTmux() || te#env#SupportTerminal()
         if and(a:option, 0x04)
             :tabnew
@@ -42,33 +56,54 @@ function! te#tools#shell_pop(option) abort
                 let l:row=&lines-l:line
                 let l:width=&columns
             elseif and(a:option, 0x02)
-                let l:row=0
+                let l:row=1
                 let l:width=&columns/2
             endif
             let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': &columns/2-1,
-                        \ 'row': l:row, 'anchor': 'NW'}
+                        \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true}
             let l:win_id=nvim_open_win(winbufnr(0), v:true, l:opts)
+            call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
             call nvim_win_set_option(l:win_id, 'winblend', 30)
         else
             if bufexists(expand('%')) && &filetype !=# 'startify'
                 let l:fullbuffer=0
+                let l:line=(38*&lines)/100
+                if  l:line < 10 | let l:line = 10 |endif
                 if and(a:option, 0x01)
-                    let l:line=(38*&lines)/100
-                    if  l:line < 10 | let l:line = 10 |endif
                     let l:fullbuffer=1
                     execute 'rightbelow '.l:line.'split'
                 elseif and(a:option, 0x02)
-                    :botright vsplit
+                    if a:0 == 0
+                        let l:buf = term_start(l:shell, #{hidden: 1, term_finish: 'close'})
+                    else
+                        let l:buf = a:1
+                    endif
+                    let l:win_id = popup_create(l:buf, {
+                                \ 'line': 2,
+                                \ 'col': &columns/2 - 1,
+                                \ 'tabpage': -1,
+                                \ 'title': " Terminal",
+                                \ 'zindex': 200,
+                                \ 'minwidth': &columns/2,
+                                \ 'minheight': l:line,
+                                \ 'maxwidth': &columns/2,
+                                \ 'maxheight': l:line,
+                                \ 'border': [],
+                                \ 'borderchars':['─', '│', '─', '│', '┌', '┐', '┘', '└'],
+                                \ 'borderhighlight':['vinux_border'],
+                                \ 'drag': 1,
+                                \ 'close': 'button',
+                                \ 'scrollbar': 1,
+                                \ 'scrollbarhighlight': 'ErrorMsg'
+                                \ })
+                    call setwinvar(l:win_id, '&wincolor', 'Pmenu')
+                    return
+                    ":botright vsplit
                 endif
             endif
         endif
     endif
 
-    if te#env#IsGui() && te#env#IsUnix()
-        let l:shell='bash'
-    else
-        let l:shell=&shell
-    endif
     if te#env#SupportTerminal()  && te#env#IsVim8()
         execute ':terminal ++close ++curwin '.l:shell
     elseif te#env#SupportTerminal() && te#env#IsNvim() != 0

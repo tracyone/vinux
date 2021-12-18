@@ -8,6 +8,8 @@ function! FzfStartEntry(cmd)
     execute a:cmd
 endfunction
 
+
+
 function! s:fzf_vim_setting()
     "buffer
     nnoremap  <silent><c-j> :call FzfStartEntry('Buffers')<Cr>
@@ -86,18 +88,17 @@ function! s:fzf_vim_setting()
         let g:fzf_layout = { 'window': 'call FloatingFZF()', 'down': '~40%' }
 
         function! FloatingFZF()
-            let height = &lines - 3
-            let width = float2nr(&columns - (&columns * 2 / 10))
-            let col = float2nr((&columns - width) / 2)
+            let height = float2nr(&lines * 4 / 10)
+            let width = float2nr(&columns * 8 / 10)
 
-            let col_offset = &columns / 6
+            let col_offset = &columns / 10 
 
             let opts = {
                         \ 'relative': 'editor',
-                        \ 'row': height * 0.3,
-                        \ 'col': col + col_offset,
-                        \ 'width': width * 2 / 3,
-                        \ 'height': height / 2,
+                        \ 'row': &lines * 0.3,
+                        \ 'col': col_offset,
+                        \ 'width': width,
+                        \ 'height': height,
                         \ 'style': 'minimal',
                         \ 'border': 'rounded'
                         \ }
@@ -106,7 +107,7 @@ function! s:fzf_vim_setting()
 
             let win = nvim_open_win(buf, v:true, opts)
 
-            call setwinvar(win, '&winhl', 'Normal:Tabline')
+            call nvim_win_set_option(win, 'winhl', 'Normal:vinux_tabline,FloatBorder:vinux_border')
 
             if mode() ==# 't'
                 call feedkeys('i')
@@ -115,6 +116,10 @@ function! s:fzf_vim_setting()
     else
         if has('patch-8.2.191')
             let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.4 }, 'down': '~40%' }
+            let g:fzf_colors =
+                        \ { 'fg':      ['fg', 'vinux_tabline'],
+                        \ 'border':  ['fg', 'vinux_border'],
+                        \ 'preview-fg':      ['fg', 'vinux_normal']}
         else
             let g:fzf_layout = { 'down': '~40%' }
         endif
