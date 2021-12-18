@@ -22,6 +22,7 @@ else
     Plug 'lifepillar/vim-solarized8'
     Plug 'liuchengxu/space-vim-dark'
 endif
+Plug 'mhinz/vim-janah'
 Plug 'lifepillar/vim-gruvbox8'
 Plug 'vim-scripts/desert256.vim'
 Plug 'ayu-theme/ayu-vim'
