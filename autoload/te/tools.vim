@@ -6,7 +6,11 @@ function! te#tools#jump_to_floating_win() abort
         if buflisted(l:n)
             let l:name=bufname(l:n)
             if strlen(matchstr(l:name, 'term://'))
-                call nvim_set_current_win(win_findbuf(l:n)[0])
+                if len(win_findbuf(l:n))
+                    call nvim_set_current_win(win_findbuf(l:n)[0])
+                else
+                    call te#tools#shell_pop(0x2, l:n)
+                endif
                 startinsert
                 break
             elseif getbufvar(l:n, '&buftype', 'ERROR') ==# 'terminal'
@@ -61,7 +65,12 @@ function! te#tools#shell_pop(option,...) abort
             endif
             let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': &columns/2-1,
                         \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true}
-            let l:win_id=nvim_open_win(winbufnr(0), v:true, l:opts)
+            if a:0 == 0
+                let l:buf = winbufnr(0)
+            else
+                let l:buf = a:1
+            endif
+            let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
             call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
             call nvim_win_set_option(l:win_id, 'winblend', 30)
         else
@@ -107,7 +116,9 @@ function! te#tools#shell_pop(option,...) abort
     if te#env#SupportTerminal()  && te#env#IsVim8()
         execute ':terminal ++close ++curwin '.l:shell
     elseif te#env#SupportTerminal() && te#env#IsNvim() != 0
-        :terminal
+        if a:0 == 0
+            :terminal
+        endif
     elseif te#env#IsTmux()
         call te#tmux#run_command(&shell, a:option)
     else 
