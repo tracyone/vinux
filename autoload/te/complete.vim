@@ -92,7 +92,13 @@ function te#complete#lookup_reference(open_type) abort
         let l:ret=te#lsp#references()
     elseif &ft == 'c'
         " use ctags or cscope
-        :cs find c <C-R>=expand("<cword>")<CR><CR>:botright cw 7
+        try
+            execute ':cs find c '.expand("<cword>")
+        catch /^Vim\%((\a\+)\)\=:E/	
+            call te#utils#EchoWarning("No references were found!")
+            return 1
+        endtry
+        :botright cw 7
     elseif g:feat_enable_complete == 1 && g:complete_plugin_type.cur_val == "YouCompleteMe"
         :YcmCompleter GoToReferences
     else
