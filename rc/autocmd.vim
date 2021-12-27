@@ -4,7 +4,7 @@ augroup misc_group
     autocmd CmdwinEnter * set ft= | noremap <buffer> q :q<cr> | nmap <buffer><silent> <cr> <Enter>
     autocmd BufRead * if &ff=="dos" | setlocal ffs=dos,unix,mac | endif  
     autocmd VimResized * wincmd = 
-    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") |
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") && line(".") == 1 |
                 \ exe "normal! g'\"" |
                 \ endif "jump to last position last open in vim
     if !te#env#SupportTimer()
