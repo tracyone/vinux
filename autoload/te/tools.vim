@@ -83,6 +83,7 @@ function! te#tools#shell_pop(option,...) abort
             call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
             call nvim_win_set_option(l:win_id, 'winblend', 30)
             call termopen(l:shell)
+            return
         else
             if bufexists(expand('%')) && &filetype !=# 'startify'
                 let l:fullbuffer=0
