@@ -3,7 +3,7 @@ function! te#tools#jump_to_floating_win() abort
 	let l:n = 1
 
 	while l:n <= l:last_buffer
-        if buflisted(l:n)
+        if !buflisted(l:n)
             let l:name=bufname(l:n)
             if strlen(matchstr(l:name, 'term://'))
                 if len(win_findbuf(l:n))
@@ -33,6 +33,12 @@ function! te#tools#jump_to_floating_win() abort
     endif
 
 endfunction
+
+function! s:hide_shell_buf(winid, result) abort
+    "call te#utils#EchoWarning(winbufnr(a:winid))
+    "execute bufwinnr(winbufnr(a:winid)) . 'hide'
+endfunction
+
 "pop vimshell
 "option:0x04 open terminal in a new tab
 "option:0x01 open terminal in a split window
@@ -64,15 +70,19 @@ function! te#tools#shell_pop(option,...) abort
                 let l:width=&columns/2
             endif
             let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': &columns/2-1,
-                        \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true}
+                        \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal'}
             if a:0 == 0
-                let l:buf = winbufnr(0)
+                let l:buf = nvim_create_buf(v:false, v:true)
             else
                 let l:buf = a:1
             endif
+            call nvim_buf_set_option(l:buf, 'buftype', 'nofile')
+            call nvim_buf_set_option(l:buf, 'buflisted', v:false)
+            call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
             let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
             call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
             call nvim_win_set_option(l:win_id, 'winblend', 30)
+            call termopen(l:shell)
         else
             if bufexists(expand('%')) && &filetype !=# 'startify'
                 let l:fullbuffer=0
@@ -84,6 +94,7 @@ function! te#tools#shell_pop(option,...) abort
                 elseif and(a:option, 0x02)
                     if a:0 == 0
                         let l:buf = term_start(l:shell, #{hidden: 1, term_finish: 'close'})
+                        call setbufvar(l:buf, '&buflisted', 0)
                     else
                         let l:buf = a:1
                     endif
@@ -102,9 +113,9 @@ function! te#tools#shell_pop(option,...) abort
                                 \ 'borderhighlight':['vinux_border'],
                                 \ 'drag': 1,
                                 \ 'close': 'button',
-                                \ 'scrollbar': 1,
-                                \ 'scrollbarhighlight': 'ErrorMsg'
+                                \ 'callback': function('<SID>hide_shell_buf')
                                 \ })
+                    echom l:win_id
                     call setwinvar(l:win_id, '&wincolor', 'Pmenu')
                     return
                     ":botright vsplit
@@ -115,10 +126,6 @@ function! te#tools#shell_pop(option,...) abort
 
     if te#env#SupportTerminal()  && te#env#IsVim8()
         execute ':terminal ++close ++curwin '.l:shell
-    elseif te#env#SupportTerminal() && te#env#IsNvim() != 0
-        if a:0 == 0
-            :terminal
-        endif
     elseif te#env#IsTmux()
         call te#tmux#run_command(&shell, a:option)
     else 
