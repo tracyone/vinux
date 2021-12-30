@@ -30,6 +30,7 @@ let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.colnr = ' ℅:'
 set noshowmode 
 
 
@@ -69,8 +70,12 @@ function! s:airline_setting()
             let g:airline#extensions#lsp#enabled = 1
             let airline#extensions#lsp#error_symbol = 'E:'
             let airline#extensions#lsp#warning_symbol = 'W:'
+            let g:airline#extensions#lsp#progress_skip_time = 0.3
+            let g:airline_section_warning = '⚠ %{lsp#get_buffer_diagnostics_counts()["warning"]}'
+            let g:airline_section_error = '✗ %{lsp#get_buffer_diagnostics_counts()["error"]}%{lsp#get_buffer_first_error_line()? "-".lsp#get_buffer_first_error_line():""}'
         endif
     endif
+
     if g:feat_enable_complete == 1
         if g:complete_plugin_type.cur_val == 'YouCompleteMe'
             call add(g:airline_extensions, 'ycm')
@@ -100,7 +105,7 @@ function! s:airline_setting()
 
 
     if te#env#SupportAsync()
-        let g:airline_section_error = airline#section#create_right(['%{neomakemp#run_status()}'])
+        let g:airline_section_error .= ' '.airline#section#create_right(['%{neomakemp#run_status()}'])
     endif
     "let g:airline_section_warning='%{strftime("%m/%d\-%H:%M")}'
     "load extension here

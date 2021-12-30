@@ -14,6 +14,7 @@ else
     nnoremap  <silent><leader>ql :call te#lsp#show_diagnostics(0)<cr>
     call te#feat#register_vim_enter_setting2([0], ['vim-lsp-settings'])
     if te#env#SupportFloatingWindows()
+        let g:lsp_work_done_progress_enabled = 1
         let g:lsp_diagnostics_float_cursor = 1
         autocmd User lsp_float_opened call popup_setoptions(lsp#ui#vim#output#getpreviewwinid(), 
                     \ {'borderchars':['─', '│', '─', '│', '┌', '┐', '┘', '└'],
