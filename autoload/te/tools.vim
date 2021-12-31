@@ -3,27 +3,25 @@ function! te#tools#jump_to_floating_win() abort
 	let l:n = 1
 
 	while l:n <= l:last_buffer
-        if !buflisted(l:n)
-            let l:name=bufname(l:n)
-            if strlen(matchstr(l:name, 'term://'))
-                if len(win_findbuf(l:n))
-                    call nvim_set_current_win(win_findbuf(l:n)[0])
-                else
-                    call te#tools#shell_pop(0x2, l:n)
+        let l:name=bufname(l:n)
+        if strlen(matchstr(l:name, 'term://'))
+            if len(win_findbuf(l:n))
+                call nvim_set_current_win(win_findbuf(l:n)[0])
+            else
+                call te#tools#shell_pop(0x2, l:n)
+            endif
+            startinsert
+            break
+        elseif getbufvar(l:n, '&buftype', 'ERROR') ==# 'terminal'
+            if len(win_findbuf(l:n))
+                call win_gotoid(win_findbuf(l:n)[0])
+                if mode() != 't'
+                    call feedkeys('a')
                 endif
-                startinsert
                 break
-            elseif getbufvar(l:n, '&buftype', 'ERROR') ==# 'terminal'
-                if len(win_findbuf(l:n))
-                    call win_gotoid(win_findbuf(l:n)[0])
-                    if mode() != 't'
-                        call feedkeys('a')
-                    endif
-                    break
-                else
-                    call te#tools#shell_pop(0x2, l:n)
-                    break
-                endif
+            else
+                call te#tools#shell_pop(0x2, l:n)
+                break
             endif
         endif
         let l:n = l:n+1
