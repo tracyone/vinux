@@ -319,18 +319,18 @@ nnoremap si zi
 " close all buffer
 map <Leader>ba :bufdo bd<cr>
 nnoremap  <silent><leader>jf :call te#tools#jump_to_floating_win()<cr>
+execute 'tnoremap <Esc><Esc> <C-\><C-n>'
 if te#env#IsNvim() != 0
     "terminal-emulator setting
-    execute 'tnoremap <Esc><Esc> <C-\><C-n>'
     execute 'tnoremap <A-h> <C-\><C-n><C-w>h'
     execute 'tnoremap <A-j> <C-\><C-n><C-w>j'
     execute 'tnoremap <A-k> <C-\><C-n><C-w>k'
     execute 'tnoremap <A-l> <C-\><C-n><C-w>l'
     silent! execute 'tmap <c-v> <C-\><C-n>"*pa'
+    tnoremap <c-w>q <C-\><C-n>:call te#tools#hide_popup()<cr>
 elseif te#env#SupportTerminal()
     "terminal-emulator setting
     "execute 'tnoremap <Esc> <C-\><C-n>' "effect <a-> key?
-    silent! execute 'tnoremap <Esc><Esc> '.te#env#get_termwinkey().'N'
     call te#meta#map('tmap <silent> ','h',te#env#get_termwinkey().'h')
     call te#meta#map('tmap <silent> ','j',te#env#get_termwinkey().'j')
     call te#meta#map('tmap <silent> ','k',te#env#get_termwinkey().'k')
@@ -338,6 +338,7 @@ elseif te#env#SupportTerminal()
     silent! execute 'tnoremap <c-v> '.te#env#get_termwinkey().'"*'
     call te#meta#map('tnoremap <silent> ','b','<C-left>')
     call te#meta#map('tnoremap <silent> ','f','<C-right>')
+    tnoremap <c-w>q <c-w>:call te#tools#hide_popup()<cr>
 endif
 
 " Open plug status windows

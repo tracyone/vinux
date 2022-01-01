@@ -32,9 +32,12 @@ function! te#tools#jump_to_floating_win() abort
 
 endfunction
 
-function! s:hide_shell_buf(winid, result) abort
-    "call te#utils#EchoWarning(winbufnr(a:winid))
-    "execute bufwinnr(winbufnr(a:winid)) . 'hide'
+function! te#tools#hide_popup()
+    if te#env#IsNvim() != 0
+        call nvim_win_close(win_getid(), v:true)
+    else
+        call popup_close(win_getid())
+    endif
 endfunction
 
 "pop vimshell
@@ -71,16 +74,18 @@ function! te#tools#shell_pop(option,...) abort
                         \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal'}
             if a:0 == 0
                 let l:buf = nvim_create_buf(v:false, v:true)
+                call nvim_buf_set_option(l:buf, 'buftype', 'nofile')
+                call nvim_buf_set_option(l:buf, 'buflisted', v:false)
+                call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
             else
                 let l:buf = a:1
             endif
-            call nvim_buf_set_option(l:buf, 'buftype', 'nofile')
-            call nvim_buf_set_option(l:buf, 'buflisted', v:false)
-            call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
             let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
             call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
             call nvim_win_set_option(l:win_id, 'winblend', 30)
-            call termopen(l:shell)
+            if a:0 == 0
+                call termopen(l:shell)
+            endif
             return
         else
             if bufexists(expand('%')) && &filetype !=# 'startify'
@@ -112,9 +117,7 @@ function! te#tools#shell_pop(option,...) abort
                                 \ 'borderhighlight':['vinux_border'],
                                 \ 'drag': 1,
                                 \ 'close': 'button',
-                                \ 'callback': function('<SID>hide_shell_buf')
                                 \ })
-                    echom l:win_id
                     call setwinvar(l:win_id, '&wincolor', 'Pmenu')
                     return
                     ":botright vsplit
