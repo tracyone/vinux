@@ -15,14 +15,13 @@ function! te#tools#jump_to_floating_win() abort
         elseif getbufvar(l:n, '&buftype', 'ERROR') ==# 'terminal'
             if len(win_findbuf(l:n))
                 call win_gotoid(win_findbuf(l:n)[0])
-                if mode() != 't'
-                    call feedkeys('a')
-                endif
-                break
             else
                 call te#tools#shell_pop(0x2, l:n)
-                break
             endif
+            if mode() != 't'
+                call feedkeys('a')
+            endif
+            break
         endif
         let l:n = l:n+1
     endwhile
@@ -33,10 +32,16 @@ function! te#tools#jump_to_floating_win() abort
 endfunction
 
 function! te#tools#hide_popup()
+    let l:win_id = win_getid()
     if te#env#IsNvim() != 0
-        call nvim_win_close(win_getid(), v:true)
+        call nvim_win_close(l:win_id, v:true)
     else
-        call popup_close(win_getid())
+        if win_gettype() != 'popup'
+            echom "hah"
+            :hide
+        else
+            call popup_close(l:win_id)
+        endif
     endif
 endfunction
 
@@ -128,6 +133,8 @@ function! te#tools#shell_pop(option,...) abort
 
     if te#env#SupportTerminal()  && te#env#IsVim8()
         execute ':terminal ++close ++curwin '.l:shell
+        call setwinvar(win_getid(), '&wincolor', 'Pmenu')
+        call setbufvar(bufnr('%'), '&buflisted', 0)
     elseif te#env#IsTmux()
         call te#tmux#run_command(&shell, a:option)
     else 
