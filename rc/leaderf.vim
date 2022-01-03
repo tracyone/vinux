@@ -27,8 +27,9 @@ function! s:leaderf_setting()
     "colorsceme
     nnoremap  <silent><Leader>pc :LeaderfColorscheme<cr>
     nnoremap  <silent><Leader>ff :Leaderf dir<cr>
-    nnoremap  <silent><Leader>fe :Leaderf feat<cr>
-    nnoremap  <silent><Leader>fd :Leaderf feat<cr>
+    nnoremap  <silent><Leader>fe :Leaderf feat -d 1<cr>
+    nnoremap  <silent><Leader>fd :Leaderf feat -d 0<cr>
+    nnoremap  <silent><Leader>ph :LeaderfHelp<cr>
     "CtrlP cmd
     let g:Lf_ShortcutF = '<C-P>'
     let g:Lf_ShortcutB = '<C-j>'
@@ -36,11 +37,31 @@ function! s:leaderf_setting()
     let g:Lf_DefaultMode='FullPath'
     let g:Lf_StlColorscheme = 'default'
     let g:Lf_StlSeparator = { 'left': '', 'right': '' }
+    let g:Lf_PreviewCode = 1
+    let g:Lf_PreviewResult = {
+            \ 'File': 1,
+            \ 'Buffer': 1,
+            \ 'Mru': 1,
+            \ 'Tag': 1,
+            \ 'BufTag': 1,
+            \ 'Function': 1,
+            \ 'Line': 0,
+            \ 'Colorscheme': 1,
+            \ 'Rg': 1,
+            \ 'Gtags': 0
+            \}
     let g:Lf_UseMemoryCache = 0
     let g:Lf_ReverseOrder = 1
-    let g:Lf_PreviewInPopup = 1
     if te#env#SupportFloatingWindows()
         let g:Lf_WindowPosition ='popup'
+        let g:Lf_PreviewInPopup = 1
+        "let g:Lf_PreviewPopupWidth = &columns * 4 / 10
+        "let g:Lf_PreviewPopupWidth = &columns * 4 / 10
+        let g:Lf_PopupWidth = &columns * 8 / 10
+        let g:Lf_PopupHeight = &lines * 4 / 10
+        let g:Lf_PopupShowStatusline = 0
+        let g:Lf_PreviewHorizontalPosition = 'right'
+        "let g:Lf_PopupPosition= 
     endif
     let g:Lf_ShowDevIcons = 0
     nnoremap  <silent><Leader><Leader> :LeaderfFile<cr>
@@ -55,6 +76,7 @@ function! s:leaderf_setting()
                     \ 'feat': {
                         \       'source': "te#leaderf#feat#source",
                         \       'accept': 'te#leaderf#feat#accept',
+                        \       'arguments': [ { "name": ["-d"], "nargs": 1}],
                         \       'supports_name_only': 1,
                         \       'supports_multi': 0,
                         \ },

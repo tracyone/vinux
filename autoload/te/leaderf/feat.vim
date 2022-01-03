@@ -16,7 +16,8 @@ function! te#leaderf#feat#get_var_value(A, L, P) abort
 endfunction
 
 function! te#leaderf#feat#accept(line, args) abort
-    if len(a:args)
+    "{'popup_winid': 1002, '-d': [], 'arg_line': ' feat -d ', 'win_pos': 'popup'}
+    if a:args['-d'] == ['1']
         let l:en_flag = 1
     else
         let l:en_flag = 0
