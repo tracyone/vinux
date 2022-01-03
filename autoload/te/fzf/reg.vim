@@ -40,13 +40,7 @@ function! te#fzf#reg#start(is_v_mode) abort
     let l:run_dict = {
                 \ 'source': te#utils#get_reg(),
                 \ 'sink*': function('<SID>edit_file'),
-                \ 'down':'40%' ,
                 \ 'options' : '-m --prompt "Reg> "',
                 \ }
-    if te#env#IsNvim() != 0
-        :call extend(l:run_dict, {'window':'call FloatingFZF()'})
-    else
-        :call extend(l:run_dict, g:fzf_layout)
-    endif
-    call fzf#run(l:run_dict)
+    call fzf#run(fzf#wrap(l:run_dict))
 endfunction

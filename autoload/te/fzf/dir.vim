@@ -24,16 +24,10 @@ function! s:edit_file(item) abort
             let l:run_dict = {
                         \ 'source': 'ls -a -F', 
                         \ 'sink*': function('<SID>edit_file'),
-                        \ 'down':'40%' ,
                         \ 'options' : ' --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : '.
                         \              '-m --prompt "Dir> "',
                         \ }
-            if te#env#IsNvim() != 0
-                :call extend(l:run_dict, {'window':'call FloatingFZF()'})
-            else
-                :call extend(l:run_dict, g:fzf_layout)
-            endif
-            call fzf#run(l:run_dict)
+            call fzf#run(fzf#wrap(fzf#vim#with_preview(l:run_dict)))
             :redraw!
         endif
     else
@@ -45,14 +39,8 @@ function! te#fzf#dir#start() abort
         let l:run_dict = {
                     \ 'source': 'ls -a -F', 
                     \ 'sink*': function('<SID>edit_file'),
-                    \ 'down':'40%' ,
                     \ 'options' : ' --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : '.
                     \              '-m --prompt "Dir> "',
                     \ }
-        if te#env#IsNvim() != 0
-            :call extend(l:run_dict, {'window':'call FloatingFZF()'})
-        else
-            :call extend(l:run_dict, g:fzf_layout)
-        endif
-        call fzf#run(l:run_dict)
+        call fzf#run(fzf#wrap(fzf#vim#with_preview(l:run_dict)))
 endfunction

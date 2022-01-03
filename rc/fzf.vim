@@ -48,6 +48,7 @@ function! s:fzf_vim_setting()
         nnoremap  <silent><Leader>pk  :call FzfStartEntry('BTags')<cr>
         nnoremap  <silent><c-k>  :call FzfStartEntry('BTags')<cr>
     endif
+    let g:fzf_buffers_jump = 1
 
     "ag
     if te#env#Executable('ag')
@@ -83,46 +84,14 @@ function! s:fzf_vim_setting()
     "nmap <leader><tab> <plug>(fzf-maps-n)
     "xmap <leader><tab> <plug>(fzf-maps-x)
     "omap <leader><tab> <plug>(fzf-maps-o)
-    if te#env#SupportFloatingWindows() == 2
-        "let $FZF_DEFAULT_OPTS='--layout=reverse'
-        let g:fzf_layout = { 'window': 'call FloatingFZF()', 'down': '~40%' }
-
-        function! FloatingFZF()
-            let height = float2nr(&lines * 4 / 10)
-            let width = float2nr(&columns * 8 / 10)
-
-            let col_offset = &columns / 10 
-
-            let opts = {
-                        \ 'relative': 'editor',
-                        \ 'row': &lines * 0.3,
-                        \ 'col': col_offset,
-                        \ 'width': width,
-                        \ 'height': height,
-                        \ 'style': 'minimal',
-                        \ 'border': 'rounded'
-                        \ }
-
-            let buf = nvim_create_buf(v:false, v:true)
-
-            let win = nvim_open_win(buf, v:true, opts)
-
-            call nvim_win_set_option(win, 'winhl', 'Normal:vinux_tabline,FloatBorder:vinux_border')
-
-            if mode() ==# 't'
-                call feedkeys('i')
-            endif
-        endfunction
+    if has('patch-8.2.191') || te#env#IsNvim() != 0
+        let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.4 }, 'down': '~40%' }
+        let g:fzf_colors =
+                    \ { 'fg':      ['fg', 'vinux_tabline'],
+                    \ 'border':  ['fg', 'vinux_border'],
+                    \ 'preview-fg':      ['fg', 'vinux_normal']}
     else
-        if has('patch-8.2.191')
-            let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.4 }, 'down': '~40%' }
-            let g:fzf_colors =
-                        \ { 'fg':      ['fg', 'vinux_tabline'],
-                        \ 'border':  ['fg', 'vinux_border'],
-                        \ 'preview-fg':      ['fg', 'vinux_normal']}
-        else
-            let g:fzf_layout = { 'down': '~40%' }
-        endif
+        let g:fzf_layout = { 'down': '~40%' }
     endif
 
     "disable preview window

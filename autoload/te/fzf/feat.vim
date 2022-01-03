@@ -73,13 +73,7 @@ function! te#fzf#feat#start(en) abort
     let l:run_dict = {
                     \ 'source': s:text, 
                     \ 'sink': function('<SID>edit_file'),
-                    \ 'down':'40%' ,
                     \ 'options' : '-m --prompt "Feat> "',
                     \ }
-     if te#env#IsNvim() != 0
-          :call extend(l:run_dict, {'window':'call FloatingFZF()'})
-      else
-          :call extend(l:run_dict, g:fzf_layout)
-     endif
-     call fzf#run(l:run_dict)
+     call fzf#run(fzf#wrap(l:run_dict))
 endfunction

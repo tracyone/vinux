@@ -318,9 +318,9 @@ nnoremap si zi
 
 " close all buffer
 map <Leader>ba :bufdo bd<cr>
-nnoremap  <silent><leader>jf :call te#tools#jump_to_floating_win()<cr>
+nnoremap  <silent><leader>jf :call te#terminal#jump_to_floating_win()<cr>
 execute 'tnoremap <Esc><Esc> <C-\><C-n>'
-tnoremap <c-w>q <C-\><C-n>:call te#tools#hide_popup()<cr>
+tnoremap <c-w>q <C-\><C-n>:call te#terminal#hide_popup()<cr>
 if te#env#IsNvim() != 0
     "terminal-emulator setting
     execute 'tnoremap <A-h> <C-\><C-n><C-w>h'
@@ -349,12 +349,12 @@ nnoremap  <silent><Leader>pl :call te#plug#list()<cr>
 "checkhealth
 nnoremap <silent> <Leader>ch :call te#utils#check_health()<cr>
 " Open vimshell or neovim's emulator in split window
-nnoremap <silent> <Leader>as :call te#tools#shell_pop(0x1)<cr>
-noremap <silent> <F4> :call te#tools#shell_pop(0x1)<cr>
+nnoremap <silent> <Leader>as :call te#terminal#shell_pop(0x1)<cr>
+noremap <silent> <F4> :call te#terminal#shell_pop(0x1)<cr>
 " Open vimshell or neovim's emulator in vertical window
-nnoremap <silent> <Leader>av :call te#tools#shell_pop(0x2)<cr>
+nnoremap <silent> <Leader>av :call te#terminal#shell_pop(0x2)<cr>
 " Open vimshell or neovim's emulator in new tab
-nnoremap <silent> <Leader>ns :call te#tools#shell_pop(0x4)<cr>
+nnoremap <silent> <Leader>ns :call te#terminal#shell_pop(0x4)<cr>
 
 call te#meta#map('inoremap','u','<c-\><c-o>:call te#tools#PreviousCursor(6)<cr>')
 call te#meta#map('inoremap','d','<c-\><c-o>:call te#tools#PreviousCursor(7)<cr>')
