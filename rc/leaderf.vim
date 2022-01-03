@@ -30,6 +30,9 @@ function! s:leaderf_setting()
     nnoremap  <silent><Leader>fe :Leaderf feat -d 1<cr>
     nnoremap  <silent><Leader>fd :Leaderf feat -d 0<cr>
     nnoremap  <silent><Leader>ph :LeaderfHelp<cr>
+    if te#env#Executable('rg')
+        nnoremap  <silent><Leader>pf :Leaderf rg<cr>
+    endif
     "CtrlP cmd
     let g:Lf_ShortcutF = '<C-P>'
     let g:Lf_ShortcutB = '<C-j>'
