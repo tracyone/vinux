@@ -14,15 +14,28 @@ function! te#terminal#get_buf_list()
     return l:result_list
 endfunction
 
-function! te#terminal#open_term(buf, option)
-    if len(win_findbuf(a:buf))
+function! te#terminal#is_term_buf(bufno)
+    let l:name=bufname(a:bufno)
+    if strlen(matchstr(l:name, 'term://'))
+        return v:true
+    elseif getbufvar(a:bufno, '&buftype', 'ERROR') ==# 'terminal'
+        return v:true
+    else
+        return v:false
+    endif
+endfunction
+
+function! te#terminal#open_term(...)
+    let l:buf = a:1
+    let l:option = a:2
+    if len(win_findbuf(l:buf))
         if te#env#IsNvim() != 0
-            call nvim_set_current_win(win_findbuf(a:buf)[0])
+            call nvim_set_current_win(win_findbuf(l:buf)[0])
         else
-            call win_gotoid(win_findbuf(a:buf)[0])
+            call win_gotoid(win_findbuf(l:buf)[0])
         endif
     else
-        call te#terminal#shell_pop(a:option, a:buf)
+        call te#terminal#shell_pop(l:option, l:buf)
     endif
     if te#env#IsNvim() != 0
         startinsert
@@ -33,20 +46,79 @@ function! te#terminal#open_term(buf, option)
     endif
 endfunction
 
-function! te#terminal#jump_to_floating_win() abort
+"num can be following value:
+"-1:previous terminal
+"-2:next terminal
+"-3:lastopen terminal
+"-4:select terminal in fzf
+"0~9:0~9 terminal
+function! te#terminal#jump_to_floating_win(num) abort
     let l:term_list = te#terminal#get_buf_list()
     let l:no_of_term = len(l:term_list)
+    let l:current_term_buf = -1
     if l:no_of_term == 0
         call te#utils#EchoWarning("No terminal window found!")
     elseif l:no_of_term == 1
         call te#terminal#open_term(l:term_list[0], 0x2)
     else
-        call te#fzf#terminal#start()
+        if te#terminal#is_term_buf(bufnr('%')) == v:true
+            let l:current_term_buf = bufnr('%')
+            let l:last_close_bufnr = s:last_close_bufnr
+            call te#terminal#hide_popup()
+        endif
+        if a:num == -4
+            "in terminal or out out terminal
+            call te#fzf#terminal#start()
+        elseif a:num >= 0
+            "in terminal or out out terminal
+            if a:num < l:no_of_term
+                call timer_start(100, function('te#terminal#open_term',[l:term_list[a:num], 0x2]), {'repeat': 1})
+            else
+                call te#utils#EchoWarning("Out of range ".a:num.' number of terminal: '.l:no_of_term)
+            endif
+        elseif a:num == -1 || a:num == -2
+            "in terminal only
+            if l:current_term_buf < 0
+                call te#utils#EchoWarning("Only support in terminal")
+                return
+            endif
+            let l:cur_index = 0
+            for l:n in l:term_list
+                if l:n == l:current_term_buf
+                    break
+                endif
+                let l:cur_index += 1
+            endfor
+            if a:num == -1
+                if l:cur_index > 0
+                    call timer_start(100, function('te#terminal#open_term',[l:term_list[l:cur_index - 1], 0x2]), {'repeat': 1})
+                else
+                    call te#utils#EchoWarning("No previous window!")
+                endif
+            endif
+            if a:num == -2
+                if l:cur_index < l:no_of_term
+                    call timer_start(100, function('te#terminal#open_term',[l:term_list[l:cur_index + 1], 0x2]), {'repeat': 1})
+                else
+                    call te#utils#EchoWarning("No next window!")
+                endif
+            endif
+        elseif a:num == -3
+            if l:current_term_buf < 0
+                call te#utils#EchoWarning("Only support in terminal")
+                return
+            endif
+            call timer_start(100, function('te#terminal#open_term',[l:last_close_bufnr, 0x2]), {'repeat': 1})
+        else
+            call te#utils#EchoWarning("Wrong option: ".a:num)
+        endif
     endif
 endfunction
 
+let s:last_close_bufnr = -1
 function! te#terminal#hide_popup()
     let l:win_id = win_getid()
+    let s:last_close_bufnr = bufnr('%')
     if te#env#IsNvim() != 0
         call nvim_win_close(l:win_id, v:true)
     else
@@ -108,8 +180,10 @@ function! te#terminal#shell_pop(option,...) abort
         else
             if bufexists(expand('%')) && &filetype !=# 'startify'
                 let l:fullbuffer=0
+                let l:title = ' Terminal'
                 let l:line=(38*&lines)/100
                 if  l:line < 10 | let l:line = 10 |endif
+                let l:term_list = te#terminal#get_buf_list()
                 if and(a:option, 0x01)
                     let l:fullbuffer=1
                     execute 'rightbelow '.l:line.'split'
@@ -117,13 +191,23 @@ function! te#terminal#shell_pop(option,...) abort
                     if a:0 == 0
                         let l:buf = term_start(l:shell, #{hidden: 1, term_finish: 'close'})
                         call setbufvar(l:buf, '&buflisted', 0)
+                        let l:no_of_term = len(l:term_list) + 1
+                        let l:title .= '['.l:no_of_term.'/'.l:no_of_term.']'
                     else
                         let l:buf = a:1
+                        let l:cur_index = 0
+                        for l:n in l:term_list
+                            let l:cur_index += 1
+                            if l:n == l:buf
+                                break
+                            endif
+                        endfor
+                        let l:title .= '['.l:cur_index.'/'.len(l:term_list).']'
                     endif
                     let l:win_id = popup_create(l:buf, {
                                 \ 'line': 2,
                                 \ 'col': &columns/2 - 1,
-                                \ 'title': " Terminal",
+                                \ 'title': l:title,
                                 \ 'zindex': 200,
                                 \ 'minwidth': &columns/2,
                                 \ 'minheight': l:line,
