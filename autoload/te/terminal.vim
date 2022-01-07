@@ -57,7 +57,8 @@ function! te#terminal#jump_to_floating_win(num) abort
     let l:no_of_term = len(l:term_list)
     let l:current_term_buf = -1
     if l:no_of_term == 0
-        call te#utils#EchoWarning("No terminal window found!")
+        call te#utils#EchoWarning("No terminal window found! Try to create a new one!")
+        call te#terminal#shell_pop(0x2)
     elseif l:no_of_term == 1
         call te#terminal#open_term(l:term_list[0], 0x2)
     else
@@ -93,14 +94,16 @@ function! te#terminal#jump_to_floating_win(num) abort
                 if l:cur_index > 0
                     call te#terminal#open_term(l:term_list[l:cur_index - 1], 0x2)
                 else
-                    call te#utils#EchoWarning("No previous window!")
+                    let l:cur_index = l:no_of_term
+                    call te#terminal#open_term(l:term_list[l:cur_index - 1], 0x2)
                 endif
             endif
             if a:num == -2
-                if l:cur_index < l:no_of_term
+                if l:cur_index + 1 < l:no_of_term
                     call te#terminal#open_term(l:term_list[l:cur_index + 1], 0x2)
                 else
-                    call te#utils#EchoWarning("No next window!")
+                    let l:cur_index = 0
+                    call te#terminal#open_term(l:term_list[0], 0x2)
                 endif
             endif
         elseif a:num == -3
