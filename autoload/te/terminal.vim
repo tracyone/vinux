@@ -72,7 +72,7 @@ function! te#terminal#jump_to_floating_win(num) abort
         elseif a:num >= 0
             "in terminal or out out terminal
             if a:num < l:no_of_term
-                call timer_start(100, function('te#terminal#open_term',[l:term_list[a:num], 0x2]), {'repeat': 1})
+                call te#terminal#open_term(l:term_list[a:num], 0x2)
             else
                 call te#utils#EchoWarning("Out of range ".a:num.' number of terminal: '.l:no_of_term)
             endif
@@ -91,14 +91,14 @@ function! te#terminal#jump_to_floating_win(num) abort
             endfor
             if a:num == -1
                 if l:cur_index > 0
-                    call timer_start(100, function('te#terminal#open_term',[l:term_list[l:cur_index - 1], 0x2]), {'repeat': 1})
+                    call te#terminal#open_term(l:term_list[l:cur_index - 1], 0x2)
                 else
                     call te#utils#EchoWarning("No previous window!")
                 endif
             endif
             if a:num == -2
                 if l:cur_index < l:no_of_term
-                    call timer_start(100, function('te#terminal#open_term',[l:term_list[l:cur_index + 1], 0x2]), {'repeat': 1})
+                    call te#terminal#open_term(l:term_list[l:cur_index + 1], 0x2)
                 else
                     call te#utils#EchoWarning("No next window!")
                 endif
@@ -108,7 +108,7 @@ function! te#terminal#jump_to_floating_win(num) abort
                 call te#utils#EchoWarning("Only support in terminal")
                 return
             endif
-            call timer_start(100, function('te#terminal#open_term',[l:last_close_bufnr, 0x2]), {'repeat': 1})
+            call te#terminal#open_term(l:last_close_bufnr, 0x2)
         else
             call te#utils#EchoWarning("Wrong option: ".a:num)
         endif
