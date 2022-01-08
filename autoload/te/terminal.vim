@@ -148,6 +148,12 @@ function! te#terminal#hide_popup()
     endif
 endfunction
 
+fun! s:OnExit(job_id, code, event)
+    if a:code == 0
+        close
+    endif
+endfun
+
 "pop vimshell
 "option:0x04 open terminal in a new tab
 "option:0x01 open terminal in a split window
@@ -192,7 +198,7 @@ function! te#terminal#shell_pop(option,...) abort
             call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
             call nvim_win_set_option(l:win_id, 'winblend', 30)
             if a:0 == 0
-                call termopen(l:shell)
+                call termopen(l:shell, {'on_exit': function('<SID>OnExit')})
             endif
             return
         else
