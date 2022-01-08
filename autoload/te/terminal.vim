@@ -14,6 +14,21 @@ function! te#terminal#get_buf_list()
     return l:result_list
 endfunction
 
+function! te#terminal#get_index(bufno)
+    let l:term_list = te#terminal#get_buf_list()
+    let l:index = 0
+    for l:i in l:term_list
+        if l:i == a:bufno
+            break
+        endif
+        let l:index += 1
+    endfor
+    if l:index >= len(l:term_list)
+        return -1
+    endif
+    return l:index
+endfunction
+
 function! te#terminal#is_term_buf(bufno)
     let l:name=bufname(a:bufno)
     if strlen(matchstr(l:name, 'term://'))
@@ -83,13 +98,7 @@ function! te#terminal#jump_to_floating_win(num) abort
                 call te#utils#EchoWarning("Only support in terminal")
                 return
             endif
-            let l:cur_index = 0
-            for l:n in l:term_list
-                if l:n == l:current_term_buf
-                    break
-                endif
-                let l:cur_index += 1
-            endfor
+            let l:cur_index = te#terminal#get_index(l:current_term_buf)
             if a:num == -1
                 if l:cur_index > 0
                     call te#terminal#open_term(l:term_list[l:cur_index - 1], 0x2)
@@ -198,13 +207,7 @@ function! te#terminal#shell_pop(option,...) abort
                         let l:title .= '['.l:no_of_term.'/'.l:no_of_term.']'
                     else
                         let l:buf = a:1
-                        let l:cur_index = 0
-                        for l:n in l:term_list
-                            let l:cur_index += 1
-                            if l:n == l:buf
-                                break
-                            endif
-                        endfor
+                        let l:cur_index = te#terminal#get_index(l:buf) + 1
                         let l:title .= '['.l:cur_index.'/'.len(l:term_list).']'
                     endif
                     let l:win_id = popup_create(l:buf, {
