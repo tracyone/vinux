@@ -49,8 +49,6 @@ call te#meta#map('cnoremap','a','<C-C>gggH<C-O>G')
 call te#meta#map('onoremap','a','<C-C>gggH<C-O>G')
 call te#meta#map('snoremap','a','<C-C>gggH<C-O>G')
 call te#meta#map('xnoremap','a','<C-C>ggVG')
-"Alignment
-call te#meta#map('nnoremap','=',' <esc>ggVG=``')
 "move
 call te#meta#map('inoremap','h','<Left>')
 call te#meta#map('inoremap','l','<Right>')
