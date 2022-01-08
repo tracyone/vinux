@@ -33,15 +33,9 @@ function! s:edit_file(item)
             let l:run_dict = {
                      \ 'source': s:var_candidate, 
                      \ 'sink': function('<SID>get_var_value'),
-                     \ 'down':'40%' ,
                      \ 'options' : '-m --prompt "Feat> "',
                      \ }
-            if te#env#IsNvim() != 0
-               :call extend(l:run_dict, {'window':'call FloatingFZF()'})
-           else
-               :call extend(l:run_dict, g:fzf_layout)
-            endif
-           call fzf#run(l:run_dict)
+           call fzf#run(fzf#wrap(l:run_dict))
            return
         else
             let l:feat_dict[l:str]=s:enable_flag
