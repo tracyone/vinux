@@ -347,6 +347,11 @@ endfunction
 " quit current split windows
 function! te#utils#quit_win(all) abort
     if a:all == 1
+        if len(te#terminal#get_buf_list())
+            call te#utils#EchoWarning("There are terminals not closed!")
+            call te#terminal#jump_to_floating_win(-4)
+            return
+        endif
         if (confirm('Quit Vim Vim Vim Vim Vim ?', "&Yes\n&No", 2)==1)
             :qa
         endif
@@ -371,6 +376,11 @@ function! te#utils#quit_win(all) abort
             if !te#utils#is_listed_buffer() && l:no_of_listed_buffer == 1
                 :bdelete
             else
+                if len(te#terminal#get_buf_list())
+                    call te#utils#EchoWarning("There are terminals not closed!")
+                    call te#terminal#jump_to_floating_win(-4)
+                    return
+                endif
                 if (confirm('Quit Vim Vim Vim Vim Vim ?', "&Yes\n&No", 2)==1)
                     :quit
                 endif
