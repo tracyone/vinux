@@ -3,8 +3,10 @@ function! te#complete#goto_def(open_type) abort
     let l:ret = -1
     execute a:open_type
     if &filetype == 'vim'
-        :call lookup#lookup()
-        return 0
+        silent! execute 'let l:ret = lookup#lookup()'
+        if l:ret > 0
+            return 0
+        endif
     endif
     if get(g:, 'feat_enable_complete', 0)
         if te#env#SupportYcm() && g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
