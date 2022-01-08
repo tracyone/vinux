@@ -225,7 +225,7 @@ function! te#terminal#shell_pop(option,...) abort
                                 \ 'drag': 1,
                                 \ 'close': 'button',
                                 \ })
-                    call setwinvar(l:win_id, '&wincolor', 'Pmenu')
+                    "call setwinvar(l:win_id, '&wincolor', 'Pmenu')
                     return
                     ":botright vsplit
                 endif
@@ -239,7 +239,7 @@ function! te#terminal#shell_pop(option,...) abort
 
     if te#env#SupportTerminal()  && te#env#IsVim8()
         execute ':terminal ++close ++curwin '.l:shell
-        call setwinvar(win_getid(), '&wincolor', 'Pmenu')
+        "call setwinvar(win_getid(), '&wincolor', 'Pmenu')
         call setbufvar(bufnr('%'), '&buflisted', 0)
     elseif te#env#IsTmux()
         call te#tmux#run_command(&shell, a:option)
