@@ -13,7 +13,7 @@ if [ -n "${VIM_REMOTE}" ]; then
             #path not absolute,  lets prefix with pwd...
             absfilepath="$PWD/${1#./}"
         fi
-        `$VIM_REMOTE --remote-send "N:e! $absfilepath<cr>"`
+        `$VIM_REMOTE --remote-send "<C-\><C-N>:call te#terminal#hide_popup()<cr>:e! $absfilepath<cr>"`
     else
         `$VIM_REMOTE --remote $1`
     fi

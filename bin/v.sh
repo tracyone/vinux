@@ -19,7 +19,7 @@ if [ -n "$TMUX"  ]; then
       # We have found a pane with vim running lets send it to the pane with :e (change for split/buffer/tab)
       if [ "$#" -gt 0 ]; then
           #exit terminal mode in vim
-          tmux send-keys -t $i C-\\ C-n
+          tmux send-keys -t $i C-w q
           for var in $@; do
               if [[ $var = /*  ]]; then
                   #path already looks absolute...

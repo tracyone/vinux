@@ -4,7 +4,7 @@
 export VIM_ACTION=":tabnew"
 
 if [ -n "${VIM_REMOTE}" ]; then
-    `$VIM_REMOTE --remote-tab-silent $@`
+    `$VIM_REMOTE --remote-send "<C-\><C-N>:call te#terminal#hide_popup()<cr>" --remote-tab-silent $@ ` 
 else
     v.sh $@
 fi
