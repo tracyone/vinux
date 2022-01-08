@@ -173,7 +173,7 @@ function! te#terminal#shell_pop(option,...) abort
                 let l:width=&columns/2
             endif
             let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': &columns/2-1,
-                        \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal'}
+                        \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
             if a:0 == 0
                 let l:buf = nvim_create_buf(v:false, v:true)
                 call nvim_buf_set_option(l:buf, 'buftype', 'nofile')

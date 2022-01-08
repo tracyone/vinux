@@ -97,7 +97,7 @@ function! te#utils#EchoWarning(str,...) abort
             let l:win.line=s:win_list[-1].line + 2 + s:win_list[-1].str_width
         endif
         let l:opts = {'relative': 'editor', 'width': l:str_len, 'height': l:win.str_width, 'col': &columns,
-                    \ 'row': l:win.line, 'anchor': 'NW', 'border': 'single', 'style': 'minimal'}
+                    \ 'row': l:win.line, 'anchor': 'NW', 'border': 'single', 'style': 'minimal', 'zindex': 200}
         let l:win.id=nvim_open_win(l:bufnr, v:false,l:opts)
         call nvim_buf_set_lines(l:bufnr, 0, -1, v:false, [l:str])
         call nvim_win_set_option(l:win.id, 'winhl', 'Normal:'.l:level.',FloatBorder:vinux_border')
