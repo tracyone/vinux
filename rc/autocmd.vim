@@ -48,7 +48,6 @@ augroup END
 if te#env#IsNvim() != 0
     autocmd misc_group TermOpen * setlocal nonu nornu signcolumn=no | :startinsert
     "auto close terminal buffer
-    autocmd misc_group TermClose * exe expand('<abuf>').'bd!'
     autocmd misc_group  FileType fzf tnoremap <buffer> <c-v> <c-v>
     autocmd misc_group User Startified setlocal buflisted
 else

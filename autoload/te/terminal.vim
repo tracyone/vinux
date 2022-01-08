@@ -74,7 +74,7 @@ function! te#terminal#jump_to_floating_win(num) abort
     if l:no_of_term == 0
         call te#utils#EchoWarning("No terminal window found! Try to create a new one!")
         call te#terminal#shell_pop(0x2)
-    elseif l:no_of_term == 1
+    elseif l:no_of_term == 1 && a:num != -5
         call te#terminal#open_term(l:term_list[0], 0x2)
     else
         if te#terminal#is_term_buf(bufnr('%')) == v:true
@@ -121,6 +121,12 @@ function! te#terminal#jump_to_floating_win(num) abort
                 return
             endif
             call te#terminal#open_term(l:last_close_bufnr, 0x2)
+        elseif a:num == -5
+            if l:current_term_buf < 0
+                call te#utils#EchoWarning("Only support in terminal")
+                return
+            endif
+            call te#terminal#shell_pop(0x2)
         else
             call te#utils#EchoWarning("Wrong option: ".a:num)
         endif
