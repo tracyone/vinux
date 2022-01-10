@@ -72,11 +72,6 @@ function! te#utils#EchoWarning(str,...) abort
         return
     endif
 
-    if getbufvar(bufnr("%"), '&buftype', 'ERROR') ==# 'terminal'
-        redraw!
-        execut 'echohl '.l:level | echom ' '.a:str | echohl None
-        return
-    endif
     if te#env#IsNvim() != 0 && te#env#SupportFloatingWindows() == 2
         let l:str= ' '.a:str
         let l:win={}

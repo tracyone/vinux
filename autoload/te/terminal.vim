@@ -137,20 +137,24 @@ let s:last_close_bufnr = -1
 function! te#terminal#hide_popup()
     let l:win_id = win_getid()
     let s:last_close_bufnr = bufnr('%')
-    if te#env#IsNvim() != 0
-        call nvim_win_close(l:win_id, v:true)
-    else
-        if win_gettype() != 'popup'
-            :hide
+    try
+        if te#env#IsNvim() != 0
+            call nvim_win_close(l:win_id, v:true)
         else
-            call popup_close(l:win_id)
+            if win_gettype() != 'popup'
+                :hide
+            else
+                call popup_close(l:win_id)
+            endif
         endif
-    endif
+    catch /last/
+        call te#utils#EchoWarning("Can not close last window")
+    endtry
 endfunction
 
 fun! s:OnExit(job_id, code, event)
     if a:code == 0
-        close
+        :bd
     endif
 endfun
 
@@ -170,90 +174,76 @@ function! te#terminal#shell_pop(option,...) abort
     else
         let l:shell=&shell
     endif
-    if !te#env#IsTmux() || te#env#SupportTerminal()
+    if te#env#SupportTerminal()
+        let l:line=(38*&lines)/100
+        if  l:line < 10 | let l:line = 10 |endif
         if and(a:option, 0x04)
             :tabnew
+        elseif and(a:option, 0x01)
+            execute 'rightbelow '.l:line.'split'
         endif
-        if te#env#SupportFloatingWindows() == 2 && !and(a:option, 0x04)
-            let l:line=(38*&lines)/100
-            if  l:line < 10 | let l:line = 10 |endif
-            if and(a:option, 0x01)
-                let l:row=&lines-l:line
-                let l:width=&columns
-            elseif and(a:option, 0x02)
-                let l:row=1
-                let l:width=&columns/2
-            endif
-            let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': &columns/2-1,
-                        \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
-            if a:0 == 0
-                let l:buf = nvim_create_buf(v:false, v:true)
-                call nvim_buf_set_option(l:buf, 'buftype', 'nofile')
-                call nvim_buf_set_option(l:buf, 'buflisted', v:false)
-                call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
-            else
+        if te#env#SupportFloatingWindows() == 2
+            let l:row=1
+            let l:width=&columns/2
+            if a:0 == 1
                 let l:buf = a:1
+            else
+                    let l:buf = nvim_create_buf(v:false, v:true)
+                    call nvim_buf_set_option(l:buf, 'buftype', 'nofile')
+                    call nvim_buf_set_option(l:buf, 'buflisted', v:false)
+                    call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
             endif
-            let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
-            call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
-            call nvim_win_set_option(l:win_id, 'winblend', 30)
+            if and(a:option, 0x02)
+                let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': &columns/2-1,
+                            \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
+                let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
+                call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
+                call nvim_win_set_option(l:win_id, 'winblend', 30)
+            else
+                execute ':buf '.l:buf
+            endif
             if a:0 == 0
                 call termopen(l:shell, {'on_exit': function('<SID>OnExit')})
             endif
             return
-        else
-            if bufexists(expand('%')) && &filetype !=# 'startify'
-                let l:fullbuffer=0
-                let l:title = ' Terminal'
-                let l:line=(38*&lines)/100
-                if  l:line < 10 | let l:line = 10 |endif
-                let l:term_list = te#terminal#get_buf_list()
-                if and(a:option, 0x01)
-                    let l:fullbuffer=1
-                    execute 'rightbelow '.l:line.'split'
-                elseif and(a:option, 0x02)
-                    if a:0 == 0
-                        let l:buf = term_start(l:shell, #{hidden: 1, term_finish: 'close'})
-                        call setbufvar(l:buf, '&buflisted', 0)
-                        let l:no_of_term = len(l:term_list) + 1
-                        let l:title .= '['.l:no_of_term.'/'.l:no_of_term.']'
-                    else
-                        let l:buf = a:1
-                        let l:cur_index = te#terminal#get_index(l:buf) + 1
-                        let l:title .= '['.l:cur_index.'/'.len(l:term_list).']'
-                    endif
-                    let l:win_id = popup_create(l:buf, {
-                                \ 'line': 2,
-                                \ 'col': &columns/2 - 1,
-                                \ 'title': l:title,
-                                \ 'zindex': 200,
-                                \ 'minwidth': &columns/2,
-                                \ 'minheight': l:line,
-                                \ 'maxwidth': &columns/2,
-                                \ 'maxheight': l:line,
-                                \ 'border': [],
-                                \ 'borderchars':['─', '│', '─', '│', '┌', '┐', '┘', '└'],
-                                \ 'borderhighlight':['vinux_border'],
-                                \ 'drag': 1,
-                                \ 'close': 'button',
-                                \ })
-                    "call setwinvar(l:win_id, '&wincolor', 'Pmenu')
-                    return
-                    ":botright vsplit
-                endif
+        elseif te#env#SupportFloatingWindows()
+            let l:title = ' Terminal'
+            let l:term_list = te#terminal#get_buf_list()
+            if a:0 == 0
+                let l:buf = term_start(l:shell, #{hidden: 1, term_finish: 'close'})
+                call setbufvar(l:buf, '&buflisted', 0)
+                let l:no_of_term = len(l:term_list) + 1
+                let l:title .= '['.l:no_of_term.'/'.l:no_of_term.']'
+            else
+                let l:buf = a:1
+                let l:cur_index = te#terminal#get_index(l:buf) + 1
+                let l:title .= '['.l:cur_index.'/'.len(l:term_list).']'
             endif
+            if  and(a:option, 0x02)
+                let l:win_id = popup_create(l:buf, {
+                            \ 'line': 2,
+                            \ 'col': &columns/2 - 1,
+                            \ 'title': l:title,
+                            \ 'zindex': 200,
+                            \ 'minwidth': &columns/2,
+                            \ 'minheight': l:line,
+                            \ 'maxwidth': &columns/2,
+                            \ 'maxheight': l:line,
+                            \ 'border': [],
+                            \ 'borderchars':['─', '│', '─', '│', '┌', '┐', '┘', '└'],
+                            \ 'borderhighlight':['vinux_border'],
+                            \ 'drag': 1,
+                            \ 'close': 'button',
+                            \ })
+                "call setwinvar(l:win_id, '&wincolor', 'Pmenu')
+            else
+                execute ':buf '.l:buf
+            endif
+            return
         endif
     endif
-    if a:0 != 0
-        execute ':buf '.a:1
-        return
-    endif
 
-    if te#env#SupportTerminal()  && te#env#IsVim8()
-        execute ':terminal ++close ++curwin '.l:shell
-        "call setwinvar(win_getid(), '&wincolor', 'Pmenu')
-        call setbufvar(bufnr('%'), '&buflisted', 0)
-    elseif te#env#IsTmux()
+    if te#env#IsTmux()
         call te#tmux#run_command(&shell, a:option)
     else 
         execute 'VimShell' 
