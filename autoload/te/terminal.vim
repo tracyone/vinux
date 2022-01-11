@@ -14,6 +14,12 @@ function! te#terminal#get_buf_list()
     return l:result_list
 endfunction
 
+function! te#terminal#get_title(buf)
+    if has_key(s:term_title,a:buf)
+        return s:term_title[a:buf]
+    endif
+endfunction
+
 function! te#terminal#get_index(bufno)
     let l:term_list = te#terminal#get_buf_list()
     let l:index = 0
@@ -37,6 +43,37 @@ function! te#terminal#is_term_buf(bufno)
         return v:true
     else
         return v:false
+    endif
+endfunction
+
+let s:term_title = {}
+function! te#terminal#rename()
+    let l:buf = bufnr('%')
+    let l:win_id = win_getid()
+    if te#terminal#is_term_buf(l:buf) == v:true
+        if l:win_id != 0
+            if te#env#IsNvim() == 0
+                let l:origin_opt = popup_getoptions(l:win_id)
+                let l:user_input = ' '
+                let l:user_input .= input('Please input a new name: ')
+                let s:term_title[l:buf] = l:user_input
+                let l:user_input .= matchstr(l:origin_opt.title, "[\\d/\\d\\]")
+                call popup_setoptions(l:win_id, {'title':l:user_input})
+            else
+                call te#utils#EchoWarning("To be implement!")
+            endif
+        else
+            call te#utils#EchoWarning("Can not find window id for ".l:buf)
+        endif
+    else
+        call te#utils#EchoWarning("Not a terminal buffer!")
+    endif
+    if te#env#IsNvim() != 0
+        startinsert
+    else
+        if mode() != 't'
+            call feedkeys('a')
+        endif
     endif
 endfunction
 
@@ -154,9 +191,15 @@ endfunction
 
 fun! s:OnExit(job_id, code, event)
     if a:code == 0
+        call remove(s:term_title, bufnr("%"))
         :bd
     endif
 endfun
+
+func s:JobExit(job, status)
+    call remove(s:term_title, bufnr("%"))
+    close
+endfunc
 
 "pop vimshell
 "option:0x04 open terminal in a new tab
@@ -174,6 +217,7 @@ function! te#terminal#shell_pop(option,...) abort
     else
         let l:shell=&shell
     endif
+    let l:title = ' Terminal'
     if te#env#SupportTerminal()
         let l:line=(38*&lines)/100
         if  l:line < 10 | let l:line = 10 |endif
@@ -188,10 +232,11 @@ function! te#terminal#shell_pop(option,...) abort
             if a:0 == 1
                 let l:buf = a:1
             else
-                    let l:buf = nvim_create_buf(v:false, v:true)
-                    call nvim_buf_set_option(l:buf, 'buftype', 'nofile')
-                    call nvim_buf_set_option(l:buf, 'buflisted', v:false)
-                    call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
+                let l:buf = nvim_create_buf(v:false, v:true)
+                let s:term_title[l:buf] = l:title
+                call nvim_buf_set_option(l:buf, 'buftype', 'nofile')
+                call nvim_buf_set_option(l:buf, 'buflisted', v:false)
+                call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
             endif
             if and(a:option, 0x02)
                 let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': &columns/2-1,
@@ -207,16 +252,17 @@ function! te#terminal#shell_pop(option,...) abort
             endif
             return
         elseif te#env#SupportFloatingWindows()
-            let l:title = ' Terminal'
             let l:term_list = te#terminal#get_buf_list()
             if a:0 == 0
-                let l:buf = term_start(l:shell, #{hidden: 1, term_finish: 'close'})
+                let l:buf = term_start(l:shell, #{hidden: 1, exit_cb:function('<SID>JobExit')})
                 call setbufvar(l:buf, '&buflisted', 0)
                 let l:no_of_term = len(l:term_list) + 1
+                let s:term_title[l:buf] = l:title
                 let l:title .= '['.l:no_of_term.'/'.l:no_of_term.']'
             else
                 let l:buf = a:1
                 let l:cur_index = te#terminal#get_index(l:buf) + 1
+                let l:title = s:term_title[l:buf]
                 let l:title .= '['.l:cur_index.'/'.len(l:term_list).']'
             endif
             if  and(a:option, 0x02)

@@ -335,6 +335,7 @@ tnoremap  <silent><c-w>l <C-\><C-n>:call te#terminal#jump_to_floating_win(-2)<cr
 tnoremap  <silent><c-w>w <C-\><C-n>:call te#terminal#jump_to_floating_win(-2)<cr>
 tnoremap  <silent><c-w>j <C-\><C-n>:call te#terminal#jump_to_floating_win(-4)<cr>
 tnoremap  <silent><c-w>n <C-\><C-n>:call te#terminal#jump_to_floating_win(-5)<cr>
+tnoremap  <silent><c-w>r <C-\><C-n>:call te#terminal#rename()<cr>
 if te#env#IsNvim() != 0
     "terminal-emulator setting
     execute 'tnoremap <A-h> <C-\><C-n><C-w>h'

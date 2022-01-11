@@ -1,10 +1,12 @@
 function! s:get_terminal_list()
     let l:buf_list = te#terminal#get_buf_list()
+    let l:result_list = []
     for l:buf in l:buf_list
         let l:content = getbufline(l:buf, 1, 40)
         call writefile(l:content, g:fzf_history_dir.'/'.l:buf)
+        call add(l:result_list, l:buf.':'.te#terminal#get_title(l:buf))
     endfor
-    return l:buf_list
+    return l:result_list
 endfunction
 
 function! s:open_shell(timer)
@@ -18,8 +20,9 @@ endfunction
 
 function! s:edit_file(item) abort
     if len(a:item) < 2 | return | endif
-    let l:pos = stridx(a:item[1], ' ')
-    let s:buf = a:item[1][pos+1:-1]
+    echom a:item[1]
+    let s:buf =  matchstr(a:item[1], '\d\+\(:\)\@=')
+    echom s:buf
     let l:cmd = get({'ctrl-x': 'split',
                 \ 'ctrl-v': 'vsplit',
                 \ 'ctrl-t': 'tabedit'}, a:item[0], 'e')
@@ -41,7 +44,7 @@ function! te#fzf#terminal#start() abort
                 \ 'options' : ' --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : '.
                 \              '-m --prompt "Term> "',
                 \ 'dir': g:fzf_history_dir,
-                \ 'placeholder': '{-1}',
+                \ 'placeholder': '{1}',
                 \ }
     call fzf#run(fzf#wrap(fzf#vim#with_preview(l:run_dict)))
 endfunction
