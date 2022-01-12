@@ -1,3 +1,6 @@
+let s:term_title = {}
+let s:term_option = {}
+
 function! te#terminal#get_buf_list()
     let l:last_buffer = bufnr('$')
 	let l:n = 1
@@ -17,6 +20,12 @@ endfunction
 function! te#terminal#get_title(buf)
     if has_key(s:term_title,a:buf)
         return s:term_title[a:buf]
+    endif
+endfunction
+
+function! te#terminal#get_option(buf)
+    if has_key(s:term_option,a:buf)
+        return s:term_option[a:buf]
     endif
 endfunction
 
@@ -46,21 +55,18 @@ function! te#terminal#is_term_buf(bufno)
     endif
 endfunction
 
-let s:term_title = {}
 function! te#terminal#rename()
     let l:buf = bufnr('%')
     let l:win_id = win_getid()
     if te#terminal#is_term_buf(l:buf) == v:true
         if l:win_id != 0
+            let l:user_input = ' '
+            let l:user_input .= input('Please input a new name: ')
+            let s:term_title[l:buf] = l:user_input
             if te#env#IsNvim() == 0
                 let l:origin_opt = popup_getoptions(l:win_id)
-                let l:user_input = ' '
-                let l:user_input .= input('Please input a new name: ')
-                let s:term_title[l:buf] = l:user_input
                 let l:user_input .= matchstr(l:origin_opt.title, "[\\d/\\d\\]")
                 call popup_setoptions(l:win_id, {'title':l:user_input})
-            else
-                call te#utils#EchoWarning("To be implement!")
             endif
         else
             call te#utils#EchoWarning("Can not find window id for ".l:buf)
@@ -78,8 +84,12 @@ function! te#terminal#rename()
 endfunction
 
 function! te#terminal#open_term(...)
+    if a:0 > 2 || a:0 == 0
+        call te#utils#EchoWarning("Error argument!")
+        return
+    endif
     let l:buf = a:1
-    let l:option = a:2
+
     if len(win_findbuf(l:buf))
         if te#env#IsNvim() != 0
             call nvim_set_current_win(win_findbuf(l:buf)[0])
@@ -87,7 +97,11 @@ function! te#terminal#open_term(...)
             call win_gotoid(win_findbuf(l:buf)[0])
         endif
     else
-        call te#terminal#shell_pop(l:option, l:buf)
+        if a:0 == 2
+            call te#terminal#shell_pop(a:2, l:buf)
+        else
+            call te#terminal#shell_pop(0, l:buf)
+        endif
     endif
     if te#env#IsNvim() != 0
         startinsert
@@ -112,7 +126,7 @@ function! te#terminal#jump_to_floating_win(num) abort
         call te#utils#EchoWarning("No terminal window found! Try to create a new one!")
         call te#terminal#shell_pop(0x2)
     elseif l:no_of_term == 1 && a:num != -5
-        call te#terminal#open_term(l:term_list[0], 0x2)
+        call te#terminal#open_term(l:term_list[0])
     else
         if te#terminal#is_term_buf(bufnr('%')) == v:true
             let l:current_term_buf = bufnr('%')
@@ -125,7 +139,7 @@ function! te#terminal#jump_to_floating_win(num) abort
         elseif a:num >= 0
             "in terminal or out out terminal
             if a:num < l:no_of_term
-                call te#terminal#open_term(l:term_list[a:num], 0x2)
+                call te#terminal#open_term(l:term_list[a:num])
             else
                 call te#utils#EchoWarning("Out of range ".a:num.' number of terminal: '.l:no_of_term)
             endif
@@ -138,18 +152,18 @@ function! te#terminal#jump_to_floating_win(num) abort
             let l:cur_index = te#terminal#get_index(l:current_term_buf)
             if a:num == -1
                 if l:cur_index > 0
-                    call te#terminal#open_term(l:term_list[l:cur_index - 1], 0x2)
+                    call te#terminal#open_term(l:term_list[l:cur_index - 1])
                 else
                     let l:cur_index = l:no_of_term
-                    call te#terminal#open_term(l:term_list[l:cur_index - 1], 0x2)
+                    call te#terminal#open_term(l:term_list[l:cur_index - 1])
                 endif
             endif
             if a:num == -2
                 if l:cur_index + 1 < l:no_of_term
-                    call te#terminal#open_term(l:term_list[l:cur_index + 1], 0x2)
+                    call te#terminal#open_term(l:term_list[l:cur_index + 1])
                 else
                     let l:cur_index = 0
-                    call te#terminal#open_term(l:term_list[0], 0x2)
+                    call te#terminal#open_term(l:term_list[0])
                 endif
             endif
         elseif a:num == -3
@@ -157,7 +171,7 @@ function! te#terminal#jump_to_floating_win(num) abort
                 call te#utils#EchoWarning("Only support in terminal")
                 return
             endif
-            call te#terminal#open_term(l:last_close_bufnr, 0x2)
+            call te#terminal#open_term(l:last_close_bufnr)
         elseif a:num == -5
             if l:current_term_buf < 0
                 call te#utils#EchoWarning("Only support in terminal")
@@ -205,11 +219,17 @@ endfunc
 "option:0x04 open terminal in a new tab
 "option:0x01 open terminal in a split window
 "option:0x02 open terminal in a vsplit window
+"option:0x0 use second arg buf's option,s:term_option
 function! te#terminal#shell_pop(option,...) abort
     " 38% height of current window
     if a:0 > 1
         call te#utils#EchoWarning("Error argument!")
         return
+    endif
+    if a:option == 0 && a:0 == 1
+        let l:option = te#terminal#get_option(a:1)
+    else
+        let l:option = a:option
     endif
     call te#server#connect()
     if te#env#IsGui() && te#env#IsUnix()
@@ -221,9 +241,9 @@ function! te#terminal#shell_pop(option,...) abort
     if te#env#SupportTerminal()
         let l:line=(38*&lines)/100
         if  l:line < 10 | let l:line = 10 |endif
-        if and(a:option, 0x04)
+        if and(l:option, 0x04)
             :tabnew
-        elseif and(a:option, 0x01)
+        elseif and(l:option, 0x01)
             execute 'rightbelow '.l:line.'split'
         endif
         if te#env#SupportFloatingWindows() == 2
@@ -238,7 +258,8 @@ function! te#terminal#shell_pop(option,...) abort
                 call nvim_buf_set_option(l:buf, 'buflisted', v:false)
                 call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
             endif
-            if and(a:option, 0x02)
+            let s:term_option[l:buf] = l:option
+            if and(l:option, 0x02)
                 let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': &columns/2-1,
                             \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
                 let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
@@ -265,7 +286,8 @@ function! te#terminal#shell_pop(option,...) abort
                 let l:title = s:term_title[l:buf]
                 let l:title .= '['.l:cur_index.'/'.len(l:term_list).']'
             endif
-            if  and(a:option, 0x02)
+            let s:term_option[l:buf] = l:option
+            if  and(l:option, 0x02)
                 let l:win_id = popup_create(l:buf, {
                             \ 'line': 2,
                             \ 'col': &columns/2 - 1,
@@ -290,7 +312,7 @@ function! te#terminal#shell_pop(option,...) abort
     endif
 
     if te#env#IsTmux()
-        call te#tmux#run_command(&shell, a:option)
+        call te#tmux#run_command(&shell, l:option)
     else 
         execute 'VimShell' 
     endif
