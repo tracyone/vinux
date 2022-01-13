@@ -1,5 +1,4 @@
-let s:term_title = {}
-let s:term_option = {}
+let s:term_obj = {}
 
 function! te#terminal#get_buf_list()
     let l:last_buffer = bufnr('$')
@@ -18,14 +17,14 @@ function! te#terminal#get_buf_list()
 endfunction
 
 function! te#terminal#get_title(buf)
-    if has_key(s:term_title,a:buf)
-        return s:term_title[a:buf]
+    if has_key(s:term_obj,a:buf)
+        return s:term_obj[a:buf].title
     endif
 endfunction
 
 function! te#terminal#get_option(buf)
-    if has_key(s:term_option,a:buf)
-        return s:term_option[a:buf]
+    if has_key(s:term_obj,a:buf)
+        return s:term_obj[a:buf].option
     endif
 endfunction
 
@@ -62,7 +61,7 @@ function! te#terminal#rename()
         if l:win_id != 0
             let l:user_input = ' '
             let l:user_input .= input('Please input a new name: ')
-            let s:term_title[l:buf] = l:user_input
+            let s:term_obj[l:buf].title = l:user_input
             if te#env#IsNvim() == 0
                 let l:origin_opt = popup_getoptions(l:win_id)
                 let l:user_input .= matchstr(l:origin_opt.title, "[\\d/\\d\\]")
@@ -205,13 +204,13 @@ endfunction
 
 fun! s:OnExit(job_id, code, event)
     if a:code == 0
-        call remove(s:term_title, bufnr("%"))
+        call remove(s:term_obj, bufnr("%"))
         :bd
     endif
 endfun
 
 func s:JobExit(job, status)
-    call remove(s:term_title, bufnr("%"))
+    call remove(s:term_obj, bufnr("%"))
     close
 endfunc
 
@@ -219,9 +218,10 @@ endfunc
 "option:0x04 open terminal in a new tab
 "option:0x01 open terminal in a split window
 "option:0x02 open terminal in a vsplit window
-"option:0x0 use second arg buf's option,s:term_option
+"option:0x0 use second arg buf's option,s:term_obj
 function! te#terminal#shell_pop(option,...) abort
     " 38% height of current window
+    let l:term_obj = {}
     if a:0 > 1
         call te#utils#EchoWarning("Error argument!")
         return
@@ -251,14 +251,16 @@ function! te#terminal#shell_pop(option,...) abort
             let l:width=&columns/2
             if a:0 == 1
                 let l:buf = a:1
+                let l:term_obj.title = te#terminal#get_title(l:buf)
             else
                 let l:buf = nvim_create_buf(v:false, v:true)
-                let s:term_title[l:buf] = l:title
+                let l:term_obj.title = l:title
                 call nvim_buf_set_option(l:buf, 'buftype', 'nofile')
                 call nvim_buf_set_option(l:buf, 'buflisted', v:false)
                 call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
             endif
-            let s:term_option[l:buf] = l:option
+            let l:term_obj.option = l:option
+            let s:term_obj[l:buf] = l:term_obj
             if and(l:option, 0x02)
                 let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': &columns/2-1,
                             \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
@@ -278,15 +280,17 @@ function! te#terminal#shell_pop(option,...) abort
                 let l:buf = term_start(l:shell, #{hidden: 1, exit_cb:function('<SID>JobExit')})
                 call setbufvar(l:buf, '&buflisted', 0)
                 let l:no_of_term = len(l:term_list) + 1
-                let s:term_title[l:buf] = l:title
+                let l:term_obj.title = l:title
                 let l:title .= '['.l:no_of_term.'/'.l:no_of_term.']'
             else
                 let l:buf = a:1
                 let l:cur_index = te#terminal#get_index(l:buf) + 1
-                let l:title = s:term_title[l:buf]
+                let l:title = te#terminal#get_title(l:buf)
+                let l:term_obj.title = l:title
                 let l:title .= '['.l:cur_index.'/'.len(l:term_list).']'
             endif
-            let s:term_option[l:buf] = l:option
+            let l:term_obj.option = l:option
+            let s:term_obj[l:buf] = l:term_obj
             if  and(l:option, 0x02)
                 let l:win_id = popup_create(l:buf, {
                             \ 'line': 2,
