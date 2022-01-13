@@ -83,6 +83,13 @@ function! s:leaderf_setting()
                         \       'supports_name_only': 1,
                         \       'supports_multi': 0,
                         \ },
+                    \ 'term': {
+                        \       'source': "te#leaderf#terminal#source",
+                        \       'accept': 'te#leaderf#terminal#accept',
+                        \       'arguments': [ { "name": ["-d"], "nargs": 1}],
+                        \       'supports_name_only': 1,
+                        \       'supports_multi': 0,
+                        \ },
                         \}
 endfunction
 

@@ -134,7 +134,12 @@ function! te#terminal#jump_to_floating_win(num) abort
         endif
         if a:num == -4
             "in terminal or out out terminal
-            call te#fzf#terminal#start()
+            if g:fuzzysearcher_plugin_name.cur_val == 'fzf'
+                call te#fzf#terminal#start()
+            endif
+            if g:fuzzysearcher_plugin_name.cur_val == 'leaderf'
+                :Leaderf term
+            endif
         elseif a:num >= 0
             "in terminal or out out terminal
             if a:num < l:no_of_term

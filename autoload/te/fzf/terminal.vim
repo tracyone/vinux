@@ -20,9 +20,7 @@ endfunction
 
 function! s:edit_file(item) abort
     if len(a:item) < 2 | return | endif
-    echom a:item[1]
     let s:buf =  matchstr(a:item[1], '\d\+\(:\)\@=')
-    echom s:buf
     let l:cmd = get({'ctrl-x': 'split',
                 \ 'ctrl-v': 'vsplit',
                 \ 'ctrl-t': 'tabedit'}, a:item[0], 'e')
