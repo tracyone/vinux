@@ -136,9 +136,10 @@ function! te#terminal#jump_to_floating_win(num) abort
             "in terminal or out out terminal
             if g:fuzzysearcher_plugin_name.cur_val == 'fzf'
                 call te#fzf#terminal#start()
-            endif
-            if g:fuzzysearcher_plugin_name.cur_val == 'leaderf'
+            elseif g:fuzzysearcher_plugin_name.cur_val == 'leaderf'
                 :Leaderf term
+            elseif g:fuzzysearcher_plugin_name.cur_val == 'ctrlp'
+                :call te#ctrlp#term#start()
             endif
         elseif a:num >= 0
             "in terminal or out out terminal

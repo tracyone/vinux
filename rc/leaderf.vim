@@ -5,7 +5,6 @@ if !has('patch-7.4.330') || !te#env#SupportAsync() || !te#env#SupportPy()
     finish
 endif
 Plug 'Yggdroot/LeaderF',{'on': []}
-Plug 'Yggdroot/LeaderF-marks',{'on': 'LeaderfMarks'}
 
 function! s:leaderf_setting()
     " show global mark
@@ -76,21 +75,21 @@ function! s:leaderf_setting()
                     \       'supports_name_only': 1,
                     \       'supports_multi': 0,
                     \ },
-                    \ 'feat': {
-                        \       'source': "te#leaderf#feat#source",
-                        \       'accept': 'te#leaderf#feat#accept',
-                        \       'arguments': [ { "name": ["-d"], "nargs": 1}],
-                        \       'supports_name_only': 1,
-                        \       'supports_multi': 0,
-                        \ },
-                    \ 'term': {
-                        \       'source': "te#leaderf#terminal#source",
-                        \       'accept': 'te#leaderf#terminal#accept',
-                        \       'arguments': [ { "name": ["-d"], "nargs": 1}],
-                        \       'supports_name_only': 1,
-                        \       'supports_multi': 0,
-                        \ },
-                        \}
+                \ 'feat': {
+                    \       'source': "te#leaderf#feat#source",
+                    \       'accept': 'te#leaderf#feat#accept',
+                    \       'arguments': [ { "name": ["-d"], "nargs": 1}],
+                    \       'supports_name_only': 1,
+                    \       'supports_multi': 0,
+                    \ },
+                \ 'term': {
+                    \       'source': "te#leaderf#terminal#source",
+                    \       'accept': 'te#leaderf#terminal#accept',
+                    \       'arguments': [ { "name": ["-d"], "nargs": 1}],
+                    \       'supports_name_only': 1,
+                    \       'supports_multi': 0,
+                    \ },
+                    \}
 endfunction
 
 call te#feat#register_vim_enter_setting2([function('<SID>leaderf_setting')], ['LeaderF'])

@@ -1,7 +1,6 @@
 function! s:open_shell(timer)
     let l:buf = str2nr(s:buf)
     call te#terminal#open_term(l:buf)
-    let l:buf_list = te#terminal#get_buf_list()
 endfunction
 
 function! te#leaderf#terminal#accept(line, args) abort
