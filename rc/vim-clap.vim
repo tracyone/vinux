@@ -3,8 +3,7 @@ if !has('patch-8.1.2114') && !has('nvim-0.4')
     let g:fuzzysearcher_plugin_name.cur_val='ctrlp'
     finish
 endif
-Plug 'liuchengxu/vim-clap', {'on':'Clap'}
-Plug 'tamago324/vim-clap-help'
+Plug 'liuchengxu/vim-clap', {'on':'Clap','do': ':Clap install-binary' }
 
 
 nnoremap  <silent><c-k> :Clap tags<cr>
@@ -35,7 +34,7 @@ nnoremap  <silent><Leader>pgl :Clap commits<cr>
 "CtrlP git remote branch
 "nnoremap  <silent><Leader>pgr :call te#ctrlp#git#start(4)<cr>
 "vim help
-nnoremap  <silent><Leader>ph :Clap help<cr>
+nnoremap  <silent><Leader>ph :Clap help_tags<cr>
 "nnoremap  <silent><Leader>fe :call te#ctrlp#feat#start(1)<cr>
 "nnoremap  <silent><Leader>fd :call te#ctrlp#feat#start(0)<cr>
 
@@ -43,9 +42,9 @@ nnoremap  <silent><Leader>qc :Clap hist:<cr>
 "nnoremap  <silent><Leader>q/ :call te#ctrlp#history#start('/')<cr>
 nnoremap  <silent><Leader>pf :Clap grep<cr>
 
-  let g:clap_popup_move_manager = {
-      \ "\<C-z>": "\<Tab>",
-      \ }
+let g:clap_popup_move_manager = {
+            \ "\<C-z>": "\<Tab>",
+            \ }
 
 
 "atom_dark.vim  material_design_dark.vim  nord.vim  onehalfdark.vim  onehalflight.vim  solarized_dark.vim  solarized_light.vim
