@@ -127,9 +127,9 @@ function! te#terminal#jump_to_floating_win(num) abort
     elseif l:no_of_term == 1 && a:num != -5
         call te#terminal#open_term(l:term_list[0])
     else
+        let l:last_close_bufnr = s:last_close_bufnr
         if te#terminal#is_term_buf(bufnr('%')) == v:true
             let l:current_term_buf = bufnr('%')
-            let l:last_close_bufnr = s:last_close_bufnr
             call te#terminal#hide_popup()
         endif
         if a:num == -4
@@ -140,6 +140,8 @@ function! te#terminal#jump_to_floating_win(num) abort
                 :Leaderf term
             elseif g:fuzzysearcher_plugin_name.cur_val == 'ctrlp'
                 :call te#ctrlp#term#start()
+            else
+                call te#terminal#open_term(l:last_close_bufnr)
             endif
         elseif a:num >= 0
             "in terminal or out out terminal
@@ -172,10 +174,6 @@ function! te#terminal#jump_to_floating_win(num) abort
                 endif
             endif
         elseif a:num == -3
-            if l:current_term_buf < 0
-                call te#utils#EchoWarning("Only support in terminal")
-                return
-            endif
             call te#terminal#open_term(l:last_close_bufnr)
         elseif a:num == -5
             if l:current_term_buf < 0
