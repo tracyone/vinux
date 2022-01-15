@@ -49,8 +49,10 @@ function! s:leaderf_setting()
             \ 'Function': 1,
             \ 'Line': 0,
             \ 'Colorscheme': 1,
+            \ 'dir': 1,
+            \ 'term': 1,
             \ 'Rg': 1,
-            \ 'Gtags': 0
+            \ 'Gtags': 0,
             \}
     let g:Lf_UseMemoryCache = 0
     let g:Lf_ReverseOrder = 1
@@ -67,28 +69,31 @@ function! s:leaderf_setting()
     endif
     let g:Lf_ShowDevIcons = 0
     nnoremap  <silent><Leader><Leader> :LeaderfFile<cr>
-    let g:Lf_Extensions = {
-                \ 'dir': {
+    if !exists("g:Lf_Extensions")
+        let g:Lf_Extensions = {}
+    endif
+    let g:Lf_Extensions.dir = {
                     \       'source': 'te#leaderf#dir#source',
                     \       'accept': 'te#leaderf#dir#accept',
                     \ 'need_exit': 'te#leaderf#dir#needExit',
+                    \ 'preview': 'te#leaderf#dir#preview',
                     \       'supports_name_only': 1,
                     \       'supports_multi': 0,
-                    \ },
-                \ 'feat': {
+                    \ }
+    let g:Lf_Extensions.feat = {
                     \       'source': "te#leaderf#feat#source",
                     \       'accept': 'te#leaderf#feat#accept',
                     \       'arguments': [ { "name": ["-d"], "nargs": 1}],
                     \       'supports_name_only': 1,
                     \       'supports_multi': 0,
-                    \ },
-                \ 'term': {
+                    \ }
+    let g:Lf_Extensions.term = {
                     \       'source': "te#leaderf#terminal#source",
                     \       'accept': 'te#leaderf#terminal#accept',
+                    \ 'preview': 'te#leaderf#terminal#preview',
                     \       'arguments': [ { "name": ["-d"], "nargs": 1}],
                     \       'supports_name_only': 1,
                     \       'supports_multi': 0,
-                    \ },
                     \}
 endfunction
 

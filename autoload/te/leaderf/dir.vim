@@ -27,6 +27,14 @@ function! te#leaderf#dir#needExit(line, args) abort
     endif
 endfunction
 
+function! te#leaderf#dir#preview(orig_buf_nr, orig_cursor, line, args) abort
+    if isdirectory(a:line)
+        return []
+    endif
+     let l:buf_nr = bufadd(a:line)
+    return [l:buf_nr, 0, '']
+endfunction
+
 function! te#leaderf#dir#accept(line, args) abort
     let l:file_or_dir=matchstr(a:line,".*[^@]")
     if isdirectory(l:file_or_dir)
