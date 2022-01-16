@@ -328,6 +328,7 @@ nnoremap  <silent><leader>j6 :call te#terminal#jump_to_floating_win(6)<cr>
 nnoremap  <silent><leader>j7 :call te#terminal#jump_to_floating_win(7)<cr>
 nnoremap  <silent><leader>j8 :call te#terminal#jump_to_floating_win(8)<cr>
 nnoremap  <silent><leader>j9 :call te#terminal#jump_to_floating_win(9)<cr>
+nnoremap  <silent><leader>jr :call te#terminal#shell_pop(0x1, 'ranger')<cr>
 tnoremap <silent><Esc><Esc> <C-\><C-n>
 tnoremap  <silent><c-w>q <C-\><C-n>:call te#terminal#hide_popup()<cr>
 tnoremap  <silent><c-w>p <C-\><C-n>:call te#terminal#jump_to_floating_win(-3)<cr>

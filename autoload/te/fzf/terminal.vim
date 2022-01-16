@@ -2,7 +2,13 @@ function! s:get_terminal_list()
     let l:buf_list = te#terminal#get_buf_list()
     let l:result_list = []
     for l:buf in l:buf_list
-        let l:content = getbufline(l:buf, 1, 40)
+        let l:line_nr = te#terminal#get_line(l:buf)
+        if l:line_nr > 12
+            let l:line_nr -= 12 
+        else
+            let l:line_nr = 0
+        endif
+        let l:content = getbufline(l:buf, l:line_nr, '$')
         call writefile(l:content, g:fzf_history_dir.'/'.l:buf)
         call add(l:result_list, l:buf.':'.te#terminal#get_title(l:buf))
     endfor

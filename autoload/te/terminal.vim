@@ -16,13 +16,33 @@ function! te#terminal#get_buf_list()
     return l:result_list
 endfunction
 
-function! te#terminal#get_title(buf)
+function! te#terminal#get_term_obj(buf)
+    if has_key(s:term_obj,a:buf)
+        return s:term_obj[a:buf]
+    endif
+endfunction
+
+function! te#terminal#get_title(buf) abort
     if has_key(s:term_obj,a:buf)
         return s:term_obj[a:buf].title
     endif
 endfunction
 
-function! te#terminal#get_option(buf)
+function! te#terminal#set_line(buf, line) abort
+    if has_key(s:term_obj,a:buf)
+        let s:term_obj[a:buf].line = a:line
+    endif
+endfunction
+
+function! te#terminal#get_line(buf) abort
+    if has_key(s:term_obj,a:buf)
+        return s:term_obj[a:buf].line
+    else
+        return 0
+    endif
+endfunction
+
+function! te#terminal#get_option(buf) abort
     if has_key(s:term_obj,a:buf)
         return s:term_obj[a:buf].option
     endif
@@ -191,6 +211,7 @@ let s:last_close_bufnr = -1
 function! te#terminal#hide_popup()
     let l:win_id = win_getid()
     let s:last_close_bufnr = bufnr('%')
+    call te#terminal#set_line(s:last_close_bufnr, line('$'))
     try
         if te#env#IsNvim() != 0
             call nvim_win_close(l:win_id, v:true)
@@ -203,7 +224,9 @@ function! te#terminal#hide_popup()
         endif
     catch /last/
         call te#utils#EchoWarning("Can not close last window")
+        return
     endtry
+    return
 endfunction
 
 fun! s:OnExit(job_id, code, event)
@@ -223,6 +246,8 @@ endfunc
 "option:0x01 open terminal in a split window
 "option:0x02 open terminal in a vsplit window
 "option:0x0 use second arg buf's option,s:term_obj
+"second arg is buffer number which is a terminal buffer
+"third arg is command 
 function! te#terminal#shell_pop(option,...) abort
     " 38% height of current window
     let l:term_obj = {}
@@ -230,8 +255,19 @@ function! te#terminal#shell_pop(option,...) abort
         call te#utils#EchoWarning("Error argument!")
         return
     endif
-    if a:option == 0 && a:0 == 1
-        let l:option = te#terminal#get_option(a:1)
+    if a:0 == 1
+        if type(a:1) == type(0)
+            let l:buf = a:1
+        elseif type(a:1) == type("")
+            let l:cmd = a:1
+        endif
+    endif
+    if a:option == 0 && exists('l:buf')
+        if te#terminal#is_term_buf(l:buf) != v:true
+            call te#utils#EchoWarning(l:buf." is not a terminal buffer")
+            return
+        endif
+        let l:option = te#terminal#get_option(l:buf)
     else
         let l:option = a:option
     endif
@@ -240,6 +276,9 @@ function! te#terminal#shell_pop(option,...) abort
         let l:shell='bash'
     else
         let l:shell=&shell
+    endif
+    if exists('l:cmd')
+        let l:shell = l:cmd
     endif
     let l:title = ' Terminal'
     if te#env#SupportTerminal()
@@ -253,12 +292,12 @@ function! te#terminal#shell_pop(option,...) abort
         if te#env#SupportFloatingWindows() == 2
             let l:row=1
             let l:width=&columns/2
-            if a:0 == 1
-                let l:buf = a:1
-                let l:term_obj.title = te#terminal#get_title(l:buf)
+            if exists('l:buf')
+                let l:term_obj = te#terminal#get_term_obj(l:buf)
             else
                 let l:buf = nvim_create_buf(v:false, v:true)
                 let l:term_obj.title = l:title
+                let l:term_obj.line = 0
                 call nvim_buf_set_option(l:buf, 'buftype', 'nofile')
                 call nvim_buf_set_option(l:buf, 'buflisted', v:false)
                 call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
@@ -274,23 +313,23 @@ function! te#terminal#shell_pop(option,...) abort
             else
                 execute ':buf '.l:buf
             endif
-            if a:0 == 0
+            if a:0 == 0 || exists('l:cmd')
                 call termopen(l:shell, {'on_exit': function('<SID>OnExit')})
             endif
             return
         elseif te#env#SupportFloatingWindows()
             let l:term_list = te#terminal#get_buf_list()
-            if a:0 == 0
+            if !exists('l:buf')
                 let l:buf = term_start(l:shell, #{hidden: 1, exit_cb:function('<SID>JobExit')})
                 call setbufvar(l:buf, '&buflisted', 0)
                 let l:no_of_term = len(l:term_list) + 1
                 let l:term_obj.title = l:title
+                let l:term_obj.line = 0
                 let l:title .= '['.l:no_of_term.'/'.l:no_of_term.']'
             else
-                let l:buf = a:1
                 let l:cur_index = te#terminal#get_index(l:buf) + 1
-                let l:title = te#terminal#get_title(l:buf)
-                let l:term_obj.title = l:title
+                let l:term_obj = te#terminal#get_term_obj(l:buf)
+                let l:title = l:term_obj.title
                 let l:title .= '['.l:cur_index.'/'.len(l:term_list).']'
             endif
             let l:term_obj.option = l:option
@@ -306,6 +345,7 @@ function! te#terminal#shell_pop(option,...) abort
                             \ 'maxwidth': &columns/2,
                             \ 'maxheight': l:line,
                             \ 'border': [],
+                            \ 'wrap': 0,
                             \ 'borderchars':['─', '│', '─', '│', '┌', '┐', '┘', '└'],
                             \ 'borderhighlight':['vinux_border'],
                             \ 'drag': 1,

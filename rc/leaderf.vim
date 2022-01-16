@@ -59,6 +59,7 @@ function! s:leaderf_setting()
     if te#env#SupportFloatingWindows()
         let g:Lf_WindowPosition ='popup'
         let g:Lf_PreviewInPopup = 1
+        let g:Lf_PopupPreviewPosition = 'bottom'
         "let g:Lf_PreviewPopupWidth = &columns * 4 / 10
         "let g:Lf_PreviewPopupWidth = &columns * 4 / 10
         let g:Lf_PopupWidth = &columns * 8 / 10

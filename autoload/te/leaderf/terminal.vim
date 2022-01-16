@@ -10,7 +10,13 @@ endfunction
 
 function! te#leaderf#terminal#preview(orig_buf_nr, orig_cursor, line, args) abort
     let l:buf_nr =  str2nr(matchstr(a:line, '\d\+\(:\)\@='))
-    return [l:buf_nr, 0, '']
+    let l:linenum = te#terminal#get_line(l:buf_nr)
+    if l:linenum > 20
+        let l:linenum -= 20
+    else
+        let l:linenum = 0
+    endif
+    return [l:buf_nr, l:linenum, '']
 endfunction
 
 function! te#leaderf#terminal#source(args) abort
