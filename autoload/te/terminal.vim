@@ -320,7 +320,8 @@ function! te#terminal#shell_pop(option,...) abort
         elseif te#env#SupportFloatingWindows()
             let l:term_list = te#terminal#get_buf_list()
             if !exists('l:buf')
-                let l:buf = term_start(l:shell, #{hidden: 1, exit_cb:function('<SID>JobExit')})
+                let l:buf = term_start(l:shell, #{hidden: 1, exit_cb:function('<SID>JobExit'), 
+                            \ term_rows:l:line, term_cols:&columns/2})
                 call setbufvar(l:buf, '&buflisted', 0)
                 let l:no_of_term = len(l:term_list) + 1
                 let l:term_obj.title = l:title
