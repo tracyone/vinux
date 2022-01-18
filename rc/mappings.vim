@@ -166,6 +166,9 @@ nnoremap  <silent><leader>ol :call te#utils#open_url("")<cr>
 nnoremap  <silent><Leader>tn :call te#utils#nu_toggle()<cr>
 " realtime underline word toggle
 nnoremap  <silent><leader>th :call te#utils#OptionToggle("g:cursorword",[0,1])<cr>
+
+" next buffer or tab
+nnoremap  <silent><tab> :call te#utils#tab_buf_switch(-1)<cr>
 " next buffer or tab
 nnoremap  <silent><Leader>bn :call te#utils#tab_buf_switch(-1)<cr>
 " previous buffer or tab
