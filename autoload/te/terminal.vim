@@ -144,9 +144,13 @@ function! s:ranger_exit()
 endfunction
 
 function! te#terminal#start_ranger() abort
-    let s:ranger_tmpfile = tempname()
-    let l:cmd = 'ranger --choosefiles="' . s:ranger_tmpfile . '"'
-    call te#terminal#shell_pop(0x2, l:cmd, function('<SID>ranger_exit'))
+    if te#env#Executable('ranger')
+        let s:ranger_tmpfile = tempname()
+        let l:cmd = 'ranger --choosefiles="' . s:ranger_tmpfile . '"'
+        call te#terminal#shell_pop(0x2, l:cmd, function('<SID>ranger_exit'))
+    else
+        call te#utils#EchoWarning("You need to install ranger first! ")
+    endif
 endfunction
 
 "num can be following value:
@@ -270,8 +274,9 @@ endfunc
 "option:0x01 open terminal in a split window
 "option:0x02 open terminal in a vsplit window
 "option:0x0 use second arg buf's option,s:term_obj
-"second arg is buffer number which is a terminal buffer
-"third arg is command 
+"second arg is buffer number which is a terminal buffer or
+"a command string
+"third arg is a  funcrf type which will be called after terminal exit
 function! te#terminal#shell_pop(option,...) abort
     " 38% height of current window
     let l:term_obj = {}
@@ -303,8 +308,10 @@ function! te#terminal#shell_pop(option,...) abort
     endif
     if exists('l:cmd')
         let l:shell = l:cmd
+        let l:title = ' '.matchstr(l:cmd, '\w\+')
+    else
+        let l:title = ' Terminal'
     endif
-    let l:title = ' Terminal'
     if te#env#SupportTerminal()
         let l:line=(38*&lines)/100
         if  l:line < 10 | let l:line = 10 |endif
