@@ -131,6 +131,24 @@ function! te#terminal#open_term(...)
     endif
 endfunction
 
+function! s:ranger_exit()
+    if filereadable(s:ranger_tmpfile)
+        let l:filenames = readfile(s:ranger_tmpfile)
+        if !empty(l:filenames)
+            for l:n in l:filenames
+                execute ':tabnew '.l:n
+            endfor
+        endif
+        call delete(s:ranger_tmpfile)
+    endif
+endfunction
+
+function! te#terminal#start_ranger() abort
+    let s:ranger_tmpfile = tempname()
+    let l:cmd = 'ranger --choosefiles="' . s:ranger_tmpfile . '"'
+    call te#terminal#shell_pop(0x2, l:cmd, function('<SID>ranger_exit'))
+endfunction
+
 "num can be following value:
 "-1:previous terminal
 "-2:next terminal
@@ -230,15 +248,21 @@ function! te#terminal#hide_popup()
 endfunction
 
 fun! s:OnExit(job_id, code, event)
-    if a:code == 0
-        call remove(s:term_obj, bufnr("%"))
-        :bd
+    let l:buf_nr = bufnr("%")
+    :bd
+    if has_key(s:term_obj[l:buf_nr], 'exit_cb')
+        call s:term_obj[l:buf_nr].exit_cb()
     endif
+    call remove(s:term_obj, l:buf_nr)
 endfun
 
 func s:JobExit(job, status)
-    call remove(s:term_obj, bufnr("%"))
+    let l:buf_nr = bufnr("%")
     close
+    if has_key(s:term_obj[l:buf_nr], 'exit_cb')
+        call s:term_obj[l:buf_nr].exit_cb()
+    endif
+    call remove(s:term_obj, l:buf_nr)
 endfunc
 
 "pop vimshell
@@ -251,14 +275,14 @@ endfunc
 function! te#terminal#shell_pop(option,...) abort
     " 38% height of current window
     let l:term_obj = {}
-    if a:0 > 1
+    if a:0 > 2
         call te#utils#EchoWarning("Error argument!")
         return
     endif
-    if a:0 == 1
-        if type(a:1) == type(0)
+    if a:0 >= 1
+        if type(a:1) == g:t_number
             let l:buf = a:1
-        elseif type(a:1) == type("")
+        elseif type(a:1) == g:t_string
             let l:cmd = a:1
         endif
     endif
@@ -298,6 +322,9 @@ function! te#terminal#shell_pop(option,...) abort
                 let l:buf = nvim_create_buf(v:false, v:true)
                 let l:term_obj.title = l:title
                 let l:term_obj.line = 0
+                if a:0 == 2 && type(a:2) == g:t_func
+                    let l:term_obj.exit_cb = a:2
+                endif
                 call nvim_buf_set_option(l:buf, 'buftype', 'nofile')
                 call nvim_buf_set_option(l:buf, 'buflisted', v:false)
                 call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
@@ -326,6 +353,9 @@ function! te#terminal#shell_pop(option,...) abort
                 let l:no_of_term = len(l:term_list) + 1
                 let l:term_obj.title = l:title
                 let l:term_obj.line = 0
+                if a:0 == 2 && type(a:2) == g:t_func
+                    let l:term_obj.exit_cb = a:2
+                endif
                 let l:title .= '['.l:no_of_term.'/'.l:no_of_term.']'
             else
                 let l:cur_index = te#terminal#get_index(l:buf) + 1
