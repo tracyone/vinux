@@ -322,6 +322,7 @@ function! te#terminal#shell_pop(option,...) abort
             let l:width=&columns
             :tabnew
         elseif and(l:option, 0x01)
+            let l:width=&columns
             execute 'rightbelow '.l:line.'split'
         endif
         if te#env#SupportFloatingWindows() == 2
@@ -329,7 +330,11 @@ function! te#terminal#shell_pop(option,...) abort
             if exists('l:buf')
                 let l:term_obj = te#terminal#get_term_obj(l:buf)
             else
-                let l:buf = nvim_create_buf(v:false, v:true)
+                if and(l:option, 0x2) || and(l:option, 0x1)
+                    let l:buf = nvim_create_buf(v:false, v:true)
+                else
+                    let l:buf = bufnr("%")
+                endif
                 let l:term_obj.title = l:title
                 let l:term_obj.line = 0
                 if a:0 == 2 && type(a:2) == g:t_func
