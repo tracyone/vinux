@@ -181,13 +181,7 @@ endfunction
 function! te#git#show_log(dir) abort
     execute 'cd '.a:dir
     if te#env#SupportTerminal()
-        :tabnew
-        if te#env#IsNvim() != 0
-            :terminal tig
-        else
-            hi Terminal ctermbg=black ctermfg=white guibg=black guifg=white
-            :terminal ++curwin ++close tig
-        endif
+        call te#terminal#shell_pop(0x4, 'tig')
         cd -
         return 0
     elseif exists(':Gitv')

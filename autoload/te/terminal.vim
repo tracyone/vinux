@@ -280,6 +280,7 @@ endfunc
 function! te#terminal#shell_pop(option,...) abort
     " 38% height of current window
     let l:term_obj = {}
+    let l:env_dict = {"TIG_EDITOR":"t"}
     if a:0 > 2
         call te#utils#EchoWarning("Error argument!")
         return
@@ -315,14 +316,16 @@ function! te#terminal#shell_pop(option,...) abort
     if te#env#SupportTerminal()
         let l:line=(38*&lines)/100
         if  l:line < 10 | let l:line = 10 |endif
+        let l:width=&columns/2
         if and(l:option, 0x04)
+            let l:line=&lines
+            let l:width=&columns
             :tabnew
         elseif and(l:option, 0x01)
             execute 'rightbelow '.l:line.'split'
         endif
         if te#env#SupportFloatingWindows() == 2
             let l:row=1
-            let l:width=&columns/2
             if exists('l:buf')
                 let l:term_obj = te#terminal#get_term_obj(l:buf)
             else
@@ -339,7 +342,7 @@ function! te#terminal#shell_pop(option,...) abort
             let l:term_obj.option = l:option
             let s:term_obj[l:buf] = l:term_obj
             if and(l:option, 0x02)
-                let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': &columns/2-1,
+                let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': l:width-1,
                             \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
                 let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
                 call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
@@ -348,14 +351,14 @@ function! te#terminal#shell_pop(option,...) abort
                 execute ':buf '.l:buf
             endif
             if a:0 == 0 || exists('l:cmd')
-                call termopen(l:shell, {'on_exit': function('<SID>OnExit')})
+                call termopen(l:shell, {'on_exit': function('<SID>OnExit'), "env":l:env_dict})
             endif
             return
         elseif te#env#SupportFloatingWindows()
             let l:term_list = te#terminal#get_buf_list()
             if !exists('l:buf')
                 let l:buf = term_start(l:shell, #{hidden: 1, exit_cb:function('<SID>JobExit'), 
-                            \ term_rows:l:line, term_cols:&columns/2})
+                            \ term_rows:l:line, term_cols:l:width, env:l:env_dict})
                 call setbufvar(l:buf, '&buflisted', 0)
                 let l:no_of_term = len(l:term_list) + 1
                 let l:term_obj.title = l:title
@@ -375,12 +378,12 @@ function! te#terminal#shell_pop(option,...) abort
             if  and(l:option, 0x02)
                 let l:win_id = popup_create(l:buf, {
                             \ 'line': 2,
-                            \ 'col': &columns/2 - 1,
+                            \ 'col': l:width - 1,
                             \ 'title': l:title,
                             \ 'zindex': 200,
-                            \ 'minwidth': &columns/2,
+                            \ 'minwidth': l:width,
                             \ 'minheight': l:line,
-                            \ 'maxwidth': &columns/2,
+                            \ 'maxwidth': l:width,
                             \ 'maxheight': l:line,
                             \ 'border': [],
                             \ 'wrap': 0,

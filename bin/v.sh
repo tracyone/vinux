@@ -20,18 +20,22 @@ if [ -n "$TMUX"  ]; then
       if [ "$#" -gt 0 ]; then
           #exit terminal mode in vim
           tmux send-keys -t $i C-w q
+          regex_rule="\++"
           for var in $@; do
               if [[ $var = /*  ]]; then
                   #path already looks absolute...
-                  absfilepath="$var"
+                  absfilepath=$absfilepath" ""$var"
+              elif [[ $var =~ $regex_rule ]]; then
+                  option=${var}
               else
-                  #path not absolute,  lets prefix with pwd...
-                  absfilepath="$PWD/${var#./}"
+                  absfilepath=$absfilepath" ""$PWD/${var#./}"
               fi
               # only sendkeys to vim if there were args (like a file name or path), if not we just change to the vim window/pane
               # use bash's printf to escape chars like vim likes.
-              tmux send-keys -t $i "${VIM_ACTION} $(printf "%q" "$absfilepath")" C-m
           done
+          #if [[ ! -z $absfilepath ]]; then
+          tmux send-keys -t $i "${VIM_ACTION} $option $(printf "%q" $absfilepath)" C-m
+          #fi
       fi
       # lets make the tmux window that had the first vim pane active 
       tmux list-panes -a  -s |grep "$i" |cut -f2 -d: |xargs tmux select-window -t
