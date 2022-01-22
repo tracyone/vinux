@@ -11,9 +11,9 @@ if [ -n "$TMUX"  ]; then
     # we are in nvim & vim's builin terminal
     if [ "${IN_VIM%m}" = "vi" ]  || [ "${IN_VIM%m}" = "nvi" ]; then
         cmd=${IN_VIM}
-        if [ ${current_pane} != $i ]; then
-            continue
-        fi
+    fi
+    if [ ${current_pane} != $i ]; then
+        continue
     fi
     if [ "${cmd%m}" = "vi" ] || [ "${cmd%m}" = "nvi"  ]; then
       # We have found a pane with vim running lets send it to the pane with :e (change for split/buffer/tab)
