@@ -181,7 +181,7 @@ endfunction
 function! te#git#show_log(dir) abort
     execute 'cd '.a:dir
     if te#env#SupportTerminal()
-        call te#terminal#shell_pop(0x4, 'tig')
+        call te#terminal#shell_pop({'opener':0x4, 'cmd':'tig'})
         cd -
         return 0
     elseif exists(':Gitv')

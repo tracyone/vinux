@@ -334,13 +334,26 @@ nnoremap  <silent><leader>j9 :call te#terminal#jump_to_floating_win(9)<cr>
 nnoremap  <silent><leader>jr :call te#terminal#start_ranger()<cr>
 tnoremap <silent><Esc><Esc> <C-\><C-n>
 tnoremap  <silent><c-w>q <C-\><C-n>:call te#terminal#hide_popup()<cr>
-tnoremap  <silent><c-w>p <C-\><C-n>:call te#terminal#jump_to_floating_win(-3)<cr>
-tnoremap  <silent><c-w>h <C-\><C-n>:call te#terminal#jump_to_floating_win(-1)<cr>
-tnoremap  <silent><c-w>l <C-\><C-n>:call te#terminal#jump_to_floating_win(-2)<cr>
+
+"previous terminal
+tnoremap  <silent><c-w>p <C-\><C-n>:call te#terminal#jump_to_floating_win(-1)<cr>
+"next terminal
+tnoremap  <silent><c-w>n <C-\><C-n>:call te#terminal#jump_to_floating_win(-2)<cr>
 tnoremap  <silent><c-w>w <C-\><C-n>:call te#terminal#jump_to_floating_win(-2)<cr>
-tnoremap  <silent><c-w>j <C-\><C-n>:call te#terminal#jump_to_floating_win(-4)<cr>
-tnoremap  <silent><c-w>n <C-\><C-n>:call te#terminal#jump_to_floating_win(-5)<cr>
+"start fuzzy finder to select terminal
+tnoremap  <silent><c-w>f <C-\><C-n>:call te#terminal#jump_to_floating_win(-4)<cr>
+"new terminal
+tnoremap  <silent><c-w>s <C-\><C-n>:call te#terminal#jump_to_floating_win(-5)<cr>
+"last open 
+tnoremap  <silent><c-w>t <C-\><C-n>:call te#terminal#jump_to_floating_win(-3)<cr>
+"rename terminal
 tnoremap  <silent><c-w>r <C-\><C-n>:call te#terminal#rename()<cr>
+"move terminal
+tnoremap <silent><c-w>h <C-\><C-n>:call te#terminal#move_floating_win("left")<cr>
+tnoremap <silent><c-w>l <C-\><C-n>:call te#terminal#move_floating_win("right")<cr>
+tnoremap <silent><c-w>j <C-\><C-n>:call te#terminal#move_floating_win("bottom")<cr>
+tnoremap <silent><c-w>k <C-\><C-n>:call te#terminal#move_floating_win("top")<cr>
+tnoremap <silent><c-w>m <C-\><C-n>:call te#terminal#move_floating_win("middle")<cr>
 if te#env#IsNvim() != 0
     "terminal-emulator setting
     execute 'tnoremap <A-h> <C-\><C-n><C-w>h'
@@ -369,12 +382,14 @@ nnoremap  <silent><Leader>pl :call te#plug#list()<cr>
 "checkhealth
 nnoremap <silent> <Leader>ch :call te#utils#check_health()<cr>
 " Open vimshell or neovim's emulator in split window
-nnoremap <silent> <Leader>as :call te#terminal#shell_pop(0x1)<cr>
-noremap <silent> <F4> :call te#terminal#shell_pop(0x1)<cr>
+noremap <silent> <F4> :call te#terminal#shell_pop({'opener':0x1})<cr>
+nnoremap <silent> <Leader>as :call te#terminal#shell_pop({'opener':0x1})<cr>
 " Open vimshell or neovim's emulator in vertical window
-nnoremap <silent> <Leader>av :call te#terminal#shell_pop(0x2)<cr>
+nnoremap <silent> <Leader>av :call te#terminal#shell_pop({'opener':0x8})<cr>
+" Open vimshell or neovim's emulator in floating window
+nnoremap <silent> <Leader>af :call te#terminal#shell_pop({'opener':0x2})<cr>
 " Open vimshell or neovim's emulator in new tab
-nnoremap <silent> <Leader>ns :call te#terminal#shell_pop(0x4)<cr>
+nnoremap <silent> <Leader>at :call te#terminal#shell_pop({'opener':0x4})<cr>
 
 call te#meta#map('inoremap','u','<c-\><c-o>:call te#tools#PreviousCursor(6)<cr>')
 call te#meta#map('inoremap','d','<c-\><c-o>:call te#tools#PreviousCursor(7)<cr>')

@@ -76,13 +76,13 @@ nnoremap <silent><Leader>ay <esc>:TranslateW<cr>
 " YouDao translate (visual mode)
 vnoremap <silent><Leader>ay <Plug>TranslateWV
 " open current file's position with default file explorer
-nmap  <silent><Leader>af gof
+nmap  <silent><Leader>of gof
 " open current file's position with default terminal
-nmap  <silent><Leader>at got
+nmap  <silent><Leader>ot got
 " open project's(pwd) position with default file explorer
-nmap  <silent><Leader>aF goF
+nmap  <silent><Leader>oF goF
 " open project's(pwd) position with default terminal
-nmap  <silent><Leader>aT goT
+nmap  <silent><Leader>oT goT
 function! s:drawit_toggle()
     let l:ret = te#utils#GetError('DrawIt','already on')
     if l:ret != 0

@@ -17,7 +17,7 @@ endfunction
 
 function! s:open_shell(timer)
     let l:buf = str2nr(s:buf)
-    call te#terminal#open_term(l:buf, str2nr(s:shell_pop_option))
+    call te#terminal#open_term({'opener':str2nr(s:shell_pop_option), 'bufnr':l:buf})
     let l:buf_list = te#terminal#get_buf_list()
     for l:buf in l:buf_list
         call delete(g:fzf_history_dir.'/'.l:buf)
@@ -31,8 +31,10 @@ function! s:edit_file(item) abort
                 \ 'ctrl-v': 'vsplit',
                 \ 'ctrl-t': 'tabedit'}, a:item[0], 'e')
 
-    if l:cmd == 'e' || l:cmd == 'vsplit'
-        let s:shell_pop_option = 0x2
+    if l:cmd == 'e'
+        let s:shell_pop_option = 0x0
+    elseif l:cmd == 'vsplit'
+        let s:shell_pop_option = 0x8
     elseif l:cmd == 'split'
         let s:shell_pop_option  = 0x1
     elseif l:cmd == 'tabedit'

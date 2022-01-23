@@ -48,6 +48,12 @@ function! te#terminal#get_option(buf) abort
     endif
 endfunction
 
+function! te#terminal#get_pos(buf) abort
+    if has_key(s:term_obj,a:buf)
+        return s:term_obj[a:buf].pos
+    endif
+endfunction
+
 function! te#terminal#get_index(bufno)
     let l:term_list = te#terminal#get_buf_list()
     let l:index = 0
@@ -102,12 +108,8 @@ function! te#terminal#rename()
     endif
 endfunction
 
-function! te#terminal#open_term(...)
-    if a:0 > 2 || a:0 == 0
-        call te#utils#EchoWarning("Error argument!")
-        return
-    endif
-    let l:buf = a:1
+function! te#terminal#open_term(option)
+    let l:buf = a:option.bufnr
 
     if len(win_findbuf(l:buf))
         if te#env#IsNvim() != 0
@@ -116,11 +118,7 @@ function! te#terminal#open_term(...)
             call win_gotoid(win_findbuf(l:buf)[0])
         endif
     else
-        if a:0 == 2
-            call te#terminal#shell_pop(a:2, l:buf)
-        else
-            call te#terminal#shell_pop(0, l:buf)
-        endif
+        call te#terminal#shell_pop(a:option)
     endif
     if te#env#IsNvim() != 0
         startinsert
@@ -147,17 +145,71 @@ function! te#terminal#start_ranger() abort
     if te#env#Executable('ranger')
         let s:ranger_tmpfile = tempname()
         let l:cmd = 'ranger --choosefiles="' . s:ranger_tmpfile . '"'
-        call te#terminal#shell_pop(0x2, l:cmd, function('<SID>ranger_exit'))
+        call te#terminal#shell_pop({'opener':0x2, 'cmd':l:cmd, 'exit_cb':function('<SID>ranger_exit')})
     else
         call te#utils#EchoWarning("You need to install ranger first! ")
     endif
 endfunction
 
+
+function! te#terminal#move_floating_win(pos) abort
+    let l:term_list = te#terminal#get_buf_list()
+    let l:no_of_term = len(l:term_list)
+    let l:current_term_buf = -1
+    if l:no_of_term == 0
+        call te#utils#EchoWarning("No terminal window found!")
+        return
+    endif
+    if te#terminal#is_term_buf(bufnr('%')) == v:true
+        let l:current_term_buf = bufnr('%')
+        call te#terminal#hide_popup()
+        let l:pos_str = te#terminal#get_pos(l:current_term_buf)
+        if a:pos == 'left'
+            if l:pos_str == 'bottomright'
+                let l:pos_str = 'bottomleft'
+            endif
+            if l:pos_str == 'topright'
+                let l:pos_str = 'topleft'
+            endif
+        endif
+        if a:pos == 'right'
+            if l:pos_str == 'bottomleft'
+                let l:pos_str = 'bottomright'
+            endif
+            if l:pos_str == 'topleft'
+                let l:pos_str = 'topright'
+            endif
+        endif
+        if a:pos == 'top'
+            if l:pos_str == 'bottomleft'
+                let l:pos_str = 'topleft'
+            endif
+            if l:pos_str == 'bottomright'
+                let l:pos_str = 'topright'
+            endif
+        endif
+        if a:pos == 'bottom'
+            if l:pos_str == 'topleft'
+                let l:pos_str = 'bottomleft'
+            endif
+            if l:pos_str == 'topright'
+                let l:pos_str = 'bottomright'
+            endif
+        endif
+        if a:pos == 'middle'
+            let l:pos_str = a:pos
+        endif
+        call te#terminal#open_term({'bufnr':l:current_term_buf, 'pos':l:pos_str})
+    else
+        call te#utils#EchoWarning("Not a terminal window!")
+    endif
+endfunction
 "num can be following value:
 "-1:previous terminal
 "-2:next terminal
 "-3:lastopen terminal
-"-4:select terminal in fzf
+"-4:select terminal in fuzzy finder
+"-5:new terminal
 "0~9:0~9 terminal
 function! te#terminal#jump_to_floating_win(num) abort
     let l:term_list = te#terminal#get_buf_list()
@@ -165,9 +217,9 @@ function! te#terminal#jump_to_floating_win(num) abort
     let l:current_term_buf = -1
     if l:no_of_term == 0
         call te#utils#EchoWarning("No terminal window found! Try to create a new one!")
-        call te#terminal#shell_pop(0x2)
+        call te#terminal#shell_pop({'opener':0x2})
     elseif l:no_of_term == 1 && a:num != -5
-        call te#terminal#open_term(l:term_list[0])
+        call te#terminal#open_term({'bufnr':l:term_list[0]})
     else
         let l:last_close_bufnr = s:last_close_bufnr
         if te#terminal#is_term_buf(bufnr('%')) == v:true
@@ -183,12 +235,12 @@ function! te#terminal#jump_to_floating_win(num) abort
             elseif g:fuzzysearcher_plugin_name.cur_val == 'ctrlp'
                 :call te#ctrlp#term#start()
             else
-                call te#terminal#open_term(l:last_close_bufnr)
+                call te#terminal#open_term({'bufnr':l:last_close_bufnr})
             endif
         elseif a:num >= 0
             "in terminal or out out terminal
             if a:num < l:no_of_term
-                call te#terminal#open_term(l:term_list[a:num])
+                call te#terminal#open_term({'bufnr':l:term_list[a:num]})
             else
                 call te#utils#EchoWarning("Out of range ".a:num.' number of terminal: '.l:no_of_term)
             endif
@@ -201,28 +253,28 @@ function! te#terminal#jump_to_floating_win(num) abort
             let l:cur_index = te#terminal#get_index(l:current_term_buf)
             if a:num == -1
                 if l:cur_index > 0
-                    call te#terminal#open_term(l:term_list[l:cur_index - 1])
+                    call te#terminal#open_term({'bufnr':l:term_list[l:cur_index - 1]})
                 else
                     let l:cur_index = l:no_of_term
-                    call te#terminal#open_term(l:term_list[l:cur_index - 1])
+                    call te#terminal#open_term({'bufnr':l:term_list[l:cur_index - 1]})
                 endif
             endif
             if a:num == -2
                 if l:cur_index + 1 < l:no_of_term
-                    call te#terminal#open_term(l:term_list[l:cur_index + 1])
+                    call te#terminal#open_term({'bufnr':l:term_list[l:cur_index + 1]})
                 else
                     let l:cur_index = 0
-                    call te#terminal#open_term(l:term_list[0])
+                    call te#terminal#open_term({'bufnr':l:term_list[0]})
                 endif
             endif
         elseif a:num == -3
-            call te#terminal#open_term(l:last_close_bufnr)
+            call te#terminal#open_term({'bufnr':l:last_close_bufnr})
         elseif a:num == -5
             if l:current_term_buf < 0
                 call te#utils#EchoWarning("Only support in terminal")
                 return
             endif
-            call te#terminal#shell_pop(0x2)
+            call te#terminal#shell_pop({'opener':0x2})
         else
             call te#utils#EchoWarning("Wrong option: ".a:num)
         endif
@@ -270,36 +322,38 @@ func s:JobExit(job, status)
 endfunc
 
 "pop vimshell
+"option:0x08 open terminal in a vsplit window
 "option:0x04 open terminal in a new tab
 "option:0x01 open terminal in a split window
-"option:0x02 open terminal in a vsplit window
+"option:0x02 open terminal in a floating window
 "option:0x0 use second arg buf's option,s:term_obj
 "second arg is buffer number which is a terminal buffer or
 "a command string
 "third arg is a  funcrf type which will be called after terminal exit
-function! te#terminal#shell_pop(option,...) abort
+function! te#terminal#shell_pop(option) abort
     " 38% height of current window
     let l:term_obj = {}
     let l:env_dict = {"TIG_EDITOR":"t"}
-    if a:0 > 2
+    if type(a:option) != g:t_dict
         call te#utils#EchoWarning("Error argument!")
         return
     endif
-    if a:0 >= 1
-        if type(a:1) == g:t_number
-            let l:buf = a:1
-        elseif type(a:1) == g:t_string
-            let l:cmd = a:1
-        endif
+    if has_key(a:option, 'bufnr')
+        let l:buf = a:option.bufnr
     endif
-    if a:option == 0 && exists('l:buf')
+    if has_key(a:option, 'cmd')
+        let l:cmd = a:option.cmd
+    endif
+    if has_key(a:option, 'opener')
+        let l:option = a:option.opener
+    endif
+    if exists('l:buf')
         if te#terminal#is_term_buf(l:buf) != v:true
             call te#utils#EchoWarning(l:buf." is not a terminal buffer")
             return
         endif
         let l:option = te#terminal#get_option(l:buf)
     else
-        let l:option = a:option
     endif
     call te#server#connect()
     if te#env#IsGui() && te#env#IsUnix()
@@ -314,19 +368,25 @@ function! te#terminal#shell_pop(option,...) abort
         let l:title = ' Terminal'
     endif
     if te#env#SupportTerminal()
-        let l:line=(38*&lines)/100
-        if  l:line < 10 | let l:line = 10 |endif
+        let l:height=(40*&lines)/100
+        if  l:height < 10 | let l:height = 10 |endif
         let l:width=&columns/2
         if and(l:option, 0x04)
-            let l:line=&lines
+            let l:height=&lines
             let l:width=&columns
             :tabnew
         elseif and(l:option, 0x01)
             let l:width=&columns
-            execute 'rightbelow '.l:line.'split'
+            execute 'rightbelow '.l:height.'split'
+        elseif and(l:option, 0x08)
+            let l:height=&lines
+            execute 'rightbelow '.l:width.'vsplit'
+        endif
+        let l:pos_str = 'topright'
+        if has_key(a:option, 'pos')
+            let l:pos_str = a:option.pos
         endif
         if te#env#SupportFloatingWindows() == 2
-            let l:row=1
             if exists('l:buf')
                 let l:term_obj = te#terminal#get_term_obj(l:buf)
             else
@@ -337,17 +397,34 @@ function! te#terminal#shell_pop(option,...) abort
                 endif
                 let l:term_obj.title = l:title
                 let l:term_obj.line = 0
-                if a:0 == 2 && type(a:2) == g:t_func
-                    let l:term_obj.exit_cb = a:2
+                if has_key(a:option, 'exit_cb') && type(a:option.exit_cb) == g:t_func
+                    let l:term_obj.exit_cb = a:option.exit_cb
                 endif
                 call nvim_buf_set_option(l:buf, 'buftype', 'nofile')
                 call nvim_buf_set_option(l:buf, 'buflisted', v:false)
                 call nvim_buf_set_option(l:buf, 'bufhidden', 'hide')
             endif
             let l:term_obj.option = l:option
+            let l:term_obj.pos = l:pos_str
             let s:term_obj[l:buf] = l:term_obj
             if and(l:option, 0x02)
-                let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:line, 'col': l:width-1,
+                if l:pos_str == 'topleft'
+                    let l:row=1
+                    let l:col=1
+                elseif l:pos_str == 'topright'
+                    let l:row=1
+                    let l:col = l:width - 1
+                elseif l:pos_str == 'bottomleft'
+                    let l:row = &lines
+                    let l:col = 1
+                elseif l:pos_str == 'bottomright'
+                    let l:row = &lines
+                    let l:col = l:width - 1
+                elseif l:pos_str == 'middle'
+                    let l:row = &lines/4
+                    let l:col = &columns/4
+                endif
+                let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:height, 'col': l:col,
                             \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
                 let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
                 call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
@@ -355,7 +432,7 @@ function! te#terminal#shell_pop(option,...) abort
             else
                 execute ':buf '.l:buf
             endif
-            if a:0 == 0 || exists('l:cmd')
+            if exists('l:cmd') || !has_key(a:option, 'bufnr')
                 call termopen(l:shell, {'on_exit': function('<SID>OnExit'), "env":l:env_dict})
             endif
             return
@@ -363,13 +440,13 @@ function! te#terminal#shell_pop(option,...) abort
             let l:term_list = te#terminal#get_buf_list()
             if !exists('l:buf')
                 let l:buf = term_start(l:shell, #{hidden: 1, exit_cb:function('<SID>JobExit'), 
-                            \ term_rows:l:line, term_cols:l:width, env:l:env_dict})
+                            \ term_rows:l:height, term_cols:l:width, env:l:env_dict})
                 call setbufvar(l:buf, '&buflisted', 0)
                 let l:no_of_term = len(l:term_list) + 1
                 let l:term_obj.title = l:title
                 let l:term_obj.line = 0
-                if a:0 == 2 && type(a:2) == g:t_func
-                    let l:term_obj.exit_cb = a:2
+                if has_key(a:option, 'exit_cb') && type(a:option.exit_cb) == g:t_func
+                    let l:term_obj.exit_cb = a:option.exit_cb
                 endif
                 let l:title .= '['.l:no_of_term.'/'.l:no_of_term.']'
             else
@@ -379,17 +456,34 @@ function! te#terminal#shell_pop(option,...) abort
                 let l:title .= '['.l:cur_index.'/'.len(l:term_list).']'
             endif
             let l:term_obj.option = l:option
+            let l:term_obj.pos = l:pos_str
             let s:term_obj[l:buf] = l:term_obj
             if  and(l:option, 0x02)
+                if l:pos_str == 'topleft'
+                    let l:row=2
+                    let l:col=1
+                elseif l:pos_str == 'topright'
+                    let l:row=2
+                    let l:col = l:width - 1
+                elseif l:pos_str == 'bottomleft'
+                    let l:row = &lines
+                    let l:col = 1
+                elseif l:pos_str == 'bottomright'
+                    let l:row = &lines
+                    let l:col = l:width - 1
+                elseif l:pos_str == 'middle'
+                    let l:row = &lines/4
+                    let l:col = &columns/4
+                endif
                 let l:win_id = popup_create(l:buf, {
-                            \ 'line': 2,
-                            \ 'col': l:width - 1,
+                            \ 'line': l:row,
+                            \ 'col': l:col,
                             \ 'title': l:title,
                             \ 'zindex': 200,
                             \ 'minwidth': l:width,
-                            \ 'minheight': l:line,
+                            \ 'minheight': l:height,
                             \ 'maxwidth': l:width,
-                            \ 'maxheight': l:line,
+                            \ 'maxheight': l:height,
                             \ 'border': [],
                             \ 'wrap': 0,
                             \ 'borderchars':['─', '│', '─', '│', '┌', '┐', '┘', '└'],

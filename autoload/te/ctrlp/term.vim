@@ -40,7 +40,7 @@ function! te#ctrlp#term#accept(mode, str) abort
       let l:HowToOpen=0x2
   endif
   let l:buf =  str2nr(matchstr(a:str, '\d\+\(:\)\@='))
-  call te#terminal#open_term(l:buf, l:HowToOpen)
+  call te#terminal#open_term({'opener':l:HowToOpen, 'bufnr':l:buf})
 endfunction
 
 let s:id = g:ctrlp_builtins + len(g:ctrlp_ext_vars)

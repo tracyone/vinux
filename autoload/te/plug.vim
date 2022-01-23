@@ -42,7 +42,7 @@ function! te#plug#open_plugin_dir(option) abort
             return
         endif
        if a:option == 1
-           call te#terminal#shell_pop(0x4)
+           call te#terminal#shell_pop({'opener':0x4})
        endif
     endif
 endfunction
