@@ -334,6 +334,7 @@ function! te#terminal#shell_pop(option) abort
     " 38% height of current window
     let l:term_obj = {}
     let l:env_dict = {"TIG_EDITOR":"t"}
+    let l:pos_str = 'topright'
     if type(a:option) != g:t_dict
         call te#utils#EchoWarning("Error argument!")
         return
@@ -353,6 +354,7 @@ function! te#terminal#shell_pop(option) abort
             return
         endif
         let l:option = te#terminal#get_option(l:buf)
+        let l:pos_str = te#terminal#get_pos(l:buf)
     else
     endif
     call te#server#connect()
@@ -382,7 +384,6 @@ function! te#terminal#shell_pop(option) abort
             let l:height=&lines
             execute 'rightbelow '.l:width.'vsplit'
         endif
-        let l:pos_str = 'topright'
         if has_key(a:option, 'pos')
             let l:pos_str = a:option.pos
         endif
