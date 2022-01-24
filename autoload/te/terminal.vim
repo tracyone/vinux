@@ -164,41 +164,24 @@ function! te#terminal#move_floating_win(pos) abort
         let l:current_term_buf = bufnr('%')
         call te#terminal#hide_popup()
         let l:pos_str = te#terminal#get_pos(l:current_term_buf)
-        if a:pos == 'left'
-            if l:pos_str == 'bottomright'
-                let l:pos_str = 'bottomleft'
+        let l:btm = matchstr(a:pos, '\v(bottom)|(top)|(middle)')
+        let l:rlm = matchstr(a:pos, '\v(right)|(left)|(middle)')
+        if len(l:btm) && len(l:rlm)
+            let l:pos_str=a:pos
+        elseif len(l:btm)
+            let l:str1 = matchstr(l:pos_str, '\v(right)|(left)|(middle)')
+            if len(l:str1)
+                let l:pos_str=l:btm.l:str1
             endif
-            if l:pos_str == 'topright'
-                let l:pos_str = 'topleft'
+        elseif len(l:rlm)
+            let l:str1 = matchstr(l:pos_str, '\v(bottom)|(top)|(middle)')
+            if len(l:str1)
+                let l:pos_str=l:str1.l:rlm
             endif
+        else
+            call te#utils#EchoWarning("Wrong argument!!!:(bottom)|(top)|(middle)|(right)|(left)")
         endif
-        if a:pos == 'right'
-            if l:pos_str == 'bottomleft'
-                let l:pos_str = 'bottomright'
-            endif
-            if l:pos_str == 'topleft'
-                let l:pos_str = 'topright'
-            endif
-        endif
-        if a:pos == 'top'
-            if l:pos_str == 'bottomleft'
-                let l:pos_str = 'topleft'
-            endif
-            if l:pos_str == 'bottomright'
-                let l:pos_str = 'topright'
-            endif
-        endif
-        if a:pos == 'bottom'
-            if l:pos_str == 'topleft'
-                let l:pos_str = 'bottomleft'
-            endif
-            if l:pos_str == 'topright'
-                let l:pos_str = 'bottomright'
-            endif
-        endif
-        if a:pos == 'middle'
-            let l:pos_str = a:pos
-        endif
+
         call te#terminal#open_term({'bufnr':l:current_term_buf, 'pos':l:pos_str})
     else
         call te#utils#EchoWarning("Not a terminal window!")
@@ -355,7 +338,6 @@ function! te#terminal#shell_pop(option) abort
         endif
         let l:option = te#terminal#get_option(l:buf)
         let l:pos_str = te#terminal#get_pos(l:buf)
-    else
     endif
     call te#server#connect()
     if te#env#IsGui() && te#env#IsUnix()
@@ -387,6 +369,24 @@ function! te#terminal#shell_pop(option) abort
         if has_key(a:option, 'pos')
             let l:pos_str = a:option.pos
         endif
+        if len(matchstr(l:pos_str, '\v^middle'))
+            let l:row = &lines/4
+        endif
+        if len(matchstr(l:pos_str, '\vmiddle$'))
+            let l:col = &columns/4
+        endif
+        if len(matchstr(l:pos_str, 'left'))
+            let l:col=1
+        endif
+        if len(matchstr(l:pos_str, 'right'))
+            let l:col = l:width - 1
+        endif
+        if len(matchstr(l:pos_str, 'top'))
+            let l:row=1
+        endif
+        if len(matchstr(l:pos_str, 'bottom'))
+            let l:row = &lines - 1
+        endif
         if te#env#SupportFloatingWindows() == 2
             if exists('l:buf')
                 let l:term_obj = te#terminal#get_term_obj(l:buf)
@@ -409,22 +409,6 @@ function! te#terminal#shell_pop(option) abort
             let l:term_obj.pos = l:pos_str
             let s:term_obj[l:buf] = l:term_obj
             if and(l:option, 0x02)
-                if l:pos_str == 'topleft'
-                    let l:row=1
-                    let l:col=1
-                elseif l:pos_str == 'topright'
-                    let l:row=1
-                    let l:col = l:width - 1
-                elseif l:pos_str == 'bottomleft'
-                    let l:row = &lines
-                    let l:col = 1
-                elseif l:pos_str == 'bottomright'
-                    let l:row = &lines
-                    let l:col = l:width - 1
-                elseif l:pos_str == 'middle'
-                    let l:row = &lines/4
-                    let l:col = &columns/4
-                endif
                 let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:height, 'col': l:col,
                             \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
                 let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
@@ -460,24 +444,8 @@ function! te#terminal#shell_pop(option) abort
             let l:term_obj.pos = l:pos_str
             let s:term_obj[l:buf] = l:term_obj
             if  and(l:option, 0x02)
-                if l:pos_str == 'topleft'
-                    let l:row=2
-                    let l:col=1
-                elseif l:pos_str == 'topright'
-                    let l:row=2
-                    let l:col = l:width - 1
-                elseif l:pos_str == 'bottomleft'
-                    let l:row = &lines
-                    let l:col = 1
-                elseif l:pos_str == 'bottomright'
-                    let l:row = &lines
-                    let l:col = l:width - 1
-                elseif l:pos_str == 'middle'
-                    let l:row = &lines/4
-                    let l:col = &columns/4
-                endif
                 let l:win_id = popup_create(l:buf, {
-                            \ 'line': l:row,
+                            \ 'line': l:row + 1,
                             \ 'col': l:col,
                             \ 'title': l:title,
                             \ 'zindex': 200,
