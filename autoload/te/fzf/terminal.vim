@@ -34,7 +34,7 @@ function! s:edit_file(item) abort
     if l:cmd == 'e'
         let s:shell_pop_option = 0x0
     elseif l:cmd == 'vsplit'
-        let s:shell_pop_option = 0x8
+        let s:shell_pop_option = 0x2
     elseif l:cmd == 'split'
         let s:shell_pop_option  = 0x1
     elseif l:cmd == 'tabedit'

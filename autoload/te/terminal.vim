@@ -328,9 +328,6 @@ function! te#terminal#shell_pop(option) abort
     if has_key(a:option, 'cmd')
         let l:cmd = a:option.cmd
     endif
-    if has_key(a:option, 'opener')
-        let l:option = a:option.opener
-    endif
     if exists('l:buf')
         if te#terminal#is_term_buf(l:buf) != v:true
             call te#utils#EchoWarning(l:buf." is not a terminal buffer")
@@ -338,6 +335,9 @@ function! te#terminal#shell_pop(option) abort
         endif
         let l:option = te#terminal#get_option(l:buf)
         let l:pos_str = te#terminal#get_pos(l:buf)
+    endif
+    if has_key(a:option, 'opener') && a:option.opener != 0
+        let l:option = a:option.opener
     endif
     call te#server#connect()
     if te#env#IsGui() && te#env#IsUnix()
