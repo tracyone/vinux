@@ -90,6 +90,9 @@ function! s:fzf_vim_setting()
                     \ { 'fg':      ['fg', 'vinux_tabline'],
                     \ 'border':  ['fg', 'vinux_border'],
                     \ 'preview-fg':      ['fg', 'vinux_normal']}
+    elseif te#env#IsTmux()
+        "use tmux's popup feature, require tmux V3.2 or later
+        let g:fzf_layout = { 'tmux': '-p80%,40%' }
     else
         let g:fzf_layout = { 'down': '~40%' }
     endif
