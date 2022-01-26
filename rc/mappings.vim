@@ -355,6 +355,8 @@ tnoremap <silent><c-w>j <C-\><C-n>:call te#terminal#move_floating_win("bottom")<
 tnoremap <silent><c-w>k <C-\><C-n>:call te#terminal#move_floating_win("top")<cr>
 tnoremap <silent><c-w>m <C-\><C-n>:call te#terminal#move_floating_win("middle")<cr>
 if te#env#IsNvim() != 0
+    tnoremap  <silent><c-w>a <C-\><C-n>:call te#terminal#hide_all()<cr>
+    nnoremap <silent><c-w>a :call te#terminal#hide_all()<cr>
     "terminal-emulator setting
     execute 'tnoremap <A-h> <C-\><C-n><C-w>h'
     execute 'tnoremap <A-j> <C-\><C-n><C-w>j'

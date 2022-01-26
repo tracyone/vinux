@@ -207,7 +207,9 @@ function! te#terminal#jump_to_floating_win(num) abort
         let l:last_close_bufnr = s:last_close_bufnr
         if te#terminal#is_term_buf(bufnr('%')) == v:true
             let l:current_term_buf = bufnr('%')
-            call te#terminal#hide_popup()
+            if te#env#IsNvim() == 0
+                call te#terminal#hide_popup()
+            endif
         endif
         if a:num == -4
             "in terminal or out out terminal
@@ -257,7 +259,13 @@ function! te#terminal#jump_to_floating_win(num) abort
                 call te#utils#EchoWarning("Only support in terminal")
                 return
             endif
-            call te#terminal#shell_pop({'opener':0x2})
+            let l:pos_list = ['topright', 'bottomright', 'topleft', 'bottomleft', 'middlemiddle']
+            if te#env#IsNvim() == 0
+                let l:index = 0
+            else
+                let l:index = len(l:term_list) % 5
+            endif
+            call te#terminal#shell_pop({'opener':0x2, 'pos':l:pos_list[l:index]})
         else
             call te#utils#EchoWarning("Wrong option: ".a:num)
         endif
@@ -265,18 +273,31 @@ function! te#terminal#jump_to_floating_win(num) abort
 endfunction
 
 let s:last_close_bufnr = -1
-function! te#terminal#hide_popup()
+function! te#terminal#hide_all() abort
+    let l:term_buf_list = te#terminal#get_buf_list()
+    for l:buf in l:term_buf_list
+        if len(win_findbuf(l:buf))
+            call s:hide_win(win_findbuf(l:buf)[0], l:buf)
+        endif
+    endfor
+endfunction
+
+function! te#terminal#hide_popup() abort
     let l:win_id = win_getid()
     let s:last_close_bufnr = bufnr('%')
-    call te#terminal#set_line(s:last_close_bufnr, line('$'))
+    call s:hide_win(l:win_id, s:last_close_bufnr)
+endfunction
+
+function! s:hide_win(winid, buf)
+    call te#terminal#set_line(a:buf, line('$'))
     try
         if te#env#IsNvim() != 0
-            call nvim_win_close(l:win_id, v:true)
+            call nvim_win_close(a:winid, v:true)
         else
             if win_gettype() != 'popup'
                 :hide
             else
-                call popup_close(l:win_id)
+                call popup_close(a:winid)
             endif
         endif
     catch /last/
@@ -354,7 +375,7 @@ function! te#terminal#shell_pop(option) abort
     if te#env#SupportTerminal()
         let l:height=(40*&lines)/100
         if  l:height < 10 | let l:height = 10 |endif
-        let l:width=&columns/2
+        let l:width=&columns/2 - 2
         if and(l:option, 0x04)
             let l:height=&lines
             let l:width=&columns
@@ -369,6 +390,7 @@ function! te#terminal#shell_pop(option) abort
         if has_key(a:option, 'pos')
             let l:pos_str = a:option.pos
         endif
+        let l:anchor = ['N', 'W']
         if len(matchstr(l:pos_str, '\v^middle'))
             let l:row = &lines/4
         endif
@@ -377,16 +399,25 @@ function! te#terminal#shell_pop(option) abort
         endif
         if len(matchstr(l:pos_str, 'left'))
             let l:col=1
+            let l:anchor[1] = 'E'
         endif
         if len(matchstr(l:pos_str, 'right'))
-            let l:col = l:width - 1
+            let l:col = &columns - l:width
+            let l:anchor[1] = 'W'
         endif
         if len(matchstr(l:pos_str, 'top'))
             let l:row=1
+            let l:anchor[0] = 'N'
         endif
         if len(matchstr(l:pos_str, 'bottom'))
-            let l:row = &lines - 1
+            if te#env#IsNvim() == 0
+                let l:row = &lines - 1
+            else
+                let l:row = &lines - 2
+            endif
+            let l:anchor[0] = 'S'
         endif
+        let l:anchor = l:anchor[0].l:anchor[1]
         if te#env#SupportFloatingWindows() == 2
             if exists('l:buf')
                 let l:term_obj = te#terminal#get_term_obj(l:buf)
@@ -410,7 +441,7 @@ function! te#terminal#shell_pop(option) abort
             let s:term_obj[l:buf] = l:term_obj
             if and(l:option, 0x02)
                 let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:height, 'col': l:col,
-                            \ 'row': l:row, 'anchor': 'NW', 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
+                            \ 'row': l:row, 'anchor': l:anchor, 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
                 let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
                 call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
                 call nvim_win_set_option(l:win_id, 'winblend', 30)
