@@ -58,6 +58,7 @@ function! te#terminal#repl() abort
     elseif &ft == 'matlab'
         let l:cmd = 'matlab -nodesktop -nosplash'
     else
+        call te#utils#EchoWarning("Not support current filetype:".&ft)
         return
     endif
     if te#env#IsNvim() != 0
@@ -65,7 +66,7 @@ function! te#terminal#repl() abort
         call feedkeys("\<C-\>\<C-n>\<c-w>h")
     else
         :call te#terminal#shell_pop({'opener':0x8, 'cmd':l:cmd})
-        call feedkeys("\<c-y>h")
+        execute 'call feedkeys("\'.te#env#get_termwinkey().'h")'
     endif
 endfunction
 
@@ -122,10 +123,10 @@ function! te#terminal#send(range, line1, line2, text) abort
         "in terminal or out out terminal
         if g:fuzzysearcher_plugin_name.cur_val == 'fzf'
             call te#fzf#terminal#start(l:text_list)
-        elseif g:fuzzysearcher_plugin_name.cur_val == 'leaderf'
-            :Leaderf term
         elseif g:fuzzysearcher_plugin_name.cur_val == 'ctrlp'
             :call te#ctrlp#term#start(l:text_list)
+        else
+            :call te#utils#EchoWarning("Not support for current fuzzy finder:".g:fuzzysearcher_plugin_name.cur_val)
         endif
     endif
 endfunction
