@@ -42,6 +42,33 @@ function! te#terminal#get_line(buf) abort
     endif
 endfunction
 
+function! te#terminal#repl() abort
+    if &ft == 'python'
+        let l:cmd = 'python'
+    elseif &ft == 'lua'
+        let l:cmd = 'lua'
+    elseif &ft == 'vim'
+        let l:cmd = 'vim -e'
+    elseif &ft == 'javascript'
+        let l:cmd = 'node'
+    elseif &ft == 'sh'
+        let l:cmd = 'bash'
+    elseif &ft == 'zsh'
+        let l:cmd = 'zsh'
+    elseif &ft == 'matlab'
+        let l:cmd = 'matlab -nodesktop -nosplash'
+    else
+        return
+    endif
+    if te#env#IsNvim() != 0
+        :call te#terminal#shell_pop({'opener':0x2, 'cmd':l:cmd})
+        call feedkeys("\<C-\>\<C-n>\<c-w>h")
+    else
+        :call te#terminal#shell_pop({'opener':0x8, 'cmd':l:cmd})
+        call feedkeys("\<c-y>h")
+    endif
+endfunction
+
 function! te#terminal#get_option(buf) abort
     if has_key(s:term_obj,a:buf)
         return s:term_obj[a:buf].option
@@ -51,6 +78,55 @@ endfunction
 function! te#terminal#get_pos(buf) abort
     if has_key(s:term_obj,a:buf)
         return s:term_obj[a:buf].pos
+    endif
+endfunction
+
+function! te#terminal#send_key(buf, text)
+    if te#env#IsNvim() != 0
+        if has_key(s:term_obj,a:buf)
+            call chansend(s:term_obj[a:buf].job_id, a:text)
+        endif
+    else
+        call term_sendkeys(a:buf, a:text)
+    endif
+endfunction
+
+function! te#terminal#send(range, line1, line2, text) abort
+    let l:text_list = []
+    let l:term_list = te#terminal#get_buf_list()
+    if len(l:term_list) == 0
+        call te#utils#EchoWarning("No terminal buffer")
+        return
+    endif
+    if a:range == 0
+        call add(l:text_list, a:text)
+    elseif a:range == 1
+        call add(l:text_list, getline(a:line1))
+    elseif a:range == 2
+        let [lnum1, col1] = getpos("'<")[1:2]
+        let [lnum2, col2] = getpos("'>")[1:2]
+        if lnum1 == 0 || col1 == 0 || lnum2 == 0 || col2 == 0
+            let l:text_list = getline(a:line1, a:line2)
+        else
+            let l:text_list = getline(lnum1, lnum2)
+        endif
+    endif
+    if len(l:term_list) == 1
+        for l:t in l:text_list
+            call te#terminal#send_key(l:term_list[0], l:t."\r")
+        endfor
+        if !len(win_findbuf(l:term_list[0]))
+            call te#terminal#open_term({'bufnr':l:term_list[0]})
+        endif
+    else
+        "in terminal or out out terminal
+        if g:fuzzysearcher_plugin_name.cur_val == 'fzf'
+            call te#fzf#terminal#start(l:text_list)
+        elseif g:fuzzysearcher_plugin_name.cur_val == 'leaderf'
+            :Leaderf term
+        elseif g:fuzzysearcher_plugin_name.cur_val == 'ctrlp'
+            :call te#ctrlp#term#start(l:text_list)
+        endif
     endif
 endfunction
 
@@ -214,11 +290,11 @@ function! te#terminal#jump_to_floating_win(num) abort
         if a:num == -4
             "in terminal or out out terminal
             if g:fuzzysearcher_plugin_name.cur_val == 'fzf'
-                call te#fzf#terminal#start()
+                call te#fzf#terminal#start("")
             elseif g:fuzzysearcher_plugin_name.cur_val == 'leaderf'
                 :Leaderf term
             elseif g:fuzzysearcher_plugin_name.cur_val == 'ctrlp'
-                :call te#ctrlp#term#start()
+                :call te#ctrlp#term#start("")
             else
                 call te#terminal#open_term({'bufnr':l:last_close_bufnr})
             endif
@@ -438,7 +514,6 @@ function! te#terminal#shell_pop(option) abort
             endif
             let l:term_obj.option = l:option
             let l:term_obj.pos = l:pos_str
-            let s:term_obj[l:buf] = l:term_obj
             if and(l:option, 0x02)
                 let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:height, 'col': l:col,
                             \ 'row': l:row, 'anchor': l:anchor, 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
@@ -449,8 +524,9 @@ function! te#terminal#shell_pop(option) abort
                 execute ':buf '.l:buf
             endif
             if exists('l:cmd') || !has_key(a:option, 'bufnr')
-                call termopen(l:shell, {'on_exit': function('<SID>OnExit'), "env":l:env_dict})
+                let l:term_obj.job_id = termopen(l:shell, {'on_exit': function('<SID>OnExit'), "env":l:env_dict})
             endif
+            let s:term_obj[l:buf] = l:term_obj
             return
         elseif te#env#SupportFloatingWindows()
             let l:term_list = te#terminal#get_buf_list()

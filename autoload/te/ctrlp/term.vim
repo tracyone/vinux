@@ -40,6 +40,11 @@ function! te#ctrlp#term#accept(mode, str) abort
       let l:HowToOpen=0x2
   endif
   let l:buf =  str2nr(matchstr(a:str, '\d\+\(:\)\@='))
+  if len(s:key_text)
+      for l:t in s:key_text
+          call te#terminal#send_key(l:buf, l:t."\r")
+      endfor
+  endif
   call te#terminal#open_term({'opener':l:HowToOpen, 'bufnr':l:buf})
 endfunction
 
@@ -49,7 +54,8 @@ function! te#ctrlp#term#id() abort
   return s:id
 endfunction
 
-function! te#ctrlp#term#start() abort
+function! te#ctrlp#term#start(text) abort
+    let s:key_text = a:text
     let s:text = s:get_term_list()
     call ctrlp#init(te#ctrlp#term#id()) 
 endfunction

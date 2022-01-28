@@ -354,6 +354,11 @@ tnoremap <silent><c-w>l <C-\><C-n>:call te#terminal#move_floating_win("right")<c
 tnoremap <silent><c-w>j <C-\><C-n>:call te#terminal#move_floating_win("bottom")<cr>
 tnoremap <silent><c-w>k <C-\><C-n>:call te#terminal#move_floating_win("top")<cr>
 tnoremap <silent><c-w>m <C-\><C-n>:call te#terminal#move_floating_win("middle")<cr>
+command! -nargs=* -range T call te#terminal#send(<range>, <line1>, <line2>, <q-args>)
+vnoremap <silent><leader>tr :T<cr>
+nnoremap <silent><leader>re :call te#terminal#repl()<cr>
+nnoremap <silent><leader>tr :execute line(".")."T"<cr>
+nnoremap <silent><leader>ta :1,$T<cr>
 if te#env#IsNvim() != 0
     tnoremap  <silent><c-w>a <C-\><C-n>:call te#terminal#hide_all()<cr>
     nnoremap <silent><c-w>a :call te#terminal#hide_all()<cr>

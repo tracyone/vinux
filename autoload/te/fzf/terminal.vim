@@ -40,10 +40,16 @@ function! s:edit_file(item) abort
     elseif l:cmd == 'tabedit'
         let s:shell_pop_option  = 0x4
     endif
+    if len(s:key_text)
+        for l:t in s:key_text
+            call te#terminal#send_key(str2nr(s:buf), l:t."\r")
+        endfor
+    endif
     call timer_start(100, function('<SID>open_shell'), {'repeat': 1})
 endfunction
 
-function! te#fzf#terminal#start() abort
+function! te#fzf#terminal#start(text) abort
+    let s:key_text = a:text
     let l:run_dict = {
                 \ 'source': <SID>get_terminal_list(),
                 \ 'sink*': function('<SID>edit_file'),
