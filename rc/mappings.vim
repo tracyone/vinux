@@ -341,9 +341,9 @@ tnoremap  <silent><c-w>p <C-\><C-n>:call te#terminal#jump_to_floating_win(-1)<cr
 tnoremap  <silent><c-w>n <C-\><C-n>:call te#terminal#jump_to_floating_win(-2)<cr>
 tnoremap  <silent><c-w>w <C-\><C-n>:call te#terminal#jump_to_floating_win(-2)<cr>
 "start fuzzy finder to select terminal
-tnoremap  <silent><c-w>f <C-\><C-n>:call te#terminal#jump_to_floating_win(-4)<cr>
+tnoremap  <silent><c-w><space> <C-\><C-n>:call te#terminal#jump_to_floating_win(-4)<cr>
 "new terminal
-tnoremap  <silent><c-w>s <C-\><C-n>:call te#terminal#jump_to_floating_win(-5)<cr>
+tnoremap  <silent><c-w>a <C-\><C-n>:call te#terminal#jump_to_floating_win(-5)<cr>
 "last open 
 tnoremap  <silent><c-w>t <C-\><C-n>:call te#terminal#jump_to_floating_win(-3)<cr>
 "rename terminal
@@ -354,14 +354,18 @@ tnoremap <silent><c-w>l <C-\><C-n>:call te#terminal#move_floating_win("right")<c
 tnoremap <silent><c-w>j <C-\><C-n>:call te#terminal#move_floating_win("bottom")<cr>
 tnoremap <silent><c-w>k <C-\><C-n>:call te#terminal#move_floating_win("top")<cr>
 tnoremap <silent><c-w>m <C-\><C-n>:call te#terminal#move_floating_win("middle")<cr>
+tnoremap <silent><c-w>t <C-\><C-n>:call te#terminal#switch_opener({'opener':0x4})<cr>
+tnoremap <silent><c-w>v <C-\><C-n>:call te#terminal#switch_opener({'opener':0x8})<cr>
+tnoremap <silent><c-w>s <C-\><C-n>:call te#terminal#switch_opener({'opener':0x1})<cr>
+tnoremap <silent><c-w>f <C-\><C-n>:call te#terminal#switch_opener({'opener':0x2})<cr>
 command! -nargs=* -range T call te#terminal#send(<range>, <line1>, <line2>, <q-args>)
 vnoremap <silent><leader>tr :T<cr>
 nnoremap <silent><leader>re :call te#terminal#repl()<cr>
 nnoremap <silent><leader>tr :execute line(".")."T"<cr>
 nnoremap <silent><leader>ta :1,$T<cr>
 if te#env#IsNvim() != 0
-    tnoremap  <silent><c-w>a <C-\><C-n>:call te#terminal#hide_all()<cr>
-    nnoremap <silent><c-w>a :call te#terminal#hide_all()<cr>
+    tnoremap  <silent><c-w>d <C-\><C-n>:call te#terminal#hide_all()<cr>
+    nnoremap <silent><c-w>d :call te#terminal#hide_all()<cr>
     "terminal-emulator setting
     execute 'tnoremap <A-h> <C-\><C-n><C-w>h'
     execute 'tnoremap <A-j> <C-\><C-n><C-w>j'

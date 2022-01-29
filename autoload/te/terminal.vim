@@ -1,6 +1,6 @@
 let s:term_obj = {}
 
-function! te#terminal#get_buf_list()
+function! te#terminal#get_buf_list() abort
     let l:last_buffer = bufnr('$')
 	let l:n = 1
     let l:result_list = []
@@ -16,7 +16,7 @@ function! te#terminal#get_buf_list()
     return l:result_list
 endfunction
 
-function! te#terminal#get_term_obj(buf)
+function! te#terminal#get_term_obj(buf) abort
     if has_key(s:term_obj,a:buf)
         return s:term_obj[a:buf]
     endif
@@ -82,7 +82,7 @@ function! te#terminal#get_pos(buf) abort
     endif
 endfunction
 
-function! te#terminal#send_key(buf, text)
+function! te#terminal#send_key(buf, text) abort
     if te#env#IsNvim() != 0
         if has_key(s:term_obj,a:buf)
             call chansend(s:term_obj[a:buf].job_id, a:text)
@@ -140,7 +140,7 @@ function! te#terminal#send(range, line1, line2, text) abort
     endif
 endfunction
 
-function! te#terminal#get_index(bufno)
+function! te#terminal#get_index(bufno) abort
     let l:term_list = te#terminal#get_buf_list()
     let l:index = 0
     for l:i in l:term_list
@@ -155,7 +155,7 @@ function! te#terminal#get_index(bufno)
     return l:index
 endfunction
 
-function! te#terminal#is_term_buf(bufno)
+function! te#terminal#is_term_buf(bufno) abort
     let l:name=bufname(a:bufno)
     if strlen(matchstr(l:name, 'term://'))
         return v:true
@@ -166,7 +166,7 @@ function! te#terminal#is_term_buf(bufno)
     endif
 endfunction
 
-function! te#terminal#rename()
+function! te#terminal#rename() abort
     let l:buf = bufnr('%')
     let l:win_id = win_getid()
     if te#terminal#is_term_buf(l:buf) == v:true
@@ -194,7 +194,21 @@ function! te#terminal#rename()
     endif
 endfunction
 
-function! te#terminal#open_term(option)
+function! te#terminal#switch_opener(option) abort
+    let l:buf = bufnr('%')
+    call te#terminal#hide_popup()
+    call extend(a:option, {'bufnr':l:buf})
+    call te#terminal#shell_pop(a:option)
+    if te#env#IsNvim() != 0
+        startinsert
+    else
+        if mode() != 't'
+            call feedkeys('a')
+        endif
+    endif
+endfunction
+
+function! te#terminal#open_term(option) abort
     let l:buf = a:option.bufnr
 
     if len(win_findbuf(l:buf))
