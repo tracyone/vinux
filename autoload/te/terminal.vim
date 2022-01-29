@@ -418,7 +418,11 @@ endfun
 
 func s:JobExit(job, status)
     let l:buf_nr = bufnr("%")
-    close
+    try
+        close
+    catch /last/
+        :q
+    endtry
     if has_key(s:term_obj[l:buf_nr], 'exit_cb')
         call s:term_obj[l:buf_nr].exit_cb()
     endif
