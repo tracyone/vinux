@@ -120,6 +120,15 @@ function! te#terminal#send(range, line1, line2, text) abort
             call te#terminal#open_term({'bufnr':l:term_list[0]})
         endif
     else
+        let l:cur_tab_buf_list = tabpagebuflist()
+        for l:b in l:cur_tab_buf_list
+            if te#terminal#is_term_buf(l:b)
+                for l:t in l:text_list
+                    call te#terminal#send_key(l:b, l:t."\r")
+                endfor
+                return
+            endif
+        endfor
         "in terminal or out out terminal
         if g:fuzzysearcher_plugin_name.cur_val == 'fzf'
             call te#fzf#terminal#start(l:text_list)
