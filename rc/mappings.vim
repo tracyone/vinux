@@ -367,10 +367,10 @@ if te#env#IsNvim() != 0
     tnoremap  <silent><c-w>d <C-\><C-n>:call te#terminal#hide_all()<cr>
     nnoremap <silent><c-w>d :call te#terminal#hide_all()<cr>
     "terminal-emulator setting
-    execute 'tnoremap <A-h> <C-\><C-n><C-w>h'
-    execute 'tnoremap <A-j> <C-\><C-n><C-w>j'
-    execute 'tnoremap <A-k> <C-\><C-n><C-w>k'
-    execute 'tnoremap <A-l> <C-\><C-n><C-w>l'
+    execute 'tnoremap <A-h> <C-\><C-n>G<C-w>h'
+    execute 'tnoremap <A-j> <C-\><C-n>G<C-w>j'
+    execute 'tnoremap <A-k> <C-\><C-n>G<C-w>k'
+    execute 'tnoremap <A-l> <C-\><C-n>G<C-w>l'
     silent! execute 'tmap <c-v> <C-\><C-n>"*pa'
 elseif te#env#SupportTerminal()
     "terminal-emulator setting

@@ -63,7 +63,7 @@ function! te#terminal#repl() abort
     endif
     if te#env#IsNvim() != 0
         :call te#terminal#shell_pop({'opener':0x2, 'cmd':l:cmd})
-        call feedkeys("\<C-\>\<C-n>\<c-w>h")
+        call feedkeys("\<C-\>\<C-n>G\<c-w>h")
     else
         :call te#terminal#shell_pop({'opener':0x8, 'cmd':l:cmd})
         execute 'call feedkeys("\'.te#env#get_termwinkey().'h")'
