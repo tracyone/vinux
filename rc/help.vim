@@ -54,14 +54,14 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'c': 'Calculator',
                     \ 'd': 'Calendar',
                     \ 'e': 'Translate:zh2en',
-                    \ 'F': 'opens the current working directory in the File manager' ,
+                    \ 'F': 'Open a terminal win in floating win' ,
                     \ 'f': "Go to the current file's directory in the File manager",
                     \ 'l': 'easy align',
                     \ 'r': 'Enter screensaver',
-                    \ 's': 'Open shell in vim in a split window',
+                    \ 's': 'Open terminal win in vim in a split window',
                     \ 'T': 'Go to the current working directory in the Terminal',
                     \ 't': "Go to the current file's directory in the Terminal",
-                    \ 'v': 'Open shell in vim in a vertical split window',
+                    \ 'v': 'Open terminal win in a vertical split window',
                     \ 'w': 'toggle drawit plugin',
                     \ 'y': 'Translate using youdao dict',
                     \ 'z': 'Translate:en2ch',
@@ -139,9 +139,19 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'j' : 'easymotion:search 1 char',
                     \ 'l' : 'easymotion:Line downward and upward',
                     \ 's' : 'easymotion:search multiple previous char ',
-                    \ 't' : 'easymotion:search multiple next char',
                     \ 'w' : 'easymotion:word',
-                    \ 'f' : 'Move cursor to first terminal window',
+                    \ 't' : 'Start last close terminal win',
+                    \ 'f' : 'Start a fuzzyfinder to select terminal win',
+                    \ '0' : 'Open index 0 terminal win',
+                    \ '1' : 'Open index 1 terminal win',
+                    \ '2' : 'Open index 2 terminal win',
+                    \ '3' : 'Open index 3 terminal win',
+                    \ '4' : 'Open index 4 terminal win',
+                    \ '5' : 'Open index 5 terminal win',
+                    \ '6' : 'Open index 6 terminal win',
+                    \ '7' : 'Open index 7 terminal win',
+                    \ '8' : 'Open index 8 terminal win',
+                    \ '9' : 'Open index 9 terminal win',
                     \ }
         let g:which_key_map.l = { 
                     \ 'name' : '+love',
@@ -213,7 +223,9 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ }
         let g:which_key_map.r = { 
                     \ 'name' : '+Run',
-                    \ 'c' : 'Run command from user input',
+                    \ 'c' :'Run command from user input',
+                    \ 'e' :'Start repl for current filetype',
+                    \ 'r' : 'Open ranger in floating window',
                     \ }
         let g:which_key_map.s = { 
                     \ 'name' : '+Show_or_session',
@@ -304,6 +316,8 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'v' : 'Toggle focus window',
                     \ 'w' : 'Toggle unlimit textwidth option',
                     \ 'z' : 'Toggle spell option',
+                    \ 'r' : 'send current line to terminal win',
+                    \ 'a' : 'send all content  to terminal win',
                     \ }
 
         let g:which_key_map['<Tab>'] = 'switch to last open tab or buffer'
