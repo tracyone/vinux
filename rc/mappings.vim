@@ -376,11 +376,11 @@ if te#env#IsNvim() != 0
 elseif te#env#SupportTerminal()
     "terminal-emulator setting
     "execute 'tnoremap <Esc> <C-\><C-n>' "effect <a-> key?
-    call te#meta#map('tmap <silent> ','h',te#env#get_termwinkey().'h')
-    call te#meta#map('tmap <silent> ','j',te#env#get_termwinkey().'j')
-    call te#meta#map('tmap <silent> ','k',te#env#get_termwinkey().'k')
-    call te#meta#map('tmap <silent> ','l',te#env#get_termwinkey().'l')
-    silent! execute 'tnoremap <c-v> '.te#env#get_termwinkey().'"*'
+    call te#meta#map('tmap <silent> ','h',te#terminal#get_termwinkey().'h')
+    call te#meta#map('tmap <silent> ','j',te#terminal#get_termwinkey().'j')
+    call te#meta#map('tmap <silent> ','k',te#terminal#get_termwinkey().'k')
+    call te#meta#map('tmap <silent> ','l',te#terminal#get_termwinkey().'l')
+    silent! execute 'tnoremap <c-v> '.te#terminal#get_termwinkey().'"*'
     call te#meta#map('tnoremap <silent> ','b','<C-left>')
     call te#meta#map('tnoremap <silent> ','f','<C-right>')
 endif

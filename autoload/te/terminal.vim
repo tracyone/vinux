@@ -66,7 +66,7 @@ function! te#terminal#repl() abort
         call feedkeys("\<C-\>\<C-n>G\<c-w>h")
     else
         :call te#terminal#shell_pop({'opener':0x8, 'cmd':l:cmd})
-        execute 'call feedkeys("\'.te#env#get_termwinkey().'h")'
+        execute 'call feedkeys("\'.te#terminal#get_termwinkey().'h")'
     endif
 endfunction
 
@@ -390,6 +390,22 @@ function! te#terminal#hide_popup() abort
     call s:hide_win(l:win_id, s:last_close_bufnr)
 endfunction
 
+function! te#terminal#get_termwinkey() abort
+    let l:result=""
+    if win_gettype() == 'popup'
+        return "<c-w>"
+    endif
+    if has('patch-8.0.1743')
+        let l:result=&termwinkey
+    else
+        let l:result=&termkey
+    endif
+    if empty(l:result)
+        let l:result="<c-w>"
+    endif
+    return l:result
+endfunction
+
 function! s:hide_win(winid, buf)
     call te#terminal#set_line(a:buf, line('$'))
     try
@@ -560,6 +576,7 @@ function! te#terminal#shell_pop(option) abort
             return
         elseif te#env#SupportFloatingWindows()
             let l:term_list = te#terminal#get_buf_list()
+            let l:term_key = &termwinkey
             if !exists('l:buf')
                 let l:buf = term_start(l:shell, #{hidden: 1, exit_cb:function('<SID>JobExit'), 
                             \ term_rows:l:height, term_cols:l:width, env:l:env_dict})
@@ -597,7 +614,7 @@ function! te#terminal#shell_pop(option) abort
                             \ 'drag': 1,
                             \ 'close': 'button',
                             \ })
-                "call setwinvar(l:win_id, '&wincolor', 'Pmenu')
+                call setwinvar(l:win_id, '&termwinkey', l:term_key)
             else
                 execute ':buf '.l:buf
             endif

@@ -137,13 +137,6 @@ function! te#env#check_requirement() abort
     endif
 endfunction
 
-function! te#env#get_termwinkey() abort
-    if has('patch-8.0.1743')
-        return &termwinkey
-    else
-        return &termkey
-    endif
-endfunction
 
 function! te#env#SupportFloatingWindows() abort
     if te#env#IsNvim() == 0
