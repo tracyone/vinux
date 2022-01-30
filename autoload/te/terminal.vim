@@ -309,6 +309,8 @@ function! te#terminal#jump_to_floating_win(num) abort
             let l:current_term_buf = bufnr('%')
             if te#env#IsNvim() == 0
                 call te#terminal#hide_popup()
+            else
+                let s:last_close_bufnr = bufnr('%')
             endif
         endif
         if a:num == -4

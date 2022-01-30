@@ -345,7 +345,7 @@ tnoremap  <silent><c-w><space> <C-\><C-n>:call te#terminal#jump_to_floating_win(
 "new terminal
 tnoremap  <silent><c-w>a <C-\><C-n>:call te#terminal#jump_to_floating_win(-5)<cr>
 "last open 
-tnoremap  <silent><c-w>t <C-\><C-n>:call te#terminal#jump_to_floating_win(-3)<cr>
+tnoremap  <silent><c-w><tab> <C-\><C-n>:call te#terminal#jump_to_floating_win(-3)<cr>
 "rename terminal
 tnoremap  <silent><c-w>r <C-\><C-n>:call te#terminal#rename()<cr>
 "move terminal
