@@ -18,5 +18,5 @@ if [ -n "${VIM_REMOTE}" ]; then
         `$VIM_REMOTE --remote $1`
     fi
 else
-    v.sh $1
+    v.sh $@
 fi
