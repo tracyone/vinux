@@ -22,15 +22,12 @@ if [ -n "$TMUX"  ]; then
           tmux send-keys -t $i C-w q
           regex_rule="\++"
           for var in $@; do
-              if [[ $var =~ $regex_rule ]]; then
-                  option=${var}
-                  break
-              fi
-          done
-          for var in $@; do
               if [[ $var = /*  ]]; then
                   #path already looks absolute...
                   absfilepath="$var"
+              elif [[ $var =~ $regex_rule ]]; then
+                  option=${var}
+                  continue
               else
                   absfilepath="$PWD/${var#./}"
               fi
