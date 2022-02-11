@@ -55,15 +55,21 @@ if [ -n "$TMUX"  ]; then
 fi
 # if we made it here,  we are running this command outside of tmux and will just pass all to vim normally.
 if [ ${OS} == "Darwin" ]; then
+    regex_rule="\++"
+    v.scpt "q"
     for var in $@; do
         if [[ $var = /*  ]]; then
             #path already looks absolute...
             absfilepath="$var"
+        elif [[ $var =~ $regex_rule ]]; then
+            option=${var}
+            continue
         else
-            #path not absolute,  lets prefix with pwd...
             absfilepath="$PWD/${var#./}"
         fi
-        v.scpt ${VIM_ACTION} $absfilepath 2>/dev/null
+        # only sendkeys to vim if there were args (like a file name or path), if not we just change to the vim window/pane
+        # use bash's printf to escape chars like vim likes.
+        v.scpt ${VIM_ACTION} " "$option" " $(printf "%q" $absfilepath) 2>/dev/null
     done
 else
     vim -p $@
