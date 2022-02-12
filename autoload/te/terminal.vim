@@ -392,9 +392,6 @@ endfunction
 
 function! te#terminal#get_termwinkey() abort
     let l:result=""
-    if win_gettype() == 'popup'
-        return "<c-w>"
-    endif
     if has('patch-8.0.1743')
         let l:result=&termwinkey
     else
