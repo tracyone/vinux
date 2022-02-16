@@ -387,7 +387,13 @@ endfunction
 function! te#terminal#hide_popup() abort
     let l:win_id = win_getid()
     let s:last_close_bufnr = bufnr('%')
-    call s:hide_win(l:win_id, s:last_close_bufnr)
+    let l:ret = s:hide_win(l:win_id, s:last_close_bufnr)
+    if l:ret == 1
+        call feedkeys("\<c-\><c-n>")
+        :tabnew
+        :tabprev
+        :call s:hide_win(l:win_id, s:last_close_bufnr)
+    endif
 endfunction
 
 function! te#terminal#get_termwinkey() abort
@@ -417,9 +423,9 @@ function! s:hide_win(winid, buf)
         endif
     catch /last/
         call te#utils#EchoWarning("Can not close last window")
-        return
+        return 1
     endtry
-    return
+    return 0
 endfunction
 
 fun! s:OnExit(job_id, code, event)
