@@ -334,39 +334,39 @@ nnoremap  <silent><leader>j9 :call te#terminal#jump_to_floating_win(9)<cr>
 nnoremap  <silent><leader>rr :call te#terminal#start_ranger()<cr>
 nnoremap  <silent><leader>rg :call te#terminal#shell_pop({'opener':0x2, 'cmd':'tig status'})<cr>
 tnoremap <silent><Esc><Esc> <C-\><C-n>
-tnoremap  <silent><c-q>q <C-\><C-n>:call te#terminal#hide_popup()<cr>
+tnoremap  <silent><c-w>q <C-\><C-n>:call te#terminal#hide_popup()<cr>
 
 "previous terminal
-tnoremap  <silent><c-q>p <C-\><C-n>:call te#terminal#jump_to_floating_win(-1)<cr>
+tnoremap  <silent><c-w>p <C-\><C-n>:call te#terminal#jump_to_floating_win(-1)<cr>
 "next terminal
-tnoremap  <silent><c-q>n <C-\><C-n>:call te#terminal#jump_to_floating_win(-2)<cr>
-tnoremap  <silent><c-q>w <C-\><C-n>:call te#terminal#jump_to_floating_win(-2)<cr>
+tnoremap  <silent><c-w>n <C-\><C-n>:call te#terminal#jump_to_floating_win(-2)<cr>
+tnoremap  <silent><c-w>w <C-\><C-n>:call te#terminal#jump_to_floating_win(-2)<cr>
 "start fuzzy finder to select terminal
-tnoremap  <silent><c-q><space> <C-\><C-n>:call te#terminal#jump_to_floating_win(-4)<cr>
+tnoremap  <silent><c-w><space> <C-\><C-n>:call te#terminal#jump_to_floating_win(-4)<cr>
 "new terminal
-tnoremap  <silent><c-q>a <C-\><C-n>:call te#terminal#jump_to_floating_win(-5)<cr>
+tnoremap  <silent><c-w>a <C-\><C-n>:call te#terminal#jump_to_floating_win(-5)<cr>
 "last open 
-tnoremap  <silent><c-q>w <C-\><C-n>:call te#terminal#jump_to_floating_win(-3)<cr>
+tnoremap  <silent><c-w><tab> <C-\><C-n>:call te#terminal#jump_to_floating_win(-3)<cr>
 "rename terminal
-tnoremap  <silent><c-q>r <C-\><C-n>:call te#terminal#rename()<cr>
+tnoremap  <silent><c-w>r <C-\><C-n>:call te#terminal#rename()<cr>
 "move terminal
-tnoremap <silent><c-q>h <C-\><C-n>:call te#terminal#move_floating_win("left")<cr>
-tnoremap <silent><c-q>l <C-\><C-n>:call te#terminal#move_floating_win("right")<cr>
-tnoremap <silent><c-q>j <C-\><C-n>:call te#terminal#move_floating_win("bottom")<cr>
-tnoremap <silent><c-q>k <C-\><C-n>:call te#terminal#move_floating_win("top")<cr>
-tnoremap <silent><c-q>m <C-\><C-n>:call te#terminal#move_floating_win("middle")<cr>
-tnoremap <silent><c-q>t <C-\><C-n>:call te#terminal#switch_opener({'opener':0x4})<cr>
-tnoremap <silent><c-q>v <C-\><C-n>:call te#terminal#switch_opener({'opener':0x8})<cr>
-tnoremap <silent><c-q>s <C-\><C-n>:call te#terminal#switch_opener({'opener':0x1})<cr>
-tnoremap <silent><c-q>f <C-\><C-n>:call te#terminal#switch_opener({'opener':0x2})<cr>
+tnoremap <silent><c-w>h <C-\><C-n>:call te#terminal#move_floating_win("left")<cr>
+tnoremap <silent><c-w>l <C-\><C-n>:call te#terminal#move_floating_win("right")<cr>
+tnoremap <silent><c-w>j <C-\><C-n>:call te#terminal#move_floating_win("bottom")<cr>
+tnoremap <silent><c-w>k <C-\><C-n>:call te#terminal#move_floating_win("top")<cr>
+tnoremap <silent><c-w>m <C-\><C-n>:call te#terminal#move_floating_win("middle")<cr>
+tnoremap <silent><c-w>t <C-\><C-n>:call te#terminal#switch_opener({'opener':0x4})<cr>
+tnoremap <silent><c-w>v <C-\><C-n>:call te#terminal#switch_opener({'opener':0x8})<cr>
+tnoremap <silent><c-w>s <C-\><C-n>:call te#terminal#switch_opener({'opener':0x1})<cr>
+tnoremap <silent><c-w>f <C-\><C-n>:call te#terminal#switch_opener({'opener':0x2})<cr>
 command! -nargs=* -range T call te#terminal#send(<range>, <line1>, <line2>, <q-args>)
 vnoremap <silent><leader>tr :T<cr>
 nnoremap <silent><leader>re :call te#terminal#repl()<cr>
 nnoremap <silent><leader>tr :execute line(".")."T"<cr>
 nnoremap <silent><leader>ta :1,$T<cr>
 if te#env#IsNvim() != 0
-    tnoremap  <silent><c-q>d <C-\><C-n>:call te#terminal#hide_all()<cr>
-    nnoremap <silent><c-q>d :call te#terminal#hide_all()<cr>
+    tnoremap  <silent><c-w>d <C-\><C-n>:call te#terminal#hide_all()<cr>
+    nnoremap <silent><c-w>d :call te#terminal#hide_all()<cr>
     "terminal-emulator setting
     execute 'tnoremap <A-h> <C-\><C-n>G<C-w>h'
     execute 'tnoremap <A-j> <C-\><C-n>G<C-w>j'
