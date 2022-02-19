@@ -180,7 +180,7 @@ function! te#terminal#rename() abort
                 call popup_setoptions(l:win_id, {'title':l:user_input})
             endif
         else
-            call te#utils#EchoWarning("Can not find window id for ".l:user_input)
+            call te#utils#EchoWarning("Can not find window id for ".l:buf)
         endif
     else
         call te#utils#EchoWarning("Not a terminal buffer!")
