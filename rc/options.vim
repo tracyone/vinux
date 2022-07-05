@@ -232,6 +232,9 @@ if te#env#IsNvim() != 0
     set signcolumn=number
 else
     command! -nargs=? UpdateRemotePlugins call te#utils#EchoWarning("It is neovim's command")
+    if te#env#IsVim9()
+        set wildoptions=pum,fuzzy
+    endif
 endif
 
 if te#env#IsVim8()
