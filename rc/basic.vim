@@ -71,8 +71,12 @@ Plug 'itchyny/vim-cursorword'
 Plug 'thinca/vim-quickrun',{'on': '<Plug>(quickrun)'}
 if(!te#env#IsWindows())
     Plug 'vim-scripts/sudo.vim', {'on': ['SudoRead', 'SudoWrite']}
-    if te#env#IsNvim() == 0
-        Plug 'lambdalisue/vim-manpager'
+    if te#env#IsVim9()
+        runtime ftplugin/man.vim
+    else
+        if te#env#IsNvim() == 0
+            Plug 'lambdalisue/vim-manpager'
+        endif
     endif
     if te#env#IsMac()
         Plug 'CodeFalling/fcitx-vim-osx',{'do': 'wget -c \"https://raw.githubusercontent.com/

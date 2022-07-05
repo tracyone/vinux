@@ -21,7 +21,7 @@ endfunction
 let s:win_list=[]
 let s:global_echo_str=[]
 
-function! VimCloseWin(winid, result) abort
+function! te#utils#close_win(winid, result) abort
     if !empty(s:win_list)
         if a:winid == s:win_list[0].id
             call remove(s:win_list, 0)
@@ -131,7 +131,7 @@ function! te#utils#EchoWarning(str,...) abort
                     \ 'borderchars':['─', '│', '─', '│', '┌', '┐', '┘', '└'],
                     \ 'borderhighlight':['vinux_border'],
                     \ 'drag': 1,
-                    \ 'callback': 'VimCloseWin',
+                    \ 'callback': 'te#utils#close_win',
                     \ })
         call add(s:win_list, l:win)
     else

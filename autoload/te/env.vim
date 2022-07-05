@@ -19,6 +19,14 @@ function! te#env#IsVim8() abort
     endif
 endfunction
 
+function! te#env#IsVim9() abort
+    if v:version >= 900 && !s:is_nvim
+        return 1
+    else
+        return 0
+    endif
+endfunction
+
 function! te#env#IsMac() abort
     if s:is_unix == 2 | return 1 | endif
     return 0
