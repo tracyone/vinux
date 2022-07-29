@@ -29,6 +29,10 @@ function! te#pg#add_cscope_out(read_project,...) abort
     endif
 endfunction
 
+function! te#pg#add_tags() abort
+    call rename(".temptags", "tags")
+endfunction
+
 function! te#pg#top_of_uboot_tree() abort
     let l:tree_check= ['include/asm-generic/u-boot.h', 'CREDITS', 'Kbuild', 'Makefile',
                 \ 'README', 'arch', 'include', 'drivers',
@@ -60,9 +64,10 @@ function! te#pg#gen_cscope_kernel(timerid) abort
     else
         :silent! call delete('cctree.out')
         if &cscopeprg ==# 'gtags-cscope'
-            call te#utils#run_command('make O=. SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[0,'.',1])
+            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[0,'.',1])
         else
-            call te#utils#run_command('make O=. SRCARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope tags', function('te#pg#add_cscope_out'),[0])
+            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[0])
+            call te#utils#run_command('ctags -f .temptags -R . ', function('te#pg#add_tags'))
         endif
         :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
     endif

@@ -19,8 +19,9 @@ function! te#complete#goto_def(open_type) abort
         try
             execute 'cs find g '.l:cword
         catch /^Vim\%((\a\+)\)\=:E/	
-            call te#utils#EchoWarning('cscope query failed')
+            call te#utils#EchoWarning('cscope query failed try ctags')
             if a:open_type !=? '' | wincmd q | endif
+            call feedkeys("\<c-]>")
             return -1
         endtry
     else
