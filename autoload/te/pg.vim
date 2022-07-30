@@ -67,7 +67,7 @@ function! te#pg#gen_cscope_kernel(timerid) abort
             call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[0,'.',1])
         else
             call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[0])
-            call te#utils#run_command('ctags -f .temptags -R . ', function('te#pg#add_tags'))
+            call te#utils#run_command('ctags -f .temptags --languages=C --c-types=+p --fields=+S -R * ', function('te#pg#add_tags'))
         endif
         :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
     endif
@@ -121,9 +121,9 @@ function! te#pg#do_cs_tags(dir, option) abort
         endif
         if(executable('ctags'))
             if &filetype ==# 'cpp'
-                call te#utils#run_command('ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .')
+                call te#utils#run_command('ctags -R --languages=C++ --c++-kinds=+px --fields=+aiKSz --extra=+q .')
             elseif &filetype ==# 'c'
-                call te#utils#run_command('ctags -R --c-types=+p --fields=+S *')
+                call te#utils#run_command('ctags -R --languages=C --c-types=+p --fields=+S *')
             else
                 call te#utils#run_command('ctags -R *')
             endif
