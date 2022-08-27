@@ -318,7 +318,7 @@ nnoremap sk zM
 nnoremap si zi
 
 " close all buffer
-map <Leader>ba :bufdo bd<cr>
+nnoremap <silent><Leader>ba :call te#tools#buf_only(-1, '')<cr>
 nnoremap  <silent><leader>jf :call te#terminal#jump_to_floating_win(-4)<cr>
 nnoremap  <silent><leader>jt :call te#terminal#jump_to_floating_win(-3)<cr>
 nnoremap  <silent><leader>j0 :call te#terminal#jump_to_floating_win(0)<cr>

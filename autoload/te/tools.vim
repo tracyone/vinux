@@ -65,11 +65,7 @@ function! te#tools#buf_only(buffer, bang) abort
 		" A l:buffer name was provided.
 		let l:buffer = bufnr(a:buffer)
 	endif
-
-	if l:buffer == -1
-        call te#utils#EchoWarning('No matching l:buffer for '.a:buffer, 'err')
-		return
-	endif
+    " if a:buffer == -1 then delete all buffer
 
 	let l:last_buffer = bufnr('$')
 
