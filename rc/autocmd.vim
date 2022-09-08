@@ -35,6 +35,7 @@ augroup filetype_group
 
     autocmd FileType crontab setlocal nobackup nowritebackup
     autocmd FileType fugitiveblame nnoremap <silent><buffer> q :call feedkeys('gq')<cr>
+    autocmd FileType vinarise nmap <buffer><c-g> :call feedkeys("gG")<cr>
 
     autocmd FileType gitcommit setlocal nofoldenable cursorline
     autocmd FileType qfreplace,vimcalc,man setlocal nonu nornu nofoldenable | imap <buffer> <c-d> :q<cr>
