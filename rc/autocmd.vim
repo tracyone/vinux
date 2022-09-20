@@ -11,6 +11,9 @@ augroup misc_group
         autocmd VimEnter * call te#feat#run_vim_enter_setting(0)
     endif
     autocmd FileChangedRO * setlocal noreadonly | call te#utils#EchoWarning('Changing readonly file ...')
+    if g:complete_plugin_type.cur_val == 'asyncomplete.vim'
+        autocmd InsertCharPre * call AsyncOpenCompleteMenu()
+    endif
 augroup END
 
 augroup lazy_load_group

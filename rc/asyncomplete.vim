@@ -51,6 +51,15 @@ function! s:check_back_space() abort
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+function! AsyncOpenCompleteMenu()
+    if !pumvisible() && ((v:char == '.' || v:char == '>'))
+        let b:asyncomplete_min_chars = 0
+    else
+        let b:asyncomplete_min_chars = g:asyncomplete_min_chars
+    endif
+endfunction
+
+
 inoremap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
             \ <SID>check_back_space() ? "\<TAB>" :
