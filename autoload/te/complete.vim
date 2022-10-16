@@ -17,13 +17,12 @@ function! te#complete#goto_def(open_type) abort
     endif
     if l:ret < 0
         try
-            execute 'cs find g '.l:cword
+            execute ':cstag '.l:cword
         catch /^Vim\%((\a\+)\)\=:E/	
-            call te#utils#EchoWarning('cscope query failed try ctags')
-            if a:open_type !=? '' | wincmd q | endif
-            call feedkeys("\<c-]>")
+            call te#utils#EchoWarning("Can not find any definition...")
             return -1
         endtry
+        :botright copen
     else
         return 0
     endif
