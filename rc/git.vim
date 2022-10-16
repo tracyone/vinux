@@ -17,6 +17,7 @@ if te#env#SupportPy2()
     Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
 endif
 Plug 'rhysd/github-complete.vim',{'for': ['gitcommit', 'markdown', 'gina-commit']}
+Plug 'rhysd/conflict-marker.vim'
 if te#env#SupportFeature('signs')
     Plug 'airblade/vim-gitgutter', { 'on': [] }
     call te#feat#register_vim_enter_setting2(['GitGutterEnable'], 
