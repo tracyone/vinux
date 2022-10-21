@@ -489,7 +489,11 @@ function! te#terminal#shell_pop(option) abort
     if te#env#IsGui() && te#env#IsUnix()
         let l:shell='bash'
     else
-        let l:shell=&shell
+        if !empty($SHELL)
+            let l:shell=$SHELL
+        else
+            let l:shell=&shell
+        endif
     endif
     if exists('l:cmd')
         let l:shell = l:cmd
@@ -626,7 +630,7 @@ function! te#terminal#shell_pop(option) abort
     endif
 
     if te#env#IsTmux()
-        call te#tmux#run_command(&shell, l:option)
+        call te#tmux#run_command(l:shell, l:option)
     else 
         execute 'VimShell' 
     endif
