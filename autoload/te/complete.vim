@@ -22,7 +22,10 @@ function! te#complete#goto_def(open_type) abort
             call te#utils#EchoWarning("Can not find any definition...")
             return -1
         endtry
-        :botright copen
+        let l:len=getqflist({'size':0}).size
+        if l:len > 1
+            :botright copen
+        endif
     else
         return 0
     endif
