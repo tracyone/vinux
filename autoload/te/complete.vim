@@ -57,6 +57,8 @@ function! s:get_input() abort
 endfunction
 
 function! s:YcmGotoDef() abort
+    let l:cur_line = line(".")
+    let l:cur_file_name = expand('%:t')
     let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
     if g:complete_plugin_type.cur_val ==# 'YouCompleteMe'
         if  exists('*youcompleteme#Enable') == 0
@@ -85,6 +87,11 @@ function! s:YcmGotoDef() abort
             endif
         else
             return -3 
+        endif
+    else
+        if l:cur_file_name == expand('%:t') && l:cur_line == line(".")
+            "file name and line not change
+            return -4 
         endif
     endif
     return 0
