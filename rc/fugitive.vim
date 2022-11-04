@@ -28,7 +28,7 @@ nnoremap  <silent><Leader>gb :Git blame<cr>
 " git diff current file (vimdiff)
 nnoremap  <silent><Leader>gd :Gdiff<cr>
 " git cd
-nnoremap  <silent><Leader>gc :Gcd<cr>:call te#utils#EchoWarning(getcwd())<cr>
+nnoremap  <silent><Leader>gc :Gcd<cr>
 " git config -e
 nnoremap  <silent><Leader>ge :Gcd<cr>:sp .git/config<cr>
 " Open github url

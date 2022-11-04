@@ -67,9 +67,9 @@ function! te#git#get_remote_name(A, L, P) abort
         call te#utils#EchoWarning('Git remote name failed!')
         return ''
     endif
-    let l:result=''
+    let l:result=[]
     for l:str in l:remote_name
-        let l:result.=l:str..nr2char(10)
+        call add(l:result, l:str)
     endfor
     return l:result
 endfunction
@@ -90,7 +90,7 @@ function! te#git#GitPush(push_type) abort
     if type(l:remote_name) != g:t_string
         return 2
     endif
-    let l:branch_name = input('Please input the branch name(master): ','master','custom,te#git#GetRemoteBr')
+    let l:branch_name = input('Please input the branch name: ','','customlist,te#git#GetRemoteBr')
     let l:cur_br_name=te#git#get_cur_br_name()
     if a:push_type ==# 'for'
         let l:cur_br_name = input('Which commit do you to push(HEAD):','HEAD','custom,te#git#get_latest_sevral_commit')
@@ -117,9 +117,9 @@ function! te#git#GetRemoteBr(A,L,P) abort
         call te#utils#EchoWarning('No remote name found!')
         return 1
     endif
-    let l:result=''
+    let l:result=[]
     for l:str in l:all_remote_name
-        let l:result.=substitute(l:str,'.*/','','').nr2char(10)
+        call add(l:result, substitute(l:str,'.*/','',''))
     endfor
     return l:result
 endfunction
@@ -148,16 +148,16 @@ function! te#git#git_rebase() abort
     if type(l:remote_name) != g:t_string
         return 2
     endif
-    let l:branch_name = input('Please input the branch name: ','','custom,te#git#GetRemoteBr')
+    let l:branch_name = input('Please input the branch name: ','','customlist,te#git#GetRemoteBr')
     call te#utils#run_command('git rebase '.l:remote_name.'/'.l:branch_name)
 endfunction
 
 function! te#git#git_merge() abort
-    let l:remote_name=input('Which remote do you want to merge: ','origin','custom,te#git#get_remote_name')
+    let l:remote_name=input('Which remote do you want to merge: ','','customlist,te#git#get_remote_name')
     if type(l:remote_name) != g:t_string
         return 2
     endif
-    let l:branch_name = input('which branch do you want to merge: ','master','custom,te#git#GetRemoteBr')
+    let l:branch_name = input('which branch do you want to merge: ','','customlist,te#git#GetRemoteBr')
     call te#utils#run_command('git fetch --all && git rebase '.l:remote_name.'/'.l:branch_name)
 endfunction
 

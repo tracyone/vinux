@@ -233,7 +233,6 @@ function! te#utils#goto_cur_file(option) abort
     else
         execute 'lcd %:h'
     endif
-    call te#utils#EchoWarning("cd to ".getcwd(), 'info')
 endfunction
 
 function! s:Get_pattern_at_cursor(pat) abort
