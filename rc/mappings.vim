@@ -110,7 +110,7 @@ nnoremap  <silent><leader>so :call te#utils#source_vimrc($MYVIMRC)<cr>
 "open the vimrc in tab
 nnoremap  <silent><leader>vc :call te#feat#edit_config()<cr>
 "open quickfix windows
-nnoremap  <silent><leader>qf :botright copen<cr>
+nnoremap  <silent><leader>qf :silent! botright copen<cr>
 "open location windows
 nnoremap  <silent><leader>qc q:
 nnoremap  <silent><leader>q/ q/

@@ -230,12 +230,21 @@ if te#env#IsNvim() != 0
     hi MsgSeparator ctermbg=black ctermfg=white
     set wildoptions+=pum
     set signcolumn=number
+    set shada='400,<20,@100,s10,f1,h,r/tmp,r/private/var
+    set shadafile=NONE
+    if te#env#IsNvim() >= 0.9
+        set cmdheight=0
+        set diffopt+=linematch:60
+        set laststatus=3
+        set foldcolumn=auto:1
+    endif
 else
     command! -nargs=? UpdateRemotePlugins call te#utils#EchoWarning("It is neovim's command")
     if te#env#IsVim9()
         set wildoptions=pum,fuzzy
     endif
 endif
+
 
 if te#env#IsVim8()
     set belloff=all

@@ -174,10 +174,18 @@ function! te#terminal#rename() abort
             let l:user_input = ' '
             let l:user_input .= input('Please input a new name: ')
             let s:term_obj[l:buf].title = l:user_input
-            if te#env#IsNvim() == 0 && te#terminal#get_option(l:buf) == 0x2
-                let l:origin_opt = popup_getoptions(l:win_id)
-                let l:user_input .= matchstr(l:origin_opt.title, "[\\d/\\d\\]")
-                call popup_setoptions(l:win_id, {'title':l:user_input})
+            if  te#terminal#get_option(l:buf) == 0x2
+                if te#env#IsNvim() == 0
+                    let l:origin_opt = popup_getoptions(l:win_id)
+                    let l:user_input .= matchstr(l:origin_opt.title, "[\\d/\\d\\]")
+                    call popup_setoptions(l:win_id, {'title':l:user_input})
+                else
+                    let l:origin_opt = nvim_win_get_config(l:win_id)
+                    let l:user_input .= matchstr(l:origin_opt.title[0][0], "[\\d/\\d\\]")
+                    let l:origin_opt.title[0][0] = l:user_input
+                    let l:origin_opt.title_pos = "left"
+                    call nvim_win_set_config(l:win_id, l:origin_opt)
+                endif
             endif
         else
             call te#utils#EchoWarning("Can not find window id for ".l:buf)
@@ -547,9 +555,14 @@ function! te#terminal#shell_pop(option) abort
             let l:anchor[0] = 'S'
         endif
         let l:anchor = l:anchor[0].l:anchor[1]
+        let l:term_list = te#terminal#get_buf_list()
+        let l:no_of_term = len(l:term_list) + 1
         if te#env#SupportFloatingWindows() == 2
             if exists('l:buf')
                 let l:term_obj = te#terminal#get_term_obj(l:buf)
+                let l:cur_index = te#terminal#get_index(l:buf) + 1
+                let l:title = l:term_obj.title
+                let l:title .= '['.l:cur_index.'/'.len(l:term_list).']'
             else
                 if and(l:option, 0x2) || and(l:option, 0x1)
                     let l:buf = nvim_create_buf(v:false, v:true)
@@ -558,6 +571,7 @@ function! te#terminal#shell_pop(option) abort
                 endif
                 let l:term_obj.title = l:title
                 let l:term_obj.line = 0
+                let l:title .= '['.l:no_of_term.'/'.l:no_of_term.']'
                 if has_key(a:option, 'exit_cb') && type(a:option.exit_cb) == g:t_func
                     let l:term_obj.exit_cb = a:option.exit_cb
                 endif
@@ -569,7 +583,8 @@ function! te#terminal#shell_pop(option) abort
             let l:term_obj.pos = l:pos_str
             if and(l:option, 0x02)
                 let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:height, 'col': l:col,
-                            \ 'row': l:row, 'anchor': l:anchor, 'border': 'rounded', 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
+                            \ 'row': l:row, 'anchor': l:anchor, 'border': 'rounded', 'focusable': v:true,
+                            \ 'style': 'minimal', 'zindex': 1, 'title':l:title}
                 let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
                 call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
                 call nvim_win_set_option(l:win_id, 'winblend', 30)
@@ -582,13 +597,11 @@ function! te#terminal#shell_pop(option) abort
             let s:term_obj[l:buf] = l:term_obj
             return
         elseif te#env#SupportFloatingWindows()
-            let l:term_list = te#terminal#get_buf_list()
             let l:term_key = &termwinkey
             if !exists('l:buf')
                 let l:buf = term_start(l:shell, #{hidden: 1, exit_cb:function('<SID>JobExit'), 
                             \ term_rows:l:height, term_cols:l:width, env:l:env_dict})
                 call setbufvar(l:buf, '&buflisted', 0)
-                let l:no_of_term = len(l:term_list) + 1
                 let l:term_obj.title = l:title
                 let l:term_obj.line = 0
                 if has_key(a:option, 'exit_cb') && type(a:option.exit_cb) == g:t_func

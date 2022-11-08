@@ -21,7 +21,7 @@ endfunction
 function s:gina_setting()
     nnoremap  <silent><F3> :Gina status<cr>
     " Open git status window
-    nnoremap  <silent><Leader>gs :Gina status<cr>
+    nnoremap  <silent><Leader>gs :silent! Gina status<cr>
     " Open github url
     nnoremap  <silent><Leader>gh :Gina browse<cr>
     " Open git blame windows
