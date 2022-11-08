@@ -210,7 +210,7 @@ let g:loaded_tutor_mode_plugin = 1
 let g:loaded_netrwSettings = 1
 let g:loaded_netrwFileHandlers = 1
 
-
+ set viminfo='100,<20,s10,h
 if te#env#IsNvim() != 0
     " Use cursor shape feature
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
@@ -230,8 +230,6 @@ if te#env#IsNvim() != 0
     hi MsgSeparator ctermbg=black ctermfg=white
     set wildoptions+=pum
     set signcolumn=number
-    set shada='400,<20,@100,s10,f1,h,r/tmp,r/private/var
-    set shadafile=NONE
     if te#env#IsNvim() >= 0.9
         set cmdheight=0
         set diffopt+=linematch:60

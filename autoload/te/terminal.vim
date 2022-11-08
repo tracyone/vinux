@@ -181,10 +181,12 @@ function! te#terminal#rename() abort
                     call popup_setoptions(l:win_id, {'title':l:user_input})
                 else
                     let l:origin_opt = nvim_win_get_config(l:win_id)
-                    let l:user_input .= matchstr(l:origin_opt.title[0][0], "[\\d/\\d\\]")
-                    let l:origin_opt.title[0][0] = l:user_input
-                    let l:origin_opt.title_pos = "left"
-                    call nvim_win_set_config(l:win_id, l:origin_opt)
+                    if has_key(l:origin_opt, 'title')
+                        let l:user_input .= matchstr(l:origin_opt.title[0][0], "[\\d/\\d\\]")
+                        let l:origin_opt.title[0][0] = l:user_input
+                        let l:origin_opt.title_pos = "left"
+                        call nvim_win_set_config(l:win_id, l:origin_opt)
+                    endif
                 endif
             endif
         else
@@ -221,7 +223,19 @@ function! te#terminal#open_term(option) abort
 
     if len(win_findbuf(l:buf))
         if te#env#IsNvim() != 0
-            call nvim_set_current_win(win_findbuf(l:buf)[0])
+            let l:win_id=win_findbuf(l:buf)[0]
+            let l:origin_opt = nvim_win_get_config(l:win_id)
+            if has_key(l:origin_opt, 'title')
+                let l:term_list = te#terminal#get_buf_list()
+                let l:term_obj = te#terminal#get_term_obj(l:buf)
+                let l:cur_index = te#terminal#get_index(l:buf) + 1
+                let l:title = l:term_obj.title
+                let l:title .= '['.l:cur_index.'/'.len(l:term_list).']'
+                let l:origin_opt.title[0][0] = l:title
+                let l:origin_opt.title_pos = "left"
+                call nvim_win_set_config(l:win_id, l:origin_opt)
+            endif
+            call nvim_set_current_win(l:win_id)
         else
             call win_gotoid(win_findbuf(l:buf)[0])
         endif
@@ -584,7 +598,10 @@ function! te#terminal#shell_pop(option) abort
             if and(l:option, 0x02)
                 let l:opts = {'relative': 'editor', 'width': l:width, 'height': l:height, 'col': l:col,
                             \ 'row': l:row, 'anchor': l:anchor, 'border': 'rounded', 'focusable': v:true,
-                            \ 'style': 'minimal', 'zindex': 1, 'title':l:title}
+                            \ 'style': 'minimal', 'zindex': 1}
+                if te#env#IsNvim() >= 0.9
+                    let l:opts.title = l:title
+                endif
                 let l:win_id=nvim_open_win(l:buf, v:true, l:opts)
                 call nvim_win_set_option(l:win_id, 'winhl', 'FloatBorder:vinux_border')
                 call nvim_win_set_option(l:win_id, 'winblend', 30)

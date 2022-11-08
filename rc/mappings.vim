@@ -390,7 +390,7 @@ nnoremap  <silent><Leader>ps :PlugStatus<cr>
 " update plugin
 nnoremap  <silent><Leader>pu :PlugUpdate<cr>
 " list plugins
-nnoremap  <silent><Leader>pl :call te#plug#list()<cr>
+nnoremap  <silent><Leader>pl :silent! call te#plug#list()<cr>
 "checkhealth
 nnoremap <silent> <Leader>ch :call te#utils#check_health()<cr>
 " Open vimshell or neovim's emulator in split window
