@@ -146,7 +146,7 @@ endif
 if get(g:,'feat_enable_airline') != 1
     " Dictionary: take mode() input -> longer notation of current mode
     " mode() is defined by Vim
-    let g:currentmode={ 'n' : 'Normal', 'no' : 'N-Operator Pending', 'v' : 'Visual', 'V' : 'V-Line', '^V' : 'V-Block', 's' : 'Select', 'S': 'S-Line', '^S' : 'S-Block', 'i' : 'Insert', 'R' : 'Replace', 'Rv' : 'V-Replace', 'c' : 'Command', 'cv' : 'Vim Ex', 'ce' : 'Ex', 'r' : 'Prompt', 'rm' : 'More', 'r?' : 'Confirm', '!' : 'Shell', 't' : 'Terminal'}
+    let g:currentmode={ 'n' : 'N', 'no' : 'N-Operator Pending', 'v' : 'Visual', 'V' : 'V-Line', '^V' : 'V-Block', 's' : 'Select', 'S': 'S-Line', '^S' : 'S-Block', 'i' : 'I', 'R' : 'R', 'Rv' : 'V-R', 'c' : 'C', 'cv' : 'Vim Ex', 'ce' : 'Ex', 'r' : 'Prompt', 'rm' : 'More', 'r?' : 'Confirm', '!' : 'Shell', 't' : 'Term'}
     " Function: return current mode
     " abort -> function will abort soon as error detected
     function! ModeCurrent() abort
@@ -163,6 +163,9 @@ if get(g:,'feat_enable_airline') != 1
         let l:mystatus_line.='%<%t%m%r%h%w'.s:right_seperator
         if winwidth(0) < 70
             return l:mystatus_line
+        endif
+        if te#env#SupportCscope()
+            let l:mystatus_line.='cscope[%{cscope_connection()}]'.s:right_seperator
         endif
         if a:type == 1
             let l:mystatus_line.=s:git_branch
