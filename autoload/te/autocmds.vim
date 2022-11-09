@@ -9,7 +9,9 @@ endfunction
 "Put all things that you want to be triggered by DirChanged
 function! te#autocmds#dir_changed() abort
     "add cscope database if exist
-    call te#pg#add_cscope_out(1)
+    if te#env#SupportCscope()
+        call te#pg#add_cscope_out(1)
+    endif
     "show current directory
     call te#utils#EchoWarning(getcwd(), 'info')
 endfunction

@@ -111,10 +111,6 @@ function! te#pg#do_cs_tags(dir, option) abort
         call te#utils#EchoWarning('Wrong argument! Option must be a number', 'err')
         return
     endif
-    if and(a:option, 0x04)
-        call te#utils#run_command('gtags '.a:dir, function('te#pg#add_cscope_out'),[0,a:dir,1])
-        return 0
-    endif
     :silent! call delete(l:cctreeout)
     if and(a:option, 0x01)
         if filereadable('tags')
@@ -134,10 +130,14 @@ function! te#pg#do_cs_tags(dir, option) abort
             endif
         endif
     endif
-    if !and(a:option, 0x02) || (&filetype !=# 'c' && &filetype !=# 'cpp')
-        return
+    if and(a:option, 0x04)
+        call te#utils#run_command('gtags '.a:dir, function('te#pg#add_cscope_out'),[0,a:dir,1])
+        return 0
     endif
     if !te#env#SupportCscope()
+        return
+    endif
+    if !and(a:option, 0x02) || (&filetype !=# 'c' && &filetype !=# 'cpp')
         return
     endif
     if filereadable(l:cscopefiles)

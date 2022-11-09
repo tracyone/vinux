@@ -9,46 +9,48 @@ if get(g:, 'feat_enable_c') != 1
 endif
 
 
-" add cscope database at the first time
-if get(g:,'tagging_program').cur_val ==# 'gtags'
-    set cscopeprg=gtags-cscope
-    :call te#pg#add_cscope_out(1,'.',1)
-else
-    set cscopeprg=cscope
-    :call te#pg#add_cscope_out(1)
+if te#env#SupportCscope()
+    " add cscope database at the first time
+    if get(g:,'tagging_program').cur_val ==# 'gtags'
+        set cscopeprg=gtags-cscope
+        :call te#pg#add_cscope_out(1,'.',1)
+    else
+        set cscopeprg=cscope
+        :call te#pg#add_cscope_out(1)
+    endif
+
+    " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+    set cscopetag
+    " check cscope for definition of a symbol before checking ctags: set to 1
+    " if you want the reverse search order.
+    set cscopetagorder=0
+    set cscopequickfix=s-,c-,d-,i-,t-,e-,i-,g-,f-
+    " add any cscope database in current directory
+    " else add the database pointed to by environment variable 
+    set cscopetagorder=0
+    set cscopeverbose 
+    " show msg when any other cscope db added
+    nnoremap  <silent><buffer> <LocalLeader>s :cs find s <C-R>=expand("<cword>")<CR><CR>:botright cw 7<cr>
+    nnoremap  <silent><buffer> <LocalLeader>d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:botright cw 7<cr>
+    nnoremap  <silent><buffer> <LocalLeader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:botright cw 7<cr>
+    nnoremap  <silent><buffer> <LocalLeader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:botright cw 7<cr>
+    "nnoremap ,f :cs find f <C-R>=expand("<cfile>")<CR><CR>:cw 7<cr>
+    nnoremap  <silent><buffer> <LocalLeader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:botright cw 7<cr>
+
+    nnoremap  <silent><buffer> <C-\>s :split<CR>:cs find s <C-R>=expand("<cword>")<CR><CR>
+    nnoremap  <silent><buffer> <C-\>d :split<CR>:cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>
+    nnoremap  <silent><buffer> <C-\>c :split<CR>:cs find c <C-R>=expand("<cword>")<CR><CR>
+    nnoremap  <silent><buffer> <C-\>t :split<CR>:cs find t <C-R>=expand("<cword>")<CR><CR>
+    nnoremap  <silent><buffer> <C-\>e :split<CR>:cs find e <C-R>=expand("<cword>")<CR><CR>
+    nnoremap  <silent><buffer> <C-\>f :split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nnoremap  <silent><buffer> <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+
+    nnoremap  <silent><buffer> <LocalLeader>u :call te#pg#gen_cs_out()<cr>
+    nnoremap  <silent><buffer> <LocalLeader>a :call te#pg#add_cscope_out(1)<cr>
+    "kill the connection of current dir 
+    nnoremap  <silent><buffer> <LocalLeader>k :cs kill cscope.out<cr> 
+
 endif
-
-" use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
-set cscopetag
-" check cscope for definition of a symbol before checking ctags: set to 1
-" if you want the reverse search order.
-set cscopetagorder=0
-set cscopequickfix=s-,c-,d-,i-,t-,e-,i-,g-,f-
-" add any cscope database in current directory
-" else add the database pointed to by environment variable 
-set cscopetagorder=0
-set cscopeverbose 
-" show msg when any other cscope db added
-nnoremap  <silent><buffer> <LocalLeader>s :cs find s <C-R>=expand("<cword>")<CR><CR>:botright cw 7<cr>
-nnoremap  <silent><buffer> <LocalLeader>d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:botright cw 7<cr>
-nnoremap  <silent><buffer> <LocalLeader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:botright cw 7<cr>
-nnoremap  <silent><buffer> <LocalLeader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:botright cw 7<cr>
-"nnoremap ,f :cs find f <C-R>=expand("<cfile>")<CR><CR>:cw 7<cr>
-nnoremap  <silent><buffer> <LocalLeader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:botright cw 7<cr>
-
-nnoremap  <silent><buffer> <C-\>s :split<CR>:cs find s <C-R>=expand("<cword>")<CR><CR>
-nnoremap  <silent><buffer> <C-\>d :split<CR>:cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>
-nnoremap  <silent><buffer> <C-\>c :split<CR>:cs find c <C-R>=expand("<cword>")<CR><CR>
-nnoremap  <silent><buffer> <C-\>t :split<CR>:cs find t <C-R>=expand("<cword>")<CR><CR>
-nnoremap  <silent><buffer> <C-\>e :split<CR>:cs find e <C-R>=expand("<cword>")<CR><CR>
-nnoremap  <silent><buffer> <C-\>f :split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
-nnoremap  <silent><buffer> <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-
-nnoremap  <silent><buffer> <LocalLeader>u :call te#pg#gen_cs_out()<cr>
-nnoremap  <silent><buffer> <LocalLeader>a :call te#pg#add_cscope_out(1)<cr>
-"kill the connection of current dir 
-nnoremap  <silent><buffer> <LocalLeader>k :cs kill cscope.out<cr> 
-
 " make
 nnoremap  <silent><buffer> <leader>am :call te#pg#do_make()<cr>
 nnoremap  <silent><buffer> <F5> :call te#pg#do_make()<CR>
