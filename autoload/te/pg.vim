@@ -63,13 +63,18 @@ function! te#pg#gen_cscope_kernel(timerid) abort
         call te#utils#EchoWarning('Current directory is not in the top level of kernel tree')
     else
         :silent! call delete('cctree.out')
-        if &cscopeprg ==# 'gtags-cscope'
-            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[0,'.',1])
+        if te#env#SupportCscope()
+            if &cscopeprg ==# 'gtags-cscope'
+                call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[0,'.',1])
+            else
+                call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[0])
+                call te#utils#run_command('ctags -f .temptags --languages=C --c-types=+p --fields=+S -R * ', function('te#pg#add_tags'))
+            endif
+            :call te#utils#EchoWarning('Generating cscope database and tag file for linux kernel ...')
         else
-            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[0])
             call te#utils#run_command('ctags -f .temptags --languages=C --c-types=+p --fields=+S -R * ', function('te#pg#add_tags'))
+            :call te#utils#EchoWarning('Generating tag file for linux kernel ...')
         endif
-        :call te#utils#EchoWarning('Generating cscope database file for linux kernel ...')
     endif
 endfunction
 
@@ -132,6 +137,9 @@ function! te#pg#do_cs_tags(dir, option) abort
     if !and(a:option, 0x02) || (&filetype !=# 'c' && &filetype !=# 'cpp')
         return
     endif
+    if !te#env#SupportCscope()
+        return
+    endif
     if filereadable(l:cscopefiles)
         let csfilesdeleted=delete(l:cscopefiles)
         if(csfilesdeleted!=0)
@@ -155,8 +163,10 @@ endfunction
 function! te#pg#gen_cs_out() abort
     let l:project_root=getcwd()
     let l:option=0x02
-    if &cscopeprg ==# 'gtags-cscope'
-        let l:option=0x04
+    if te#env#SupportCscope()
+        if &cscopeprg ==# 'gtags-cscope'
+            let l:option=0x04
+        endif
     endif
     if empty(glob('.project'))
         :call te#pg#do_cs_tags(getcwd(),l:option)

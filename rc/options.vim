@@ -231,7 +231,6 @@ if te#env#IsNvim() != 0
     set wildoptions+=pum
     set signcolumn=number
     if te#env#IsNvim() >= 0.9
-        set cmdheight=0
         set diffopt+=linematch:60
         set laststatus=3
         set foldcolumn=auto:1
