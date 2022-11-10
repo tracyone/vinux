@@ -167,6 +167,9 @@ if get(g:,'feat_enable_airline') != 1
         if te#env#SupportCscope()
             let l:mystatus_line.='cscope[%{cscope_connection()}]'.s:right_seperator
         endif
+        if get(g:, 'feat_enable_lsp') == 1
+            let l:mystatus_line.='lsp[%{te#lsp#is_server_running()}]'.s:right_seperator
+        endif
         if a:type == 1
             let l:mystatus_line.=s:git_branch
             let l:mystatus_line.=s:function_name

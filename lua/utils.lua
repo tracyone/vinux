@@ -7,7 +7,8 @@ local function get_size(tabl)
 end
 
 function module.is_lsp_running()
-    local client_obj = vim.lsp.buf_get_clients()
+    local current_buf = vim.api.nvim_get_current_buf()
+    local client_obj = vim.lsp.get_active_clients{ buffer = current_buf }
     return get_size(client_obj)
 end
 
