@@ -19,7 +19,7 @@ function! te#complete#goto_def(open_type) abort
         if te#env#SupportCscope()
             let l:cmd = ':cstag '.l:cword
         else
-            let l:cmd = ':tag '.l:cword
+            let l:cmd = ':tselect '.l:cword
         endif
         try
             execute  l:cmd
