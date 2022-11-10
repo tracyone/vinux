@@ -68,11 +68,11 @@ function! te#pg#gen_cscope_kernel(timerid) abort
                 call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[0,'.',1])
             else
                 call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[0])
-                call te#utils#run_command('ctags -f .temptags --languages=C --c-types=+p --fields=+S -R * ', function('te#pg#add_tags'))
+                call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'))
             endif
             :call te#utils#EchoWarning('Generating cscope database and tag file for linux kernel ...')
         else
-            call te#utils#run_command('ctags -f .temptags --languages=C --c-types=+p --fields=+S -R * ', function('te#pg#add_tags'))
+            call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'))
             :call te#utils#EchoWarning('Generating tag file for linux kernel ...')
         endif
     endif
@@ -122,11 +122,11 @@ function! te#pg#do_cs_tags(dir, option) abort
         endif
         if(executable('ctags'))
             if &filetype ==# 'cpp'
-                call te#utils#run_command('ctags -R --languages=C++ --c++-kinds=+px --fields=+aiKSz --extra=+q .')
+                call te#utils#run_command('ctags -R --languages=C++ --langmap=c++:+.inl.h.cc --c++-kinds=+px --fields=+aiKSz --extra=+q .')
             elseif &filetype ==# 'c'
-                call te#utils#run_command('ctags -R --languages=C --c-types=+p --fields=+S *')
+                call te#utils#run_command('ctags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R .')
             else
-                call te#utils#run_command('ctags -R *')
+                call te#utils#run_command('ctags -R .')
             endif
         endif
     endif
@@ -162,11 +162,14 @@ endfunction
 " generate cscope database
 function! te#pg#gen_cs_out() abort
     let l:project_root=getcwd()
-    let l:option=0x02
     if te#env#SupportCscope()
         if &cscopeprg ==# 'gtags-cscope'
             let l:option=0x04
+        else
+            let l:option=0x02
         endif
+    else
+        let l:option=0x01
     endif
     if empty(glob('.project'))
         :call te#pg#do_cs_tags(getcwd(),l:option)
