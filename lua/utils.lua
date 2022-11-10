@@ -12,4 +12,14 @@ function module.is_lsp_running()
     return get_size(client_obj)
 end
 
+function module.get_client_name()
+    local current_buf = vim.api.nvim_get_current_buf()
+    local client_obj = vim.lsp.get_active_clients{ buffer = current_buf }
+
+    for _, client in pairs(client_obj) do
+        return string.format("%s", client.name)
+    end
+    return string.format("0")
+end
+
 return module

@@ -18,6 +18,23 @@ function! te#lsp#is_server_running() abort
     return 0
 endfunction
 
+function! te#lsp#get_lsp_server_name() abort
+    if te#env#IsNvim() >= 0.5
+        return v:lua.require('utils').get_client_name()
+    else
+        if exists("*lsp#get_server_status")
+            let l:ret = 0
+            let l:serve_name = lsp#get_allowed_servers()
+            for l:needle in l:serve_name
+                if stridx(lsp#get_server_status(l:needle), 'running') != -1
+                    return l:needle
+                endif
+            endfor
+            return "0"
+        endif
+    endif
+endfunction
+
 function! te#lsp#gotodefinion() abort
     if exists(':LspDefinition') == 2
         :LspDefinition
