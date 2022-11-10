@@ -16,8 +16,13 @@ function! te#complete#goto_def(open_type) abort
         endif
     endif
     if l:ret < 0
+        if te#env#SupportCscope()
+            let l:cmd = ':cstag '.l:cword
+        else
+            let l:cmd = ':tag '.l:cword
+        endif
         try
-            execute ':cstag '.l:cword
+            execute  l:cmd
         catch /^Vim\%((\a\+)\)\=:E/	
             call te#utils#EchoWarning("Can not find any definition...")
             return -1
