@@ -97,6 +97,8 @@ elseif g:vinux_coding_style.cur_val ==# 'google'
     let g:vinux_tabwidth=2
 elseif g:vinux_coding_style.cur_val ==# 'llvm'
     let g:vinux_tabwidth=4
+elseif g:vinux_coding_style.cur_val ==# 'chromium'
+    let g:vinux_tabwidth=2
 endif
 
 set hlsearch "highlight all matches for the last used search pattern

@@ -74,16 +74,20 @@ setlocal nosmarttab
 
 " linux coding style
 let g:clang_format#code_style=g:vinux_coding_style.cur_val
-let g:clang_format#style_options = {
-            \ 'IndentWidth' : g:vinux_tabwidth,
-            \ 'UseTab' : 'Always',
-            \ 'BreakBeforeBraces' : 'Linux',
-            \ 'AllowShortIfStatementsOnASingleLine': 'false',
-            \ 'AllowShortBlocksOnASingleLine': 'false',
-            \ 'AllowShortCaseLabelsOnASingleLine': 'false',
-            \ 'AllowShortFunctionsOnASingleLine': 'None',
-            \ 'AllowShortLoopsOnASingleLine': 'false',
-            \ 'IndentCaseLabels' : 'false'}
+"custom codeing style for linux kernel development
+if g:clang_format#code_style ==# 'linux'
+    let g:clang_format#code_style='llvm'
+    let g:clang_format#style_options = {
+                \ 'IndentWidth' : g:vinux_tabwidth,
+                \ 'UseTab' : 'Always',
+                \ 'BreakBeforeBraces' : 'Linux',
+                \ 'AllowShortIfStatementsOnASingleLine': 'false',
+                \ 'AllowShortBlocksOnASingleLine': 'false',
+                \ 'AllowShortCaseLabelsOnASingleLine': 'false',
+                \ 'AllowShortFunctionsOnASingleLine': 'None',
+                \ 'AllowShortLoopsOnASingleLine': 'false',
+                \ 'IndentCaseLabels' : 'false'}
+endif
 if &ft == 'cpp'
     execute 'source '.$VIMFILES.'/after/ftplugin/cpp.vim'
 endif

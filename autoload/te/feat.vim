@@ -246,7 +246,7 @@ function! te#feat#init_all() abort
     "limit:use cache when exceed the limit files
     call te#feat#init_var('g:ctrlp_caching_type', ['limit', 'on', 'off'])
     "c & cpp coding style
-    call te#feat#init_var('g:vinux_coding_style', ['linux', 'mozilla', 'google', 'llvm'])
+    call te#feat#init_var('g:vinux_coding_style', ['linux', 'mozilla', 'google', 'llvm', 'chromium'])
     call te#feat#init_var('g:enable_sexy_mode', ['off', 'on'])
     call te#feat#init_var('g:tagging_program', ['cscope', 'gtags'])
     if filereadable($VIMFILES.'/feature.vim')
