@@ -74,27 +74,28 @@ setlocal nosmarttab
 
 " linux coding style
 let g:clang_format#code_style=g:vinux_coding_style.cur_val
-if g:vinux_coding_style.cur_val ==# 'linux'
-    let g:clang_format#code_style='llvm'
-    let g:clang_format#style_options = {
-                \ 'IndentWidth' : '8',
-                \ 'UseTab' : 'Always',
-                \ 'BreakBeforeBraces' : 'Linux',
-                \ 'AllowShortIfStatementsOnASingleLine': 'false',
-                \ 'AllowShortBlocksOnASingleLine': 'false',
-                \ 'AllowShortCaseLabelsOnASingleLine': 'false',
-                \ 'AllowShortFunctionsOnASingleLine': 'None',
-                \ 'AllowShortLoopsOnASingleLine': 'false',
-                \ 'IndentCaseLabels' : 'false'}
-endif
+let g:clang_format#style_options = {
+            \ 'IndentWidth' : g:vinux_tabwidth,
+            \ 'UseTab' : 'Always',
+            \ 'BreakBeforeBraces' : 'Linux',
+            \ 'AllowShortIfStatementsOnASingleLine': 'false',
+            \ 'AllowShortBlocksOnASingleLine': 'false',
+            \ 'AllowShortCaseLabelsOnASingleLine': 'false',
+            \ 'AllowShortFunctionsOnASingleLine': 'None',
+            \ 'AllowShortLoopsOnASingleLine': 'false',
+            \ 'IndentCaseLabels' : 'false'}
 if &ft == 'cpp'
     execute 'source '.$VIMFILES.'/after/ftplugin/cpp.vim'
+endif
+
+if g:clang_format#code_style == 'linux'
+    setlocal colorcolumn=80
 else
-setlocal colorcolumn=80
+    setlocal colorcolumn=160
+endif
 execute 'setlocal tabstop='.g:vinux_tabwidth
 execute 'setlocal shiftwidth='.g:vinux_tabwidth
 execute 'setlocal softtabstop='.g:vinux_tabwidth
-endif
 
 let b:delimitMate_matchpairs = '(:),[:],{:}'
 
@@ -116,24 +117,4 @@ if !exists('g:vinux_auto_gen_cscope')
         endif
     endif
     let g:vinux_auto_gen_cscope=1
-endif
-
-if &ft ==# 'cpp'
-    if te#env#Executable('cppman')
-        let g:manpager#man_executable='cppman'
-    endif
-    let g:clang_format#code_style='google'
-    let g:clang_format#style_options = {
-                \ 'IndentWidth' : '4',
-                \ 'UseTab' : 'Always',
-                \ 'BreakBeforeBraces' : 'Linux',
-                \ 'AllowShortIfStatementsOnASingleLine': 'false',
-                \ 'AllowShortBlocksOnASingleLine': 'false',
-                \ 'AllowShortCaseLabelsOnASingleLine': 'false',
-                \ 'AllowShortFunctionsOnASingleLine': 'None',
-                \ 'AllowShortLoopsOnASingleLine': 'false',
-                \ 'IndentCaseLabels' : 'false'}
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-    setlocal softtabstop=4
 endif
