@@ -19,7 +19,7 @@ xnoremap  <silent><Leader>ac :<C-u>HowMuch =<cr>
 xnoremap  <silent><Leader>ar :<C-u>HowMuch r<cr>
 let g:HowMuch_scale = 16
 let g:HowMuch_auto_engines = ['py', 'vim', 'bc']
-Plug 'voldikss/vim-translate-me', {'on': ['TranslateW','TranslateR', 'Translate']}
+Plug 'voldikss/vim-translator', {'on': ['TranslateW','TranslateR', 'Translate']}
 command! -nargs=? Trans call te#trans#translate(<q-args>)
 command! -nargs=? -range TransR call te#trans#replace(<q-args>)
 Plug 'vim-scripts/DrawIt',{'on': 'DrawIt'}
