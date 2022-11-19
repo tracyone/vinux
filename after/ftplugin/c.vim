@@ -13,10 +13,10 @@ if te#env#SupportCscope()
     " add cscope database at the first time
     if get(g:,'tagging_program').cur_val ==# 'gtags'
         set cscopeprg=gtags-cscope
-        :call te#pg#add_cscope_out(1,'.',1)
+        call te#pg#add_cscope_out(1,'.',1)
     else
         set cscopeprg=cscope
-        :call te#pg#add_cscope_out(1)
+        call te#pg#add_cscope_out(1)
     endif
 
     " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
@@ -92,14 +92,6 @@ if &ft == 'cpp'
     execute 'source '.$VIMFILES.'/after/ftplugin/cpp.vim'
 endif
 
-if g:clang_format#code_style == 'linux'
-    setlocal colorcolumn=80
-else
-    setlocal colorcolumn=160
-endif
-execute 'setlocal tabstop='.g:vinux_tabwidth
-execute 'setlocal shiftwidth='.g:vinux_tabwidth
-execute 'setlocal softtabstop='.g:vinux_tabwidth
 
 let b:delimitMate_matchpairs = '(:),[:],{:}'
 
@@ -115,7 +107,6 @@ if !exists('g:vinux_auto_gen_cscope')
     if te#env#SupportTimer() &&
                 \ (te#env#IsTmux() || te#env#SupportAsync())
         if te#pg#top_of_kernel_tree() || te#pg#top_of_uboot_tree()
-                    \ || filereadable('.project')
             call timer_start(3000, 'te#pg#gen_cscope_kernel')
             call timer_start(600000, 'te#pg#gen_cscope_kernel', {'repeat': -1})
         endif

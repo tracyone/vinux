@@ -85,7 +85,7 @@ function! te#tools#buf_only(buffer, bang) abort
 		let l:n = l:n+1
 	endwhile
 
-    call te#utils#EchoWarning(l:delete_count.' buffers deleted')
+    call te#utils#EchoWarning(l:delete_count.' buffers have been deleted')
 endfunction
 
 " 0:up, 1:down, 2:pgup, 3:pgdown, 4:top, 5:bottom

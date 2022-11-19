@@ -15,7 +15,7 @@ function! s:config_deoplete()
         if strlen(a:dir) == 0
             let l:dir=getcwd().'/'
         endif
-        if empty(glob(l:dir.'.clang_complete'))
+        if !filereadable(l:dir.'.clang_complete')
             return 1 
         else
             for s:line in readfile(l:dir.'.clang_complete', '')

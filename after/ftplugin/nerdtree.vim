@@ -96,32 +96,11 @@ function! s:move_file()
 endfunction
 
 function! s:paste_file()
-    let l:node = g:NERDTreeFileNode.GetSelected()
     let l:confirm = 1
+    let l:node = g:NERDTreeFileNode.GetSelected()
     if exists("s:copy_file_path") && !empty(s:copy_file_path)
         let l:dst_file = fnamemodify(l:node.path.str(), ":p:h").nerdtree#slash().fnamemodify(s:copy_file_path, ":t")
-        if filereadable(s:copy_file_path)
-            if filereadable(l:dst_file)
-                if confirm(l:dst_file." is exist! override?", "&Yes\n&No", 2) == 2
-                    call te#utils#EchoWarning("Copy file abort")
-                    let l:confirm = 0
-                endif
-            endif
-            if l:confirm == 1
-                if !exists('*readblob')
-                    let l:ret = system('cp -a '.s:copy_file_path.' '.l:dst_file)
-                else
-                    let l:ret = writefile(readblob(s:copy_file_path), l:dst_file, "s")
-                endif
-                if l:ret == -1
-                    call te#utils#EchoWarning("Copy ".s:copy_file_path. " fail")
-                else
-                    call te#utils#EchoWarning("Copy file finish")
-                endif
-            endif
-        else
-            call te#utils#EchoWarning(s:copy_file_path." is not exist")
-        endif
+        let l:ret = te#file#copy_file(s:copy_file_path, l:dst_file)
         let s:copy_file_path = ""
     endif
 

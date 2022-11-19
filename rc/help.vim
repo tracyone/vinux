@@ -34,12 +34,6 @@ noremap <F8> :SSave<cr>
 " Open startify windows
 nnoremap  <silent><Leader>hh :Startify<cr>
 autocmd misc_group FileType startify setlocal buftype=
-" Session save 
-nnoremap  <silent><Leader>ss :SSave<cr>
-" Session load
-nnoremap  <silent><Leader>sl :SLoad 
-" Session delete
-nnoremap  <silent><Leader>sd :SDelete<cr>
 "}}}
 "which-key {{{
 if v:version >= 704 && te#env#IsDisplay()

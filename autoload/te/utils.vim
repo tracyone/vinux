@@ -686,7 +686,6 @@ function! te#utils#cd_to_plugin(path) abort
         return
     endif
     execute 'cd '.l:plugin_name 
-    call te#utils#EchoWarning('cd to '.l:plugin_name)
 endfunction
 
 function! s:pedit(line)

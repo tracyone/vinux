@@ -89,8 +89,14 @@ if has('patch-8.1.1902')
     set completepopup=height:10,width:60,highlight:Pmenu,border:off
 endif
 
+set textwidth=160
+set expandtab
+set smarttab
 if g:vinux_coding_style.cur_val ==# 'linux'
     let g:vinux_tabwidth=8
+    set textwidth=80
+    set noexpandtab
+    set nosmarttab
 elseif g:vinux_coding_style.cur_val ==# 'mozilla'
     let g:vinux_tabwidth=4
 elseif g:vinux_coding_style.cur_val ==# 'google'
@@ -100,6 +106,9 @@ elseif g:vinux_coding_style.cur_val ==# 'llvm'
 elseif g:vinux_coding_style.cur_val ==# 'chromium'
     let g:vinux_tabwidth=2
 endif
+execute 'set tabstop='.g:vinux_tabwidth
+execute 'set shiftwidth='.g:vinux_tabwidth
+execute 'set softtabstop='.g:vinux_tabwidth
 
 set hlsearch "highlight all matches for the last used search pattern
 set noshowmode "display the current mode in the status line

@@ -173,12 +173,6 @@ if get(g:, 'feat_enable_help') == 0
     Plug 'xolox/vim-misc', {'on': ['OpenSession', 'SaveSession', 'DeleteSession']}
     let g:session_autoload=0
     let g:session_autosave='no'
-    " Session save 
-    nnoremap  <silent><Leader>ss :SaveSession 
-    " Session load
-    nnoremap  <silent><Leader>sl :OpenSession<cr> 
-    " Session delete
-    nnoremap  <silent><Leader>sd :DeleteSession<cr>
     let g:session_directory=$VIMFILES.'/sessions'
 endif
 
@@ -295,7 +289,7 @@ vnoremap  <silent><leader>yr :'<,'>QuickRun<cr>
 " }}}
 " Misc {{{
 if te#env#SupportAsync()
-    let g:love_support_option=['termguicolors']
+    let g:love_support_option=['termguicolors', 'tabstop', 'shiftwidth', 'softtabstop', 'colorcolumn', 'expandtab', 'smarttab']
 endif
 " Save basic setting
 nnoremap  <silent><Leader>lo :Love<cr>

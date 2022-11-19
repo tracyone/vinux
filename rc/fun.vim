@@ -28,7 +28,7 @@ call te#feat#register_vim_enter_setting(function('<SID>fun_setting'))
 " 1500000 ms (45 mins)
 let s:expires_time=2700000
 " 120000 ms (10 mins) for rest time
-let s:rest_time=600000
+let s:rest_time=120000
 let s:main_timer=-1
 
 function! s:rest_exit(timer)

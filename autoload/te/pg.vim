@@ -1,7 +1,7 @@
 "some programming function
 
 " add cscope database
-" a:1:read path from .project or pwd
+" a:1:read path from .csdb or pwd
 " a:2:use gtags or not
 function! te#pg#add_cscope_out(read_project,...) abort
     if a:0 == 2 && a:2 == 1
@@ -10,11 +10,11 @@ function! te#pg#add_cscope_out(read_project,...) abort
         let l:cscope_db_name='cscope.out'
     endif
     if a:read_project == 1
-        if empty(glob('.project'))
+        if !filereadable('.csdb')
             silent! execute 'cs kill '.l:cscope_db_name
             exec 'silent! cs add '.l:cscope_db_name
         else
-            for s:line in readfile('.project', '')
+            for s:line in readfile('.csdb', '')
                 exec 'silent! cs add '.s:line.'/'.l:cscope_db_name
             endfor
         endif
@@ -58,10 +58,7 @@ function! te#pg#top_of_kernel_tree() abort
 endfunction
 
 function! te#pg#gen_cscope_kernel(timerid) abort
-    if !te#pg#top_of_kernel_tree()
-        call te#pg#gen_cs_out()
-        call te#utils#EchoWarning('Current directory is not in the top level of kernel tree')
-    else
+    if te#pg#top_of_kernel_tree()
         :silent! call delete('cctree.out')
         if te#env#SupportCscope()
             if &cscopeprg ==# 'gtags-cscope'
@@ -171,14 +168,12 @@ function! te#pg#gen_cs_out() abort
     else
         let l:option=0x01
     endif
-    if empty(glob('.project'))
+    if !filereadable('.csdb')
         :call te#pg#do_cs_tags(getcwd(),l:option)
     else
-        for l:line in readfile('.project', '')
-            let l:ans=input('Generate cscope database in '.l:line.' [y/n/a]?','y')
-            if l:ans =~# '\v^[yY]$'
-                call te#pg#do_cs_tags(l:line, l:option)
-            endif
+        for l:line in readfile('.csdb', '')
+            call te#utils#EchoWarning('Generate cscope database in '.l:line)
+            call te#pg#do_cs_tags(l:line, l:option)
         endfor
     endif
     execute 'cd '.l:project_root
@@ -189,7 +184,7 @@ endfunction
 function! te#pg#do_make() abort
     :call te#utils#EchoWarning('making ...')
     :wa
-    if empty(glob('makefile')) && empty(glob('Makefile'))
+    if !filereadable('makefile') && !filereadable('Makefile')
         let l:cc = 'gcc '
         if &ft == 'cpp'
             let l:cc = 'g++ --std=c++14 '
