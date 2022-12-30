@@ -16,6 +16,12 @@ else
     if te#env#SupportFloatingWindows()
         let g:lsp_work_done_progress_enabled = 1
         let g:lsp_diagnostics_float_cursor = 1
+        if te#env#IsVim9()
+            let g:lsp_diagnostics_virtual_text_enabled = 1
+        endif
+        if has('patch-8.2.4780')
+            let g:lsp_use_native_client = 1
+        endif
         autocmd User lsp_float_opened call popup_setoptions(lsp#ui#vim#output#getpreviewwinid(), 
                     \ {'borderchars':['─', '│', '─', '│', '┌', '┐', '┘', '└'],
                     \ 'borderhighlight':['vinux_border'],
