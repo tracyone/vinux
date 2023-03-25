@@ -21,12 +21,21 @@ endfunction
 let s:win_list=[]
 let s:global_echo_str=[]
 
+function! te#utils#close_all_echo_win() abort
+    for l:needle in s:win_list
+        if te#env#IsNvim() == 0
+            call popup_close(l:needle.id)
+        else
+            call nvim_win_close(l:needle.id, v:true)
+        endif
+    endfor
+    let s:win_list=[]
+endfunction
+
 function! te#utils#close_win(winid, result) abort
-    if !empty(s:win_list)
+    if len(s:win_list)
         if a:winid == s:win_list[0].id
             call remove(s:win_list, 0)
-        else
-            let s:win_list=[]
         endif
     endif
 endfunction
@@ -34,6 +43,9 @@ endfunction
 function! s:nvim_close_win(timer) abort
     call timer_info(a:timer)
     let l:flag=0
+    if empty(s:win_list)
+        return
+    endif
     try
         call nvim_win_close(s:win_list[0].id, v:true)
     catch

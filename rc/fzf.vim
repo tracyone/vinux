@@ -2,9 +2,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim', {'on': []}
 
 function! FzfStartEntry(cmd)
-    if te#env#SupportFloatingWindows() == 1
-        call popup_clear()
-    endif
+    call te#utils#close_all_echo_win()
     execute a:cmd
 endfunction
 

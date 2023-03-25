@@ -222,6 +222,7 @@ function! te#terminal#open_term(option) abort
     let l:buf = a:option.bufnr
 
     if len(win_findbuf(l:buf))
+        call te#utils#close_all_echo_win()
         if te#env#IsNvim() != 0
             let l:win_id=win_findbuf(l:buf)[0]
             let l:origin_opt = nvim_win_get_config(l:win_id)
@@ -486,6 +487,7 @@ function! te#terminal#shell_pop(option) abort
     let l:term_obj = {}
     let l:env_dict = {"TIG_EDITOR":"t"}
     let l:pos_str = 'topright'
+    call te#utils#close_all_echo_win()
     if type(a:option) != g:t_dict
         call te#utils#EchoWarning("Error argument!")
         return
