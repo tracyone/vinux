@@ -1,5 +1,6 @@
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim', {'on': []}
+Plug 'pbogut/fzf-mru.vim', {'on': []}
 
 function! FzfStartEntry(cmd)
     call te#utils#close_all_echo_win()
@@ -17,8 +18,8 @@ function! s:fzf_vim_setting()
     "file cmd
     nnoremap  <silent><Leader><Leader> :call FzfStartEntry("Files")<cr>
     "mru
-    nnoremap  <silent><c-l>  :call FzfStartEntry('History')<cr>
-    nnoremap  <silent><Leader>pm  :call FzfStartEntry('History')<cr>
+    nnoremap  <silent><c-l>  :FZFMru<cr>
+    nnoremap  <silent><Leader>pm  :FZFMru<cr>
     "command history
     nnoremap  <silent><leader>qc :call FzfStartEntry('History')<cr>
     nnoremap  <silent><leader>q/  :call FzfStartEntry('History/')<cr>
@@ -100,5 +101,5 @@ function! s:fzf_vim_setting()
     "let g:fzf_preview_window = 'right:50%'
 endfunction
 
-call te#feat#register_vim_enter_setting2([function('<SID>fzf_vim_setting')], ['fzf.vim'])
+call te#feat#register_vim_enter_setting2([function('<SID>fzf_vim_setting')], ['fzf.vim', 'fzf-mru.vim'])
 
