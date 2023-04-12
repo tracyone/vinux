@@ -125,6 +125,7 @@ function! te#project#load_project() abort
             call te#file#copy_file(l:project_root.l:project.'.love.vim', l:old_dir)
             call te#file#copy_file(l:project_root.l:project.'compile_commands.json', l:old_dir)
             call te#file#copy_file(l:project_root.l:project.'compile_flags.txt', l:old_dir)
+            call te#file#copy_file(l:project_root.l:project.'.csdb', l:old_dir)
             call love#Apply()
             call te#feat#source_rc('colors.vim')
             call te#utils#close_all_echo_win()
