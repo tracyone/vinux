@@ -428,3 +428,5 @@ nnoremap  <silent><Leader>ss :call te#project#create_project()<cr>
 nnoremap  <silent><Leader>sl :call te#project#load_project()<cr>
 " project delete
 nnoremap  <silent><Leader>sd :call te#project#delete_project()<cr>
+" edit project
+nnoremap  <silent><Leader>se :call te#project#edit_project()<cr>

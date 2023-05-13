@@ -90,8 +90,12 @@ function! te#project#create_project() abort
     return 0
 endfunction
 
+"edit project file and update 
 function! te#project#edit_project() abort
-    
+    let l:file_to_open=['.ycm_extra_conf.py', '.clang-format', '.love.vim', 'compile_commands.json', 'compile_flags.txt', '.csdb']
+    for l:file in l:file_to_open
+        execute ':tabnew '.l:file
+    endfor
 endfunction
 
 function! te#project#load_project() abort
