@@ -45,32 +45,63 @@ function! te#pg#top_of_uboot_tree() abort
     return 1
 endfunction
 
-function! te#pg#top_of_kernel_tree() abort
+function! te#pg#top_of_kernel_tree(path) abort
+    if !isdirectory(a:path)
+        return 0
+    endif
     let l:tree_check= ['COPYING', 'CREDITS', 'Kbuild', 'MAINTAINERS', 'Makefile',
                 \ 'README', 'Documentation', 'arch', 'include', 'drivers',
                 \ 'fs', 'init', 'ipc', 'kernel', 'lib', 'scripts']
     for l:needle in l:tree_check
-        if !isdirectory(l:needle) && !filereadable(l:needle)
+        if !isdirectory(a:path.'/'.l:needle) && !filereadable(a:path.'/'.l:needle)
             return 0
         endif
     endfor
     return 1
 endfunction
 
-function! te#pg#gen_cscope_kernel(timerid) abort
-    if te#pg#top_of_kernel_tree()
-        :silent! call delete('cctree.out')
-        if te#env#SupportCscope()
-            if &cscopeprg ==# 'gtags-cscope'
-                call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[0,'.',1])
-            else
-                call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[0])
-                call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'))
-            endif
-            :call te#utils#EchoWarning('Generating cscope database and tag file for linux kernel ...')
+function! s:gen_kernel_cscope(read_csdb) abort
+    :silent! call delete('cctree.out')
+    if te#env#SupportCscope()
+        if &cscopeprg ==# 'gtags-cscope'
+            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[a:read_csdb,'.',1])
         else
+            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[a:read_csdb])
             call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'))
-            :call te#utils#EchoWarning('Generating tag file for linux kernel ...')
+        endif
+        :call te#utils#EchoWarning('Generating cscope database and tag file for linux kernel ...')
+    else
+        call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'))
+        :call te#utils#EchoWarning('Generating tag file for linux kernel ...')
+    endif
+
+endfunction
+
+function! te#pg#gen_cscope_kernel(timerid) abort
+    if te#env#SupportCscope()
+        if &cscopeprg ==# 'gtags-cscope'
+            let l:option=0x04
+        else
+            let l:option=0x02
+        endif
+    else
+        let l:option=0x01
+    endif
+    if filereadable('.csdb')
+        for l:line in readfile('.csdb', '')
+            if te#pg#top_of_kernel_tree(l:line)
+                execute 'cd '.l:line
+                :call <SID>gen_kernel_cscope(1)
+                cd -
+            else
+                call te#pg#do_cs_tags(l:line, l:option)
+            endif
+        endfor
+    else
+        if te#pg#top_of_kernel_tree(getcwd())
+            :call <SID>gen_kernel_cscope(0)
+        else
+            call te#pg#do_cs_tags(l:line, l:option)
         endif
     endif
 endfunction

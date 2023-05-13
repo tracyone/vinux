@@ -11,7 +11,6 @@ endfunction
 "3. coding style format
 "4. cscope info
 function! te#project#create_project() abort
-    let l:file_to_open = []
     let l:name = input("Please input project name:", fnamemodify(getcwd(), ':t'))
     if !strlen(l:name)
         return
@@ -41,7 +40,6 @@ function! te#project#create_project() abort
             else
                 let l:ret = te#file#copy_file(g:ycm_global_ycm_extra_conf, l:project_name.'.ycm_extra_conf.py')
             endif
-            call add(l:file_to_open, l:project_name.'.ycm_extra_conf.py')
         endif
     endif
 
@@ -49,7 +47,6 @@ function! te#project#create_project() abort
         "bear --output compile_commands.json  -- make
         if filereadable('compile_commands.json')
             let l:ret = te#file#copy_file('compile_commands.json', l:project_name.'compile_commands.json')
-            call add(l:file_to_open, l:project_name.'compile_commands.json')
         else
             call te#utils#EchoWarning("bear --output compile_commands.json  -- build command")
             if filereadable('compile_flags.txt')
@@ -57,7 +54,6 @@ function! te#project#create_project() abort
             else
                 call te#utils#EchoWarning("No compile_commands.json or compile_flags.txt found!")
             endif
-            call add(l:file_to_open, l:project_name.'compile_flags.txt')
         endif
     endif
     "coding style select
@@ -74,7 +70,6 @@ function! te#project#create_project() abort
         else
             let l:ret = te#file#copy_file('.clang-format', l:project_name.'.clang-format')
         endif
-        call add(l:file_to_open, l:project_name.'.clang-format')
     endif
 
     ".love.vim
@@ -84,7 +79,6 @@ function! te#project#create_project() abort
     if filereadable('.love.vim')
         let l:ret = te#file#copy_file('.love.vim', l:project_name.'.love.vim')
     endif
-    call add(l:file_to_open, l:project_name.'.love.vim')
 
     ".csdb
     if filereadable('.csdb')
@@ -93,12 +87,11 @@ function! te#project#create_project() abort
         call writefile([getcwd()], ".csdb", "a")
         let l:ret = te#file#copy_file('.csdb', l:project_name)
     endif
-    call add(l:file_to_open, l:project_name.'.csdb')
-
-    for l:file in l:file_to_open
-        execute ':tabnew '.l:file
-    endfor
     return 0
+endfunction
+
+function! te#project#edit_project() abort
+    
 endfunction
 
 function! te#project#load_project() abort

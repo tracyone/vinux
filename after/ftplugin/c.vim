@@ -106,7 +106,8 @@ let b:match_words=
 if !exists('g:vinux_auto_gen_cscope') 
     if te#env#SupportTimer() &&
                 \ (te#env#IsTmux() || te#env#SupportAsync())
-        if te#pg#top_of_kernel_tree() || te#pg#top_of_uboot_tree()
+        if te#pg#top_of_kernel_tree(getcwd()) || te#pg#top_of_uboot_tree()
+                    \ || filereadable('.csdb')
             call timer_start(3000, 'te#pg#gen_cscope_kernel')
             call timer_start(600000, 'te#pg#gen_cscope_kernel', {'repeat': -1})
         endif

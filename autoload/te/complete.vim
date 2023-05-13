@@ -67,7 +67,7 @@ function! s:YcmGotoDef() abort
     let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
     if g:complete_plugin_type.cur_val ==# 'YouCompleteMe'
         if  exists('*youcompleteme#Enable') == 0
-            if te#pg#top_of_kernel_tree()
+            if te#pg#top_of_kernel_tree(getcwd())
                 let g:ycm_global_ycm_extra_conf = $VIMFILES.'/rc/ycm_conf_for_arm_linux.py'
             endif
             call te#utils#EchoWarning('Loading ycm ...')
