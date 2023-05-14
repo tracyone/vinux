@@ -1,6 +1,6 @@
 
 if !has('patch-7.4.330') || !te#env#SupportAsync() || !te#env#SupportPy()
-    call te#utils#EchoWarning('leaderf require python , patch-7.4.330 and async api support!', 1)
+    call te#utils#EchoWarning('leaderf require python , patch-7.4.330 and async api support!')
     let g:fuzzysearcher_plugin_name.cur_val='ctrlp'
     finish
 endif

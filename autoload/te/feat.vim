@@ -67,7 +67,7 @@ function! te#feat#gen_feature_vim(reset) abort
     endif
     let g:vinux_version=string(g:vinux_version)
     call te#compatiable#writefile(['let g:vinux_version='.g:vinux_version], $VIMFILES.'/feature.vim', 'a')
-    call te#utils#EchoWarning('Updated feature.vim successfully!', 'warn', 1)
+    call te#utils#EchoWarning('Updated feature.vim successfully!', 'warn')
 endfunction
 
 function! te#feat#gen_local_vim() abort
@@ -249,6 +249,7 @@ function! te#feat#init_all() abort
     call te#feat#init_var('g:vinux_coding_style', ['linux', 'mozilla', 'google', 'llvm', 'chromium'])
     call te#feat#init_var('g:enable_sexy_mode', ['off', 'on'])
     call te#feat#init_var('g:tagging_program', ['cscope', 'gtags'])
+    call te#feat#init_var('g:message_delay_time', ['5000', '3000', '1000', '500'])
     if filereadable($VIMFILES.'/feature.vim')
         try
             execute ':source '.$VIMFILES.'/feature.vim'

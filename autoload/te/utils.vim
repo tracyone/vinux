@@ -60,10 +60,8 @@ endfunction
 
 "echo warning messag
 "a:1-->err or warn or info,default is warn
-"a:2-->flag of VimEnter,0 or 1
 function! te#utils#EchoWarning(str,...) abort
     let l:level='vinux_warn'
-    let l:flag=0
     if a:0 != 0
         for s:needle in a:000
             if type(s:needle) == g:t_string
@@ -74,12 +72,10 @@ function! te#utils#EchoWarning(str,...) abort
                 elseif s:needle ==? 'info'
                     let l:level='vinux_info'
                 endif
-            elseif type(s:needle) == g:t_number
-                let l:flag=s:needle
             endif
         endfor
     endif
-    if l:flag != 0 || has('vim_starting')
+    if has('vim_starting')
         call add(s:global_echo_str, a:str)
         return
     endif
@@ -112,7 +108,7 @@ function! te#utils#EchoWarning(str,...) abort
         call nvim_buf_set_option(l:bufnr, 'bufhidden', 'wipe')
         call nvim_win_set_option(l:win.id, 'winblend', 30)
         call add(s:win_list, l:win)
-        call timer_start(5000, function('<SID>nvim_close_win'), {'repeat': 1})
+        call timer_start(str2nr(g:message_delay_time.cur_val), function('<SID>nvim_close_win'), {'repeat': 1})
     elseif te#env#SupportFloatingWindows() == 1
         let l:str=' '.a:str
         let l:win={}
@@ -134,7 +130,7 @@ function! te#utils#EchoWarning(str,...) abort
         let l:win.id = popup_create(l:str, {
                     \ 'line': l:win.line,
                     \ 'col': &columns-l:str_len-3,
-                    \ 'time': 5000,
+                    \ 'time': str2nr(g:message_delay_time.cur_val),
                     \ 'tab': -1,
                     \ 'zindex': 200,
                     \ 'highlight': l:level,

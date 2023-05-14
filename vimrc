@@ -56,7 +56,7 @@ endif
 if !isdirectory(g:vinux_plugin_dir.cur_val)
     silent! call mkdir(g:vinux_plugin_dir.cur_val, 'p')
     if !isdirectory(g:vinux_plugin_dir.cur_val)
-        call te#utils#EchoWarning('Create '.g:vinux_plugin_dir.cur_val.' fail!', 'err', 1)
+        call te#utils#EchoWarning('Create '.g:vinux_plugin_dir.cur_val.' fail!', 'err')
         let g:vinux_plugin_dir.cur_val=$VIMFILES.'/bundle/'
     endif
 endif
@@ -74,7 +74,7 @@ if !filereadable($VIMFILES.'/autoload/plug.vim')
                         \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
         endif
     else
-        call te#utils#EchoWarning('Please install curl and git!', 1)
+        call te#utils#EchoWarning('Please install curl and git!')
     endif
 endif
 silent! call plug#begin(g:vinux_plugin_dir.cur_val)
