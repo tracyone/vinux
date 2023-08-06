@@ -69,14 +69,17 @@ setlocal cinoptions=:0,l1,t0,g0,(0)
 setlocal comments    =sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/
 setlocal cindent  "enable specific indenting for C code
 setlocal foldmethod=syntax
-setlocal noexpandtab
-setlocal nosmarttab
+execute 'setlocal tabstop='.g:vinux_tabwidth
+execute 'setlocal shiftwidth='.g:vinux_tabwidth
+execute 'setlocal softtabstop='.g:vinux_tabwidth
 
 " linux coding style
 let g:clang_format#code_style=g:vinux_coding_style.cur_val
 "custom codeing style for linux kernel development
 if g:clang_format#code_style ==# 'linux'
     let g:clang_format#code_style='llvm'
+    setlocal noexpandtab
+    setlocal nosmarttab
     let g:clang_format#style_options = {
                 \ 'IndentWidth' : g:vinux_tabwidth,
                 \ 'UseTab' : 'Always',
