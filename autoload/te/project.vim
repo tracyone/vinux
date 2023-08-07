@@ -22,7 +22,7 @@ function! te#project#create_project() abort
     else
         call mkdir(l:project_name, 'p')
         if !isdirectory(l:project_name)
-            call te#utils#EchoWarning('Create '.l:projjct_name.' fail')
+            call te#utils#EchoWarning('Create '.l:project_name.' fail')
             return -1
         endif
     endif

@@ -29,8 +29,13 @@ function! te#pg#add_cscope_out(read_project,...) abort
     endif
 endfunction
 
-function! te#pg#add_tags() abort
-    call rename(".temptags", "tags")
+function! te#pg#add_tags(tag_path) abort
+    call te#utils#EchoWarning("Rename .temptags")
+    let l:ret = rename(a:tag_path."/.temptags", a:tag_path."/tags")
+    if l:ret != 0
+        call te#utils#EchoWarning("Fail to rename .temptags")
+    endif
+    execute 'set tags+='.a:tag_path.'/tags'
 endfunction
 
 function! te#pg#top_of_uboot_tree() abort
@@ -62,16 +67,28 @@ endfunction
 
 function! s:gen_kernel_cscope(read_csdb) abort
     :silent! call delete('cctree.out')
+    let l:cur_path = getcwd()
+    let l:ret = 0
     if te#env#SupportCscope()
         if &cscopeprg ==# 'gtags-cscope'
             call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[a:read_csdb,'.',1])
         else
             call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[a:read_csdb])
-            call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'))
+            if filereadable('.temptags')
+                let l:ret = te#file#delete('.temptags')
+            endif
+            if l:ret == 0
+                call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'), [l:cur_path])
+            endif
         endif
         :call te#utils#EchoWarning('Generating cscope database and tag file for linux kernel ...')
     else
-        call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'))
+        if filereadable('.temptags')
+            let l:ret = te#file#delete('.temptags')
+        endif
+        if l:ret == 0
+            call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'), [l:cur_path])
+        endif
         :call te#utils#EchoWarning('Generating tag file for linux kernel ...')
     endif
 
@@ -82,7 +99,7 @@ function! te#pg#gen_cscope_kernel(timerid) abort
         if &cscopeprg ==# 'gtags-cscope'
             let l:option=0x04
         else
-            let l:option=0x02
+            let l:option=0x03
         endif
     else
         let l:option=0x01
@@ -124,6 +141,7 @@ endfunction
 "        0x03-->generate cscope and tags
 "        0x04-->generate gtags
 function! te#pg#do_cs_tags(dir, option) abort
+    let l:ret = 0
     if(te#env#IsWindows())
         let l:tagfile=a:dir.'\\'.'tags'
         let l:cscopefiles=a:dir.'\\'.'cscope.files'
@@ -149,12 +167,18 @@ function! te#pg#do_cs_tags(dir, option) abort
             endif
         endif
         if(executable('ctags'))
-            if &filetype ==# 'cpp'
-                call te#utils#run_command('ctags -R --languages=C++ --langmap=c++:+.inl.h.cc --c++-kinds=+px --fields=+aiKSz --extra=+q .')
-            elseif &filetype ==# 'c'
-                call te#utils#run_command('ctags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R .')
-            else
-                call te#utils#run_command('ctags -R .')
+            let l:cmd_str = 'ctags -f '.a:dir.'/.temptags '
+            if filereadable(a:dir.'/.temptags')
+                let l:ret = te#file#delete(a:dir.'/.temptags')
+            endif
+            if l:ret == 0
+                if &filetype ==# 'cpp'
+                    call te#utils#run_command(l:cmd_str.'-R --languages=C++ --langmap=c++:+.inl.h.cc --c++-kinds=+px --fields=+aiKSz --extra=+q .', function('te#pg#add_tags'), [a:dir])
+                elseif &filetype ==# 'c'
+                    call te#utils#run_command(l:cmd_str.'--languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R .', function('te#pg#add_tags'), [a:dir])
+                else
+                    call te#utils#run_command(l:cmd_str.'-R .', function('te#pg#add_tags'), [a:dir])
+                endif
             endif
         endif
     endif
