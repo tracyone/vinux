@@ -36,9 +36,13 @@ function! te#project#create_project() abort
     if get(g:, 'feat_enable_complete')
         if g:complete_plugin_type.cur_val ==# 'YouCompleteMe'
             if filereadable('.ycm_extra_conf.py')
-                let l:ret = te#file#copy_file('.ycm_extra_conf.py', l:project_name.'.ycm_extra_conf.py')
+                let l:ret = te#file#copy_file('.ycm_extra_conf.py', l:project_name.'.ycm_extra_conf.py', 0)
             else
-                let l:ret = te#file#copy_file(g:ycm_global_ycm_extra_conf, l:project_name.'.ycm_extra_conf.py')
+                execute 'cd '.$VIMFILES.'/rc/ycm_conf/'
+                let l:ycm_path = input('Please select ycm conf:','','file')
+                let l:ret = te#file#copy_file(l:ycm_path, l:project_name.'.ycm_extra_conf.py')
+                cd -
+                let l:ret = te#file#copy_file(l:project_name.'.ycm_extra_conf.py', './.ycm_extra_conf.py')
             endif
         endif
     endif
@@ -46,11 +50,11 @@ function! te#project#create_project() abort
     if get(g:, 'feat_enable_lsp')
         "bear --output compile_commands.json  -- make
         if filereadable('compile_commands.json')
-            let l:ret = te#file#copy_file('compile_commands.json', l:project_name.'compile_commands.json')
+            let l:ret = te#file#copy_file('compile_commands.json', l:project_name.'compile_commands.json', 0)
         else
             call te#utils#EchoWarning("bear --output compile_commands.json  -- build command")
             if filereadable('compile_flags.txt')
-                let l:ret = te#file#copy_file('compile_flags.txt', l:project_name.'compile_flags.txt')
+                let l:ret = te#file#copy_file('compile_flags.txt', l:project_name.'compile_flags.txt', 0)
             else
                 call te#utils#EchoWarning("No compile_commands.json or compile_flags.txt found!")
             endif
@@ -62,27 +66,28 @@ function! te#project#create_project() abort
             let l:coding_style = input('Please select coding style template: ','','customlist,te#project#clang_format')
             if strlen(l:coding_style)
                 if l:coding_style ==# 'Linux'
-                    let l:ret = te#file#copy_file($VIMFILES.'/format/clang-format-linux', l:project_name.'.clang-format')
+                    call te#file#copy_file($VIMFILES.'/format/clang-format-linux', l:project_name.'.clang-format')
+                    call te#file#copy_file($VIMFILES.'/format/clang-format-linux', '.clang-format')
                 else
                     call te#utils#run_command('clang-format -style='.l:coding_style.' -dump-config > .clang-format', function('te#file#copy_file'), ['.clang-format', l:project_name.'.clang-format'])
                 endif
             endif
         else
-            let l:ret = te#file#copy_file('.clang-format', l:project_name.'.clang-format')
+n           let l:ret = te#file#copy_file('.clang-format', l:project_name.'.clang-format', 0)
         endif
     endif
 
     ".love.vim
     if exists(":Love") == 2
-        execute ':Love 1'
+        silent! execute ':Love 1'
     endif
     if filereadable('.love.vim')
-        let l:ret = te#file#copy_file('.love.vim', l:project_name.'.love.vim')
+        let l:ret = te#file#copy_file('.love.vim', l:project_name.'.love.vim', 0)
     endif
 
     ".csdb
     if filereadable('.csdb')
-        let l:ret = te#file#copy_file('.csdb', l:project_name)
+        let l:ret = te#file#copy_file('.csdb', l:project_name, 0)
     else
         call writefile([getcwd()], ".csdb", "a")
         let l:ret = te#file#copy_file('.csdb', l:project_name)
@@ -117,12 +122,12 @@ function! te#project#load_project() abort
                 execute ":OpenSession ".l:session_name
             endif
             let l:old_dir = getcwd()
-            call te#file#copy_file(l:project_root.l:project.'.ycm_extra_conf.py', l:old_dir)
-            call te#file#copy_file(l:project_root.l:project.'.clang-format', l:old_dir)
-            call te#file#copy_file(l:project_root.l:project.'.love.vim', l:old_dir)
-            call te#file#copy_file(l:project_root.l:project.'compile_commands.json', l:old_dir)
-            call te#file#copy_file(l:project_root.l:project.'compile_flags.txt', l:old_dir)
-            call te#file#copy_file(l:project_root.l:project.'.csdb', l:old_dir)
+            call te#file#copy_file(l:project_root.l:project.'.ycm_extra_conf.py', l:old_dir, 0)
+            call te#file#copy_file(l:project_root.l:project.'.clang-format', l:old_dir, 0)
+            call te#file#copy_file(l:project_root.l:project.'.love.vim', l:old_dir, 0)
+            call te#file#copy_file(l:project_root.l:project.'compile_commands.json', l:old_dir, 0)
+            call te#file#copy_file(l:project_root.l:project.'compile_flags.txt', l:old_dir, 0)
+            call te#file#copy_file(l:project_root.l:project.'.csdb', l:old_dir, 0)
             call love#Apply()
             call te#feat#source_rc('colors.vim')
             call te#utils#close_all_echo_win()

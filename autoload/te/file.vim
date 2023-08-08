@@ -1,5 +1,5 @@
 
-function! te#file#copy_file(src, dst) abort
+function! te#file#copy_file(src, dst,...) abort
     let l:confirm = 1
     let l:ret = -1
     if isdirectory(a:dst)
@@ -7,12 +7,17 @@ function! te#file#copy_file(src, dst) abort
     else
         let l:dst=a:dst
     endif
+    if a:0 == 1
+        let l:confirm = a:1
+    endif
 
     if filereadable(a:src)
         if filereadable(l:dst)
-            if confirm(l:dst." is exist! override?", "&Yes\n&No", 2) == 2
-                call te#utils#EchoWarning("Copy file abort")
-                let l:confirm = 0
+            if l:confirm == 1
+                if confirm(l:dst." is exist! override?", "&Yes\n&No", 2) == 2
+                    call te#utils#EchoWarning("Copy file abort")
+                    let l:confirm = 0
+                endif
             endif
         endif
         if l:confirm == 1
