@@ -9,7 +9,12 @@ function! te#terminal#get_buf_list() abort
         if strlen(matchstr(l:name, 'term://'))
             call add(l:result_list, l:n)
         elseif getbufvar(l:n, '&buftype', 'ERROR') ==# 'terminal'
-            call add(l:result_list, l:n)
+            if term_getstatus(l:n) != 'finished'
+                call add(l:result_list, l:n)
+            else
+                "kill the finished buffer
+                silent execute ':bdelete! '.l:n
+            endif
         endif
         let l:n = l:n+1
     endwhile
@@ -19,6 +24,8 @@ endfunction
 function! te#terminal#get_term_obj(buf) abort
     if has_key(s:term_obj,a:buf)
         return s:term_obj[a:buf]
+    else
+        return {}
     endif
 endfunction
 

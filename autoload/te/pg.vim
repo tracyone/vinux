@@ -12,25 +12,27 @@ function! te#pg#add_cscope_out(read_project,...) abort
     if a:read_project == 1
         if !filereadable('.csdb')
             silent! execute 'cs kill '.l:cscope_db_name
-            exec 'silent! cs add '.l:cscope_db_name
+            silent! exec 'cs add '.l:cscope_db_name
         else
             for s:line in readfile('.csdb', '')
-                exec 'silent! cs add '.s:line.'/'.l:cscope_db_name
+                silent! exec 'cs add '.s:line.'/'.l:cscope_db_name
+                if filereadable(s:line.'/tags')
+                    execute 'set tags+='.s:line.'/tags'
+                endif
             endfor
         endif
     else
         if a:0 >= 1
             silent! execute 'cs kill '.a:1.'/'.l:cscope_db_name
-            exec 'cs add '.a:1.'/'.l:cscope_db_name
+            silent! exec 'cs add '.a:1.'/'.l:cscope_db_name
         else
             silent! execute 'cs kill '.l:cscope_db_name
-            exec 'silent! cs add '.l:cscope_db_name
+            silent! exec 'cs add '.l:cscope_db_name
         endif
     endif
 endfunction
 
 function! te#pg#add_tags(tag_path) abort
-    call te#utils#EchoWarning("Rename .temptags")
     let l:ret = rename(a:tag_path."/.temptags", a:tag_path."/tags")
     if l:ret != 0
         call te#utils#EchoWarning("Fail to rename .temptags")
@@ -118,7 +120,7 @@ function! te#pg#gen_cscope_kernel(timerid) abort
         if te#pg#top_of_kernel_tree(getcwd())
             :call <SID>gen_kernel_cscope(0)
         else
-            call te#pg#do_cs_tags(l:line, l:option)
+            call te#pg#do_cs_tags(getcwd(), l:option)
         endif
     endif
 endfunction

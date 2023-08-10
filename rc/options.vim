@@ -176,7 +176,7 @@ if get(g:,'feat_enable_airline') != 1
             return l:mystatus_line
         endif
         if te#env#SupportCscope()
-            let l:mystatus_line.='cscope[%{cscope_connection()}]'.s:right_seperator
+            let l:mystatus_line.="%{(cscope_connection() == 1?'cs[1]':'')}".s:right_seperator
         endif
         if get(g:, 'feat_enable_lsp') == 1
             let l:mystatus_line.='lsp[%{te#lsp#get_lsp_server_name()}]'.s:right_seperator
