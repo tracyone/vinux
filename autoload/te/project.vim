@@ -73,7 +73,7 @@ function! te#project#create_project() abort
                 endif
             endif
         else
-n           let l:ret = te#file#copy_file('.clang-format', l:project_name.'.clang-format', 0)
+            let l:ret = te#file#copy_file('.clang-format', l:project_name.'.clang-format', 0)
         endif
     endif
 
