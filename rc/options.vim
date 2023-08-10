@@ -157,7 +157,7 @@ endif
 if get(g:,'feat_enable_airline') != 1
     " Dictionary: take mode() input -> longer notation of current mode
     " mode() is defined by Vim
-    let g:currentmode={ 'n' : 'N', 'no' : 'N-Operator Pending', 'v' : 'Visual', 'V' : 'V-Line', '^V' : 'V-Block', 's' : 'Select', 'S': 'S-Line', '^S' : 'S-Block', 'i' : 'I', 'R' : 'R', 'Rv' : 'V-R', 'c' : 'C', 'cv' : 'Vim Ex', 'ce' : 'Ex', 'r' : 'Prompt', 'rm' : 'More', 'r?' : 'Confirm', '!' : 'Shell', 't' : 'Term'}
+    let g:currentmode={ 'n' : 'N', 'no' : 'N-Operator Pending', 'v' : 'Visual', 'V' : 'VL', '^V' : 'VB', 's' : 'Select', 'S': 'S-Line', '^S' : 'S-Block', 'i' : 'I', 'R' : 'R', 'Rv' : 'V-R', 'c' : 'C', 'cv' : 'Vim Ex', 'ce' : 'Ex', 'r' : 'Prompt', 'rm' : 'More', 'r?' : 'Confirm', '!' : 'Shell', 't' : 'Term'}
     " Function: return current mode
     " abort -> function will abort soon as error detected
     function! ModeCurrent() abort
@@ -165,7 +165,7 @@ if get(g:,'feat_enable_airline') != 1
         " use get() -> fails safely, since ^V doesn't seem to register
         " 3rd arg is used when return of mode() == 0, which is case with ^V
         " thus, ^V fails -> returns 0 -> replaced with 'V Block'
-        let l:modelist = toupper(get(g:currentmode, l:modecurrent, 'V-Block '))
+        let l:modelist = toupper(get(g:currentmode, l:modecurrent, 'VB '))
         let l:current_status_mode = l:modelist
         return l:current_status_mode
     endfunction
@@ -176,7 +176,9 @@ if get(g:,'feat_enable_airline') != 1
             return l:mystatus_line
         endif
         if te#env#SupportCscope()
-            let l:mystatus_line.="%{(cscope_connection() == 1?'cs[1]':'')}".s:right_seperator
+            if cscope_connection() == 1
+                let l:mystatus_line.="cs[1]".s:right_seperator
+            endif
         endif
         if get(g:, 'feat_enable_lsp') == 1
             let l:mystatus_line.='lsp[%{te#lsp#get_lsp_server_name()}]'.s:right_seperator
