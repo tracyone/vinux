@@ -113,7 +113,7 @@ if !exists('g:vinux_working_directory')
         if te#env#SupportTimer()
             call timer_start(3000, 'te#pg#gen_cscope_kernel')
             call timer_start(600000, 'te#pg#gen_cscope_kernel', {'repeat': -1})
-        else
+        elseif filereadable('.csdb')
             for l:line in readfile('.csdb', '')
                 call te#pg#do_cs_tags(l:line, l:option)
                 call te#pg#add_cscope_out(l:line, 0)

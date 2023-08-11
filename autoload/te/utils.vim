@@ -627,6 +627,7 @@ function! te#utils#run_command(command,...) abort
             call te#utils#EchoWarning('Wrong argument', 'err')
         endif
     elseif te#env#IsTmux()
+        "TODO support call back?
         call te#tmux#run_command(l:command, 0x0c)
     else
         let l:job_info={}
