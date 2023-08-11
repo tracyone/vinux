@@ -3,39 +3,23 @@
 " add cscope database
 " a:1:read path from .csdb or pwd
 " a:2:use gtags or not
-function! te#pg#add_cscope_out(read_project,...) abort
-    if a:0 == 2 && a:2 == 1
+function! te#pg#add_cscope_out(path, use_gtags) abort
+    if a:use_gtags == 1
         let l:cscope_db_name='GTAGS'
     else
         let l:cscope_db_name='cscope.out'
     endif
-    if a:read_project == 1
-        if !filereadable('.csdb')
-            silent! execute 'cs kill '.l:cscope_db_name
-            silent! exec 'cs add '.l:cscope_db_name
-        else
-            for s:line in readfile('.csdb', '')
-                silent! exec 'cs add '.s:line.'/'.l:cscope_db_name
-                if filereadable(s:line.'/tags')
-                    execute 'set tags+='.s:line.'/tags'
-                endif
-            endfor
-        endif
-    else
-        if a:0 >= 1
-            silent! execute 'cs kill '.a:1.'/'.l:cscope_db_name
-            silent! exec 'cs add '.a:1.'/'.l:cscope_db_name
-        else
-            silent! execute 'cs kill '.l:cscope_db_name
-            silent! exec 'cs add '.l:cscope_db_name
-        endif
-    endif
+
+    silent! execute 'cs kill '.a:path.'/'.l:cscope_db_name
+    silent! exec 'cs add '.a:path.'/'.l:cscope_db_name
 endfunction
 
 function! te#pg#add_tags(tag_path) abort
-    let l:ret = rename(a:tag_path."/.temptags", a:tag_path."/tags")
-    if l:ret != 0
-        call te#utils#EchoWarning("Fail to rename .temptags")
+    if filereadable(a:tag_path."/.temptags")
+        let l:ret = rename(a:tag_path."/.temptags", a:tag_path."/tags")
+        if l:ret != 0
+            call te#utils#EchoWarning("Fail to rename .temptags")
+        endif
     endif
     execute 'set tags+='.a:tag_path.'/tags'
 endfunction
@@ -67,20 +51,19 @@ function! te#pg#top_of_kernel_tree(path) abort
     return 1
 endfunction
 
-function! s:gen_kernel_cscope(read_csdb) abort
+function! s:gen_kernel_cscope(path) abort
     :silent! call delete('cctree.out')
-    let l:cur_path = getcwd()
     let l:ret = 0
     if te#env#SupportCscope()
         if &cscopeprg ==# 'gtags-cscope'
-            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[a:read_csdb,'.',1])
+            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[a:path, 1])
         else
-            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[a:read_csdb])
+            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[a:path, 0])
             if filereadable('.temptags')
                 let l:ret = te#file#delete('.temptags')
             endif
             if l:ret == 0
-                call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'), [l:cur_path])
+                call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'), [a:path])
             endif
         endif
         :call te#utils#EchoWarning('Generating cscope database and tag file for linux kernel ...')
@@ -89,7 +72,7 @@ function! s:gen_kernel_cscope(read_csdb) abort
             let l:ret = te#file#delete('.temptags')
         endif
         if l:ret == 0
-            call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'), [l:cur_path])
+            call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'), [a:path])
         endif
         :call te#utils#EchoWarning('Generating tag file for linux kernel ...')
     endif
@@ -106,11 +89,14 @@ function! te#pg#gen_cscope_kernel(timerid) abort
     else
         let l:option=0x01
     endif
+    if exists('g:vinux_working_directory') && isdirectory(g:vinux_working_directory)
+        execute 'cd '.g:vinux_working_directory
+    endif
     if filereadable('.csdb')
         for l:line in readfile('.csdb', '')
             if te#pg#top_of_kernel_tree(l:line)
                 execute 'cd '.l:line
-                :call <SID>gen_kernel_cscope(1)
+                :call <SID>gen_kernel_cscope(l:line)
                 cd -
             else
                 call te#pg#do_cs_tags(l:line, l:option)
@@ -118,7 +104,7 @@ function! te#pg#gen_cscope_kernel(timerid) abort
         endfor
     else
         if te#pg#top_of_kernel_tree(getcwd())
-            :call <SID>gen_kernel_cscope(0)
+            :call <SID>gen_kernel_cscope(getcwd())
         else
             call te#pg#do_cs_tags(getcwd(), l:option)
         endif
@@ -185,7 +171,7 @@ function! te#pg#do_cs_tags(dir, option) abort
         endif
     endif
     if and(a:option, 0x04)
-        call te#utils#run_command('gtags '.a:dir, function('te#pg#add_cscope_out'),[0,a:dir,1])
+        call te#utils#run_command('gtags '.a:dir, function('te#pg#add_cscope_out'),[a:dir, 1])
         return 0
     endif
     if !te#env#SupportCscope()
@@ -207,7 +193,7 @@ function! te#pg#do_cs_tags(dir, option) abort
         let l:generate_cscopefiles='dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.l:cscopefiles
     endif
     exec 'cd '.a:dir
-    call te#utils#run_command(l:generate_cscopefiles.' && cscope -Rbkq -i '.l:cscopefiles, function('te#pg#add_cscope_out'),[0,a:dir])
+    call te#utils#run_command(l:generate_cscopefiles.' && cscope -Rbkq -i '.l:cscopefiles, function('te#pg#add_cscope_out'),[a:dir, 0])
     cd -
     execute 'normal :'
     execute 'redraw!'

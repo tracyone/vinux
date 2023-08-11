@@ -13,10 +13,10 @@ if te#env#SupportCscope()
     " add cscope database at the first time
     if get(g:,'tagging_program').cur_val ==# 'gtags'
         set cscopeprg=gtags-cscope
-        call te#pg#add_cscope_out(1,'.',1)
+        call te#pg#add_cscope_out(getcwd(), 1)
     else
         set cscopeprg=cscope
-        call te#pg#add_cscope_out(1)
+        call te#pg#add_cscope_out(getcwd(), 0)
     endif
 
     " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
@@ -46,7 +46,7 @@ if te#env#SupportCscope()
     nnoremap  <silent><buffer> <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
     nnoremap  <silent><buffer> <LocalLeader>u :call te#pg#gen_cs_out()<cr>
-    nnoremap  <silent><buffer> <LocalLeader>a :call te#pg#add_cscope_out(1)<cr>
+    nnoremap  <silent><buffer> <LocalLeader>a :call te#pg#add_cscope_out(getcwd(), 0)<cr>
     "kill the connection of current dir 
     nnoremap  <silent><buffer> <LocalLeader>k :cs kill cscope.out<cr> 
 
@@ -106,14 +106,18 @@ let b:match_words=
 \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
 \ '\<switch\>:\<case\>:\<default\>'
 
-if !exists('g:vinux_auto_gen_cscope') 
-    if te#env#SupportTimer() &&
-                \ (te#env#IsTmux() || te#env#SupportAsync())
-        if te#pg#top_of_kernel_tree(getcwd()) || te#pg#top_of_uboot_tree()
-                    \ || filereadable('.csdb')
+if !exists('g:vinux_working_directory') 
+    if filereadable('.csdb') || te#pg#top_of_kernel_tree(getcwd()) 
+                \ || te#pg#top_of_uboot_tree()
+        let g:vinux_working_directory=getcwd()
+        if te#env#SupportTimer()
             call timer_start(3000, 'te#pg#gen_cscope_kernel')
             call timer_start(600000, 'te#pg#gen_cscope_kernel', {'repeat': -1})
+        else
+            for l:line in readfile('.csdb', '')
+                call te#pg#do_cs_tags(l:line, l:option)
+                call te#pg#add_cscope_out(l:line, 0)
+            endfor
         endif
     endif
-    let g:vinux_auto_gen_cscope=1
 endif
