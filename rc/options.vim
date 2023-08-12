@@ -183,7 +183,7 @@ if get(g:,'feat_enable_airline') != 1
         let l:mystatus_line.=te#pg#get_tags_number(s:right_seperator)
 
         if get(g:, 'feat_enable_lsp') == 1
-            let l:mystatus_line.='lsp[%{te#lsp#get_lsp_server_name()}]'.s:right_seperator
+            let l:mystatus_line.=te#lsp#get_lsp_server_name(s:right_seperator)
         endif
         if a:type == 1
             let l:mystatus_line.=s:git_branch
