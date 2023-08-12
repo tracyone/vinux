@@ -14,6 +14,7 @@ function! te#pg#add_cscope_out(path, use_gtags) abort
     silent! exec 'cs add '.a:path.'/'.l:cscope_db_name
 endfunction
 
+let s:extra_tags_number = 0
 function! te#pg#add_tags(tag_path) abort
     if filereadable(a:tag_path."/.temptags")
         let l:ret = rename(a:tag_path."/.temptags", a:tag_path."/tags")
@@ -21,7 +22,18 @@ function! te#pg#add_tags(tag_path) abort
             call te#utils#EchoWarning("Fail to rename .temptags")
         endif
     endif
-    execute 'set tags+='.a:tag_path.'/tags'
+    if filereadable(a:tag_path.'/tags')
+        let s:extra_tags_number += 1
+        execute 'set tags+='.a:tag_path.'/tags'
+    endif
+endfunction
+
+function! te#pg#get_tags_number(sep) abort
+    if s:extra_tags_number
+        return 'tags['.s:extra_tags_number.']'.a:sep
+    else
+        return ""
+    endif
 endfunction
 
 function! te#pg#top_of_uboot_tree() abort

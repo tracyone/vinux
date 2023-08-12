@@ -180,6 +180,8 @@ if get(g:,'feat_enable_airline') != 1
                 let l:mystatus_line.="cs[1]".s:right_seperator
             endif
         endif
+        let l:mystatus_line.=te#pg#get_tags_number(s:right_seperator)
+
         if get(g:, 'feat_enable_lsp') == 1
             let l:mystatus_line.='lsp[%{te#lsp#get_lsp_server_name()}]'.s:right_seperator
         endif
