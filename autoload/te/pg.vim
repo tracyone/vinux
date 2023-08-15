@@ -14,7 +14,7 @@ function! te#pg#add_cscope_out(path, use_gtags) abort
     silent! exec 'cs add '.a:path.'/'.l:cscope_db_name
 endfunction
 
-let s:extra_tags_number = 0
+let s:extra_tags_list = []
 function! te#pg#add_tags(tag_path) abort
     if filereadable(a:tag_path."/.temptags")
         let l:ret = rename(a:tag_path."/.temptags", a:tag_path."/tags")
@@ -23,14 +23,19 @@ function! te#pg#add_tags(tag_path) abort
         endif
     endif
     if filereadable(a:tag_path.'/tags')
-        let s:extra_tags_number += 1
         execute 'set tags+='.a:tag_path.'/tags'
+        for l:needle in s:extra_tags_list
+            if l:needle == a:tag_path.'/tags'
+                return
+            endif
+        endfor
+        call add(s:extra_tags_list, a:tag_path.'/tags')
     endif
 endfunction
 
 function! te#pg#get_tags_number(sep) abort
-    if s:extra_tags_number
-        return 'tags['.s:extra_tags_number.']'.a:sep
+    if len(s:extra_tags_list)
+        return 'tags['.len(s:extra_tags_list).']'.a:sep
     else
         return ""
     endif
@@ -91,7 +96,7 @@ function! s:gen_kernel_cscope(path) abort
 
 endfunction
 
-function! te#pg#gen_cscope_kernel(timerid) abort
+function! te#pg#gen_cs_tags(timerid) abort
     if te#env#SupportCscope()
         if &cscopeprg ==# 'gtags-cscope'
             let l:option=0x04
@@ -106,6 +111,7 @@ function! te#pg#gen_cscope_kernel(timerid) abort
     endif
     if filereadable('.csdb')
         for l:line in readfile('.csdb', '')
+            call te#pg#add_tags(l:line)
             if te#pg#top_of_kernel_tree(l:line)
                 execute 'cd '.l:line
                 :call <SID>gen_kernel_cscope(l:line)
@@ -210,30 +216,6 @@ function! te#pg#do_cs_tags(dir, option) abort
     execute 'normal :'
     execute 'redraw!'
 endfunction
-
-" generate cscope database
-function! te#pg#gen_cs_out() abort
-    let l:project_root=getcwd()
-    if te#env#SupportCscope()
-        if &cscopeprg ==# 'gtags-cscope'
-            let l:option=0x04
-        else
-            let l:option=0x02
-        endif
-    else
-        let l:option=0x01
-    endif
-    if !filereadable('.csdb')
-        :call te#pg#do_cs_tags(getcwd(),l:option)
-    else
-        for l:line in readfile('.csdb', '')
-            call te#utils#EchoWarning('Generate cscope database in '.l:line)
-            call te#pg#do_cs_tags(l:line, l:option)
-        endfor
-    endif
-    execute 'cd '.l:project_root
-endfunction
-
 
 "make 
 function! te#pg#do_make() abort

@@ -45,7 +45,7 @@ if te#env#SupportCscope()
     nnoremap  <silent><buffer> <C-\>f :split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
     nnoremap  <silent><buffer> <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
-    nnoremap  <silent><buffer> <LocalLeader>u :call te#pg#gen_cs_out()<cr>
+    nnoremap  <silent><buffer> <LocalLeader>u :call te#pg#gen_cs_tags(0)<cr>
     nnoremap  <silent><buffer> <LocalLeader>a :call te#pg#add_cscope_out(getcwd(), 0)<cr>
     "kill the connection of current dir 
     nnoremap  <silent><buffer> <LocalLeader>k :cs kill cscope.out<cr> 
@@ -56,8 +56,6 @@ nnoremap  <silent><buffer> <leader>am :call te#pg#do_make()<cr>
 nnoremap  <silent><buffer> <F5> :call te#pg#do_make()<CR>
 nnoremap  <silent><buffer><Leader>cf :<C-u>ClangFormat<CR>
 vnoremap  <silent><buffer><Leader>cf :ClangFormat<CR>
-" generate cscope for linux kernel
-nnoremap  <silent><buffer><Leader>gk :call te#pg#gen_cscope_kernel(0)<cr>
 " generate cctree database
 nnoremap  <silent><buffer><Leader>gt :call te#pg#cctree()<cr>
 
@@ -111,13 +109,10 @@ if !exists('g:vinux_working_directory')
                 \ || te#pg#top_of_uboot_tree()
         let g:vinux_working_directory=getcwd()
         if te#env#SupportTimer()
-            call timer_start(3000, 'te#pg#gen_cscope_kernel')
-            call timer_start(600000, 'te#pg#gen_cscope_kernel', {'repeat': -1})
+            call timer_start(3000, 'te#pg#gen_cs_tags')
+            call timer_start(600000, 'te#pg#gen_cs_tags', {'repeat': -1})
         elseif filereadable('.csdb')
-            for l:line in readfile('.csdb', '')
-                call te#pg#do_cs_tags(l:line, l:option)
-                call te#pg#add_cscope_out(l:line, 0)
-            endfor
+            call te#pg#gen_cs_tags(0)
         endif
     endif
 endif
