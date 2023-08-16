@@ -33,11 +33,13 @@ function! te#utils#close_all_echo_win() abort
 endfunction
 
 function! te#utils#close_win(winid, result) abort
-    if len(s:win_list)
-        if a:winid == s:win_list[0].id
-            call remove(s:win_list, 0)
+    let l:index = 0
+    for l:win in s:win_list
+        if l:win.id == a:winid
+            call remove(s:win_list, l:index)
         endif
-    endif
+        let l:index += 1
+    endfor
 endfunction
 
 function! s:nvim_close_win(timer) abort
