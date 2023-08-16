@@ -1,6 +1,7 @@
 
 function! te#file#copy_file(src, dst,...) abort
     let l:confirm = 1
+    let l:execure_write = 1
     let l:ret = -1
     if isdirectory(a:dst)
         let l:dst=a:dst.'/'.fnamemodify(a:src, ':t')
@@ -16,11 +17,11 @@ function! te#file#copy_file(src, dst,...) abort
             if l:confirm == 1
                 if confirm(l:dst." is exist! override?", "&Yes\n&No", 2) == 2
                     call te#utils#EchoWarning("Copy file abort")
-                    let l:confirm = 0
+                    let l:execure_write = 0
                 endif
             endif
         endif
-        if l:confirm == 1
+        if l:execure_write == 1
             if !exists('*readblob')
                 let l:ret = system('cp -a '.a:src.' '.l:dst)
             else
