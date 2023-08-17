@@ -92,20 +92,7 @@ endif
 set textwidth=160
 set expandtab
 set smarttab
-if g:vinux_coding_style.cur_val ==# 'linux'
-    let g:vinux_tabwidth=8
-    set textwidth=80
-    set noexpandtab
-    set nosmarttab
-elseif g:vinux_coding_style.cur_val ==# 'mozilla'
-    let g:vinux_tabwidth=4
-elseif g:vinux_coding_style.cur_val ==# 'google'
-    let g:vinux_tabwidth=2
-elseif g:vinux_coding_style.cur_val ==# 'llvm'
-    let g:vinux_tabwidth=4
-elseif g:vinux_coding_style.cur_val ==# 'chromium'
-    let g:vinux_tabwidth=2
-endif
+let g:vinux_tabwidth=4
 execute 'set tabstop='.g:vinux_tabwidth
 execute 'set shiftwidth='.g:vinux_tabwidth
 execute 'set softtabstop='.g:vinux_tabwidth

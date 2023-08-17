@@ -67,6 +67,22 @@ setlocal cinoptions=:0,l1,t0,g0,(0)
 setlocal comments    =sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/
 setlocal cindent  "enable specific indenting for C code
 setlocal foldmethod=syntax
+
+if g:vinux_coding_style.cur_val == 'linux'
+    let g:vinux_tabwidth=8
+    set textwidth=80
+    set noexpandtab
+    set nosmarttab
+elseif g:vinux_coding_style.cur_val ==# 'mozilla'
+    let g:vinux_tabwidth=4
+elseif g:vinux_coding_style.cur_val ==# 'google'
+    let g:vinux_tabwidth=2
+elseif g:vinux_coding_style.cur_val ==# 'llvm'
+    let g:vinux_tabwidth=4
+elseif g:vinux_coding_style.cur_val ==# 'chromium'
+    let g:vinux_tabwidth=2
+endif
+
 execute 'setlocal tabstop='.g:vinux_tabwidth
 execute 'setlocal shiftwidth='.g:vinux_tabwidth
 execute 'setlocal softtabstop='.g:vinux_tabwidth

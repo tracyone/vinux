@@ -2,9 +2,31 @@
 
 function! te#project#clang_format(A,L,P) abort
     let l:temp=a:A.a:L.a:P
-    return ["LLVM", "GNU", "Google", "Chromium", "Microsoft", "Mozilla", "WebKit", "Linux"]
+    return ["llvm", "gnu", "google", "chromium", "microsoft", "mozilla", "webkit", "linux"]
 endfunction
 
+function! te#project#set_indent_options(coding_style)
+    let g:vinux_coding_style.cur_val = a:coding_style
+    if a:coding_style ==# 'linux'
+        let g:vinux_tabwidth=8
+        :silent! bufdo set textwidth=80
+        :silent! bufdo set noexpandtab
+        :silent! bufdo set nosmarttab
+    elseif a:coding_style ==# 'mozilla'
+        let g:vinux_tabwidth=4
+    elseif a:coding_style ==# 'google'
+        let g:vinux_tabwidth=2
+    elseif a:coding_style ==# 'llvm'
+        let g:vinux_tabwidth=4
+    elseif a:coding_style ==# 'chromium'
+        let g:vinux_tabwidth=2
+    else
+        let g:vinux_tabwidth=4
+    endif
+    execute 'silent! bufdo set tabstop='.g:vinux_tabwidth
+    execute 'silent! bufdo set shiftwidth='.g:vinux_tabwidth
+    execute 'silent! bufdo set softtabstop='.g:vinux_tabwidth
+endfunction
 "create a project
 "1. session
 "2. compile flag info
@@ -25,12 +47,6 @@ function! te#project#create_project() abort
             call te#utils#EchoWarning('Create '.l:project_name.' fail')
             return -1
         endif
-    endif
-    "session
-    if exists(":SSave") == 2
-        execute ":SSave ".l:name
-    elseif exists(":SaveSession") == 2
-        execute ":SaveSession ".l:name
     endif
     "complete flag
     if get(g:, 'feat_enable_complete')
@@ -65,12 +81,13 @@ function! te#project#create_project() abort
         if !filereadable('.clang-format')
             let l:coding_style = input('Please select coding style template: ','','customlist,te#project#clang_format')
             if strlen(l:coding_style)
-                if l:coding_style ==# 'Linux'
+                if l:coding_style ==# 'linux'
                     call te#file#copy_file($VIMFILES.'/format/clang-format-linux', l:project_name.'.clang-format')
                     call te#file#copy_file($VIMFILES.'/format/clang-format-linux', '.clang-format')
                 else
                     call te#utils#run_command('clang-format -style='.l:coding_style.' -dump-config > .clang-format', function('te#file#copy_file'), ['.clang-format', l:project_name.'.clang-format'])
                 endif
+                call te#project#set_indent_options(l:coding_style)
             endif
         else
             let l:ret = te#file#copy_file('.clang-format', l:project_name.'.clang-format', 0)
@@ -91,6 +108,12 @@ function! te#project#create_project() abort
     else
         call writefile([getcwd()], ".csdb", "a")
         let l:ret = te#file#copy_file('.csdb', l:project_name)
+    endif
+    "session
+    if exists(":SSave") == 2
+        execute ":SSave ".l:name
+    elseif exists(":SaveSession") == 2
+        execute ":SaveSession ".l:name
     endif
     return 0
 endfunction
