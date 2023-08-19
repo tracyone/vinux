@@ -23,11 +23,14 @@ let s:global_echo_str=[]
 
 function! te#utils#close_all_echo_win() abort
     for l:needle in s:win_list
-        if te#env#IsNvim() == 0
-            call popup_close(l:needle.id)
-        else
-            call nvim_win_close(l:needle.id, v:true)
-        endif
+        try
+            if te#env#IsNvim() == 0
+                call popup_close(l:needle.id)
+            else
+                call nvim_win_close(l:needle.id, v:true)
+            endif
+        catch
+        endtry
     endfor
     let s:win_list=[]
 endfunction

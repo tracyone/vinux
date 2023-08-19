@@ -20,6 +20,7 @@ else
     if te#env#IsNvim() >= 0.5
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
         Plug 'nvim-treesitter/nvim-treesitter-refactor'
+        Plug 'nvim-treesitter/nvim-treesitter-context'
         function! s:treesitter_setup()
 lua << EOF
             require('treesittier_nvim')
