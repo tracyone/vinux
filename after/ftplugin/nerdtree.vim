@@ -1,7 +1,7 @@
 function! s:delete_file()
     let l:lastline = line("'>")
     let l:curLine = line("'<")
-    if l:curLine == l:lastline
+    if l:curLine == l:lastline || mode() == 'n'
         let l:curLine = line(".")
         let l:lastline = l:curLine
     endif
@@ -14,7 +14,7 @@ function! s:delete_file()
                     try 
                         call l:file.delete()
                     catch
-                        call te#utils#EchoWarning("Delete ".l:file.path.str()." fail")
+                        call te#utils#EchoWarning("Delete ".l:file.path.str()." fail", 'err')
                     endtry
                 endif
             endif
@@ -55,7 +55,7 @@ function! s:new_file()
 
         redraw!
     catch /^NERDTree/
-        call te#utils#EchoWarning("Create ".l:newNodeName." fail!")
+        call te#utils#EchoWarning("Create ".l:newNodeName." fail!", 'err')
     endtry
 endfunction
 
@@ -85,14 +85,21 @@ function! s:copy_file()
     call setreg('"', l:node.path.str())
 endfunction
 
+let s:move_file_path = []
 function! s:move_file()
-    let l:node = g:NERDTreeFileNode.GetSelected()
-    if l:node.path.isDirectory
-        call te#utils#EchoWarning("Not support directory")
-    else
-        let s:move_file_path = substitute(l:node.path.str(), '\/$', '', '')
-        call te#utils#EchoWarning("Copy to clipboard : ".s:move_file_path)
+    let l:lastline = line("'>")
+    let l:curLine = line("'<")
+    if l:curLine == l:lastline || mode() == 'n'
+        let l:curLine = line(".")
+        let l:lastline = l:curLine
     endif
+    while l:curLine <= l:lastline
+        call cursor(l:curLine, 1)
+        let l:node = g:NERDTreeFileNode.GetSelected()
+        call add(s:move_file_path, substitute(l:node.path.str(), '\/$', '', ''))
+        let l:curLine += 1
+    endwhile
+    call te#utils#EchoWarning("Copy ".len(s:move_file_path).' files path!')
 endfunction
 
 function! s:paste_file()
@@ -104,26 +111,24 @@ function! s:paste_file()
         let s:copy_file_path = ""
     endif
 
-    if exists("s:move_file_path") && !empty(s:move_file_path)
-        let l:dst_file = fnamemodify(l:node.path.str(), ":p:h").nerdtree#slash().fnamemodify(s:move_file_path, ":t")
-        if exists("s:move_file_path")
-            if filereadable(l:dst_file)
-                if confirm(l:dst_file." is exist! override?", "&Yes\n&No", 2) == 2
-                    call te#utils#EchoWarning("Move file abort")
-                    let l:confirm = 0
-                endif
-            endif
-            if l:confirm == 1
-                let l:ret = rename(s:move_file_path, l:dst_file)
-                if l:ret
-                    call te#utils#EchoWarning("Move file to".l:dst_file." fail!!")
-                else
-                    call te#utils#EchoWarning("Move file finish")
-                endif
+    for l:path in s:move_file_path
+        let l:dst_file = fnamemodify(l:node.path.str(), ":p:h").nerdtree#slash().fnamemodify(l:path, ":t")
+        if filereadable(l:dst_file)
+            if confirm(l:dst_file." is exist! override?", "&Yes\n&No", 2) == 2
+                call te#utils#EchoWarning("Move file abort")
+                let l:confirm = 0
             endif
         endif
-        let s:move_file_path = ""
-    endif
+        if l:confirm == 1
+            let l:ret = rename(l:path, l:dst_file)
+            if l:ret
+                call te#utils#EchoWarning("Move file to".l:dst_file." fail!!", 'err')
+            else
+                call te#utils#EchoWarning("Move file finish")
+            endif
+        endif
+    endfor
+    let s:move_file_path = []
     call b:NERDTree.root.refresh()
     "call l:node.parent.refresh()
     call NERDTreeRender()
@@ -140,7 +145,7 @@ function! s:rename_file()
     endif
     let l:ret = rename(l:node.path.str(), l:newNodeName)
     if l:ret
-        call te#utils#EchoWarning("Rename file from ".l:node.path.str()." to ".l:newNodeName." fail")
+        call te#utils#EchoWarning("Rename file from ".l:node.path.str()." to ".l:newNodeName." fail", 'err')
     else
         call te#utils#EchoWarning("Rename file finish")
     endif
@@ -154,6 +159,7 @@ xnoremap <silent><buffer> dd :<c-u>:call <SID>delete_file()<cr>
 nnoremap <silent><buffer> N :call <SID>new_file()<cr>
 nnoremap <silent><buffer> yy :call <SID>copy_file()<cr>
 nnoremap <silent><buffer> m :call <SID>move_file()<cr>
+xnoremap <silent><buffer> m :<c-u>::call <SID>move_file()<cr>
 nnoremap <silent><buffer> p :call <SID>paste_file()<cr>
 nnoremap <silent><buffer> r :call <SID>rename_file()<cr>
 
