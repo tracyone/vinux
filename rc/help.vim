@@ -28,12 +28,12 @@ let g:startify_session_savevars = [
             \ 'g:startify_session_savevars',
             \ 'g:startify_session_savecmds',
             \ 'g:vinux_coding_style.cur_val',
+            \ 'g:vinux_project_name',
+            \ 'g:vinux_working_directory',
             \ ]
 
 let g:startify_session_savecmds = [
-            \ 'call love#Apply()',
-            \ "call te#feat#source_rc('colors.vim')",
-            \ "call te#project#set_indent_options(g:vinux_coding_style.cur_val)"
+            \ "call te#project#load_project(g:vinux_project_name)",
             \ ]
 
 let g:startify_commands = [

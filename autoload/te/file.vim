@@ -39,9 +39,9 @@ function! te#file#copy_file(src, dst,...) abort
     return l:ret
 endfunction
 
-function! te#file#delete(path) abort
+function! te#file#delete(path, confirm) abort
     let l:ret = -1
-    if (confirm('Delete '.a:path, "&Yes\n&No", 2)==1)
+    if a:confirm == 0 || (confirm('Delete '.a:path, "&Yes\n&No", 2)==1)
         let l:ret=delete(a:path, 'rf')
     endif
     return l:ret

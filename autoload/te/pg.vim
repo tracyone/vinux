@@ -77,7 +77,7 @@ function! s:gen_kernel_cscope(path) abort
         else
             call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[a:path, 0])
             if filereadable('.temptags')
-                let l:ret = te#file#delete('.temptags')
+                let l:ret = te#file#delete('.temptags', 0)
             endif
             if l:ret == 0
                 call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'), [a:path])
@@ -86,7 +86,7 @@ function! s:gen_kernel_cscope(path) abort
         :call te#utils#EchoWarning('Generating cscope database and tag file for linux kernel ...')
     else
         if filereadable('.temptags')
-            let l:ret = te#file#delete('.temptags')
+            let l:ret = te#file#delete('.temptags', 0)
         endif
         if l:ret == 0
             call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'), [a:path])
@@ -175,7 +175,7 @@ function! te#pg#do_cs_tags(dir, option) abort
         if(executable('ctags'))
             let l:cmd_str = 'ctags -f '.a:dir.'/.temptags '
             if filereadable(a:dir.'/.temptags')
-                let l:ret = te#file#delete(a:dir.'/.temptags')
+                let l:ret = te#file#delete(a:dir.'/.temptags', 0)
             endif
             if l:ret == 0
                 if &filetype ==# 'cpp'

@@ -425,7 +425,7 @@ nnoremap <expr><silent> <Enter> &buftype ==# 'quickfix' ? "\<CR>" : ":call te#co
 " Project save 
 nnoremap  <silent><Leader>ss :call te#project#create_project()<cr>
 " Porject load
-nnoremap  <silent><Leader>sl :call te#project#load_project()<cr>
+nnoremap  <silent><Leader>sl :call te#project#load_project("")<cr>
 " project delete
 nnoremap  <silent><Leader>sd :call te#project#delete_project()<cr>
 " edit project
