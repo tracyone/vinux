@@ -30,8 +30,6 @@ endif
 if te#env#IsNvim() > 0
     Plug 'nvim-lua/plenary.nvim' 
     Plug 'petertriho/cmp-git'
-else
-    Plug 'rhysd/github-complete.vim',{'for': ['gitcommit', 'markdown', 'gina-commit']}
 endif
 
 " Git releate ---------------------{{{
@@ -47,9 +45,6 @@ nnoremap  <silent><leader>gA :call te#git#archive_my_vim_cfg($VIMFILES,'vim_conf
 nnoremap  <silent><leader>gC :call te#git#archive_my_vim_cfg('.','')<cr>
 let g:gissues_lazy_load = 1
 let g:gissues_async_omni = 1
-if filereadable($VIMFILES.'/.github_token')
-    let g:github_access_token = readfile($VIMFILES.'/.github_token', '')[0]
-endif
 " git push origin master
 nnoremap  <silent><Leader>gp :call te#git#GitPush("heads")<cr>
 " git push to gerrit

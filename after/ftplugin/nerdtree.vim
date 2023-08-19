@@ -1,7 +1,7 @@
 function! s:delete_file()
     let l:lastline = line("'>")
     let l:curLine = line("'<")
-    if l:curLine == l:lastline || mode() == 'n'
+    if l:curLine == l:lastline
         let l:curLine = line(".")
         let l:lastline = l:curLine
     endif
@@ -74,22 +74,32 @@ function! s:open_file()
     endif
 endfunction
 
+let s:copy_file_path = []
 function! s:copy_file()
-    let l:node = g:NERDTreeFileNode.GetSelected()
-    if l:node.path.isDirectory
-        call te#utils#EchoWarning("Not support directory")
-    else
-        let s:copy_file_path = substitute(l:node.path.str(), '\/$', '', '')
-        call te#utils#EchoWarning("Copy to clipboard : ".s:copy_file_path)
+    let l:lastline = line("'>")
+    let l:curLine = line("'<")
+    if l:curLine == l:lastline
+        let l:curLine = line(".")
+        let l:lastline = l:curLine
     endif
-    call setreg('"', l:node.path.str())
+    while l:curLine <= l:lastline
+        call cursor(l:curLine, 1)
+        let l:node = g:NERDTreeFileNode.GetSelected()
+        if l:node.path.isDirectory
+            call te#utils#EchoWarning("Not support directory")
+        else
+            call add(s:copy_file_path, substitute(l:node.path.str(), '\/$', '', ''))
+        endif
+        let l:curLine += 1
+    endwhile
+    call te#utils#EchoWarning("Copy ".len(s:copy_file_path)." files")
 endfunction
 
 let s:move_file_path = []
 function! s:move_file()
     let l:lastline = line("'>")
     let l:curLine = line("'<")
-    if l:curLine == l:lastline || mode() == 'n'
+    if l:curLine == l:lastline
         let l:curLine = line(".")
         let l:lastline = l:curLine
     endif
@@ -105,11 +115,12 @@ endfunction
 function! s:paste_file()
     let l:confirm = 1
     let l:node = g:NERDTreeFileNode.GetSelected()
-    if exists("s:copy_file_path") && !empty(s:copy_file_path)
-        let l:dst_file = fnamemodify(l:node.path.str(), ":p:h").nerdtree#slash().fnamemodify(s:copy_file_path, ":t")
-        let l:ret = te#file#copy_file(s:copy_file_path, l:dst_file)
-        let s:copy_file_path = ""
-    endif
+
+    for l:path in s:copy_file_path
+        let l:dst_file = fnamemodify(l:node.path.str(), ":p:h").nerdtree#slash().fnamemodify(l:path, ":t")
+        let l:ret = te#file#copy_file(l:path, l:dst_file)
+    endfor
+    let s:copy_file_path = []
 
     for l:path in s:move_file_path
         let l:dst_file = fnamemodify(l:node.path.str(), ":p:h").nerdtree#slash().fnamemodify(l:path, ":t")
@@ -155,11 +166,12 @@ endfunction
 
 nnoremap <silent><buffer> O :call <SID>open_file()<cr>
 nnoremap <silent><buffer> dd :call <SID>delete_file()<cr>
-xnoremap <silent><buffer> dd :<c-u>:call <SID>delete_file()<cr>
 nnoremap <silent><buffer> N :call <SID>new_file()<cr>
 nnoremap <silent><buffer> yy :call <SID>copy_file()<cr>
+xnoremap <silent><buffer> dd :<c-u>:call <SID>delete_file()<cr>
+xnoremap <silent><buffer> y :<c-u>:call <SID>copy_file()<cr>
+xnoremap <silent><buffer> m :<c-u>:call <SID>move_file()<cr>
 nnoremap <silent><buffer> m :call <SID>move_file()<cr>
-xnoremap <silent><buffer> m :<c-u>::call <SID>move_file()<cr>
 nnoremap <silent><buffer> p :call <SID>paste_file()<cr>
 nnoremap <silent><buffer> r :call <SID>rename_file()<cr>
 

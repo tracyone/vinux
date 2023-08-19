@@ -23,6 +23,7 @@ if g:enable_powerline_fonts.cur_val ==# 'on'
 else
     let g:airline_symbols.branch = '⎇'
 endif
+let g:airline_section_c_sep = ' | '
 let g:airline_symbols.maxlinenr = '☰'
 let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.paste = 'ρ'
@@ -46,6 +47,11 @@ function! s:airline_setting()
     else
         let g:airline_extensions = ['tabline']
     endif
+    let g:airline_section_c="%t".g:airline_section_c_sep
+    if te#env#SupportCscope()
+        let g:airline_section_c.="cs["."%{cscope_connection()}"."]".g:airline_section_c_sep
+    endif
+    let g:airline_section_c.="%{te#pg#get_tags_number(g:airline_section_c_sep)}"
 
     if get(g:, 'feat_enable_git')
         if g:git_plugin_name.cur_val ==# 'vim-fugitive'
@@ -74,6 +80,7 @@ function! s:airline_setting()
             let g:airline_section_warning = '⚠ %{lsp#get_buffer_diagnostics_counts()["warning"]}'
             let g:airline_section_error = '✗ %{lsp#get_buffer_diagnostics_counts()["error"]}%{lsp#get_buffer_first_error_line()? "-".lsp#get_buffer_first_error_line():""}'
         endif
+        let g:airline_section_c.="%{te#lsp#get_lsp_server_name(g:airline_section_c_sep)}"
     endif
 
     if g:feat_enable_complete == 1
