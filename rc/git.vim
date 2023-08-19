@@ -16,7 +16,6 @@ nnoremap  <silent><Leader>gl :call te#git#show_log(".")<cr>
 if te#env#SupportPy2()
     Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
 endif
-Plug 'rhysd/github-complete.vim',{'for': ['gitcommit', 'markdown', 'gina-commit']}
 Plug 'rhysd/conflict-marker.vim'
 if te#env#SupportFeature('signs')
     Plug 'airblade/vim-gitgutter', { 'on': [] }
@@ -27,6 +26,12 @@ if te#env#SupportAsync()
     Plug 'rhysd/git-messenger.vim',{'on': '<Plug>(git-messenger)'}
     nmap  <silent><Leader>gn <Plug>(git-messenger)
     let g:git_messenger_no_default_mappings=v:true
+endif
+if te#env#IsNvim() > 0
+    Plug 'nvim-lua/plenary.nvim' 
+    Plug 'petertriho/cmp-git'
+else
+    Plug 'rhysd/github-complete.vim',{'for': ['gitcommit', 'markdown', 'gina-commit']}
 endif
 
 " Git releate ---------------------{{{

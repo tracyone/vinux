@@ -46,6 +46,7 @@ autocmd FileType markdown,gitcommit,gina-commit lua require'cmp'.setup.buffer {
                     \     {name='look', keyword_length=2},
                     \ { name = 'ultisnips' },
                     \ { name = 'buffer' },
+                    \ { name = 'git' },
                     \   },
                     \ }
 endfunction
