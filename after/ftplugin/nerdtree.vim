@@ -1,4 +1,4 @@
-function! s:delete_file()
+function! s:delete_file(confirm)
     let l:lastline = line("'>")
     let l:curLine = line("'<")
     if l:curLine == l:lastline
@@ -10,7 +10,7 @@ function! s:delete_file()
         let l:file = g:NERDTreeFileNode.GetSelected()
         if !empty(l:file)
             if !empty(l:file.path)
-                if (confirm("Delete ".l:file.path.str(), "&Yes\n&No", 2)==1)
+                if a:confirm == 0 || (confirm("Delete ".l:file.path.str(), "&Yes\n&No", 2)==1)
                     try 
                         call l:file.delete()
                     catch
@@ -85,11 +85,7 @@ function! s:copy_file()
     while l:curLine <= l:lastline
         call cursor(l:curLine, 1)
         let l:node = g:NERDTreeFileNode.GetSelected()
-        if l:node.path.isDirectory
-            call te#utils#EchoWarning("Not support directory")
-        else
-            call add(s:copy_file_path, substitute(l:node.path.str(), '\/$', '', ''))
-        endif
+        call add(s:copy_file_path, substitute(l:node.path.str(), '\/$', '', ''))
         let l:curLine += 1
     endwhile
     call te#utils#EchoWarning("Copy ".len(s:copy_file_path)." files")
@@ -165,13 +161,19 @@ function! s:rename_file()
 endfunction
 
 nnoremap <silent><buffer> O :call <SID>open_file()<cr>
-nnoremap <silent><buffer> dd :call <SID>delete_file()<cr>
-nnoremap <silent><buffer> N :call <SID>new_file()<cr>
+
+nnoremap <silent><buffer> dd :call <SID>delete_file(1)<cr>
+xnoremap <silent><buffer> dd :<c-u>:call <SID>delete_file(1)<cr>
+nnoremap <silent><buffer> D :call <SID>delete_file(0)<cr>
+xnoremap <silent><buffer> D :<c-u>:call <SID>delete_file(0)<cr>
+
 nnoremap <silent><buffer> yy :call <SID>copy_file()<cr>
-xnoremap <silent><buffer> dd :<c-u>:call <SID>delete_file()<cr>
 xnoremap <silent><buffer> y :<c-u>:call <SID>copy_file()<cr>
+
 xnoremap <silent><buffer> m :<c-u>:call <SID>move_file()<cr>
 nnoremap <silent><buffer> m :call <SID>move_file()<cr>
+
+nnoremap <silent><buffer> N :call <SID>new_file()<cr>
 nnoremap <silent><buffer> p :call <SID>paste_file()<cr>
 nnoremap <silent><buffer> r :call <SID>rename_file()<cr>
 

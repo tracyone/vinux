@@ -12,7 +12,7 @@ function! te#file#copy_file(src, dst,...) abort
         let l:confirm = a:1
     endif
 
-    if filereadable(a:src)
+    if filereadable(a:src) || isdirectory(a:src)
         if filereadable(l:dst)
             if l:confirm == 1
                 if confirm(l:dst." is exist! override?", "&Yes\n&No", 2) == 2
@@ -22,15 +22,15 @@ function! te#file#copy_file(src, dst,...) abort
             endif
         endif
         if l:execure_write == 1
-            if !exists('*readblob')
-                let l:ret = system('cp -a '.a:src.' '.l:dst)
+            if te#env#Executable('cp')
+                call te#utils#run_command('cp -a '.a:src.' '.l:dst)
             else
                 let l:ret = writefile(readblob(a:src), l:dst, "s")
-            endif
-            if l:ret
-                call te#utils#EchoWarning("Copy ".a:src.' to '.l:dst.' fail')
-            else
-                call te#utils#EchoWarning("Copy ".a:src.' to '.l:dst.' successfully')
+                if l:ret
+                    call te#utils#EchoWarning("Copy ".a:src.' to '.l:dst.' fail')
+                else
+                    call te#utils#EchoWarning("Copy ".a:src.' to '.l:dst.' successfully')
+                endif
             endif
         endif
     else
