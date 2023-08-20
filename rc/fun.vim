@@ -71,4 +71,35 @@ function! s:smile()
     endif
 endfunction
 
+let s:game_list = ['VimGameCodeBreak', 'VimGameSnake', 'KillKillKill', 'MineSweep']
+let s:game_index = -1
+
+function! s:game_start(timer) abort
+    if s:game_index >= 0
+        set laststatus=0
+        set showtabline=0
+        set nonumber norelativenumber nocursorline nocursorcolumn
+        set nowrap
+        execute s:game_list[s:game_index]
+    endif
+endfunction
+function GameSelect(id, result)
+    let s:game_index = a:result - 1
+    call timer_start(50, function('<SID>game_start'), {'repeat': 1})
+endfunc
+
+function! s:start_vinux_game_center() abort
+    call popup_menu(s:game_list, #{
+                \ callback: 'GameSelect',
+                \ border: [],
+                \ tab: -1,
+                \ zindex: 200,
+                \ highlight: 'WarningMsg',
+                \ minwidth: &columns/6,
+                \ borderchars:['─', '│', '─', '│', '┌', '┐', '┘', '└'],
+                \ borderhighlight:['vinux_border'],
+                \ })
+endfunction
+nnoremap  <silent><Leader>ag :call <SID>start_vinux_game_center()<cr>
+
 let s:main_timer=timer_start(str2nr(s:expires_time), function('<SID>enter_screen_saver'), {'repeat': 1})
