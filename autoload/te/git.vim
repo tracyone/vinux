@@ -126,18 +126,18 @@ endfunction
 
 function! te#git#get_latest_sevral_commit(A, L, P) abort
     let l:temp=a:A.a:L.a:P
-    let g:log=te#compatiable#systemlist('git log --abbrev-commit -6 --pretty=oneline')
-    if type(g:log) == g:t_number
+    let l:log=te#compatiable#systemlist('git log --abbrev-commit -6 --pretty=oneline')
+    if type(l:log) == g:t_number
         return ''
     endif
-    if empty(g:log) == 1
+    if empty(l:log) == 1
         call te#utils#EchoWarning('git log failed')
         return 1
     endif
     " avoid warning..
     let l:result=l:temp 
     let l:result=''
-    for l:str in g:log
+    for l:str in l:log
         let l:result.=l:str."\n"
     endfor
     return l:result

@@ -294,7 +294,7 @@ nnoremap  <silent><Leader>fu :call te#feat#gen_feature_vim(0)<cr>
 " reset feature
 nnoremap  <silent><Leader>fr :call te#feat#gen_feature_vim(1)<cr>
 
-nnoremap  <silent><Leader>dj <c-u>
+nnoremap  <silent><Leader>du <c-u>
 nnoremap  <silent><Leader>dd <c-d>
 nnoremap <silent><Leader>pw :call te#utils#EchoWarning(getcwd(), 'info')<cr>
 " cd to any plugin directory

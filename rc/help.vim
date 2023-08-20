@@ -70,6 +70,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'w': 'toggle drawit plugin',
                     \ 'y': 'Translate using youdao dict',
                     \ 'z': 'Translate:en2ch',
+                    \ 'g': 'Open game center',
                     \ }
         let g:which_key_map.b = { 
                     \ 'name' : '+buffer',
@@ -97,6 +98,7 @@ if v:version >= 704 && te#env#IsDisplay()
         let g:which_key_map.d = { 
                     \ 'name' : '+Do',
                     \ 'd': 'Ctrl-d in normal mode',
+                    \ 'u': 'Ctrl-u in normal mode',
                     \ 'i': 'drawit start',
                     \ 's': 'drawit stop',
                     \ }
@@ -128,6 +130,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'h' : "Open git url using default web browser",
                     \ 'i' : "Show git hunk",
                     \ 'l' : "Open git log window",
+                    \ 'L' : "Open git log window with --all",
                     \ 'm' : "Merge and rebase with selected branch",
                     \ 'p' : "git push to selected branch ",
                     \ 's' : 'Open git status window',
@@ -177,6 +180,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'j' : 'Move down curent line',
                     \ 'k' : 'Move up curent line',
                     \ 'm' : 'Mark current word',
+                    \ 'n' : 'Clear current mark',
                     \ 'p' : 'Markdown preview',
                     \ 'r' : 'highlight words that match specified regex',
                     \ 's' : 'show Markdown toc',
@@ -193,7 +197,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'j' : 'Show list of running jobs',
                     \ }
         let g:which_key_map.o = { 
-                    \ 'name' : '+Org',
+                    \ 'name' : '+Org_or_Open',
                     \ 'b' : 'org checkbox toggle',
                     \ 'c' : 'New org checkbox below',
                     \ 'd' : 'Org interactive',
@@ -203,6 +207,9 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 't' : 'Org todo',
                     \ 'u' : 'Org checkbox update',
                     \ 'w' : 'Org open index.org',
+                    \ 'F' : 'open Files position',
+                    \ 'f' : 'open Files position',
+                    \ 'T' : 'open Files position in terminal',
                     \ }
         let g:which_key_map.p = { 
                     \ 'name' : '+FuzzySearcher_or_Plugin',
@@ -236,6 +243,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'e' :'Start repl for current filetype',
                     \ 'r' : 'Open ranger in floating window',
                     \ 'g' : 'Show git status using tig',
+                    \ 'n' : 'LSP rename',
                     \ }
         let g:which_key_map.s = { 
                     \ 'name' : '+Show_or_session',
