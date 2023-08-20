@@ -8,7 +8,7 @@ Plug 'iqxd/vim-mine-sweeping', {'on': 'MineSweep', 'branch': 'main'}
 
 " open calendar
 nnoremap  <silent><Leader>ad :Calendar<cr>
-nnoremap  <silent><Leader>ab :Thumbnail<cr>
+nnoremap  <silent><Leader>ap :Thumbnail<cr>
 
 if !te#env#SupportTimer()
     :finish

@@ -13,9 +13,7 @@ nnoremap ghc :call te#git#browse_file(0)<cr>
 xmap ghc :<c-u>call te#git#browse_file(2)<cr>
 
 nnoremap  <silent><Leader>gl :call te#git#show_log(".")<cr>
-if te#env#SupportPy2()
-    Plug 'jaxbot/github-issues.vim', { 'on': 'Gissue' }
-endif
+nnoremap  <silent><Leader>gL :call te#git#show_log(".", "--all")<cr>
 Plug 'rhysd/conflict-marker.vim'
 if te#env#SupportFeature('signs')
     Plug 'airblade/vim-gitgutter', { 'on': [] }
@@ -34,17 +32,16 @@ endif
 
 " Git releate ---------------------{{{
 " list git issue
-nnoremap  <silent><Leader>gi :silent! Gissue<cr>
-" create new github issue
-nnoremap  <silent><Leader>ga :silent! Giadd<cr>
+
+nnoremap <silent><Leader>gi <Plug>(GitGutterPreviewHunk)
+nnoremap <silent><Leader>ga <Plug>(GitGutterStageHunk)
+nnoremap <silent><Leader>gu <Plug>(GitGutterUndoHunk)
 " git merge
 nnoremap  <silent><Leader>gm :call te#git#git_merge()<cr>
 " arhcive vim config.
 nnoremap  <silent><leader>gA :call te#git#archive_my_vim_cfg($VIMFILES,'vim_config')<cr>
 " archive current git repo with default name
 nnoremap  <silent><leader>gC :call te#git#archive_my_vim_cfg('.','')<cr>
-let g:gissues_lazy_load = 1
-let g:gissues_async_omni = 1
 " git push origin master
 nnoremap  <silent><Leader>gp :call te#git#GitPush("heads")<cr>
 " git push to gerrit

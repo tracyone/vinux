@@ -56,17 +56,16 @@ if v:version >= 704 && te#env#IsDisplay()
         let g:which_key_map = {}
         let g:which_key_map.a = { 
                     \ 'name' : '+application',
-                    \ 'b': 'Preview window',
+                    \ 'p': 'Preview window',
                     \ 'c': 'Calculator',
                     \ 'd': 'Calendar',
                     \ 'e': 'Translate:zh2en',
-                    \ 'F': 'Open a terminal win in floating win' ,
-                    \ 'f': "Go to the current file's directory in the File manager",
                     \ 'l': 'easy align',
                     \ 'r': 'Enter screensaver',
                     \ 's': 'Open terminal win in vim in a split window',
                     \ 'T': 'Go to the current working directory in the Terminal',
-                    \ 't': "Go to the current file's directory in the Terminal",
+                    \ 't': "Open terminal win in a tab window",
+                    \ 'f': "Open terminal win in a floating window",
                     \ 'v': 'Open terminal win in a vertical split window',
                     \ 'w': 'toggle drawit plugin',
                     \ 'y': 'Translate using youdao dict',
@@ -93,6 +92,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 's': 'Commnet sexy',
                     \ 'u': 'UnCommnet',
                     \ 'y': 'Comment and yank',
+                    \ 'h': 'Check the vim health',
                     \ }
         let g:which_key_map.d = { 
                     \ 'name' : '+Do',
@@ -112,11 +112,13 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 's' : 'Save current file',
                     \ 'S' : 'Save all file',
                     \ 'u' : 'Generate feature.vim',
+                    \ 'w' : 'Fuzzy search vim windows',
                     \ }
         let g:which_key_map.g = { 
                     \ 'name' : '+git',
                     \ 'A' : 'Archive vinux and move the archive to current dir',
-                    \ 'a' : 'Git add',
+                    \ 'a' : 'Git stage Hunk',
+                    \ 'u' : 'Git undo Hunk',
                     \ 'b' : 'open Git blame window',
                     \ 'C' : 'Archive current git repo and move the archive to current dir',
                     \ 'c' : 'Cd to the root dir of git repo',
@@ -124,7 +126,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'e' : "Open git repo's config",
                     \ 'f' : "Git fetch all",
                     \ 'h' : "Open git url using default web browser",
-                    \ 'i' : "Open git issue window",
+                    \ 'i' : "Show git hunk",
                     \ 'l' : "Open git log window",
                     \ 'm' : "Merge and rebase with selected branch",
                     \ 'p' : "git push to selected branch ",
@@ -134,11 +136,12 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ }
         let g:which_key_map.h = { 
                     \ 'name' : '+help',
-                    \ 'e' : ':help eval.txt',
-                    \ 'f' : ':help function-list',
+                    \ 'e' : 'Open vim eval.txt',
+                    \ 'f' : 'Open vim function-list',
                     \ 'm' : 'Open manual of current cursor word',
                     \ 'p' : 'Open vim programming document',
                     \ 'h' : 'Open start screen',
+                    \ 'v' : 'Fuzzy search vim help',
                     \ }
         let g:which_key_map.j = { 
                     \ 'name' : '+jump',
@@ -210,7 +213,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'm' : 'Mru',
                     \ 'p' : 'File',
                     \ 'r' : 'Reg',
-                    \ 's' : 'Searcher itself',
+                    \ 's' : 'Plugin status',
                     \ 't' : 'tag',
                     \ 'u' : 'Plugin update',
                     \ 'w' : 'Show current directory',
@@ -232,6 +235,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'c' :'Run command from user input',
                     \ 'e' :'Start repl for current filetype',
                     \ 'r' : 'Open ranger in floating window',
+                    \ 'g' : 'Show git status using tig',
                     \ }
         let g:which_key_map.s = { 
                     \ 'name' : '+Show_or_session',
@@ -243,6 +247,8 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'o' : 'Source vimrc',
                     \ 's' : 'Session save',
                     \ 't' : 'Show git tag',
+                    \ 'e' : 'Edit project files',
+                    \ 'p' : 'Fuzzy search snippets',
                     \ }
         let g:which_key_map.u = { 
                     \ 'name' : '+Update',

@@ -178,19 +178,23 @@ function! te#git#archive_my_vim_cfg(git_dir, out_name) abort
     call te#utils#EchoWarning('Creating '.l:cur_dir.'/'.l:out_name.' ...')
 endfunction
 
-function! te#git#show_log(dir) abort
+function! te#git#show_log(dir,...) abort
+    let l:option_str=""
     execute 'cd '.a:dir
+    if a:0 == 1
+        let l:option_str=" ".a:1
+    endif
     if te#env#SupportTerminal()
-        call te#terminal#shell_pop({'opener':0x4, 'cmd':'tig'})
+        call te#terminal#shell_pop({'opener':0x4, 'cmd':'tig'.l:option_str})
         cd -
         return 0
     elseif exists(':Gitv')
-        :Gitv
+        execute ':Gitv'.l:option_str
         cd -
         return 0
     elseif exists(':Gina')
         :tabnew
-        :Gina log --max-count=300
+        execute ':Gina log --max-count=300'.l:option_str
         cd -
         return 0
     endif

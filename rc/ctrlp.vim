@@ -138,7 +138,7 @@ function! s:ctrlp_setting()
     "CtrlP git remote branch
     nnoremap  <silent><Leader>pgr :call te#ctrlp#git#start(4)<cr>
     "vim help
-    nnoremap  <silent><Leader>ph :CtrlPHelp<cr>
+    nnoremap  <silent><Leader>hv :CtrlPHelp<cr>
     nnoremap  <silent><Leader>fe :call te#ctrlp#feat#start(1)<cr>
     nnoremap  <silent><Leader>fd :call te#ctrlp#feat#start(0)<cr>
     nnoremap <silent><Leader>pr :call te#ctrlp#reg#start(0)<cr> 

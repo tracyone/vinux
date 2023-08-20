@@ -12,11 +12,13 @@ endfunction
 function! s:fzf_vim_setting()
     "buffer
     nnoremap  <silent><c-j> :call FzfStartEntry('Buffers')<Cr>
+    nnoremap  <silent><Leader>pb :call FzfStartEntry('Buffers')<Cr>
     nnoremap  <silent><Leader>fw :call FzfStartEntry('Windows')<cr>
     "colorsceme
     nnoremap  <silent><Leader>pc :call FzfStartEntry('Colors')<cr>
     "file cmd
     nnoremap  <silent><Leader><Leader> :call FzfStartEntry("Files")<cr>
+    nnoremap  <silent><Leader>pp :call FzfStartEntry("Files")<cr>
     "mru
     nnoremap  <silent><c-l>  :FZFMru<cr>
     nnoremap  <silent><Leader>pm  :FZFMru<cr>
@@ -27,7 +29,7 @@ function! s:fzf_vim_setting()
     nnoremap  <silent><Leader>pgc  :call FzfStartEntry('Commits')<cr>
     nnoremap  <silent><Leader>sp  :call FzfStartEntry('Snippets')<cr>
     "vim help
-    nnoremap  <silent><Leader>ph  :call FzfStartEntry('Helptags')<cr>
+    nnoremap  <silent><Leader>hv  :call FzfStartEntry('Helptags')<cr>
     "spacemacs :SPC ff
     nnoremap  <silent><Leader>ff  :call FzfStartEntry('call te#fzf#dir#start()')<cr>
     "feature enable
