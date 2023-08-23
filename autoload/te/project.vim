@@ -118,6 +118,7 @@ function! te#project#create_project() abort
     elseif exists(":SaveSession") == 2
         execute ":SaveSession ".l:name
     endif
+    call te#pg#start_gen_cs_tags_threads()
     return 0
 endfunction
 

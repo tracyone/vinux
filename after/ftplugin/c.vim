@@ -120,15 +120,4 @@ let b:match_words=
 \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
 \ '\<switch\>:\<case\>:\<default\>'
 
-if !exists('g:vinux_auto_gen_cscope') 
-    if filereadable('.csdb') || te#pg#top_of_kernel_tree(getcwd()) 
-                \ || te#pg#top_of_uboot_tree()
-        let g:vinux_auto_gen_cscope=1
-        if te#env#SupportTimer()
-            call timer_start(3000, 'te#pg#gen_cs_tags')
-            call timer_start(600000, 'te#pg#gen_cs_tags', {'repeat': -1})
-        elseif filereadable('.csdb')
-            call te#pg#gen_cs_tags(0)
-        endif
-    endif
-endif
+call te#pg#start_gen_cs_tags_threads()
