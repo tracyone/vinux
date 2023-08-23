@@ -122,6 +122,7 @@ function! te#feat#feat_dyn_enable(en) abort
         call te#feat#gen_feature_vim(0)
     endif
     if a:en == 1 | :PlugInstall --sync | q | endif
+    call te#feat#source_rc('colors.vim')
     call te#utils#EchoWarning(l:enable.' '.l:feat.' successfully!', 'info')
 endfunction
 
@@ -144,6 +145,7 @@ function! te#feat#feat_enable(var, default) abort
     if eval(a:var) != 0 && matchstr(a:var, 'g:feat_enable_') !=# ''
         call te#feat#source_rc(matchstr(a:var,'_\zs[^_]*\ze$').'.vim')
     endif
+    call te#feat#source_rc('colors.vim')
 endfunction
 
 function! te#feat#init_var(val, default)
@@ -213,6 +215,7 @@ function! te#feat#check_plugin_install() abort
     if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
         call te#utils#EchoWarning('Install the missing plugins!')
         PlugInstall --sync | q
+        call te#feat#source_rc('colors.vim')
     endif
 endfunction
 

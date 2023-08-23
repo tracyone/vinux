@@ -54,6 +54,7 @@ function! s:edit_file(item)
         call te#feat#gen_feature_vim(0)
     endif
     if s:enable_flag == 1 | :PlugInstall --sync | q | endif
+    call te#feat#source_rc('colors.vim')
     call te#utils#EchoWarning(l:enable.' '.l:str.' successfully!', 'info')
 endfunction
 
