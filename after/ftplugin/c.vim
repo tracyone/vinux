@@ -11,13 +11,7 @@ endif
 
 if te#env#SupportCscope()
     " add cscope database at the first time
-    if get(g:,'tagging_program').cur_val ==# 'gtags'
-        set cscopeprg=gtags-cscope
-        call te#pg#add_cscope_out(getcwd(), 1)
-    else
-        set cscopeprg=cscope
-        call te#pg#add_cscope_out(getcwd(), 0)
-    endif
+    call te#pg#add_cscope_out(getcwd())
 
     " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
     set cscopetag
@@ -46,7 +40,7 @@ if te#env#SupportCscope()
     nnoremap  <silent><buffer> <C-\>i :split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
     nnoremap  <silent><buffer> <LocalLeader>u :call te#pg#gen_cs_tags(0)<cr>
-    nnoremap  <silent><buffer> <LocalLeader>a :call te#pg#add_cscope_out(getcwd(), 0)<cr>
+    nnoremap  <silent><buffer> <LocalLeader>a :call te#pg#add_cscope_out(getcwd())<cr>
     "kill the connection of current dir 
     nnoremap  <silent><buffer> <LocalLeader>k :cs kill cscope.out<cr> 
 

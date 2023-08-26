@@ -18,8 +18,8 @@ endfunction
 " add cscope database
 " a:1:read path from .csdb or pwd
 " a:2:use gtags or not
-function! te#pg#add_cscope_out(path, use_gtags) abort
-    if a:use_gtags == 1
+function! te#pg#add_cscope_out(path) abort
+    if &cscopeprg == 'gtags-cscope'
         let l:cscope_db_name='GTAGS'
     else
         let l:cscope_db_name='cscope.out'
@@ -87,16 +87,12 @@ function! s:gen_kernel_cscope(path) abort
     :silent! call delete('cctree.out')
     let l:ret = 0
     if te#env#SupportCscope()
-        if &cscopeprg ==# 'gtags-cscope'
-            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 gtags', function('te#pg#add_cscope_out'),[a:path, 1])
-        else
-            call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 cscope', function('te#pg#add_cscope_out'),[a:path, 0])
-            if filereadable('.temptags')
-                let l:ret = te#file#delete('.temptags', 0)
-            endif
-            if l:ret == 0
-                call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'), [a:path])
-            endif
+        call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 '.g:tagging_program.cur_val, function('te#pg#add_cscope_out'),[a:path])
+        if filereadable('.temptags')
+            let l:ret = te#file#delete('.temptags', 0)
+        endif
+        if l:ret == 0
+            call te#utils#run_command('ctags -f .temptags --languages=C --langmap=c:+.h --c-kinds=+px --fields=+aiKSz -R . ', function('te#pg#add_tags'), [a:path])
         endif
         :call te#utils#EchoWarning('Generating cscope database and tag file for linux kernel ...')
     else
@@ -113,11 +109,7 @@ endfunction
 
 function! te#pg#gen_cs_tags(timerid) abort
     if te#env#SupportCscope()
-        if &cscopeprg ==# 'gtags-cscope'
-            let l:option=0x04
-        else
-            let l:option=0x03
-        endif
+        let l:option=0x03
     else
         let l:option=0x01
     endif
@@ -160,7 +152,6 @@ endfunction
 "option: 0x01-->generate tags only
 "        0x02-->generate cscope only
 "        0x03-->generate cscope and tags
-"        0x04-->generate gtags
 function! te#pg#do_cs_tags(dir, option) abort
     let l:ret = 0
     if(te#env#IsWindows())
@@ -203,14 +194,7 @@ function! te#pg#do_cs_tags(dir, option) abort
             endif
         endif
     endif
-    if and(a:option, 0x04)
-        call te#utils#run_command('gtags '.a:dir, function('te#pg#add_cscope_out'),[a:dir, 1])
-        return 0
-    endif
-    if !te#env#SupportCscope()
-        return
-    endif
-    if !and(a:option, 0x02) || (&filetype !=# 'c' && &filetype !=# 'cpp')
+    if !te#env#SupportCscope() || !and(a:option, 0x02)
         return
     endif
     if filereadable(l:cscopefiles)
@@ -220,13 +204,27 @@ function! te#pg#do_cs_tags(dir, option) abort
             return
         endif
     endif
-    if(!te#env#IsWindows())
-        let l:generate_cscopefiles='find ' .a:dir. ' -name "*.[chsS]" > '  . l:cscopefiles
+
+    if te#git#is_git_repo()
+        let l:generate_cscopefiles='git ls-files > '  . l:cscopefiles
     else
-        let l:generate_cscopefiles='dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.l:cscopefiles
+        if !te#env#IsWindows()
+            let l:generate_cscopefiles='find ' .a:dir. ' -name "*.[chsS]" -o -name "*.cpp"  -o -name "*.java"  -o -name "*.vim" > '  . l:cscopefiles
+        else
+            let l:generate_cscopefiles='dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.l:cscopefiles
+        endif
     endif
     exec 'cd '.a:dir
-    call te#utils#run_command(l:generate_cscopefiles.' && cscope -Rbkq -i '.l:cscopefiles, function('te#pg#add_cscope_out'),[a:dir, 0])
+    if &cscopeprg ==# 'gtags-cscope'
+        if exists('$GTAGSLABEL')
+            let l:gtagslabel=' --gtagslabel='.$GTAGSLABEL
+        else
+            let l:gtagslabel=''
+        endif
+        call te#utils#run_command(l:generate_cscopefiles.' && gtags -i -f '.l:cscopefiles.' '.l:gtagslabel.' '.a:dir, function('te#pg#add_cscope_out'),[a:dir])
+        return 0
+    endif
+    call te#utils#run_command(l:generate_cscopefiles.' && cscope -Rbkq -i '.l:cscopefiles, function('te#pg#add_cscope_out'),[a:dir])
     cd -
     execute 'normal :'
     execute 'redraw!'

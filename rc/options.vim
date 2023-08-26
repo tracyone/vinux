@@ -299,6 +299,12 @@ if has('termguicolors')
     set termguicolors
 endif
 
+if get(g:,'tagging_program').cur_val ==# 'gtags'
+    set cscopeprg=gtags-cscope
+else
+    set cscopeprg=cscope
+endif
+
 "{{{fold setting
 "folding type: manual, indent, expr, marker or syntax
 set foldenable                  " enable folding

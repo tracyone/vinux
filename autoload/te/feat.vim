@@ -267,7 +267,5 @@ function! te#feat#init_all() abort
             let s:feature_dict[l:key]=string(eval(l:key))
         endif
     endfor
-    "gtags
-    let $GTAGSLABEL = 'ctags-exuberant'
 
 endfunction

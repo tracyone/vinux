@@ -11,12 +11,15 @@ function! te#complete#goto_def(open_type) abort
     if get(g:, 'feat_enable_complete', 0)
         if te#env#SupportYcm() && g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
             let l:ret=s:YcmGotoDef()
-        else
-            let l:ret=te#lsp#gotodefinion()
         endif
     endif
+    if get(g:, 'feat_enable_lsp') == 1
+        let l:ret=te#lsp#gotodefinion()
+    endif
     if l:ret < 0
+        let l:ret = 0
         if te#env#SupportCscope()
+            "cscope and ctags combine
             let l:cmd = ':cstag '.l:cword
         else
             let l:cmd = ':tselect '.l:cword
@@ -25,16 +28,16 @@ function! te#complete#goto_def(open_type) abort
             execute  l:cmd
         catch /^Vim\%((\a\+)\)\=:E/	
             call te#utils#EchoWarning("Can not find any definition...")
-            return -1
+            let l:ret = -1
         endtry
         let l:len=getqflist({'size':0}).size
-        if l:len > 1
+        if l:ret == 0 && l:len > 1
             :botright copen
         endif
     else
         return 0
     endif
-    return 0
+    return l:ret
 endfunction
 
 
@@ -105,21 +108,31 @@ endfunction
 
 function te#complete#lookup_reference(open_type) abort
     execute a:open_type
-    if g:feat_enable_lsp == 1
-        let l:ret=te#lsp#references()
-    elseif &ft == 'c'
-        " use ctags or cscope
+    let l:ret = 0
+    if te#env#SupportCscope() && 
+                \ ((&ft == 'c' || &ft == 'cpp') 
+                \ || &cscopeprg ==# 'gtags-cscope')
         try
             execute ':cs find c '.expand("<cword>")
         catch /^Vim\%((\a\+)\)\=:E/	
-            call te#utils#EchoWarning("No references were found!")
-            return 1
+            let l:ret = -1
+            if g:feat_enable_lsp == 1
+                call te#lsp#references()
+            elseif g:feat_enable_complete == 1 && g:complete_plugin_type.cur_val == "YouCompleteMe"
+                :YcmCompleter GoToReferences
+            else
+                call te#utils#EchoWarning("Can not find any reference!")
+            endif
         endtry
-        :botright cw 7
-    elseif g:feat_enable_complete == 1 && g:complete_plugin_type.cur_val == "YouCompleteMe"
-        :YcmCompleter GoToReferences
+        if l:ret == 0
+            :botright cw 7
+        endif
     else
-        call te#utils#EchoWarning("Enable lsp or youcompleteme")
+        if g:feat_enable_lsp == 1
+            let l:ret=te#lsp#references()
+        elseif g:feat_enable_complete == 1 && g:complete_plugin_type.cur_val == "YouCompleteMe"
+            :YcmCompleter GoToReferences
+        endif
     endif
     return 0
 endfunction

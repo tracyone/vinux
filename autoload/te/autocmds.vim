@@ -10,11 +10,7 @@ endfunction
 function! te#autocmds#dir_changed() abort
     "add cscope database if exist
     if te#env#SupportCscope()
-        if get(g:,'tagging_program').cur_val ==# 'gtags'
-            call te#pg#add_cscope_out(getcwd() ,1)
-        else
-            call te#pg#add_cscope_out(getcwd() ,0)
-        endif
+        call te#pg#add_cscope_out(getcwd())
     endif
     "show current directory
     call te#utils#EchoWarning(getcwd(), 'info')

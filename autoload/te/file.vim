@@ -28,8 +28,6 @@ function! te#file#copy_file(src, dst,...) abort
                 let l:ret = writefile(readblob(a:src), l:dst, "s")
                 if l:ret
                     call te#utils#EchoWarning("Copy ".a:src.' to '.l:dst.' fail')
-                else
-                    call te#utils#EchoWarning("Copy ".a:src.' to '.l:dst.' successfully')
                 endif
             endif
         endif
