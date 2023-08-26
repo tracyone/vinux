@@ -10,19 +10,7 @@ endif
 
 
 if te#env#SupportCscope()
-    " add cscope database at the first time
-    call te#pg#add_cscope_out(getcwd())
 
-    " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
-    set cscopetag
-    " check cscope for definition of a symbol before checking ctags: set to 1
-    " if you want the reverse search order.
-    set cscopetagorder=0
-    set cscopequickfix=s-,c-,d-,i-,t-,e-,i-,g-,f-
-    " add any cscope database in current directory
-    " else add the database pointed to by environment variable 
-    set cscopetagorder=0
-    set cscopeverbose 
     " show msg when any other cscope db added
     nnoremap  <silent><buffer> <LocalLeader>s :cs find s <C-R>=expand("<cword>")<CR><CR>:botright cw 7<cr>
     nnoremap  <silent><buffer> <LocalLeader>d :cs find d <C-R>=expand("<cword>")<CR> <C-R>=expand("%")<CR><CR>:botright cw 7<cr>
@@ -114,4 +102,3 @@ let b:match_words=
 \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
 \ '\<switch\>:\<case\>:\<default\>'
 
-call te#pg#start_gen_cs_tags_threads()

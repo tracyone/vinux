@@ -299,10 +299,25 @@ if has('termguicolors')
     set termguicolors
 endif
 
-if get(g:,'tagging_program').cur_val ==# 'gtags'
-    set cscopeprg=gtags-cscope
-else
-    set cscopeprg=cscope
+if te#env#SupportCscope()
+    if get(g:,'tagging_program').cur_val ==# 'gtags'
+        set cscopeprg=gtags-cscope
+    else
+        set cscopeprg=cscope
+    endif
+    " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+    set cscopetag
+    " check cscope for definition of a symbol before checking ctags: set to 1
+    " if you want the reverse search order.
+    set cscopetagorder=0
+    set cscopequickfix=s-,c-,d-,i-,t-,e-,i-,g-,f-
+    " add any cscope database in current directory
+    " else add the database pointed to by environment variable 
+    set cscopetagorder=0
+    set cscopeverbose 
+    " add cscope database at the first time
+    call te#pg#add_cscope_out(getcwd())
+    call te#pg#start_gen_cs_tags_threads()
 endif
 
 "{{{fold setting
