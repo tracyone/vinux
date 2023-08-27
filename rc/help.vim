@@ -68,8 +68,9 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'f': "Open terminal win in a floating window",
                     \ 'v': 'Open terminal win in a vertical split window',
                     \ 'w': 'toggle drawit plugin',
-                    \ 'y': 'Translate using youdao dict',
-                    \ 'z': 'Translate:en2ch',
+                    \ 'i': 'Translate from user input',
+                    \ 'y': 'Translate en2ch or ch2en',
+                    \ 'z': 'Translate:chinese pinyin',
                     \ 'g': 'Open game center',
                     \ }
         let g:which_key_map.b = { 

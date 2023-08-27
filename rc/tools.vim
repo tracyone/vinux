@@ -3,6 +3,7 @@ if te#env#SupportPy2() && te#env#IsLinux()
 endif
 if te#env#SupportPy3()
     Plug 'fedorenchik/VimCalc3',{'on': 'Calc'}
+    Plug 'bujnlc8/vim-translator', {'on': ['Tc', 'Ti', 'Tv', 'Tz']}
     " vim calculator
     nnoremap  <silent><Leader>ac :Calc<cr>
 elseif te#env#SupportPy2()
@@ -19,9 +20,6 @@ xnoremap  <silent><Leader>ac :<C-u>HowMuch =<cr>
 xnoremap  <silent><Leader>ar :<C-u>HowMuch r<cr>
 let g:HowMuch_scale = 16
 let g:HowMuch_auto_engines = ['py', 'vim', 'bc']
-Plug 'voldikss/vim-translator', {'on': ['TranslateW','TranslateR', 'Translate']}
-command! -nargs=? Trans call te#trans#translate(<q-args>)
-command! -nargs=? -range TransR call te#trans#replace(<q-args>)
 Plug 'vim-scripts/DrawIt',{'on': 'DrawIt'}
 if te#env#IsNvim() != 0 && te#env#SupportPy3()
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -61,20 +59,14 @@ endfunction
 " Convert file's encode
 nnoremap  <silent><leader>tf :call FencToggle()<cr>
 "}}}
-" YouDao translate
-nnoremap  <silent><Leader>az :Trans en:zh-CN<cr>
-" YouDao translate (visual mode)
-vnoremap  <silent><Leader>az :TransR en:zh-CN<cr>
-" YouDao translate
-nnoremap  <silent><Leader>ae :Trans zh-CN:en<cr>
-" YouDao translate (visual mode)
-vnoremap  <silent><Leader>ae :TransR zh-CN:en<cr>
-nnoremap  <silent><F10> <esc>:TranslateW<cr>
-vmap  <silent><F10> <Plug>TranslateWV
-" YouDao translate
-nnoremap <silent><Leader>ay <esc>:TranslateW<cr>
-" YouDao translate (visual mode)
-vnoremap <silent><Leader>ay <Plug>TranslateWV
+" translate
+let g:translator_channel='baidu'
+nnoremap  <silent><leader>az :<C-u>Tz<CR>
+nnoremap  <silent><leader>ai :<C-u>Ti<CR>
+nnoremap <silent><Leader>ay :<C-u>Tc<cr>
+" translate (visual mode)
+vnoremap <silent><Leader>ay :<C-u>Tv<cr>
+
 " open current file's position with default file explorer
 nmap  <silent><Leader>of gof
 " open current file's position with default terminal
