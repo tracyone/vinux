@@ -88,6 +88,7 @@ function! s:copy_file()
         call add(s:copy_file_path, substitute(l:node.path.str(), '\/$', '', ''))
         let l:curLine += 1
     endwhile
+    call setreg('"', l:node.path.str())
     call te#utils#EchoWarning("Copy ".len(s:copy_file_path)." files")
 endfunction
 
@@ -105,6 +106,7 @@ function! s:move_file()
         call add(s:move_file_path, substitute(l:node.path.str(), '\/$', '', ''))
         let l:curLine += 1
     endwhile
+    call setreg('"', l:node.path.str())
     call te#utils#EchoWarning("Copy ".len(s:move_file_path).' files path!')
 endfunction
 
