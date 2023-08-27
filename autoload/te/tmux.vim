@@ -29,15 +29,16 @@ endfunction
 "0x4 new window
 "0x8 run command in background
 function! te#tmux#run_command(cmd, flag) abort
-    let l:action = 'split-window -p 38 '
+    let l:action = 'split-window -l '.&lines/2." "
     "split
     if and(a:flag, 0x1)
-        let l:action = 'split-window -p 38 '
+        let l:action = 'split-window -l '.&lines/2." "
     elseif and(a:flag, 0x2)
-        let l:action = 'split-window -h -p 50 '
+        let l:action = 'split-window -h -l '.&columns/2." "
     elseif and(a:flag, 0x4)
         let l:action = 'new-window '
     endif
+    "background run
     if and(a:flag, 0x8)
         let l:action .= ' -d '
     endif
