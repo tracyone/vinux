@@ -24,9 +24,13 @@ function! te#pg#add_cscope_out(path) abort
     else
         let l:cscope_db_name='cscope.out'
     endif
-
-    silent! execute 'cs kill '.a:path.'/'.l:cscope_db_name
-    silent! exec 'cs add '.a:path.'/'.l:cscope_db_name
+    if filereadable(a:path.'/'.l:cscope_db_name)
+        "gtags require change to GTAGS's path before add it
+        execute 'cd '. a:path
+        silent! execute 'cs kill '.a:path.'/'.l:cscope_db_name
+        silent! exec 'cs add '.a:path.'/'.l:cscope_db_name." ".a:path
+        cd -
+    endif
 endfunction
 
 let s:extra_tags_list = []
@@ -113,16 +117,18 @@ function! te#pg#gen_cs_tags(timerid) abort
     else
         let l:option=0x01
     endif
+    let l:old_pwd=getcwd()
     if exists('g:vinux_working_directory') && isdirectory(g:vinux_working_directory)
-        execute 'cd '.g:vinux_working_directory
+        let l:old_pwd=g:vinux_working_directory
     endif
+    execute 'cd '.l:old_pwd
     if filereadable('.csdb')
         for l:line in readfile('.csdb', '')
             call te#pg#add_tags(l:line)
             if te#pg#top_of_kernel_tree(l:line)
                 execute 'cd '.l:line
                 :call <SID>gen_kernel_cscope(l:line)
-                cd -
+                execute 'cd '.l:old_pwd
             else
                 call te#pg#do_cs_tags(l:line, l:option)
             endif
@@ -214,6 +220,7 @@ function! te#pg#do_cs_tags(dir, option) abort
             let l:generate_cscopefiles='dir /s/b *.c,*.cpp,*.h,*.java,*.cs,*.s,*.asm > '.l:cscopefiles
         endif
     endif
+    let l:old_pwd=getcwd()
     exec 'cd '.a:dir
     if &cscopeprg ==# 'gtags-cscope'
         if exists('$GTAGSLABEL')
@@ -225,7 +232,7 @@ function! te#pg#do_cs_tags(dir, option) abort
         return 0
     endif
     call te#utils#run_command(l:generate_cscopefiles.' && cscope -Rbkq -i '.l:cscopefiles, function('te#pg#add_cscope_out'),[a:dir])
-    cd -
+    execute 'cd ' .l:old_pwd
     execute 'normal :'
     execute 'redraw!'
 endfunction

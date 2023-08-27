@@ -124,13 +124,18 @@ endfunction
 
 "edit project file and update 
 function! te#project#edit_project() abort
-    if exists('g:vinux_working_directory') && isdirectory(g:vinux_working_directory)
-        execute 'cd '.g:vinux_working_directory
-    endif
+    let l:project_root=$VIMFILES.'/.project/'
+    let l:old_pwd = getcwd()
+    execute 'cd '.l:project_root
+    let l:project = input('Please select project: ','','dir')
+    execute 'cd '.l:project_root.'/'.l:project
     let l:file_to_open=['.ycm_extra_conf.py', '.clang-format', '.love.vim', 'compile_commands.json', 'compile_flags.txt', '.csdb']
     for l:file in l:file_to_open
-        execute ':tabnew '.l:file
+        if filereadable(l:file)
+            execute ':tabnew '.l:file
+        endif
     endfor
+    execute 'cd '.l:old_pwd
 endfunction
 
 function! te#project#load_project(session_name) abort

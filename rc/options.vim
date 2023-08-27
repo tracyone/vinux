@@ -315,6 +315,7 @@ if te#env#SupportCscope()
     " else add the database pointed to by environment variable 
     set cscopetagorder=0
     set cscopeverbose 
+    set cscoperelative
     " add cscope database at the first time
     call te#pg#add_cscope_out(getcwd())
     call te#pg#start_gen_cs_tags_threads()
