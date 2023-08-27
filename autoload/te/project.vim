@@ -168,6 +168,7 @@ function! te#project#load_project(session_name) abort
             call te#feat#source_rc('colors.vim')
             call te#utils#close_all_echo_win()
             call te#project#set_indent_options(g:vinux_coding_style.cur_val)
+            call te#pg#start_gen_cs_tags_threads()
         else
             call te#utils#EchoWarning(l:project." is not a directory")
         endif
