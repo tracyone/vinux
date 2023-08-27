@@ -149,7 +149,7 @@ if te#env#IsGui() || te#env#SupportFloatingWindows()
     amenu PopUp.&Undo :UndotreeToggle<CR>
     amenu PopUp.&Open\ Header/Source :AT<cr>
     amenu PopUp.&Hightlight :execute "normal ". "\<Plug>MarkSet"<cr>
-    amenu PopUp.&Translate :TranslateW<cr>
+    amenu PopUp.&Translate :Tc<cr>
 endif
 nnoremap  <silent><2-LeftMouse> :execute "normal ". "\<Plug>MarkSet"<cr>
 
