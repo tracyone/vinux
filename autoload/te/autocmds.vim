@@ -13,5 +13,5 @@ function! te#autocmds#dir_changed() abort
         call te#pg#add_cscope_out(getcwd())
     endif
     "show current directory
-    call te#utils#EchoWarning(getcwd(), 'info')
+    "call te#utils#EchoWarning(getcwd(), 'info')
 endfunction
