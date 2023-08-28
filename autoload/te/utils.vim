@@ -1,4 +1,77 @@
 scriptencoding utf-8
+
+let s:ctx = {}
+
+function! ConfirmResult(id, result) abort
+    if has_key(s:ctx, a:id)
+        let l:confirm_obj = s:ctx[a:id]
+        if type(l:confirm_obj.callback) == g:t_list
+            if type(l:confirm_obj.callback[a:result - 1]) == g:t_string
+                execute l:confirm_obj.callback[a:result - 1]
+            elseif type(l:confirm_obj.callback[a:result - 1]) == g:t_dict
+                let l:act_func = l:confirm_obj.callback[a:result -1 ]
+                call call(l:act_func.func, l:act_func.arg)
+            endif
+        elseif type(l:confirm_obj.callback) == g:t_func
+            call call(l:confirm_obj.callback, [a:result])
+        endif
+        call remove(s:ctx, a:id)
+    else
+        call te#utils#EchoWarning(a:id.' object not found')
+    endif
+endfunction
+
+function! te#utils#confirm_filter(id, key) abort
+    if has_key(s:ctx, a:id)
+        let l:confirm_obj = s:ctx[a:id]
+        let l:index = 1
+        for l:needle in l:confirm_obj.menu_list
+            if string(a:key) =~? '[jk]'
+                continue
+            endif
+            if string(a:key) ==? string(l:needle[0])
+                call popup_close(a:id, l:index)
+                return 1
+            endif
+            let l:index += 1
+        endfor
+        return popup_filter_menu(a:id, a:key)
+    else
+        call te#utils#EchoWarning(a:id.' object not found')
+    endif
+    return 0
+endfunction
+
+function! te#utils#confirm(str, menu_list, action) abort
+    let l:confirm_obj = {}
+    if type(a:action) == g:t_list || type(a:action) == g:t_func
+        let l:confirm_obj.callback = a:action
+    else
+        call te#utils#EchoWarning("Action must be a list or funcref")
+        return -1
+    endif
+
+    let l:confirm_obj.menu_list = a:menu_list
+    let l:confirm_obj.prompt_str = a:str
+
+    let l:confirm_obj.win_id = popup_menu(a:menu_list, #{
+                \ callback: 'ConfirmResult',
+                \ border: [],
+                \ filter: 'te#utils#confirm_filter',
+                \ title: a:str,
+                \ tab: -1,
+                \ hidden: 1,
+                \ zindex: len(s:ctx),
+                \ highlight: 'WarningMsg',
+                \ minwidth: &columns/6,
+                \ borderchars:['─', '│', '─', '│', '┌', '┐', '┘', '└'],
+                \ borderhighlight:['vinux_warn'],
+                \ })
+    let s:ctx[l:confirm_obj.win_id] = l:confirm_obj
+    call popup_show(l:confirm_obj.win_id)
+    redraw
+    return 0
+endfunction
 " name :te#utils#GetError
 " arg  :command,vim command(not shell command) that want to
 "       test execute status
@@ -359,9 +432,7 @@ function! te#utils#quit_win(all) abort
             call te#terminal#jump_to_floating_win(-4)
             return
         endif
-        if (confirm('Quit Vim Vim Vim Vim Vim ?', "&Yes\n&No", 2)==1)
-            :qa
-        endif
+        call te#utils#confirm('Quit Vim Vim Vim Vim Vim ?', ['Yes', 'No'], ["wqa!", ""])
         return
     endif
     if te#env#IsNvim() > 0
@@ -388,9 +459,7 @@ function! te#utils#quit_win(all) abort
                     call te#terminal#jump_to_floating_win(-4)
                     return
                 endif
-                if (confirm('Quit Vim Vim Vim Vim Vim ?', "&Yes\n&No", 2)==1)
-                    :quit
-                endif
+                call te#utils#confirm('Quit Vim Vim Vim Vim Vim ?', ['Yes', 'No'], ["quit", ""])
             endif
         else
             if !te#utils#is_listed_buffer() || winnr('$') <= 1

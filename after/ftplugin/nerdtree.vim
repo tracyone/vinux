@@ -1,3 +1,13 @@
+function! s:delete_action(file)
+    try 
+        call a:file.delete()
+    catch
+        call te#utils#EchoWarning("Delete ".a:file.path.str()." fail", 'err')
+    endtry
+    call a:file.parent.refresh()
+    call NERDTreeRender()
+endfunction
+
 function! s:delete_file(confirm)
     let l:lastline = line("'>")
     let l:curLine = line("'<")
@@ -10,19 +20,16 @@ function! s:delete_file(confirm)
         let l:file = g:NERDTreeFileNode.GetSelected()
         if !empty(l:file)
             if !empty(l:file.path)
-                if a:confirm == 0 || (confirm("Delete ".l:file.path.str(), "&Yes\n&No", 2)==1)
-                    try 
-                        call l:file.delete()
-                    catch
-                        call te#utils#EchoWarning("Delete ".l:file.path.str()." fail", 'err')
-                    endtry
+                if a:confirm == 1
+                    let l:dict = {}
+                    let l:dict.func = function("<SID>delete_action")
+                    let l:dict.arg = [l:file]
+                    let l:ret = te#utils#confirm("Delete ".l:file.path.str(), ['Yes', 'No'], [l:dict, ""])
                 endif
             endif
         endif
         let l:curLine += 1
     endwhile
-    call l:file.parent.refresh()
-    call NERDTreeRender()
 endfunction
 
 function! s:new_file()
@@ -111,7 +118,6 @@ function! s:move_file()
 endfunction
 
 function! s:paste_file()
-    let l:confirm = 1
     let l:node = g:NERDTreeFileNode.GetSelected()
 
     for l:path in s:copy_file_path
@@ -123,12 +129,8 @@ function! s:paste_file()
     for l:path in s:move_file_path
         let l:dst_file = fnamemodify(l:node.path.str(), ":p:h").nerdtree#slash().fnamemodify(l:path, ":t")
         if filereadable(l:dst_file)
-            if confirm(l:dst_file." is exist! override?", "&Yes\n&No", 2) == 2
-                call te#utils#EchoWarning("Move file abort")
-                let l:confirm = 0
-            endif
-        endif
-        if l:confirm == 1
+            let l:ret = te#utils#confirm(l:dst_file." is exist! override?", ['Yes', 'No'], ["call rename(".string(l:path).",".string(l:dst_file).")", ""])
+        else
             let l:ret = rename(l:path, l:dst_file)
             if l:ret
                 call te#utils#EchoWarning("Move file to".l:dst_file." fail!!", 'err')

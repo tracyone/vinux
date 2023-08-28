@@ -83,22 +83,13 @@ function! s:game_start(timer) abort
         execute s:game_list[s:game_index]
     endif
 endfunction
-function GameSelect(id, result)
+function GameSelect(result)
     let s:game_index = a:result - 1
     call timer_start(50, function('<SID>game_start'), {'repeat': 1})
 endfunc
 
 function! s:start_vinux_game_center() abort
-    call popup_menu(s:game_list, #{
-                \ callback: 'GameSelect',
-                \ border: [],
-                \ tab: -1,
-                \ zindex: 200,
-                \ highlight: 'WarningMsg',
-                \ minwidth: &columns/6,
-                \ borderchars:['─', '│', '─', '│', '┌', '┐', '┘', '└'],
-                \ borderhighlight:['vinux_border'],
-                \ })
+    call te#utils#confirm("Select a game to start!", s:game_list, function('GameSelect'))
 endfunction
 nnoremap  <silent><Leader>ag :call <SID>start_vinux_game_center()<cr>
 
