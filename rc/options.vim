@@ -69,7 +69,6 @@ endif
 set relativenumber number "show the line number for each line
 set cmdheight=1  "number of lines used for the command-line
 set showmatch "when inserting a bracket, briefly jump to its match
-set printfont=Yahei_Mono:h10:cGB2312  "name of the font to be used for :hardcopy
 set smartcase  "override 'ignorecase' when pattern has upper case characters
 set confirm  "start a dialog when a command fails
 set smartindent "do clever autoindenting
@@ -107,9 +106,6 @@ set backspace=indent,eol,start  "specifies what <BS>, CTRL-W, etc. can do in Ins
 set whichwrap=b,h,l,<,>,[,]  "list of menu_flags specifying which commands wrap to another line
 set mouse=a "list of menu_flags for using the mouse,support all
 
-"unnamed" to use the * register like unnamed register
-"autoselect" to always put selected text on the clipboardset clipboard+=unnamed
-set clipboard+=unnamed
 "set autochdir  "change to directory of file in buffer
 "
 if g:enable_powerline_fonts.cur_val ==# 'on'
@@ -243,11 +239,30 @@ if te#env#IsNvim() != 0
         set laststatus=3
         set foldcolumn=auto:1
     endif
+    if te#env#IsTmux()
+        set clipboard+=unnamedplus
+        let g:clipboard = {
+                    \   'name': 'myClipboard',
+                    \   'copy': {
+                    \      '+': ['tmux', 'load-buffer', '-'],
+                    \      '*': ['tmux', 'load-buffer', '-'],
+                    \    },
+                    \   'paste': {
+                    \      '+': ['tmux', 'save-buffer', '-'],
+                    \      '*': ['tmux', 'save-buffer', '-'],
+                    \   },
+                    \   'cache_enabled': 1,
+                    \ }
+    endif
 else
     command! -nargs=? UpdateRemotePlugins call te#utils#EchoWarning("It is neovim's command")
     if te#env#IsVim9()
         set wildoptions=pum,fuzzy
     endif
+    set printfont=Yahei_Mono:h10:cGB2312  "name of the font to be used for :hardcopy
+    "unnamed" to use the * register like unnamed register
+    "autoselect" to always put selected text on the clipboardset clipboard+=unnamed
+    set clipboard+=unnamed
 endif
 
 
