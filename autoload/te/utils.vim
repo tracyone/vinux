@@ -3,6 +3,9 @@ scriptencoding utf-8
 let s:ctx = {}
 
 function! ConfirmResult(id, result) abort
+    if te#env#IsNvim() != 0
+        call nvim_win_close(0, v:true)
+    endif
     if has_key(s:ctx, a:id)
         let l:confirm_obj = s:ctx[a:id]
         if type(l:confirm_obj.callback) == g:t_list
@@ -42,6 +45,11 @@ function! te#utils#confirm_filter(id, key) abort
     return 0
 endfunction
 
+function! NvimConfirmResult()
+    let l:win_id = win_getid()
+    call ConfirmResult(l:win_id, line('.'))
+endfunction
+
 function! te#utils#confirm(str, menu_list, action) abort
     let l:confirm_obj = {}
     if type(a:action) == g:t_list || type(a:action) == g:t_func
@@ -54,22 +62,49 @@ function! te#utils#confirm(str, menu_list, action) abort
     let l:confirm_obj.menu_list = a:menu_list
     let l:confirm_obj.prompt_str = a:str
 
-    let l:confirm_obj.win_id = popup_menu(a:menu_list, #{
-                \ callback: 'ConfirmResult',
-                \ border: [],
-                \ filter: 'te#utils#confirm_filter',
-                \ title: a:str,
-                \ tab: -1,
-                \ hidden: 1,
-                \ zindex: len(s:ctx),
-                \ highlight: 'WarningMsg',
-                \ minwidth: &columns/6,
-                \ borderchars:['─', '│', '─', '│', '┌', '┐', '┘', '└'],
-                \ borderhighlight:['vinux_warn'],
-                \ })
+    if te#env#IsNvim() >= 0.5
+        let l:bufnr = nvim_create_buf(v:false, v:false)
+        call nvim_buf_set_option(l:bufnr, 'buftype', 'nofile')
+        call nvim_buf_set_option(l:bufnr, 'bufhidden', 'wipe')
+        call nvim_buf_set_option(l:bufnr, 'buflisted', v:false)
+        call nvim_buf_set_keymap(l:bufnr, 'n', '<CR>', ':call NvimConfirmResult()<cr>', {'silent':v:true })
+        call nvim_buf_set_keymap(l:bufnr, 'n', '<C-c>', ':call nvim_win_close(0, v:true)<cr>', {'silent':v:true })
+        call nvim_buf_set_keymap(l:bufnr, 'n', 'y', '/\c^y<cr><cr>', {'silent':v:true })
+        call nvim_buf_set_keymap(l:bufnr, 'n', 'n', '/\c^n<cr><cr>', {'silent':v:true })
+        let l:opts = {'relative': 'editor', 'width': &columns/6, 'height': len(a:menu_list), 'col': &columns/2-len(a:str),
+                    \ 'row': &lines/2 - len(a:menu_list), 'anchor': 'NW', 'border': 'single', 'style': 'minimal',
+                    \ 'zindex': len(s:ctx) + 1, 'title':a:str, 'focusable': v:true}
+        let l:confirm_obj.win_id=nvim_open_win(l:bufnr, v:false,l:opts)
+        let l:len = 0
+        for l:str in a:menu_list
+            call nvim_buf_set_lines(l:bufnr, l:len, -1, v:false, [l:str])
+            let l:len += 1
+        endfor
+        call nvim_buf_set_option(l:bufnr, "readonly", v:true)
+        call nvim_buf_set_option(l:bufnr, "modified", v:false)
+        call nvim_win_set_option(l:confirm_obj.win_id, 'winhl', 'Normal:vinux_warn'.',FloatBorder:vinux_border')
+        call nvim_win_set_option(l:confirm_obj.win_id, 'winblend', 30)
+        call nvim_set_current_win(l:confirm_obj.win_id)
+    else
+        let l:confirm_obj.win_id = popup_menu(a:menu_list, #{
+                    \ callback: 'ConfirmResult',
+                    \ border: [],
+                    \ filter: 'te#utils#confirm_filter',
+                    \ title: a:str,
+                    \ tab: -1,
+                    \ hidden: 1,
+                    \ zindex: len(s:ctx),
+                    \ highlight: 'WarningMsg',
+                    \ minwidth: &columns/6,
+                    \ borderchars:['─', '│', '─', '│', '┌', '┐', '┘', '└'],
+                    \ borderhighlight:['vinux_warn'],
+                    \ })
+    endif
     let s:ctx[l:confirm_obj.win_id] = l:confirm_obj
-    call popup_show(l:confirm_obj.win_id)
-    redraw
+    if te#env#IsNvim() == 0
+        call popup_show(l:confirm_obj.win_id)
+        redraw
+    endif
     return 0
 endfunction
 " name :te#utils#GetError
