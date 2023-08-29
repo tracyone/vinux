@@ -82,8 +82,10 @@ function! te#utils#confirm(str, menu_list, action) abort
         endfor
         call nvim_buf_set_option(l:bufnr, "readonly", v:true)
         call nvim_buf_set_option(l:bufnr, "modified", v:false)
-        call nvim_win_set_option(l:confirm_obj.win_id, 'winhl', 'Normal:vinux_warn'.',FloatBorder:vinux_border')
-        call nvim_win_set_option(l:confirm_obj.win_id, 'winblend', 30)
+        call nvim_win_set_option(l:confirm_obj.win_id, 'cursorline', v:true)
+        call nvim_win_set_option(l:confirm_obj.win_id, 'winhl', 
+                    \ 'Normal:WarningMsg,FloatBorder:vinux_warn,CursorLine:vinux_sel,FloatTitle:vinux_warn')
+        call nvim_win_set_option(l:confirm_obj.win_id, 'winblend', 50)
         call nvim_set_current_win(l:confirm_obj.win_id)
     elseif te#env#IsVim8()
         let l:confirm_obj.win_id = popup_menu(a:menu_list, #{

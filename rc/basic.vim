@@ -21,13 +21,6 @@ else
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
         Plug 'nvim-treesitter/nvim-treesitter-refactor'
         Plug 'nvim-treesitter/nvim-treesitter-context'
-        function! s:treesitter_setup()
-lua << EOF
-            require('treesittier_nvim')
-EOF
-        endfunction
-
-        call te#feat#register_vim_enter_setting(function('<SID>treesitter_setup'))
     endif
     call add(s:sexy_command, ':Defx -toggle -split=vertical -winwidth=50 -direction=topleft')
 endif
