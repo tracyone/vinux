@@ -7,12 +7,13 @@ function! te#leaderf#feat#source(args) abort
     return l:text
 endfunction
 
-function! te#leaderf#feat#get_var_value(A, L, P) abort
-    let l:result=''
-    for l:needle in s:var_candidate
-        let l:result.=l:needle.nr2char(10)
-    endfor
-    return l:result
+function! s:get_var_value(item) abort
+    let l:str = s:var_candidate[a:item - 1]
+    let l:feat_dict=te#feat#get_feature_dict()
+    let l:feat_dict[s:var_value]=string(l:str)
+    execute 'let '.s:var_value.'='.string(l:str)
+    call te#feat#gen_feature_vim(0)
+    call te#utils#EchoWarning('Set '.s:var_value.' to '.string(l:str).' successfully!', 'info')
 endfunction
 
 function! te#leaderf#feat#accept(line, args) abort
@@ -33,11 +34,8 @@ function! te#leaderf#feat#accept(line, args) abort
             let s:var_candidate=[]
             let l:feat_candidate=eval(matchstr(a:line,'.*\(\.cur_val\)\@=').'.candidate')
             call extend(s:var_candidate,l:feat_candidate)
-            let l:str=input('Input the value of '.a:line.': ', '', 'custom,te#leaderf#feat#get_var_value')
-            let l:feat_dict[a:line]=string(l:str)
-            execute 'let '.a:line.'='.string(l:str)
-            call te#feat#gen_feature_vim(0)
-            call te#utils#EchoWarning('Set '.a:line.' to '.string(l:str).' successfully!')
+            let s:var_value=a:line
+            call te#utils#confirm('Select '.a:line."'s option", s:var_candidate, function('<SID>get_var_value'))
             return
         else
             let l:feat_dict[a:line]=l:en_flag

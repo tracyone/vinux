@@ -85,7 +85,7 @@ function! te#utils#confirm(str, menu_list, action) abort
         call nvim_win_set_option(l:confirm_obj.win_id, 'winhl', 'Normal:vinux_warn'.',FloatBorder:vinux_border')
         call nvim_win_set_option(l:confirm_obj.win_id, 'winblend', 30)
         call nvim_set_current_win(l:confirm_obj.win_id)
-    else
+    elseif te#env#IsVim8()
         let l:confirm_obj.win_id = popup_menu(a:menu_list, #{
                     \ callback: 'ConfirmResult',
                     \ border: [],
@@ -99,12 +99,22 @@ function! te#utils#confirm(str, menu_list, action) abort
                     \ borderchars:['─', '│', '─', '│', '┌', '┐', '┘', '└'],
                     \ borderhighlight:['vinux_warn'],
                     \ })
+
+    else
+        let l:choices = ""
+        for l:needle in a:menu_list
+            let l:choices .= "&".l:needle."\n"
+        endfor
+        let l:confirm_obj.win_id = 0
+        let l:result = confirm(a:str, choices, 1)
+        let s:ctx[l:confirm_obj.win_id] = l:confirm_obj
+        return ConfirmResult(l:confirm_obj.win_id, l:result)
     endif
     let s:ctx[l:confirm_obj.win_id] = l:confirm_obj
-    if te#env#IsNvim() == 0
+    if te#env#IsVim8()
         call popup_show(l:confirm_obj.win_id)
-        redraw
     endif
+    redraw
     return 0
 endfunction
 " name :te#utils#GetError

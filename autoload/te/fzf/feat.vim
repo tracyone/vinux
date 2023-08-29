@@ -6,8 +6,7 @@ let s:enable_flag= 0
 let s:var_value=""
 
 function! s:get_var_value(item) abort
-    let l:pos = stridx(a:item, ' ')
-    let l:str = a:item[pos+1:-1]
+    let l:str = s:var_candidate[a:item - 1]
     let l:feat_dict=te#feat#get_feature_dict()
     let l:feat_dict[s:var_value]=string(l:str)
     execute 'let '.s:var_value.'='.string(l:str)
@@ -30,13 +29,8 @@ function! s:edit_file(item)
             let l:feat_candidate=eval(matchstr(l:str,'.*\(\.cur_val\)\@=').'.candidate')
             call extend(s:var_candidate,l:feat_candidate)
             let s:var_value=l:str
-            let l:run_dict = {
-                     \ 'source': s:var_candidate, 
-                     \ 'sink': function('<SID>get_var_value'),
-                     \ 'options' : '-m --prompt "Feat> "',
-                     \ }
-           call fzf#run(fzf#wrap(l:run_dict))
-           return
+            call te#utils#confirm('Select '.s:var_value."'s option", s:var_candidate, function('<SID>get_var_value'))
+            return
         else
             let l:feat_dict[l:str]=s:enable_flag
             execute 'let '.l:str.'='.s:enable_flag
