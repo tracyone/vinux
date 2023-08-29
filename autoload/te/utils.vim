@@ -71,8 +71,8 @@ function! te#utils#confirm(str, menu_list, action) abort
         call nvim_buf_set_keymap(l:bufnr, 'n', '<C-c>', ':call nvim_win_close(0, v:true)<cr>', {'silent':v:true })
         call nvim_buf_set_keymap(l:bufnr, 'n', 'y', '/\c^y<cr><cr>', {'silent':v:true })
         call nvim_buf_set_keymap(l:bufnr, 'n', 'n', '/\c^n<cr><cr>', {'silent':v:true })
-        let l:opts = {'relative': 'editor', 'width': &columns/6, 'height': len(a:menu_list), 'col': &columns/2-len(a:str),
-                    \ 'row': &lines/2 - len(a:menu_list), 'anchor': 'NW', 'border': 'single', 'style': 'minimal',
+        let l:opts = {'relative': 'editor', 'width': &columns/6, 'height': len(a:menu_list), 'col': &columns/2-len(a:str)/2,
+                    \ 'row': &lines/2 - len(a:menu_list)/2, 'anchor': 'NW', 'border': 'single', 'style': 'minimal',
                     \ 'zindex': len(s:ctx) + 1, 'title':a:str, 'focusable': v:true}
         let l:confirm_obj.win_id=nvim_open_win(l:bufnr, v:false,l:opts)
         let l:len = 0
