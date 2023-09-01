@@ -114,9 +114,12 @@ function! te#project#create_project() abort
     let g:vinux_project_name = l:name
     let g:vinux_working_directory = getcwd()
     if exists(":SSave") == 2
-        execute ":SSave ".l:name
+        execute ":SSave! ".l:name
     elseif exists(":SaveSession") == 2
         execute ":SaveSession ".l:name
+    endif
+    if te#env#IsTmux()
+        :call te#tmux#rename_win(l:name)
     endif
     call te#pg#start_gen_cs_tags_threads()
     return 0
@@ -174,6 +177,9 @@ function! te#project#load_project(session_name) abort
             call te#utils#close_all_echo_win()
             call te#project#set_indent_options(g:vinux_coding_style.cur_val)
             call te#pg#start_gen_cs_tags_threads()
+            if te#env#IsTmux()
+                :call te#tmux#rename_win(a:session_name)
+            endif
         else
             call te#utils#EchoWarning(l:project." is not a directory")
         endif
