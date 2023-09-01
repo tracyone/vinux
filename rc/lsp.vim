@@ -1,6 +1,7 @@
 if te#env#IsNvim() >= 0.5
     Plug 'neovim/nvim-lspconfig'
-    Plug 'williamboman/nvim-lsp-installer'
+    Plug 'williamboman/mason.nvim'
+    Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'folke/trouble.nvim'
     function! s:lsp_setup()
 lua << EOF
