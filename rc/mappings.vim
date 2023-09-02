@@ -285,7 +285,6 @@ nnoremap  <silent><Leader>tw :call te#utils#OptionToggle('textwidth',[80,0])<cr>
 " cursorline toggle
 nnoremap  <silent><Leader>tc :call te#utils#OptionToggle('cursorline',[1,0])<cr>
 " feature enable
-"nnoremap  <silent><Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
 nnoremap  <silent><Leader>fe :call te#feat#feat_dyn_enable(1)<cr>
 nnoremap  <silent><Leader>fd :call te#feat#feat_dyn_enable(0)<cr>
 
