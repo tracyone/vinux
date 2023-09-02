@@ -150,3 +150,15 @@ function! te#lsp#show_diagnostics(current_buffer)
         :botright lopen
     endif
 endfunction
+
+function! te#lsp#code_action() abort
+    if exists(':LspCodeAction') == 2
+        :LspCodeAction --ui=float
+        return 0
+    elseif te#env#IsNvim() >= 0.5
+        :lua vim.lsp.buf.code_action()
+    else
+        call te#utils#EchoWarning('NOT support command!')
+        return -1
+    endif
+endfunction

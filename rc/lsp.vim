@@ -35,5 +35,6 @@ endif
 "lsp setting
 vnoremap  <silent><Leader>df :call te#lsp#format_document_range()<CR>
 nnoremap  <silent> <silent> K :call te#lsp#hover()<cr>
-nnoremap  <silent><Leader>rn  :call te#lsp#rename()<cr>
+nnoremap  <silent><Leader>lr  :call te#lsp#rename()<cr>
+nnoremap  <silent><Leader>lc  :call te#lsp#code_action()<cr>
 

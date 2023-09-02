@@ -169,6 +169,9 @@ if v:version >= 704 && te#env#IsDisplay()
         let g:which_key_map.l = { 
                     \ 'name' : '+love',
                     \ 'o' : 'save your own vim setting',
+                    \ 'c' : 'lsp code action',
+                    \ 'd' : 'lsp goto declaration',
+                    \ 'r' : 'lsp rename',
                     \ }
         let g:which_key_map.m = { 
                     \ 'name' : '+bookmark_or_markdown',

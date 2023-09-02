@@ -5,12 +5,11 @@ local on_attach = function(client, bufnr)
 
   -- Mappings.
   local opts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.keymap.set('n', '<Leader>ld', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.keymap.set('n', '<C-x>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  vim.keymap.set('n', '<space>ql', "<cmd>Trouble<CR>", opts)
-
+  vim.keymap.set('n', '<Leader>ql', "<cmd>Trouble<CR>", opts)
 end
 
 local function make_config()
@@ -140,7 +139,7 @@ require("mason").setup({
 
         ---@since 1.0.0
         -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
-        border = "none",
+        border = "single",
 
         ---@since 1.0.0
         -- Width of the window. Accepts:
@@ -155,15 +154,9 @@ require("mason").setup({
         height = 0.9,
 
         icons = {
-            ---@since 1.0.0
-            -- The list icon to use for installed packages.
-            package_installed = "◍",
-            ---@since 1.0.0
-            -- The list icon to use for packages that are installing, or queued for installation.
-            package_pending = "◍",
-            ---@since 1.0.0
-            -- The list icon to use for packages that are not installed.
-            package_uninstalled = "◍",
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
         },
 
         keymaps = {
@@ -175,19 +168,19 @@ require("mason").setup({
             install_package = "i",
             ---@since 1.0.0
             -- Keymap to reinstall/update the package under the current cursor position
-            update_package = "u",
+            update_package = "U",
             ---@since 1.0.0
             -- Keymap to check for new version for the package under the current cursor position
             check_package_version = "c",
             ---@since 1.0.0
             -- Keymap to update all installed packages
-            update_all_packages = "U",
+            update_all_packages = "A",
             ---@since 1.0.0
             -- Keymap to check which installed packages are outdated
             check_outdated_packages = "C",
             ---@since 1.0.0
             -- Keymap to uninstall a package
-            uninstall_package = "X",
+            uninstall_package = "dd",
             ---@since 1.0.0
             -- Keymap to cancel a package installation
             cancel_installation = "<C-c>",
@@ -199,7 +192,7 @@ require("mason").setup({
             toggle_package_install_log = "<CR>",
             ---@since 1.8.0
             -- Keymap to toggle the help view
-            toggle_help = "g?",
+            toggle_help = "?",
         },
     },
 })
