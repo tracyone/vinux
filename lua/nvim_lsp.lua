@@ -37,16 +37,21 @@ local lua_settings = {
     workspace = {
       -- Make the server aware of Neovim runtime files
       library = {
-        [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-        [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+        vim.fn.expand('$VIMRUNTIME/lua'),
+        vim.fn.expand('$VIMRUNTIME/lua/vim/lsp'),
+        vim.fn.stdpath('config') .. '/lua'
       },
+    },
+    -- Do not send telemetry data containing a randomized but unique identifier
+    telemetry = {
+        enable = false,
     },
   }
 }
 
 local function on_server_ready(server_name)
     local opts = make_config(server_name)
-    if server_name == "lua" then
+    if string.match(server_name, "lua.*") then
       opts.settings = lua_settings
     end
     require("lspconfig")[server_name].setup(opts)
