@@ -143,6 +143,8 @@ function! te#terminal#send(range, line1, line2, text) abort
             :call te#ctrlp#term#start(l:text_list)
         elseif g:fuzzysearcher_plugin_name.cur_val == 'vim-clap'
             :call te#clap#terminal#start(l:text_list)
+        elseif g:fuzzysearcher_plugin_name.cur_val == 'telescope.nvim'
+            :Telescope term
         else
             :call te#utils#EchoWarning("Not support for current fuzzy finder:".g:fuzzysearcher_plugin_name.cur_val)
         endif
@@ -355,6 +357,8 @@ function! te#terminal#jump_to_floating_win(num) abort
                 :call te#ctrlp#term#start("")
             elseif g:fuzzysearcher_plugin_name.cur_val == 'vim-clap'
                 :call te#clap#terminal#start("")
+            elseif g:fuzzysearcher_plugin_name.cur_val == 'telescope.nvim'
+                :Telescope term
             else
                 call te#terminal#open_term({'bufnr':l:last_close_bufnr})
             endif
