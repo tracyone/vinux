@@ -17,6 +17,12 @@ function! ConfirmResult(id, result) abort
             endif
         elseif type(l:confirm_obj.callback) == g:t_func
             call call(l:confirm_obj.callback, [a:result])
+        elseif type(l:confirm_obj.callback) == g:t_dict
+            let l:act_func = l:confirm_obj.callback
+            call add(l:act_func.arg, a:result)
+            echom l:act_func.arg
+            echom l:act_func.func
+            call call(l:act_func.func, l:act_func.arg)
         endif
         call remove(s:ctx, a:id)
     else
@@ -53,6 +59,7 @@ endfunction
 function! te#utils#confirm(str, menu_list, action) abort
     let l:confirm_obj = {}
     if type(a:action) == g:t_list || type(a:action) == g:t_func
+                \ || type(a:action) == g:t_dict
         let l:confirm_obj.callback = a:action
     else
         call te#utils#EchoWarning("Action must be a list or funcref")

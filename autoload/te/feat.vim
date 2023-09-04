@@ -18,14 +18,6 @@ function! te#feat#get_vim_version() abort
     return l:result
 endfunction
 
-function! te#feat#get_var_value(A, L, P) abort
-    let l:result=''
-    for l:needle in s:var_candidate
-        let l:result.=l:needle.nr2char(10)
-    endfor
-    return l:result
-endfunction
-
 function! te#feat#get_feature(A, L, P) abort
     let l:temp=a:A.a:L.a:P
     if !exists('s:feature_dict')
@@ -79,33 +71,36 @@ function! te#feat#get_feature_dict() abort
     return s:feature_dict
 endfunction
 
-function! te#feat#feat_dyn_enable(en) abort
+function! s:get_var_value(feat, result) abort
+    let l:str = s:var_candidate[a:result - 1]
+    let s:feature_dict[a:feat]=string(l:str)
+    execute 'let '.a:feat.'='.string(l:str)
+    call te#feat#gen_feature_vim(0)
+    call te#utils#EchoWarning('Set '.a:feat.' to '.string(l:str).' successfully!', 'info')
+endfunction
+
+function! te#feat#feature_enable(en, feat) abort
     if a:en == 1
         let l:enable='Enable'
     else
         let l:enable='Disable'
     endif
-    let l:feat = input(l:enable.' the feature(or "all"): ','g:feat_enable_','custom,te#feat#get_feature')
-    if l:feat !=# 'all'
-        if !has_key(s:feature_dict, l:feat)
-            call te#utils#EchoWarning(l:feat.' feature is not exist!', 'err')
+    if a:feat !=# 'all'
+        if !has_key(s:feature_dict, a:feat)
+            call te#utils#EchoWarning(a:feat.' feature is not exist!', 'err')
             return
         endif
-        if type(eval(l:feat))
+        if type(eval(a:feat))
             let s:var_candidate=[]
-            let l:feat_candidate=eval(matchstr(l:feat,'.*\(\.cur_val\)\@=').'.candidate')
-            call extend(s:var_candidate,l:feat_candidate)
-            let l:str=input('Input the value of '.l:feat.': ', '', 'custom,te#feat#get_var_value')
-            let s:feature_dict[l:feat]=string(l:str)
-            execute 'let '.l:feat.'='.string(l:str)
-            call te#feat#gen_feature_vim(0)
-            call te#utils#EchoWarning('Set '.l:feat.' to '.string(l:str).' successfully!', 'info')
+            let l:feat_candidate=eval(matchstr(a:feat,'.*\(\.cur_val\)\@=').'.candidate')
+            call extend(s:var_candidate, l:feat_candidate)
+            call te#utils#confirm('Select '.a:feat."'s option", s:var_candidate, {'func':function('<SID>get_var_value'), 'arg':[a:feat]})
             return
         else
-            let s:feature_dict[l:feat]=a:en
-            execute 'let '.l:feat.'='.a:en
+            let s:feature_dict[a:feat]=a:en
+            execute 'let '.a:feat.'='.a:en
             call te#feat#gen_feature_vim(0)
-            call te#feat#feat_enable(l:feat,eval(s:feature_dict[l:feat]))
+            call te#feat#feat_enable(a:feat,eval(s:feature_dict[a:feat]))
         endif
     else
         for l:key in keys(s:feature_dict)
@@ -119,7 +114,17 @@ function! te#feat#feat_dyn_enable(en) abort
     endif
     if a:en == 1 | :PlugInstall --sync | q | endif
     call te#feat#source_rc('colors.vim')
-    call te#utils#EchoWarning(l:enable.' '.l:feat.' successfully!', 'info')
+    call te#utils#EchoWarning(l:enable.' '.a:feat.' successfully!', 'info')
+endfunction
+
+function! te#feat#feat_dyn_enable(en) abort
+    if a:en == 1
+        let l:enable='Enable'
+    else
+        let l:enable='Disable'
+    endif
+    let l:feat = input(l:enable.' the feature(or "all"): ','g:feat_enable_','custom,te#feat#get_feature')
+    call te#feat#feature_enable(a:en, l:feat)
 endfunction
 
 "source file frome rc folder
