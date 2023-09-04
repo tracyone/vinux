@@ -20,8 +20,6 @@ function! ConfirmResult(id, result) abort
         elseif type(l:confirm_obj.callback) == g:t_dict
             let l:act_func = l:confirm_obj.callback
             call add(l:act_func.arg, a:result)
-            echom l:act_func.arg
-            echom l:act_func.func
             call call(l:act_func.func, l:act_func.arg)
         endif
         call remove(s:ctx, a:id)

@@ -20,6 +20,7 @@ vim.keymap.set('n', '<leader>q/', builtin.search_history, {})
 vim.keymap.set('n', '<leader>pc', builtin.colorscheme, {})
 vim.keymap.set('n', '<leader>pr', builtin.registers, {})
 vim.keymap.set('n', '<leader>ff', ":Telescope file_browser<CR>", {})
+vim.keymap.set('n', '<leader>fe', ":Telescope feat<CR>", {})
 
 local actions = require("telescope.actions")
 local actions_layout = require("telescope.actions.layout")
@@ -184,4 +185,7 @@ require("telescope").setup {
 
 require('telescope').load_extension('fzf')
 require("telescope").load_extension("file_browser")
+--vinux terminal
 require("telescope").load_extension("term")
+--vinux feature
+require("telescope").load_extension("feat")
