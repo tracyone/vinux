@@ -6,6 +6,7 @@ local action_state = require("telescope.actions.state")
 
 local feat = {}
 
+local enable_flag = 0
 
 local function feat_select(prompt_buffer)
     local selection = action_state.get_selected_entry()
@@ -14,13 +15,15 @@ local function feat_select(prompt_buffer)
     end
 
     actions.close(prompt_buffer)
-    vim.fn['te#feat#feature_enable'](1, selection.value)
+    vim.fn['te#feat#feature_enable'](enable_flag, selection.value)
 end
 
 feat.search = function(opts)
     opts = opts or {}
     local src_list = vim.fn['keys'](vim.fn['te#feat#get_feature_dict']())
     src_list[#src_list+1] = 'all'
+    opts.en = vim.F.if_nil(opts.en, enable_flag)
+    enable_flag = opts.en
 
     pickers.new(opts, {
         prompt_title = "Select Feature",
