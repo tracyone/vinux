@@ -10,10 +10,11 @@ lua << EOF
 EOF
     endfunction
     call te#feat#register_vim_enter_setting(function('<SID>lsp_setup'))
+elseif g:complete_plugin_type.cur_val ==# 'coc.nvim'
+
 else
     Plug 'prabirshrestha/vim-lsp'
     Plug 'mattn/vim-lsp-settings',{'on': []}
-    nnoremap  <silent><leader>ql :call te#lsp#show_diagnostics(0)<cr>
     call te#feat#register_vim_enter_setting2([0], ['vim-lsp-settings'])
     if te#env#SupportFloatingWindows()
         let g:lsp_work_done_progress_enabled = 1
@@ -33,9 +34,20 @@ else
         let g:lsp_diagnostics_echo_cursor = 1
     endif
 endif
+
 "lsp setting
-vnoremap  <silent><Leader>df :call te#lsp#format_document_range()<CR>
 nnoremap  <silent> <silent> K :call te#lsp#hover()<cr>
 nnoremap  <silent><Leader>lr  :call te#lsp#rename()<cr>
 nnoremap  <silent><Leader>lc  :call te#lsp#code_action()<cr>
+nnoremap  <silent><leader>ql :call te#lsp#show_diagnostics(0)<cr>
+vnoremap  <silent><Leader>lf  :call te#lsp#format_document_range()<cr>
+nnoremap  <silent><Leader>lf  :call te#lsp#format_document()<cr>
+nnoremap  <silent><Leader>li  :call te#lsp#find_implementation()<cr>
+nnoremap  <silent><Leader>ly  :call te#lsp#goto_type_def()<cr>
+nnoremap  <silent><Leader>lti  :call te#lsp#call_tree(1)<cr>
+nnoremap  <silent><Leader>lto  :call te#lsp#call_tree(0)<cr>
+nnoremap <silent> [d :call te#lsp#diagnostics_jump(0)<cr>
+nnoremap <silent> ]d :call te#lsp#diagnostics_jump(1)<cr>
+nnoremap  <silent><Leader>ll :call te#lsp#code_len()<cr>
+
 

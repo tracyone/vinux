@@ -237,7 +237,7 @@ function! te#feat#init_all() abort
 
     call te#feat#init_var('g:fuzzy_matcher_type',['py-matcher', 'cpsm'])
     call te#feat#init_var('g:complete_plugin_type',['YouCompleteMe', 'clang_complete', 'neocomplete',
-                \ 'asyncomplete.vim', 'deoplete.nvim','ncm2', 'supertab', 'nvim-cmp'])
+                \ 'asyncomplete.vim', 'deoplete.nvim','ncm2', 'supertab', 'nvim-cmp', 'coc.nvim'])
     call te#feat#init_var('g:fuzzysearcher_plugin_name', ['ctrlp', 'leaderf', 'denite.nvim', 'fzf', 'vim-clap', 'telescope.nvim'])
     call te#feat#init_var('g:git_plugin_name',['vim-fugitive','gina.vim'])
     call te#feat#init_var('g:enable_powerline_fonts', ['off','on'])

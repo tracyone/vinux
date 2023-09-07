@@ -7,8 +7,6 @@ local on_attach = function(client, bufnr)
   local opts = { noremap=true, silent=true, buffer=bufnr }
   vim.keymap.set('n', '<Leader>ld', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.keymap.set('n', '<C-x>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   vim.keymap.set('n', '<Leader>ql', "<cmd>Trouble<CR>", opts)
 end
 
