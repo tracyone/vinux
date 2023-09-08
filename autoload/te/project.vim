@@ -114,7 +114,7 @@ function! te#project#create_project() abort
     let g:vinux_project_name = l:name
     let g:vinux_working_directory = getcwd()
     if exists(":SSave") == 2
-        execute ":SSave! ".l:name
+        execute ":SSave ".l:name
     elseif exists(":SaveSession") == 2
         execute ":SaveSession ".l:name
     endif
