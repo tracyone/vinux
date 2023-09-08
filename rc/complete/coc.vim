@@ -1,6 +1,8 @@
 Plug 'neoclide/coc.nvim', {'on': [], 'branch': 'release'}
 
 
+let g:coc_config_home = $VIMFILES.'/rc/complete/'
+
 function! s:coc_setup() abort
     " code
     " Use tab for trigger completion with characters ahead and navigate
@@ -80,7 +82,6 @@ function! s:coc_setup() abort
         call add(g:coc_global_extensions, 'coc-sh')
         let g:coc_extensions_dict[&ft]='coc-sh'
     endif
-    let g:coc_config_home = $VIMFILES.'/rc/complete/'
 
     " Add `:Format` command to format current buffer
     command! -nargs=0 Format :call CocActionAsync('format')

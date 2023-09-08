@@ -121,7 +121,7 @@ local mappings = {
 -- Setup 〈
 local defaults = {
     -- UI
-    selection_caret = "❯ ",
+    selection_caret = "> ",
     -- prompt_prefix = " ",
     --selection_caret = " ",
     --prompt_prefix = " ",
