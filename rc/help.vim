@@ -172,6 +172,12 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'c' : 'lsp code action',
                     \ 'd' : 'lsp goto declaration',
                     \ 'r' : 'lsp rename',
+                    \ 'f' : 'lsp format',
+                    \ 'i' : 'lsp find implementation',
+                    \ 'y' : 'lsp find type definition',
+                    \ 't' : 'lsp call tree',
+                    \ 'l' : 'lsp code len',
+                    \ 's' : 'lsp server install',
                     \ }
         let g:which_key_map.m = { 
                     \ 'name' : '+bookmark_or_markdown',

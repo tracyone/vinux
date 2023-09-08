@@ -49,5 +49,6 @@ nnoremap  <silent><Leader>lto  :call te#lsp#call_tree(0)<cr>
 nnoremap <silent> [d :call te#lsp#diagnostics_jump(0)<cr>
 nnoremap <silent> ]d :call te#lsp#diagnostics_jump(1)<cr>
 nnoremap  <silent><Leader>ll :call te#lsp#code_len()<cr>
+nnoremap  <silent><Leader>ls  :call te#lsp#install_server()<cr>
 
 

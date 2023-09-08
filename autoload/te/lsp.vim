@@ -248,3 +248,13 @@ function! te#lsp#code_len() abort
         call CocActionAsync('codeLensAction')
     endif
 endfunction
+
+function! te#lsp#install_server() abort
+    if exists(':LspInstallServer') == 2
+        :LspInstallServer
+    elseif te#env#IsNvim() >= 0.5
+        :Mason
+    elseif g:complete_plugin_type.cur_val == 'coc.nvim'
+        :CocList marketplace
+    endif
+endfunction
