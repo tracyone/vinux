@@ -62,7 +62,7 @@ function! s:coc_setup() abort
         vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
     endif
 
-    let g:coc_global_extensions = ['coc-marketplace', 'coc-json']
+    let g:coc_global_extensions = ['coc-marketplace', 'coc-json', 'coc-ultisnips']
     let g:coc_extensions_dict = {'json': 'coc-json'}
     if &ft == 'vim'
         call add(g:coc_global_extensions, 'coc-vimlsp')
