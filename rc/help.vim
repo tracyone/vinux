@@ -167,7 +167,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ '9' : 'Open index 9 terminal win',
                     \ }
         let g:which_key_map.l = { 
-                    \ 'name' : '+love',
+                    \ 'name' : '+lsp',
                     \ 'o' : 'save your own vim setting',
                     \ 'c' : 'lsp code action',
                     \ 'd' : 'lsp goto declaration',
@@ -175,9 +175,13 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'f' : 'lsp format',
                     \ 'i' : 'lsp find implementation',
                     \ 'y' : 'lsp find type definition',
-                    \ 't' : 'lsp call tree',
                     \ 'l' : 'lsp code len',
                     \ 's' : 'lsp server install',
+                    \ }
+        let g:which_key_map.l.t = { 
+                    \ 'name' : '+call tree',
+                    \ 'i' : 'lsp in coming call',
+                    \ 'o' : 'lsp out coming call',
                     \ }
         let g:which_key_map.m = { 
                     \ 'name' : '+bookmark_or_markdown',
