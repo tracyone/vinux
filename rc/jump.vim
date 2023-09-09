@@ -9,16 +9,21 @@ elseif g:fuzzysearcher_plugin_name.cur_val ==# 'fzf'
 elseif g:fuzzysearcher_plugin_name.cur_val ==# 'vim-clap'
     execute 'source '.$VIMFILES.'/rc/vim-clap.vim'
 elseif g:fuzzysearcher_plugin_name.cur_val ==# 'telescope.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-    Plug 'nvim-telescope/telescope-file-browser.nvim'
-    function! s:telescope_setup()
+    if te#env#IsNvim() < 0.9
+        call te#utils#EchoWarning('telescope.nvim require neovim 0.9.0+!')
+        let g:fuzzysearcher_plugin_name.cur_val='ctrlp'
+    else
+        Plug 'nvim-telescope/telescope.nvim'
+        Plug 'nvim-lua/plenary.nvim'
+        Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+        Plug 'nvim-telescope/telescope-file-browser.nvim'
+        function! s:telescope_setup()
 lua << EOF
-        require('nvim_telescope')
+            require('nvim_telescope')
 EOF
-    endfunction
-    call te#feat#register_vim_enter_setting(function('<SID>telescope_setup'))
+        endfunction
+        call te#feat#register_vim_enter_setting(function('<SID>telescope_setup'))
+    endif
 endif
 
 "fallback option
