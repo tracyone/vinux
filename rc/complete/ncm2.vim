@@ -13,7 +13,7 @@ Plug 'ncm2/ncm2-vim', { 'for': ['vim']}
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'ncm2/ncm2-tagprefix'
 Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
-Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm2'}
+Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'master'}
 if g:feat_enable_lsp == 1 && te#env#IsNvim() < 0.5
     Plug 'ncm2/ncm2-vim-lsp'
 endif
