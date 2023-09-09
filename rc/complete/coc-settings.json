@@ -7,6 +7,14 @@
     "Lua.diagnostics.globals": [
         "vim"
     ],
-    "marketplace.npmsio":true
+
+    "diagnostic.virtualText": true,
+    "diagnostic.virtualTextCurrentLineOnly": false,
+    "marketplace.npmsio":true,
+
+    //multiple curssor
+    "cursors.nextKey": "<C-n>",
+    "cursors.previousKey": "<C-p>",
+    "cursors.cancelKey": "<esc>"
 
 }

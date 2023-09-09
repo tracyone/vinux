@@ -74,6 +74,8 @@ else
     let Tlist_Use_Right_Window = 1
     let Tlist_GainFocus_On_ToggleOpen=1
 endif
+
+"vimproc required by vim-clang-format and quickrun
 if te#env#IsMac()
     Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
 elseif te#env#IsUnix()
