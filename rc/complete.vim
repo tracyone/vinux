@@ -1,66 +1,102 @@
 let g:complete_plugin={}
 let g:complete_plugin.name=[g:complete_plugin_type.cur_val]
 let g:complete_plugin.enable_func=function('te#env#IsVim8')
-if g:complete_plugin_type.cur_val ==# 'YouCompleteMe' && te#env#SupportYcm()
-    if te#env#IsUnix()
-        Plug 'Valloric/YouCompleteMe', { 'on': [], 'commit': '85c11d3a875b02a7ac28fb96d0c7a02782f60410' }
-        let g:complete_plugin.name=['YouCompleteMe']
-    elseif te#env#IsWin32()
-        Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
-        let g:complete_plugin.name=['YouCompleteMe-x86']
+if g:complete_plugin_type.cur_val ==# 'YouCompleteMe'
+    if !te#env#SupportYcm()
+        call te#utils#EchoWarning("python2 feature and patch-7.4.1578 are required to use YoucompleteMe")
+        let g:complete_plugin_type.cur_val='supertab'
     else
-        Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
-        let g:complete_plugin.name=['YouCompleteMe-x64']
+        if te#env#IsUnix()
+            Plug 'Valloric/YouCompleteMe', { 'on': [], 'commit': '85c11d3a875b02a7ac28fb96d0c7a02782f60410' }
+            let g:complete_plugin.name=['YouCompleteMe']
+        elseif te#env#IsWin32()
+            Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
+            let g:complete_plugin.name=['YouCompleteMe-x86']
+        else
+            Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
+            let g:complete_plugin.name=['YouCompleteMe-x64']
+        endif
+        call te#feat#source_rc('complete/ycm.vim')
     endif
-    call te#feat#source_rc('complete/ycm.vim')
 elseif g:complete_plugin_type.cur_val ==# 'clang_complete'
-    Plug 'xavierd/clang_complete', { 'on': [] }
-    call te#feat#source_rc('complete/clang_complete.vim')
-elseif g:complete_plugin_type.cur_val ==# 'asyncomplete.vim' && te#env#SupportAsync()
-    call te#feat#source_rc('complete/asyncomplete.vim')
-elseif g:complete_plugin_type.cur_val ==# 'neocomplete' && te#env#SupportFeature('lua')
-    Plug 'Shougo/neocomplete', { 'on': [] }
-    Plug 'tracyone/dict'
-    Plug 'Konfekt/FastFold'
-    call te#feat#source_rc('complete/neocomplete.vim')
+    if !te#env#SupportPy()
+        call te#utils#EchoWarning("python feature are required to use asyncomplete.vim")
+        let g:complete_plugin_type.cur_val='supertab'
+    else
+        Plug 'xavierd/clang_complete', { 'on': [] }
+        call te#feat#source_rc('complete/clang_complete.vim')
+    endif
+elseif g:complete_plugin_type.cur_val ==# 'asyncomplete.vim'
+    if !te#env#SupportAsync()
+        call te#utils#EchoWarning("neovim or vim8 are required to use asyncomplete.vim")
+        let g:complete_plugin_type.cur_val='supertab'
+    else
+        call te#feat#source_rc('complete/asyncomplete.vim')
+    endif
+elseif g:complete_plugin_type.cur_val ==# 'neocomplete'
+    if !te#env#SupportFeature('lua') || has('patch-8.2.1066')
+        call te#utils#EchoWarning("lua feature and vim 8.2.1066- are required to use neocomplete.vim")
+        let g:complete_plugin_type.cur_val='supertab'
+    else
+        Plug 'Shougo/neocomplete', { 'on': [] }
+        Plug 'tracyone/dict'
+        Plug 'Konfekt/FastFold'
+        call te#feat#source_rc('complete/neocomplete.vim')
+    endif
 elseif g:complete_plugin_type.cur_val ==# 'deoplete.nvim'
-    call te#feat#source_rc('complete/deoplete.vim')
-elseif g:complete_plugin_type.cur_val ==# 'ncm2' && te#env#SupportPy3()
-    call te#feat#source_rc('complete/ncm2.vim')
-elseif g:complete_plugin_type.cur_val ==# 'nvim-cmp' && te#env#IsNvim() >= 0.5
-    Plug 'hrsh7th/cmp-nvim-lsp', {'branch': 'main' }
-    Plug 'hrsh7th/cmp-buffer', {'branch': 'main' }
-    Plug 'hrsh7th/nvim-cmp', {'branch': 'main' }
-    Plug 'hrsh7th/cmp-path', {'branch': 'main' }
-    Plug 'hrsh7th/cmp-nvim-lua',{'branch': 'main'}
-    Plug 'hrsh7th/cmp-cmdline'
-    Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main' }
-    Plug 'octaltree/cmp-look'
-    Plug 'hrsh7th/cmp-calc'
-    "Plug 'onsails/lspkind-nvim'
-    "Plug 'tamago324/cmp-zsh',{'for':['bash','zsh'], 'branch': 'main'}
+    if !te#env#SupportPy3() || !has('patch-8.2.1978')
+        call te#utils#EchoWarning("python3 feature and vim 8.2.1978+ are required to use deoplete.nvim")
+        let g:complete_plugin_type.cur_val='supertab'
+    else
+        call te#feat#source_rc('complete/deoplete.vim')
+    endif
+elseif g:complete_plugin_type.cur_val ==# 'ncm2'
+    if !te#env#SupportPy3() || !te#env#SupportAsync()
+        call te#utils#EchoWarning("python3 feature and vim 8.2.1978+ are required to use ncm2")
+        let g:complete_plugin_type.cur_val='supertab'
+    else
+        call te#feat#source_rc('complete/ncm2.vim')
+    endif
+elseif g:complete_plugin_type.cur_val ==# 'nvim-cmp'
+    if te#env#IsNvim() == 0
+        call te#utils#EchoWarning("lastest neovim are required to use nvim-cmp")
+        let g:complete_plugin_type.cur_val='supertab'
+    else
+        Plug 'hrsh7th/cmp-nvim-lsp', {'branch': 'main' }
+        Plug 'hrsh7th/cmp-buffer', {'branch': 'main' }
+        Plug 'hrsh7th/nvim-cmp', {'branch': 'main' }
+        Plug 'hrsh7th/cmp-path', {'branch': 'main' }
+        Plug 'hrsh7th/cmp-nvim-lua',{'branch': 'main'}
+        Plug 'hrsh7th/cmp-cmdline'
+        Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main' }
+        Plug 'octaltree/cmp-look'
+        Plug 'hrsh7th/cmp-calc'
+        "Plug 'onsails/lspkind-nvim'
+        "Plug 'tamago324/cmp-zsh',{'for':['bash','zsh'], 'branch': 'main'}
 
-function! s:enable_nvim_lsp()
+        function! s:enable_nvim_lsp()
 lua << EOF
-    require('nvim_cmp')
+            require('nvim_cmp')
 EOF
-    autocmd FileType markdown,gitcommit,gina-commit lua require'cmp'.setup.buffer {
-                    \   sources = {
+            autocmd FileType markdown,gitcommit,gina-commit lua require'cmp'.setup.buffer {
+                        \   sources = {
                         \     {name='look', keyword_length=2},
                         \ { name = 'ultisnips' },
                         \ { name = 'buffer' },
                         \ { name = 'git' },
                         \   },
                         \ }
-endfunction
-"Important config neovim lsp and cmp when vim enter
-call te#feat#register_vim_enter_setting(function('<SID>enable_nvim_lsp'))
+        endfunction
+        "Important config neovim lsp and cmp when vim enter
+        call te#feat#register_vim_enter_setting(function('<SID>enable_nvim_lsp'))
+    endif
 elseif g:complete_plugin_type.cur_val ==# 'coc.nvim'
-    call te#feat#source_rc('complete/coc.vim')
-else
-    let g:complete_plugin_type.cur_val='supertab'
-    let g:complete_plugin.name=['supertab']
-    Plug 'ervandew/supertab', { 'on': [] }
+    if !te#env#Executable('node') || !te#env#SupportAsync()
+        call te#utils#EchoWarning("nodejs 16 and vim8 or neovim are required to use coc.nvim")
+        let g:complete_plugin_type.cur_val='supertab'
+    else
+        call te#feat#source_rc('complete/coc.vim')
+    endif
 endif
 
 
@@ -81,6 +117,8 @@ else
 endif
 
 if g:complete_plugin_type.cur_val ==# 'supertab'
+    let g:complete_plugin.name=['supertab']
+    Plug 'ervandew/supertab', { 'on': [] }
     let g:SuperTabCrMapping = 0
     let g:SuperTabDefaultCompletionType = 'context'
     let g:SuperTabContextDefaultCompletionType = '<c-x><c-o>'

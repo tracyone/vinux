@@ -1,6 +1,30 @@
+function! te#complete#cstag(timer) abort
+    let l:ret = 0
+    if s:cur_file_name == expand('%:t') && s:cur_line == line(".")
+        if te#env#SupportCscope()
+            "cscope and ctags combine
+            let l:cmd = ':cstag '.s:cur_word
+        else
+            let l:cmd = ':tselect '.s:cur_word
+        endif
+        try
+            execute  l:cmd
+        catch /^Vim\%((\a\+)\)\=:E/	
+            call te#utils#EchoWarning(l:cmd."Can not find any definition...")
+            let l:ret = -1
+        endtry
+        let l:len=getqflist({'size':0}).size
+        if l:ret == 0 && l:len > 1
+            :botright copen
+        endif
+    endif
+endfunction
+
 function! te#complete#goto_def(open_type) abort
-    let l:cword=expand('<cword>')
     let l:ret = -1
+    let s:cur_line = line(".")
+    let s:cur_file_name = expand('%:t')
+    let s:cur_word=expand('<cword>')
     execute a:open_type
     if &filetype == 'vim'
         silent! execute 'let l:ret = lookup#lookup()'
@@ -9,33 +33,37 @@ function! te#complete#goto_def(open_type) abort
         endif
     endif
     if get(g:, 'feat_enable_complete', 0)
-        if te#env#SupportYcm() && g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
+        if g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
             let l:ret=s:YcmGotoDef()
         endif
     endif
     if get(g:, 'feat_enable_lsp') == 1
         let l:ret=te#lsp#gotodefinion()
     endif
-    if l:ret < 0
-        let l:ret = 0
-        if te#env#SupportCscope()
-            "cscope and ctags combine
-            let l:cmd = ':cstag '.l:cword
-        else
-            let l:cmd = ':tselect '.l:cword
-        endif
-        try
-            execute  l:cmd
-        catch /^Vim\%((\a\+)\)\=:E/	
-            call te#utils#EchoWarning("Can not find any definition...")
-            let l:ret = -1
-        endtry
-        let l:len=getqflist({'size':0}).size
-        if l:ret == 0 && l:len > 1
-            :botright copen
-        endif
+    if te#env#SupportTimer() && l:ret == 0
+        call timer_start(200, function('te#complete#cstag'), {'repeat': 1})
     else
-        return 0
+        if l:ret < 0
+            let l:ret = 0
+            if te#env#SupportCscope()
+                "cscope and ctags combine
+                let l:cmd = ':cstag '.s:cur_word
+            else
+                let l:cmd = ':tselect '.s:cur_word
+            endif
+            try
+                execute  l:cmd
+            catch /^Vim\%((\a\+)\)\=:E/	
+                call te#utils#EchoWarning("Can not find any definition...")
+                let l:ret = -1
+            endtry
+            let l:len=getqflist({'size':0}).size
+            if l:ret == 0 && l:len > 1
+                :botright copen
+            endif
+        else
+            return 0
+        endif
     endif
     return l:ret
 endfunction
@@ -65,9 +93,6 @@ function! s:get_input() abort
 endfunction
 
 function! s:YcmGotoDef() abort
-    let l:cur_line = line(".")
-    let l:cur_file_name = expand('%:t')
-    let l:cur_word=expand('<cword>').'\s*(.*[^;]$'
     if g:complete_plugin_type.cur_val ==# 'YouCompleteMe'
         if  exists('*youcompleteme#Enable') == 0
             if te#pg#top_of_kernel_tree(getcwd())
@@ -97,7 +122,7 @@ function! s:YcmGotoDef() abort
             return -3 
         endif
     else
-        if l:cur_file_name == expand('%:t') && l:cur_line == line(".")
+        if s:cur_file_name == expand('%:t') && s:cur_line == line(".")
             "file name and line not change
             return -4 
         endif
@@ -105,34 +130,51 @@ function! s:YcmGotoDef() abort
     return 0
 endfunction
 
-
-function te#complete#lookup_reference(open_type) abort
-    execute a:open_type
+function! te#complete#csref(timer) abort
     let l:ret = 0
-    if te#env#SupportCscope() && 
-                \ ((&ft == 'c' || &ft == 'cpp') 
-                \ || &cscopeprg ==# 'gtags-cscope')
+    if s:cur_file_name == expand('%:t') && s:cur_line == line(".")
         try
-            execute ':cs find c '.expand("<cword>")
+            execute ':cs find c '.s:cur_word
         catch /^Vim\%((\a\+)\)\=:E/	
+            call te#utils#EchoWarning("Can not find any refernces")
             let l:ret = -1
-            if g:feat_enable_lsp == 1
-                call te#lsp#references()
-            elseif g:feat_enable_complete == 1 && g:complete_plugin_type.cur_val == "YouCompleteMe"
-                :YcmCompleter GoToReferences
-            else
-                call te#utils#EchoWarning("Can not find any reference!")
-            endif
         endtry
-        if l:ret == 0
-            :botright cw 7
-        endif
-    else
-        if g:feat_enable_lsp == 1
-            let l:ret=te#lsp#references()
-        elseif g:feat_enable_complete == 1 && g:complete_plugin_type.cur_val == "YouCompleteMe"
-            :YcmCompleter GoToReferences
+        let l:len=getqflist({'size':0}).size
+        if l:ret == 0 && l:len > 1
+            :botright copen
         endif
     endif
-    return 0
+    return l:ret
+endfunction
+
+function te#complete#lookup_reference(open_type) abort
+    let s:cur_line = line(".")
+    let s:cur_file_name = expand('%:t')
+    let s:cur_word=expand('<cword>')
+    execute a:open_type
+    if g:feat_enable_lsp == 1
+        let l:ret=te#lsp#references()
+    elseif g:feat_enable_complete == 1 && g:complete_plugin_type.cur_val == "YouCompleteMe"
+        try
+            :YcmCompleter GoToReferences
+        catch
+            let l:ret = -1
+        endtry
+    endif
+    if te#env#SupportTimer() && l:ret == 0
+        call timer_start(200, function('te#complete#csref'), {'repeat': 1})
+    elseif l:ret != 0
+        let l:ret = 0
+        try
+            execute ':cs find c '.s:cur_word
+        catch /^Vim\%((\a\+)\)\=:E/	
+            call te#utils#EchoWarning("Can not find any refernces")
+            let l:ret = -1
+        endtry
+        let l:len=getqflist({'size':0}).size
+        if l:ret == 0 && l:len > 1
+            :botright copen
+        endif
+    endif
+    return l:ret
 endfunction
