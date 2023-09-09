@@ -11,16 +11,17 @@ let s:is_tmux = empty($TMUX)
 let s:has_display = empty($DISPLAY)
 let s:support_cscope=has('cscope')+executable('cscope')
 
-function! te#env#IsVim8() abort
-    if v:version >= 800 && !s:is_nvim
-        return 1
+
+function! te#env#IsVim() abort
+    if !s:is_nvim
+        return v:version
     else
         return 0
     endif
 endfunction
 
-function! te#env#IsVim9() abort
-    if v:version >= 900 && !s:is_nvim
+function! te#env#IsVim8() abort
+    if v:version >= 800 && !s:is_nvim
         return 1
     else
         return 0

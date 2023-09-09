@@ -1,7 +1,28 @@
 " basic package
 " Package info {{{
 let s:sexy_command=[]
-if te#env#IsNvim() == 0 || get(g:, 'feat_enable_tools') == 0
+if  g:file_explorer_plugin.cur_val == 'defx.nvim'
+    if te#env#IsNvim() == 0 && te#env#IsVim() < 802
+        call te#utils#EchoWarning("defx requires Neovim 0.4.0+ or Vim8.2+ with Python3.6.1+")
+        let g:file_explorer_plugin.cur_val = 'nerdtree'
+    else
+        Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+        if te#env#IsNvim() == 0 && g:complete_plugin_type.cur_val != 'ncm2'
+            Plug 'roxma/nvim-yarp'
+            Plug 'roxma/vim-hug-neovim-rpc'
+        endif
+        " Open Vim File Explorer
+        nnoremap  <silent><Leader>fj :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
+        noremap  <silent><F12> :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
+        " Open nerd tree
+        nnoremap  <silent><leader>te :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
+        " Open nerd tree
+        nnoremap  <silent><leader>nf :Defx -toggle -split=vertical -winwidth=50 -direction=topleft `expand('%:p:h')` -search=`expand('%:p')`<CR> 
+        call add(s:sexy_command, ':Defx -toggle -split=vertical -winwidth=50 -direction=topleft')
+    endif
+endif
+
+if g:file_explorer_plugin.cur_val == 'nerdtree'
     Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle','NERDTreeFind'] }
     call add(s:sexy_command, 'NERDTreeToggle')
     let g:NERDTreeShowLineNumbers=0	"don't show line number
@@ -16,20 +37,20 @@ if te#env#IsNvim() == 0 || get(g:, 'feat_enable_tools') == 0
     nnoremap  <silent><leader>nf :NERDTreeFind<CR> 
     "map <2-LeftMouse>  *N "double click highlight the current cursor word 
     inoremap <F12> <ESC> :NERDTreeToggle<CR>
-else
-    if te#env#IsNvim() >= 0.5
-        Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
-        Plug 'nvim-treesitter/nvim-treesitter-refactor'
-        Plug 'nvim-treesitter/nvim-treesitter-context'
-    endif
+endif
+
+if te#env#IsNvim() >= 0.5
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
+    Plug 'nvim-treesitter/nvim-treesitter-refactor'
+    Plug 'nvim-treesitter/nvim-treesitter-context'
     function! s:treesitter_setup()
 lua << EOF
-        require('treesittier_nvim')
+            require('treesittier_nvim')
 EOF
     endfunction
     call te#feat#register_vim_enter_setting(function('<SID>treesitter_setup'))
-    call add(s:sexy_command, ':Defx -toggle -split=vertical -winwidth=50 -direction=topleft')
 endif
+
 if te#env#check_requirement()
     Plug 'majutsushi/tagbar',{'on': []}
     " Open tagbar
@@ -71,7 +92,7 @@ Plug 'itchyny/vim-cursorword'
 Plug 'thinca/vim-quickrun',{'on': '<Plug>(quickrun)'}
 if(!te#env#IsWindows())
     Plug 'vim-scripts/sudo.vim', {'on': ['SudoRead', 'SudoWrite']}
-    if te#env#IsVim9()
+    if te#env#IsVim() >= 900
         runtime ftplugin/man.vim
     else
         if te#env#IsNvim() == 0

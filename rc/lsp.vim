@@ -19,7 +19,7 @@ else
     if te#env#SupportFloatingWindows()
         let g:lsp_work_done_progress_enabled = 1
         let g:lsp_diagnostics_float_cursor = 1
-        if te#env#IsVim9()
+        if te#env#IsVim() >= 900
             let g:lsp_diagnostics_virtual_text_enabled = 1
         endif
         if has('patch-8.2.4780')

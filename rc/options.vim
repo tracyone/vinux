@@ -256,7 +256,7 @@ if te#env#IsNvim() != 0
     endif
 else
     command! -nargs=? UpdateRemotePlugins call te#utils#EchoWarning("It is neovim's command")
-    if te#env#IsVim9()
+    if te#env#IsVim() >= 900
         set wildoptions=pum,fuzzy
     endif
     set printfont=Yahei_Mono:h10:cGB2312  "name of the font to be used for :hardcopy

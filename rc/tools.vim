@@ -21,16 +21,6 @@ xnoremap  <silent><Leader>ar :<C-u>HowMuch r<cr>
 let g:HowMuch_scale = 16
 let g:HowMuch_auto_engines = ['py', 'vim', 'bc']
 Plug 'vim-scripts/DrawIt',{'on': 'DrawIt'}
-if te#env#IsNvim() != 0 && te#env#SupportPy3()
-    Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-    " Open Vim File Explorer
-    nnoremap  <silent><Leader>fj :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
-    noremap  <silent><F12> :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
-    " Open nerd tree
-    nnoremap  <silent><leader>te :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
-    " Open nerd tree
-    nnoremap  <silent><leader>nf :Defx -toggle -split=vertical -winwidth=50 -direction=topleft `expand('%:p:h')` -search=`expand('%:p')`<CR> 
-endif
 Plug 'qpkorr/vim-renamer',{'on': 'Ren'}
 Plug 'Shougo/vinarise.vim',{'on': 'Vinarise'}
 Plug 'will133/vim-dirdiff',{'on': 'DirDiff'}
