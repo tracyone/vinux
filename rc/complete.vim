@@ -14,7 +14,7 @@ if g:complete_plugin_type.cur_val ==# 'YouCompleteMe' && te#env#SupportYcm()
     endif
     call te#feat#source_rc('complete/ycm.vim')
 elseif g:complete_plugin_type.cur_val ==# 'clang_complete'
-    Plug 'Rip/clang_complete', { 'on': [] }
+    Plug 'xavierd/clang_complete', { 'on': [] }
     call te#feat#source_rc('complete/clang_complete.vim')
 elseif g:complete_plugin_type.cur_val ==# 'asyncomplete.vim' && te#env#SupportAsync()
     call te#feat#source_rc('complete/asyncomplete.vim')
