@@ -15,3 +15,10 @@ function! te#autocmds#dir_changed() abort
     "show current directory
     "call te#utils#EchoWarning(getcwd(), 'info')
 endfunction
+
+function! te#autocmds#file_type() abort
+    let $CurBufferDir=expand('%:p:h')
+    if g:complete_plugin_type.cur_val == 'coc.nvim'
+        call CocCheckExtensions()
+    endif
+endfunction

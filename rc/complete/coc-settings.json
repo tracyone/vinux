@@ -15,6 +15,41 @@
     //multiple curssor
     "cursors.nextKey": "<C-n>",
     "cursors.previousKey": "<C-p>",
-    "cursors.cancelKey": "<esc>"
+    "cursors.cancelKey": "<esc>",
+// coc-settings.json
+    "explorer.keyMappings.global": {
+        "i": false, // cancel default mapkey
+        "<c-o>": "noop",
 
+        "<tab>": "actionMenu",
+        "e": "open",
+        "s": "open:split",
+        "E": "open:vsplit",
+        "t": "open:tab",
+        "<bs>": ["wait", "gotoParent"],
+        "gs": ["wait", "reveal:select"],
+        "<2-LeftMouse>": "preview:labeling",
+
+        "yp": "copyFilepath",
+        "yn": "copyFilename",
+        "yy": "copyFile",
+        "dd": "deleteForever",
+        "p": "pasteFile",
+        "m": "cutFile",
+
+        "a": "addFile",
+        "N": "addFile",
+        "A": "addDirectory",
+        "r": "rename",
+
+        "I": "toggleHidden",
+        "R": "refresh",
+
+        "?": "help",
+        "q": "quit",
+        "<esc>": "esc",
+
+        "f": "search",
+        "F": "searchRecursive"
+    }
 }

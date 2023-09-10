@@ -2,6 +2,33 @@ Plug 'neoclide/coc.nvim', {'on': [], 'branch': 'release'}
 
 
 let g:coc_config_home = $VIMFILES.'/rc/complete/'
+let g:coc_extensions_dict = {}
+
+"add lsp coc extensions here
+let s:vinux_coc_extensions = {'json': 'coc-json', 'vim':'coc-vimlsp', 'c':'coc-clangd', 'cpp':'coc-clangd',
+            \ 'python':'coc-pyright', 'sh':'coc-sh', 'bash':'coc-sh', 'zsh':'coc-sh', 'lua':'coc-sumneko-lua',
+            \ 'java':'coc-java','html':'coc-html','cmake':'coc-cmake','xml':'coc-xml','rust':'coc-rls',
+            \}
+
+function! CocCheckExtensions() abort
+    if get(g:, 'coc_service_initialized') == 1
+        if !has_key(g:coc_extensions_dict, &ft)
+            if has_key(s:vinux_coc_extensions, &ft)
+                let g:coc_extensions_dict[&ft] = s:vinux_coc_extensions[&ft]
+            else
+                return
+            endif
+        endif
+        let l:installed_list = CocAction('extensionStats')
+        for l:ndl in l:installed_list
+            if l:ndl.id == g:coc_extensions_dict[&ft]
+                return
+            endif
+        endfor
+        "Not install yet try to install
+        execute ':CocInstall '.g:coc_extensions_dict[&ft]
+    endif
+endfunction
 
 function! s:coc_setup() abort
     " code
@@ -64,23 +91,15 @@ function! s:coc_setup() abort
         vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
     endif
 
-    let g:coc_global_extensions = ['coc-marketplace', 'coc-json', 'coc-ultisnips']
-    let g:coc_extensions_dict = {'json': 'coc-json'}
-    if &ft == 'vim'
-        call add(g:coc_global_extensions, 'coc-vimlsp')
-        let g:coc_extensions_dict.vim = 'coc-vimlsp'
-    elseif &ft == 'lua'
-        call add(g:coc_global_extensions, 'coc-sumneko-lua')
-        let g:coc_extensions_dict.lua = 'coc-sumneko-lua'
-    elseif &ft == 'c' || &ft == 'cpp'
-        call add(g:coc_global_extensions, 'coc-clangd')
-        let g:coc_extensions_dict[&ft]='coc-clangd'
-    elseif &ft == 'python'
-        call add(g:coc_global_extensions, 'coc-pyright')
-        let g:coc_extensions_dict.python = 'coc-pyright'
-    elseif &ft =~ ".*sh$"
-        call add(g:coc_global_extensions, 'coc-sh')
-        let g:coc_extensions_dict[&ft]='coc-sh'
+    let g:coc_global_extensions = ['coc-marketplace', 'coc-ultisnips']
+    if has_key(s:vinux_coc_extensions, &ft)
+        call add(g:coc_global_extensions, s:vinux_coc_extensions[&ft])
+        let g:coc_extensions_dict[&ft]=s:vinux_coc_extensions[&ft]
+    endif
+    if g:file_explorer_plugin.cur_val == 'coc-explorer'
+        call add(g:coc_global_extensions, 'coc-explorer')
+        noremap <F12> <Cmd>CocCommand explorer<CR>
+        nnoremap  <silent><leader>te <Cmd>CocCommand explorer<CR>
     endif
 
     " Add `:Format` command to format current buffer

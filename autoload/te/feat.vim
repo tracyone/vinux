@@ -45,7 +45,7 @@ function! te#feat#gen_feature_vim(reset) abort
     let l:temp2=te#feat#get_vim_version()
     let l:vinux_version=te#compatiable#systemlist('git describe')
     if type(l:vinux_version) == g:t_number || v:shell_error != 0
-        let g:vinux_version='vinux V1.7.9'.' @'.l:temp2[0].'.'.l:temp2[1]
+        let g:vinux_version='vinux V1.8.0'.' @'.l:temp2[0].'.'.l:temp2[1]
     else
         let l:temp = matchstr(l:vinux_version[-1],'.*\(-\d\+-\w\+\)\@=')
         if  l:temp !=# ''
@@ -254,7 +254,7 @@ function! te#feat#init_all() abort
     call te#feat#init_var('g:enable_sexy_mode', ['off', 'on'])
     call te#feat#init_var('g:tagging_program', ['cscope', 'gtags'])
     call te#feat#init_var('g:message_delay_time', ['5000', '3000', '1000', '500'])
-    call te#feat#init_var('g:file_explorer_plugin', ['nerdtree', 'defx.nvim'])
+    call te#feat#init_var('g:file_explorer_plugin', ['nerdtree', 'defx.nvim', 'coc-explorer'])
     if filereadable($VIMFILES.'/feature.vim')
         try
             execute ':source '.$VIMFILES.'/feature.vim'
