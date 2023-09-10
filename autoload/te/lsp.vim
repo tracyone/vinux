@@ -260,7 +260,7 @@ function! te#lsp#install_server() abort
 endfunction
 
 function! te#lsp#diagnostics_info(type) abort
-    let l:sign = (a:type == 'warning') ? '⚠ ': '✗'
+    let l:sign = (a:type == 'warning') ? '⚠ ': '✗ '
     if exists('*lsp#get_buffer_diagnostics_counts')
         return l:sign.lsp#get_buffer_diagnostics_counts()[a:type]
     elseif te#env#IsNvim() >= 0.5
@@ -268,6 +268,16 @@ function! te#lsp#diagnostics_info(type) abort
             return l:sign.len(v:lua.vim.diagnostic.get(0, { 'severity':2 }))
         else
             return l:sign.len(v:lua.vim.diagnostic.get(0, { 'severity':1 }))
+        endif
+    else
+        if exists('b:coc_diagnostic_info')
+            if a:type == 'warning'
+                return l:sign.b:coc_diagnostic_info.warning
+            else
+                return l:sign.b:coc_diagnostic_info.error
+            endif
+        else
+            return l:sign.'0'
         endif
     endif
 endfunction

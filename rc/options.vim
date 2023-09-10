@@ -179,6 +179,10 @@ if get(g:,'feat_enable_airline') != 1
             let l:mystatus_line.='%{&ft}'.s:seperator."%{(&fenc!=''?&fenc:&enc)}[%{&ff}]".s:seperator.'%p%%[%l,%v]'
             let l:mystatus_line.=s:seperator."%{strftime(\"%m/%d\-\%H:%M\")} "
         endif
+        if get(g:, 'feat_enable_lsp') == 1
+            let l:mystatus_line.=s:seperator.te#lsp#diagnostics_info('warning')
+            let l:mystatus_line.=s:seperator.te#lsp#diagnostics_info('error')
+        endif
         if exists('*neomakemp#run_status') && neomakemp#run_status() !=# ''
             let l:mystatus_line.=s:seperator.neomakemp#run_status().' '
         endif

@@ -66,10 +66,8 @@ function! s:airline_setting()
         endif
     endif
     if get(g:, 'feat_enable_lsp')
-        if g:complete_plugin_type.cur_val != 'coc.nvim'
-            let g:airline_section_warning = '%{te#lsp#diagnostics_info("warning")}'
-            let g:airline_section_error = '%{te#lsp#diagnostics_info("error")}'
-        endif
+        let g:airline_section_warning = '%{te#lsp#diagnostics_info("warning")}'
+        let g:airline_section_error = '%{te#lsp#diagnostics_info("error")}'
         let g:airline_section_c.="%{te#lsp#get_lsp_server_name(g:airline_section_c_sep)}"
     endif
 

@@ -111,9 +111,6 @@ function! s:coc_setup() abort
     "nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
     "let g:coc_status_error_sign = 'E'
     "let g:coc_status_warning_sign = 'W'
-    if get(g:, 'feat_enable_airline') == 1
-        let g:airline_section_warning = ' %{coc#status()}'
-    endif
 endfunction
 
 let g:complete_plugin.name = ['coc.nvim']
