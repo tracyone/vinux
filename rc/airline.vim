@@ -66,16 +66,9 @@ function! s:airline_setting()
         endif
     endif
     if get(g:, 'feat_enable_lsp')
-        if te#env#IsNvim() >= 0.5
-            call add(g:airline_extensions, 'nvimlsp')
-            let g:airline#extensions#nvimlsp#enabled = 1
-            let airline#extensions#nvimlsp#error_symbol = 'E:'
-            let airline#extensions#nvimlsp#warning_symbol = 'W:'
-        else
-            if g:complete_plugin_type.cur_val != 'coc.nvim'
-                let g:airline_section_warning = '⚠ %{lsp#get_buffer_diagnostics_counts()["warning"]}'
-                let g:airline_section_error = '✗ %{lsp#get_buffer_diagnostics_counts()["error"]}%{lsp#get_buffer_first_error_line()? "-".lsp#get_buffer_first_error_line():""}'
-            endif
+        if g:complete_plugin_type.cur_val != 'coc.nvim'
+            let g:airline_section_warning = '%{te#lsp#diagnostics_info("warning")}'
+            let g:airline_section_error = '%{te#lsp#diagnostics_info("error")}'
         endif
         let g:airline_section_c.="%{te#lsp#get_lsp_server_name(g:airline_section_c_sep)}"
     endif

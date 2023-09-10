@@ -258,3 +258,16 @@ function! te#lsp#install_server() abort
         :CocList marketplace
     endif
 endfunction
+
+function! te#lsp#diagnostics_info(type) abort
+    let l:sign = (a:type == 'warning') ? '⚠ ': '✗'
+    if exists('*lsp#get_buffer_diagnostics_counts')
+        return l:sign.lsp#get_buffer_diagnostics_counts()[a:type]
+    elseif te#env#IsNvim() >= 0.5
+        if a:type == 'warning'
+            return l:sign.len(v:lua.vim.diagnostic.get(0, { 'severity':2 }))
+        else
+            return l:sign.len(v:lua.vim.diagnostic.get(0, { 'severity':1 }))
+        endif
+    endif
+endfunction
