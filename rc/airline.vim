@@ -72,13 +72,10 @@ function! s:airline_setting()
             let airline#extensions#nvimlsp#error_symbol = 'E:'
             let airline#extensions#nvimlsp#warning_symbol = 'W:'
         else
-            call add(g:airline_extensions, 'lsp')
-            let g:airline#extensions#lsp#enabled = 1
-            let airline#extensions#lsp#error_symbol = 'E:'
-            let airline#extensions#lsp#warning_symbol = 'W:'
-            let g:airline#extensions#lsp#progress_skip_time = 0.3
-            let g:airline_section_warning = '⚠ %{lsp#get_buffer_diagnostics_counts()["warning"]}'
-            let g:airline_section_error = '✗ %{lsp#get_buffer_diagnostics_counts()["error"]}%{lsp#get_buffer_first_error_line()? "-".lsp#get_buffer_first_error_line():""}'
+            if g:complete_plugin_type.cur_val != 'coc.nvim'
+                let g:airline_section_warning = '⚠ %{lsp#get_buffer_diagnostics_counts()["warning"]}'
+                let g:airline_section_error = '✗ %{lsp#get_buffer_diagnostics_counts()["error"]}%{lsp#get_buffer_first_error_line()? "-".lsp#get_buffer_first_error_line():""}'
+            endif
         endif
         let g:airline_section_c.="%{te#lsp#get_lsp_server_name(g:airline_section_c_sep)}"
     endif
