@@ -111,6 +111,8 @@ function! s:coc_setup() abort
     " Add `:OR` command for organize imports of the current buffer
     command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
+    nnoremap <Leader>aa :CocCommand clangd.switchSourceHeader<cr>
+
     " Mappings for CoCList
     " Show all diagnostics
     "nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
