@@ -148,6 +148,7 @@ function! te#complete#csref(timer) abort
 endfunction
 
 function te#complete#lookup_reference(open_type) abort
+    let l:ret = 0
     let s:cur_line = line(".")
     let s:cur_file_name = expand('%:t')
     let s:cur_word=expand('<cword>')
@@ -155,11 +156,7 @@ function te#complete#lookup_reference(open_type) abort
     if g:feat_enable_lsp == 1
         let l:ret=te#lsp#references()
     elseif g:feat_enable_complete == 1 && g:complete_plugin_type.cur_val == "YouCompleteMe"
-        try
-            :YcmCompleter GoToReferences
-        catch
-            let l:ret = -1
-        endtry
+        :silent! YcmCompleter GoToReferences
     endif
     if te#env#SupportTimer() && l:ret == 0
         call timer_start(200, function('te#complete#csref'), {'repeat': 1})
