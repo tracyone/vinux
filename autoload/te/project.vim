@@ -33,12 +33,29 @@ endfunction
 "3. coding style format
 "4. cscope info
 function! te#project#create_project() abort
-    let l:name = input("Please input project name:", fnamemodify(getcwd(), ':t'))
+    let l:project_exist = 0
+    let l:default_name=fnamemodify(getcwd(), ':t')
+    if exists('g:vinux_project_name') && !empty(g:vinux_project_name)
+        let l:default_name=g:vinux_project_name
+        let l:project_exist = 1
+        let l:name = input("Rename or save current project:", l:default_name)
+    else
+        let l:name = input("Please input the new project name:", l:default_name)
+    endif
     if !strlen(l:name)
         return
     endif
-
     let l:project_name=$VIMFILES.'/.project/'.l:name.'/'
+    if l:project_exist == 1 && l:name != g:vinux_project_name
+        "Delete session then renmae .project/
+        if exists(":SDelete") == 2
+            execute ':SDelete! '.g:vinux_project_name
+        elseif exists(":DeleteSession") == 2
+            execute ':DeleteSession! '.g:vinux_project_name
+        endif
+        call rename($VIMFILES.'/.project/'.g:vinux_project_name.'/', l:project_name)
+    endif
+
     if isdirectory(l:project_name)
         call te#utils#EchoWarning(l:project_name.' is already exists!')
     else
