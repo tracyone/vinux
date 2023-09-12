@@ -114,7 +114,7 @@ function! s:YcmGotoDef() abort
         if l:ret == 0
             execute ':silent! A'
             " search failed then go back
-            if search(l:cur_word) == 0
+            if search(s:cur_word) == 0
                 execute ':silent! A'
                 return -2
             endif
