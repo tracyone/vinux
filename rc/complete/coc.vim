@@ -1,5 +1,10 @@
-Plug 'neoclide/coc.nvim', {'on': [], 'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'on': ['CocCommand'], 'branch': 'release'}
 
+if g:file_explorer_plugin.cur_val == 'coc-explorer'
+    noremap <F12> <Cmd>CocCommand explorer<CR>
+    nnoremap  <silent><leader>te <Cmd>CocCommand explorer<CR>
+endif
+nnoremap <Leader>aa :CocCommand clangd.switchSourceHeader<cr>
 
 let g:coc_config_home = $VIMFILES.'/rc/complete/'
 let g:coc_extensions_dict = {}
@@ -98,8 +103,6 @@ function! s:coc_setup() abort
     endif
     if g:file_explorer_plugin.cur_val == 'coc-explorer'
         call add(g:coc_global_extensions, 'coc-explorer')
-        noremap <F12> <Cmd>CocCommand explorer<CR>
-        nnoremap  <silent><leader>te <Cmd>CocCommand explorer<CR>
     endif
 
     " Add `:Format` command to format current buffer
@@ -111,7 +114,6 @@ function! s:coc_setup() abort
     " Add `:OR` command for organize imports of the current buffer
     command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
-    nnoremap <Leader>aa :CocCommand clangd.switchSourceHeader<cr>
 
     " Mappings for CoCList
     " Show all diagnostics

@@ -56,6 +56,7 @@ if v:version >= 704 && te#env#IsDisplay()
         let g:which_key_map = {}
         let g:which_key_map.a = { 
                     \ 'name' : '+application',
+                    \ 'a': 'Switch to c & cpp header',
                     \ 'p': 'Preview window',
                     \ 'c': 'Calculator',
                     \ 'd': 'Calendar',
