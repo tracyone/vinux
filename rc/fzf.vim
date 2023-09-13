@@ -1,3 +1,10 @@
+scriptencoding utf-8
+if te#env#IsVim() < 800
+    call te#utils#EchoWarning("fzf require vim8.0+")
+    let g:fuzzysearcher_plugin_name.cur_val='ctrlp'
+    finish
+endif
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim', {'on': []}
 Plug 'pbogut/fzf-mru.vim', {'on': []}

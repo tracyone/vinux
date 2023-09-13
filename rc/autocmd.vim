@@ -14,7 +14,9 @@ augroup misc_group
     if g:complete_plugin_type.cur_val == 'asyncomplete.vim' && g:feat_enable_complete == 1
         autocmd InsertCharPre * call AsyncOpenCompleteMenu()
     endif
-    autocmd DirChanged * call te#autocmds#dir_changed()
+    if te#env#IsVim() >= 800
+        autocmd DirChanged * call te#autocmds#dir_changed()
+    endif
 augroup END
 
 augroup lazy_load_group
