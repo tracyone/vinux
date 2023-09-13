@@ -1,5 +1,5 @@
 scriptencoding utf-8
-if te#env#IsVim() < 800
+if te#env#IsVim() < 800 && te#env#IsNvim() == 0
     call te#utils#EchoWarning("fzf require vim8.0+")
     let g:fuzzysearcher_plugin_name.cur_val='ctrlp'
     finish
