@@ -23,7 +23,11 @@ Plug 'justinmk/vim-syntax-extra',{'for': ['c', 'cpp', 'lex', 'yacc']}
 ":IHT new tab and switches
 ":IHN cycles through matches
 " Open c family header in new tab
-nnoremap <Leader>aa :AT<cr>
+if g:complete_plugin_type.cur_val == 'coc.nvim'
+    nnoremap <Leader>aa :CocCommand clangd.switchSourceHeader<cr>
+else
+    nnoremap <Leader>aa :AT<cr>
+endif
 "}}}
 " CCtree --------------------------{{{
 let g:CCTreeKeyTraceForwardTree = '<C-\>>' "the symbol in current cursor's forward tree 

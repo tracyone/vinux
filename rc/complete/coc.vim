@@ -4,7 +4,6 @@ if g:file_explorer_plugin.cur_val == 'coc-explorer'
     noremap <F12> <Cmd>CocCommand explorer<CR>
     nnoremap  <silent><leader>te <Cmd>CocCommand explorer<CR>
 endif
-nnoremap <Leader>aa :CocCommand clangd.switchSourceHeader<cr>
 
 let g:coc_config_home = $VIMFILES.'/rc/complete/'
 let g:coc_extensions_dict = {}
