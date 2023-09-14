@@ -17,7 +17,12 @@ function! te#autocmds#dir_changed() abort
 endfunction
 
 function! te#autocmds#file_type() abort
-    let $CurBufferDir=expand('%:p:h')
+    if v:version < 800
+       if exists('s:current_dir') && s:current_dir != getcwd()
+           call te#autocmds#dir_changed()
+       endif 
+    endif
+    let s:current_dir=getcwd()
     if g:complete_plugin_type.cur_val == 'coc.nvim'
         call CocCheckExtensions()
     endif

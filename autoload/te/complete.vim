@@ -13,7 +13,7 @@ function! te#complete#cstag(timer) abort
             call te#utils#EchoWarning(l:cmd."Can not find any definition...")
             let l:ret = -1
         endtry
-        let l:len=getqflist({'size':0}).size
+        let l:len=len(getqflist())
         if l:ret == 0 && l:len > 1
             :botright copen
         endif
@@ -57,7 +57,7 @@ function! te#complete#goto_def(open_type) abort
                 call te#utils#EchoWarning("Can not find any definition...")
                 let l:ret = -1
             endtry
-            let l:len=getqflist({'size':0}).size
+            let l:len=len(getqflist())
             if l:ret == 0 && l:len > 1
                 :botright copen
             endif
@@ -139,7 +139,7 @@ function! te#complete#csref(timer) abort
             call te#utils#EchoWarning("Can not find any refernces")
             let l:ret = -1
         endtry
-        let l:len=getqflist({'size':0}).size
+        let l:len=len(getqflist())
         if l:ret == 0 && l:len > 1
             :botright copen
         endif
@@ -168,7 +168,7 @@ function te#complete#lookup_reference(open_type) abort
             call te#utils#EchoWarning("Can not find any refernces")
             let l:ret = -1
         endtry
-        let l:len=getqflist({'size':0}).size
+        let l:len=len(getqflist())
         if l:ret == 0 && l:len > 1
             :botright copen
         endif

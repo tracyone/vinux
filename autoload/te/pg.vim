@@ -125,6 +125,9 @@ function! te#pg#gen_cs_tags(timerid) abort
     if filereadable('.csdb')
         for l:line in readfile('.csdb', '')
             call te#pg#add_tags(l:line)
+            if te#env#SupportCscope()
+                call te#pg#add_cscope_out(l:line)
+            endif
             if te#pg#top_of_kernel_tree(l:line)
                 execute 'cd '.l:line
                 :call <SID>gen_kernel_cscope(l:line)
