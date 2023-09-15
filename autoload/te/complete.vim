@@ -36,33 +36,31 @@ function! te#complete#goto_def(open_type) abort
         if g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
             let l:ret=s:YcmGotoDef()
         endif
-    endif
-    if get(g:, 'feat_enable_lsp') == 1
+    elseif get(g:, 'feat_enable_lsp') == 1
         let l:ret=te#lsp#gotodefinion()
+    else
+        let l:ret = -1 
     endif
+
     if te#env#SupportTimer() && l:ret == 0
         call timer_start(200, function('te#complete#cstag'), {'repeat': 1})
-    else
-        if l:ret < 0
-            let l:ret = 0
-            if te#env#SupportCscope()
-                "cscope and ctags combine
-                let l:cmd = ':cstag '.s:cur_word
-            else
-                let l:cmd = ':tselect '.s:cur_word
-            endif
-            try
-                execute  l:cmd
-            catch /^Vim\%((\a\+)\)\=:E/	
-                call te#utils#EchoWarning("Can not find any definition...")
-                let l:ret = -1
-            endtry
-            let l:len=len(getqflist())
-            if l:ret == 0 && l:len > 1
-                :botright copen
-            endif
+    elseif l:ret < 0
+        let l:ret = 0
+        if te#env#SupportCscope()
+            "cscope and ctags combine
+            let l:cmd = ':cstag '.s:cur_word
         else
-            return 0
+            let l:cmd = ':tselect '.s:cur_word
+        endif
+        try
+            execute  l:cmd
+        catch /^Vim\%((\a\+)\)\=:E/	
+            call te#utils#EchoWarning("Can not find any definition...")
+            let l:ret = -1
+        endtry
+        let l:len=len(getqflist())
+        if l:ret == 0 && l:len > 1
+            :botright copen
         endif
     endif
     return l:ret
@@ -157,6 +155,8 @@ function te#complete#lookup_reference(open_type) abort
         let l:ret=te#lsp#references()
     elseif g:feat_enable_complete == 1 && g:complete_plugin_type.cur_val == "YouCompleteMe"
         :silent! YcmCompleter GoToReferences
+    else
+        let l:ret = -1 
     endif
     if te#env#SupportTimer() && l:ret == 0
         call timer_start(200, function('te#complete#csref'), {'repeat': 1})
