@@ -15,7 +15,11 @@ if  g:file_explorer_plugin.cur_val == 'defx.nvim'
         nnoremap  <silent><Leader>fj :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
         noremap  <silent><F12> :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
         " Open nerd tree
-        nnoremap  <silent><leader>te :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
+        if te#env#SupportFloatingWindows() == 2
+            nnoremap  <silent><leader>te :Defx -toggle -split=vertical -winwidth=50 -direction=topleft -floating-preview<cr>
+        else
+            nnoremap  <silent><leader>te :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
+        endif
         " Open nerd tree
         nnoremap  <silent><leader>nf :Defx -toggle -split=vertical -winwidth=50 -direction=topleft `expand('%:p:h')` -search=`expand('%:p')`<CR> 
         call add(s:sexy_command, ':Defx -toggle -split=vertical -winwidth=50 -direction=topleft')

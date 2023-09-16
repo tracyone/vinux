@@ -16,16 +16,20 @@ function! s:defx_my_settings() abort
                 \ defx#do_action('open', 'tabnew')
     nnoremap <silent><buffer><expr> <c-v>
                 \ defx#do_action('open', 'vsplit')
+    nnoremap <silent><buffer><expr> t 
+                \ defx#do_action('open', 'tabedit')
     nnoremap <silent><buffer><expr> <c-j>
                 \ defx#do_action('open', 'pedit')
+    nnoremap <silent><buffer><expr> P
+                \ defx#do_action('preview')
     nnoremap <silent><buffer><expr> K
                 \ defx#do_action('new_directory')
     nnoremap <silent><buffer><expr> N
                 \ defx#do_action('new_file')
-    nnoremap <silent><buffer><expr> d
+    nnoremap <silent><buffer><expr> dd
                 \ defx#do_action('remove')
     nnoremap <silent><buffer><expr> r
-                \ defx#do_action('rename')
+                \ defx#do_action('rename', 'new')
     nnoremap <silent><buffer><expr> x
                 \ defx#do_action('execute_system')
     nnoremap <silent><buffer><expr> .
