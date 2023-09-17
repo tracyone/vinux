@@ -22,10 +22,28 @@ if  g:file_explorer_plugin.cur_val == 'defx.nvim'
             let s:defx_option.=' -floating-preview '
         endif
         execute 'nnoremap  <silent><leader>te '.s:defx_option.'<cr>'
-        execute 'nnoremap  <silent><leader><F12> '.s:defx_option.'<cr>'
+        execute 'nnoremap  <silent><F12> '.s:defx_option.'<cr>'
         " Open nerd tree
         nnoremap  <silent><leader>nf :Defx -toggle -split=vertical -winwidth=50 -direction=topleft `expand('%:p:h')` -search=`expand('%:p')`<CR> 
         call add(s:sexy_command, s:defx_option)
+    endif
+endif
+
+if g:file_explorer_plugin.cur_val == 'nvim-tree.lua'
+    if te#env#IsNvim() == 0
+        call te#utils#EchoWarning("nvim-tree.lua requires Neovim 0.9.0+")
+        let g:file_explorer_plugin.cur_val = 'nerdtree'
+    else
+        Plug 'nvim-tree/nvim-tree.lua'
+function! s:nvim_tree_setup()
+lua << EOF
+require("nvim_tree")
+EOF
+endfunction
+nnoremap <silent><leader>te :NvimTreeToggle<cr>
+nnoremap <silent><F12> :NvimTreeToggle<cr>
+nnoremap <silent><leader>nf :NvimTreeFindFile<cr>
+call te#feat#register_vim_enter_setting(function('<SID>nvim_tree_setup'))
     endif
 endif
 
