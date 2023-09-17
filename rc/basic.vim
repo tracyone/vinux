@@ -6,23 +6,26 @@ if  g:file_explorer_plugin.cur_val == 'defx.nvim'
         call te#utils#EchoWarning("defx requires Neovim 0.4.0+ or Vim8.2+ with Python3.6.1+")
         let g:file_explorer_plugin.cur_val = 'nerdtree'
     else
-        Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+        Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins'}
+        let s:defx_option=':Defx -toggle -split=vertical -winwidth=50 -direction=topleft '
         if te#env#IsNvim() == 0 && g:complete_plugin_type.cur_val != 'ncm2'
             Plug 'roxma/nvim-yarp'
             Plug 'roxma/vim-hug-neovim-rpc'
         endif
-        " Open Vim File Explorer
-        nnoremap  <silent><Leader>fj :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
-        noremap  <silent><F12> :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
-        " Open nerd tree
-        if te#env#SupportFloatingWindows() == 2
-            nnoremap  <silent><leader>te :Defx -toggle -split=vertical -winwidth=50 -direction=topleft -floating-preview<cr>
-        else
-            nnoremap  <silent><leader>te :Defx -toggle -split=vertical -winwidth=50 -direction=topleft<cr>
+        if g:enable_powerline_fonts.cur_val == 'on'
+            Plug 'kristijanhusak/defx-icons'
+            Plug 'kristijanhusak/defx-git'
+            let s:defx_option.=' -columns=git:icons:indent:filename:type '
         endif
         " Open nerd tree
+        if te#env#SupportFloatingWindows() == 2
+            let s:defx_option.=' -floating-preview '
+        endif
+        execute 'nnoremap  <silent><leader>te '.s:defx_option.'<cr>'
+        execute 'nnoremap  <silent><leader><F12> '.s:defx_option.'<cr>'
+        " Open nerd tree
         nnoremap  <silent><leader>nf :Defx -toggle -split=vertical -winwidth=50 -direction=topleft `expand('%:p:h')` -search=`expand('%:p')`<CR> 
-        call add(s:sexy_command, ':Defx -toggle -split=vertical -winwidth=50 -direction=topleft')
+        call add(s:sexy_command, s:defx_option)
     endif
 endif
 

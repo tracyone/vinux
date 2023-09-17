@@ -180,5 +180,8 @@ nnoremap <silent><buffer> m :call <SID>move_file()<cr>
 nnoremap <silent><buffer> N :call <SID>new_file()<cr>
 nnoremap <silent><buffer> p :call <SID>paste_file()<cr>
 nnoremap <silent><buffer> r :call <SID>rename_file()<cr>
+if g:enable_powerline_fonts.cur_val == 'on'
+    call glyph_palette#apply()
+endif
 
 

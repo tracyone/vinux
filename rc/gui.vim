@@ -27,6 +27,16 @@ Plug 'lifepillar/vim-gruvbox8'
 Plug 'vim-scripts/desert256.vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'srcery-colors/srcery-vim'
+
+"nerd font support
+if g:enable_powerline_fonts.cur_val ==# 'on'
+    if te#env#IsNvim() > 0
+        Plug 'nvim-tree/nvim-web-devicons'
+    else
+        Plug 'ryanoasis/vim-devicons'
+        Plug 'lambdalisue/glyph-palette.vim'
+    endif
+endif
 " }}}
 "Gui releate{{{
 if te#env#IsGui()
@@ -45,16 +55,8 @@ if te#env#IsGui()
             set guifontwide=YaHei_Mono:h12.5:cGB2312
         endif
         if g:enable_powerline_fonts.cur_val ==# 'on'
-            if te#env#IsMacVim()
-                set guifont=YaHei\ Consolas\ Hybrid:h14
-                set guifontwide=YaHei\ Consolas\ Hybrid:h14
-            elseif te#env#IsUnix()
-                set guifont=YaHei\ Consolas\ Hybrid\ 12
-                set guifontwide=YaHei\ Consolas\ Hybrid\ 12
-            else
-                set guifont=Monaco:h12:cANSI
-                set guifontwide=YaHei_Consolas_Hybrid:h12:cGB2312
-            endif
+            set guifont=YaHeiConsolasHybridNF:h14
+            set guifontwide=YaHeiConsolasHybridNF:h14
         endif
     catch /^Vim\%((\a\+)\)\=:E/
         set guifontwide&

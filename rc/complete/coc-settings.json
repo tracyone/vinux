@@ -17,6 +17,7 @@
     "cursors.previousKey": "<C-p>",
     "cursors.cancelKey": "<esc>",
 // coc-settings.json
+    "explorer.icon.enableNerdfont":true,
     "explorer.keyMappings.global": {
         "i": false, // cancel default mapkey
         "<c-o>": "noop",
