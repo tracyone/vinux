@@ -17,7 +17,7 @@ function! te#lsp#is_server_running() abort
         elseif g:complete_plugin_type.cur_val == 'coc.nvim'
             if exists("g:coc_extensions_dict")
                 if has_key(g:coc_extensions_dict, &ft)
-                    return 1
+                    return coc#client#is_running('coc')
                 endif
             return 0
         endif

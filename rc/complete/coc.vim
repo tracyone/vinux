@@ -26,6 +26,10 @@ function! CocCheckExtensions() abort
         let l:installed_list = CocAction('extensionStats')
         for l:ndl in l:installed_list
             if l:ndl.id == g:coc_extensions_dict[&ft]
+                "alread installed
+                if coc#client#is_running('coc') == 0
+                    :CocStart
+                endif
                 return
             endif
         endfor
@@ -133,6 +137,9 @@ function! s:coc_setup() abort
     "nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
     "let g:coc_status_error_sign = 'E'
     "let g:coc_status_warning_sign = 'W'
+    if coc#client#is_running('coc') == 0
+        :CocStart
+    endif
 endfunction
 
 let g:complete_plugin.name = ['coc.nvim']
