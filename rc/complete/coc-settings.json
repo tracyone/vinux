@@ -10,7 +10,12 @@
 
     "diagnostic.virtualText": true,
     "diagnostic.virtualTextCurrentLineOnly": false,
-    "marketplace.npmsio":true,
+    "diagnostic.errorSign":"",
+    "diagnostic.warningSign":"⚠",
+    "diagnostic.infoSign":"",
+    "diagnostic.hintSign":"",
+
+    "marketplace.npmsio": true,
 
     //multiple curssor
     "cursors.nextKey": "<C-n>",

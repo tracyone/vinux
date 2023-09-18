@@ -26,6 +26,10 @@ else
         if has('patch-8.2.4780')
             let g:lsp_use_native_client = 1
         endif
+        if g:enable_powerline_fonts.cur_val == 'on'
+            let g:lsp_diagnostics_signs_error = {'text': '✗'}
+            let g:lsp_diagnostics_signs_warning = {'text': '⚠'}
+        endif
         autocmd User lsp_float_opened call popup_setoptions(lsp#ui#vim#output#getpreviewwinid(), 
                     \ {'borderchars':['─', '│', '─', '│', '┌', '┐', '┘', '└'],
                     \ 'borderhighlight':['vinux_border'],
