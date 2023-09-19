@@ -117,11 +117,9 @@ function! s:coc_setup() abort
     " Add `:OR` command for organize imports of the current buffer
     command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
-    if g:enable_powerline_fonts.cur_val == 'on'
-        let g:coc_notify_error_icon = ''
-        let g:coc_notify_warning_icon = '⚠'
-        let g:coc_notify_info_icon = ''
-    endif
+    let g:coc_notify_error_icon = g:vinux_diagnostics_signs_error
+    let g:coc_notify_warning_icon = g:vinux_diagnostics_signs_warning
+    let g:coc_notify_info_icon = g:vinux_diagnostics_signs_info
 
     " Mappings for CoCList
     " Show all diagnostics

@@ -111,9 +111,17 @@ set mouse=a "list of menu_flags for using the mouse,support all
 if g:enable_powerline_fonts.cur_val ==# 'on'
     let s:seperator='  '
     let s:right_seperator = '  '
+    let g:vinux_diagnostics_signs_error = ""
+    let g:vinux_diagnostics_signs_warning = "⚠"
+    let g:vinux_diagnostics_signs_info = ""
+    let g:vinux_diagnostics_signs_hint = ""
 else
     let s:seperator=' | '
     let s:right_seperator = ' | '
+    let g:vinux_diagnostics_signs_error = ">>"
+    let g:vinux_diagnostics_signs_warning = "!!"
+    let g:vinux_diagnostics_signs_info = "i"
+    let g:vinux_diagnostics_signs_hint = "!"
 endif
 
 if get(g:,'feat_enable_basic') == 1
@@ -125,6 +133,7 @@ if get(g:,'feat_enable_basic') == 1
 else
     let s:function_name=''
 endif
+
 
 if get(g:,'feat_enable_git') == 1
     if g:git_plugin_name.cur_val ==# 'gina.vim'

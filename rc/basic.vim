@@ -153,17 +153,15 @@ if te#env#IsVim8() || te#env#IsNvim() != 0
         "let g:neomake_c_enabled_makers = []
         nnoremap  <silent><Leader>sc :Neomake<cr>
         "let g:neomake_open_list=2
-        if !te#env#IsGui() && g:enable_powerline_fonts.cur_val == 'off'
-            let g:neomake_info_sign = {'text': 'i', 'texthl': 'NeomakeInfoSign'}
-            let g:neomake_warning_sign = {
-                        \ 'text': '!',
-                        \ 'texthl': 'WarningMsg',
-                        \ }
-            let g:neomake_error_sign = {
-                        \ 'text': '>>',
-                        \ 'texthl': 'ErrorMsg',
-                        \ }
-        endif
+        let g:neomake_info_sign = {'text': g:vinux_diagnostics_signs_info, 'texthl': 'NeomakeInfoSign'}
+        let g:neomake_warning_sign = {
+                    \ 'text': g:vinux_diagnostics_signs_warning,
+                    \ 'texthl': 'WarningMsg',
+                    \ }
+        let g:neomake_error_sign = {
+                    \ 'text': g:vinux_diagnostics_signs_error,
+                    \ 'texthl': 'ErrorMsg',
+                    \ }
         function! s:get_neomake_joblist()
             redir => l:msg
             :silent! call neomake#ListJobs()

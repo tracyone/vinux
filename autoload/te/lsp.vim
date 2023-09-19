@@ -260,7 +260,7 @@ function! te#lsp#install_server() abort
 endfunction
 
 function! te#lsp#diagnostics_info(type) abort
-    let l:sign = (a:type == 'warning') ? '⚠ ': '✗ '
+    let l:sign = (a:type == 'warning') ? g:vinux_diagnostics_signs_warning.' ': g:vinux_diagnostics_signs_error.' '
     if exists('*lsp#get_buffer_diagnostics_counts')
         return l:sign.lsp#get_buffer_diagnostics_counts()[a:type]
     elseif te#env#IsNvim() >= 0.5

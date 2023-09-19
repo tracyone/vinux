@@ -62,10 +62,10 @@ require("trouble").setup {
     indent_lines = false, -- add an indent guide below the fold icons
     signs = {
         -- icons / text used for a diagnostic
-        error = "error",
-        warning = "warn",
-        hint = "hint",
-        information = "info"
+        error = vim.g.vinux_diagnostics_signs_error,
+        warning = vim.g.vinux_diagnostics_signs_warning,
+        hint = vim.g.vinux_diagnostics_signs_hint,
+        information = vim.g.vinux_diagnostics_signs_info
     },
     use_diagnostic_signs = false
   }
