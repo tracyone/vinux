@@ -81,7 +81,6 @@ set shiftwidth=4 "number of spaces used for each step of (auto)indent
 set softtabstop=4  "if non-zero, number of spaces to insert for a <Tab>
 set expandtab
 set smarttab "a <Tab> in an indent inserts 'shiftwidth' spaces
-set textwidth=80
 set completeopt=preview,menuone
 if has('patch-8.1.1902')
     set completeopt+=popup
@@ -89,6 +88,7 @@ if has('patch-8.1.1902')
 endif
 
 set textwidth=160
+set colorcolumn=161
 set expandtab
 set smarttab
 let g:vinux_tabwidth=4
