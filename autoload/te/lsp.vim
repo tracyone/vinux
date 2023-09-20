@@ -72,7 +72,7 @@ function! te#lsp#format_document() abort
         :LspDocumentFormatSync
         return 0
     elseif te#env#IsNvim() >= 0.5
-        :lua vim.lsp.buf.range_formatting()
+        :lua vim.lsp.buf.format()
     elseif g:complete_plugin_type.cur_val == 'coc.nvim'
         execute 'normal '."\<Plug>(coc-format-selected)"
     else
@@ -87,7 +87,15 @@ function! te#lsp#format_document_range() abort
         :LspDocumentRangeFormatSync
         return 0
     elseif te#env#IsNvim() >= 0.5
-        :lua vim.lsp.buf.format()
+lua << EOF
+        vim.lsp.buf.format({
+            async = true,
+            range = {
+                ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
+                ["end"] = vim.api.nvim_buf_get_mark(0, ">"),
+            }
+        })
+EOF
     elseif g:complete_plugin_type.cur_val == 'coc.nvim'
         call CocActionAsync('formatSelected', visualmode())
     else

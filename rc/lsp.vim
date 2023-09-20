@@ -44,7 +44,7 @@ nnoremap  <silent> <silent> K :call te#lsp#hover()<cr>
 nnoremap  <silent><Leader>lr  :call te#lsp#rename()<cr>
 nnoremap  <silent><Leader>lc  :call te#lsp#code_action()<cr>
 nnoremap  <silent><leader>ql :call te#lsp#show_diagnostics(0)<cr>
-vnoremap  <silent><Leader>lf  :call te#lsp#format_document_range()<cr>
+vnoremap  <silent><Leader>lf  :<C-u>call te#lsp#format_document_range()<cr>
 nnoremap  <silent><Leader>lf  :call te#lsp#format_document()<cr>
 nnoremap  <silent><Leader>li  :call te#lsp#find_implementation()<cr>
 nnoremap  <silent><Leader>ly  :call te#lsp#goto_type_def()<cr>
