@@ -86,6 +86,8 @@ function! te#lsp#format_document_range() abort
     if exists(':LspDocumentRangeFormatSync') == 2
         :LspDocumentRangeFormatSync
         return 0
+    elseif te#env#IsNvim() >= 0.5
+        :lua vim.lsp.buf.format()
     elseif g:complete_plugin_type.cur_val == 'coc.nvim'
         call CocActionAsync('formatSelected', visualmode())
     else

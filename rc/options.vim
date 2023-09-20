@@ -107,19 +107,20 @@ set whichwrap=b,h,l,<,>,[,]  "list of menu_flags specifying which commands wrap 
 set mouse=a "list of menu_flags for using the mouse,support all
 
 "set autochdir  "change to directory of file in buffer
-"
+let s:seperator=' | '
+let s:right_seperator = ' | '
 if g:enable_powerline_fonts.cur_val ==# 'on'
-    let s:seperator='  '
-    let s:right_seperator = '  '
+    if get(g:, 'feat_enable_airline') == 1
+        let s:seperator='  '
+        let s:right_seperator = '  '
+    endif
     let g:vinux_diagnostics_signs_error = ""
     let g:vinux_diagnostics_signs_warning = "⚠"
-    let g:vinux_diagnostics_signs_info = ""
-    let g:vinux_diagnostics_signs_hint = ""
+    let g:vinux_diagnostics_signs_info = ""
+    let g:vinux_diagnostics_signs_hint = "💡"
 else
-    let s:seperator=' | '
-    let s:right_seperator = ' | '
-    let g:vinux_diagnostics_signs_error = ">>"
-    let g:vinux_diagnostics_signs_warning = "!!"
+    let g:vinux_diagnostics_signs_error = "x"
+    let g:vinux_diagnostics_signs_warning = "w"
     let g:vinux_diagnostics_signs_info = "i"
     let g:vinux_diagnostics_signs_hint = "!"
 endif

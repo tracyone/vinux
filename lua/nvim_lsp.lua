@@ -8,6 +8,12 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<Leader>ld', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.keymap.set('n', '<C-x>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.keymap.set('n', '<Leader>ql', "<cmd>Trouble<CR>", opts)
+    local signs = { Error = vim.g.vinux_diagnostics_signs_error, Warn = vim.g.vinux_diagnostics_signs_warning,
+        Hint = vim.g.vinux_diagnostics_signs_hint, Info = vim.g.vinux_diagnostics_signs_info }
+    for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    end
 end
 
 local function make_config()
