@@ -331,16 +331,20 @@ endfunction
 function! te#terminal#jump_to_floating_win(num) abort
     let l:term_list = te#terminal#get_buf_list()
     let l:no_of_term = len(l:term_list)
+    let l:buf = bufnr('%')
     let l:current_term_buf = -1
     if l:no_of_term == 0
         call te#utils#EchoWarning("No terminal window found! Try to create a new one!")
         call te#terminal#shell_pop({'opener':0x2})
     elseif l:no_of_term == 1 && a:num != -5
-        call te#terminal#open_term({'bufnr':l:term_list[0]})
+        call te#utils#EchoWarning("Only one terminal!")
+        if te#terminal#is_term_buf(l:buf) == v:false
+            call te#terminal#open_term({'bufnr':l:term_list[0]})
+        endif
     else
         let l:last_close_bufnr = s:last_close_bufnr
-        if te#terminal#is_term_buf(bufnr('%')) == v:true
-            let l:current_term_buf = bufnr('%')
+        if te#terminal#is_term_buf(l:buf) == v:true
+            let l:current_term_buf = l:buf
             if te#env#IsNvim() == 0
                 call te#terminal#hide_popup()
             else
@@ -659,7 +663,7 @@ function! te#terminal#shell_pop(option) abort
                             \ 'line': l:row + 1,
                             \ 'col': l:col,
                             \ 'title': l:title,
-                            \ 'zindex': 200,
+                            \ 'zindex': 1,
                             \ 'minwidth': l:width,
                             \ 'minheight': l:height,
                             \ 'maxwidth': l:width,
