@@ -26,4 +26,7 @@ function! te#autocmds#file_type() abort
     if g:complete_plugin_type.cur_val == 'coc.nvim'
         call CocCheckExtensions()
     endif
+    if type(get(g:, 'vinux_project_name')) == g:t_string
+        call te#project#set_indent_options(g:vinux_coding_style.cur_val)
+    endif
 endfunction

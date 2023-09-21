@@ -9,9 +9,9 @@ function! te#project#set_indent_options(coding_style)
     let g:vinux_coding_style.cur_val = a:coding_style
     if a:coding_style ==# 'linux'
         let g:vinux_tabwidth=8
-        :silent! bufdo set textwidth=80
-        :silent! bufdo set noexpandtab
-        :silent! bufdo set nosmarttab
+        :set textwidth=80
+        :set noexpandtab
+        :set nosmarttab
     elseif a:coding_style ==# 'mozilla'
         let g:vinux_tabwidth=4
     elseif a:coding_style ==# 'google'
@@ -23,9 +23,9 @@ function! te#project#set_indent_options(coding_style)
     else
         let g:vinux_tabwidth=4
     endif
-    execute 'silent! bufdo set tabstop='.g:vinux_tabwidth
-    execute 'silent! bufdo set shiftwidth='.g:vinux_tabwidth
-    execute 'silent! bufdo set softtabstop='.g:vinux_tabwidth
+    execute 'silent! set tabstop='.g:vinux_tabwidth
+    execute 'silent! set shiftwidth='.g:vinux_tabwidth
+    execute 'silent! set softtabstop='.g:vinux_tabwidth
 endfunction
 "create a project
 "1. session
@@ -35,7 +35,7 @@ endfunction
 function! te#project#create_project() abort
     let l:project_exist = 0
     let l:default_name=fnamemodify(getcwd(), ':t')
-    if exists('g:vinux_project_name') && !empty(g:vinux_project_name)
+    if type(get(g:, 'vinux_project_name')) == g:t_string
         let l:default_name=g:vinux_project_name
         let l:project_exist = 1
         let l:name = input("Rename or save current project:", l:default_name)
