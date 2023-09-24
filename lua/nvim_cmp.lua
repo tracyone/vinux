@@ -2,6 +2,9 @@
 local cmp = require'cmp'
 local lspkind = require('lspkind')
 
+require("cmp_nvim_ultisnips").setup{}
+local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+
 cmp.setup({
     mapping = {
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
@@ -9,7 +12,16 @@ cmp.setup({
         ['<C-t>'] = cmp.mapping.complete(),
         ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
         ['<C-e>'] = cmp.mapping.close(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<CR>'] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Insert,
+            select = true,
+        },
+
+    },
+    snippet = {
+        expand = function(args)
+            vim.fn["UltiSnips#Anon"](args.body)
+        end,
     },
     sources = {
         { name = 'nvim_lsp' },
