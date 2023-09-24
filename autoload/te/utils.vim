@@ -559,6 +559,8 @@ function! te#utils#tab_buf_switch(num) abort
                 :BufferNext
             elseif a:num == -2
                 :b#
+            elseif a:num == -3
+                :BufferPick
             else
                 execute ':BufferGoto '.a:num
             endif

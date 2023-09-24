@@ -230,6 +230,7 @@ nnoremap <silent> <Left> :call te#utils#tab_buf_switch(0)<cr>
 
 "switch next tab or buftab
 nnoremap <silent> <Right> :call te#utils#tab_buf_switch(-1)<cr>
+nnoremap <silent> <leader>` :call te#utils#tab_buf_switch(-3)<cr>
 
 "move
 "nnoremap <Up> <C-b>
