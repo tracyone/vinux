@@ -57,7 +57,19 @@ cmp.setup({
 
 
 cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
+    mapping = cmp.mapping.preset.cmdline{
+        ['<Tab>'] = cmp.config.disable,
+        ['<C-p>'] = cmp.config.disable,
+        ['<C-n>'] = cmp.config.disable,
+        ['<cr>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+                cmp.confirm()
+            else
+                fallback()
+            end
+        end, { 'c' }),
+    },
     sources = cmp.config.sources({
       { name = 'path' }
     }, {
