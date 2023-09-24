@@ -64,6 +64,7 @@ elseif g:vinux_coding_style.cur_val ==# 'llvm'
 elseif g:vinux_coding_style.cur_val ==# 'chromium'
     let g:vinux_tabwidth=2
 endif
+execute 'set colorcolumn='.(&textwidth + 1)
 
 execute 'setlocal tabstop='.g:vinux_tabwidth
 execute 'setlocal shiftwidth='.g:vinux_tabwidth

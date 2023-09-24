@@ -9,9 +9,9 @@ function! te#project#set_indent_options(coding_style)
     let g:vinux_coding_style.cur_val = a:coding_style
     if a:coding_style ==# 'linux'
         let g:vinux_tabwidth=8
-        :set textwidth=80
-        :set noexpandtab
-        :set nosmarttab
+        set textwidth=80
+        set noexpandtab
+        set nosmarttab
     elseif a:coding_style ==# 'mozilla'
         let g:vinux_tabwidth=4
     elseif a:coding_style ==# 'google'
@@ -27,6 +27,7 @@ function! te#project#set_indent_options(coding_style)
     execute 'silent! set shiftwidth='.g:vinux_tabwidth
     execute 'silent! set softtabstop='.g:vinux_tabwidth
 endfunction
+execute 'set colorcolumn='.(&textwidth + 1)
 "create a project
 "1. session
 "2. compile flag info
@@ -46,14 +47,33 @@ function! te#project#create_project() abort
         return
     endif
     let l:project_name=$VIMFILES.'/.project/'.l:name.'/'
-    if l:project_exist == 1 && l:name != g:vinux_project_name
-        "Delete session then renmae .project/
-        if exists(":SDelete") == 2
-            execute ':SDelete! '.g:vinux_project_name
-        elseif exists(":DeleteSession") == 2
-            execute ':DeleteSession! '.g:vinux_project_name
+    if l:project_exist == 1 
+        if l:name != g:vinux_project_name
+            "Delete session then renmae .project/
+            if exists(":SDelete") == 2
+                execute ':SDelete! '.g:vinux_project_name
+            elseif exists(":DeleteSession") == 2
+                execute ':DeleteSession! '.g:vinux_project_name
+            endif
+            call rename($VIMFILES.'/.project/'.g:vinux_project_name.'/', l:project_name)
         endif
-        call rename($VIMFILES.'/.project/'.g:vinux_project_name.'/', l:project_name)
+        if get(g:, 'vinux_working_directory') != getcwd()
+            "working directory is changed
+            "clean original working directory files...
+            call te#file#delete(g:vinux_working_directory.'/.ycm_extra_conf.py', 0)
+            call te#file#delete(g:vinux_working_directory.'/.clang-format', 0)
+            call te#file#delete(g:vinux_working_directory.'/.love.vim', 0)
+            call te#file#delete(g:vinux_working_directory.'/compile_commands.json', 0)
+            call te#file#delete(g:vinux_working_directory.'/compile_flags.txt', 0)
+            call te#file#delete(g:vinux_working_directory.'/.csdb', 0)
+            let g:vinux_working_directory = getcwd()
+            call te#file#copy_file(l:project_name.'/.ycm_extra_conf.py', g:vinux_working_directory, 0)
+            call te#file#copy_file(l:project_name.'/.clang-format', g:vinux_working_directory, 0)
+            call te#file#copy_file(l:project_name.'/.love.vim', g:vinux_working_directory, 0)
+            call te#file#copy_file(l:project_name.'/compile_commands.json', g:vinux_working_directory, 0)
+            call te#file#copy_file(l:project_name.'/compile_flags.txt', g:vinux_working_directory, 0)
+            call te#file#copy_file(l:project_name.'/.csdb', g:vinux_working_directory, 0)
+        endif
     endif
 
     if isdirectory(l:project_name)

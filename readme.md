@@ -26,8 +26,6 @@ Feature:
 
 # Todo list
 
-- [ ] Android Framework support
-- [ ] game center
 - [ ] use stable version of plugin instead of newest version
 
 # Buy me a coffee

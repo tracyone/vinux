@@ -335,7 +335,7 @@ vnoremap  <silent><leader>yr :'<,'>QuickRun<cr>
 " }}}
 " Misc {{{
 if te#env#SupportAsync()
-    let g:love_support_option=['termguicolors', 'tabstop', 'shiftwidth', 'softtabstop', 'colorcolumn', 'expandtab', 'smarttab']
+    let g:love_support_option=['termguicolors', 'tabstop', 'shiftwidth', 'softtabstop', 'expandtab', 'smarttab']
 endif
 " Save basic setting
 nnoremap  <silent><Leader>lo :Love<cr>
