@@ -552,7 +552,17 @@ function! te#utils#tab_buf_switch(num) abort
             execute 'normal '."\<Plug>AirlineSelectTab".a:num
         endif
     else
-        if exists( '*tabpagenr' ) && tabpagenr('$') != 1
+        if exists(':BufferGoto')
+            if a:num == 0
+                :BufferPrevious
+            elseif a:num == -1
+                :BufferNext
+            elseif a:num == -2
+                :b#
+            else
+                execute ':BufferGoto '.a:num
+            endif
+        elseif exists( '*tabpagenr' ) && tabpagenr('$') != 1
             " Tab support && tabs open
             if a:num == 0
                 :tabprev

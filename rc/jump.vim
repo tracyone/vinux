@@ -38,14 +38,18 @@ Plug 'kshenoy/vim-signature',{'on':[]}
 call te#feat#register_vim_enter_setting2(['let g:SignatureEnabledAtStartup=1'],['vim-signature'])
 Plug 'MattesGroeger/vim-bookmarks', { 'on': ['BookmarkShowAll', 'BookmarkToggle', 'BookmarkAnnotate']}
 if get(g:,'feat_enable_airline') == 0
-    Plug 'tracyone/vim-buftabline'
-    let g:buftabline_numbers=2
-    let g:buftabline_show=1
-    let g:buftabline_indicators=1
-    if te#env#IsDisplay()
-        let g:buftabline_separators = 1
+    if te#env#IsNvim() > 0.9
+        Plug 'romgrk/barbar.nvim'
     else
-        let g:buftabline_separators = 0
+        Plug 'tracyone/vim-buftabline'
+        let g:buftabline_numbers=2
+        let g:buftabline_show=1
+        let g:buftabline_indicators=1
+        if te#env#IsDisplay()
+            let g:buftabline_separators = 1
+        else
+            let g:buftabline_separators = 0
+        endif
     endif
 endif
 " }}}
