@@ -85,5 +85,6 @@
 	  "operator": "󰆕",
 	  "typeParameter": "T",
 	  "default": ""
-    }
+    },
+    "coc.source.word.filetypes":["text", "markdown", "gitcommit", "help"]
 }

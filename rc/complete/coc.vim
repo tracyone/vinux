@@ -12,7 +12,7 @@ let g:coc_extensions_dict = {}
 let s:vinux_coc_extensions = {'json': 'coc-json', 'vim':'coc-vimlsp', 'c':'coc-clangd', 'cpp':'coc-clangd',
             \ 'python':'coc-pyright', 'sh':'coc-sh', 'bash':'coc-sh', 'zsh':'coc-sh', 'lua':'coc-sumneko-lua',
             \ 'java':'coc-java','html':'coc-html','cmake':'coc-cmake','xml':'coc-xml','rust':'coc-rls',
-            \ 'txt':'coc-word','gitcommit':'coc-git',
+            \ 'text':'coc-word','gitcommit':'coc-git', 'help':'coc-word'
             \}
 
 function! CocCheckExtensions() abort
