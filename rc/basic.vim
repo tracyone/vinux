@@ -8,10 +8,6 @@ if  g:file_explorer_plugin.cur_val == 'defx.nvim'
     else
         Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins'}
         let s:defx_option=':Defx -toggle -split=vertical -winwidth=50 -direction=topleft '
-        if te#env#IsNvim() == 0 && g:complete_plugin_type.cur_val != 'ncm2'
-            Plug 'roxma/nvim-yarp'
-            Plug 'roxma/vim-hug-neovim-rpc'
-        endif
         if g:enable_powerline_fonts.cur_val == 'on'
             Plug 'kristijanhusak/defx-icons'
             Plug 'kristijanhusak/defx-git'
@@ -108,7 +104,7 @@ elseif te#env#IsUnix()
 else
     Plug 'Shougo/vimproc.vim'
 endif
-if !te#env#SupportTerminal() 
+if !te#env#SupportTerminal() && !te#env#IsTmux()
     Plug 'Shougo/vimshell.vim',{'on':'VimShell'}
     Plug 'tracyone/ctrlp-vimshell.vim',{'on':'VimShell'}
 endif
@@ -222,21 +218,19 @@ if get(g:, 'feat_enable_help') == 0
     let g:session_directory=$VIMFILES.'/sessions'
 endif
 
-if g:complete_plugin_type.cur_val ==# 'ncm2'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc', { 'do':'pip3 install --user pynvim'}
-endif
 
-if te#env#IsNvim() == 0 && (g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' ||
-            \ g:complete_plugin_type.cur_val ==# 'deoplete.nvim')
-    if g:complete_plugin_type.cur_val !=# 'ncm2'
+if te#env#IsNvim() == 0
+    if g:fuzzysearcher_plugin_name.cur_val ==# 'denite.nvim' ||
+                \ g:complete_plugin_type.cur_val ==# 'deoplete.nvim' ||
+                \ g:complete_plugin_type.cur_val ==# 'ncm2' ||
+                \ g:file_explorer_plugin.cur_val ==# 'defx.nvim'
         Plug 'roxma/nvim-yarp'
         Plug 'roxma/vim-hug-neovim-rpc', { 'do':'pip3 install --user pynvim'}
     endif
 endif
 "}}}
 " Vimshell {{{
-if(!te#env#SupportTerminal())
+if !te#env#SupportTerminal() && !te#env#IsTmux()
     let g:vimshell_enable_smart_case = 1
     let g:vimshell_editor_command='gvim'
     let g:vimshell_prompt = '$ '
