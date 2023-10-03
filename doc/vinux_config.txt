@@ -1,0 +1,528 @@
+vinux_config.txt
+TABLE OF CONTENTS                                              *vinux_config*
+==============================================================================
+Complete feature                                             |vinux-complete|
+LSP feature                                                  |vinux-lsp|
+Jump feature                                                 |vinux-jump|
+  Ctrlp cache type                                           |vinux-ctrlp-cache|
+GUI feature                                                  |vinux-gui|
+Tmux feature                                                 |vinux-tmux|
+Basic feature                                                |vinux-basic|
+  File explorer                                                |vinux-fileExplorer|
+  Grepper                                                      |vinux-grepper|
+Fun feature                                                  |vinux-fun|
+Tools feature                                                |vinux-tools|
+Wiring feature                                               |vinux-writing|
+Airline feature                                               |vinux-airline|
+Frontend feature                                             |vinux-frontend|
+Vim feature                                                  |vinux-vim|
+Git feature                                                  |vinux-git|
+Edit feature                                                  |vinux-edit|
+Help feature                                                  |vinux-help|
+C feature                                                     |vinux-c|
+  Coding style                                                 |vinux-codingStyle| 
+zsh feature                                                   |vinux-zsh|
+Plugin auto install                                          |vinux-autoInstall|
+Plugins Directory                                             |vinux-plugins-dir|
+Tagging program                                               |vinux-tagging| 
+Notification Message                                          |vinux-message|
+
+==============================================================================
+
+Complete feature                                           *vinux-complete*
+==============================================================================
+
+To enable code complete feature
+
+    let g:feat_enable_complete=1
+
+By default, YouCompleteMe is the default complete plugin, You can change it by
+modifying following variable:
+
+    let g:complete_plugin_type.cur_val='ncm2'
+
+Following value are the candidates:
+
+1. |YouCompleteMe|  [1] , vim or neovim should enable +python
+or + python3 feature
+
+2. `clang_complete` [2]. only support c & cpp complete
+
+3. `neocomplete` [3], require vim8 should enable +lua
+feature.
+
+4. `asyncomplete.vim` [4], require vim8 or neovim nightly
+   support vim-lsp
+
+5. `deoplete.nvim` for [5], require vim8 or neovim nightly. Support vim-lsp and nvim lsp.
+
+6. `ncm2` for [6], require vim8 & neovim nightly. Support vim-lsp and nvim lsp.
+
+7. `supertab` for [7], fallback option
+
+8. `nvim-cmp` for [8], neovim only.
+
+9. |coc.nvim| for [9], support lsp function, faster, but
+   nodejs is required.
+
+10. |vimcomplete| for [10]. for vim9 only, using vim9 script
+
+
+Keymapping for complete feature please see |vinux-lsp-keymapping|.
+
+                                          [1] https://github.com/Valloric/YouCompleteMe
+                                          [2] https://github.com/xavierd/clang_complete
+                                          [3] https://github.com/Shougo/neocomplete
+                                          [4] https://github.com/prabirshrestha/asyncomplete.vim
+                                          [5] https://github.com/Shougo/deoplete.nvim
+                                          [6] https://github.com/ncm2/ncm2
+                                          [7] https://github.com/ervandew/supertab
+                                          [8] https://github.com/hrsh7th/nvim-cmp
+                                          [9] https://github.com/neoclide/coc.nvim
+
+LSP feature                                           *vinux-lsp*
+==============================================================================
+
+To enable LSP(Language Server Protocol) feature:
+
+    let g:feat_enable_lsp=1
+
+In the case of vim and older version of neovim, following plugins
+are used by default 
+
+{prabirshrestha/vim-lsp}{1}: lsp protocol parse
+{mattn/vim-lsp-settings}{2}: Auto configurations for Language Servers for vim-lsp.
+
+There are some complete plugins support lsp feature, see |vinux-complete| for
+detail.
+
+- asyncomplete.vim
+- deoplete.nvim
+- ncm2
+
+
+Another LSP solution for vim and older version of neovim is |coc.nvim|
+
+You must enable complete feature and set complete plugin to |coc.nvim|, see |vinux-complete|
+
+In the case of neovim 0.5+, following plugin are used:
+
+{neovim/nvim-lspconfig}{3}: neovim's built-in lsp config
+
+{williamboman/mason.nvim}{4}: It adds the missing :LspInstall command to
+conveniently install language servers.
+
+{folke/trouble.nvim}{5}: A pretty list for showing diagnostics, references,
+telescope results
+
+There are some complete plugins support neovim's built-in lsp feature, see
+Complete feature for detail.
+
+- nvim-cmp
+- deoplete.nvim
+
+Keymapping for LSP feature please see |vinux-lsp-keymapping|.
+
+In the case of vim9, you can choose |vimcomplete| as the complete plugin, and
+vinux will choose lsp plugin{6} that using vim9script which claim to be
+faster.
+
+                                          {1}https://github.com/prabirshrestha/vim-lsp
+                                          {2}https://github.com/mattn/vim-lsp-settings
+                                          {3}https://github.com/neovim/nvim-lspconfig
+                                          {4}https://github.com/williamboman/mason.nvim
+                                          {5}https://github.com/folke/trouble.nvim
+                                          {6}https://github.com/yegappan/lsp
+
+Jump feature                                              *vinux-jump*
+==============================================================================
+
+Jump feature is used to To jump between files, lines, charactors...Generally
+speaking it is a feature to select fuzzy searcher plugins.
+
+To enable jump feature:
+
+    let g:feat_enable_jump=1
+
+By default ctrlp is default fuzzy searcher plugin, you can change it by modifying following variable.
+
+    let g:fuzzysearcher_plugin_name.cur_val='fzf'
+
+- `ctrlp`. This is a allback option. It compatiable with vim7.4.
+- `leaderf`. python, vim8 or neovim nightly are required. 
+- `denite.nvim`. python3, vim8 or neovim nightly are required.
+- `fzf`. vim8 or neovim nightly are required.
+- `vim-clap`. vim with patch-8.1.2114 or neovim 0.4+ are required
+- `telescope.nvim`. neovim nightly is required.
+
+For `ctrlp` and `denite.nvim`, there is a variable to control matcher type
+which can accelerate the matching speed
+
+    let g:fuzzy_matcher_type.cur_val='py-matcher'
+
+`cpsm` and `py-matcher`(default) are the candidates.
+
+There are other plugins in jump feature
+
+- {easymotion/vim-easymotion}{1}, jump between charactors
+- {t9md/vim-choosewin}{2}, jump between window
+- {MattesGroeger/vim-bookmarks}{3}, jump between bookmarks
+
+Keymapping for jump feature please see |vinux-jump-keymapping|.
+
+< Ctrlp cache type >____________________________________________________________~
+                                                        *vinux-ctrlp-cache*
+
+Following variable control ctrlp.vim how to cache results.
+
+    let g:ctrlp_caching_type.cur_val='limit'
+
+- limit. Enable caching up to 5000. Fastest speed but the accuracy is worst
+- on. Enable caching but no limit
+- off. Disable caching. slower speed
+
+
+GUI feature                                                      *vinux-gui*
+==============================================================================
+
+To enable GUI feature 
+
+    let g:feat_enable_gui=1
+
+
+After enable GUI feature, you can:
+
+1. Many beautiful colorscheme.Press `<SPC>pc` to select colorscheme and press 
+   `<SPC>lo` to save.
+
+2. Sexy font. vinux support nerdfont and powerline font, you must install
+following fonts and set your terminal's font to YaHeiConsolasHybrid Nerd Font
+
+    wget https://raw.githubusercontent.com/tracyone/program_font/master/YaHeiConsolasHybridNerdFont-Regular.ttf
+
+Then enable it just modify following variable:
+
+    let g:enable_powerline_fonts.cur_val='on'
+
+- `on`:enable
+- `off`:disable
+
+3. Right-click menu
+
+- Paste
+- Goto Definition
+- Find text of current cursor word
+- Undo
+- Open Header/Source (c&cpp only)
+- Highlight cursor word
+- Translation(internet is required)
+
+
+Tmux feature                                                      *vinux-tmux*
+==============================================================================
+
+If you are using {tmux}{1}, you might want to enable this feature.
+
+    let g:feat_enable_tmux=1
+
+After enable this feature, 
+
+1. Navigate between vim and tmux panels.see |vinux-tmux-keymapping| for
+detail.
+
+2. Using tmux's buffer as clipboard of neovim and vim
+
+3. Using tmux to run command in background. see |te#tmux#run_command|
+
+Basic feature                                           *vinux-basic*
+==============================================================================
+
+Basic feature:
+
+1. file explorer. see |vinux-fileExplorer|
+2. treesitter for neovim.
+3. tagbar.
+4. manpager support
+5. Async searcher and runner
+6. other dependence plugins
+
+To enable basic feature
+
+    let g:feat_enable_basic=1
+
+Open file explorer and tagbar when vim stars.
+
+    let g:enable_sexy_mode.cur_val='on'
+
+keymapping in Basic feature see |vinux-basic-keymapping|
+
+
+< File explorer >____________________________________________________________~
+                                                        *vinux-fileExplorer*
+
+File explorer plugin is used to browse, open, create, delete file or
+directory.
+
+You can choose your favorite explorer plugin by modifying following variable.
+
+    let g:file_explorer_plugin.cur_val='nerdtree'
+
+- `nerdtree`, default option
+- `defx.nvim`, defx requires Neovim 0.4.0+ or Vim8.2+ with Python3.6.1+
+- `coc-explorer`, requires coc.nvim, see |vinux-complete|.
+- `nvim-tree.lua`, requires neovim nightly.
+
+< Grepper >____________________________________________________________~
+                                                        *vinux-grepper*
+
+You can choose a plugin to search charactors.
+
+    let g:grepper_plugin.cur_val='neomake-multiprocess'
+
+- neomake-multiprocess: async, multiple job
+- vim-easygrep: better compatibility
+
+Fun feature                                                     *vinux-fun*
+==============================================================================
+
+Fun feature collect some interesting plugins.
+
+1. Games for vim.
+2. Calendar
+3. Thumbnail
+4. Screensaver
+
+To enable Fun feature:
+
+    let g:feat_enable_fun=1
+
+If you enable this feature, Vim will lock every 25mins and unlock 2 mins after
+locked.
+
+Password is current date, ie. 20180820
+
+See |vinux-fun-keymapping|
+
+Tools feature                                                     *vinux-tools*
+==============================================================================
+
+To enable this feature:
+
+    let g:feat_enable_tools=1
+
+Tools feCalculatorature collect some useful plugins.
+
+1. Calculator
+2. Translator
+3. HexEditor
+4. FileEncoding
+5. draw line tools
+6. Toosl for opening the file manager or terminal
+
+see |vinux-tools-keymapping|
+
+Wiring feature                                               *vinux-writing*
+==============================================================================
+
+To enable this feature, just edit feature.vim and change following line:
+
+    let g:feat_enable_writing=1
+
+After enable this feature, you can:
+
+1. You can focus your writing using junegunn/goyo.vim and chrisbra/NrrwRgn
+2. You can edit org file and manager your todo list
+3. markdown support. Toc, preview...
+
+see |vinux-writing-keymapping|
+
+Airline feature                                               *vinux-airline*
+==============================================================================
+
+Airline feature is a statusline plugin [1] for vim. To enable this feature:
+
+    let g:feat_enable_airline = 1
+
+To enable power line font:
+
+    let g:airline_powerline_fonts=1
+
+You need to install fonts that support powerline symbols, see |vinux-gui| for
+detail.
+
+                                          [1] https://github.com/vim-airline/vim-airline
+
+Frontend feature                                               *vinux-frontend*
+==============================================================================
+
+Frontend feature collect some useful web base language plugin. It's useful when there is no LSP support.
+
+To enable this feature, just edit feature.vim and change following line:
+
+    let g:feat_enable_frontend=1
+
+- syntax highlight
+- code format
+- indent 
+
+Vim feature                                               *vinux-vim*
+==============================================================================
+
+Vim feature is a plugins collection of old vim script. It's useful when there is
+no LSP support.
+
+To enable this feature:
+
+    let g:feat_enable_vim=1
+
+After enable this feature, you can
+
+1. Jump to definition of vim function.
+2. Get startuptime of vim
+3. complete vim function
+
+Git feature                                                     *vinux-git*
+==============================================================================
+
+Git feature is used to perform git operation in Vim.
+
+To enable this feature:
+
+    let g:feat_enable_git=1
+
+You can choose git plugin by modifying following variable:
+
+
+    let g:git_plugin_name.cur_val='vim-fugitive'
+
+- `vim-fugitive`, better compatibility
+- gina.vim, more function
+
+After enable this feature:
+
+1. stage, commit, log, blame operation.
+2. conflict handle
+3. git sign or message
+
+see |vinux-git-keymapping|
+
+Edit feature                                           *vinux-edit*
+==============================================================================
+
+Edit feature is a plugins collection of improving edit speed.
+
+To enable this feature
+
+    let g:feat_enable_edit=1
+
+After enable this feature, you can
+
+- Sublime Text's multiple selection
+- automatic closing of quotes, parenthesis, brackets
+- commenting operations
+- dealing with pairs of "surroundings."
+- Live substitute
+
+  see |vinux-edit-keymapping|
+
+Help feature                                           *vinux-help*
+==============================================================================
+
+To enable this feature
+
+    let g:feat_enable_help=1
+
+After enable this feature, you  get
+
+- start screen
+- keymapping help prompt
+
+C feature                                                        *vinux-c*
+==============================================================================
+
+To enable this feature
+
+    let g:feat_enable_c=1
+
+After enable this feature, you can
+
+- enhance c & ccp syntax highlight
+- code format
+
+< Coding style >____________________________________________________________~
+                                                        *vinux-codingStyle*
+
+You can choose clang format's default coding style.
+
+    let g:vinux_coding_style.cur_val='google'
+
+- 'linux'
+- 'mozilla'
+- 'google'
+- 'llvm'
+- 'chromium'
+
+zsh feature                                                     *vinux-zsh*
+==============================================================================
+
+To enable this feature
+
+    let g:feat_enable_zsh=1
+
+After enable this feature, you can
+
+- runtime files
+- complete support(deoplete or omnicompletion)
+
+Plugin auto install                                              *vinux-autoInstall*
+==============================================================================
+
+By default, vinux will install the missing plugins automatically. You can
+enable or disable by modifying following variable
+
+    let g:enable_auto_plugin_install.cur_val='on'
+
+- `on`: enable
+- `off`: disable
+
+Plugins Directory                                              *vinux-plugins-dir*
+==============================================================================
+
+By default, all vim plugin are installed in `$VIMFILES/bundle`, you can change
+it by modifying following variable:
+
+    let g:vinux_plugin_dir.cur_val='/Users/tracyone/.vim/bundle/'
+
+Tagging program                                              *vinux-tagging*
+==============================================================================
+
+cscope and gtags help you browse your code in vim, you can choose one as the 
+`cscopeprg`.
+
+    let g:tagging_program.cur_val='gtags'
+
+- `cscope`, default
+- `gtags`, better support for cpp
+
+Notification Message                                         *vinux-message*
+==============================================================================
+
+By default, some notification message will appear in a pop-up window from the
+top right corne.(require vim8+ or neovim)
+
+You can define the duration of message win.
+
+
+    let g:message_delay_time.cur_val='3000'
+
+
+unit is ms:
+
+- 5000.
+- 3000.
+- 1000.
+- 500.
+- 0. disable message win.
+
+
+vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:

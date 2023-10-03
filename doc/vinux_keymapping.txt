@@ -1,0 +1,222 @@
+vinux_keymapping.txt	Last change: October 14 2023
+vinux_keymapping - TABLE OF CONTENTS                        *vinux_keymapping*
+==============================================================================
+Introduction                                     |vinux-keymapping-instruction|
+vinux lsp keymapping                                    |vinux-lsp-keymapping|
+vinux jump keymapping                                   |vinux-jump-keymapping|
+vinux tmux keymapping                                   |vinux-tmux-keymapping|
+vinux basic keymapping                                  |vinux-basic-keymapping|
+vinux fun keymapping                                    |vinux-fun-keymapping|
+vinux tools keymapping                                  |vinux-tools-keymapping|
+vinux writing keymapping                                |vinux-writing-keymapping|
+vinux git keymapping                                    |vinux-git-keymapping|
+vinux edit keymapping                                    |vinux-edit-keymapping|
+vinux gui keymapping                                    |vinux-gui-keymapping|
+General keymapping                                       |vinux-general-keymapping|
+  Termainl keymapping                                    |vinux-terminal-keymapping|
+  Tabline keymapping                                     |vinux-tabline-keymapping|
+
+==============================================================================
+
+Introduction                                    *vinux-keymapping-introduction*
+==============================================================================
+
+After you enable |vinux-help| feature,  press `space` key will displays available 
+keybindings in the bottom of vim.
+
+
+vinux lsp keymapping                                    *vinux-lsp-keymapping*
+==============================================================================
+
+mode  |    key     |              description
+----  | ---------- | --------------------------------------
+n     |  `<Enter>`   | Go to definition
+n     |  `,g`        | Go to definition
+n     |  `<C-j\>g`   | Go to definition in a split window
+n     |  `,c`        | Go to references
+n     |  `<C-\>c`    | Go to references in a split window
+n     |  `<SPC>lc`   | LSP Code action
+n     |  `<SPC>ld`   | LSP Go to declaration
+n,v   |  `<SPC>lf`   | LSP format code
+n     |  `<SPC>li`   | LSP find implementation
+n     |  `<SPC>ll`   | LSP code len
+n     |  `<SPC>lm`   | Coc multicurosr rename
+n     |  `<SPC>lr`   | LSP rename
+n     |  `<SPC>ls`   | Install LSP server
+n     |  `<SPC>ly`   | LSP find type definition
+n     |  `<SPC>lto`  | LSP out coming call
+n     |  `<SPC>lti`  | LSP in coming call
+n     |  `K`         | LSP Hover
+n     |  `ql`        | LSP diagnostics list
+n     |  `[d`        | LSP jump to previous diagnostic
+n     |  `]d`        | LSP jump to next diagnostic
+
+vinux jump keymapping                                    *vinux-jump-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n     |  `<SPC><SPC>`   | Find files in fuzzy finder
+n     |  `<SPC><pp>`    | Find files in fuzzy finder
+n     |  `<C-j>     `   | Find buffers in fuzzy finder
+n     |  `<SPC>pb   `   | Find buffers in fuzzy finder
+n     |  `<SPC>fw   `   | Find tabs in fuzzy finder
+n     |  `<SPC>pc   `   | Select vim colorsceme in fuzzy finder
+n     |  `<C-l>     `   | Select most recently used file in fuzzy finder
+n     |  `<SPC>pm   `   | Select most recently used file in fuzzy finder
+n     |  `<SPC>qc   `   | Fuzzy search vim history command
+n     |  `<SPC>q/   `   | Fuzzy search vim history search
+n     |  `<SPC>sp   `   | Fuzzy search Snippets
+n     |  `<SPC>hv   `   | Fuzzy search vim help
+n     |  `<SPC>ff   `   | Fuzzy search current directory's files or dir
+n     |  `<SPC>fe   `   | Vinux feature enable
+n     |  `<SPC>fd   `   | Vinux feature disable
+n,v   |  `<SPC>pr   `   | Fuzzy search vim's registers
+n     |  `<C-k>     `   | Fuzzy search current file's tags
+n     |  `<SPC>pk   `   | Fuzzy search current file's tags
+n     |  `<SPC>pf   `   | Live grep in fuzzy finder
+
+vinux tmux keymapping                                    *vinux-tmux-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n     |  `<SPC>uu`      | Find tmux window in fuzzy finder(only for ctrlp)
+n     |  `<SPC>uf`      | Find tmux buffer in fuzzy finder(only for ctrlp)
+n     |  `<SPC>um`      | Find tmux session in fuzzy finder(only for ctrlp)
+n     |  `<SPC>uc`      | Find tmux command in fuzzy finder(only for ctrlp)
+n     |  `<SPC>ui`      | tmux command interactively in fuzzy finder(only for ctrlp)
+n     |  `<SPC>uw`      | rename tmux win
+n     |  `<Alt>l`       | move to right win(tmux or vim)
+n     |  `<Alt>h`       | move to left win(tmux or vim)
+n     |  `<Alt>j`       | move to down win(tmux or vim)
+n     |  `<Alt>k`       | move to top win(tmux or vim)
+n     |  `<Alt>w`       | move to previous win(tmux or vim)
+
+vinux basic keymapping                                    *vinux-basic-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n,v   |  `<SPC>vv`      | search for the word on current curosr
+n     |  `<SPC>vt`      | search "TODO" in current directory
+n     |  `<SPC>vf`      | search c family function
+n     |  `<SPC>vs`      | search pattern from user input
+n     |  `<SPC>nm`      | Get current buffer's enable linker(neomake plugin)
+n     |  `<SPC>nn`      | Start lint current buffer(neomake)
+n     |  `<SPC>nj`      | Start lint current buffer(neomake)
+n     |  `<SPC>te`      | Open file explorer
+n,i   |  `<F12>  `      | Open file explorer
+n     |  `<SPC>nf`      | Open file explorer and locate to current file
+n     |  `<SPC>tt`      | Open tagbar window
+n     |  `<F9>  `       | Open tagbar window
+n,v   |  `<SPC>mm`      | Toggle highlight of cursor word
+n     |  `<SPC>mn`      | Clear highlight of cursor word
+n     |  `<SPC>mr`      | Highlight word that match pattern from user input
+n     |  `<SPC>m?`      | Jump to the previous occurrence of any mark
+n     |  `<SPC>m/`      | Jump to the next occurrence of any mark
+
+vinux fun keymapping                                    *vinux-fun-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n     |  `<SPC>ad`      | Open Calendar
+n     |  `<SPC>ap`      | Open Thumbnail
+n     |  `<SPC>ar`      | Enter screensaver
+n     |  `<SPC>ag`      | Game center
+
+vinux tools keymapping                                    *vinux-tools-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n     |  `<SPC>ac`      | Open calculator
+  v   |  `<SPC>ar`      | calculate current selection
+  n   |  `<SPC>tf`      | Toggle file coding
+  n   |  `<SPC>ay`      | Translate current cursor word
+  n   |  `<SPC>az`      | Translate from zh-cn to english from prompt
+  n   |  `<SPC>ai`      | Translate from English to zh-cn from prompt
+  n   |  `<SPC>of`      | open current file's position with default file explorer
+  n   |  `<SPC>ot`      | open current file's position with default terminal
+  n   |  `<SPC>oF`      | open project's(pwd) position with default file explorer
+  n   |  `<SPC>oT`      | open project's(pwd) position with default terminal
+  n   |  `<SPC>aw`      | start drawit
+  n   |  `<SPC>fR`      | Start renamer window
+  n   |  `<F2>`         | Start renamer window
+
+vinux wiring keymapping                                 *vinux-writing-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n     |  `<SPC>to`      | toggle free writing in vim (Goyo)
+n     |  `<SPC>ow`      | org open index.org
+n     |  `<SPC>ot`      | show todo
+n     |  `<SPC>od`      | org change todo type
+n     |  `<SPC>os`      | org inster a new date
+n     |  `<SPC>oc`      | org inster a new checkbox
+n     |  `<SPC>on`      | org inster a new url
+n     |  `<SPC>ob`      | org checkbox toggle
+n     |  `<SPC>ou`      | org checkbox update
+n,v   |  `<SPC>nl`      | send visual selection to narrow win 
+n     |  `<SPC>nw`      | send visible area to narrow win 
+n     |  `<SPC>mp`      | markdown preview
+n     |  `<SPC>mt`      | generate markdown TOC
+n     |  `<SPC>mu`      | update markdown TOC
+n     |  `<SPC>ms`      | show toc sidebar
+
+vinux git keymapping                                 *vinux-git-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n     |  `<SPC>gs`      | git status window
+n     |  `<SPC>gb`      | git blame
+n     |  `<SPC>gd`      | git diff
+n     |  `<SPC>gc`      | change directory to root of git repo
+n     |  `<SPC>ge`      | Edit .git/config
+n     |  `<SPC>gh`      | Open current git repo's url with default browser
+n,v   |  ` gho`         | Open current file's remote url 
+n,v   |  ` ghc`         | Copy current line's remote url
+n     |  `<SPC>gl`      | Open git log window
+n     |  `<SPC>gL`      | Open git log window with all branch
+n     |  `<SPC>gn`      | Show current line's commit info
+n     |  `<SPC>gi`      | Preview git hunk
+n     |  `<SPC>ga`      | Stage git hunk
+n     |  `<SPC>gu`      | Undo git hunk
+n     |  `<SPC>gm`      | git merge operation
+n     |  `<SPC>gA`      | Archive vinux
+n     |  `<SPC>gC`      | Archive current git repository
+n     |  `<SPC>gp`      | git push 
+n     |  `<SPC>gg`      | git push to gerrit
+n     |  `<SPC>gf`      | git fetch --all
+
+vinux edit keymapping                                 *vinux-edit-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n,v   |  `<SPC>zn`      | Correct spell forward
+n,v   |  `<SPC>zp`      | Correct spell backward
+n     |  `<SPC>tz`      | Toggle vim option spell
+v     |  `ga`           | Toggle easy align
+v     |  `<SPC>al`      | Live easy align
+n     |  `<SPC>cc`      | Toggle comment
+n,v   |  `<C-h>  `      | Live Substitute with curosr word
+n,v   |  `ss`           | Live Substitute
+n     |  `<SPC>tu`      | Toggle undo win
+
+vinux gui keymapping                                 *vinux-gui-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n     |  `<Alt>-`       | decrease font size
+n     |  `<Alt>+`       | increase font size
+n     |  `<Alt>o`       | Restore font size
+n     |  `<Alt>o`       | Restore font size
+n     |  `<2-leftmouse>`| Highlight cursor word
+n     |  `<SPC>tb`      | Toggle vim's background option
+
+vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:

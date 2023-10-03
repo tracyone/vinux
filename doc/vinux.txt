@@ -1,0 +1,180 @@
+vinux.txt	Last change: October 4 2023
+vinux - TABLE OF CONTENTS                                *vinux* *vinux-toc*
+==============================================================================
+
+Introduction                                             |vinux-introduction|
+Installation                                              |vinux-installation|
+  Requirement                                             |vinux-requirement|
+  HowToInstall                                            |vinux-howToInstall|
+  HowToUpdate                                             |vinux-howToUpdate|
+  TryVinux                                                |vinux-tryVinux|
+  RemoveVinux                                             |vinux-remove|
+Config                                                    |vinux-config|
+  ConfigDynamically                                       |vinux-DynConfig|
+Keymapping                                                |vinux-keymapping|
+PluginsList                                               |vinux-plugins|
+API                                                       |vinux-api|
+
+
+==============================================================================
+
+
+Introduction                                           *vinux-introduction*
+==============================================================================
+
+vinux - Swiss Army Knife，Dark power (neo)vim config.
+
+vinux works in most environments, the philosophy of vinux is customization, it
+does this by modifying features
+
+Feature:
+- Modular
+- Spacemacs-like keymap
+- Lazyload
+- Compatiable with Vim 7.3
+- Optimize for Linux kernel and uboot development.
+ 
+Installation                                           *vinux-installation*
+==============================================================================
+
+< Requirement >____________________________________________________________~
+                                                        *vinux-requirement*
+
+ - vim version >= v7.3.1058 and with +python or +python3 feature enabled
+ - latest neovim
+
+< HowToInstall >____________________________________________________________~
+                                                        *vinux-howToInstall*
+Before install please backup or remove your vim config.
+
+    mv ~/.vim ~/vim_backup
+    mv  ~/.vimrc vimrc_backup
+
+Quick Install:
+
+    bash -c "$(curl -fsSL https://git.io/vNDOQ)"
+
+Install manually:
+
+   git clone https://github.com/tracyone/vinux ~/.vim
+
+MS Windows install flow:
+
+Install {git-for-window}{1} 
+
+    git clone https://github.com/tracyone/vinux /c/Users/yourname/vimfiles
+
+Note: `yourname` is your login name in MS-Window.
+
+
+                                          {1}https://git-scm.com/download/win
+
+< HowToUpdate >____________________________________________________________~
+                                                        *vinux-howToUpdate*
+
+Make sure you have git installed, Then start vim, Press `Space ud`, It will
+update vim to latest release.
+
+If you want to use the lastest developing version，You can cd to  ~/.vim or
+/c/Users/yourname/vimfiles(MS-Window),then execute following command
+
+    git checkout master
+    git pull origin master
+
+< TryVinux >____________________________________________________________~
+                                                        *vinux-tryVinux*
+
+If you want to try vinux without breaking your current config.
+
+    git clone https://github.com/tracyone/vinux <vinux repo path>
+    vim -u <vinux repo path>/vimrc
+
+
+replace `<vinux repo path>` to any directory you want, ie. `~/work/vinux`
+
+< RemoveVinux >____________________________________________________________~
+                                                        *vinux-remove*
+
+Just delete folder `~/.vim` in MacOS and linux or `/c/Users/yourname/vimfiles` in
+MS-Window
+
+Config                                           *vinux-config*
+==============================================================================
+
+After installed vinux, you will find `feature.vim` in `~/.vim/`.
+
+Open feature.vim, following features can be configed:
+
+
+    let g:vinux_coding_style.cur_val='google'
+    let g:feat_enable_writing=0
+    let g:feat_enable_tools=1
+    let g:feat_enable_airline=0
+    let g:vinux_plugin_dir.cur_val='/Users/tracyone/.vim/bundle/'
+    let g:feat_enable_frontend=0
+    let g:fuzzy_matcher_type.cur_val='py-matcher'
+    let g:enable_auto_plugin_install.cur_val='on'
+    let g:feat_enable_lsp=1
+    let g:feat_enable_vim=1
+    let g:git_plugin_name.cur_val='vim-fugitive'
+    let g:enable_powerline_fonts.cur_val='on'
+    let g:feat_enable_edit=1
+    let g:grepper_plugin.cur_val='neomake-multiprocess'
+    let g:feat_enable_c=1
+    let g:tagging_program.cur_val='gtags'
+    let g:feat_enable_jump=1
+    let g:feat_enable_basic=1
+    let g:ctrlp_caching_type.cur_val='limit'
+    let g:feat_enable_fun=0
+    let g:enable_sexy_mode.cur_val='off'
+    let g:feat_enable_gui=1
+    let g:feat_enable_tmux=1
+    let g:fuzzysearcher_plugin_name.cur_val='fzf'
+    let g:complete_plugin_type.cur_val='coc.nvim'
+    let g:file_explorer_plugin.cur_val='nerdtree'
+    let g:feat_enable_complete=1
+    let g:feat_enable_markdown=0
+    let g:feat_enable_zsh=1
+    let g:message_delay_time.cur_val='5000'
+    let g:feat_enable_git=1
+    let g:feat_enable_help=1
+    let g:vinux_version='vinux V1.9.0 @9.0.1787'
+
+
+There are two kind of variable:
+
+1. variables for enabling feature which prefix is g:feat_enable_. Set 1 to
+enable, 0 to disable
+
+2. variables for controlling some detail of feature or global settings which
+suffix is .cur_val. Use tab to select candidates option.
+
+For the detail of features please see |vinux_config|.
+
+< ConfigDynamically >____________________________________________________________~
+                                                        *vinux-DynConfig*
+
+You can edit feature.vim manually or update it dynamically using following
+keymapping:
+
+1.`<SPC>fe`: enable feature dynamically.
+2. `<SPC>fd`: disable feature dynamically.
+
+By default, vinux will use ctrlp to filter the features
+
+Keymapping                                              *vinux-keymapping*
+==============================================================================
+
+Please see |vinux_keymapping| for detail.
+
+PluginsList                                              *vinux-plugins*
+==============================================================================
+
+Please see |vinux_plugins| for detail.
+
+API                                                     *vinux-api*
+==============================================================================
+
+Please see |vinux_api| for detail.
+
+vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:

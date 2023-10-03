@@ -1,0 +1,130 @@
+vinux_plugins.txt	Last change: June 18 2024
+vinux_plugins - TABLE OF CONTENTS                        *vinux_plugins*
+==============================================================================
+YouCompleteMe                                                  |YouCompleteMe|
+coc.nvim                                                       |coc.nvim|
+vimcomplete                                                    |vimcomplete|
+asyncomplete.vim                                               |asyncomplete.vim|
+nvim-cmp                                                       |nvim-cmp|
+vim-lsp                                                       |vim-lsp|
+ 
+
+
+==============================================================================
+
+YouCompleteMe                                                 *YouCompleteMe*
+==============================================================================
+
+Check |vinux-complete| to know how to select YouCompleteMe.
+
+YouCompleteMe is a complex plugin that requires compilation before use, and
+this compilation process needs to be done by you manually. The following are
+merely suggestions to guide you.
+
+By default, If you are using the latest stable version of OS, vinux will get
+the latest version of YouCompleteMe. vinux also provide a legacy version of
+YouCompleteMe that support python2.
+
+For the latest version of YouCompleteMe, your OS must support python3.8+, and
+install the vim9 or latest version of neovim.
+
+`Build YouCompleteMe`
+
+for latest version of YouCompleteMe:
+
+  cd ~/.vim/bundle/YouCompleteMe/
+  python3 ./install.py --clangd-completer
+
+for legacy version of YouCompleteMe:
+
+  cd ~/.vim/bundle/YouCompleteMe/
+  python2 ./install.py --clang-completer
+
+
+If you want more language support, see `./install.py --help` or 
+see the official document |youcompleteme|
+
+Vinux provide some example `.ycm_extra_conf.py` that locate in `rc/ycm_conf`
+folder
+
+YouCompleteMe provide powerful API to complete, find
+definition,reference,caller and so on. see |complete-api| for detail.
+
+
+coc.nvim                                                      *coc.nvim*
+==============================================================================
+
+Coc.nvim enhances your (Neo)Vim to match the user experience provided by
+VSCode through a rich extension ecosystem and implemented the client features
+specified by Language Server Protocol (3.17 for now), see |coc-lsp|.
+
+Some features (like completion) automatically works by default, all of them
+can be disabled by |coc-configuration|.
+
+Some key features:~
+
+  • Typescript APIs compatible with both Vim8 and Neovim.
+  • Loading VSCode-like extensions |coc-api-extension|.
+  • Configuring coc.nvim and its extensions with JSON configuration
+    |coc-configuration|.
+  • Configuring Language Servers that using Language Server Protocol (LSP)
+    |coc-config-languageserver|.
+
+Requirement:
+
+Neovim >= 0.4.0 or Vim >= 8.1.1719.
+
+NodeJS https://nodejs.org/ >= 16.18.0.
+
+coc.nvim use json to config some detail of coc, in vinux, this config locate
+in:
+
+`rc/complete/coc-settings.json`
+
+coc.nvim need install coc extensions before you can use, vinux has implemented a function that install
+coc extensions automatically base on the filetype.
+
+see `rc/complete/coc.vim`
+
+
+vimcomplete                                                     *vimcomplete*
+==============================================================================
+
+Async autocompletion plugin written entirely in Vim9script.
+
+configuration for vimcomplete is located in `rc/complete/vimcomplete.vim`
+
+:help |vimcomplete.txt|
+
+asyncomplete.vim                                            *asyncomplete.vim*
+==============================================================================
+
+Async autocompletion for Vim 8 and Neovim with |timers|.
+
+This is inspired by https://github.com/roxma/nvim-complete-manager but written
+in pure Vim Script.
+
+configuration for asyncomplete.vim is located in `rc/complete/asyncomplete.vim`
+
+:help |asyncomplete.txt|
+
+nvim-cmp                                                           *nvim-cmp*
+==============================================================================
+
+A completion plugin for neovim coded in Lua.
+
+configuration for nvim-cmp is located in `lua/nvim_cmp.lua`
+
+vim-lsp                                                            *vim-lsp*
+==============================================================================
+
+Async Language Server Protocol (LSP) for Vim 8 and Neovim.
+
+Suitable for vim version that only support vim script
+
+configuration for nvim-cmp is located in `rc/lsp.vim`
+
+
+
+
+vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:
