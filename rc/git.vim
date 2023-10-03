@@ -5,6 +5,18 @@ else
     let g:git_plugin_name.cur_val = 'vim-fugitive'
     execute 'source '.$VIMFILES.'/rc/fugitive.vim'
 endif
+if g:feat_enable_basic == 1
+    if g:file_explorer_plugin.cur_val == 'nerdtree'
+       Plug 'Xuyuanp/nerdtree-git-plugin' 
+       if g:enable_powerline_fonts.cur_val == 'on'
+           let g:NERDTreeGitStatusUseNerdFonts = 1
+       else
+           let g:NERDTreeGitStatusUseNerdFonts = 0
+       endif
+    elseif g:file_explorer_plugin.cur_val == 'defx.nvim'
+        Plug 'kristijanhusak/defx-git'
+    endif
+endif
 
 nnoremap gho :call te#git#browse_file(1)<cr>
 xmap gho :<c-u>call te#git#browse_file(3)<cr>

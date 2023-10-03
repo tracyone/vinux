@@ -10,7 +10,6 @@ if  g:file_explorer_plugin.cur_val == 'defx.nvim'
         let s:defx_option=':Defx -toggle -split=vertical -winwidth=50 -direction=topleft '
         if g:enable_powerline_fonts.cur_val == 'on'
             Plug 'kristijanhusak/defx-icons'
-            Plug 'kristijanhusak/defx-git'
             let s:defx_option.=' -columns=git:icons:indent:filename:type '
         endif
         " Open nerd tree
