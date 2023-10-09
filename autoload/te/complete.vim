@@ -32,15 +32,16 @@ function! te#complete#goto_def(open_type) abort
             return 0
         endif
     endif
-    if get(g:, 'feat_enable_complete', 0)
-        if g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
-            let l:ret=s:YcmGotoDef()
-        endif
+
+    if get(g:, 'feat_enable_complete', 0) && 
+                \ g:complete_plugin_type.cur_val ==# 'YouCompleteMe' 
+        let l:ret=s:YcmGotoDef()
     elseif get(g:, 'feat_enable_lsp') == 1
         let l:ret=te#lsp#gotodefinion()
     else
         let l:ret = -1 
     endif
+
 
     if te#env#SupportTimer() && l:ret == 0
         call timer_start(200, function('te#complete#cstag'), {'repeat': 1})
