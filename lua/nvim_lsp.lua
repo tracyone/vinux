@@ -209,8 +209,8 @@ require("mason").setup({
     },
 })
 require("mason-lspconfig").setup({
-    ensure_installed = { "vimls", "lua_ls", 'bashls', 'clangd', 'pyright'},
-    automatic_installation = true, 
+    ensure_installed = { "vimls", "lua_ls", "bashls", "clangd", "pyright", "marksman"},
+    automatic_installation = true,
     handlers = nil,
 })
 
@@ -285,3 +285,18 @@ require'lsp_signature'.setup(cfg) -- no need to specify bufnr if you don't use t
 -- You can also do this inside lsp on_attach
 -- note: on_attach deprecated
 require'lsp_signature'.on_attach(cfg, bufnr) -- no need to specify bufnr if you don't use toggle_key
+
+
+local null_ls = require 'null-ls'
+null_ls.setup()
+
+require("mason-null-ls").setup({
+    ensure_installed = {
+        "stylua", -- lua
+        "shfmt", -- shell script
+        "shellcheck",
+        "autopep8", --python
+        "prettier", -- web language
+    },
+    handlers = {},
+})

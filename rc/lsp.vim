@@ -5,6 +5,8 @@ if te#env#IsNvim() >= 0.5
     Plug 'folke/trouble.nvim'
     Plug 'ray-x/lsp_signature.nvim'
     Plug 'onsails/lspkind.nvim'
+    Plug 'nvimtools/none-ls.nvim'
+    Plug 'jay-babu/mason-null-ls.nvim'
     function! s:lsp_setup()
 lua << EOF
         require('nvim_lsp')
