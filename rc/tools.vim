@@ -25,7 +25,9 @@ Plug 'qpkorr/vim-renamer',{'on': 'Ren'}
 Plug 'Shougo/vinarise.vim',{'on': 'Vinarise'}
 Plug 'will133/vim-dirdiff',{'on': 'DirDiff'}
 if te#env#IsDisplay()
-    Plug 'justinmk/vim-gtfo' "got to file explorer or terminal
+    "got to file explorer or terminal
+    Plug 'justinmk/vim-gtfo', {'on': []}
+    call te#feat#register_vim_enter_setting2([0], ['vim-gtfo'])
 endif
 Plug 'adah1972/fencview',{'on': 'FencManualEncoding'}
 if te#env#IsMac()
