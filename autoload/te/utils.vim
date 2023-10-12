@@ -209,6 +209,11 @@ function! te#utils#EchoWarning(str,...) abort
         call add(s:global_echo_str, a:str)
         return
     endif
+    if g:message_delay_time.cur_val == '0'
+        redraw!
+        execut 'echohl '.l:level | echom ' '.a:str | echohl None
+        return
+    endif
 
     if te#env#IsNvim() != 0 && te#env#SupportFloatingWindows() == 2
         let l:str= ' '.a:str
