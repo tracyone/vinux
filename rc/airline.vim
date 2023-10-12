@@ -82,6 +82,8 @@ function! s:airline_setting()
     endif
     if g:feat_enable_jump
         call add(g:airline_extensions, g:fuzzysearcher_plugin_name.cur_val)
+        call add(g:airline_extensions, 'bookmark')
+        let g:airline#extensions#bookmark#enabled = 1
     endif
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
