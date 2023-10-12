@@ -4,13 +4,12 @@
 Plug 'mhinz/vim-startify',{'commit': '5df5b7478c09991bd20ab50cc65023cda826b2bf'}
 " }}}
 " VimStartify {{{
-function! StartifyEntryFormat()
-    if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
+if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
+    autocmd FileType startify call glyph_palette#apply()
+    function! StartifyEntryFormat()
         return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
-    else
-        return "entry_path"
-    endif
-endfunction
+    endfunction
+endif
 if te#env#IsWindows()
     let g:startify_session_dir = $VIMFILES .'\sessions'
 else
