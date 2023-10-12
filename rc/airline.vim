@@ -20,18 +20,22 @@ if g:enable_powerline_fonts.cur_val ==# 'on'
     let g:airline_symbols.branch = ''
     let g:airline_symbols.readonly = ''
     let g:airline_powerline_fonts = 1
+    let g:airline_symbols.maxlinenr = '☰'
+    let g:airline_symbols.dirty='⚡'
+    let g:airline_symbols.linenr = ' :'
+    let g:airline_symbols.colnr = ' :'
 else
     let g:airline_symbols.branch = '⎇'
+    let g:airline_symbols.maxlinenr = '㏑'
+    let g:airline_symbols.linenr = '¶'
+    let g:airline_symbols.colnr = ' ℅:'
 endif
 let g:airline_section_c_sep = ' | '
-let g:airline_symbols.maxlinenr = '☰'
-let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.colnr = ' ℅:'
 set noshowmode 
 
 
@@ -82,11 +86,16 @@ function! s:airline_setting()
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
     let g:airline#extensions#tabline#show_tab_nr = 1
-    let g:airline#extensions#tabline#formatter = 'default'
+    if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
+        let g:airline#extensions#tabline#formatter = 'webdevicons'
+    else
+        let g:airline#extensions#tabline#formatter = 'default'
+    endif
     let g:airline#extensions#tabline#buffer_nr_show = 0
     let g:airline#extensions#tabline#fnametruncate = 16
     let g:airline#extensions#tabline#fnamecollapse = 2
     let g:airline#extensions#tabline#buffer_idx_mode = 1
+    let g:airline#extensions#tabline#show_tab_type = 0
     let g:airline#extensions#tabline#fnamemod = ':p:t'
     let g:airline#extensions#hunks#enabled = 0
     let g:airline_detect_modified=1
@@ -96,7 +105,6 @@ function! s:airline_setting()
     let g:airline#extensions#ycm#enabled = 0
     let g:airline#extensions#ctrlp#show_adjacent_modes = 0
     let g:airline_highlighting_cache = 1
-    let g:airline#extensions#tabline#show_tab_type = 0
 
 
     if te#env#SupportAsync()
@@ -120,6 +128,7 @@ function! s:airline_setting()
         catch
         endtry
     endif
+    :AirlineRefresh
 endfunction
 
 call te#feat#register_vim_enter_setting2([function('<SID>airline_setting')], ['vim-airline'])
