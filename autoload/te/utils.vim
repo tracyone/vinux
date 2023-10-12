@@ -65,7 +65,7 @@ function! te#utils#confirm(str, menu_list, action) abort
     endif
 
     let l:confirm_obj.menu_list = a:menu_list
-    let l:confirm_obj.prompt_str = a:str
+    let l:confirm_obj.prompt_str = " ".a:str
 
     if te#env#IsNvim() >= 0.5
         let l:bufnr = nvim_create_buf(v:false, v:false)
@@ -76,9 +76,9 @@ function! te#utils#confirm(str, menu_list, action) abort
         call nvim_buf_set_keymap(l:bufnr, 'n', '<C-c>', ':call nvim_win_close(0, v:true)<cr>', {'silent':v:true })
         call nvim_buf_set_keymap(l:bufnr, 'n', 'y', '/\c^y<cr><cr>', {'silent':v:true })
         call nvim_buf_set_keymap(l:bufnr, 'n', 'n', '/\c^n<cr><cr>', {'silent':v:true })
-        let l:opts = {'relative': 'editor', 'width': &columns/6, 'height': len(a:menu_list), 'col': &columns/2-len(a:str)/2,
+        let l:opts = {'relative': 'editor', 'width': &columns/6, 'height': len(a:menu_list), 'col': &columns/2-len(l:confirm_obj.prompt_str)/2,
                     \ 'row': &lines/2 - len(a:menu_list)/2, 'anchor': 'NW', 'border': 'single', 'style': 'minimal',
-                    \ 'zindex': len(s:ctx) + 1, 'title':a:str, 'focusable': v:true}
+                    \ 'zindex': len(s:ctx) + 1, 'title':l:confirm_obj.prompt_str, 'focusable': v:true}
         let l:confirm_obj.win_id=nvim_open_win(l:bufnr, v:false,l:opts)
         let l:len = 0
         for l:str in a:menu_list
@@ -97,7 +97,7 @@ function! te#utils#confirm(str, menu_list, action) abort
                     \ callback: 'ConfirmResult',
                     \ border: [],
                     \ filter: 'te#utils#confirm_filter',
-                    \ title: a:str,
+                    \ title: l:confirm_obj.prompt_str,
                     \ tab: -1,
                     \ hidden: 1,
                     \ zindex: len(s:ctx),
@@ -113,7 +113,7 @@ function! te#utils#confirm(str, menu_list, action) abort
             let l:choices .= "&".l:needle."\n"
         endfor
         let l:confirm_obj.win_id = 0
-        let l:result = confirm(a:str, choices, 1)
+        let l:result = confirm(l:confirm_obj.prompt_str, choices, 1)
         let s:ctx[l:confirm_obj.win_id] = l:confirm_obj
         return ConfirmResult(l:confirm_obj.win_id, l:result)
     endif
