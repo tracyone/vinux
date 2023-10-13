@@ -89,7 +89,10 @@ function! s:airline_setting()
     let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
     let g:airline#extensions#tabline#show_tab_nr = 1
     if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
-        let g:airline#extensions#tabline#formatter = 'webdevicons'
+        if te#env#IsNvim() == 0
+            let g:airline#extensions#tabline#formatter = 'webdevicons'
+            call airline#add_statusline_func('AirlineWebDevIcons')
+        endif
     else
         let g:airline#extensions#tabline#formatter = 'default'
     endif

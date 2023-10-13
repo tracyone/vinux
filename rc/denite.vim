@@ -173,6 +173,11 @@ function! s:denite_nvim_setting() abort
     nnoremap  <silent><Leader>qc :Denite command_history<cr>
     "fly on grep
     nnoremap  <silent><Leader>pf :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
+    if te#env#IsNvim() == 0
+        if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
+            call devicons#plugins#denite#init()
+        endif
+    endif
 endfunction
 "}}}
 

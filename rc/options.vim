@@ -178,17 +178,12 @@ if get(g:,'feat_enable_airline') != 1
         if get(g:, 'feat_enable_lsp') == 1
             let l:mystatus_line.=te#lsp#get_lsp_server_name(s:right_seperator)
         endif
+        let l:mystatus_line.=s:git_branch
         if a:type == 1
-            let l:mystatus_line.=s:git_branch
             let l:mystatus_line.=s:function_name
-            let l:mystatus_line.='%{&ft}'.s:seperator."%{(&fenc!=''?&fenc:&enc)}[%{&ff}]".s:seperator.'%p%%[%l,%v]'
-            let l:mystatus_line.=s:seperator."%{strftime(\"%m/%d\-\%H:%M\")} "
-        elseif a:type == 3
-            "for win32 ctags make gvim slow...
-            let l:mystatus_line.=s:git_branch
-            let l:mystatus_line.='%{&ft}'.s:seperator."%{(&fenc!=''?&fenc:&enc)}[%{&ff}]".s:seperator.'%p%%[%l,%v]'
-            let l:mystatus_line.=s:seperator."%{strftime(\"%m/%d\-\%H:%M\")} "
         endif
+        let l:mystatus_line.='%{&ft}'.s:seperator."%{(&fenc!=''?&fenc:&enc)}[%{&ff}]".s:seperator.'%p%%[%l,%v]'
+        let l:mystatus_line.=s:seperator."%{strftime(\"%m/%d\-\%H:%M\")} "
         if get(g:, 'feat_enable_lsp') == 1
             let l:mystatus_line.=s:seperator.te#lsp#diagnostics_info('warning')
             let l:mystatus_line.=s:seperator.te#lsp#diagnostics_info('error')

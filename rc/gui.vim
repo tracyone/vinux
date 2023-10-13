@@ -35,6 +35,8 @@ if g:enable_powerline_fonts.cur_val ==# 'on'
     else
         Plug 'ryanoasis/vim-devicons'
         Plug 'lambdalisue/glyph-palette.vim'
+        let g:webdevicons_enable_airline_tabline = 1
+        let g:webdevicons_enable_airline_statusline = 1
     endif
 endif
 " }}}

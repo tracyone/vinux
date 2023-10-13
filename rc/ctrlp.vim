@@ -147,6 +147,11 @@ function! s:ctrlp_setting()
 
     nnoremap  <silent><Leader>qc :call te#ctrlp#history#start(':')<cr>
     nnoremap  <silent><Leader>q/ :call te#ctrlp#history#start('/')<cr>
+    if te#env#IsNvim() == 0
+        if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
+            call devicons#plugins#ctrlp#init()
+        endif
+    endif
 endfunction
 
 call te#feat#register_vim_enter_setting2([function('<SID>ctrlp_setting')], s:ctrlp_plugins)
