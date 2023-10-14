@@ -27,7 +27,9 @@ xmap ghc :<c-u>call te#git#browse_file(2)<cr>
 
 nnoremap  <silent><Leader>gl :call te#git#show_log(".")<cr>
 nnoremap  <silent><Leader>gL :call te#git#show_log(".", "--all")<cr>
-Plug 'rhysd/conflict-marker.vim'
+Plug 'rhysd/conflict-marker.vim', {'on': []}
+call te#feat#register_vim_enter_setting2([0], 
+            \ ['conflict-marker.vim'])
 if te#env#SupportFeature('signs')
     Plug 'airblade/vim-gitgutter', { 'on': [] }
     call te#feat#register_vim_enter_setting2(['GitGutterEnable'], 

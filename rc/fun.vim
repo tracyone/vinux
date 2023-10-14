@@ -14,7 +14,7 @@ if !te#env#SupportTimer()
     :finish
 endif
 
-Plug 'itchyny/screensaver.vim'
+Plug 'itchyny/screensaver.vim', {'on': []}
 
 "config ...
 function! s:fun_setting()
@@ -23,7 +23,7 @@ function! s:fun_setting()
     silent! call screensaver#source#password#set(sha256(s:password))
     nnoremap  <silent><Leader>ar :call <SID>enter_screen_saver(0)<cr>
 endfunction
-call te#feat#register_vim_enter_setting(function('<SID>fun_setting'))
+call te#feat#register_vim_enter_setting2([function('<SID>fun_setting')], ['screensaver.vim'])
 
 " 1500000 ms (45 mins)
 let s:expires_time=2700000

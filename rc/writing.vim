@@ -1,7 +1,7 @@
 "wirting something...
 Plug 'junegunn/goyo.vim',{'on': 'Goyo'}
 Plug 'jceb/vim-orgmode', {'for': 'org'}
-Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-speeddating', {'on': []}
 Plug 'chrisbra/NrrwRgn',{'on': 'NR'}
 
 if te#env#IsDisplay()
@@ -12,6 +12,7 @@ Plug 'mzlogin/vim-markdown-toc',{'for': 'markdown'}
 if te#env#IsNvim() < 0.6
     Plug 'plasticboy/vim-markdown',{'for': 'markdown'}
 endif
+call te#feat#register_vim_enter_setting2([0], ['vim-speeddating'])
 
 " toggle free writing in vim (Goyo)
 nnoremap  <silent><Leader>to :Goyo<cr>

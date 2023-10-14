@@ -109,8 +109,8 @@ if !te#env#SupportTerminal() && !te#env#IsTmux()
 endif
 Plug 'tracyone/love.vim'
 Plug 'tracyone/mark.vim',{'on':[]}
-call te#feat#register_vim_enter_setting2([0],['mark.vim'])
-Plug 'itchyny/vim-cursorword'
+Plug 'itchyny/vim-cursorword', {'on':[]}
+call te#feat#register_vim_enter_setting2([0],['mark.vim', 'vim-cursorword'])
 Plug 'thinca/vim-quickrun',{'on': '<Plug>(quickrun)'}
 if(!te#env#IsWindows())
     Plug 'vim-scripts/sudo.vim', {'on': ['SudoRead', 'SudoWrite']}
