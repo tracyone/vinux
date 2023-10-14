@@ -38,7 +38,7 @@ Plug 'kshenoy/vim-signature',{'on':[]}
 call te#feat#register_vim_enter_setting2(['let g:SignatureEnabledAtStartup=1'],['vim-signature'])
 Plug 'MattesGroeger/vim-bookmarks', { 'on': ['BookmarkShowAll', 'BookmarkToggle', 'BookmarkAnnotate']}
 if get(g:,'feat_enable_airline') == 0
-    if te#env#IsNvim() > 0.9
+    if te#env#IsNvim() > 0.9 && g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
         Plug 'romgrk/barbar.nvim'
     else
         Plug 'tracyone/vim-buftabline'
