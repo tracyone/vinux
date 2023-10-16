@@ -548,6 +548,7 @@ function! te#utils#tab_buf_switch(num) abort
             if exists( '*tabpagenr' ) && tabpagenr('$') != 1
                 execute 'normal '."\<Plug>AirlineSelectTab".s:lastopen_tab
             else
+                :update
                 :b#
             endif
         else
@@ -558,6 +559,7 @@ function! te#utils#tab_buf_switch(num) abort
         endif
     else
         if exists(':BufferGoto')
+            :update
             if a:num == 0
                 :BufferPrevious
             elseif a:num == -1
@@ -581,6 +583,7 @@ function! te#utils#tab_buf_switch(num) abort
                 execute 'normal '.a:num.'gt'
             endif
         elseif exists('g:buftabline_numbers') && g:buftabline_numbers == 2
+            :update
             if a:num == 0
                 :bprev
             elseif a:num == -1
@@ -591,6 +594,7 @@ function! te#utils#tab_buf_switch(num) abort
                 execute 'normal '."\<Plug>BufTabLine.Go(".a:num.')'
             endif
         else
+            :update
             if a:num == 0
                 :bprev
                 return

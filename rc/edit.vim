@@ -43,7 +43,6 @@ let g:delimitMate_expand_space = 0
 " Algin ---------------------------{{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
 xmap  <silent><leader>al <Plug>(LiveEasyAlign)
 " Live easy align
 nmap  <silent><leader>al <Plug>(LiveEasyAlign)

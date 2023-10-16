@@ -146,7 +146,7 @@ if te#env#IsVim8() || te#env#IsNvim() != 0
         "g:neomake_ft_enabled_makers=[]
         "let g:neomake_vim_enabled_makers = []
         "let g:neomake_c_enabled_makers = []
-        nnoremap  <silent><Leader>sc :Neomake<cr>
+        nnoremap  <silent><Leader>nn :Neomake<cr>
         "let g:neomake_open_list=2
         let g:neomake_info_sign = {'text': g:vinux_diagnostics_signs_info, 'texthl': 'NeomakeInfoSign'}
         let g:neomake_warning_sign = {
