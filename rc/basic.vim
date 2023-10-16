@@ -1,6 +1,5 @@
 " basic package
 " Package info {{{
-let s:sexy_command=[]
 if  g:file_explorer_plugin.cur_val == 'defx.nvim'
     if te#env#IsNvim() == 0 && te#env#IsVim() < 802
         call te#utils#EchoWarning("defx requires Neovim 0.4.0+ or Vim8.2+ with Python3.6.1+")
@@ -20,7 +19,7 @@ if  g:file_explorer_plugin.cur_val == 'defx.nvim'
         execute 'nnoremap  <silent><F12> '.s:defx_option.'<cr>'
         " Open nerd tree
         nnoremap  <silent><leader>nf :Defx -toggle -split=vertical -winwidth=50 -direction=topleft `expand('%:p:h')` -search=`expand('%:p')`<CR> 
-        call add(s:sexy_command, s:defx_option)
+        call te#tools#register_sexy_command(s:defx_option)
     endif
 endif
 
@@ -44,7 +43,7 @@ endif
 
 if g:file_explorer_plugin.cur_val == 'nerdtree'
     Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle','NERDTreeFind'] }
-    call add(s:sexy_command, 'NERDTreeToggle')
+    call te#tools#register_sexy_command('NERDTreeToggle')
     let g:NERDTreeShowLineNumbers=0	"don't show line number
     let g:NERDTreeWinPos='left'	"show nerdtree in the rigth side
     "let NERDTreeWinSize='30'
@@ -76,7 +75,7 @@ if te#env#check_requirement()
     " Open tagbar
     nnoremap <silent><F9> :TagbarToggle<CR>
     nnoremap  <silent><leader>tt :TagbarToggle<CR>
-    call add(s:sexy_command, 'TagbarOpen')
+    call te#tools#register_sexy_command('TagbarOpen')
     let g:tagbar_left=0
     let g:tagbar_width=30
     let g:tagbar_sort=0
@@ -89,7 +88,7 @@ else
     Plug 'tracyone/vim-taglist'
     nnoremap <silent><F9> :TlistToggle<CR>
     nnoremap  <silent><leader>tt :TlistToggle<CR>
-    call add(s:sexy_command, ':TlistToggle')
+    call te#tools#register_sexy_command(':TlistToggle')
     let Tlist_Show_One_File = 1
     let Tlist_Use_Right_Window = 1
     let Tlist_GainFocus_On_ToggleOpen=1
@@ -332,17 +331,12 @@ if te#env#SupportAsync()
 endif
 " Save basic setting
 nnoremap  <silent><Leader>lo :Love<cr>
+nnoremap  <silent><Leader>ts :call te#tools#run_sexy_command()<cr>
+
 
 if g:enable_sexy_mode.cur_val ==# 'on'
-    function! SexyCommnad()
-        for l:n in s:sexy_command
-            silent! execute l:n
-        endfor
-        silent! execute '2 wincmd w'
-    endfunction
-    call te#feat#register_vim_enter_setting(function('SexyCommnad'))
+    call te#feat#register_vim_enter_setting(function('te#tools#run_sexy_command'))
 endif
-
 
 
 

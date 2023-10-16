@@ -125,3 +125,16 @@ function! te#tools#get_enabler_linter() abort
         call te#utils#EchoWarning("Not support filetype: ".&filetype, 'err')
     endif
 endfunction
+
+let s:sexy_command=[]
+
+function! te#tools#register_sexy_command(cmd) abort
+    call add(s:sexy_command, a:cmd)
+endfunction
+
+function! te#tools#run_sexy_command() abort
+    for l:n in s:sexy_command
+        silent! execute l:n
+        execute '2 wincmd w'
+    endfor
+endfunction
