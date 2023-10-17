@@ -21,6 +21,13 @@ if  g:file_explorer_plugin.cur_val == 'defx.nvim'
         nnoremap  <silent><leader>nf :Defx -toggle -split=vertical -winwidth=50 -direction=topleft `expand('%:p:h')` -search=`expand('%:p')`<CR> 
         call te#tools#register_sexy_command(s:defx_option)
     endif
+elseif g:file_explorer_plugin.cur_val == 'fern.vim'
+    if te#env#IsNvim() < 0.8 && te#env#IsVim() < 802
+        call te#utils#EchoWarning("fern.vim requires Neovim 0.8+ or Vim8.0+")
+        let g:file_explorer_plugin.cur_val = 'nerdtree'
+    else
+        call te#feat#source_rc('fern.vim')
+    endif
 endif
 
 if g:file_explorer_plugin.cur_val == 'nvim-tree.lua'
