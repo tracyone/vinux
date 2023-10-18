@@ -1,4 +1,5 @@
 function! s:defx_my_settings() abort
+    setlocal nonu nornu
     " Define mappings
     nnoremap <silent><buffer><expr> <CR>
                 \ defx#async_action('drop')
@@ -65,7 +66,7 @@ function! s:defx_my_settings() abort
                 \ defx#async_action('open_tree_recursive')
     nnoremap <silent><buffer><expr> M
                 \ defx#do_action('new_multiple_files')
-    xnoremap <silent><buffer><expr> <Space>
+    xnoremap <silent><buffer><expr> -
                 \ defx#do_action('toggle_select_visual')
 endfunction
 
