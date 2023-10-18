@@ -6,12 +6,14 @@ Plug 'yuki-yano/fern-preview.vim', {'on': []}
 let s:lazy_load_plugins = ['fern.vim',
             \ 'fern-git-status.vim', 'fern-ssh', 'fern-preview.vim']
  
-if te#env#IsNvim() != 0
-    Plug 'TheLeoP/fern-renderer-web-devicons.nvim', {'on', []}
-    call add(s:lazy_load_plugins, 'fern-renderer-web-devicons.nvim')
-else
-    Plug 'lambdalisue/fern-renderer-devicons.vim', {'on': []}
-    call add(s:lazy_load_plugins, 'fern-renderer-devicons.vim')
+if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
+    if te#env#IsNvim() != 0
+        Plug 'TheLeoP/fern-renderer-web-devicons.nvim', {'on': []}
+        call add(s:lazy_load_plugins, 'fern-renderer-web-devicons.nvim')
+    else
+        Plug 'lambdalisue/fern-renderer-devicons.vim', {'on': []}
+        call add(s:lazy_load_plugins, 'fern-renderer-devicons.vim')
+    endif
 endif
 
 if g:feat_enable_jump == 1 && g:fuzzysearcher_plugin_name.cur_val == 'fzf'
@@ -25,7 +27,9 @@ call te#tools#register_sexy_command(':Fern . -drawer')
 function! s:fern_file_type_setting() abort
     setlocal nonu nornu
     if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
-        call glyph_palette#apply()
+        if te#env#IsNvim() == 0
+            call glyph_palette#apply()
+        endif
     endif
     nmap <buffer> yy <Plug>(fern-action-clipboard-copy)
     nmap <buffer> r <Plug>(fern-action-rename)
