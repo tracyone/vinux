@@ -41,8 +41,8 @@ lua << EOF
 require("nvim_tree")
 EOF
 endfunction
-nnoremap <silent><leader>te :NvimTreeToggle<cr>
-nnoremap <silent><F12> :NvimTreeToggle<cr>
+nnoremap <silent><leader>te :NvimTreeToggle .<cr>
+nnoremap <silent><F12> :NvimTreeToggle .<cr>
 nnoremap <silent><leader>nf :NvimTreeFindFile<cr>
 call te#feat#register_vim_enter_setting(function('<SID>nvim_tree_setup'))
     endif
