@@ -56,6 +56,7 @@ if g:file_explorer_plugin.cur_val == 'nerdtree'
     "let NERDTreeWinSize='30'
     let g:NERDTreeShowBookmarks=1
     let g:NERDTreeChDirMode=2
+    let g:NERDTreeMapMenu='<Tab>'
     noremap <F12> :NERDTreeToggle .<CR> 
     " Open nerd tree
     nnoremap  <silent><leader>te :NERDTreeToggle .<CR> 
