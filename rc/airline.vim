@@ -127,6 +127,8 @@ function! s:airline_setting()
         endtry
     elseif g:colors_name ==# 'space-vim-dark'
         :AirlineTheme violet
+    elseif g:colors_name ==# 'space-nvim'
+        :AirlineTheme violet
     else
         try
             execute ':AirlineTheme '. g:colors_name

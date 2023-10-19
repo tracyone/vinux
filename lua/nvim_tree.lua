@@ -81,10 +81,18 @@ local function my_on_attach(bufnr)
 		api.marks.clear()
 		api.tree.reload()
 	end
+    -- open tab silently
+	local function open_tab_silent(node)
+		local api = require("nvim-tree.api")
+
+		api.node.open.tab(node)
+		vim.cmd.tabprev()
+	end
 	-- default mappings
 	api.config.mappings.default_on_attach(bufnr)
 
 	-- custom mappings
+    vim.keymap.set("n", "l", api.node.open.edit, opts("Edit Or Open"))
     vim.keymap.set("n", "J", mark_move_j, opts("Toggle Bookmark Down"))
     vim.keymap.set("n", "K", mark_move_k, opts("Toggle Bookmark Up"))
 	vim.keymap.set("n", "m", mark_cut, opts("Cut File(s)"))
@@ -94,6 +102,7 @@ local function my_on_attach(bufnr)
     vim.keymap.set("n", "p", api.fs.paste, opts("Paste"))
 	vim.keymap.set("n", "t", mark_tab, opts("Open: New Tab"))
 	vim.keymap.set("n", "<c-t>", mark_tab, opts("Open: New Tab"))
+    vim.keymap.set('n', 'T', open_tab_silent, opts('Open Tab Silent'))
 
 	vim.keymap.set("n", "mv", api.marks.bulk.move, opts("Move Bookmarked"))
 	vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
