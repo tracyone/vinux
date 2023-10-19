@@ -182,7 +182,8 @@ nnoremap <silent><buffer> p :call <SID>paste_file()<cr>
 nnoremap <silent><buffer> r :call <SID>rename_file()<cr>
 nnoremap <silent><buffer> B :Bookmark<cr>
 nnoremap <silent><buffer> db :execute 'ClearBookmarks '.expand('<cword>')<cr>
-if g:enable_powerline_fonts.cur_val == 'on'
+
+if exists('*glyph_palette#apply')
     call glyph_palette#apply()
 endif
 
