@@ -35,8 +35,17 @@ if g:enable_powerline_fonts.cur_val ==# 'on'
     else
         Plug 'ryanoasis/vim-devicons'
         Plug 'lambdalisue/glyph-palette.vim'
-        let g:webdevicons_enable_airline_tabline = 1
-        let g:webdevicons_enable_airline_statusline = 1
+        let g:webdevicons_enable = 1
+        if g:file_explorer_plugin.cur_val == 'nerdtree'
+            let g:webdevicons_enable_nerdtree = 1
+            let g:webdevicons_conceal_nerdtree_brackets = 1
+            let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+            let g:WebDevIconsNerdTreeGitPluginForceVAlign = 0
+        endif
+        if g:feat_enable_airline == 1
+            let g:webdevicons_enable_airline_tabline = 1
+            let g:webdevicons_enable_airline_statusline = 1
+        endif
     endif
 endif
 " }}}

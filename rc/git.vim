@@ -13,7 +13,7 @@ if g:feat_enable_basic == 1
        else
            let g:NERDTreeGitStatusUseNerdFonts = 0
        endif
-       let g:NERDTreeGitStatusShowClean = 1
+       let g:NERDTreeGitStatusShowClean = 0
     elseif g:file_explorer_plugin.cur_val == 'defx.nvim'
         Plug 'kristijanhusak/defx-git'
     endif

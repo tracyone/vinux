@@ -27,7 +27,7 @@ call te#tools#register_sexy_command(':Fern . -drawer')
 function! s:fern_file_type_setting() abort
     setlocal nonu nornu
     if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
-        if exists('*glyph_palette#apply')
+        if te#env#IsNvim() == 0
             call glyph_palette#apply()
         endif
     endif

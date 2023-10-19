@@ -183,8 +183,4 @@ nnoremap <silent><buffer> r :call <SID>rename_file()<cr>
 nnoremap <silent><buffer> B :Bookmark<cr>
 nnoremap <silent><buffer> db :execute 'ClearBookmarks '.expand('<cword>')<cr>
 
-if exists('*glyph_palette#apply')
-    call glyph_palette#apply()
-endif
-
 

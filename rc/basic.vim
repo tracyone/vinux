@@ -62,8 +62,10 @@ if g:file_explorer_plugin.cur_val == 'nerdtree'
     nnoremap  <silent><leader>te :NERDTreeToggle .<CR> 
     " Open nerd tree
     nnoremap  <silent><leader>nf :NERDTreeFind<CR> 
-    "map <2-LeftMouse>  *N "double click highlight the current cursor word 
     inoremap <F12> <ESC> :NERDTreeToggle<CR>
+    if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
+        autocmd FileType nerdtree call glyph_palette#apply()
+    endif
 endif
 
 if te#env#IsNvim() >= 0.5

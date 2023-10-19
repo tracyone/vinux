@@ -5,7 +5,7 @@ Plug 'mhinz/vim-startify',{'commit': '5df5b7478c09991bd20ab50cc65023cda826b2bf'}
 " }}}
 " VimStartify {{{
 if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
-    if exists('*glyph_palette#apply')
+    if te#env#IsNvim() == 0
         autocmd FileType startify call glyph_palette#apply()
     endif
     function! StartifyEntryFormat()
