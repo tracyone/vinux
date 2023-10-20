@@ -1,6 +1,10 @@
 function! s:defx_my_settings() abort
     setlocal nonu nornu
     " Define mappings
+	nnoremap <silent><buffer><expr> > defx#do_action('resize',
+	\ defx#get_context().winwidth + 10)
+	nnoremap <silent><buffer><expr> < defx#do_action('resize',
+	\ defx#get_context().winwidth - 10)
     nnoremap <silent><buffer><expr> <CR>
                 \ defx#async_action('drop')
     nnoremap <silent><buffer><expr> <2-LeftMouse>
@@ -13,12 +17,14 @@ function! s:defx_my_settings() abort
                 \ defx#do_action('paste')
     nnoremap <silent><buffer><expr> l
                 \ defx#async_action('open')
+    "nnoremap <silent><buffer><expr> <T>
+                "\ defx#do_action('open', 'tabnew|:tabprev')
     nnoremap <silent><buffer><expr> <c-t>
-                \ defx#do_action('open', 'tabnew')
+                \ defx#do_action('drop', 'tabnew')
     nnoremap <silent><buffer><expr> <c-v>
-                \ defx#do_action('open', 'vsplit')
+                \ defx#do_action('drop', 'vsplit')
     nnoremap <silent><buffer><expr> t 
-                \ defx#do_action('open', 'tabedit')
+                \ defx#do_action('drop', 'tabedit')
     nnoremap <silent><buffer><expr> <c-j>
                 \ defx#do_action('open', 'pedit')
     nnoremap <silent><buffer><expr> P
@@ -41,7 +47,7 @@ function! s:defx_my_settings() abort
                 \ defx#async_action('cd')
     nnoremap <silent><buffer><expr> q
                 \ defx#do_action('quit')
-    nnoremap <silent><buffer><expr> <Space>
+    nnoremap <silent><buffer><expr> -
                 \ defx#do_action('toggle_select') . 'j'
     nnoremap <silent><buffer><expr> *
                 \ defx#do_action('toggle_select_all')
@@ -71,4 +77,5 @@ function! s:defx_my_settings() abort
 endfunction
 
 call s:defx_my_settings()
+
 

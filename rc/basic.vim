@@ -6,7 +6,7 @@ if  g:file_explorer_plugin.cur_val == 'defx.nvim'
         let g:file_explorer_plugin.cur_val = 'nerdtree'
     else
         Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins'}
-        let s:defx_option=':Defx -toggle -split=vertical -winwidth=50 -direction=topleft '
+        let s:defx_option=':Defx -toggle -split=vertical -winwidth=31 -direction=topleft '
         if g:enable_powerline_fonts.cur_val == 'on'
             Plug 'kristijanhusak/defx-icons'
             let s:defx_option.=' -columns=git:icons:indent:filename:type '
