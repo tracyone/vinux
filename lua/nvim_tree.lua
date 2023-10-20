@@ -83,8 +83,6 @@ local function my_on_attach(bufnr)
 	end
     -- open tab silently
 	local function open_tab_silent(node)
-		local api = require("nvim-tree.api")
-
 		api.node.open.tab(node)
 		vim.cmd.tabprev()
 	end
@@ -103,16 +101,28 @@ local function my_on_attach(bufnr)
 	vim.keymap.set("n", "t", mark_tab, opts("Open: New Tab"))
 	vim.keymap.set("n", "<c-t>", mark_tab, opts("Open: New Tab"))
     vim.keymap.set('n', 'T', open_tab_silent, opts('Open Tab Silent'))
+	vim.keymap.set("n", "P", api.node.open.preview, opts("Open Preview"))
+	vim.keymap.set("n", "<c-i>", api.node.navigate.sibling.next, opts("Next Sibling"))
+	vim.keymap.set("n", "<c-o>", api.node.navigate.sibling.prev, opts("Previous Sibling"))
 
 	vim.keymap.set("n", "mv", api.marks.bulk.move, opts("Move Bookmarked"))
 	vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
 	vim.keymap.set("n", "N", api.fs.create, opts("Create"))
 	vim.keymap.set("n", "B", api.marks.toggle, opts("Toggle Bookmark"))
+	vim.keymap.set("n", ">", '<Cmd>NvimTreeResize +20<CR>', opts("Toggle Bookmark"))
+	vim.keymap.set("n", "<", '<Cmd>NvimTreeResize -20<CR>', opts("Toggle Bookmark"))
 end
 
 -- pass to setup along with your other options
 require("nvim-tree").setup {
     disable_netrw = false,
     on_attach = my_on_attach,
+    view = {
+        float = {
+            enable = false,
+            quit_on_focus_loss = false,
+        },
+    },
+
 }
 return module
