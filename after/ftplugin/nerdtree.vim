@@ -183,4 +183,7 @@ nnoremap <silent><buffer> r :call <SID>rename_file()<cr>
 nnoremap <silent><buffer> B :Bookmark<cr>
 nnoremap <silent><buffer> db :execute 'ClearBookmarks '.expand('<cword>')<cr>
 
+nnoremap <silent><buffer> > :vertical resize +10<cr>
+nnoremap <silent><buffer> < :vertical resize -10<cr>
+
 

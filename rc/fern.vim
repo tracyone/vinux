@@ -22,6 +22,7 @@ if g:feat_enable_jump == 1 && g:fuzzysearcher_plugin_name.cur_val == 'fzf'
 endif
 
 
+let g:fern_renderer_devicons_disable_warning = 1
 call te#tools#register_sexy_command(':Fern . -drawer')
 
 function! s:fern_file_type_setting() abort
@@ -42,6 +43,9 @@ function! s:fern_file_type_setting() abort
 	nmap <buffer> <c-t> <Plug>(fern-action-open:tabedit)
 	nmap <buffer> <c-x> <Plug>(fern-action-open:split)
 	nmap <buffer> I <Plug>(fern-action-hidden:toggle)
+	nmap <buffer> > <Plug>(fern-action-zoom:half)
+	nmap <buffer> < <Plug>(fern-action-zoom:reset)
+
     "preview
     nmap <buffer> P <Plug>(fern-action-preview:auto:toggle)
 endfunction
@@ -55,7 +59,6 @@ function! s:fern_settings() abort
             let g:fern#renderer = "devicons"
         endif
     endif
-    
     nnoremap <silent><leader>te :Fern . -drawer<cr>
     nnoremap <silent><F12> :Fern . -drawer<cr>
     nnoremap <silent><leader>nf :Fern %:h -drawer<cr>

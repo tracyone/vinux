@@ -119,11 +119,12 @@ endfunction
 
 "list all plugin
 function! te#plug#list() abort
-    if buflisted('[plugins_list]')
-        call te#utils#EchoWarning("Plugin list buffer is already exist!")
-        execute ':b '.bufnr("[plugins_list]")
-        return
+    if exists('s:plugins_list_win_id') && s:plugins_list_win_id > 0
+        if win_gotoid(s:plugins_list_win_id) == v:true
+            return
+        endif
     endif
+    let s:plugins_list_win_id=-1
     tabnew
     nnoremap  <silent><buffer> q :call te#utils#quit_win(0)<cr>
     nnoremap  <silent><buffer> <2-LeftMouse> :call te#plug#open_doc()<cr>
@@ -159,4 +160,5 @@ function! te#plug#list() abort
     call s:syntax()
     :0
     :f [plugins_list]
+    let s:plugins_list_win_id=bufwinid(bufnr('%'))
 endfunction
