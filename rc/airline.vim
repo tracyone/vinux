@@ -119,21 +119,19 @@ function! s:airline_setting()
     "load extension here
     call airline#extensions#load()
 
-    if g:colors_name =~ 'gruvbox*'
-        try
-            :AirlineTheme gruvbox8
-        catch
-            :AirlineTheme gruvbox
-        endtry
-    elseif g:colors_name ==# 'space-vim-dark'
-        :AirlineTheme violet
-    elseif g:colors_name ==# 'space-nvim'
-        :AirlineTheme violet
+    
+    let l:theme_map = {'gruvbox8_hard':'gruvbox8', 'gruvbox8_soft':'gruvbox8', 
+                \ 'space-vim-dark':'violet', 'space-nvim':'violet', 'jellybeans-nvim':'jellybeans',
+                \ 'janah':'base16_grayscale'
+                \ }
+    if has_key(l:theme_map, g:colors_name)
+        execute ':AirlineTheme '.l:theme_map[g:colors_name]
     else
-        try
-            execute ':AirlineTheme '. g:colors_name
-        catch
-        endtry
+        execute ':AirlineTheme '. g:colors_name
+        if g:airline_theme != g:colors_name
+            "default
+            :AirlineTheme base16_google
+        endif
     endif
     :AirlineRefresh
 endfunction
