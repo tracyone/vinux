@@ -46,11 +46,7 @@ augroup filetype_group
     autocmd FileType gitcommit setlocal nofoldenable cursorline
     autocmd FileType qfreplace,vimcalc,man setlocal nonu nornu nofoldenable | imap <buffer> <c-d> :q<cr>
                 \ | nmap <buffer> q :bdelete<cr> | setlocal matchpairs-=<:>
-    autocmd FileType vim-plug nnoremap <buffer> <silent> H :call te#plug#open_doc()<cr> 
-                \ | nnoremap <buffer> <silent> <leader>ol :call te#plug#browse_plugin_url()<cr>
-                \ | nnoremap <buffer> <silent> <c-t> :call te#plug#open_plugin_dir(1)<cr>
-                \ | nnoremap <buffer> <silent> D :call te#plug#show_log()<cr>
-                \ | call te#plug#extra_key()
+    autocmd FileType vim-plug  call te#plug#extra_key()
 augroup END
 if te#env#IsNvim() != 0
     autocmd misc_group TermOpen * setlocal nonu nornu signcolumn=no | :startinsert

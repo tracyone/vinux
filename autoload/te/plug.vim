@@ -68,14 +68,6 @@ function! te#plug#browse_plugin_url() abort
 endfunction
 
 
-function! s:scroll_preview(down) abort
-  silent! wincmd P
-  if &previewwindow
-    execute 'normal!' a:down ? "\<c-e>" : "\<c-y>"
-    wincmd p
-  endif
-endfunction
-
 function! s:get_plugin_name_in_visual_mode() abort
     let l:sline=line("'<")
     let l:eline=line("'>")
@@ -87,13 +79,29 @@ function! s:get_plugin_name_in_visual_mode() abort
     return l:result
 endfunction
 
+function! s:update_plugins(vmode) abort
+    if a:vmode == 1
+        let l:plugin_name = <SID>get_plugin_name_in_visual_mode()
+    else
+        let l:plugin_name = matchstr(getline('.'), '^[x-] \zs\S\+\ze:')
+    endif
+    if te#env#IsNvim() > 0
+        :bdelete
+    endif
+    execute 'PlugUpdate '.l:plugin_name
+endfunction
+
 function! te#plug#extra_key() abort
-    nnoremap <silent> <buffer> J :call <sid>scroll_preview(1)<cr>
-    nnoremap <silent> <buffer> K :call <sid>scroll_preview(0)<cr>
-    nnoremap <silent> <buffer> U :execute ':PlugUpdate '.matchstr(getline('.'), '^[x-] \zs\S\+\ze:')<cr>
-    xnoremap <silent> <buffer> U :<c-u>execute ':PlugUpdate '.<SID>get_plugin_name_in_visual_mode()<cr>
-    nnoremap <silent> <buffer> <c-n> :call search('^  \X*\zs\x')<cr>
-    nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
+    nnoremap  <silent><buffer> q :bdelete<cr>
+    nnoremap  <silent><buffer> <2-LeftMouse> :call te#plug#open_doc()<cr>
+    nnoremap  <silent><buffer> <s-LeftMouse> :call te#plug#browse_plugin_url()<cr>
+    nnoremap  <silent><buffer> <RightMouse> :call te#plug#open_plugin_dir(1)<cr>
+    nnoremap <buffer> <silent> H :call te#plug#open_doc()<cr> 
+    nnoremap <buffer> <silent> <leader>ol :call te#plug#browse_plugin_url()<cr>
+    nnoremap <buffer> <silent> <c-t> :call te#plug#open_plugin_dir(1)<cr>
+    nnoremap <buffer> <silent> D :call te#plug#show_log()<cr>
+    nnoremap <silent> <buffer> U :call <SID>update_plugins(0)<cr>
+    xnoremap <silent> <buffer> U :<c-u>:call <SID>update_plugins(1)<cr>
     nnoremap <silent> <buffer> cd :call te#plug#open_plugin_dir(0)<cr>
     nmap <silent> <buffer> dd :call te#plug#open_plugin_dir(2)<cr>
     nmap <silent> <buffer> <c-j> <c-n>o
@@ -125,15 +133,6 @@ function! te#plug#list() abort
         endif
     endif
     let s:plugins_list_win_id=-1
-    tabnew
-    nnoremap  <silent><buffer> q :call te#utils#quit_win(0)<cr>
-    nnoremap  <silent><buffer> <2-LeftMouse> :call te#plug#open_doc()<cr>
-    nnoremap  <silent><buffer> <s-LeftMouse> :call te#plug#browse_plugin_url()<cr>
-    nnoremap  <silent><buffer> <RightMouse> :call te#plug#open_plugin_dir(1)<cr>
-    setlocal wrap
-    setlocal mouse=a
-    setlocal conceallevel=2 concealcursor=nc
-    setlocal keywordprg=:help iskeyword=@,48-57,_,192-255,-,#
 
     let l:output=[]
     call add(l:output, 'Vinux plugins list:')
@@ -150,15 +149,54 @@ function! te#plug#list() abort
         let l:i=l:i + 1
     endfor
     let l:output[0].=l:i-3
-    call append(0, l:output)
 
-    setlocal nomodified
-    setlocal nomodifiable
-    setlocal bufhidden=delete
-    setlocal filetype=vim-plug
-    setlocal noswapfile
-    call s:syntax()
-    :0
-    :f [plugins_list]
-    let s:plugins_list_win_id=bufwinid(bufnr('%'))
+    let l:buf_opt = {'buftype':'nofile', 'buflisted':v:false, 'bufhidden':'wipe',
+                \ 'undolevels':-1, 'textwidth':0, 'swapfile':v:false,
+                \  'filetype':'vim-plug', 'modifiable':v:false,
+                \ }
+    if te#env#IsNvim() > 0.5
+        let l:buf = nvim_create_buf(v:false, v:true)
+        let l:win_opt = {'number':v:false, 'relativenumber':v:false, 'wrap':v:false,
+                    \ 'spell':v:false, 'foldenable':v:false, 'signcolumn':"no",
+                    \  'colorcolumn':'', 'cursorline':v:true, 'previewwindow':v:true,
+                    \ }
+
+        let l:opts = {'relative': 'editor','anchor': "NW", 'border': 'rounded', 
+                    \ 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
+        let l:opts.width = &columns * 8/10 
+        let l:opts.height = &lines * 8/10 
+        let l:opts.row = (&lines - l:opts.height)/2 - 2
+        let l:opts.col = (&columns - l:opts.width)/2
+        let l:opts.title = "Vinux Plugins Manager" 
+        let l:opts.title_pos = "center" 
+        let s:plugins_list_win_id=nvim_open_win(l:buf, v:true, l:opts)
+        call nvim_win_set_option(s:plugins_list_win_id, 'winhl', 
+                    \ 'FloatBorder:vinux_border,FloatTitle:vinux_warn')
+        for [k,v] in items(l:win_opt)
+            call nvim_win_set_option(s:plugins_list_win_id, k, v)
+        endfor
+        call nvim_buf_set_lines(l:buf, 0, -1, v:false, l:output)
+        for [k,v] in items(l:buf_opt)
+            call nvim_buf_set_option(l:buf, k, v)
+        endfor
+        call s:syntax()
+    else
+        tabnew
+        call append(0, l:output)
+        for [k,v] in items(l:buf_opt)
+            if type(v) == g:t_bool
+                if v == v:false
+                    execute 'setlocal no'.k
+                elseif v == v:true
+                    execute 'setlocal '.k
+                endif
+            else
+                execute 'setlocal '.k.'='.v
+            endif
+        endfor
+        call s:syntax()
+        :0
+        :f [plugins_list]
+        let s:plugins_list_win_id=bufwinid(bufnr('%'))
+    endif
 endfunction
