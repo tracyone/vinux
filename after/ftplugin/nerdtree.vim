@@ -96,6 +96,9 @@ function! s:copy_file()
         let l:curLine += 1
     endwhile
     call setreg('*', l:node.path.str())
+    call setreg('"', l:node.path.str())
+    call setreg('p', fnamemodify(l:node.path.str(), ':p:h'))
+    call setreg('f', fnamemodify(l:node.path.str(), ':t'))
     call te#utils#EchoWarning("Copy ".len(s:copy_file_path)." files")
 endfunction
 
