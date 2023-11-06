@@ -52,6 +52,9 @@ else
     nnoremap <Leader>aa :AT<cr>
 endif
 "}}}
+"
+nnoremap gf :call te#pg#find_header()<cr>  
+
 let g:neomake_make_maker = {
             \ 'exe': 'make',
             \ 'args': ['-j8'],

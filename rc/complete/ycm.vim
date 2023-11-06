@@ -19,7 +19,6 @@ nnoremap  <silent><leader>yd :YcmDiags<cr>
 nnoremap  <silent><leader>yt :YcmCompleter GetType<cr>
 nnoremap  <silent><leader>yp :YcmCompleter GetParent<cr>
 nnoremap  <silent><leader>yf :YcmCompleter FixIt<cr>
-nnoremap  gf :YcmCompleter GoToInclude<cr>
 "inoremap <silent><expr> ( complete_parameter#pre_complete("()")
 "smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
 "imap <c-j> <Plug>(complete_parameter#goto_next_parameter)

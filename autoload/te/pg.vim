@@ -265,3 +265,31 @@ function! te#pg#do_make() abort
         endif
     endif
 endfunction
+
+function! te#pg#cs_find_file(timer) abort
+    if s:cur_file_name == expand('%:t')
+        if te#env#SupportCscope()
+            try
+                execute ':cs find f '.expand('<cword>')
+            catch
+                call te#utils#EchoWarning('Can not find any files')
+            endtry
+        else
+            call te#utils#EchoWarning('Can not find any files')
+        endif
+    endif
+endfunction
+
+function! te#pg#find_header() abort
+    let s:cur_file_name = expand('%:t')
+    if get(g:, 'feat_enable_complete') == 1
+        if g:complete_plugin_type.cur_val == 'YouCompleteMe'
+            :YcmCompleter GoToInclude
+        endif
+    endif
+    if te#env#SupportTimer()
+        call timer_start(200, function('te#pg#cs_find_file'), {'repeat': 1})
+    else
+        call te#pg#cs_find_file(0)
+    endif
+endfunction
