@@ -39,15 +39,19 @@ if g:file_explorer_plugin.cur_val == 'nvim-tree.lua'
         let g:file_explorer_plugin.cur_val = 'nerdtree'
     else
         Plug 'nvim-tree/nvim-tree.lua'
-function! s:nvim_tree_setup()
+
+        function! s:nvim_tree_setup()
 lua << EOF
-require("nvim_tree")
+        require("nvim_tree")
 EOF
-endfunction
-nnoremap <silent><leader>te :NvimTreeToggle .<cr>
-nnoremap <silent><F12> :NvimTreeToggle .<cr>
-nnoremap <silent><leader>nf :NvimTreeFindFile<cr>
-call te#feat#register_vim_enter_setting(function('<SID>nvim_tree_setup'))
+        endfunction
+        nnoremap <silent><leader>te :NvimTreeToggle .<cr>
+        nnoremap <silent><F12> :NvimTreeToggle .<cr>
+        nnoremap <silent><leader>nf :NvimTreeFindFile<cr>
+        call te#feat#register_vim_enter_setting(function('<SID>nvim_tree_setup'))
+        if and(str2nr(g:enable_sexy_mode.cur_val), 0x1)
+            call te#tools#register_sexy_command("NvimTreeFocus|wincmd l")
+        endif
     endif
 endif
 
