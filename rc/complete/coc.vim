@@ -4,7 +4,7 @@ if g:file_explorer_plugin.cur_val == 'coc-explorer'
     noremap <F12> <Cmd>CocCommand explorer<CR>
     nnoremap  <silent><leader>te <Cmd>CocCommand explorer<CR>
     if and(str2nr(g:enable_sexy_mode.cur_val), 0x1)
-        call te#tools#register_sexy_command('CocCommand explorer')
+        call te#tools#register_sexy_command('CocCommand explorer --no-focus --no-toggle')
     endif
 endif
 
