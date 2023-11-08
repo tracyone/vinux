@@ -69,9 +69,6 @@ function! te#utils#confirm(str, menu_list, action) abort
 
     if te#env#IsNvim() >= 0.5
         let l:bufnr = nvim_create_buf(v:false, v:false)
-        call nvim_buf_set_option(l:bufnr, 'buftype', 'nofile')
-        call nvim_buf_set_option(l:bufnr, 'bufhidden', 'wipe')
-        call nvim_buf_set_option(l:bufnr, 'buflisted', v:false)
         call nvim_buf_set_keymap(l:bufnr, 'n', '<CR>', ':call NvimConfirmResult()<cr>', {'silent':v:true })
         call nvim_buf_set_keymap(l:bufnr, 'n', '<C-c>', ':call nvim_win_close(0, v:true)<cr>', {'silent':v:true })
         call nvim_buf_set_keymap(l:bufnr, 'n', 'y', '/\c^y<cr><cr>', {'silent':v:true })
@@ -85,8 +82,13 @@ function! te#utils#confirm(str, menu_list, action) abort
             call nvim_buf_set_lines(l:bufnr, l:len, -1, v:false, [l:str])
             let l:len += 1
         endfor
-        call nvim_buf_set_option(l:bufnr, "readonly", v:true)
-        call nvim_buf_set_option(l:bufnr, "modified", v:false)
+        let l:buf_opt = {'buftype':'nofile', 'buflisted':v:false, 'bufhidden':'wipe',
+                    \ 'undolevels':-1, 'textwidth':0, 'swapfile':v:false,
+                    \  'filetype':'vim-plug', 'modifiable':v:false,
+                    \ }
+        for [k,v] in items(l:buf_opt)
+            call nvim_buf_set_option(l:bufnr, k, v)
+        endfor
         call nvim_win_set_option(l:confirm_obj.win_id, 'cursorline', v:true)
         call nvim_win_set_option(l:confirm_obj.win_id, 'winhl', 
                     \ 'Normal:WarningMsg,FloatBorder:vinux_warn,CursorLine:vinux_sel,FloatTitle:vinux_warn')
