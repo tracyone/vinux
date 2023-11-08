@@ -6,7 +6,7 @@ if  g:file_explorer_plugin.cur_val == 'defx.nvim'
         let g:file_explorer_plugin.cur_val = 'nerdtree'
     else
         Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins'}
-        let s:defx_option=':Defx -toggle -split=vertical -winwidth=31 -direction=topleft '
+        let s:defx_option=':Defx -split=vertical -winwidth=31 -direction=topleft '
         if g:enable_powerline_fonts.cur_val == 'on'
             Plug 'kristijanhusak/defx-icons'
             let s:defx_option.=' -columns=git:icons:indent:filename:type '
@@ -15,11 +15,14 @@ if  g:file_explorer_plugin.cur_val == 'defx.nvim'
         if te#env#SupportFloatingWindows() == 2
             let s:defx_option.=' -floating-preview '
         endif
-        execute 'nnoremap  <silent><leader>te '.s:defx_option.'<cr>'
-        execute 'nnoremap  <silent><F12> '.s:defx_option.'<cr>'
+        execute 'nnoremap  <silent><leader>te '.s:defx_option.' -toggle <cr>'
+        execute 'nnoremap  <silent><F12> '.s:defx_option.' -toggle <cr>'
+        if and(str2nr(g:enable_sexy_mode.cur_val), 0x1)
+            let s:defx_option.=' -resume -no-focus '
+            call te#tools#register_sexy_command(s:defx_option)
+        endif
         " Open nerd tree
         nnoremap  <silent><leader>nf :Defx -toggle -split=vertical -winwidth=50 -direction=topleft `expand('%:p:h')` -search=`expand('%:p')`<CR> 
-        call te#tools#register_sexy_command(s:defx_option)
     endif
 elseif g:file_explorer_plugin.cur_val == 'fern.vim'
     if te#env#IsNvim() < 0.8 && te#env#IsVim() < 802
@@ -49,9 +52,12 @@ call te#feat#register_vim_enter_setting(function('<SID>nvim_tree_setup'))
 endif
 
 if g:file_explorer_plugin.cur_val == 'nerdtree'
-    Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle','NERDTreeFind'] }
-    call te#tools#register_sexy_command('NERDTreeToggle')
+    Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle','NERDTreeFind', 'NERDTreeFocus'] }
+    if and(str2nr(g:enable_sexy_mode.cur_val), 0x1)
+        call te#tools#register_sexy_command("NERDTreeFocus|wincmd l")
+    endif
     let g:NERDTreeShowLineNumbers=0	"don't show line number
+    let g:NERDTreeAutoDeleteBuffer=1
     let g:NERDTreeWinPos='left'	"show nerdtree in the rigth side
     "let NERDTreeWinSize='30'
     let g:NERDTreeShowBookmarks=1
@@ -90,11 +96,13 @@ if te#env#check_requirement()
     " Open tagbar
     nnoremap <silent><F9> :TagbarToggle<CR>
     nnoremap  <silent><leader>tt :TagbarToggle<CR>
-    call te#tools#register_sexy_command('TagbarOpen')
+    if and(str2nr(g:enable_sexy_mode.cur_val), 0x2)
+        call te#tools#register_sexy_command('TagbarOpen')
+    endif
     let g:tagbar_left=0
     let g:tagbar_width=30
     let g:tagbar_sort=0
-    let g:tagbar_autofocus = 1
+    let g:tagbar_autofocus = 0
     let g:tagbar_compact = 1
     let g:tagbar_systemenc='cp936'
     let g:tagbar_iconchars = ['+', '-']
@@ -103,7 +111,9 @@ else
     Plug 'tracyone/vim-taglist'
     nnoremap <silent><F9> :TlistToggle<CR>
     nnoremap  <silent><leader>tt :TlistToggle<CR>
-    call te#tools#register_sexy_command(':TlistToggle')
+    if and(str2nr(g:enable_sexy_mode.cur_val), 0x2)
+        call te#tools#register_sexy_command(':TlistToggle')
+    endif
     let Tlist_Show_One_File = 1
     let Tlist_Use_Right_Window = 1
     let Tlist_GainFocus_On_ToggleOpen=1
@@ -347,11 +357,6 @@ endif
 " Save basic setting
 nnoremap  <silent><Leader>lo :Love<cr>
 nnoremap  <silent><Leader>ts :call te#tools#run_sexy_command()<cr>
-
-
-if g:enable_sexy_mode.cur_val ==# 'on'
-    call te#feat#register_vim_enter_setting(function('te#tools#run_sexy_command'))
-endif
 
 
 

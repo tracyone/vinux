@@ -23,7 +23,9 @@ endif
 
 
 let g:fern_renderer_devicons_disable_warning = 1
-call te#tools#register_sexy_command(':Fern . -drawer')
+if and(str2nr(g:enable_sexy_mode.cur_val), 0x1)
+    call te#tools#register_sexy_command(':Fern . -drawer -stay')
+endif
 
 function! s:fern_file_type_setting() abort
     setlocal nonu nornu

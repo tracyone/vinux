@@ -132,9 +132,13 @@ function! te#tools#register_sexy_command(cmd) abort
     call add(s:sexy_command, a:cmd)
 endfunction
 
-function! te#tools#run_sexy_command() abort
+function! te#tools#run_sexy_command(timer) abort
+    let l:black_list = {'gitcommit':1, 'fugitive':1, 'qf':1, 'help':1}
+    if has_key(l:black_list, &ft)
+        return
+    endif
     for l:n in s:sexy_command
         silent! execute l:n
-        execute '2 wincmd w'
     endfor
 endfunction
+

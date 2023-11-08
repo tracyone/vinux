@@ -17,6 +17,7 @@ augroup misc_group
     if te#env#IsVim() >= 800 || te#env#IsNvim() > 0
         autocmd DirChanged * call te#autocmds#dir_changed()
     endif
+    autocmd BufReadPre * call timer_start(300, function('te#tools#run_sexy_command'), {'repeat': 1})
 augroup END
 
 augroup lazy_load_group
@@ -32,8 +33,6 @@ augroup filetype_group
     autocmd BufRead,BufNewFile *.bld setlocal filetype=javascript
     "automatic recognition xdc file as javascript
     autocmd BufRead,BufNewFile *.xdc setlocal filetype=javascript
-    autocmd BufRead,BufNewFile *.mk setlocal filetype=make
-    autocmd BufRead,BufNewFile *.make setlocal filetype=make
     autocmd BufRead,BufNewFile *.veo setlocal filetype=verilog
     autocmd BufEnter * :call te#autocmds#file_type()
     autocmd BufRead,BufNewFile *.hex,*.out,*.o,*.a,*.bin Vinarise

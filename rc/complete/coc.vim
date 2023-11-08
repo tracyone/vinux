@@ -3,7 +3,9 @@ Plug 'neoclide/coc.nvim', {'on': ['CocCommand'], 'branch': 'release'}
 if g:file_explorer_plugin.cur_val == 'coc-explorer'
     noremap <F12> <Cmd>CocCommand explorer<CR>
     nnoremap  <silent><leader>te <Cmd>CocCommand explorer<CR>
-    call te#tools#register_sexy_command('CocCommand explorer')
+    if and(str2nr(g:enable_sexy_mode.cur_val), 0x1)
+        call te#tools#register_sexy_command('CocCommand explorer')
+    endif
 endif
 
 let g:coc_config_home = $VIMFILES.'/rc/complete/'
