@@ -84,33 +84,41 @@ if te#env#IsNvim() >= 0.5
     call te#feat#register_vim_enter_setting('call te#feat#load_lua_modlue("treesittier_nvim")')
 endif
 
-if te#env#check_requirement()
-    Plug 'majutsushi/tagbar',{'on': []}
-    " Open tagbar
-    nnoremap <silent><F9> :TagbarToggle<CR>
-    nnoremap  <silent><leader>tt :TagbarToggle<CR>
-    if and(str2nr(g:enable_sexy_mode.cur_val), 0x2)
-        call te#tools#register_sexy_command('TagbarOpen')
+if g:outline_plugin.cur_val == 'tagbar'
+    if !te#env#check_requirement()
+        call te#utils#EchoWarning("tagbar require vim7.3+ with patch 1058")
+        let g:outline_plugin.cur_val = 'vim-taglist'
+    else
+        Plug 'majutsushi/tagbar',{'on': []}
+        " Open tagbar
+        nnoremap <silent><F9> :TagbarToggle<CR>
+        nnoremap  <silent><leader>tt :TagbarToggle<CR>
+        if and(str2nr(g:enable_sexy_mode.cur_val), 0x2)
+            call te#tools#register_sexy_command('TagbarOpen')
+        endif
+        let g:tagbar_left=0
+        let g:tagbar_width=30
+        let g:tagbar_sort=0
+        let g:tagbar_autofocus = 0
+        let g:tagbar_compact = 1
+        let g:tagbar_systemenc='cp936'
+        let g:tagbar_iconchars = ['+', '-']
     endif
-    let g:tagbar_left=0
-    let g:tagbar_width=30
-    let g:tagbar_sort=0
-    let g:tagbar_autofocus = 0
-    let g:tagbar_compact = 1
-    let g:tagbar_systemenc='cp936'
-    let g:tagbar_iconchars = ['+', '-']
-    call te#feat#register_vim_enter_setting2([0], ['tagbar'])
-else
-    Plug 'tracyone/vim-taglist'
+endif
+
+if g:outline_plugin.cur_val == 'vim-taglist'
+    Plug 'tracyone/vim-taglist', {'on': []}
     nnoremap <silent><F9> :TlistToggle<CR>
     nnoremap  <silent><leader>tt :TlistToggle<CR>
     if and(str2nr(g:enable_sexy_mode.cur_val), 0x2)
-        call te#tools#register_sexy_command(':TlistToggle')
+        call te#tools#register_sexy_command('TlistOpen | wincmd h')
     endif
     let Tlist_Show_One_File = 1
     let Tlist_Use_Right_Window = 1
     let Tlist_GainFocus_On_ToggleOpen=1
 endif
+
+call te#feat#register_vim_enter_setting2([0], [g:outline_plugin.cur_val])
 
 "vimproc required by vim-clang-format and quickrun
 if te#env#IsMac()

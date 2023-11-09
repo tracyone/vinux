@@ -41,13 +41,12 @@ set noshowmode
 
 function! s:airline_setting()
     if te#env#check_requirement()
-        let g:airline_extensions = ['tabline', 'tagbar']
-        let g:airline#extensions#tagbar#enabled = 1
-        let g:airline#extensions#tagbar#flags = '' 
-        let g:airline#extensions#tagbar#flags = 'f'
-        let g:airline#extensions#tagbar#flags = 's'
-        let g:airline#extensions#tagbar#flags = 'p'
-        let g:airline_section_x = "%{airline#util#prepend(tagbar#currenttag('%s', ''),0)}"
+        let g:airline_extensions = ['tabline']
+        if g:outline_plugin.cur_val == 'tagbar'
+            let g:airline_section_x = "%{airline#util#prepend(tagbar#currenttag('%s', ''),0)}"
+        else
+            let g:airline_section_x = "%{airline#util#prepend(Tlist_Get_Tagname_By_Line(),0)}"
+        endif
     else
         let g:airline_extensions = ['tabline']
     endif
