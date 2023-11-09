@@ -147,6 +147,7 @@ function! s:coc_setup() abort
     if coc#client#is_running('coc') == 0
         :CocStart
     endif
+    let g:vista_default_executive='coc'
 endfunction
 
 let g:complete_plugin.name = ['coc.nvim']

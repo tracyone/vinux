@@ -89,7 +89,7 @@ if g:outline_plugin.cur_val == 'tagbar'
         call te#utils#EchoWarning("tagbar require vim7.3+ with patch 1058")
         let g:outline_plugin.cur_val = 'vim-taglist'
     else
-        Plug 'majutsushi/tagbar',{'on': []}
+        Plug 'preservim/tagbar',{'on': []}
         " Open tagbar
         nnoremap <silent><F9> :TagbarToggle<CR>
         nnoremap  <silent><leader>tt :TagbarToggle<CR>
@@ -103,6 +103,40 @@ if g:outline_plugin.cur_val == 'tagbar'
         let g:tagbar_compact = 1
         let g:tagbar_systemenc='cp936'
         let g:tagbar_iconchars = ['+', '-']
+    endif
+endif
+
+if g:outline_plugin.cur_val == 'vista.vim'
+    if te#env#IsNvim() == 0 && te#env#IsVim() < 801
+        call te#utils#EchoWarning("vista.vim require vim8.1+ or neovim latest")
+        let g:outline_plugin.cur_val = 'vim-taglist'
+    else
+        Plug 'liuchengxu/vista.vim', {'on': []}
+        if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
+            let g:vista#renderer#enable_icon = 1
+        else
+            let g:vista#renderer#enable_icon = 0
+        endif
+        let g:vista_disable_statusline = 1
+        let g:vista_floating_delay = 600
+        let g:vista_floating_border='rounded'
+        let g:vista_stay_on_open=0
+        let g:vista_echo_cursor_strategy='floating_win'
+        if g:feat_enable_lsp == 1 && g:complete_plugin_type.cur_val != 'coc.nvim'
+            if te#env#IsNvim() > 0
+                let g:vista_default_executive='nvim_lsp'
+            else
+                let g:vista_default_executive='vim_lsp'
+            endif
+        else
+            let g:vista_default_executive='ctags'
+        endif
+        nnoremap <silent><F9> :Vista!!<CR>
+        nnoremap  <silent><leader>tt :Vista!!<CR>
+        nnoremap  <silent><leader>lv :Vista finder<CR>
+        if and(str2nr(g:enable_sexy_mode.cur_val), 0x2)
+            call te#tools#register_sexy_command('Vista')
+        endif
     endif
 endif
 
