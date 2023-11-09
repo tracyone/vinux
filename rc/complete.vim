@@ -75,9 +75,7 @@ elseif g:complete_plugin_type.cur_val ==# 'nvim-cmp'
         "Plug 'tamago324/cmp-zsh',{'for':['bash','zsh'], 'branch': 'main'}
 
         function! s:enable_nvim_lsp()
-lua << EOF
-            require('nvim_cmp')
-EOF
+            call te#feat#load_lua_modlue("nvim_cmp")
             autocmd FileType markdown,gitcommit,gina-commit lua require'cmp'.setup.buffer {
                         \   sources = {
                         \     {name='look', keyword_length=2},

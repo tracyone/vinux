@@ -7,12 +7,7 @@ if te#env#IsNvim() >= 0.5
     Plug 'onsails/lspkind.nvim'
     Plug 'nvimtools/none-ls.nvim'
     Plug 'jay-babu/mason-null-ls.nvim'
-    function! s:lsp_setup()
-lua << EOF
-        require('nvim_lsp')
-EOF
-    endfunction
-    call te#feat#register_vim_enter_setting(function('<SID>lsp_setup'))
+    call te#feat#register_vim_enter_setting('call te#feat#load_lua_modlue("nvim_lsp")')
 elseif g:complete_plugin_type.cur_val ==# 'coc.nvim'
 
 else
