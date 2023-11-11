@@ -17,7 +17,9 @@ augroup misc_group
     if te#env#IsVim() >= 800 || te#env#IsNvim() > 0
         autocmd DirChanged * call te#autocmds#dir_changed()
     endif
-    autocmd BufReadPre * call timer_start(300, function('te#tools#run_sexy_command'), {'repeat': 1})
+    if g:enable_sexy_mode.cur_val != 0
+        autocmd BufReadPre * call timer_start(300, function('te#tools#run_sexy_command'), {'repeat': 1})
+    endif
 augroup END
 
 augroup lazy_load_group

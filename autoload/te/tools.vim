@@ -133,7 +133,7 @@ function! te#tools#register_sexy_command(cmd) abort
 endfunction
 
 function! te#tools#run_sexy_command(timer) abort
-    let l:black_list = {'gitcommit':1, 'fugitive':1, 'qf':1, 'help':1}
+    let l:black_list = {'gitcommit':1, 'fugitive':1, 'qf':1, 'help':1, 'text':1, 'gina-commit':1}
     if has_key(l:black_list, &ft)
         return
     endif

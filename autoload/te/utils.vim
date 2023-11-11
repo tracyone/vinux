@@ -470,11 +470,20 @@ augroup Tabpage
 augroup end
 
 "Return the total number of listed buffers
-function! te#utils#has_listed_buffer() abort
-    if te#env#SupportAsync()
-        let l:ret = len(getbufinfo({'buflisted':1}))
+function! te#utils#has_listed_buffer(cur_tab) abort
+    let l:ret = 0
+    if a:cur_tab == 0
+        if te#env#SupportAsync()
+            let l:ret = len(getbufinfo({'buflisted':1}))
+        else
+            let l:ret = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+        endif
     else
-        let l:ret = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+        for l:i in tabpagebuflist()
+            if buflisted()
+                let l:ret += 1
+            endif
+        endfor
     endif
     return l:ret
 endfunction
@@ -505,29 +514,17 @@ function! te#utils#quit_win(all) abort
         endfor
     endif
     "multiple tab
-    if tabpagenr('$') != 1
-        :quit
-    else
-        " 0 or 1 listed buffer
-        let l:no_of_listed_buffer=te#utils#has_listed_buffer()
-        if l:no_of_listed_buffer <= 1 && winnr('$') <= 1
-            if !te#utils#is_listed_buffer() && l:no_of_listed_buffer == 1
-                :bdelete
-            else
-                if len(te#terminal#get_buf_list())
-                    call te#utils#EchoWarning("There are terminals not closed!")
-                    call te#terminal#jump_to_floating_win(-4)
-                    return
-                endif
-                call te#utils#confirm('Quit Vim Vim Vim Vim Vim ?', ['Yes', 'No'], ["quit", ""])
-            endif
-        else
-            if !te#utils#is_listed_buffer() || winnr('$') <= 1
-                :bdelete
-            else 
-                :quit
-            endif
+    " 0 or 1 listed buffer
+    let l:no_of_listed_buffer=te#utils#has_listed_buffer(0)
+    if l:no_of_listed_buffer == 1
+        if len(te#terminal#get_buf_list())
+            call te#utils#EchoWarning("There are terminals not closed!")
+            call te#terminal#jump_to_floating_win(-4)
+            return
         endif
+        call te#utils#confirm('Quit Vim Vim Vim Vim Vim ?', ['Yes', 'No'], ["quit", ""])
+    else
+        :bdelete
     endif
 endfunction
 
@@ -537,7 +534,7 @@ endfunction
 "1~9:tab 1~9 or buffer 1~9
 function! te#utils#tab_buf_switch(num) abort
     if a:num == 0 || a:num == -1
-        if te#utils#has_listed_buffer() <= 1
+        if te#utils#has_listed_buffer(0) <= 1
             return
         endif
     endif
