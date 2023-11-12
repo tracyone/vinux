@@ -133,10 +133,15 @@ if g:outline_plugin.cur_val == 'vista.vim'
 endif
 
 if g:outline_plugin.cur_val == 'aerial.nvim'
-    Plug 'stevearc/aerial.nvim'
-    call te#feat#register_vim_enter_setting('call te#feat#load_lua_modlue("aerial_setup")')
-    if and(str2nr(g:enable_sexy_mode.cur_val), 0x2)
-        call te#tools#register_sexy_command("AerialOpen!")
+    if te#env#IsNvim() < 0.7
+        call te#utils#EchoWarning("aerial.nvim require neovim 0.7+")
+        let g:outline_plugin.cur_val == 'vim-taglist'
+    else
+        Plug 'stevearc/aerial.nvim'
+        call te#feat#register_vim_enter_setting('call te#feat#load_lua_modlue("aerial_setup")')
+        if and(str2nr(g:enable_sexy_mode.cur_val), 0x2)
+            call te#tools#register_sexy_command("AerialOpen!")
+        endif
     endif
 endif
 
