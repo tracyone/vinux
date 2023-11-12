@@ -122,15 +122,7 @@ if g:outline_plugin.cur_val == 'vista.vim'
         let g:vista_floating_border='rounded'
         let g:vista_stay_on_open=0
         let g:vista_echo_cursor_strategy='floating_win'
-        if g:feat_enable_lsp == 1 && g:complete_plugin_type.cur_val != 'coc.nvim'
-            if te#env#IsNvim() > 0
-                let g:vista_default_executive='nvim_lsp'
-            else
-                let g:vista_default_executive='vim_lsp'
-            endif
-        else
-            let g:vista_default_executive='ctags'
-        endif
+        let g:vista_default_executive='ctags'
         nnoremap <silent><F9> :Vista!!<CR>
         nnoremap  <silent><leader>tt :Vista!!<CR>
         nnoremap  <silent><leader>lv :Vista finder<CR>

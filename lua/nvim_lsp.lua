@@ -62,6 +62,7 @@ local function on_server_ready(server_name)
       opts.settings = lua_settings
     end
     require("lspconfig")[server_name].setup(opts)
+    vim.g.vista_default_executive='nvim_lsp'
 end
 
 require("trouble").setup {

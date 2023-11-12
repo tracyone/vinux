@@ -27,11 +27,15 @@ else
         let g:lsp_diagnostics_signs_error = {'text': g:vinux_diagnostics_signs_error}
         let g:lsp_diagnostics_signs_warning = {'text': g:vinux_diagnostics_signs_warning}
         let g:lsp_diagnostics_signs_hint = {'text': g:vinux_diagnostics_signs_hint}
-        autocmd User lsp_float_opened call popup_setoptions(lsp#ui#vim#output#getpreviewwinid(), 
-                    \ {'borderchars':['─', '│', '─', '│', '┌', '┐', '┘', '└'],
-                    \ 'borderhighlight':['vinux_border'],
-                    \ 'highlight':'Pmenu'
-                    \ })
+        augroup lsp_install
+            au!
+            autocmd User lsp_buffer_enabled :let g:vista_default_executive="vim_lsp"
+            autocmd User lsp_float_opened call popup_setoptions(lsp#ui#vim#output#getpreviewwinid(), 
+                        \ {'borderchars':['─', '│', '─', '│', '┌', '┐', '┘', '└'],
+                        \ 'borderhighlight':['vinux_border'],
+                        \ 'highlight':'Pmenu'
+                        \ })
+        augroup END
     else
         let g:lsp_diagnostics_echo_cursor = 1
     endif

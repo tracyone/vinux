@@ -470,20 +470,32 @@ augroup Tabpage
 augroup end
 
 "Return the total number of listed buffers
-function! te#utils#has_listed_buffer(cur_tab) abort
+"opt:
+"0:get all listed buffers number
+"1:get listed buffers number of current tabpage
+"2:get unlisted buffer number of current tabpage
+function! te#utils#has_listed_buffer(opt) abort
     let l:ret = 0
-    if a:cur_tab == 0
+    if a:opt == 0
         if te#env#SupportAsync()
             let l:ret = len(getbufinfo({'buflisted':1}))
         else
             let l:ret = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
         endif
-    else
+    elseif a:opt == 1
         for l:i in tabpagebuflist()
-            if buflisted()
+            if buflisted(l:i)
                 let l:ret += 1
             endif
         endfor
+    elseif a:opt == 2
+        let l:buf_list = []
+        for l:i in tabpagebuflist()
+            if !buflisted(l:i)
+                call add(l:buf_list, l:i)
+            endif
+        endfor
+        return l:buf_list
     endif
     return l:ret
 endfunction
@@ -522,9 +534,21 @@ function! te#utils#quit_win(all) abort
             call te#terminal#jump_to_floating_win(-4)
             return
         endif
-        call te#utils#confirm('Quit Vim Vim Vim Vim Vim ?', ['Yes', 'No'], ["quit", ""])
+        call te#utils#confirm('Quit Vim Vim Vim Vim Vim ?', ['Yes', 'No'], ["qall", ""])
     else
-        :bdelete
+        let l:list1=te#utils#has_listed_buffer(2)
+        let l:no_of_listed=te#utils#has_listed_buffer(1)
+        if l:no_of_listed == 1
+            if len(l:list1)
+                for l:b in l:list1
+                    call win_gotoid(win_findbuf(l:b)[0])
+                    :quit
+                endfor
+            endif
+            :bdelete
+        else
+            :quit
+        endif
     endif
 endfunction
 

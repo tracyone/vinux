@@ -126,10 +126,12 @@ else
 endif
 
 if get(g:,'feat_enable_basic') == 1
-    if te#env#check_requirement()
+    if g:outline_plugin.cur_val == 'tagbar'
         let s:function_name="%{exists(':TagbarToggle')?\ tagbar#currenttag('%s".s:seperator."'".",'')\ :\ ''}"
-    else
+    elseif g:outline_plugin.cur_val == 'vim-taglist'
         let s:function_name='%{Tlist_Get_Tagname_By_Line()}'.s:seperator
+    elseif g:outline_plugin.cur_val == 'vista.vim'
+        let s:function_name="%{get(b:, 'vista_nearest_method_or_function', '')}".s:seperator
     endif
 else
     let s:function_name=''
