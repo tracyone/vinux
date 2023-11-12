@@ -132,6 +132,14 @@ if g:outline_plugin.cur_val == 'vista.vim'
     endif
 endif
 
+if g:outline_plugin.cur_val == 'aerial.nvim'
+    Plug 'stevearc/aerial.nvim'
+    call te#feat#register_vim_enter_setting('call te#feat#load_lua_modlue("aerial_setup")')
+    if and(str2nr(g:enable_sexy_mode.cur_val), 0x2)
+        call te#tools#register_sexy_command("AerialOpen!")
+    endif
+endif
+
 if g:outline_plugin.cur_val == 'vim-taglist'
     Plug 'tracyone/vim-taglist', {'on': []}
     nnoremap <silent><F9> :TlistToggle<CR>

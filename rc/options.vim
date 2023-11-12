@@ -132,6 +132,8 @@ if get(g:,'feat_enable_basic') == 1
         let s:function_name='%{Tlist_Get_Tagname_By_Line()}'.s:seperator
     elseif g:outline_plugin.cur_val == 'vista.vim'
         let s:function_name="%{get(b:, 'vista_nearest_method_or_function', '')}".s:seperator
+    else
+        let s:function_name=''
     endif
 else
     let s:function_name=''
