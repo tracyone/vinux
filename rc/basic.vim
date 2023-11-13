@@ -84,6 +84,8 @@ if te#env#IsNvim() >= 0.5
     call te#feat#register_vim_enter_setting('call te#feat#load_lua_modlue("treesittier_nvim")')
 endif
 
+let s:setup_str = ''
+
 if g:outline_plugin.cur_val == 'tagbar'
     if !te#env#check_requirement()
         call te#utils#EchoWarning("tagbar require vim7.3+ with patch 1058")
@@ -135,10 +137,10 @@ endif
 if g:outline_plugin.cur_val == 'aerial.nvim'
     if te#env#IsNvim() < 0.7
         call te#utils#EchoWarning("aerial.nvim require neovim 0.7+")
-        let g:outline_plugin.cur_val == 'vim-taglist'
+        let g:outline_plugin.cur_val = 'vim-taglist'
     else
-        Plug 'stevearc/aerial.nvim'
-        call te#feat#register_vim_enter_setting('call te#feat#load_lua_modlue("aerial_setup")')
+        Plug 'stevearc/aerial.nvim', {'on': []}
+        let s:setup_str = 'call te#feat#load_lua_modlue("aerial_setup")'
         if and(str2nr(g:enable_sexy_mode.cur_val), 0x2)
             call te#tools#register_sexy_command("AerialOpen!")
         endif
@@ -157,7 +159,7 @@ if g:outline_plugin.cur_val == 'vim-taglist'
     let Tlist_GainFocus_On_ToggleOpen=1
 endif
 
-call te#feat#register_vim_enter_setting2([0], [g:outline_plugin.cur_val])
+call te#feat#register_vim_enter_setting2([s:setup_str], [g:outline_plugin.cur_val])
 
 "vimproc required by vim-clang-format and quickrun
 if te#env#IsMac()
