@@ -62,15 +62,15 @@ elseif g:complete_plugin_type.cur_val ==# 'nvim-cmp'
         call te#utils#EchoWarning("lastest neovim are required to use nvim-cmp")
         let g:complete_plugin_type.cur_val='supertab'
     else
-        Plug 'hrsh7th/cmp-nvim-lsp', {'branch': 'main' }
-        Plug 'hrsh7th/cmp-buffer', {'branch': 'main' }
-        Plug 'hrsh7th/nvim-cmp', {'branch': 'main' }
-        Plug 'hrsh7th/cmp-path', {'branch': 'main' }
-        Plug 'hrsh7th/cmp-nvim-lua',{'branch': 'main'}
-        Plug 'hrsh7th/cmp-cmdline'
-        Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main' }
-        Plug 'octaltree/cmp-look'
-        Plug 'hrsh7th/cmp-calc'
+        Plug 'hrsh7th/cmp-nvim-lsp', {'branch': 'main', 'on': [] }
+        Plug 'hrsh7th/cmp-buffer', {'branch': 'main', 'on': [] }
+        Plug 'hrsh7th/nvim-cmp', {'branch': 'main', 'on': [] }
+        Plug 'hrsh7th/cmp-path', {'branch': 'main', 'on': [] }
+        Plug 'hrsh7th/cmp-nvim-lua',{'branch': 'main', 'on': []}
+        Plug 'hrsh7th/cmp-cmdline', {'on': []}
+        Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main', 'on': [] }
+        Plug 'octaltree/cmp-look', { 'on': []}
+        Plug 'hrsh7th/cmp-calc', { 'on': []}
         "Plug 'onsails/lspkind-nvim'
         "Plug 'tamago324/cmp-zsh',{'for':['bash','zsh'], 'branch': 'main'}
 
@@ -86,7 +86,9 @@ elseif g:complete_plugin_type.cur_val ==# 'nvim-cmp'
                         \ }
         endfunction
         "Important config neovim lsp and cmp when vim enter
-        call te#feat#register_vim_enter_setting(function('<SID>enable_nvim_lsp'))
+        call te#feat#register_vim_enter_setting2([function('<SID>enable_nvim_lsp')],
+                    \ ['cmp-nvim-lsp', 'nvim-cmp', 'cmp-path', 'cmp-buffer',
+                    \ 'cmp-nvim-lua', 'cmp-cmdline', 'cmp-nvim-ultisnips', 'cmp-look', 'cmp-calc'])
     endif
 elseif g:complete_plugin_type.cur_val ==# 'coc.nvim'
     if !te#env#Executable('node') || !te#env#SupportAsync()

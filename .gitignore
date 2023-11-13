@@ -18,7 +18,6 @@ org/
 .love.vim
 .gui_love.vim
 .screenlock
-autoload/plug.vim
 .LfCache/
 *.swn
 *.swo

@@ -38,11 +38,11 @@ if g:file_explorer_plugin.cur_val == 'nvim-tree.lua'
         call te#utils#EchoWarning("nvim-tree.lua requires Neovim 0.9.0+")
         let g:file_explorer_plugin.cur_val = 'nerdtree'
     else
-        Plug 'nvim-tree/nvim-tree.lua'
+        Plug 'nvim-tree/nvim-tree.lua', {'on': []}
         nnoremap <silent><leader>te :NvimTreeToggle .<cr>
         nnoremap <silent><F12> :NvimTreeToggle .<cr>
         nnoremap <silent><leader>nf :NvimTreeFindFile<cr>
-        call te#feat#register_vim_enter_setting('call te#feat#load_lua_modlue("nvim_tree")')
+        call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_modlue("nvim_tree")'], ['nvim-tree.lua'])
         if and(str2nr(g:enable_sexy_mode.cur_val), 0x1)
             call te#tools#register_sexy_command("NvimTreeFocus|wincmd l")
         endif
@@ -78,10 +78,11 @@ if g:file_explorer_plugin.cur_val == 'nerdtree'
 endif
 
 if te#env#IsNvim() >= 0.5
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
-    Plug 'nvim-treesitter/nvim-treesitter-refactor'
-    Plug 'nvim-treesitter/nvim-treesitter-context'
-    call te#feat#register_vim_enter_setting('call te#feat#load_lua_modlue("treesittier_nvim")')
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'on': []} 
+    Plug 'nvim-treesitter/nvim-treesitter-refactor', {'on': []}
+    Plug 'nvim-treesitter/nvim-treesitter-context', {'on': []}
+    call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_modlue("treesittier_nvim")'],
+                \ ['nvim-treesitter', 'nvim-treesitter-refactor', 'nvim-treesitter-context'])
 endif
 
 let s:setup_str = ''
