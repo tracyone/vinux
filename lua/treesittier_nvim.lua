@@ -42,4 +42,9 @@ require'treesitter-context'.setup{
 }
 
 
+vim.keymap.set("n", "[[", function()
+  require("treesitter-context").go_to_context()
+end, { silent = true })
+
+
 return module
