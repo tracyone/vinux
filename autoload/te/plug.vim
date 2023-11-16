@@ -125,6 +125,39 @@ function! s:syntax() abort
   hi def link plugError   Error
 endfunction
 
+function! te#plug#window(content) abort
+    let l:buf_opt = {'buftype':'nofile', 'buflisted':v:false, 'bufhidden':'wipe',
+                \ 'undolevels':-1, 'textwidth':0, 'swapfile':v:false,
+                \  'filetype':'vim-plug', 'modifiable':v:false,
+                \ }
+    let l:win_opt = {'number':v:false, 'relativenumber':v:false, 'wrap':v:false,
+                \ 'spell':v:false, 'foldenable':v:false, 'signcolumn':"no",
+                \  'colorcolumn':'', 'cursorline':v:true, 'previewwindow':v:true,
+                \ }
+    let l:buf = nvim_create_buf(v:false, v:true)
+    let l:opts = {'relative': 'editor','anchor': "NW", 'border': 'rounded', 
+                \ 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
+    let l:opts.width = &columns * 8/10 
+    let l:opts.height = &lines * 8/10 
+    let l:opts.row = (&lines - l:opts.height)/2 - 2
+    let l:opts.col = (&columns - l:opts.width)/2
+    let l:opts.title = "Vinux Plugins Manager" 
+    let l:opts.title_pos = "center" 
+    let l:plugins_list_win_id=nvim_open_win(l:buf, v:true, l:opts)
+    call nvim_win_set_option(l:plugins_list_win_id, 'winhl', 
+                \ 'FloatBorder:vinux_border,FloatTitle:vinux_warn')
+    for [k,v] in items(l:win_opt)
+        call nvim_win_set_option(l:plugins_list_win_id, k, v)
+    endfor
+    if len(a:content)
+        call nvim_buf_set_lines(l:buf, 0, -1, v:false, a:content)
+    endif
+    for [k,v] in items(l:buf_opt)
+        call nvim_buf_set_option(l:buf, k, v)
+    endfor
+    return l:plugins_list_win_id
+endfunction
+
 "list all plugin
 function! te#plug#list() abort
     if exists('s:plugins_list_win_id') && s:plugins_list_win_id > 0
@@ -155,30 +188,7 @@ function! te#plug#list() abort
                 \  'filetype':'vim-plug', 'modifiable':v:false,
                 \ }
     if te#env#IsNvim() > 0.5
-        let l:buf = nvim_create_buf(v:false, v:true)
-        let l:win_opt = {'number':v:false, 'relativenumber':v:false, 'wrap':v:false,
-                    \ 'spell':v:false, 'foldenable':v:false, 'signcolumn':"no",
-                    \  'colorcolumn':'', 'cursorline':v:true, 'previewwindow':v:true,
-                    \ }
-
-        let l:opts = {'relative': 'editor','anchor': "NW", 'border': 'rounded', 
-                    \ 'focusable': v:true, 'style': 'minimal', 'zindex': 1}
-        let l:opts.width = &columns * 8/10 
-        let l:opts.height = &lines * 8/10 
-        let l:opts.row = (&lines - l:opts.height)/2 - 2
-        let l:opts.col = (&columns - l:opts.width)/2
-        let l:opts.title = "Vinux Plugins Manager" 
-        let l:opts.title_pos = "center" 
-        let s:plugins_list_win_id=nvim_open_win(l:buf, v:true, l:opts)
-        call nvim_win_set_option(s:plugins_list_win_id, 'winhl', 
-                    \ 'FloatBorder:vinux_border,FloatTitle:vinux_warn')
-        for [k,v] in items(l:win_opt)
-            call nvim_win_set_option(s:plugins_list_win_id, k, v)
-        endfor
-        call nvim_buf_set_lines(l:buf, 0, -1, v:false, l:output)
-        for [k,v] in items(l:buf_opt)
-            call nvim_buf_set_option(l:buf, k, v)
-        endfor
+        let s:plugins_list_win_id = te#plug#window(l:output)
         call s:syntax()
     else
         tabnew

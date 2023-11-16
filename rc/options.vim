@@ -229,6 +229,8 @@ let g:loaded_netrwFileHandlers = 1
 
  set viminfo='100,<20,s10,h
 if te#env#IsNvim() != 0
+    "Use floating window
+    let g:plug_window=':call te#plug#window("")'
     " Use cursor shape feature
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
