@@ -525,8 +525,14 @@ function! te#utils#quit_win(all) abort
             endif
         endfor
     endif
-    "multiple tab
+
     " 0 or 1 listed buffer
+    let l:cur_buf = bufnr()
+    if !buflisted(l:cur_buf)
+        :quit
+        return
+    endif
+
     let l:no_of_listed_buffer=te#utils#has_listed_buffer(0)
     if l:no_of_listed_buffer == 1
         if len(te#terminal#get_buf_list())
