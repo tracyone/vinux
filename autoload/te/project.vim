@@ -244,22 +244,23 @@ function! te#project#load_project(project_info) abort
 endfunction
 
 function! te#project#delete_project() abort
+    let l:sessions_root=$VIMFILES.'/sessions/'
     let l:project_root=$VIMFILES.'/.project/'
     if !isdirectory(l:project_root)
         call te#utils#EchoWarning(l:project_root.' is not exists')
         return
     endif
-    execute 'cd '.l:project_root
-    let l:project = input('Please select project: ','','dir')
-    if strlen(l:project)
-        if isdirectory(l:project)
-            let l:ret = te#file#delete(l:project_root.l:project, 1)
-            let l:session_name = matchstr(l:project, '.*\(/\)\@=')
-            call te#utils#EchoWarning("Delete session ". l:session_name)
+    execute 'cd '.l:sessions_root
+    let l:project_name = input('Please select project: ','','file')
+    if strlen(l:project_name)
+        if filereadable(l:project_name)
+            execute 'cd '.l:project_root
+            let l:ret = te#file#delete(l:project_root.l:project_name, 1)
+            call te#utils#EchoWarning("Delete session ". l:project_name)
             if exists(":SDelete") == 2
-                execute ':SDelete! '.l:session_name
+                execute ':SDelete! '.l:project_name
             elseif exists(":DeleteSession") == 2
-                execute ':DeleteSession! '.l:session_name
+                execute ':DeleteSession! '.l:project_name
             endif
         else
             let l:ret=-1
@@ -277,8 +278,8 @@ function! te#project#delete_project() abort
     endfor
     cd -
     if !l:ret
-        call te#utils#EchoWarning("Delete project:".l:project." successfully")
+        call te#utils#EchoWarning("Delete project:".l:project_name." successfully")
     else
-        call te#utils#EchoWarning("Delete project:".l:project." fail")
+        call te#utils#EchoWarning("Delete project:".l:project_name." fail")
     endif
 endfunction
