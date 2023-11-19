@@ -47,14 +47,12 @@ function! te#project#create_project() abort
     if !strlen(l:name)
         return
     endif
+    "close unlisted buffer
+    for l:b in te#utils#get_buf_info(2)
+        execute ':bdelete '.l:b
+    endfor
     let l:project_name=$VIMFILES.'/.project/'.l:name.'/'
     if l:project_exist == 1 
-        if g:vinux_project.type == 2
-            let g:vinux_project.name = l:name
-            let g:vinux_project.dir = getcwd()
-            execute ':SSave '.l:name
-            return
-        endif
         if l:name != g:vinux_project.name
             "Delete session then renmae .project/
             if exists(":SDelete") == 2
@@ -62,7 +60,15 @@ function! te#project#create_project() abort
             elseif exists(":DeleteSession") == 2
                 execute ':DeleteSession! '.g:vinux_project.name
             endif
-            call rename($VIMFILES.'/.project/'.g:vinux_project.name.'/', l:project_name)
+            if g:vinux_project.type == 1
+                call rename($VIMFILES.'/.project/'.g:vinux_project.name.'/', l:project_name)
+            endif
+        endif
+        if g:vinux_project.type == 2
+            let g:vinux_project.name = l:name
+            let g:vinux_project.dir = getcwd()
+            execute ':SSave '.l:name
+            return
         endif
         if g:vinux_project.dir != getcwd()
             "working directory is changed

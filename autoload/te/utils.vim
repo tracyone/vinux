@@ -471,33 +471,45 @@ augroup end
 
 "Return the total number of listed buffers
 "opt:
-"0:get all listed buffers number
-"1:get listed buffers number of current tabpage
-"2:get unlisted buffer number of current tabpage
-function! te#utils#has_listed_buffer(opt) abort
-    let l:ret = 0
+"0:get all listed buffers
+"1:get listed buffers of current tabpage
+"2:get unlisted buffer of current tabpage
+function! te#utils#get_buf_info(opt) abort
+    let l:buf_list = []
     if a:opt == 0
         if te#env#SupportAsync()
-            let l:ret = len(getbufinfo({'buflisted':1}))
+            let l:temp_list = getbufinfo({'buflisted':1})
         else
-            let l:ret = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+            let l:temp_list = filter(range(1, bufnr('$')), 'buflisted(v:val)')
         endif
+        for l:i in l:temp_list
+            call add(l:buf_list, l:i.bufnr)
+        endfor
     elseif a:opt == 1
         for l:i in tabpagebuflist()
             if buflisted(l:i)
-                let l:ret += 1
+                call add(l:buf_list, l:i)
             endif
         endfor
     elseif a:opt == 2
-        let l:buf_list = []
         for l:i in tabpagebuflist()
             if !buflisted(l:i)
                 call add(l:buf_list, l:i)
             endif
         endfor
-        return l:buf_list
+    elseif a:opt == 3
+        if te#env#SupportAsync()
+            let l:temp_list = getbufinfo()
+        else
+            let l:temp_list = filter(range(1, bufnr('$')), '!buflisted(v:val)')
+        endif
+        for l:i in l:temp_list
+            if !buflisted(l:i.bufnr)
+                call add(l:buf_list, l:i.bufnr)
+            endif
+        endfor
     endif
-    return l:ret
+    return l:buf_list
 endfunction
 
 "Detect whether current buffer is listed or not
@@ -533,8 +545,8 @@ function! te#utils#quit_win(all) abort
         return
     endif
 
-    let l:no_of_listed_buffer=te#utils#has_listed_buffer(0)
-    if l:no_of_listed_buffer == 1
+    let l:no_of_listed_buffer=len(te#utils#get_buf_info(0))
+    if l:no_of_listed_buffer == 1 && winnr('$') == 1
         if len(te#terminal#get_buf_list())
             call te#utils#EchoWarning("There are terminals not closed!")
             call te#terminal#jump_to_floating_win(-4)
@@ -542,8 +554,8 @@ function! te#utils#quit_win(all) abort
         endif
         call te#utils#confirm('Quit Vim Vim Vim Vim Vim ?', ['Yes', 'No'], ["qall", ""])
     else
-        let l:list1=te#utils#has_listed_buffer(2)
-        let l:no_of_listed=te#utils#has_listed_buffer(1)
+        let l:list1=te#utils#get_buf_info(2)
+        let l:no_of_listed=len(te#utils#get_buf_info(1))
         if l:no_of_listed == 1
             if len(l:list1)
                 for l:b in l:list1
@@ -564,7 +576,7 @@ endfunction
 "1~9:tab 1~9 or buffer 1~9
 function! te#utils#tab_buf_switch(num) abort
     if a:num == 0 || a:num == -1
-        if te#utils#has_listed_buffer(0) <= 1
+        if len(te#utils#get_buf_info(0)) <= 1
             return
         endif
     endif
