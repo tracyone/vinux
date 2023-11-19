@@ -118,8 +118,8 @@ function! te#pg#gen_cs_tags(timerid) abort
         let l:option=0x01
     endif
     let l:old_pwd=getcwd()
-    if exists('g:vinux_working_directory') && isdirectory(g:vinux_working_directory)
-        let l:old_pwd=g:vinux_working_directory
+    if exists('g:vinux_project.dir') && isdirectory(g:vinux_project.dir)
+        let l:old_pwd=g:vinux_project.dir
     endif
     execute 'cd '.l:old_pwd
     if filereadable('.csdb')

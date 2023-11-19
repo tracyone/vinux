@@ -36,8 +36,9 @@ execute 'set colorcolumn='.(&textwidth + 1)
 function! te#project#create_project() abort
     let l:project_exist = 0
     let l:default_name=fnamemodify(getcwd(), ':t')
-    if type(get(g:, 'vinux_project_name')) == g:t_string
-        let l:default_name=g:vinux_project_name
+    let g:vinux_project=get(g:, 'vinux_project', {'dir':'', 'name':'', 'type':0})
+    if len(g:vinux_project.name)
+        let l:default_name=g:vinux_project.name
         let l:project_exist = 1
         let l:name = input("Rename or save current project:", l:default_name)
     else
@@ -48,31 +49,47 @@ function! te#project#create_project() abort
     endif
     let l:project_name=$VIMFILES.'/.project/'.l:name.'/'
     if l:project_exist == 1 
-        if l:name != g:vinux_project_name
+        if g:vinux_project.type == 2
+            let g:vinux_project.name = l:name
+            let g:vinux_project.dir = getcwd()
+            execute ':SSave '.l:name
+            return
+        endif
+        if l:name != g:vinux_project.name
             "Delete session then renmae .project/
             if exists(":SDelete") == 2
-                execute ':SDelete! '.g:vinux_project_name
+                execute ':SDelete! '.g:vinux_project.name
             elseif exists(":DeleteSession") == 2
-                execute ':DeleteSession! '.g:vinux_project_name
+                execute ':DeleteSession! '.g:vinux_project.name
             endif
-            call rename($VIMFILES.'/.project/'.g:vinux_project_name.'/', l:project_name)
+            call rename($VIMFILES.'/.project/'.g:vinux_project.name.'/', l:project_name)
         endif
-        if get(g:, 'vinux_working_directory') != getcwd()
+        if g:vinux_project.dir != getcwd()
             "working directory is changed
             "clean original working directory files...
-            call te#file#delete(g:vinux_working_directory.'/.ycm_extra_conf.py', 0)
-            call te#file#delete(g:vinux_working_directory.'/.clang-format', 0)
-            call te#file#delete(g:vinux_working_directory.'/.love.vim', 0)
-            call te#file#delete(g:vinux_working_directory.'/compile_commands.json', 0)
-            call te#file#delete(g:vinux_working_directory.'/compile_flags.txt', 0)
-            call te#file#delete(g:vinux_working_directory.'/.csdb', 0)
-            let g:vinux_working_directory = getcwd()
-            call te#file#copy_file(l:project_name.'/.ycm_extra_conf.py', g:vinux_working_directory, 0)
-            call te#file#copy_file(l:project_name.'/.clang-format', g:vinux_working_directory, 0)
-            call te#file#copy_file(l:project_name.'/.love.vim', g:vinux_working_directory, 0)
-            call te#file#copy_file(l:project_name.'/compile_commands.json', g:vinux_working_directory, 0)
-            call te#file#copy_file(l:project_name.'/compile_flags.txt', g:vinux_working_directory, 0)
-            call te#file#copy_file(l:project_name.'/.csdb', g:vinux_working_directory, 0)
+            call te#file#delete(g:vinux_project.dir.'/.ycm_extra_conf.py', 0)
+            call te#file#delete(g:vinux_project.dir.'/.clang-format', 0)
+            call te#file#delete(g:vinux_project.dir.'/.love.vim', 0)
+            call te#file#delete(g:vinux_project.dir.'/compile_commands.json', 0)
+            call te#file#delete(g:vinux_project.dir.'/compile_flags.txt', 0)
+            call te#file#delete(g:vinux_project.dir.'/.csdb', 0)
+            let g:vinux_project.dir = getcwd()
+            call te#file#copy_file(l:project_name.'/.ycm_extra_conf.py', g:vinux_project.dir, 0)
+            call te#file#copy_file(l:project_name.'/.clang-format', g:vinux_project.dir, 0)
+            call te#file#copy_file(l:project_name.'/.love.vim', g:vinux_project.dir, 0)
+            call te#file#copy_file(l:project_name.'/compile_commands.json', g:vinux_project.dir, 0)
+            call te#file#copy_file(l:project_name.'/compile_flags.txt', g:vinux_project.dir, 0)
+            call te#file#copy_file(l:project_name.'/.csdb', g:vinux_project.dir, 0)
+        endif
+    else
+        let l:type=confirm("Create a project or session?[P/S]", "&Project\n&Session")
+        let g:vinux_project.type = l:type
+        if l:type == 2
+            let g:vinux_project.name = l:name
+            let g:vinux_project.dir = getcwd()
+            execute ':SSave '.l:name
+            call te#utils#EchoWarning("Create session ".l:name.' finish!')
+            return
         endif
     endif
 
@@ -148,8 +165,8 @@ function! te#project#create_project() abort
         let l:ret = te#file#copy_file('.csdb', l:project_name)
     endif
     "session
-    let g:vinux_project_name = l:name
-    let g:vinux_working_directory = getcwd()
+    let g:vinux_project.name = l:name
+    let g:vinux_project.dir = getcwd()
     if exists(":SSave") == 2
         execute ":SSave ".l:name
     elseif exists(":SaveSession") == 2
@@ -178,24 +195,27 @@ function! te#project#edit_project() abort
     execute 'cd '.l:old_pwd
 endfunction
 
-function! te#project#load_project(session_name) abort
+function! te#project#load_project(project_info) abort
     "Let user choose exist project from
     let l:project_root=$VIMFILES.'/.project/'
     if !isdirectory(l:project_root)
         call te#utils#EchoWarning(l:project_root.' is not exists')
         return
     endif
-    if !len(a:session_name)
+    if !len(a:project_info)
         execute 'cd '.l:project_root
         let l:project = input('Please select project: ','','dir')
         cd -
     else
-        let l:project = a:session_name
+        if a:project_info.type == 2
+            return
+        endif
+        let l:project = a:project_info.name
     endif
     if strlen(l:project)
         if isdirectory(l:project_root.l:project)
             "session
-            if !len(a:session_name)
+            if !len(a:project_info)
                 let l:session_name = matchstr(l:project, '.*\(/\)\@=')
                 if exists(":SLoad") == 2
                     execute ":SLoad ".l:session_name
@@ -203,19 +223,19 @@ function! te#project#load_project(session_name) abort
                     execute ":OpenSession ".l:session_name
                 endif
             endif
-            call te#file#copy_file(l:project_root.l:project.'/.ycm_extra_conf.py', g:vinux_working_directory, 0)
-            call te#file#copy_file(l:project_root.l:project.'/.clang-format', g:vinux_working_directory, 0)
-            call te#file#copy_file(l:project_root.l:project.'/.love.vim', g:vinux_working_directory, 0)
-            call te#file#copy_file(l:project_root.l:project.'/compile_commands.json', g:vinux_working_directory, 0)
-            call te#file#copy_file(l:project_root.l:project.'/compile_flags.txt', g:vinux_working_directory, 0)
-            call te#file#copy_file(l:project_root.l:project.'/.csdb', g:vinux_working_directory, 0)
+            call te#file#copy_file(l:project_root.l:project.'/.ycm_extra_conf.py', g:vinux_project.dir, 0)
+            call te#file#copy_file(l:project_root.l:project.'/.clang-format', g:vinux_project.dir, 0)
+            call te#file#copy_file(l:project_root.l:project.'/.love.vim', g:vinux_project.dir, 0)
+            call te#file#copy_file(l:project_root.l:project.'/compile_commands.json', g:vinux_project.dir, 0)
+            call te#file#copy_file(l:project_root.l:project.'/compile_flags.txt', g:vinux_project.dir, 0)
+            call te#file#copy_file(l:project_root.l:project.'/.csdb', g:vinux_project.dir, 0)
             call love#Apply()
             call te#feat#source_rc('colors.vim')
             call te#utils#close_all_echo_win()
             call te#project#set_indent_options(g:vinux_coding_style.cur_val)
             call te#pg#start_gen_cs_tags_threads()
             if te#env#IsTmux()
-                :call te#tmux#rename_win(a:session_name)
+                :call te#tmux#rename_win(a:project_info.name)
             endif
         else
             call te#utils#EchoWarning(l:project." is not a directory")
@@ -248,8 +268,8 @@ function! te#project#delete_project() abort
             let l:ret=-1
     endif
     cd -
-    if exists('g:vinux_working_directory') && isdirectory(g:vinux_working_directory)
-        execute 'cd '.g:vinux_working_directory
+    if exists('g:vinux_project.dir') && isdirectory(g:vinux_project.dir)
+        execute 'cd '.g:vinux_project.dir
     endif
     let l:file_to_delete=['.ycm_extra_conf.py', '.clang-format', '.love.vim', 'compile_commands.json', 'compile_flags.txt', '.csdb']
     for l:file in l:file_to_delete

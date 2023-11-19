@@ -40,12 +40,11 @@ let g:startify_session_savevars = [
             \ 'g:startify_session_savevars',
             \ 'g:startify_session_savecmds',
             \ 'g:vinux_coding_style.cur_val',
-            \ 'g:vinux_project_name',
-            \ 'g:vinux_working_directory',
+            \ 'g:vinux_project',
             \ ]
 
 let g:startify_session_savecmds = [
-            \ "call te#project#load_project(g:vinux_project_name)",
+            \ "call te#project#load_project(get(g:, 'vinux_project', {}))",
             \ ]
 
 let g:startify_commands = [
