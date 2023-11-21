@@ -1,6 +1,15 @@
 "vim-plug extra
 "https://github.com/junegunn/vim-plug/wiki/extra
 "
+function! te#plug#gen_help_tag() abort
+    let name = matchstr(getline('.'), '^[x-] \zs\S\+\ze:')
+    if isdirectory(g:plugs[name].dir.'/doc')
+        execute ':helptags '.g:plugs[name].dir.'/doc'
+        call te#utils#EchoWarning("Generate tags for ".name." successfully")
+    else
+        call te#utils#EchoWarning("Can not find any directory")
+    endif
+endfunction
 
 function! te#plug#open_doc() abort
     let name = matchstr(getline('.'), '^[x-] \zs\S\+\ze:')
@@ -100,6 +109,7 @@ function! te#plug#extra_key() abort
     nnoremap <buffer> <silent> <leader>ol :call te#plug#browse_plugin_url()<cr>
     nnoremap <buffer> <silent> <c-t> :call te#plug#open_plugin_dir(1)<cr>
     nnoremap <buffer> <silent> D :call te#plug#show_log()<cr>
+    nnoremap <buffer> <silent> t :call te#plug#gen_help_tag()<cr>
     nnoremap <silent> <buffer> U :call <SID>update_plugins(0)<cr>
     xnoremap <silent> <buffer> U :<c-u>:call <SID>update_plugins(1)<cr>
     nnoremap <silent> <buffer> cd :call te#plug#open_plugin_dir(0)<cr>
