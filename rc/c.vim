@@ -29,9 +29,6 @@ if te#env#IsNvim() < 0.5
     let g:cpp_no_function_highlight = 1
 endif
 
-if(te#env#IsLinux())
-    Plug 'tracyone/pyclewn_linux',{'branch': 'pyclewn-1.11'}
-endif
 Plug 'jyelloz/vim-dts-indent',{'for': ['dts']}
 " }}}
 " A.vim ---------------------------{{{

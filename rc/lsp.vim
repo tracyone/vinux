@@ -1,6 +1,5 @@
 if te#env#IsNvim() >= 0.5
     Plug 'neovim/nvim-lspconfig', {'on': []}
-    Plug 'williamboman/mason.nvim', {'on': []}
     Plug 'williamboman/mason-lspconfig.nvim', {'on': []}
     Plug 'folke/trouble.nvim', {'on': []}
     Plug 'ray-x/lsp_signature.nvim', {'on': []}
@@ -8,7 +7,7 @@ if te#env#IsNvim() >= 0.5
     Plug 'nvimtools/none-ls.nvim', {'on': []}
     Plug 'jay-babu/mason-null-ls.nvim', {'on': []}
     call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_modlue("nvim_lsp")'],
-                \ ['nvim-lspconfig', 'mason.nvim', 'mason-lspconfig.nvim', 'trouble.nvim'
+                \ ['nvim-lspconfig',  'mason-lspconfig.nvim', 'trouble.nvim'
                 \ ,'lsp_signature.nvim', 'lspkind.nvim', 'none-ls.nvim', 'mason-null-ls.nvim'
                 \ ,'mason-null-ls.nvim'])
 elseif g:complete_plugin_type.cur_val ==# 'coc.nvim'

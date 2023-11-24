@@ -220,3 +220,7 @@ function! te#plug#list() abort
         let s:plugins_list_win_id=bufwinid(bufnr('%'))
     endif
 endfunction
+
+function! te#plug#is_plugin_exist(plugin) abort
+    return has_key(g:plugs, a:plugin)
+endfunction

@@ -96,6 +96,7 @@ call te#feat#feat_enable('g:feat_enable_writing', 0)
 call te#feat#feat_enable('g:feat_enable_zsh', 0)
 call te#feat#feat_enable('g:feat_enable_fun', 0)
 call te#feat#feat_enable('g:feat_enable_lsp', 0)
+call te#feat#feat_enable('g:feat_enable_debug', 0)
 call te#feat#register_vim_enter_setting(function('te#feat#check_plugin_install'))
 call te#feat#register_vim_enter_setting(function('te#utils#echo_info_after'))
 

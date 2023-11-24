@@ -83,6 +83,9 @@ if te#env#IsNvim() >= 0.5
     Plug 'nvim-treesitter/nvim-treesitter-context', {'on': []}
     call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_modlue("treesittier_nvim")'],
                 \ ['nvim-treesitter', 'nvim-treesitter-refactor', 'nvim-treesitter-context'])
+    Plug 'williamboman/mason.nvim', {'on': []}
+    call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_modlue("mason_setup")'],
+                \ ['mason.nvim'])
 endif
 
 let s:setup_str = ''
@@ -178,7 +181,6 @@ Plug 'tracyone/love.vim'
 Plug 'tracyone/mark.vim',{'on':[]}
 Plug 'itchyny/vim-cursorword', {'on':[]}
 call te#feat#register_vim_enter_setting2([0],['mark.vim', 'vim-cursorword'])
-Plug 'thinca/vim-quickrun',{'on': '<Plug>(quickrun)'}
 if(!te#env#IsWindows())
     Plug 'vim-scripts/sudo.vim', {'on': ['SudoRead', 'SudoWrite']}
     if te#env#IsVim() >= 900
@@ -370,29 +372,7 @@ xmap  <silent><leader>mn <Plug>MarkClear
 nmap  <silent><leader>m? <Plug>MarkSearchAnyPrev
 nmap  <silent><leader>m/ <Plug>MarkSearchAnyNext
 "}}}
-" Quickrun {{{
-if te#env#SupportFloatingWindows() == 1
-let g:quickrun_config = {
-            \   '_' : {
-            \       'outputter' : 'popup',
-            \   },
-            \}
-else
-let g:quickrun_config = {
-            \   '_' : {
-            \       'outputter' : 'quickfix',
-            \   },
-            \}
-endif
 
-let g:quickrun_no_default_key_mappings = 1
-map  <silent><F6> <Plug>(quickrun)
-vnoremap  <silent><F6> :'<,'>QuickRun<cr>
-" run cunrrent file
-nmap  <silent><leader>yr <Plug>(quickrun)
-" run selection text
-vnoremap  <silent><leader>yr :'<,'>QuickRun<cr>
-" }}}
 " Misc {{{
 if te#env#SupportAsync()
     let g:love_support_option=['termguicolors', 'tabstop', 'shiftwidth', 'softtabstop', 'expandtab', 'smarttab']
@@ -400,7 +380,4 @@ endif
 " Save basic setting
 nnoremap  <silent><Leader>lo :Love<cr>
 nnoremap  <silent><Leader>ts :call te#tools#run_sexy_command()<cr>
-
-
-
 " }}}
