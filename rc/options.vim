@@ -253,6 +253,7 @@ if te#env#IsNvim() != 0
         set diffopt+=linematch:60
         set laststatus=3
         set foldcolumn=auto:1
+        v:lua.vim.loader.enable()
     endif
     if te#env#IsTmux()
         set clipboard+=unnamedplus
