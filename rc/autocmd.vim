@@ -45,7 +45,7 @@ augroup filetype_group
     autocmd FileType vinarise nmap <buffer><c-g> :call feedkeys("gG")<cr>
 
     autocmd FileType gitcommit setlocal nofoldenable cursorline
-    autocmd FileType qfreplace,vimcalc,man setlocal nonu nornu nofoldenable | imap <buffer> <c-d> :q<cr>
+    autocmd FileType qfreplace,vimcalc setlocal nonu nornu nofoldenable | imap <buffer> <c-d> :q<cr>
                 \ | nmap <buffer> q :bdelete<cr> | setlocal matchpairs-=<:>
     autocmd FileType vim-plug  call te#plug#extra_key()
 augroup END
