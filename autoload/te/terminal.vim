@@ -297,6 +297,9 @@ function! te#terminal#move_floating_win(pos) abort
     if te#terminal#is_term_buf(bufnr('%')) == v:true
         let l:current_term_buf = bufnr('%')
         call te#terminal#hide_popup()
+        if g:outline_plugin.cur_val == 'vista.vim'
+            :silent! Vista!
+        endif
         let l:pos_str = te#terminal#get_pos(l:current_term_buf)
         let l:btm = matchstr(a:pos, '\v(bottom)|(top)|(middle)')
         let l:rlm = matchstr(a:pos, '\v(right)|(left)|(middle)')
