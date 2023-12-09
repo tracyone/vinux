@@ -20,6 +20,24 @@ function! te#complete#cstag(timer) abort
     endif
 endfunction
 
+function! s:load_complete_plugin() abort
+    if get(g:, 'feat_enable_complete', 0)
+        if !plug#is_plugin_load(g:complete_plugin.name[0])
+            call te#utils#EchoWarning("Try to load ".g:complete_plugin.name[0].' ...')
+            call plug#load(g:complete_plugin.name)
+            if type(g:complete_plugin.enable_func) == g:t_func
+                call g:complete_plugin.enable_func()
+            else
+                execute g:complete_plugin.enable_func
+            endif
+            autocmd! lazy_load_group 
+            call te#utils#EchoWarning('Finish! Please try again!')
+            return 1
+        endif
+    endif
+    return 0
+endfunction
+
 function! te#complete#goto_def(open_type) abort
     let l:ret = -1
     let s:cur_line = line(".")
@@ -31,6 +49,10 @@ function! te#complete#goto_def(open_type) abort
         if l:ret > 0
             return 0
         endif
+    endif
+
+    if s:load_complete_plugin() == 1
+        return 0
     endif
 
     if get(g:, 'feat_enable_complete', 0) && 
@@ -92,21 +114,6 @@ function! s:get_input() abort
 endfunction
 
 function! s:YcmGotoDef() abort
-    if g:complete_plugin_type.cur_val ==# 'YouCompleteMe'
-        if  exists('*youcompleteme#Enable') == 0
-            if te#pg#top_of_kernel_tree(getcwd())
-                let g:ycm_global_ycm_extra_conf = $VIMFILES.'/rc/ycm_conf_for_arm_linux.py'
-            endif
-            call te#utils#EchoWarning('Loading ycm ...')
-            call plug#load(g:complete_plugin.name)
-            call delete('.ycm_extra_conf.pyc')  
-            call youcompleteme#Enable() 
-            let g:is_load_ycm = 1
-            autocmd! lazy_load_group 
-            call te#utils#EchoWarning('ycm has been loaded!')
-            return -1 
-        endif
-    endif
     let l:ret = te#utils#GetError(':YcmCompleter GoToDefinition','Runtime.*')
     if l:ret == -1
         let l:ret = te#utils#GetError(':YcmCompleter GoToDeclaration','Runtime.*')
@@ -151,6 +158,11 @@ function te#complete#lookup_reference(open_type) abort
     let s:cur_line = line(".")
     let s:cur_file_name = expand('%:t')
     let s:cur_word=expand('<cword>')
+
+    if s:load_complete_plugin() == 1
+        return 0
+    endif
+
     execute a:open_type
     if g:feat_enable_lsp == 1
         let l:ret=te#lsp#references()

@@ -124,14 +124,15 @@ function! s:syntax() abort
   syntax region plug2 start=/\%2l/ end=/\%3l/ contains=plugBracket,plugX
   syn match plugDash /^-/
   syn match plugName /\(^- \)\@<=[^ ]*:/
-  syn match plugNotLoaded /(http.*)/
+  syn match MoreMsg /(http.*)/
   syn match plugError /\[missing\]/
+  syn match plugNotLoaded /\[unloaded\]/
   syn keyword Function PlugInstall PlugStatus PlugUpdate PlugClean
   hi def link plug1       Title
   hi def link plug2       Repeat
   hi def link plugDash    Special
-  hi def link plugName    Label
   hi def link plugNotLoaded Comment
+  hi def link plugName    Label
   hi def link plugError   Error
 endfunction
 
@@ -184,11 +185,14 @@ function! te#plug#list() abort
     let l:i=3
 
     for l:needle in g:plugs_order
+        let l:status=''
         if !isdirectory(g:plugs[l:needle].dir)
-            call add(l:output, printf('- %s:%s [missing]', l:needle,' ('.g:plugs[l:needle].uri.')' ) )
-        else
-            call add(l:output, printf('- %s:%s', l:needle,' ('.g:plugs[l:needle].uri.')' ) )
+            let l:status='[missing]'
         endif
+        if !plug#is_plugin_load(l:needle)
+            let l:status.=' [unloaded]'
+        endif
+        call add(l:output, printf('- %s:%s %s', l:needle,' ('.g:plugs[l:needle].uri.')', l:status ) )
         let l:i=l:i + 1
     endfor
     let l:output[0].=l:i-3

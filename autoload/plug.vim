@@ -2531,6 +2531,13 @@ function! s:upgrade_specs()
   endfor
 endfunction
 
+function! plug#is_plugin_load(name) abort
+    if get(s:loaded, a:name, 0) == 0
+        return 0
+    endif
+    return 1
+endfunction
+
 function! s:status()
   call s:prepare()
   call append(0, 'Checking plugins')
