@@ -85,10 +85,9 @@ elseif g:complete_plugin_type.cur_val ==# 'nvim-cmp'
                         \   },
                         \ }
         endfunction
-        "Important config neovim lsp and cmp when vim enter
-        call te#feat#register_vim_enter_setting2([function('<SID>enable_nvim_lsp')],
-                    \ ['cmp-nvim-lsp', 'nvim-cmp', 'cmp-path', 'cmp-buffer',
-                    \ 'cmp-nvim-lua', 'cmp-cmdline', 'cmp-nvim-ultisnips', 'cmp-look', 'cmp-calc'])
+        let g:complete_plugin.name=['cmp-nvim-lsp', 'nvim-cmp', 'cmp-path', 'cmp-buffer',
+                    \ 'cmp-nvim-lua', 'cmp-cmdline', 'cmp-nvim-ultisnips', 'cmp-look', 'cmp-calc']
+        let g:complete_plugin.enable_func=function('<SID>enable_nvim_lsp')
     endif
 elseif g:complete_plugin_type.cur_val ==# 'coc.nvim'
     if !te#env#Executable('node') || !te#env#SupportAsync()
