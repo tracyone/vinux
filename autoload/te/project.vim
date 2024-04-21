@@ -289,3 +289,17 @@ function! te#project#delete_project() abort
         call te#utils#EchoWarning("Delete project:".l:project_name." fail")
     endif
 endfunction
+
+function! s:select_dir(result) abort
+    call chdir(s:project_dir_list[a:result - 1])
+    call te#utils#EchoWarning('Change to direcory:'.s:project_dir_list[a:result - 1])
+endfunction
+
+function! te#project#select_dir() abort
+    if filereadable(g:vinux_project.dir.'/.csdb')
+        let s:project_dir_list = readfile(g:vinux_project.dir.'/.csdb')
+        call te#utils#confirm("Select dir", s:project_dir_list, function('<SID>select_dir'))
+    else
+        call te#utils#EchoWarning('Can not find .csdb')
+    endif
+endfunction

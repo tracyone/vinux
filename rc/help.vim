@@ -274,7 +274,7 @@ if v:version >= 704 && te#env#IsDisplay()
         let g:which_key_map.s = { 
                     \ 'name' : '+Show_or_session',
                     \ 'b' : 'Show all branch',
-                    \ 'c' : 'run neomake',
+                    \ 'c' : 'Select dir in project',
                     \ 'd' : 'Delete session',
                     \ 'm' : 'Show message',
                     \ 'l' : 'Session load',
