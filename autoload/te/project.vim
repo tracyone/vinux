@@ -296,7 +296,7 @@ function! s:select_dir(result) abort
 endfunction
 
 function! te#project#select_dir() abort
-    if filereadable(g:vinux_project.dir.'/.csdb')
+    if exists('g:vinux_project.dir') && filereadable(g:vinux_project.dir.'/.csdb')
         let s:project_dir_list = readfile(g:vinux_project.dir.'/.csdb')
         call te#utils#confirm("Select dir", s:project_dir_list, function('<SID>select_dir'))
     else
