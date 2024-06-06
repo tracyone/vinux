@@ -47,6 +47,10 @@ function! te#project#create_project() abort
     if !strlen(l:name)
         return
     endif
+    if !isdirectory($VIMFILES.'/sessions')
+        call mkdir($VIMFILES.'/sessions', 'p')
+    endif
+
     "close unlisted buffer
     for l:b in te#utils#get_buf_info(2)
         execute ':bdelete '.l:b
@@ -189,7 +193,12 @@ endfunction
 function! te#project#edit_project() abort
     let l:project_root=$VIMFILES.'/.project/'
     let l:old_pwd = getcwd()
-    execute 'cd '.l:project_root
+    if isdirectory(l:project_root)
+        execute 'cd '.l:project_root
+    else
+        call te#utils#EchoWarning(l:project_root." is not exist")
+        return
+    endif
     let l:project = input('Please select project: ','','dir')
     execute 'cd '.l:project_root.'/'.l:project
     let l:file_to_open=['.ycm_extra_conf.py', '.clang-format', '.love.vim', 'compile_commands.json', 'compile_flags.txt', '.csdb']
