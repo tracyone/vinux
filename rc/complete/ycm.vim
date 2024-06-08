@@ -66,3 +66,5 @@ let g:ycm_filetype_blacklist = {
             \ 'mail' : 1
             \}
 let g:ycm_global_ycm_extra_conf = $VIMFILES.'/rc/ycm_conf_for_c.py'
+
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
