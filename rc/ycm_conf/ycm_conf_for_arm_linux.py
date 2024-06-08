@@ -4,7 +4,7 @@ import os
 # Attention:
 # File path not starting with / or = will be expanded.
 
-flags_c = [
+flags_0 = [
     '-Wall',
     '-Wundef',
     '-Wstrict-prototypes',
@@ -30,6 +30,17 @@ flags_c = [
     '-include', 'include/linux/kconfig.h',  # IMPORTANT
 ]
 
+flags_1 = [
+]
+
+flags_2 = [
+]
+
+flags = {
+    'flags_0':flags_0,
+    'flags_1':flags_1,
+    'flags_2':flags_2,
+}
 
 def DirectoryOfThisScript():
     return os.path.dirname(os.path.abspath(__file__))
@@ -63,15 +74,30 @@ def MakeRelativePathsInFlagsAbsolute(flags, working_directory):
 
     return new_flags
 
-
 def FlagsForFile(filename):
     extension = os.path.splitext(filename)[1]
+    final_flags = []
+    list_name = ""
     if extension == '.cpp':
         assert False
-    flags = flags_c
 
-    relative_to = os.getcwd()
-    final_flags = MakeRelativePathsInFlagsAbsolute(flags, relative_to)
+    if os.path.exists(".csdb"): 
+        with open(".csdb", 'r') as file:  
+            for line_number, line in enumerate(file, start=0):
+                # 去除行尾的换行符和可能的空白字符  
+                path = line.strip()  
+                list_name = f'flags_{line_number}'
+                if list_name in flags and flags[list_name]: 
+                    final_flags += MakeRelativePathsInFlagsAbsolute(flags[list_name], path) 
+                else:
+                    final_flags.append("-I")
+                    final_flags.append(path)
+                    final_flags.append("-I")
+                    final_flags.append(path + "/include")
+    else:
+        path = os.getcwd()
+        final_flags += MakeRelativePathsInFlagsAbsolute(flags_0, path) 
+
     return {
         'flags': final_flags,
         'do_cache': True
