@@ -83,6 +83,45 @@ includedirs_android = [
 #Add more header locations that you're interested in
 ]
 
+flags_1 = [
+]
+
+flags_2 = [
+]
+
+flags_x = {
+    'flags_1':flags_1,
+    'flags_2':flags_2,
+}
+
+def MakeRelativePathsInFlagsAbsolute(flags, working_directory):
+    if not working_directory:
+        return flags
+    new_flags = []
+    make_next_absolute = False
+    path_flags = ['-isystem', '-I', '-iquote', '--sysroot=', '-include']
+    for flag in flags:
+        new_flag = flag
+
+        if make_next_absolute:
+            make_next_absolute = False
+            if not flag.startswith('/') and not flag.startswith('='):
+                new_flag = os.path.join(working_directory, flag)
+
+        for path_flag in path_flags:
+            if flag == path_flag:
+                make_next_absolute = True
+                break
+            if flag.startswith(path_flag):
+                path = flag[len(path_flag):]
+                new_flag = path_flag + os.path.join(working_directory, path)
+                break
+
+        if new_flag:
+            new_flags.append(new_flag)
+
+    return new_flags
+
 def GetRoot(filename, marker_dir):
     path = os.path.dirname(os.path.abspath(filename))
     while True:
@@ -160,42 +199,57 @@ def FindCorrespondingSourceFile( filename ):
 
 
 def FlagsForFile( filename, **kwargs ):
-  # If the file is a header, try to find the corresponding source file and
-  # retrieve its flags from the compilation database if using one. This is
-  # necessary since compilation databases don't have entries for header files.
-  # In addition, use this source file as the translation unit. This makes it
-  # possible to jump from a declaration in the header file to its definition in
-  # the corresponding source file.
-  AppendIncludes(filename)
+    # If the file is a header, try to find the corresponding source file and
+    # retrieve its flags from the compilation database if using one. This is
+    # necessary since compilation databases don't have entries for header files.
+    # In addition, use this source file as the translation unit. This makes it
+    # possible to jump from a declaration in the header file to its definition in
+    # the corresponding source file.
+    final_flags = []
+    list_name = ""
+    AppendIncludes(filename)
+    filename = FindCorrespondingSourceFile( filename )
 
-  filename = FindCorrespondingSourceFile( filename )
+    if os.path.exists(".csdb"): 
+        with open(".csdb", 'r') as file:  
+            for line_number, line in enumerate(file, start=0):
+                # 去除行尾的换行符和可能的空白字符  
+                path = line.strip()  
+                list_name = f'flags_{line_number}'
+                if list_name in flags_x and flags_x[list_name]: 
+                    final_flags += MakeRelativePathsInFlagsAbsolute(flags_x[list_name], path) 
+                else:
+                    final_flags.append("-I")
+                    final_flags.append(path)
 
+    path = os.getcwd()
+    final_flags += flags
 
-  if not database:
+    if not database:
+        return {
+            'flags': final_flags,
+            'include_paths_relative_to_dir': DirectoryOfThisScript(),
+            'override_filename': filename
+        }
+
+    compilation_info = database.GetCompilationInfoForFile( filename )
+    if not compilation_info.compiler_flags_:
+        return None
+
+# Bear in mind that compilation_info.compiler_flags_ does NOT return a
+# python list, but a "list-like" StringVec object.
+    final_flags = list( compilation_info.compiler_flags_ )
+
+# NOTE: This is just for YouCompleteMe; it's highly likely that your project
+# does NOT need to remove the stdlib flag. DO NOT USE THIS IN YOUR
+# ycm_extra_conf IF YOU'RE NOT 100% SURE YOU NEED IT.
+    try:
+        final_flags.remove( '-stdlib=libc++' )
+    except ValueError:
+        pass
+
     return {
-      'flags': flags,
-      'include_paths_relative_to_dir': DirectoryOfThisScript(),
-      'override_filename': filename
+        'flags': final_flags,
+        'include_paths_relative_to_dir': compilation_info.compiler_working_dir_,
+        'override_filename': filename
     }
-
-  compilation_info = database.GetCompilationInfoForFile( filename )
-  if not compilation_info.compiler_flags_:
-    return None
-
-  # Bear in mind that compilation_info.compiler_flags_ does NOT return a
-  # python list, but a "list-like" StringVec object.
-  final_flags = list( compilation_info.compiler_flags_ )
-
-  # NOTE: This is just for YouCompleteMe; it's highly likely that your project
-  # does NOT need to remove the stdlib flag. DO NOT USE THIS IN YOUR
-  # ycm_extra_conf IF YOU'RE NOT 100% SURE YOU NEED IT.
-  try:
-    final_flags.remove( '-stdlib=libc++' )
-  except ValueError:
-    pass
-
-  return {
-    'flags': final_flags,
-    'include_paths_relative_to_dir': compilation_info.compiler_working_dir_,
-    'override_filename': filename
-  }
