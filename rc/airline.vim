@@ -82,9 +82,9 @@ function! s:airline_setting()
         endif
     endif
     if g:feat_enable_jump
-        call add(g:airline_extensions, g:fuzzysearcher_plugin_name.cur_val)
-        call add(g:airline_extensions, 'bookmark')
-        let g:airline#extensions#bookmark#enabled = 1
+        if g:fuzzysearcher_plugin_name.cur_val == 'ctrlp' || !te#env#SupportFloatingWindows()
+            call add(g:airline_extensions, g:fuzzysearcher_plugin_name.cur_val)
+        endif
     endif
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
@@ -109,7 +109,7 @@ function! s:airline_setting()
     let g:airline_detect_crypt=1
     let g:airline#extensions#whitespace#enabled = 0
     let g:airline#extensions#ycm#enabled = 0
-    let g:airline#extensions#ctrlp#show_adjacent_modes = 0
+    let g:airline#extensions#ctrlp#show_adjacent_modes = 1
     let g:airline_highlighting_cache = 1
 
 

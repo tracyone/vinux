@@ -66,8 +66,13 @@ if te#env#IsGui()
             set guifontwide=YaHei_Mono:h12.5:cGB2312
         endif
         if g:enable_powerline_fonts.cur_val ==# 'on'
-            set guifont=YaHeiConsolasHybridNF:h14
-            set guifontwide=YaHeiConsolasHybridNF:h14
+            if te#env#IsMac()
+                set guifont=YaHeiConsolasHybridNF:h14
+                set guifontwide=YaHeiConsolasHybridNF:h14
+            elseif te#env#IsUnix()
+                set guifont=YaHeiConsolasHybrid\ Nerd\ Font\ 14
+                set guifontwide=YaHeiConsolasHybrid\ Nerd\ Font\ 14
+            endif
         endif
     catch /^Vim\%((\a\+)\)\=:E/
         set guifontwide&
