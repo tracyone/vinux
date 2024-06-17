@@ -84,9 +84,8 @@ def FlagsForFile(filename):
     if os.path.exists(".csdb"): 
         with open(".csdb", 'r') as file:  
             for line_number, line in enumerate(file, start=0):
-                # 去除行尾的换行符和可能的空白字符  
                 path = line.strip()  
-                list_name = f'flags_{line_number}'
+                list_name = 'flags_' + str(line_number)
                 if list_name in flags and flags[list_name]: 
                     final_flags += MakeRelativePathsInFlagsAbsolute(flags[list_name], path) 
                 else:
