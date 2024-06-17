@@ -7,14 +7,17 @@ if g:complete_plugin_type.cur_val ==# 'YouCompleteMe'
         let g:complete_plugin_type.cur_val='supertab'
     else
         if te#env#IsUnix()
-            Plug 'Valloric/YouCompleteMe', { 'on': [], 'commit': '85c11d3a875b02a7ac28fb96d0c7a02782f60410' }
+            if te#env#SupportPy3() && (te#env#IsVim() >= 900 || te#env#IsNvim() >= 0.5)
+                Plug 'ycm-core/YouCompleteMe', {'on':[] }
+            else
+                Plug 'Valloric/YouCompleteMe', { 'on': [], 'commit': '85c11d3a875b02a7ac28fb96d0c7a02782f60410' }
+            endif
             let g:complete_plugin.name=['YouCompleteMe']
-        elseif te#env#IsWin32()
-            Plug 'snakeleon/YouCompleteMe-x86', { 'on': [] }
-            let g:complete_plugin.name=['YouCompleteMe-x86']
-        else
+        elseif te#env#IsWin64()
             Plug 'snakeleon/YouCompleteMe-x64', { 'on': [] }
             let g:complete_plugin.name=['YouCompleteMe-x64']
+        else
+            let g:complete_plugin_type.cur_val='supertab'
         endif
         call te#feat#source_rc('complete/ycm.vim')
     endif
