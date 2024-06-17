@@ -37,50 +37,57 @@ import ycm_core
 # compilation database set (by default, one is not set).
 # CHANGE THIS LIST OF FLAGS. YES, THIS IS THE DROID YOU HAVE BEEN LOOKING FOR.
 flags = [
-    '-Wall',
-    '-Wextra',
-    '-Werror',
-    '-Wno-long-long',
-    '-Wno-variadic-macros',
-    '-fexceptions',
-    '-DNDEBUG',
-    '-DANDROID',
-    # You 100% do NOT need -DUSE_CLANG_COMPLETER and/or -DYCM_EXPORT in your flags;
-    # only the YCM source code needs it.
-    '-DUSE_CLANG_COMPLETER',
-    '-DYCM_EXPORT=',
-    # THIS IS IMPORTANT! Without the '-x' flag, Clang won't know which language to
-    # use when compiling headers. So it will guess. Badly. So C++ headers will be
-    # compiled as C headers. You don't want that so ALWAYS specify the '-x' flag.
-    # For a C project, you would set this to 'c' instead of 'c++'.
-    '-std=c++11',
-    '-x',
-    'c++',
-    '-I', 'include',
+      '-Wall',
+     '-Wextra',
+     '-Werror',
+     '-Wno-long-long',
+     '-Wno-variadic-macros',
+     '-Wno-unused-parameter',
+     '-fexceptions',
+     '-DNDEBUG',
+     '-DANDROID',
+     '-DHWC2_USE_CPP11',
+     '-DHWC2_INCLUDE_STRINGIFICATION',
+     '-DSUNXI_SIDEBAND_STREAM',
+     '-DGL_GLEXT_PROTOTYPES',
+     '-DEGL_EGLEXT_PROTOTYPES',
+     # THIS IS IMPORTANT! Without the '-x' flag, Clang won't know which language to
+     # use when compiling headers. So it will guess. Badly. So C++ headers will be
+     # compiled as C headers. You don't want that so ALWAYS specify the '-x' flag.
+     # For a C project, you would set this to 'c' instead of 'c++'.
+     '-std=c++11',
+     '-x',
+     'c++',
+     '-I', 'include',
 ]
 
 
 includedirs_android = [
-'system/core/include',
-'hardware/libhardware/include',
-'hardware/libhardware_legacy/include',
-'hardware/ril/include',
-'libnativehelper/include',
-'bionic/libc/arch-arm/include',
-'bionic/libc/include',
-'bionic/libc/kernel/common',
-'bionic/libc/kernel/arch-arm',
-'bionic/libstdc++/include',
-'bionic/libstdc++/include',
-'bionic/libm/include',
-'bionic/libm/include/arm',
-'bionic/libthread_db/include',
-'frameworks/native/include',
-'frameworks/native/opengl/include',
-'frameworks/av/include',
-'frameworks/base/include',
-'kernel/include/uapi' 
-#Add more header locations that you're interested in
+ 'system/core/include',
+ 'hardware/libhardware/include',
+ 'hardware/libhardware_legacy/include',
+ 'hardware/aw/display/hwc-hal/svp/include',
+ 'hardware/aw/display/hwc-hal/svp',
+ 'hardware/aw/display',
+ 'hardware/aw/display/include',
+ 'hardware/aw/display/interfaces/config/1.0/src',
+ 'hardware/ril/include',
+ 'libnativehelper/include',
+ 'bionic/libc/arch-arm/include',
+ 'bionic/libc/include',
+ 'bionic/libc/kernel/common',
+ 'bionic/libc/kernel/arch-arm',
+ 'bionic/libstdc++/include',
+ 'bionic/libstdc++/include',
+ 'bionic/libm/include',
+ 'bionic/libm/include/arm',
+ 'bionic/libthread_db/include',
+ 'frameworks/native/include',
+ 'frameworks/native/opengl/include',
+ 'frameworks/av/include',
+ 'frameworks/base/include',
+ 'kernel/include/uapi'
+ #Add more header locations that you're interested in
 ]
 
 flags_1 = [
@@ -213,9 +220,8 @@ def FlagsForFile( filename, **kwargs ):
     if os.path.exists(".csdb"): 
         with open(".csdb", 'r') as file:  
             for line_number, line in enumerate(file, start=0):
-                # 去除行尾的换行符和可能的空白字符  
                 path = line.strip()  
-                list_name = f'flags_{line_number}'
+                list_name = 'flags_' + str(line_number)
                 if list_name in flags_x and flags_x[list_name]: 
                     final_flags += MakeRelativePathsInFlagsAbsolute(flags_x[list_name], path) 
                 else:
