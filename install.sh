@@ -240,6 +240,13 @@ sync_repo       "$APP_PATH" \
 
 if program_exists "nvim";
 then
+    if  program_exists "pip3";
+    then
+        pip3 install neovim
+    elif program_exists "pip";
+    then
+        pip install neovim
+    fi
     sync_repo       "$HOME/.config/nvim" \
         "$REPO_URI" \
         "$REPO_BRANCH" \

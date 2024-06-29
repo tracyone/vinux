@@ -8,13 +8,13 @@ end
 
 function module.is_lsp_running()
     local current_buf = vim.api.nvim_eval("bufnr('%')")
-    local client_obj = vim.lsp.get_active_clients{ bufnr = current_buf }
+    local client_obj = vim.lsp.get_clients{ bufnr = current_buf }
     return get_size(client_obj)
 end
 
 function module.get_client_name()
     local current_buf = vim.api.nvim_eval("bufnr('%')")
-    local client_obj = vim.lsp.get_active_clients{ bufnr = current_buf }
+    local client_obj = vim.lsp.get_clients{ bufnr = current_buf }
 
     for _, client in pairs(client_obj) do
         return string.format("%s", client.name)
