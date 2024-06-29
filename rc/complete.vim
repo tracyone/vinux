@@ -99,6 +99,13 @@ elseif g:complete_plugin_type.cur_val ==# 'coc.nvim'
     else
         call te#feat#source_rc('complete/coc.vim')
     endif
+elseif g:complete_plugin_type.cur_val ==# 'vimcomplete'
+    if te#env#IsVim() < 900
+        call te#utils#EchoWarning("vim9 are required to use vimcomplete")
+        let g:complete_plugin_type.cur_val='supertab'
+    else
+        call te#feat#source_rc('complete/vimcomplete.vim')
+    endif
 endif
 
 

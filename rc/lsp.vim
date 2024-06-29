@@ -12,6 +12,11 @@ if te#env#IsNvim() >= 0.5
                 \ ,'mason-null-ls.nvim'])
 elseif g:complete_plugin_type.cur_val ==# 'coc.nvim'
 
+elseif g:complete_plugin_type.cur_val ==# 'vimcomplete'
+Plug 'yegappan/lsp'
+Plug 'mattn/vim-lsp-settings',{'on': []}
+Plug 'normen/vim-lsp-settings-adapter',{'on': []}
+call te#feat#register_vim_enter_setting2([0], ['vim-lsp-settings', 'vim-lsp-settings-adapter'])
 else
     Plug 'prabirshrestha/vim-lsp'
     Plug 'mattn/vim-lsp-settings',{'on': []}
