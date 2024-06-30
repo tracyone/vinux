@@ -4,7 +4,10 @@ function! te#lsp#is_server_running() abort
     if te#env#IsNvim() >= 0.5
         return v:lua.require('utils').is_lsp_running()
     else
-        if exists("*lsp#get_server_status")
+        if exists(':LspServer') == 2
+            let l:status = matchstr(execute(":LspServer show status", "silent"), "is running")
+            return !empty(l:status)
+        elseif exists("*lsp#get_server_status")
             let l:ret = 0
             let l:serve_name = lsp#get_allowed_servers()
             for l:needle in l:serve_name
@@ -30,7 +33,13 @@ function! te#lsp#get_lsp_server_name(sep) abort
     if te#env#IsNvim() >= 0.5
         let l:str=v:lua.require('utils').get_client_name()
     else
-        if exists("*lsp#get_server_status")
+        if exists(':LspServer')
+            let l:status = execute(":LspServer show status", "silent")
+            let l:is_running = matchstr(l:status, "is running")
+            if !empty(l:is_running)
+                let l:str = matchstr(l:status, "\'.*\'")
+            endif
+        elseif exists("*lsp#get_server_status")
             let l:ret = 0
             let l:serve_name = lsp#get_allowed_servers()
             for l:needle in l:serve_name
@@ -59,6 +68,8 @@ function! te#lsp#gotodefinion() abort
         :lua vim.lsp.buf.definition()
     elseif g:complete_plugin_type.cur_val == 'coc.nvim'
         call CocActionAsync('jumpDefinition')
+    elseif exists(':LspGotoDefinition') == 2
+        :LspGotoDefinition
     else
         call te#utils#EchoWarning('NOT support command!')
         return -1
@@ -75,6 +86,8 @@ function! te#lsp#format_document() abort
         :lua vim.lsp.buf.format()
     elseif g:complete_plugin_type.cur_val == 'coc.nvim'
         execute 'normal '."\<Plug>(coc-format-selected)"
+    elseif exists(':LspFormat') == 2
+        :LspFormat
     else
         call te#utils#EchoWarning('NOT support command!')
         return -1
@@ -98,6 +111,8 @@ lua << EOF
 EOF
     elseif g:complete_plugin_type.cur_val == 'coc.nvim'
         call CocActionAsync('formatSelected', visualmode())
+    elseif exists(':LspFormat') == 2
+        :LspFormat
     else
         call te#utils#EchoWarning('NOT support command!')
         return -1
@@ -130,6 +145,8 @@ function! te#lsp#find_implementation() abort
         :lua vim.lsp.buf.implementation()
     elseif g:complete_plugin_type.cur_val == 'coc.nvim'
         call CocActionAsync('jumpImplementation')
+    elseif exists(':LspGotoImpl') == 2
+        :LspGotoImpl
     else
         call te#utils#EchoWarning('NOT support command!')
         return -1
@@ -144,6 +161,8 @@ function! te#lsp#references() abort
         :lua vim.lsp.buf.references()
     elseif g:complete_plugin_type.cur_val == 'coc.nvim'
         call CocActionAsync('jumpReferences')
+    elseif exists(':LspShowReferences') == 2
+        :LspShowReferences
     else
         call te#utils#EchoWarning('NOT support command!')
         return -1
@@ -173,6 +192,8 @@ function! te#lsp#goto_type_def() abort
         :lua vim.lsp.buf.type_definition()
     elseif g:complete_plugin_type.cur_val == 'coc.nvim'
         call CocActionAsync('jumpTypeDefinition')
+    elseif exists(':LspGotoTypeDef') == 2
+        :LspGotoTypeDef
     else
         call te#utils#EchoWarning('NOT support command!')
         return -1
@@ -189,6 +210,8 @@ function! te#lsp#show_diagnostics(current_buffer)
             endif
         elseif g:complete_plugin_type.cur_val == 'coc.nvim'
             :CocDiagnostics
+        elseif exists(":LspDocumentSymbol") == 2 
+            :LspDocumentSymbol
         endif
     else
         :botright lopen
@@ -217,6 +240,8 @@ function! te#lsp#call_tree(in) abort
             :lua vim.lsp.buf.incoming_calls()
         elseif g:complete_plugin_type.cur_val == 'coc.nvim'
             call CocActionAsync('showIncomingCalls')
+        elseif exists(':LspIncomingCalls') == 2
+            :LspIncomingCalls
         endif
     else
         if exists(':LspCallHierarchyOutgoing') == 2
@@ -225,6 +250,8 @@ function! te#lsp#call_tree(in) abort
             :lua vim.lsp.buf.outgoing_calls()
         elseif g:complete_plugin_type.cur_val == 'coc.nvim'
             call CocActionAsync('showOutgoingCalls')
+        elseif exists(':LspOutgoingCalls') == 2
+            :LspOutgoingCalls
         endif
     endif
 endfunction
@@ -237,6 +264,8 @@ function! te#lsp#diagnostics_jump(direct) abort
             :lua vim.diagnostic.goto_next()
         elseif g:complete_plugin_type.cur_val == 'coc.nvim'
             call CocActionAsync('diagnosticPrevious',     'error')
+        elseif exists(':LspDiag') == 2
+            :LspDiagPrev
         endif
     else
         if exists(':LspNextDiagnostic') == 2
@@ -245,6 +274,8 @@ function! te#lsp#diagnostics_jump(direct) abort
             :lua vim.diagnostic.goto_prev()
         elseif g:complete_plugin_type.cur_val == 'coc.nvim'
             call CocActionAsync('diagnosticNext',     'error')
+        elseif exists(':LspDiag') == 2
+            :LspDiagNext
         endif
     endif
 endfunction
@@ -261,7 +292,7 @@ endfunction
 
 function! te#lsp#install_server() abort
     if exists(':LspInstallServer') == 2
-        :LspInstallServer
+        :LspManageServers
     elseif te#env#IsNvim() >= 0.5
         :Mason
     elseif g:complete_plugin_type.cur_val == 'coc.nvim'
@@ -273,6 +304,12 @@ function! te#lsp#diagnostics_info(type) abort
     let l:sign = (a:type == 'warning') ? g:vinux_diagnostics_signs_warning.' ': g:vinux_diagnostics_signs_error.' '
     if exists('*lsp#get_buffer_diagnostics_counts')
         return l:sign.lsp#get_buffer_diagnostics_counts()[a:type]
+    elseif exists('*lsp#lsp#ErrorCount')
+        if a:type == 'warning'
+            return l:sign.lsp#lsp#ErrorCount()['Warn']
+        elseif a:type == 'error'
+            return l:sign.lsp#lsp#ErrorCount()['Error']
+        endif
     elseif te#env#IsNvim() >= 0.5
         if a:type == 'warning'
             return l:sign.len(v:lua.vim.diagnostic.get(0, { 'severity':2 }))
