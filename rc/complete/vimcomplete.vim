@@ -25,10 +25,10 @@ var vimcomplete_options = {
     completor: { shuffleEqualPriority: true },
     buffer: { enable: true, priority: 10, urlComplete: true, envComplete: true },
     abbrev: { enable: true, priority: 10 },
-    lsp: { enable: true, priority: 7, maxCount: 5 },
+    lsp: { enable: true, priority: 11, maxCount: 5 },
     omnifunc: { enable: false, priority: 8, filetypes: ['python', 'javascript'] },
     vsnip: { enable: false, priority: 9 },
-    vimscript: { enable: true, priority: 11 },
+    vimscript: { enable: true, priority: 10 },
     ngram: {
         enable: true,
         priority: 10,
