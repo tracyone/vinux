@@ -1,8 +1,8 @@
 vim9script
 
 Plug 'girishji/vimcomplete'
-Plug 'girishji/autosuggest.vim'
-Plug 'girishji/ngram-complete.vim'
+Plug 'girishji/autosuggest.vim', {'on':[] }
+Plug 'girishji/ngram-complete.vim', {'on':[] }
 
 var autosuggest_options = {
     search: {
@@ -40,5 +40,10 @@ var vimcomplete_options = {
 
 g:vimcomplete_tab_enable = 1
 
-autocmd VimEnter * g:VimCompleteOptionsSet(vimcomplete_options)
-autocmd VimEnter * g:AutoSuggestSetup(autosuggest_options)
+def VimCompletSetting()
+    g:VimCompleteOptionsSet(vimcomplete_options)
+    g:AutoSuggestSetup(autosuggest_options)
+enddef
+
+g:complete_plugin.name = ['autosuggest.vim', 'ngram-complete.vim']
+g:complete_plugin.enable_func = function('VimCompletSetting')
