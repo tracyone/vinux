@@ -46,6 +46,8 @@ else
     else
         let g:lsp_diagnostics_echo_cursor = 1
     endif
+    "optimize performance
+    let g:lsp_use_lua = (te#env#IsNvim() != 0) || te#env#SupportFeature('lua')
 endif
 
 "lsp setting
