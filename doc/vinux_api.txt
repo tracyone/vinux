@@ -62,4 +62,39 @@ env-api                                                    *env-api*
 util-api                                                    *util-api*
 ==============================================================================
 
+te#utils#get_reg()                                        *te#utils#get_reg*
+    Return a list which include all vim register contents
+
+te#utils#pedit()
+    Preview files that list in quickfix window
+
+te#utils#cd_to_plugin()                                 *te#utils#cd_to_plugin*
+    Prompt vinux's plugins' directories in command line window
+
+te#utils#run_command({command}, [, {callback}] [,{arglist}] [, {flag}])         *te#utils#run_command*
+
+    Run {command} in background. If {command} is a empty string, you can enter
+    the command string in cmdline window.
+    
+    Other parameter:
+    1. {callback} is a function type, it will be called once command finished.
+    Optional.
+    2. arglist is list type, it will be passed to {callback} once command finished. Optional.
+    3. flag is integer type, it specifies whether open quickfix window after
+    {command} finish or not. Optional.
+
+    Example:
+      "run git fetch command in background
+      :call te#utils#run_command('git fetch --all')
+      "run command from user input and open quickfix window after command finisfinished
+      :call te#utils#run_command("", 1)
+      "run make cscope command in background, it will generate cscope
+      database, after finished, te#pg#add_cscope_out will be called with a:path argument.
+      call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 '.g:tagging_program.cur_val,
+                               \ function('te#pg#add_cscope_out'),[a:path])
+
+te#utils#check_health()                                                     *te#utils#check_health*
+      Show vim health info in a new tabwindow.
+
+
 vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:
