@@ -1,10 +1,10 @@
 vinux_api.txt	Last change: June 18 2024
 vinux_api - TABLE OF CONTENTS                                      *vinux_api*
 ==============================================================================
-complete-api                                                  |complete-api|
-lsp-api                                                  |lsp-api|
-env-api                                                  |env-api|
-util-api                                                  |util-api|
+complete-api                                                    |complete-api|
+lsp-api                                                         |lsp-api|
+env-api                                                         |env-api|
+util-api                                                        |util-api|
 
 
 ==============================================================================
@@ -12,8 +12,49 @@ util-api                                                  |util-api|
 complete-api                                                    *complete-api*
 ==============================================================================
 
+te#complete#lookup_reference({type})			*te#complete#lookup_reference()*
+		Find the location below the cursor where the function is called and list
+    it in the quickfix window.
+    {type} parameters specifies how to jump to the first result.
+        sp  open in a split window
+        vs  open in a vertical split window
+        tabnew open a in a new tab window
+
+te#complete#goto_def({type})                       *te#complete#goto_def*
+    Jump to the definition of cursor word.
+    {type} parameters specifies how to jump to the first result.
+        sp  open in a split window
+        vs  open in a vertical split window
+        tabnew open a in a new tab window
+
+
 lsp-api                                                    *lsp-api*
 ==============================================================================
+
+te#lsp#diagnostics_info({type})                             *te#lsp#diagnostics_info*
+    Get the specifies type of diagnostic info.
+    type parameter is string, can be:
+    'warning'
+    'error'
+  
+te#lsp#install_server()                                      *te#lsp#install_server*
+    Open a LSP serves installations management window.
+
+te#lsp#code_len()                                           *te#lsp#code_len*
+    Gets a list of possible commands that can be executed on the current document.
+
+te#lsp#diagnostics_jump({direct})                           *te#lsp#diagnostics_jump*
+    Jump to specifies direction diagnostic line
+    Parameter {direct} can be:
+    - 0. previous diagnostic info
+    - 1. next diagnostic info
+
+te#lsp#call_tree({in})                                          *te#lsp#call_tree*
+
+
+
+
+
 
 env-api                                                    *env-api*
 ==============================================================================
