@@ -182,6 +182,24 @@ function! te#feat#run_vim_enter_setting(timer) abort
         endif
         unlet l:Needle
     endfor
+    let l:tree_cmd=""
+    if(isdirectory(expand("%")))
+        call plug#load(g:file_explorer_plugin.cur_val)
+        if g:file_explorer_plugin.cur_val == 'nerdtree'
+            let l:tree_cmd="NERDTreeExplore"
+        elseif g:file_explorer_plugin.cur_val == 'defx.nvim'
+            let l:tree_cmd="Defx"
+        elseif g:file_explorer_plugin.cur_val == 'coc-explorer'
+            let l:tree_cmd="CocCommand explorer"
+        elseif g:file_explorer_plugin.cur_val == 'fern.vim'
+            let l:tree_cmd="Fern"
+        elseif g:file_explorer_plugin.cur_val == 'nvim-tree.lua'
+            let l:tree_cmd="NvimTreeOpen"
+        endif
+        if !empty(l:tree_cmd)
+            execute l:tree_cmd." ".expand("%")
+        endif
+    endif
     call te#utils#EchoWarning("Load plugins finish ...", 'info')
 endfunction
 
