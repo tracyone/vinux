@@ -164,6 +164,7 @@ function! te#project#create_project() abort
     endif
     if filereadable('.love.vim')
         call writefile(['let g:vinux_coding_style.cur_val='.string(g:vinux_coding_style.cur_val)], ".love.vim", "a")
+        call writefile(['set backupdir='.l:project_name], ".love.vim", "a")
         let l:ret = te#file#copy_file('.love.vim', l:project_name.'.love.vim', 0)
     endif
 
