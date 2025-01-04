@@ -28,15 +28,20 @@ function! te#project#set_indent_options(coding_style)
     execute 'silent! set softtabstop='.g:vinux_tabwidth
 endfunction
 execute 'set colorcolumn='.(&textwidth + 1)
+
 "create a project
 "1. session
 "2. compile flag info
 "3. coding style format
 "4. cscope info
+"g:vinux_project.dir: root directory of project:
+"g:vinux_project.name: name of project
+"g:vinux_project.type type of project, 1 for project, 2 for session
+"g:vinux_project.cmd build cmd for project
 function! te#project#create_project() abort
     let l:project_exist = 0
     let l:default_name=fnamemodify(getcwd(), ':t')
-    let g:vinux_project=get(g:, 'vinux_project', {'dir':'', 'name':'', 'type':0})
+    let g:vinux_project=get(g:, 'vinux_project', {'dir':'', 'name':'', 'type':0, 'cmd':''})
     if len(g:vinux_project.name)
         let l:default_name=g:vinux_project.name
         let l:project_exist = 1
@@ -126,6 +131,7 @@ function! te#project#create_project() abort
             endif
         endif
     endif
+    let  g:vinux_project.cmd = input('Please build command:', './build.sh && ./build.sh pack')
 
     if get(g:, 'feat_enable_lsp')
         "bear --output compile_commands.json  -- make
@@ -311,5 +317,24 @@ function! te#project#select_dir() abort
         call te#utils#confirm("Select dir", s:project_dir_list, function('<SID>select_dir'))
     else
         call te#utils#EchoWarning('Can not find .csdb')
+    endif
+endfunction
+
+function! s:hide_popup_timer(timer) abort
+    call te#terminal#hide_popup()
+endfunction
+
+function! te#project#build_project() abort
+    if has_key(g:vinux_project, 'cmd')
+        let l:build_terminal_buf = te#terminal#get_term_buf_by_title('build')
+        if l:build_terminal_buf >= 0
+            call te#terminal#send_key(l:build_terminal_buf, g:vinux_project.cmd."\r")
+            if !len(win_findbuf(l:build_terminal_buf))
+                call te#terminal#open_term({'bufnr':l:build_terminal_buf})
+                call timer_start(str2nr(2000), function('<SID>hide_popup_timer'), {'repeat': 1})
+            endif
+        else
+            call te#utils#EchoWarning("Please create a terminal with title name build!")
+        endif
     endif
 endfunction

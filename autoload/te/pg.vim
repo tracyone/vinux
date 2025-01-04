@@ -242,6 +242,10 @@ endfunction
 
 "make 
 function! te#pg#do_make() abort
+    if has_key(g:vinux_project, 'name') && len(g:vinux_project.name)
+        call te#project#build_project()
+        return
+    endif
     :call te#utils#EchoWarning('making ...')
     :wa
     if !filereadable('makefile') && !filereadable('Makefile')

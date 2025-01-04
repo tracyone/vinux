@@ -29,6 +29,17 @@ function! te#terminal#get_term_obj(buf) abort
     endif
 endfunction
 
+function! te#terminal#get_term_buf_by_title(title) abort
+    let l:term_list = te#terminal#get_buf_list()
+    for l:i in l:term_list
+        if te#terminal#get_title(l:i) == ' '.a:title
+            return l:i
+        endif
+    endfor
+    return -1
+endfunction
+
+
 function! te#terminal#get_title(buf) abort
     if has_key(s:term_obj,a:buf)
         return s:term_obj[a:buf].title
