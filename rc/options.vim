@@ -18,7 +18,6 @@ endif
 
 set encoding=utf-8
 set fileencoding=utf-8
-set termencoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb1830,big5,euc-jp,euc-kr,gbk
 if v:lang=~? '^\(zh\)\|\(ja\)\|\(ko\)'
     set ambiwidth=double
@@ -203,7 +202,6 @@ if get(g:,'feat_enable_airline') != 1
         set statusline=%!MyStatusLine(1)
     endif
 endif
-set guitablabel=%N\ %t  "do not show dir in tab
 "0, 1 or 2; when to use a status line for the last window
 set laststatus=2 "always show status
 set showtabline=1  "always show the tabline
@@ -275,10 +273,12 @@ else
     if te#env#IsVim() >= 900
         set wildoptions=pum,fuzzy
     endif
+    set termencoding=utf-8
     set printfont=Yahei_Mono:h10:cGB2312  "name of the font to be used for :hardcopy
     "unnamed" to use the * register like unnamed register
     "autoselect" to always put selected text on the clipboardset clipboard+=unnamed
     set clipboard+=unnamed
+    set guitablabel=%N\ %t  "do not show dir in tab
 endif
 
 
