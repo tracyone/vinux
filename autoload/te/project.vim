@@ -131,7 +131,7 @@ function! te#project#create_project() abort
             endif
         endif
     endif
-    let  g:vinux_project.cmd = input('Please build command:', './build.sh && ./build.sh pack')
+    let  g:vinux_project.cmd = input('Please input build command:', './build.sh && ./build.sh pack')
 
     if get(g:, 'feat_enable_lsp')
         "bear --output compile_commands.json  -- make
@@ -193,6 +193,8 @@ function! te#project#create_project() abort
         :call te#tmux#rename_win(l:name)
     endif
     call te#pg#start_gen_cs_tags_threads()
+    call te#terminal#shell_pop({'opener':0x2, 'title': "build"})
+    call te#terminal#hide_popup()
     return 0
 endfunction
 
