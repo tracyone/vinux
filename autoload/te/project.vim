@@ -41,7 +41,7 @@ execute 'set colorcolumn='.(&textwidth + 1)
 function! te#project#create_project() abort
     let l:project_exist = 0
     let l:default_name=fnamemodify(getcwd(), ':t')
-    let g:vinux_project=get(g:, 'vinux_project', {'dir':'', 'name':'', 'type':0, 'cmd':''})
+    let g:vinux_project=get(g:, 'vinux_project', {'dir':'', 'name':'', 'type':0, 'cmd':'', 'build_root_dir':''})
     if len(g:vinux_project.name)
         let l:default_name=g:vinux_project.name
         let l:project_exist = 1
@@ -131,7 +131,8 @@ function! te#project#create_project() abort
             endif
         endif
     endif
-    let  g:vinux_project.cmd = input('Please input build command:', './build.sh && ./build.sh pack')
+    let g:vinux_project.cmd = input('Please input build command:', './build.sh && ./build.sh pack')
+    let g:vinux_project.build_root_dir = input('Please input root dir of build:', getcwd())
 
     if get(g:, 'feat_enable_lsp')
         "bear --output compile_commands.json  -- make
@@ -328,17 +329,29 @@ function! s:hide_popup_timer(timer) abort
     call te#terminal#hide_popup()
 endfunction
 
-function! te#project#build_project() abort
+function! te#project#build_project(in_term) abort
     if has_key(g:vinux_project, 'cmd')
-        let l:build_terminal_buf = te#terminal#get_term_buf_by_title('build')
-        if l:build_terminal_buf >= 0
-            call te#terminal#send_key(l:build_terminal_buf, g:vinux_project.cmd."\r")
-            if !len(win_findbuf(l:build_terminal_buf))
-                call te#terminal#open_term({'bufnr':l:build_terminal_buf})
-                call timer_start(str2nr(2000), function('<SID>hide_popup_timer'), {'repeat': 1})
+        if a:in_term == 1
+            let l:build_terminal_buf = te#terminal#get_term_buf_by_title('build')
+            if l:build_terminal_buf >= 0
+                if has_key(g:vinux_project, 'build_root_dir') && isdirectory(g:vinux_project.build_root_dir)
+                    let l:cd_cmd = 'cd '.g:vinux_project.build_root_dir
+                endif
+                call te#terminal#send_key(l:build_terminal_buf, l:cd_cmd."\r")
+                call te#terminal#send_key(l:build_terminal_buf, g:vinux_project.cmd."\r")
+                if !len(win_findbuf(l:build_terminal_buf))
+                    call te#terminal#open_term({'bufnr':l:build_terminal_buf})
+                    call timer_start(str2nr(2000), function('<SID>hide_popup_timer'), {'repeat': 1})
+                endif
+            else
+                call te#utils#EchoWarning("Please create a terminal with title name build!")
             endif
         else
-            call te#utils#EchoWarning("Please create a terminal with title name build!")
+            if has_key(g:vinux_project, 'build_root_dir') && isdirectory(g:vinux_project.build_root_dir)
+                execute 'cd '.g:vinux_project.build_root_dir
+            endif
+            call te#utils#run_command(g:vinux_project.cmd)
+            execute 'cd '.g:vinux_project.dir
         endif
     endif
 endfunction

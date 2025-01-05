@@ -243,7 +243,7 @@ endfunction
 "make 
 function! te#pg#do_make() abort
     if exists('g:vinux_project')
-        call te#project#build_project()
+        call te#project#build_project(1)
         return
     endif
     :call te#utils#EchoWarning('making ...')

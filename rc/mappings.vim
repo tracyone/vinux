@@ -432,3 +432,5 @@ nnoremap  <silent><Leader>sd :call te#project#delete_project()<cr>
 nnoremap  <silent><Leader>se :call te#project#edit_project()<cr>
 " select project directory
 nnoremap <silent><leader>sc :call te#project#select_dir()<cr>
+" build project
+nnoremap  <silent><Leader>sj :call te#project#build_project(0)<cr>
