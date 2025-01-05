@@ -263,6 +263,8 @@ function! te#project#load_project(project_info) abort
             call te#utils#EchoWarning(l:project." is not a directory")
         endif
     endif
+    call te#terminal#shell_pop({'opener':0x2, 'title': "build"})
+    call te#terminal#hide_popup()
 endfunction
 
 function! te#project#delete_project() abort
