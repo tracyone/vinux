@@ -50,8 +50,13 @@ te#lsp#diagnostics_jump({direct})                           *te#lsp#diagnostics_
     - 1. next diagnostic info
 
 te#lsp#call_tree({in})                                          *te#lsp#call_tree*
+    Show call tree
 
+te#lsp#is_server_running()                                  *te#lsp#is_server_running*
+    return 1 if any lsp server is running or 0 if no lsp server is running.
 
+te#lsp#get_lsp_server_name({sep})                         *te#lsp#get_lsp_server_name*
+    return lsp server name format: 'lsp[name]'
 
 
 
