@@ -556,7 +556,11 @@ function! te#terminal#shell_pop(option) abort
         let l:shell = l:cmd
         let l:title = ' '.matchstr(l:cmd, '\w\+')
     else
-        let l:title = ' Terminal'
+        if has_key(a:option, 'title')
+            let l:title = ' '.a:option.title
+        else
+            let l:title = ' Terminal'
+        endif
     endif
     if te#env#SupportTerminal()
         let l:height=(40*&lines)/100

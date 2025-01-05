@@ -242,7 +242,7 @@ endfunction
 
 "make 
 function! te#pg#do_make() abort
-    if has_key(g:vinux_project, 'name') && len(g:vinux_project.name)
+    if exists('g:vinux_project')
         call te#project#build_project()
         return
     endif
