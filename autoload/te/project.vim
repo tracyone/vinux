@@ -330,6 +330,10 @@ function! s:hide_popup_timer(timer) abort
 endfunction
 
 function! te#project#build_project(in_term) abort
+    if !exists('g:vinux_project')
+        call te#utils#EchoWarning("Not a project!")
+        return
+    endif
     if has_key(g:vinux_project, 'cmd')
         if a:in_term == 1
             let l:build_terminal_buf = te#terminal#get_term_buf_by_title('build')
@@ -350,7 +354,7 @@ function! te#project#build_project(in_term) abort
             if has_key(g:vinux_project, 'build_root_dir') && isdirectory(g:vinux_project.build_root_dir)
                 execute 'cd '.g:vinux_project.build_root_dir
             endif
-            call te#utils#run_command(g:vinux_project.cmd)
+            call te#utils#run_command(g:vinux_project.cmd, 1)
             execute 'cd '.g:vinux_project.dir
         endif
     endif
