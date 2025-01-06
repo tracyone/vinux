@@ -296,14 +296,6 @@ function! te#project#delete_project() abort
             let l:ret=-1
     endif
     cd -
-    if exists('g:vinux_project.dir') && isdirectory(g:vinux_project.dir)
-        execute 'cd '.g:vinux_project.dir
-    endif
-    let l:file_to_delete=['.ycm_extra_conf.py', '.clang-format', '.love.vim', 'compile_commands.json', 'compile_flags.txt', '.csdb']
-    for l:file in l:file_to_delete
-        call te#file#delete(l:file, 0)
-    endfor
-    cd -
     if !l:ret
         call te#utils#EchoWarning("Delete project:".l:project_name." successfully")
     else
