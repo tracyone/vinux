@@ -282,6 +282,16 @@ function! te#project#delete_project() abort
     if strlen(l:project_name)
         if filereadable(l:project_name)
             execute 'cd '.l:project_root
+            "read project  root directory
+            let l:file_to_delete=['.ycm_extra_conf.py', '.clang-format', '.love.vim', 'compile_commands.json', 'compile_flags.txt', '.csdb']
+            if filereadable(l:project_name.'/.csdb')
+                let l:project_dir_list = readfile(l:project_name.'/.csdb')
+                for l:dir in l:project_dir_list
+                    for l:file in l:file_to_delete
+                        call te#file#delete(l:dir.'/'.l:file, 0)
+                    endfor
+                endfor
+            endif
             let l:ret = te#file#delete(l:project_root.l:project_name, 1)
             call te#utils#EchoWarning("Delete session ". l:project_name)
             if exists(":SDelete") == 2
