@@ -26,6 +26,7 @@ function! ConfirmResult(id, result) abort
     else
         call te#utils#EchoWarning(a:id.' object not found')
     endif
+    return l:confirm_obj.menu_list[a:result - 1]
 endfunction
 
 function! te#utils#confirm_filter(id, key) abort
@@ -56,18 +57,19 @@ endfunction
 
 function! te#utils#confirm(str, menu_list, action) abort
     let l:confirm_obj = {}
+    let l:block_vim = 1
     if type(a:action) == g:t_list || type(a:action) == g:t_func
                 \ || type(a:action) == g:t_dict
         let l:confirm_obj.callback = a:action
+        let l:block_vim = 0
     else
-        call te#utils#EchoWarning("Action must be a list or funcref")
-        return -1
+        let l:confirm_obj.callback = ''
     endif
 
     let l:confirm_obj.menu_list = a:menu_list
     let l:confirm_obj.prompt_str = " ".a:str
 
-    if te#env#IsNvim() >= 0.5
+    if te#env#IsNvim() >= 0.5 && l:block_vim  == 0
         let l:bufnr = nvim_create_buf(v:false, v:false)
         call nvim_buf_set_keymap(l:bufnr, 'n', '<CR>', ':call NvimConfirmResult()<cr>', {'silent':v:true })
         call nvim_buf_set_keymap(l:bufnr, 'n', '<C-c>', ':call nvim_win_close(0, v:true)<cr>', {'silent':v:true })
@@ -94,7 +96,7 @@ function! te#utils#confirm(str, menu_list, action) abort
                     \ 'Normal:WarningMsg,FloatBorder:vinux_warn,CursorLine:vinux_sel,FloatTitle:vinux_warn')
         call nvim_win_set_option(l:confirm_obj.win_id, 'winblend', 50)
         call nvim_set_current_win(l:confirm_obj.win_id)
-    elseif te#env#IsVim8()
+    elseif te#env#IsVim8() && l:block_vim  == 0
         let l:confirm_obj.win_id = popup_menu(a:menu_list, #{
                     \ callback: 'ConfirmResult',
                     \ border: [],
@@ -115,7 +117,7 @@ function! te#utils#confirm(str, menu_list, action) abort
             let l:choices .= "&".l:needle."\n"
         endfor
         let l:confirm_obj.win_id = 0
-        let l:result = confirm(l:confirm_obj.prompt_str, choices, 1)
+        let l:result = confirm(l:confirm_obj.prompt_str, l:choices, 1)
         let s:ctx[l:confirm_obj.win_id] = l:confirm_obj
         return ConfirmResult(l:confirm_obj.win_id, l:result)
     endif

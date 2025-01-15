@@ -156,7 +156,16 @@ function! te#project#create_project() abort
                     call te#file#copy_file($VIMFILES.'/format/clang-format-linux', l:project_name.'.clang-format')
                     call te#file#copy_file($VIMFILES.'/format/clang-format-linux', '.clang-format')
                 else
-                    call te#utils#run_command('clang-format -style='.l:coding_style.' -dump-config > .clang-format', function('te#file#copy_file'), ['.clang-format', l:project_name.'.clang-format'])
+                    let l:clang_fomat_cmd = 'clang-format -style="{BasedOnStyle: '.l:coding_style
+                    let l:result = te#utils#confirm("Use Tab?", ['Always', 'false'],'')
+                    let l:clang_fomat_cmd .= ', UseTab: '.l:result
+                    let l:result = input("Input the width of indent: ", 4)
+                    let l:clang_fomat_cmd .= ', IndentWidth: '.l:result
+                    let l:clang_fomat_cmd .= ', TabWidth: '.l:result
+                    let l:clang_fomat_cmd .= ', ConstructorInitializerIndentWidth: '.l:result
+                    let l:clang_fomat_cmd .= ', ContinuationIndentWidth: '.l:result
+                    let l:clang_fomat_cmd .= '}" -dump-config > .clang-format'
+                    call te#utils#run_command(l:clang_fomat_cmd, function('te#file#copy_file'), ['.clang-format', l:project_name.'.clang-format'])
                 endif
                 call te#project#set_indent_options(l:coding_style)
             endif
