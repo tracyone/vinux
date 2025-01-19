@@ -131,8 +131,9 @@ function! te#project#create_project() abort
             endif
         endif
     endif
-    let g:vinux_project.cmd = input('Please input build command:', './build.sh && ./build.sh pack')
-    let g:vinux_project.build_root_dir = input('Please input root dir of build:', getcwd())
+
+    let g:vinux_project.cmd = input('Please input build command:', get(g:vinux_project, 'cmd', './build.sh && ./build.sh pack'))
+    let g:vinux_project.build_root_dir = input('Please input root dir of build:', get(g:vinux_project, 'build_root_dir', getcwd()))
 
     if get(g:, 'feat_enable_lsp')
         "bear --output compile_commands.json  -- make
