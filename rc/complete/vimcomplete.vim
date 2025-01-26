@@ -6,19 +6,19 @@ Plug 'girishji/vimsuggest', {'on':[] }
 
 var autosuggest_options = {
     search: {
-        enable: v:true,
-        pum: v:true,
-        fuzzy: v:false,
-        alwayson: v:true,
+        enable: true,
+        pum: true,
+        fuzzy: true,
+        alwayson: true,
         popupattrs: {
             'maxheight': 12
         },
         range: 100,
         timeout: 200,
-        async: v:true,
+        async: true,
         async_timeout: 3000,
         async_minlines: 1000,
-        highlight: v:true,
+        highlight: true,
         trigger: 't',
         prefixlen: 1,
     },
@@ -28,12 +28,12 @@ var autosuggest_options = {
             fuzzy: true,   # fuzzy completion
             exclude: [],    # patterns to exclude from command completion (use \c for ignorecase)
             onspace: ['b\%[uffer]', 'colo\%[rscheme]'],
-            alwayson: v:true,
+            alwayson: true,
             popupattrs: {},
-            wildignore: v:true,
-            addons: v:true,
+            wildignore: true,
+            addons: true,
             trigger: 't',
-            reverse: v:false,
+            reverse: false,
             prefixlen: 1,
         }
 }
