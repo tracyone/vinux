@@ -1,23 +1,40 @@
 vim9script
 
 Plug 'girishji/vimcomplete'
-Plug 'girishji/autosuggest.vim', {'on':[] }
 Plug 'girishji/ngram-complete.vim', {'on':[] }
+Plug 'girishji/vimsuggest', {'on':[] }
 
 var autosuggest_options = {
     search: {
-            enable: true,   # 'false' will disable search completion
-            pum: true,      # 'false' for flat menu, 'true' for stacked menu
-            maxheight: 12,  # max height of stacked menu in lines
-            fuzzy: true,   # fuzzy completion
-            alwayson: true, # when 'false' press <tab> to open popup menu
+        enable: v:true,
+        pum: v:true,
+        fuzzy: v:false,
+        alwayson: v:true,
+        popupattrs: {
+            'maxheight': 12
         },
+        range: 100,
+        timeout: 200,
+        async: v:true,
+        async_timeout: 3000,
+        async_minlines: 1000,
+        highlight: v:true,
+        trigger: 't',
+        prefixlen: 1,
+    },
     cmd: {
             enable: true,   # 'false' will disable command completion
             pum: true,      # 'false' for flat menu, 'true' for stacked menu
             fuzzy: true,   # fuzzy completion
             exclude: [],    # patterns to exclude from command completion (use \c for ignorecase)
-            onspace: [],    # show popup menu when cursor is in front of space (ex. :buffer<space>)
+            onspace: ['b\%[uffer]', 'colo\%[rscheme]'],
+            alwayson: v:true,
+            popupattrs: {},
+            wildignore: v:true,
+            addons: v:true,
+            trigger: 't',
+            reverse: v:false,
+            prefixlen: 1,
         }
 }
 
@@ -42,8 +59,15 @@ g:vimcomplete_tab_enable = 1
 
 def VimCompletSetting()
     g:VimCompleteOptionsSet(vimcomplete_options)
-    g:AutoSuggestSetup(autosuggest_options)
 enddef
 
-g:complete_plugin.name = ['autosuggest.vim', 'ngram-complete.vim']
+def VimSuggestSetting()
+    g:VimSuggestSetOptions(autosuggest_options)
+    highlight VimSuggestMatch ctermfg=Green guifg=#00FF00
+    highlight VimSuggestMute ctermfg=Gray guifg=#808080
+enddef
+
+g:complete_plugin.name = ['vimsuggest', 'ngram-complete.vim']
 g:complete_plugin.enable_func = function('VimCompletSetting')
+
+te#feat#register_vim_enter_setting2([function('VimSuggestSetting')], ['vimsuggest'])
