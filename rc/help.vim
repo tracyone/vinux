@@ -6,13 +6,17 @@ Plug 'mhinz/vim-startify',{'commit': '5df5b7478c09991bd20ab50cc65023cda826b2bf'}
 " VimStartify {{{
 if g:feat_enable_gui == 1 && g:enable_powerline_fonts.cur_val == 'on'
     if te#env#IsNvim() == 0
-        autocmd FileType startify call glyph_palette#apply()
+        if exists('*glyph_palette#apply')
+            autocmd FileType startify call glyph_palette#apply()
+        endif
     endif
     function! StartifyEntryFormat()
         if te#env#IsNvim() > 0
             return 'v:lua.require("nvim-web-devicons").get_icon(absolute_path, fnamemodify(absolute_path, ":e"), { "default":v:true }) ." ". entry_path'
         else
-            return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+            if exists('*WebDevIconsGetFileTypeSymbol')
+                return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+            endif
         endif
     endfunction
 endif

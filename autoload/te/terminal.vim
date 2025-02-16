@@ -543,14 +543,10 @@ function! te#terminal#shell_pop(option) abort
         let l:option = a:option.opener
     endif
     call te#server#connect()
-    if te#env#IsGui() && te#env#IsUnix()
-        let l:shell='bash'
+    if !empty($SHELL)
+        let l:shell=$SHELL
     else
-        if !empty($SHELL)
-            let l:shell=$SHELL
-        else
-            let l:shell=&shell
-        endif
+        let l:shell=&shell
     endif
     if exists('l:cmd')
         let l:shell = l:cmd
