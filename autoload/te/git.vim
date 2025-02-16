@@ -184,8 +184,12 @@ function! te#git#show_log(dir,...) abort
     if a:0 == 1
         let l:option_str=" ".a:1
     endif
-    if te#env#SupportTerminal()
+    if te#env#SupportTerminal() && te#env#Executable('tig')
         call te#terminal#shell_pop({'opener':0x4, 'cmd':'tig'.l:option_str})
+        cd -
+        return 0
+    elseif exists(':Gclog')
+        :Gclog!
         cd -
         return 0
     elseif exists(':Gitv')
