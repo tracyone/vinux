@@ -8,6 +8,7 @@ endif
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim', {'on': []}
 Plug 'pbogut/fzf-mru.vim', {'on': []}
+Plug 'tracyone/fzf-funky',{'on': 'FzfFunky'}
 
 function! FzfStartEntry(cmd)
     call te#utils#close_all_echo_win()
@@ -48,13 +49,15 @@ function! s:fzf_vim_setting()
     inoremap <silent><c-r> <c-o>:stopinsert<cr>:call FzfStartEntry('call te#fzf#reg#start(0)')<cr> 
     xnoremap <silent><leader>pr :call FzfStartEntry('call te#fzf#reg#start(1)')<cr> 
 
-    if !te#env#Executable('ctags')
-        Plug 'tracyone/fzf-funky',{'on': 'FzfFunky'}
-        nnoremap  <silent><Leader>pk  :call FzfStartEntry('FzfFunky')<cr>
-        nnoremap  <silent><c-k>  :call FzfStartEntry('FzfFunky')<cr>
-    else
-        nnoremap  <silent><Leader>pk  :call FzfStartEntry('BTags')<cr>
-        nnoremap  <silent><c-k>  :call FzfStartEntry('BTags')<cr>
+    nnoremap  <silent><Leader>pk  :call FzfStartEntry('FzfFunky')<cr>
+    nnoremap  <silent><c-k>  :call FzfStartEntry('FzfFunky')<cr>
+
+    if te#env#Executable('ctags')
+        silent! call systemlist('ctags --version')
+        if !v:shell_error
+            nnoremap  <silent><Leader>pk  :call FzfStartEntry('BTags')<cr>
+            nnoremap  <silent><c-k>  :call FzfStartEntry('BTags')<cr>
+        endif
     endif
     let g:fzf_buffers_jump = 1
 
