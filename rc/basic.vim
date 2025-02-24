@@ -78,11 +78,6 @@ if g:file_explorer_plugin.cur_val == 'nerdtree'
 endif
 
 if te#env#IsNvim() >= 0.5
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'on': []} 
-    Plug 'nvim-treesitter/nvim-treesitter-refactor', {'on': []}
-    Plug 'nvim-treesitter/nvim-treesitter-context', {'on': []}
-    call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_modlue("treesittier_nvim")'],
-                \ ['nvim-treesitter', 'nvim-treesitter-refactor', 'nvim-treesitter-context'])
     Plug 'williamboman/mason.nvim', {'on': []}
     call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_modlue("mason_setup")'],
                 \ ['mason.nvim'])
