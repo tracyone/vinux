@@ -364,7 +364,7 @@ vnoremap <silent><leader>tr :T<cr>
 nnoremap <silent><leader>re :call te#terminal#repl()<cr>
 nnoremap <silent><leader>tr :execute line(".")."T"<cr>
 nnoremap <silent><leader>ta :1,$T<cr>
-if te#env#IsNvim() != 0
+if te#env#IsNvim() != 0 && !te#env#IsGui()
     tnoremap  <silent><c-w>d <C-\><C-n>:call te#terminal#hide_all()<cr>
     nnoremap <silent><c-w>d :call te#terminal#hide_all()<cr>
     "terminal-emulator setting
@@ -373,6 +373,12 @@ if te#env#IsNvim() != 0
     execute 'tnoremap <A-k> <C-\><C-n>G<C-w>k'
     execute 'tnoremap <A-l> <C-\><C-n>G<C-w>l'
     silent! execute 'tmap <c-v> <C-\><C-n>"*pa'
+elseif te#env#IsNvim() != 0 && te#env#IsGui()
+    call te#meta#map('tmap <silent> ','h','<C-\><C-n>G<C-w>h')
+    call te#meta#map('tmap <silent> ','j','<C-\><C-n>G<C-w>j')
+    call te#meta#map('tmap <silent> ','k','<C-\><C-n>G<C-w>k')
+    call te#meta#map('tmap <silent> ','l','<C-\><C-n>G<C-w>l')
+    silent! execute 'tnoremap <c-v> '.'<C-\><C-n>""pa'
 elseif te#env#SupportTerminal()
     "terminal-emulator setting
     "execute 'tnoremap <Esc> <C-\><C-n>' "effect <a-> key?

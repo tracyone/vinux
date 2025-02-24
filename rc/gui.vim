@@ -52,91 +52,98 @@ endif
 "Gui releate{{{
 if te#env#IsGui()
     try
-        if (te#env#IsMac())
-            set guifont=Consolas:h16
-        elseif te#env#IsUnix()
-            set guifont=Consolas\ 12
-            set guifontwide=YaHei_Mono_Hybird_Consolas\ 12.5
-        else
-            set guioptions+=!
-            if has("directx")
-                set renderoptions=type:directx
-            endif
-            set guifont=Monaco:h12:cANSI
-            set guifontwide=YaHei_Mono:h12.5:cGB2312
-        endif
         if g:enable_powerline_fonts.cur_val ==# 'on'
-            if te#env#IsMac()
-                set guifont=YaHeiConsolasHybridNF:h14
-                set guifontwide=YaHeiConsolasHybridNF:h14
+            if has('gui_macvim')
+                set guifont=YaHeiConsolasHybridNF:h16
+                set guifontwide=YaHeiConsolasHybridNF:h16
+            elseif te#env#IsNvim() != 0
+                echom "fuck"
+                set guifont=YaHeiConsolasHybrid\ Nerd\ Font:h16
+                set guifontwide=YaHeiConsolasHybrid\ Nerd\ Font:h16
             elseif te#env#IsUnix()
-                set guifont=YaHeiConsolasHybrid\ Nerd\ Font\ 14
-                set guifontwide=YaHeiConsolasHybrid\ Nerd\ Font\ 14
+                set guifont=YaHeiConsolasHybrid\ Nerd\ Font\ 16
+                set guifontwide=YaHeiConsolasHybrid\ Nerd\ Font\ 16
+            endif
+        else
+            if (te#env#IsMac())
+                set guifont=Consolas:h16
+            elseif te#env#IsUnix()
+                set guifont=Consolas\ 12
+                set guifontwide=YaHei_Mono_Hybird_Consolas\ 12.5
+            else
+                set guioptions+=!
+                if has("directx")
+                    set renderoptions=type:directx
+                endif
+                set guifont=Monaco:h12:cANSI
+                set guifontwide=YaHei_Mono:h12.5:cGB2312
             endif
         endif
     catch /^Vim\%((\a\+)\)\=:E/
         set guifontwide&
     endtry
-    call te#feat#register_vim_enter_setting(function('te#tools#max_win'))
-    " turn on this option as well
-    set guioptions-=b
-    set guioptions-=m "whether use menu
-    set guioptions-=r "whether show the rigth scroll bar
-    set guioptions-=l "whether show the left scroll bar
-    set guioptions-=T "whether show toolbar or not
-    set guioptions-=e "whether use tabpage
-    set guioptions+=c
-    set guioptions+=k "Keep the GUI window size when adding/removing a scrollbar
-    "highlight the screen line of the cursor
-    func! MenuToggle()
-        if &guioptions =~# '\a*[mT]\a*[mT]'
-            :set guioptions-=T
-            :set guioptions-=m
-        else
-            :set guioptions+=m
-            :set guioptions+=T
+    if te#env#IsNvim() == 0
+        call te#feat#register_vim_enter_setting(function('te#tools#max_win'))
+        " turn on this option as well
+        set guioptions-=b
+        set guioptions-=m "whether use menu
+        set guioptions-=r "whether show the rigth scroll bar
+        set guioptions-=l "whether show the left scroll bar
+        set guioptions-=T "whether show toolbar or not
+        set guioptions-=e "whether use tabpage
+        set guioptions+=c
+        set guioptions+=k "Keep the GUI window size when adding/removing a scrollbar
+        "highlight the screen line of the cursor
+        func! MenuToggle()
+            if &guioptions =~# '\a*[mT]\a*[mT]'
+                :set guioptions-=T
+                :set guioptions-=m
+            else
+                :set guioptions+=m
+                :set guioptions+=T
+            endif
+        endfunc
+        :call MenuToggle()
+        nnoremap  <silent><c-F8> :call MenuToggle()<cr>
+        " Menu and toolbar toggle(MacVIm and gvim)
+        nnoremap  <silent><Leader>tg :call MenuToggle()<cr>
+        set cul
+        "toolbar ----------------- {{{
+        if has('toolbar')
+            if exists('*Do_toolbar_tmenu')
+                delfun Do_toolbar_tmenu
+            endif
+            fun Do_toolbar_tmenu()
+                tmenu ToolBar.Open		Open File
+                tmenu ToolBar.Save		Save File
+                tmenu ToolBar.SaveAll	Save All
+                tmenu ToolBar.Print		Print
+                tmenu ToolBar.Undo		Undo
+                tmenu ToolBar.Redo		Redo
+                tmenu ToolBar.Cut		Cut
+                tmenu ToolBar.Copy		Copy
+                tmenu ToolBar.Paste		Paste
+                tmenu ToolBar.Find		Find&Replace
+                tmenu ToolBar.FindNext	Find Next
+                tmenu ToolBar.FindPrev	Find Prev
+                tmenu ToolBar.Replace	Replace
+                tmenu ToolBar.LoadSesn	Load Session
+                tmenu ToolBar.SaveSesn	Save Session
+                tmenu ToolBar.RunScript	Run a Vim Script
+                tmenu ToolBar.Make		Make
+                tmenu ToolBar.Shell		Shell
+                tmenu ToolBar.RunCtags	ctags! -R
+                tmenu ToolBar.TagJump	Jump to next tag
+                tmenu ToolBar.Help		Help
+                tmenu ToolBar.FindHelp	Search Help
+            endfun
         endif
-    endfunc
-    :call MenuToggle()
-    nnoremap  <silent><c-F8> :call MenuToggle()<cr>
-    " Menu and toolbar toggle(MacVIm and gvim)
-    nnoremap  <silent><Leader>tg :call MenuToggle()<cr>
-    set cul
-    "toolbar ----------------- {{{
-    if has('toolbar')
-        if exists('*Do_toolbar_tmenu')
-            delfun Do_toolbar_tmenu
-        endif
-        fun Do_toolbar_tmenu()
-            tmenu ToolBar.Open		Open File
-            tmenu ToolBar.Save		Save File
-            tmenu ToolBar.SaveAll	Save All
-            tmenu ToolBar.Print		Print
-            tmenu ToolBar.Undo		Undo
-            tmenu ToolBar.Redo		Redo
-            tmenu ToolBar.Cut		Cut
-            tmenu ToolBar.Copy		Copy
-            tmenu ToolBar.Paste		Paste
-            tmenu ToolBar.Find		Find&Replace
-            tmenu ToolBar.FindNext	Find Next
-            tmenu ToolBar.FindPrev	Find Prev
-            tmenu ToolBar.Replace	Replace
-            tmenu ToolBar.LoadSesn	Load Session
-            tmenu ToolBar.SaveSesn	Save Session
-            tmenu ToolBar.RunScript	Run a Vim Script
-            tmenu ToolBar.Make		Make
-            tmenu ToolBar.Shell		Shell
-            tmenu ToolBar.RunCtags	ctags! -R
-            tmenu ToolBar.TagJump	Jump to next tag
-            tmenu ToolBar.Help		Help
-            tmenu ToolBar.FindHelp	Search Help
-        endfun
+        "}}}
+        "mouse ------------------- {{{
+        " Set up the gui cursor to look nice
+        set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
+        "}}}
     endif
-    "}}}
-    "mouse ------------------- {{{
-    " Set up the gui cursor to look nice
-    set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
-    "}}}
     call te#meta#map('map', 'o',':Fontzoom!<cr>')
     call te#meta#map('map','-','<Plug>(fontzoom-smaller)')
     call te#meta#map('map','=','<Plug>(fontzoom-larger)')

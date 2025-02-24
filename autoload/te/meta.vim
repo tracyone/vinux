@@ -1,6 +1,6 @@
 "meta key mapping
 scriptencoding utf-8
-if te#env#IsMacVim()
+if te#env#IsMacVim() || (te#env#IsNvim() != 0 && te#env#IsGui())
     let s:alt_char={1:'¡',2:'™',3:'£',4:'¢',5:'∞',6:'§',7:'¶',8:'•',9:'ª'
                 \,'t':'†','q':'œ','a':'å','=':'≠','h':'˙','l':'¬','j':'∆','k':'˚'
                 \,'o':'ø','-':'–','b':'∫','f':'ƒ','m':'µ','w':'∑','p':'π','n':'˜'
@@ -10,7 +10,7 @@ elseif te#env#IsUnix() && te#env#IsNvim() == 0 && !te#env#IsGui()
                 \,'t':'ô','q':'ñ','a':'á','=':'½','h':'è','l':'ì','j':'ê','k':'ë'
                 \,'o':'ï','-':'­','b':'â','f':'æ','m':'í','w':'÷','p':'ð','n':'î'
                 \,'u':'õ','d':'ä'}
-elseif te#env#IsGui() || te#env#IsNvim() != 0
+elseif te#env#IsGui() || (te#env#IsNvim() != 0 && !te#env#IsGui())
     let s:alt_char={1:'<m-1>',2:'<m-2>',3:'<m-3>',4:'<m-4>',5:'<m-5>',6:'<m-6>',7:'<m-7>',8:'<m-8>',9:'<m-9>'
                 \,'t':'<m-t>','q':'<m-q>','a':'<m-a>','=':'<m-=>','h':'<m-h>','l':'<m-l>','j':'<m-j>','k':'<m-k>'
                 \,'o':'<m-o>','-':'<m-->','b':'<m-b>','f':'<m-f>','m':'<m-m>','w':'<m-w>','p':'<m-p>','n':'<m-n>'
