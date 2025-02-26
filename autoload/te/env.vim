@@ -11,6 +11,13 @@ let s:is_tmux = empty($TMUX)
 let s:has_display = empty($DISPLAY)
 let s:support_cscope=has('cscope')+executable('cscope')
 
+function! te#env#IsExuberantCtags() abort
+    if te#env#Executable('ctags')
+        silent! call systemlist('ctags --version')
+        return !v:shell_error
+    endif
+    return 0
+endfunction
 
 function! te#env#IsVim() abort
     if !s:is_nvim

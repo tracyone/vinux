@@ -169,6 +169,7 @@ function! s:denite_nvim_setting() abort
     nnoremap  <silent><Leader>pp :Denite outline<cr>
     "vim help
     nnoremap  <silent><Leader>hv :Denite help<cr>
+    nnoremap  \ :Denite line<cr>
     "command history
     nnoremap  <silent><Leader>qc :Denite command_history<cr>
     "fly on grep

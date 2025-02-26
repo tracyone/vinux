@@ -52,13 +52,11 @@ function! s:fzf_vim_setting()
     nnoremap  <silent><Leader>pk  :call FzfStartEntry('FzfFunky')<cr>
     nnoremap  <silent><c-k>  :call FzfStartEntry('FzfFunky')<cr>
 
-    if te#env#Executable('ctags')
-        silent! call systemlist('ctags --version')
-        if !v:shell_error
-            nnoremap  <silent><Leader>pk  :call FzfStartEntry('BTags')<cr>
-            nnoremap  <silent><c-k>  :call FzfStartEntry('BTags')<cr>
-        endif
+    if te#env#IsExuberantCtags()
+        nnoremap  <silent><Leader>pk  :call FzfStartEntry('BTags')<cr>
+        nnoremap  <silent><c-k>  :call FzfStartEntry('BTags')<cr>
     endif
+    nnoremap  \  :call FzfStartEntry('BLines')<cr>
     let g:fzf_buffers_jump = 1
 
     "ag

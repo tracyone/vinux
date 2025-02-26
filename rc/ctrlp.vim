@@ -118,6 +118,7 @@ function! s:ctrlp_setting()
     nnoremap  <silent><Leader>pm :CtrlPMRUFiles<cr>
     "CtrlP file
     nnoremap  <silent><Leader>pp :CtrlP<cr>
+    nnoremap  \ :CtrlPLine<cr>
     " narrow the list down with a word under cursor
     "CtrlP function 
     nnoremap  <silent><Leader>pU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>

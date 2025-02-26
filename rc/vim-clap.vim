@@ -8,6 +8,7 @@ Plug 'liuchengxu/vim-clap', {'on':'Clap','do': ':Clap install-binary' }
 
 function! s:vim_clap_settings() abort
     nnoremap  <silent><c-k> :Clap tags<cr>
+    nnoremap  \ :Clap blines<cr>
     nnoremap  <silent><c-j> :Clap buffers<Cr>
     " buffer 
     nnoremap  <silent><Leader>pb :Clap buffers<Cr>

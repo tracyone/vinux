@@ -15,6 +15,7 @@ function! s:leaderf_setting()
     nnoremap  <silent><Leader>pk :LeaderfFunction<cr>
     " buffer 
     nnoremap  <silent><Leader>pb :LeaderfBuffer<Cr>
+    nnoremap  \ :LeaderfLine<Cr>
     " recent file 
     nnoremap  <silent><c-l> :LeaderfMru<cr>
     nnoremap  <silent><Leader>pm :LeaderfMru<cr>
@@ -62,12 +63,13 @@ function! s:leaderf_setting()
         let g:Lf_PopupPreviewPosition = 'bottom'
         "let g:Lf_PreviewPopupWidth = &columns * 4 / 10
         "let g:Lf_PreviewPopupWidth = &columns * 4 / 10
-        let g:Lf_PopupWidth = &columns * 8 / 10
-        let g:Lf_PopupHeight = &lines * 4 / 10
+        "let g:Lf_PopupWidth = &columns * 8 / 10
+        "let g:Lf_PopupHeight = &lines * 4 / 10
         let g:Lf_PopupShowStatusline = 0
         let g:Lf_PreviewHorizontalPosition = 'right'
         "let g:Lf_PopupPosition= 
     endif
+
     let g:Lf_ShowDevIcons = 0
     nnoremap  <silent><Leader><Leader> :LeaderfFile<cr>
     if !exists("g:Lf_Extensions")
