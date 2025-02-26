@@ -3,7 +3,7 @@ require("aerial").setup({
   -- Priority list of preferred backends for aerial.
   -- This can be a filetype map (see :help aerial-filetype-map)
     backends = {
-        ['_']  = {"lsp", "treesitter"},
+        ['_']  = {"lsp"},
         man = {"man"},
         markdown = {"markdown"},
     },
@@ -356,10 +356,6 @@ require("aerial").setup({
     },
   },
 
-  treesitter = {
-    -- How long to wait (in ms) after a buffer change before updating
-    update_delay = 300,
-  },
 
   markdown = {
     -- How long to wait (in ms) after a buffer change before updating

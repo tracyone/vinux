@@ -240,7 +240,6 @@ Basic feature                                           *vinux-basic*
 Basic feature:
 
 1. file explorer. see |vinux-fileExplorer|
-2. treesitter for neovim.
 3. tagbar.
 4. manpager support
 5. Async searcher and runner
