@@ -98,7 +98,7 @@ function! te#env#IsTmux() abort
 endfunction
 
 function! te#env#IsDisplay() abort
-    if  s:has_display
+    if  s:has_display && !s:is_gui
         return s:is_win
     endif
     return 1

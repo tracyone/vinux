@@ -430,6 +430,7 @@ nnoremap <expr><silent> <Enter> &buftype ==# 'quickfix' ? "\<CR>" : ":call te#co
 
 " Project save 
 nnoremap  <silent><Leader>ss :call te#project#create_project()<cr>
+noremap <F8> :call te#project#create_project()<cr>
 " Porject load
 nnoremap  <silent><Leader>sl :call te#project#load_project("")<cr>
 " project delete

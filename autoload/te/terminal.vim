@@ -62,7 +62,11 @@ endfunction
 
 function! te#terminal#repl() abort
     if &ft == 'python'
-        let l:cmd = 'python'
+        if te#env#SupportPy3()
+            let l:cmd = 'python3'
+        elseif te#env#SupportPy2()
+            let l:cmd = 'python'
+        endif
     elseif &ft == 'lua'
         let l:cmd = 'lua'
     elseif &ft == 'vim'

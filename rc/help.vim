@@ -57,7 +57,6 @@ let g:startify_commands = [
             \ {'f': ['Find File', 'call feedkeys("\<Space>\<Space>")']},
             \ ]
 
-noremap <F8> :SSave<cr>
 " Open startify windows
 nnoremap  <silent><Leader>hh :Startify<cr>
 autocmd misc_group FileType startify setlocal buftype=
