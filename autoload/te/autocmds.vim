@@ -23,7 +23,7 @@ function! te#autocmds#file_type() abort
        endif 
     endif
     let s:current_dir=getcwd()
-    if g:complete_plugin_type.cur_val == 'coc.nvim'
+    if get(g:, 'feat_enable_complete') == 1 && g:complete_plugin_type.cur_val == 'coc.nvim'
         call CocCheckExtensions()
     endif
     if exists('g:vinux_project')
