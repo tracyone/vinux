@@ -17,7 +17,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
         call te#meta#map('inoremap', ']', '<Plug>(copilot-next)')
         call te#meta#map('inoremap', '[', '<Plug>(copilot-previous)')
     endfunction
-    let s:ai_plugin_setupt_func = ['s:copilot_setup']
+    let s:ai_plugin_setupt_func = [function('<SID>copilot_setup')]
 endif
 
 
