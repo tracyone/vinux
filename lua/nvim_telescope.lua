@@ -14,7 +14,11 @@ vim.keymap.set('n', '<c-j>', builtin.buffers, {})
 vim.keymap.set('n', '<leader>hv', builtin.help_tags, {})
 vim.keymap.set('n', '<leader>pm', builtin.oldfiles, {})
 vim.keymap.set('n', '<c-l>', builtin.oldfiles, {})
-vim.keymap.set('n', '<c-k>', builtin.lsp_document_symbols, {})
+if vim.g.outline_plugin.cur_val == 'aerial.nvim' then
+    vim.keymap.set('n', '<c-k>', ":silent! Telescope aerial<CR>", {})
+else
+    vim.keymap.set('n', '<c-k>', builtin.lsp_document_symbols, {})
+end
 vim.keymap.set('n', '<leader>qc', builtin.command_history, {})
 vim.keymap.set('n', '<leader>q/', builtin.search_history, {})
 vim.keymap.set('n', '<leader>pc', builtin.colorscheme, {})

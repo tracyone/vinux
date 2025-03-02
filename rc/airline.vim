@@ -46,6 +46,8 @@ function! s:airline_setting()
             let g:airline_section_x = "%{airline#util#prepend(tagbar#currenttag('%s', ''),0)}"
         elseif g:outline_plugin.cur_val == 'vista.vim'
             let g:airline_section_x = "%{airline#util#prepend(get(b:, 'vista_nearest_method_or_function', ''), 0)}"
+        elseif g:outline_plugin.cur_val == 'aerial.nvim'
+            let g:airline_section_x = "%{airline#util#prepend(v:lua.require'aerial_setup'.aerial_get_symbol(),0)}"
         else
             let g:airline_section_x = "%{airline#util#prepend(Tlist_Get_Tagname_By_Line(),0)}"
         endif

@@ -1,5 +1,7 @@
 -- Call the setup function to change the default behavior
-require("aerial").setup({
+module = {}
+local aerial = require('aerial')
+aerial.setup({
   -- Priority list of preferred backends for aerial.
   -- This can be a filetype map (see :help aerial-filetype-map)
     backends = {
@@ -371,5 +373,14 @@ require("aerial").setup({
 local opts = { noremap = true, silent = true}
 vim.keymap.set('n', '<Leader>tt', '<Cmd>AerialToggle<CR>', opts)
 vim.keymap.set('n', '<F12>', '<Cmd>AerialToggle<CR>', opts)
+
+function module.aerial_get_symbol()
+    local array = aerial.get_location(1)
+    if #array >= 1 then
+        return array[1].name
+    else
+        return ''
+    end
+end
 
 return module

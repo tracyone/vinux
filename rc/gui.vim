@@ -57,7 +57,6 @@ if te#env#IsGui()
                 set guifont=YaHeiConsolasHybridNF:h16
                 set guifontwide=YaHeiConsolasHybridNF:h16
             elseif te#env#IsNvim() != 0
-                echom "fuck"
                 set guifont=YaHeiConsolasHybrid\ Nerd\ Font:h16
                 set guifontwide=YaHeiConsolasHybrid\ Nerd\ Font:h16
             elseif te#env#IsUnix()
