@@ -274,6 +274,7 @@ function! te#feat#init_all() abort
     call te#feat#init_var('g:message_delay_time', ['5000', '3000', '1000', '500', '0'])
     call te#feat#init_var('g:file_explorer_plugin', ['nerdtree', 'defx.nvim', 'coc-explorer', 'nvim-tree.lua', 'fern.vim'])
     call te#feat#init_var('g:outline_plugin', ['tagbar', 'vim-taglist', 'vista.vim', 'aerial.nvim'])
+    call te#feat#init_var('g:ai_plugin_name', ['copilot.vim'])
     if filereadable($VIMFILES.'/feature.vim')
         try
             execute ':source '.$VIMFILES.'/feature.vim'
@@ -294,3 +295,18 @@ endfunction
 function! te#feat#load_lua_modlue(module) abort
     return v:lua.require(a:module)
 endfunction
+
+function! te#feat#get_cur_val(dict_str) abort
+    try
+        let l:dict = eval(a:dict_str)
+    catch
+        return ""
+    endtry
+    if exists(a:dict_str) && type(l:dict) == g:t_dict
+        if has_key(l:dict, 'cur_val')
+            return l:dict.cur_val
+        endif
+    endif
+    return ""
+endfunction
+
