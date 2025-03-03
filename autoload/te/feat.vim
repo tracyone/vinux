@@ -296,15 +296,15 @@ function! te#feat#load_lua_modlue(module) abort
     return v:lua.require(a:module)
 endfunction
 
-function! te#feat#get_cur_val(dict_str) abort
+function! te#feat#get_key_value(dict_str, key_str) abort
     try
         let l:dict = eval(a:dict_str)
     catch
         return ""
     endtry
     if exists(a:dict_str) && type(l:dict) == g:t_dict
-        if has_key(l:dict, 'cur_val')
-            return l:dict.cur_val
+        if has_key(l:dict, a:key_str)
+            return l:dict[a:key_str]
         endif
     endif
     return ""

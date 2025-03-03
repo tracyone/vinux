@@ -250,6 +250,7 @@ function! te#project#load_project(project_info) abort
     if strlen(l:project)
         if isdirectory(l:project_root.l:project)
             "session
+            let g:copilot_workspace_folders = readfile(l:project_root.l:project.'/.csdb')
             if !len(a:project_info)
                 let l:session_name = matchstr(l:project, '.*\(/\)\@=')
                 if exists(":SLoad") == 2
