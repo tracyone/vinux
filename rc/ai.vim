@@ -21,13 +21,13 @@ if s:ai_plugin_name ==# 'copilot.vim'
     endfunction
     call add(s:ai_plugin_setupt_func, function('<SID>copilot_setup'))
     call add(s:ai_plugins, s:ai_plugin_name)
+    if te#env#IsNvim() > 0
+        Plug 'CopilotC-Nvim/CopilotChat.nvim', {'on': []}
+        call add(s:ai_plugins, "CopilotChat.nvim")
+        call add(s:ai_plugin_setupt_func, 'call te#feat#load_lua_modlue("copilot_chat_setup")')
+    endif
 endif
 
-if te#env#IsNvim() > 0
-    Plug 'CopilotC-Nvim/CopilotChat.nvim', {'on': []}
-    call add(s:ai_plugins, "CopilotChat.nvim")
-    call add(s:ai_plugin_setupt_func, 'call te#feat#load_lua_modlue("copilot_chat_setup")')
-endif
 
-call te#feat#register_vim_plug_insert_setting(s:ai_plugin_setupt_func, s:ai_plugins)
+call te#feat#register_vim_enter_setting2(s:ai_plugin_setupt_func, s:ai_plugins)
 
