@@ -54,7 +54,7 @@ nnoremap  <silent><leader>tf :call FencToggle()<cr>
 " translate
 let g:translator_channel='baidu'
 nnoremap  <silent><leader>az :<C-u>Tz<CR>
-nnoremap  <silent><leader>ai :<C-u>Ti<CR>
+nnoremap  <silent><leader>au :<C-u>Ti<CR>
 nnoremap <silent><Leader>ay :<C-u>Tc<cr>
 " translate (visual mode)
 vnoremap <silent><Leader>ay :<C-u>Tv<cr>

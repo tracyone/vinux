@@ -26,6 +26,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
         call add(s:ai_plugins, "CopilotChat.nvim")
         call add(s:ai_plugin_setupt_func, 'call te#feat#load_lua_modlue("copilot_chat_setup")')
     endif
+    nnoremap <silent> <leader>ai :CopilotChat<CR>
 endif
 
 
