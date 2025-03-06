@@ -18,15 +18,18 @@ if s:ai_plugin_name ==# 'copilot.vim'
         call te#meta#map('inoremap', ']', '<Plug>(copilot-next)')
         call te#meta#map('inoremap', '[', '<Plug>(copilot-previous)')
         imap <c-l> <Plug>(copilot-accept-line)
+        imap <c-]> <Plug>(copilot-accept-word)
     endfunction
     call add(s:ai_plugin_setupt_func, function('<SID>copilot_setup'))
     call add(s:ai_plugins, s:ai_plugin_name)
     if te#env#IsNvim() > 0
-        Plug 'CopilotC-Nvim/CopilotChat.nvim', {'on': []}
+        Plug 'CopilotC-Nvim/CopilotChat.nvim', {'on': [], 'do':'make tiktoken'}
         call add(s:ai_plugins, "CopilotChat.nvim")
         call add(s:ai_plugin_setupt_func, 'call te#feat#load_lua_modlue("copilot_chat_setup")')
     endif
     nnoremap <silent> <leader>ai :CopilotChat<CR>
+    vnoremap <silent> <leader>ai :CopilotChat<CR>
+    vnoremap <silent> <leader>au :CopilotChat Translate to Chinese or English according to the detection<CR>
 endif
 
 
