@@ -13,7 +13,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
     "<M-]>                   Cycle to the next suggestion, if one is available.
     "<M-[>                   Cycle to the previous suggestion.
     function! s:copilot_setup() abort
-        imap <silent><script><expr> <C-i> copilot#Accept("\<CR>")
+        imap <silent><script><expr> <C-a> copilot#Accept("\<CR>")
         let g:copilot_no_tab_map = v:true
         call te#meta#map('inoremap', ']', '<Plug>(copilot-next)')
         call te#meta#map('inoremap', '[', '<Plug>(copilot-previous)')
