@@ -26,10 +26,10 @@ if s:ai_plugin_name ==# 'copilot.vim'
         Plug 'CopilotC-Nvim/CopilotChat.nvim', {'on': [], 'do':'make tiktoken'}
         call add(s:ai_plugins, "CopilotChat.nvim")
         call add(s:ai_plugin_setupt_func, 'call te#feat#load_lua_modlue("copilot_chat_setup")')
+        nnoremap <silent> <leader>ai :CopilotChat<CR>
+        vnoremap <silent> <leader>ai :CopilotChat<CR>
+        vnoremap <silent> <leader>au :CopilotChat Translate to Chinese or English according to the detection<CR>
     endif
-    nnoremap <silent> <leader>ai :CopilotChat<CR>
-    vnoremap <silent> <leader>ai :CopilotChat<CR>
-    vnoremap <silent> <leader>au :CopilotChat Translate to Chinese or English according to the detection<CR>
 endif
 
 
