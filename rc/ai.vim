@@ -32,6 +32,23 @@ if s:ai_plugin_name ==# 'copilot.vim'
     endif
 endif
 
+if s:ai_plugin_name ==# 'codeium.vim'
+    Plug 'Exafunction/codeium.vim', {'on': []}
+
+    function! s:codeium_setup() abort
+        let g:codeium_disable_bindings = 1
+        let g:codeium_enabled = v:true
+        imap <script><silent><nowait><expr> <C-a> codeium#Accept()
+        imap <script><silent><nowait><expr> <C-]> codeium#AcceptNextWord()
+        imap <script><silent><nowait><expr> <C-l> codeium#AcceptNextLine()
+        call te#meta#map('inoremap', ']', '<Cmd>call codeium#CycleCompletions(1)<CR>')
+        call te#meta#map('inoremap', '[', '<Cmd>call codeium#CycleCompletions(-1)<CR>')
+        nnoremap <silent> <leader>ai :Codeium Chat<CR>
+    endfunction
+
+    call add(s:ai_plugin_setupt_func, function('<SID>codeium_setup'))
+    call add(s:ai_plugins, s:ai_plugin_name)
+endif
 
 call te#feat#register_vim_enter_setting2(s:ai_plugin_setupt_func, s:ai_plugins)
 
