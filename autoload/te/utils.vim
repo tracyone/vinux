@@ -688,104 +688,35 @@ function! te#utils#check_health() abort
     setlocal filetype=health
     setlocal conceallevel=2 concealcursor=nc
     setlocal keywordprg=:help iskeyword=@,48-57,_,192-255,-,#
-    let l:output=[]
-    call add(l:output, 'Vim health info')
-    call add(l:output, '============================================')
-    let l:i=2
-    call add(l:output, printf("%s:\t",'Vim version'))
-    let l:temp=te#feat#get_vim_version()
-    let l:output[l:i].=l:temp[0].' '.l:temp[1]
-    let l:output[l:i].=' OS: '
-    if te#env#IsMac()
-        let l:output[l:i].='MacOS'
-    elseif te#env#IsUnix()
-        let l:output[l:i].='Unix'
-    elseif te#env#IsWin32()
-        let l:output[l:i].='Windows x86'
-    elseif te#env#IsWin64()
-        let l:output[l:i].='Windows x86_64'
-    endif
+    let l:output = [
+                \ 'Vim health info',
+                \ '============================================',
+                \ printf("%s:\t", 'Vim version') . te#feat#get_vim_version()[0] . ' ' . te#feat#get_vim_version()[1] . ' OS: ' . (te#env#IsMac() ? 'MacOS' : te#env#IsUnix() ? 'Unix' : te#env#IsWin32() ? 'Windows x86' : te#env#IsWin64() ? 'Windows x86_64' : ''),
+                \ '',
+                \ printf("%26s:\t", 'vim >= 7.3.1058') . (te#env#check_requirement() ? 'Yes' : '[No]'),
+                \ '--------------------------------------------'
+                \ ]
 
-    call add(l:output, '')
-    let l:i=l:i + 1
-
-    call add(l:output, printf("%26s:\t", 'vim >= 7.3.1058'))
-    let l:i=l:i + 1
-    if te#env#check_requirement()
-        let l:output[l:i].='Yes'
-    else
-        let l:output[l:i].='[No]'
-    endif
-    call add(l:output, printf('%26s', '--------------------------------------------'))
-    let l:i=l:i + 1
-
-
-    for needle in ['termguicolors', 'lua', 'perl', 'ruby', 'tcl', 
-                \ 'timers', 'python', 'python3', 'cscope', 
-                \'multi_byte', 'signs', 'clipboard', 'clientserver']
-        call add(l:output, printf("%26s:\t", ''.needle.''.' support'))
-        let l:i=l:i + 1
-        if te#env#SupportFeature(needle)
-            let l:output[l:i].='Yes'
-        else
-            let l:output[l:i].='[No]'
-        endif
-        call add(l:output, printf('%26s', '--------------------------------------------'))
-        let l:i=l:i + 1
+    for needle in ['termguicolors', 'lua', 'perl', 'ruby', 'tcl', 'timers', 'python', 'python3', 'cscope', 'multi_byte', 'signs', 'clipboard', 'clientserver']
+        call add(l:output, printf("%26s:\t%s", needle . ' support', te#env#SupportFeature(needle) ? 'Yes' : '[No]'))
+        call add(l:output, '--------------------------------------------')
     endfor
 
-    call add(l:output, printf("%26s:\t",'terminal support'))
-    let l:i=l:i + 1
-    if te#env#SupportTerminal()
-        let l:output[l:i].='Yes'
-    else
-        let l:output[l:i].='[No]'
-    endif
-    call add(l:output, printf('%26s', '--------------------------------------------'))
-    let l:i=l:i + 1
+    call add(l:output, printf("%26s:\t%s", 'terminal support', te#env#SupportTerminal() ? 'Yes' : '[No]'))
+    call add(l:output, '--------------------------------------------')
 
-    call add(l:output, printf("%26s:\t",'job support'))
-    let l:i=l:i + 1
-    if te#env#SupportAsync()
-        let l:output[l:i].='Yes'
-    else
-        let l:output[l:i].='[No]'
-    endif
-    call add(l:output, printf('%26s', '--------------------------------------------'))
-    let l:i=l:i + 1
+    call add(l:output, printf("%26s:\t%s", 'job support', te#env#SupportAsync() ? 'Yes' : '[No]'))
+    call add(l:output, '--------------------------------------------')
 
+    call add(l:output, printf("%26s:\t%s", 'ycm support', te#env#SupportYcm() ? 'Yes' : '[No]'))
+    call add(l:output, '--------------------------------------------')
 
-    call add(l:output, printf("%26s:\t",'ycm support'))
-    let l:i=l:i + 1
-    if te#env#SupportYcm()
-        let l:output[l:i].='Yes'
-    else
-        let l:output[l:i].='[No]'
-    endif
-    call add(l:output, printf('%26s', '--------------------------------------------'))
-    let l:i=l:i + 1
+    call add(l:output, printf("%26s:\t%s", 'Floating window support', te#env#SupportFloatingWindows() ? 'Yes' : '[No]'))
+    call add(l:output, '--------------------------------------------')
 
-    call add(l:output, printf("%26s:\t",'Floating window support'))
-    let l:i=l:i + 1
-    if te#env#SupportFloatingWindows()
-        let l:output[l:i].='Yes'
-    else
-        let l:output[l:i].='[No]'
-    endif
-    call add(l:output, printf('%26s', '--------------------------------------------'))
-    let l:i=l:i + 1
-
-    for needle in ['cscope', 'ctags', 'ag', 'rg', 'git', 'gtags',
-                \ 'clang', 'curl', 'bear', 'pbcopy', 'xsel', 'xclip', 'nvr', 'yapf', 'autopep8', 'node']
-        call add(l:output, printf("%26s:\t", ''.needle.''.' exist'))
-        let l:i=l:i + 1
-        if te#env#Executable(needle)
-            let l:output[l:i].='Yes'
-        else
-            let l:output[l:i].='[No]'
-        endif
-        call add(l:output, printf('%26s', '--------------------------------------------'))
-        let l:i=l:i + 1
+    for needle in ['cscope', 'ctags', 'ag', 'rg', 'git', 'gtags', 'clang', 'curl', 'bear', 'pbcopy', 'xsel', 'xclip', 'nvr', 'yapf', 'autopep8', 'node']
+        call add(l:output, printf("%26s:\t%s", needle . ' exist', te#env#Executable(needle) ? 'Yes' : '[No]'))
+        call add(l:output, '--------------------------------------------')
     endfor
 
     call append('$', l:output)

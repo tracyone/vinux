@@ -171,57 +171,33 @@ endfunction
 
 "list all plugin
 function! te#plug#list() abort
-    if exists('s:plugins_list_win_id') && s:plugins_list_win_id > 0
-        if win_gotoid(s:plugins_list_win_id) == v:true
-            return
-        endif
+    if exists('s:plugins_list_win_id') && s:plugins_list_win_id > 0 && win_gotoid(s:plugins_list_win_id) == v:true
+        return
     endif
-    let s:plugins_list_win_id=-1
+    let s:plugins_list_win_id = -1
 
-    let l:output=[]
-    call add(l:output, 'Vinux plugins list:')
-    call add(l:output, '====================')
-    call add(l:output, '')
-    let l:i=3
-
-    for l:needle in g:plugs_order
-        let l:status=''
-        if !isdirectory(g:plugs[l:needle].dir)
-            let l:status='[missing]'
-        endif
-        if !plug#is_plugin_load(l:needle)
-            let l:status.=' [unloaded]'
-        endif
-        call add(l:output, printf('- %s:%s %s', l:needle,' ('.g:plugs[l:needle].uri.')', l:status ) )
-        let l:i=l:i + 1
-    endfor
-    let l:output[0].=l:i-3
+    let l:output = ['Vinux plugins list:', '====================', '']
+    let l:output += map(copy(g:plugs_order), {_, needle -> 
+                \ printf('- %s: (%s) %s', needle, g:plugs[needle].uri, 
+                \ !isdirectory(g:plugs[needle].dir) ? '[missing]' : '' .
+                \ (!plug#is_plugin_load(needle) ? ' [unloaded]' : '')) })
+    let l:output[0] .= len(g:plugs_order)
 
     let l:buf_opt = {'buftype':'nofile', 'buflisted':v:false, 'bufhidden':'wipe',
                 \ 'undolevels':-1, 'textwidth':0, 'swapfile':v:false,
-                \  'filetype':'vim-plug', 'modifiable':v:false,
-                \ }
+                \ 'filetype':'vim-plug', 'modifiable':v:false}
+
     if te#env#IsNvim() > 0.5
         let s:plugins_list_win_id = te#plug#window(l:output)
         call s:syntax()
     else
         tabnew
         call append(0, l:output)
-        for [k,v] in items(l:buf_opt)
-            if type(v) == g:t_bool
-                if v == v:false
-                    execute 'setlocal no'.k
-                elseif v == v:true
-                    execute 'setlocal '.k
-                endif
-            else
-                execute 'setlocal '.k.'='.v
-            endif
+        for [k, v] in items(l:buf_opt)
+            execute 'setlocal ' . (type(v) == g:t_bool ? (v ? '' : 'no') : '') . k . (type(v) == g:t_bool ? '' : '=' . v)
         endfor
         call s:syntax()
-        :0
-        :f [plugins_list]
-        let s:plugins_list_win_id=bufwinid(bufnr('%'))
+        let s:plugins_list_win_id = bufwinid(bufnr('%'))
     endif
 endfunction
 
