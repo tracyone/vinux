@@ -29,6 +29,85 @@ if s:ai_plugin_name ==# 'copilot.vim'
         nnoremap <silent> <leader>ai :CopilotChat<CR>
         vnoremap <silent> <leader>ai :CopilotChat<CR>
         vnoremap <silent> <leader>au :CopilotChat Translate to Chinese or English according to the detection<CR>
+    else
+        if te#env#SupportPy3()
+            "require python 3.10 or newer
+            "pip3 install numpy cffi unwrap
+            "store your api-key to ~/.config/openai.token
+            Plug 'madox2/vim-ai', {'on': []}
+
+            function! s:vim_ai_chat_buffer_mapping() abort
+                inoremap <silent><buffer> <C-s> <C-o>:AIChat<CR>
+                inoremap <silent><buffer> <C-c> <C-o>:q<CR>
+                nnoremap <silent><buffer> q :q<cr>
+            endfunction
+
+            function! s:generate_git_commit_message()
+                let l:range = 0
+                let l:diff = system('git diff --staged')
+                let l:prompt = "Write commit message with English for the diff with commitizen convention without any comment. Keep the title under 50 characters and wrap message at 72 characters.\n" . l:diff
+                let l:config = {
+                            \  "engine": "chat",
+                            \  "options": {
+                            \    "max_tokens": 0,
+                            \    "max_completion_tokens": 0,
+                            \    "model": "ernie-speed-128k",
+                            \    "endpoint_url": "https://qianfan.baidubce.com/v2/chat/completions",
+                            \    "temperature": 1,
+                            \    "request_timeout": 20,
+                            \    "stream": 1,
+                            \    "enable_auth": 1,
+                            \    "token_file_path": "",
+                            \    "selection_boundary": "",
+                            \    "initial_prompt": ">>> system\nyou are a code assistant",
+                            \  "ui": {
+                            \    "paste_mode": 1,
+                            \  },
+                            \  },
+                            \}
+                call vim_ai#AIRun(l:range, l:config, l:prompt)
+            endfunction
+
+            function! s:ai_setup() abort
+                let s:initial_chat_prompt =<< trim END
+                    >>> system
+
+                    You are a general assistant.
+                    If you attach a code block add syntax type after ``` to enable syntax highlighting.
+                END
+
+                let g:vim_ai_chat = {
+                            \  "options": {
+                            \    "max_tokens": 0,
+                            \    "max_completion_tokens": 0,
+                            \    "model": "ernie-speed-128k",
+                            \    "endpoint_url": "https://qianfan.baidubce.com/v2/chat/completions",
+                            \    "temperature": 1,
+                            \    "request_timeout": 20,
+                            \    "stream": 1,
+                            \    "enable_auth": 1,
+                            \    "token_file_path": "",
+                            \    "selection_boundary": "",
+                            \    "initial_prompt": s:initial_chat_prompt,
+                            \  },
+                            \  "ui": {
+                            \    "code_syntax_enabled": 1,
+                            \    "populate_options": 0,
+                            \    "open_chat_command": "preset_below",
+                            \    "scratch_buffer_keep_open": 0,
+                            \    "paste_mode": 1,
+                            \  },
+                            \}
+                xnoremap <silent> <leader>au :AIChat Translate to Chinese or English according to the detection<CR>
+                nmap <leader>ai :AIChat<CR>
+                autocmd filetype_group FileType aichat call <SID>vim_ai_chat_buffer_mapping()
+                autocmd filetype_group FileType gitcommit nnoremap <leader>cm :call <SID>generate_git_commit_message()<cr>
+            endfunction
+
+
+            call add(s:ai_plugin_setupt_func, function('<SID>ai_setup'))
+            call add(s:ai_plugins, "vim-ai")
+        endif
     endif
 endif
 
