@@ -89,7 +89,7 @@ if te#env#IsGui()
         set guioptions-=r "whether show the rigth scroll bar
         set guioptions-=l "whether show the left scroll bar
         set guioptions-=T "whether show toolbar or not
-        set guioptions-=e "whether use tabpage
+        "set guioptions-=e "whether use tabpage
         set guioptions+=c
         set guioptions+=k "Keep the GUI window size when adding/removing a scrollbar
         "highlight the screen line of the cursor
