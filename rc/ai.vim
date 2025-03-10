@@ -42,6 +42,39 @@ if s:ai_plugin_name ==# 'copilot.vim'
                 nnoremap <silent><buffer> q :q<cr>
             endfunction
 
+            function! s:ai_translater()
+                let l:range = 0
+                let l:prompt = "Please enable language detection and translation features. When a user inputs text, automatically identify the language and translate it into the other language (Chinese or English) accordingly. Provide instant and accurate translations to help users communicate effectively across different languages. Translate following:"
+                " Save the current register and selection type
+                let l:save_reg = @"
+                let l:save_regtype = getregtype('"')
+                " Get the visually selected text
+                normal! gv"zy
+                let l:prompt .= @z
+
+                let l:config = {
+                            \  "engine": "chat",
+                            \  "options": {
+                            \    "max_tokens": 0,
+                            \    "max_completion_tokens": 0,
+                            \    "model": "ernie-speed-128k",
+                            \    "endpoint_url": "https://qianfan.baidubce.com/v2/chat/completions",
+                            \    "temperature": 1,
+                            \    "request_timeout": 20,
+                            \    "stream": 1,
+                            \    "enable_auth": 1,
+                            \    "token_file_path": "",
+                            \    "selection_boundary": "",
+                            \    "initial_prompt": ">>> system\nYou are a AI Translation assistant.",
+                            \  "ui": {
+                            \    "populate_options": 0,
+                            \    "scratch_buffer_keep_open": 0,
+                            \    "paste_mode": 1,
+                            \  },
+                            \  },
+                            \}
+                call vim_ai#AIChatRun(l:range, l:config, l:prompt)
+            endfunction
             function! s:generate_git_commit_message()
                 let l:range = 0
                 let l:diff = system('git diff --staged')
@@ -62,6 +95,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
                             \    "initial_prompt": ">>> system\nyou are a code assistant",
                             \  "ui": {
                             \    "paste_mode": 1,
+                            \    "scratch_buffer_keep_open": 0,
                             \  },
                             \  },
                             \}
@@ -98,7 +132,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
                             \    "paste_mode": 1,
                             \  },
                             \}
-                xnoremap <silent> <leader>au :AIChat Translate to Chinese or English according to the detection<CR>
+                xnoremap <silent> <leader>au :call <SID>ai_translater()<CR>
                 nmap <leader>ai :AIChat<CR>
                 autocmd filetype_group FileType aichat call <SID>vim_ai_chat_buffer_mapping()
                 autocmd filetype_group FileType gitcommit nnoremap <leader>cm :call <SID>generate_git_commit_message()<cr>
