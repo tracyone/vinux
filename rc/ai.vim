@@ -44,7 +44,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
 
             function! s:ai_translater()
                 let l:range = 0
-                let l:prompt = "Please enable language detection and translation features. When a user inputs text, automatically identify the language and translate it into the other language (Chinese or English) accordingly. Provide instant and accurate translations to help users communicate effectively across different languages. Translate following:"
+                let l:prompt = "Translate following sentence to Chinese without any comment:\n\n"
                 " Save the current register and selection type
                 let l:save_reg = @"
                 let l:save_regtype = getregtype('"')
@@ -57,7 +57,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
                             \  "options": {
                             \    "max_tokens": 0,
                             \    "max_completion_tokens": 0,
-                            \    "model": "ernie-speed-128k",
+                            \    "model": te#feat#get_key_value('g:ai_llm_model_name', 'cur_val'),
                             \    "endpoint_url": "https://qianfan.baidubce.com/v2/chat/completions",
                             \    "temperature": 1,
                             \    "request_timeout": 20,
@@ -84,7 +84,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
                             \  "options": {
                             \    "max_tokens": 0,
                             \    "max_completion_tokens": 0,
-                            \    "model": "ernie-speed-128k",
+                            \    "model": te#feat#get_key_value('g:ai_llm_model_name', 'cur_val'),
                             \    "endpoint_url": "https://qianfan.baidubce.com/v2/chat/completions",
                             \    "temperature": 1,
                             \    "request_timeout": 20,
@@ -114,7 +114,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
                             \  "options": {
                             \    "max_tokens": 0,
                             \    "max_completion_tokens": 0,
-                            \    "model": "ernie-speed-128k",
+                            \    "model": te#feat#get_key_value('g:ai_llm_model_name', 'cur_val'),
                             \    "endpoint_url": "https://qianfan.baidubce.com/v2/chat/completions",
                             \    "temperature": 1,
                             \    "request_timeout": 20,
