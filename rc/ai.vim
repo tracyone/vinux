@@ -78,7 +78,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
             function! s:generate_git_commit_message()
                 let l:range = 0
                 let l:diff = system('git diff --staged')
-                let l:prompt = "Write commit message with English for the diff with commitizen convention without any comment. Keep the title under 50 characters and wrap message at 72 characters.\n" . l:diff
+                let l:prompt = "Write commit message (English) with commitizen convention without any comment. Keep the title under 50 characters and wrap message at 72 characters. Folllowing is the diff:\n\n" . l:diff
                 let l:config = {
                             \  "engine": "chat",
                             \  "options": {
