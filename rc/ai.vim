@@ -2,10 +2,9 @@ let s:ai_plugin_name = te#feat#get_key_value('g:ai_plugin_name', 'cur_val')
 let s:ai_plugin_setupt_func = []
 let s:ai_plugins = []
 
-let s:llm_url_mapping = {
-            \  'ernie-speed-128k': "https://qianfan.baidubce.com/v2/chat/completions",
-            \  'deepseek-r1-distill-llama-8b': "https://qianfan.baidubce.com/v2/chat/completions",
-            \  'qwq-32b': "https://qianfan.baidubce.com/v2/chat/completions",
+let s:provider_url_mapping = {
+            \  'baidu': "https://qianfan.baidubce.com/v2/chat/completions",
+            \  'aliyun': "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
             \ }
 
 if s:ai_plugin_name ==# 'copilot.vim'
@@ -64,7 +63,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
                             \    "max_tokens": 0,
                             \    "max_completion_tokens": 0,
                             \    "model": te#feat#get_key_value('g:ai_llm_model_name', 'cur_val'),
-                            \    "endpoint_url": s:llm_url_mapping[te#feat#get_key_value('g:ai_llm_model_name', 'cur_val')],
+                            \    "endpoint_url": s:provider_url_mapping[te#feat#get_key_value('g:ai_provider_name', 'cur_val')],
                             \    "temperature": 1,
                             \    "request_timeout": 20,
                             \    "stream": 1,
@@ -91,7 +90,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
                             \    "max_tokens": 0,
                             \    "max_completion_tokens": 0,
                             \    "model": te#feat#get_key_value('g:ai_llm_model_name', 'cur_val'),
-                            \    "endpoint_url": s:llm_url_mapping[te#feat#get_key_value('g:ai_llm_model_name', 'cur_val')],
+                            \    "endpoint_url": s:provider_url_mapping[te#feat#get_key_value('g:ai_provider_name', 'cur_val')],
                             \    "temperature": 1,
                             \    "request_timeout": 20,
                             \    "stream": 1,
@@ -116,12 +115,13 @@ if s:ai_plugin_name ==# 'copilot.vim'
                     If you attach a code block add syntax type after ``` to enable syntax highlighting.
                 END
 
+                let g:vim_ai_token_file_path = '~/.config/'.te#feat#get_key_value('g:ai_provider_name', 'cur_val').'.token'
                 let g:vim_ai_chat = {
                             \  "options": {
                             \    "max_tokens": 0,
                             \    "max_completion_tokens": 0,
                             \    "model": te#feat#get_key_value('g:ai_llm_model_name', 'cur_val'),
-                            \    "endpoint_url": s:llm_url_mapping[te#feat#get_key_value('g:ai_llm_model_name', 'cur_val')],
+                            \    "endpoint_url": s:provider_url_mapping[te#feat#get_key_value('g:ai_provider_name', 'cur_val')],
                             \    "temperature": 1,
                             \    "request_timeout": 20,
                             \    "stream": 1,
