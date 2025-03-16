@@ -61,10 +61,19 @@ if te#env#SupportPy3()
     "store your api-key to ~/.config/openai.token
     Plug 'madox2/vim-ai', {'on': []}
 
+
+    function! s:save_chat_file()
+        let content = join(getline(2, '$'), '')
+        let cleaned = substitute(content, '^[\p{Zs}\t]*', '', '')
+        execute 'write '.$VIMFILES.'/.aichat/'.strcharpart(cleaned, 0, 8).'.aichat'
+        :bdelete
+    endfunction
+
     function! s:vim_ai_chat_buffer_mapping() abort
         inoremap <silent><buffer> <C-s> <C-o>:AIChat<CR>
-        inoremap <silent><buffer> <C-c> <C-o>:q<CR>
-        nnoremap <silent><buffer> q :q<cr>
+        inoremap <silent><buffer> <C-c> <C-o>:call <SID>save_chat_file()<CR>
+        nnoremap <silent><buffer> <C-c> :call <SID>save_chat_file()<CR>
+        nnoremap <silent><buffer> q :call <SID>save_chat_file()<CR>
     endfunction
 
     function! s:ai_translater()
@@ -133,6 +142,8 @@ if te#env#SupportPy3()
             If you attach a code block add syntax type after ``` to enable syntax highlighting.
         END
 
+        call mkdir($VIMFILES.'/.aichat/', 'p')
+
         let g:vim_ai_token_file_path = '~/.config/'.te#feat#get_key_value('g:ai_provider_name', 'cur_val').'.token'
         let g:vim_ai_chat = {
                     \  "options": {
@@ -188,6 +199,11 @@ if te#env#SupportPy3()
         xnoremap <silent> <leader>au :call <SID>ai_translater()<CR>
         nmap <leader>ai :AIChat<CR>
         xnoremap <leader>ai :AIEdit 
+        if te#feat#get_key_value('g:fuzzysearcher_plugin_name', 'cur_val') ==# 'fzf'
+            nnoremap <leader>ah :execute "Files ".$VIMFILES."/.aichat/"<CR>
+        else
+            nnoremap <leader>ah :execute "CtrlP ".$VIMFILES."/.aichat/"<CR>
+        endif
         autocmd filetype_group FileType aichat call <SID>vim_ai_chat_buffer_mapping()
         autocmd filetype_group FileType gitcommit nnoremap <leader>cm :call <SID>generate_git_commit_message()<cr>
     endfunction
