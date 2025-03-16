@@ -65,7 +65,7 @@ if te#env#SupportPy3()
     function! s:save_chat_file()
         let content = join(getline(2, '$'), '')
         let cleaned = substitute(content, '^[\p{Zs}\t]*', '', '')
-        execute 'write '.$VIMFILES.'/.aichat/'.strcharpart(cleaned, 0, 8).'.aichat'
+        execute 'write! '.$VIMFILES.'/.aichat/'.strcharpart(cleaned, 0, 10).'.aichat'
         :bdelete
     endfunction
 
