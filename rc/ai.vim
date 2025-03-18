@@ -53,6 +53,18 @@ if te#env#IsNvim() > 0 && s:ai_plugin_name ==# 'copilot.vim'
     call add(s:ai_plugin_setupt_func, 'call te#feat#load_lua_modlue("copilot_chat_setup")')
     nnoremap <silent> <leader>ct :CopilotChat<CR>
     vnoremap <silent> <leader>ct :CopilotChat<CR>
+
+    nnoremap <silent> <Leader>ce :CopilotChatExplain<CR>
+    vnoremap <silent> <Leader>ce :CopilotChatExplain<CR>
+
+    nnoremap <silent> <Leader>co :CopilotChatOptimize<CR>
+    vnoremap <silent> <Leader>co :CopilotChatOptimize<CR>
+
+    nnoremap <silent> <Leader>cr :CopilotChatReview<CR>
+    vnoremap <silent> <Leader>cr :CopilotChatReview<CR>
+
+    nnoremap <silent> <Leader>cg :CopilotChatTests<CR>
+    vnoremap <silent> <Leader>cg :CopilotChatTests<CR>
 endif
 
 if te#env#SupportPy3()
@@ -206,6 +218,28 @@ if te#env#SupportPy3()
         endif
         autocmd filetype_group FileType aichat call <SID>vim_ai_chat_buffer_mapping()
         autocmd filetype_group FileType gitcommit nnoremap <leader>cm :call <SID>generate_git_commit_message()<cr>
+
+        if te#env#IsNvim() == 0
+            " Code Explanation (e.g. CCExplain)
+            command! -range=% Explain :<line1>,<line2>AIChat "Explain how the following code works.："
+            " Code Refactoring (e.g.: CCRefactor)
+            command! -range=% Refactor :<line1>,<line2>AIChat "Refactor this code while maintaining existing functionality?："
+            " generate unit tests (e.g.: CCGenerateTest)
+            command! -range=% GenerateTest :<line1>,<line2>AIChat "Generate unit tests for the following code?："
+            " Code Optimization (e.g.: CCOptimize)
+            command! -range=% Optimize :<line1>,<line2>AIChat "Please optimize this code and provide modification suggestions.："
+            nnoremap <silent> <Leader>ce :Explain<CR>
+            vnoremap <silent> <Leader>ce :Explain<CR>
+
+            nnoremap <silent> <Leader>co :Optimize<CR>
+            vnoremap <silent> <Leader>co :Optimize<CR>
+
+            nnoremap <silent> <Leader>cr :Refactor<CR>
+            vnoremap <silent> <Leader>cr :Refactor<CR>
+
+            nnoremap <silent> <Leader>cg :GenerateTest<CR>
+            vnoremap <silent> <Leader>cg :GenerateTest<CR>
+        endif
     endfunction
 
 
