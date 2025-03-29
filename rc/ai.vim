@@ -74,11 +74,35 @@ if te#env#SupportPy3()
     Plug 'madox2/vim-ai', {'on': []}
 
 
-    function! s:save_chat_file()
-        let content = join(getline(2, '$'), '')
-        let cleaned = substitute(content, '^[\p{Zs}\t]*', '', '')
-        execute 'write! '.$VIMFILES.'/.aichat/'.strcharpart(cleaned, 0, 10).'.aichat'
-        :bdelete
+    function! s:save_chat_file() abort
+        try
+            " Get content and clean
+            let content = join(getline(2, '$'), '')
+            let cleaned = substitute(content, '^[\p{Zs}\t]*', '', '')
+
+            " Generate filename components
+            let filename_part = !empty(cleaned) ? 
+                        \ strcharpart(cleaned, 0, 10) : 'untitled'
+
+            " Set up paths
+            let dir_path = $VIMFILES.'/.aichat'
+            if !isdirectory(dir_path)
+                call mkdir(dir_path, 'p')
+            endif
+            let file_path = dir_path.'/'.filename_part.'.aichat'
+
+            " Attempt to write file
+            execute 'write! '.fnameescape(file_path)
+
+            call te#utils#EchoWarning('Chat saved to: '.file_path)
+
+            " Close buffer
+            :bdelete
+
+        catch /E/
+            " Error handling
+            call te#utils#EchoWarning('Save failed: '.v:exception)
+        endtry
     endfunction
 
     function! s:vim_ai_chat_buffer_mapping() abort
@@ -217,7 +241,7 @@ if te#env#SupportPy3()
             nnoremap <leader>ah :execute "CtrlP ".$VIMFILES."/.aichat/"<CR>
         endif
         autocmd filetype_group FileType aichat call <SID>vim_ai_chat_buffer_mapping()
-        autocmd filetype_group FileType gitcommit nnoremap <leader>cm :call <SID>generate_git_commit_message()<cr>
+        autocmd filetype_group FileType gitcommit nnoremap <buffer><leader>cm :call <SID>generate_git_commit_message()<cr>
 
         if te#env#IsNvim() == 0
             " Code Explanation (e.g. CCExplain)
