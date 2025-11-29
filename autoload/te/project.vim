@@ -25,7 +25,11 @@ function! te#project#set_indent_options(coding_style)
     endif
     execute 'silent! set tabstop='.g:vinux_tabwidth
     execute 'silent! set shiftwidth='.g:vinux_tabwidth
-    execute 'silent! set softtabstop='.g:vinux_tabwidth
+    if &expandtab == 1
+        execute 'silent! set softtabstop='.g:vinux_tabwidth
+    else
+        set softtabstop = 0
+    endif
 endfunction
 execute 'set colorcolumn='.(&textwidth + 1)
 

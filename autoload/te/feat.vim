@@ -275,7 +275,12 @@ function! te#feat#init_all() abort
     call te#feat#init_var('g:file_explorer_plugin', ['nerdtree', 'defx.nvim', 'coc-explorer', 'nvim-tree.lua', 'fern.vim'])
     call te#feat#init_var('g:outline_plugin', ['tagbar', 'vim-taglist', 'vista.vim', 'aerial.nvim'])
     call te#feat#init_var('g:ai_plugin_name', ['copilot.vim', 'codeium.vim'])
-    call te#feat#init_var('g:ai_llm_model_name', ['ernie-speed-128k',  'deepseek-r1', 'qwen-max', 'qwen-coder-plus', 'qwen-omni-turbo-latest'])
+    if filereadable($HOME."/.config/llm_model.list")
+        let l:llm_model_list = readfile($HOME."/.config/llm_model.list")
+    else
+        let l:llm_model_list = ['ernie-speed-128k']
+    endif
+    call te#feat#init_var('g:ai_llm_model_name', l:llm_model_list)
     call te#feat#init_var('g:ai_provider_name', ['baidu', 'aliyun'])
     if filereadable($VIMFILES.'/feature.vim')
         try

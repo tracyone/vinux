@@ -1,0 +1,28 @@
+tab.txt	Last change: June 18 2024
+vinux_plugins - TABLE OF CONTENTS                                   *tab*
+==============================================================================
+
+Tab-Definition                                             |tab-definitiono|
+
+==============================================================================
+
+Tab-Definition                                           *tab-definitiono*
+==============================================================================
+
+'expandtab' : 使用合适的空格来代替tab，这个选项对于是否使用tab，比较关键
+
+'smarttab': 使能智能tab功能，当使能的时候，tab键和退格键会根据光标位置来插入或删除空格，空格的数量由`shiftwidth`定义，使用`softtabstop`是一个更好的选择，建议关闭
+
+'softtabstop': 类似上面的功能，数值类型，可负数，如果是0，vim则会用`shiftwidth`
+
+'tabstop': 定义tab的占据空格的数量
+
+'autoindent': 意思是当新一行的时候，拷贝上一行的缩进(当在插入模式下按下 <CR>
+	或者使用"o" 或 "O"的时候) 
+
+'smartindent' 和 'cindent'，当smartindent使能的时候，'autoindent'最好也使能。
+
+
+
+
+vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:

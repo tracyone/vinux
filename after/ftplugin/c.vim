@@ -68,7 +68,11 @@ execute 'set colorcolumn='.(&textwidth + 1)
 
 execute 'setlocal tabstop='.g:vinux_tabwidth
 execute 'setlocal shiftwidth='.g:vinux_tabwidth
-execute 'setlocal softtabstop='.g:vinux_tabwidth
+if &expandtab == 1
+    execute 'silent! set softtabstop='.g:vinux_tabwidth
+else
+    set softtabstop = 0
+endif
 
 " linux coding style
 let g:clang_format#code_style=g:vinux_coding_style.cur_val
