@@ -13,8 +13,8 @@ vinux git keymapping                                    |vinux-git-keymapping|
 vinux edit keymapping                                    |vinux-edit-keymapping|
 vinux gui keymapping                                    |vinux-gui-keymapping|
 General keymapping                                       |vinux-general-keymapping|
-  Termainl keymapping                                    |vinux-terminal-keymapping|
-  Tabline keymapping                                     |vinux-tabline-keymapping|
+Termainl keymapping                                    |vinux-terminal-keymapping|
+Tabline keymapping                                     |vinux-tabline-keymapping|
 
 ==============================================================================
 
@@ -218,5 +218,48 @@ n     |  `<Alt>o`       | Restore font size
 n     |  `<Alt>o`       | Restore font size
 n     |  `<2-leftmouse>`| Highlight cursor word
 n     |  `<SPC>tb`      | Toggle vim's background option
+
+Termainl keymapping                                 *vinux-terminal-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n     |  `<SPC>af`      | Open terminal in floating window
+n     |  `<SPC>at`      | Open terminal in a new tab
+n     |  `<SPC>av`      | Open terminal in vertical window
+n     |  `<SPC>as`      | Open terminal in split window
+n     |  `<F4>`         | Open terminal in split window
+n     |  `<SPC>tb`      | Toggle vim's background option
+n     |  `<SPC>jf`      | Start a fuzzy finder to jump to terminal buffer
+n     |  `<SPC>jt`      | Goto to the last opened terminal window
+n     |  `<SPC>rr`      | start ranger file manager in floating terminal
+n     |  `<SPC>rg`      | start tig in floating terminal
+n     |  `<SPC>j<num>  `| where <num> is 0-9, jump to that terminal window
+v     |  `<SPC>tr      `| send visual selection to terminal
+n     |  `<SPC>tr      `| send current line to terminal
+n     |  `<SPC>ta      `| send all content of current buffer to terminal
+n     |  `<SPC>re      `| start a repl for current filetype in verticalterminal
+t     |  `<ALT>h`       | Move to the window on the right.
+t     |  `<ALT>j`       | Move to the window on the bottom 
+t     |  `<ALT>k`       | Move to the window on the left
+t     |  `<ALT>l`       | Move to the window on the top 
+t     |  `<CTRL>v`      | paste
+t     |  `<C-w>q`      | close terminal window
+t     |  `<C-w>p`      | jump to previous terminal window
+t     |  `<C-w>n`      | jump to next terminal window
+t     |  `<C-w>w`      | jump between terminal windows
+t     |  `<C-w>a`      | start a new terminal window
+t     |  `<C-w><tab>`  | jump to last opened terminal window
+t     |  `<C-w>r`      | jump to last opened terminal window
+t     |  `<C-w>h`      | Move terminal window to left
+t     |  `<C-w>j`      | Move terminal window to down
+t     |  `<C-w>k`      | Move terminal window to up
+t     |  `<C-w>l`      | Move terminal window to right
+t     |  `<C-w>m`      | Move terminal window to middle
+t     |  `<C-w>t`      | Change terminal window to a tab
+t     |  `<C-w>v`      | Change terminal window to a vertical split
+t     |  `<C-w>s`      | Change terminal window to a horizontal split
+t     |  `<C-w>f`      | Change terminal window to a floating window
+t     |  `<ESC><ESC>`      | exit terminal mode
 
 vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:
