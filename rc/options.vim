@@ -83,7 +83,9 @@ set smarttab "a <Tab> in an indent inserts 'shiftwidth' spaces
 set completeopt=preview,menuone
 if has('patch-8.1.1902')
     set completeopt+=popup
-    set completepopup=height:10,width:60,highlight:Pmenu,border:off
+    if te#env#IsNvim() == 0
+        set completepopup=height:10,width:60,highlight:Pmenu,border:off
+    endif
 endif
 
 set textwidth=160
