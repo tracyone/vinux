@@ -16,6 +16,8 @@ General keymapping                                       |vinux-general-keymappi
 Termainl keymapping                                    |vinux-terminal-keymapping|
 Tabline keymapping                                     |vinux-tabline-keymapping|
 AI keymapping                                          |vinux-ai-keymapping|
+Project keymapping                                      |vinux-project-keymapping|
+Debug keymapping                                      |vinux-debug-keymapping|
 
 ==============================================================================
 
@@ -283,5 +285,30 @@ n,v   |  `<SPC>ct`      | Open copilot chat window(only for neovim)
 i     |  `<c-s>`        | submit content to ai chat window(in ai chat window)
 i,n   |  `<c-c>`        | quit and save ai chat window(in ai chat window)
 n     |  `q`            | quit and save ai chat window(in ai chat window)
+
+Project keymapping                                 *vinux-project-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n     |  `<SPC>ss`      | Create or save session a project
+n     |  `<SPC>sl`      | Load a project 
+n     |  `<SPC>sd`      | Delete a project 
+n     |  `<SPC>se`      | Edit project config file
+n     |  `<SPC>sc`      | Select a directory of project then cd to it
+n     |  `<SPC>sj`      | Build project
+
+Debug keymapping                                 *vinux-debug-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n     |  `<SPC>dt`      | Toggle dap ui
+n     |  `<SPC>dc`      | Continue run
+n     |  `<SPC>dl`      | Run to last
+n     |  `<SPC>db`      | Toggle breakpoint
+n     |  `<SPC>dr`      | Step over
+n     |  `<SPC>do`      | Step out
+n     |  `<SPC>di`      | Step into
 
 vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:

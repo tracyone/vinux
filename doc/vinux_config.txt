@@ -22,6 +22,8 @@ Help feature                                                  |vinux-help|
 C feature                                                     |vinux-c|
   Coding style                                                 |vinux-codingStyle| 
 zsh feature                                                   |vinux-zsh|
+AI feature                                                   |vinux-ai|
+Debug feature                                                   |vinux-debug|
 Plugin auto install                                          |vinux-autoInstall|
 Plugins Directory                                             |vinux-plugins-dir|
 Tagging program                                               |vinux-tagging| 
@@ -472,6 +474,47 @@ After enable this feature, you can
 
 - runtime files
 - complete support(deoplete or omnicompletion)
+
+AI feature                                                     *vinux-ai*
+==============================================================================
+
+To enable this feature
+
+    let g:feat_enable_ai=1
+
+then choose ai provider:
+
+    let g:ai_provider_name.cur_val='aliyun'
+
+Following values are the candidates:
+
+- 'baidu'
+- 'aliyun'
+
+
+Please place your API key in the `~/.config/<provider_name>.token` file.
+
+then choose llm model:
+
+    let g:ai_llm_model.cur_val='deepseek-r1-0528'
+
+unlike other options, you can edit your own llm model name list in the
+`~/.config/vinux/ai_llm_model.list` file.
+
+The format of this file is: one llm model name occupies one line.
+
+Keymapping for AI feature please see |vinux-ai-keymapping|.
+
+Debug feature                                                     *vinux-debug*
+==============================================================================
+
+To enable this feature
+
+    let g:feat_enable_debug=1
+
+This feature provide debug support for neovim using |nvim-dap| plugin.
+
+Keymapping for debug feature please see |vinux-debug-keymapping|.
 
 Plugin auto install                                              *vinux-autoInstall*
 ==============================================================================

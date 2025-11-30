@@ -25,6 +25,8 @@ vim-lsp	vinux_plugins.txt	/*vim-lsp*
 vimcomplete	vinux_plugins.txt	/*vimcomplete*
 vinux	vinux.txt	/*vinux*
 vinux-DynConfig	vinux.txt	/*vinux-DynConfig*
+vinux-ai	vinux_config.txt	/*vinux-ai*
+vinux-ai-keymapping	vinux_keymapping.txt	/*vinux-ai-keymapping*
 vinux-airline	vinux_config.txt	/*vinux-airline*
 vinux-api	vinux.txt	/*vinux-api*
 vinux-autoInstall	vinux_config.txt	/*vinux-autoInstall*
@@ -35,6 +37,8 @@ vinux-codingStyle	vinux_config.txt	/*vinux-codingStyle*
 vinux-complete	vinux_config.txt	/*vinux-complete*
 vinux-config	vinux.txt	/*vinux-config*
 vinux-ctrlp-cache	vinux_config.txt	/*vinux-ctrlp-cache*
+vinux-debug	vinux_config.txt	/*vinux-debug*
+vinux-debug-keymapping	vinux_keymapping.txt	/*vinux-debug-keymapping*
 vinux-edit	vinux_config.txt	/*vinux-edit*
 vinux-edit-keymapping	vinux_keymapping.txt	/*vinux-edit-keymapping*
 vinux-fileExplorer	vinux_config.txt	/*vinux-fileExplorer*
@@ -60,6 +64,7 @@ vinux-lsp-keymapping	vinux_keymapping.txt	/*vinux-lsp-keymapping*
 vinux-message	vinux_config.txt	/*vinux-message*
 vinux-plugins	vinux.txt	/*vinux-plugins*
 vinux-plugins-dir	vinux_config.txt	/*vinux-plugins-dir*
+vinux-project-keymapping	vinux_keymapping.txt	/*vinux-project-keymapping*
 vinux-remove	vinux.txt	/*vinux-remove*
 vinux-requirement	vinux.txt	/*vinux-requirement*
 vinux-tagging	vinux_config.txt	/*vinux-tagging*
