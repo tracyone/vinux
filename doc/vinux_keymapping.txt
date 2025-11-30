@@ -15,6 +15,7 @@ vinux gui keymapping                                    |vinux-gui-keymapping|
 General keymapping                                       |vinux-general-keymapping|
 Termainl keymapping                                    |vinux-terminal-keymapping|
 Tabline keymapping                                     |vinux-tabline-keymapping|
+AI keymapping                                          |vinux-ai-keymapping|
 
 ==============================================================================
 
@@ -261,5 +262,26 @@ t     |  `<C-w>v`      | Change terminal window to a vertical split
 t     |  `<C-w>s`      | Change terminal window to a horizontal split
 t     |  `<C-w>f`      | Change terminal window to a floating window
 t     |  `<ESC><ESC>`      | exit terminal mode
+
+AI keymapping                                 *vinux-ai-keymapping*
+==============================================================================
+
+mode  |    key        |              description
+----  | ----------    | --------------------------------------
+n     |  `<SPC>cm`      | generate commit message in git commit buffer
+n     |  `<SPC>ai`      | Open a ai chat window
+n     |  `<SPC>ah`      | Start fuzzy finder to search ai chat history
+v     |  `<SPC>au`      | translate selected text from chinese to english
+n,v   |  `<SPC>ce`      | code explanation
+n,v   |  `<SPC>co`      | code optimization
+n,v   |  `<SPC>cr`      | code refactor
+n,v   |  `<SPC>cr`      | generate test code
+i     |  `<c-l>`        | accept ai suggestion(one line)
+i     |  `<c-]>`        | accept ai suggestion(word)
+i     |  `<c-a>`        | accept all ai suggestion
+n,v   |  `<SPC>ct`      | Open copilot chat window(only for neovim)
+i     |  `<c-s>`        | submit content to ai chat window(in ai chat window)
+i,n   |  `<c-c>`        | quit and save ai chat window(in ai chat window)
+n     |  `q`            | quit and save ai chat window(in ai chat window)
 
 vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:
