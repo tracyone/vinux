@@ -7,6 +7,7 @@ endfunction
 
 function! te#project#set_indent_options(coding_style)
     let g:vinux_coding_style.cur_val = a:coding_style
+    set textwidth=160
     if a:coding_style ==# 'linux'
         let g:vinux_tabwidth=8
         set textwidth=80
@@ -30,8 +31,8 @@ function! te#project#set_indent_options(coding_style)
     else
         set softtabstop = 0
     endif
+    execute 'set colorcolumn='.(&textwidth + 1)
 endfunction
-execute 'set colorcolumn='.(&textwidth + 1)
 
 "create a project
 "1. session
