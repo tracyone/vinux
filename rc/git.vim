@@ -42,7 +42,9 @@ if te#env#SupportAsync()
 endif
 if te#env#IsNvim() > 0
     Plug 'nvim-lua/plenary.nvim' 
-    Plug 'petertriho/cmp-git'
+    if g:complete_plugin_type.cur_val ==# 'nvim-cmp'
+        Plug 'petertriho/cmp-git'
+    endif
 endif
 
 " Git releate ---------------------{{{
