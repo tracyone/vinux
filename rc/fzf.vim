@@ -94,7 +94,7 @@ function! s:fzf_vim_setting()
     "xmap <leader><tab> <plug>(fzf-maps-x)
     "omap <leader><tab> <plug>(fzf-maps-o)
     if has('patch-8.2.191') || te#env#IsNvim() != 0
-        let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.4 }, 'down': '~40%' }
+        let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 }, 'down': '~40%' }
         let g:fzf_colors =
                     \ { 'fg':      ['fg', 'vinux_tabline'],
                     \ 'border':  ['fg', 'vinux_border'],
