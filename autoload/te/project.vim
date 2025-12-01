@@ -46,7 +46,7 @@ endfunction
 function! te#project#create_project() abort
     let l:project_exist = 0
     let l:default_name=fnamemodify(getcwd(), ':t')
-    let g:vinux_project=get(g:, 'vinux_project', {'dir':'', 'name':'', 'type':0, 'cmd':'', 'build_root_dir':''})
+    let g:vinux_project=get(g:, 'vinux_project', {'dir':'', 'name':'', 'type':0})
     if len(g:vinux_project.name)
         let l:default_name=g:vinux_project.name
         let l:project_exist = 1
