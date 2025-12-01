@@ -1,7 +1,7 @@
 "lsp function wrapper
 
 function! te#lsp#is_server_running() abort
-    if te#env#IsNvim() >= 0.5
+    if te#env#IsNvim() >= 0.5 && g:complete_plugin_type.cur_val !=# 'coc.nvim'
         return v:lua.require('utils').is_lsp_running()
     else
         if exists(':LspServer') == 2
@@ -30,7 +30,7 @@ endfunction
 
 function! te#lsp#get_lsp_server_name(sep) abort
     let l:str = ""
-    if te#env#IsNvim() >= 0.5
+    if te#env#IsNvim() >= 0.5 && g:complete_plugin_type.cur_val !=# 'coc.nvim'
         let l:str=v:lua.require('utils').get_client_name()
     else
         if exists(':LspServer')
