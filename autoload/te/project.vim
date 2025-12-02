@@ -165,6 +165,8 @@ function! te#project#create_project() abort
                     let l:clang_fomat_cmd = 'clang-format -style="{BasedOnStyle: '.l:coding_style
                     let l:result = te#utils#confirm("Use Tab?", ['Always', 'false'],'')
                     let l:clang_fomat_cmd .= ', UseTab: '.l:result
+                    let &expandtab = (l:result !=# 'Always')
+                    let &smarttab = (l:result !=# 'Always')
                     let l:result = input("Input the width of indent: ", 4)
                     let l:clang_fomat_cmd .= ', IndentWidth: '.l:result
                     let l:clang_fomat_cmd .= ', TabWidth: '.l:result
