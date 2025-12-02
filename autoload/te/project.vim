@@ -29,7 +29,7 @@ function! te#project#set_indent_options(coding_style)
     if &expandtab == 1
         execute 'silent! set softtabstop='.g:vinux_tabwidth
     else
-        set softtabstop = 0
+        set softtabstop=0
     endif
     execute 'set colorcolumn='.(&textwidth + 1)
 endfunction

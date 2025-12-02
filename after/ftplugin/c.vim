@@ -71,7 +71,7 @@ execute 'setlocal shiftwidth='.g:vinux_tabwidth
 if &expandtab == 1
     execute 'silent! set softtabstop='.g:vinux_tabwidth
 else
-    set softtabstop = 0
+    set softtabstop=0
 endif
 
 " linux coding style
