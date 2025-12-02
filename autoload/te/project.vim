@@ -357,6 +357,11 @@ function! te#project#build_project(in_term) abort
     if has_key(g:vinux_project, 'cmd')
         if a:in_term == 1
             let l:build_terminal_buf = te#terminal#get_term_buf_by_title('build')
+            if l:build_terminal_buf < 0
+                call te#terminal#shell_pop({'opener':0x2, 'title': "build"})
+                call te#terminal#hide_popup()
+            endif
+            let l:build_terminal_buf = te#terminal#get_term_buf_by_title('build')
             if l:build_terminal_buf >= 0
                 if has_key(g:vinux_project, 'build_root_dir') && isdirectory(g:vinux_project.build_root_dir)
                     let l:cd_cmd = 'cd '.g:vinux_project.build_root_dir
@@ -368,7 +373,7 @@ function! te#project#build_project(in_term) abort
                     call timer_start(str2nr(2000), function('<SID>hide_popup_timer'), {'repeat': 1})
                 endif
             else
-                call te#utils#EchoWarning("Please create a terminal with title name build!")
+                call te#utils#EchoWarning("Fail to find build terminal!")
             endif
         else
             if has_key(g:vinux_project, 'build_root_dir') && isdirectory(g:vinux_project.build_root_dir)
