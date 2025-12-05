@@ -47,24 +47,47 @@ if s:ai_plugin_name ==# 'codeium.vim'
     call add(s:ai_plugins, s:ai_plugin_name)
 endif
 
-if te#env#IsNvim() > 0 && s:ai_plugin_name ==# 'copilot.vim'
-    Plug 'CopilotC-Nvim/CopilotChat.nvim', {'on': [], 'do':'make tiktoken'}
-    call add(s:ai_plugins, "CopilotChat.nvim")
-    call add(s:ai_plugin_setupt_func, 'call te#feat#load_lua_modlue("copilot_chat_setup")')
-    nnoremap <silent> <leader>ct :CopilotChat<CR>
-    vnoremap <silent> <leader>ct :CopilotChat<CR>
+if s:ai_plugin_name ==# 'copilot.vim'
+    if te#env#IsNvim() > 0
+        Plug 'CopilotC-Nvim/CopilotChat.nvim', {'on': [], 'do':'make tiktoken'}
+        call add(s:ai_plugins, "CopilotChat.nvim")
+        call add(s:ai_plugin_setupt_func, 'call te#feat#load_lua_modlue("copilot_chat_setup")')
+        nnoremap <silent> <leader>ct :CopilotChat<CR>
+        vnoremap <silent> <leader>ct :CopilotChat<CR>
 
-    nnoremap <silent> <Leader>ce :CopilotChatExplain<CR>
-    vnoremap <silent> <Leader>ce :CopilotChatExplain<CR>
+        nnoremap <silent> <Leader>ce :CopilotChatExplain<CR>
+        vnoremap <silent> <Leader>ce :CopilotChatExplain<CR>
 
-    nnoremap <silent> <Leader>co :CopilotChatOptimize<CR>
-    vnoremap <silent> <Leader>co :CopilotChatOptimize<CR>
+        nnoremap <silent> <Leader>co :CopilotChatOptimize<CR>
+        vnoremap <silent> <Leader>co :CopilotChatOptimize<CR>
 
-    nnoremap <silent> <Leader>cr :CopilotChatReview<CR>
-    vnoremap <silent> <Leader>cr :CopilotChatReview<CR>
+        nnoremap <silent> <Leader>cr :CopilotChatReview<CR>
+        vnoremap <silent> <Leader>cr :CopilotChatReview<CR>
 
-    nnoremap <silent> <Leader>cg :CopilotChatTests<CR>
-    vnoremap <silent> <Leader>cg :CopilotChatTests<CR>
+        nnoremap <silent> <Leader>cg :CopilotChatTests<CR>
+        vnoremap <silent> <Leader>cg :CopilotChatTests<CR>
+    else
+        Plug 'DanBradbury/copilot-chat.vim', {'on': []}
+        call add(s:ai_plugins, "copilot-chat.vim")
+        let g:copilot_chat_open_on_toggle=0
+        let g:copilot_chat_disable_mappings = 1
+        let g:copilot_chat_data_dir=$VIMFILES.'/.aichat/'
+        nnoremap <silent> <leader>ct :CopilotChatOpen<CR>
+        vnoremap <silent> <leader>ct <Plug>CopilotChatAddSelection
+        function! s:copilot_chat_save_quit() abort
+            let l:file_name=input("Please input a new filename: ", "")
+            if !empty(l:file_name)
+                execute 'CopilotChatSave '.l:file_name
+            endif
+            :q
+        endfunction
+        function! s:copilot_buffer_mapping() abort
+            inoremap <silent><buffer> <C-s> <C-o>:CopilotChatSubmit<CR>
+            inoremap <silent><buffer> q <C-o>:call te#utils#confirm('Save chat ?', ['Yes', 'No'], ["call <SID>copilot_chat_save_quit()", ":q"])<CR>
+            nnoremap <silent><buffer> q <C-o>:call te#utils#confirm('Save chat ?', ['Yes', 'No'], ["call <SID>copilot_chat_save_quit()", ":q"])<CR>
+        endfunction
+        autocmd filetype_group FileType copilot_chat call <SID>copilot_buffer_mapping()
+    endif
 endif
 
 if te#env#SupportPy3()
