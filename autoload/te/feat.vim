@@ -274,7 +274,7 @@ function! te#feat#init_all() abort
     call te#feat#init_var('g:message_delay_time', ['5000', '3000', '1000', '500', '0'])
     call te#feat#init_var('g:file_explorer_plugin', ['nerdtree', 'defx.nvim', 'coc-explorer', 'nvim-tree.lua', 'fern.vim'])
     call te#feat#init_var('g:outline_plugin', ['tagbar', 'vim-taglist', 'vista.vim', 'aerial.nvim'])
-    call te#feat#init_var('g:ai_plugin_name', ['copilot.vim', 'codeium.vim'])
+    call te#feat#init_var('g:ai_plugin_name', ['copilot.vim', 'windsurf.vim'])
     if filereadable($HOME."/.config/llm_model.list")
         let l:llm_model_list = readfile($HOME."/.config/llm_model.list")
     else

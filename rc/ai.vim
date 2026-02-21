@@ -29,8 +29,8 @@ if s:ai_plugin_name ==# 'copilot.vim'
     call add(s:ai_plugins, s:ai_plugin_name)
 endif
 
-if s:ai_plugin_name ==# 'codeium.vim'
-    Plug 'Exafunction/codeium.vim', {'on': []}
+if s:ai_plugin_name ==# 'windsurf.vim'
+    Plug 'Exafunction/windsurf.vim', {'on': [], 'branch': 'main' }
 
     function! s:codeium_setup() abort
         let g:codeium_disable_bindings = 1
