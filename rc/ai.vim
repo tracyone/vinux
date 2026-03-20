@@ -201,6 +201,7 @@ if te#env#SupportPy3()
             If you attach a code block add syntax type after ``` to enable syntax highlighting.
         END
 
+
         call mkdir($VIMFILES.'/.aichat/', 'p')
 
         let g:vim_ai_token_file_path = '~/.config/'.te#feat#get_key_value('g:ai_provider_name', 'cur_val').'.token'
@@ -256,7 +257,22 @@ if te#env#SupportPy3()
                     \  },
                     \}
         xnoremap <silent> <leader>au :call <SID>ai_translater()<CR>
-        nmap <leader>ai :AIChat<CR>
+        nmap <leader>ai :call <SID>ai_chat_wrapper()<cr>
+
+        function! s:ai_chat_wrapper() abort
+            let l:current_file = expand('%:p')
+            :AIChat
+
+            sleep 150m
+
+            call setline(4, '>>> include')
+
+            call setline(5, l:current_file)
+
+            normal! 2G
+            normal! o
+        endfunction
+
         xnoremap <leader>ai :AIEdit 
         if te#feat#get_key_value('g:fuzzysearcher_plugin_name', 'cur_val') ==# 'fzf'
             nnoremap <leader>ah :execute "Files ".$VIMFILES."/.aichat/"<CR>
