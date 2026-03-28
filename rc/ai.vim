@@ -259,9 +259,12 @@ if te#env#SupportPy3()
                     \  },
                     \}
         xnoremap <silent> <leader>au :call <SID>ai_translater()<CR>
-        nmap <leader>ai :AIChat<CR>
+        nnoremap <leader>ai :AIChat<CR>:startinsert<cr>
 
         function! s:ai_include_file() abort
+            " Save cursor position
+            let l:save_pos = getpos('.')
+
             let l:include_files = []
             let l:current_bufnr = bufnr('%')
 
@@ -293,6 +296,8 @@ if te#env#SupportPy3()
 
             if empty(l:include_files)
                 call te#utils#EchoWarning('No editable buffers found to include.')
+                " Restore cursor position even on early return
+                call setpos('.', l:save_pos)
                 return
             endif
 
@@ -305,8 +310,8 @@ if te#env#SupportPy3()
                 call append('$', l:file_path)
             endfor
 
-            normal! G
-            normal! k
+            " Restore cursor position
+            call setpos('.', l:save_pos)
         endfunction
 
         xnoremap <leader>ai :AIEdit 
