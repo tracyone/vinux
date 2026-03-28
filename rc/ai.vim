@@ -129,7 +129,9 @@ if te#env#SupportPy3()
     endfunction
 
     function! s:vim_ai_chat_buffer_mapping() abort
-        inoremap <silent><buffer> <C-s> <C-o>:AIChat<CR>
+        inoremap <silent><buffer> <C-j> <C-o>:AIChat<CR>
+        inoremap <silent><buffer> <C-i> <C-o>:call <SID>ai_include_file()<CR>
+        nnoremap <silent><buffer> <C-i> <C-o>:call <SID>ai_include_file()<CR>
         inoremap <silent><buffer> <C-c> <C-o>:call <SID>save_chat_file()<CR>
         nnoremap <silent><buffer> <C-c> :call <SID>save_chat_file()<CR>
         nnoremap <silent><buffer> q :call <SID>save_chat_file()<CR>
@@ -257,20 +259,54 @@ if te#env#SupportPy3()
                     \  },
                     \}
         xnoremap <silent> <leader>au :call <SID>ai_translater()<CR>
-        nmap <leader>ai :call <SID>ai_chat_wrapper()<cr>
+        nmap <leader>ai :AIChat<CR>
 
-        function! s:ai_chat_wrapper() abort
-            let l:current_file = expand('%:p')
-            :AIChat
+        function! s:ai_include_file() abort
+            let l:include_files = []
+            let l:current_bufnr = bufnr('%')
 
-            sleep 150m
+            for l:buf in getbufinfo({'buflisted': 1})
+                if l:buf.bufnr == l:current_bufnr
+                    continue
+                endif
 
-            call setline(4, '>>> include')
+                if empty(l:buf.name)
+                    continue
+                endif
 
-            call setline(5, l:current_file)
+                let l:buftype = getbufvar(l:buf.bufnr, '&buftype', '')
+                if !empty(l:buftype) && l:buftype !=# ''
+                    continue
+                endif
 
-            normal! 2G
-            normal! o
+                let l:filetype = getbufvar(l:buf.bufnr, '&filetype', '')
+                if l:filetype ==# 'aichat'
+                    continue
+                endif
+
+                if !filereadable(l:buf.name)
+                    continue
+                endif
+
+                call add(l:include_files, fnamemodify(l:buf.name, ':p'))
+            endfor
+
+            if empty(l:include_files)
+                call te#utils#EchoWarning('No editable buffers found to include.')
+                return
+            endif
+
+            normal! G
+
+            call append('$', '')
+            call append('$', '>>> include')
+
+            for l:file_path in l:include_files
+                call append('$', l:file_path)
+            endfor
+
+            normal! G
+            normal! k
         endfunction
 
         xnoremap <leader>ai :AIEdit 
