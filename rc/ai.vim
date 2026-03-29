@@ -22,7 +22,6 @@ if s:ai_plugin_name ==# 'copilot.vim'
         imap <c-]> <Plug>(copilot-accept-word)
     endfunction
     call add(s:ai_plugin_setupt_func, function('<SID>copilot_setup'))
-    call add(s:ai_plugins, s:ai_plugin_name)
 endif
 
 if s:ai_plugin_name ==# 'windsurf.vim'
@@ -40,7 +39,6 @@ if s:ai_plugin_name ==# 'windsurf.vim'
     endfunction
 
     call add(s:ai_plugin_setupt_func, function('<SID>codeium_setup'))
-    call add(s:ai_plugins, s:ai_plugin_name)
 endif
 
 if s:ai_plugin_name ==# 'copilot.vim'
@@ -98,6 +96,31 @@ endif
 if s:ai_plugin_name ==# 'vim-ollama'
     Plug 'gergap/vim-ollama'
 endif
+
+if s:ai_plugin_name ==# 'vim-llm-agent' 
+    function! s:vim_llm_agent_setup() abort
+        let $OPENAI_API_KEY=te#ai#get_api_key()
+        let $OPENAI_API_BASE=te#ai#get_provider_url(te#feat#get_key_value('g:ai_provider_name', 'cur_val'))
+        let g:llm_agent_provider = 'openai'
+        let g:openai_api_key=te#ai#get_api_key()
+        let g:openai_base_url=te#ai#get_provider_url(te#feat#get_key_value('g:ai_provider_name', 'cur_val'))
+        let g:llm_agent_model=te#ai#get_model_name()
+        let g:llm_agent_max_tokens=2000
+        let g:llm_agent_session_mode=1
+        let g:llm_agent_temperature = 0.7
+        let g:llm_agent_lang = 'Chinese'
+        let g:llm_agent_split_direction = 'vertical'
+        let g:split_ratio=4
+        let g:llm_agent_enable_tools=1
+        let g:chat_persona='default'
+        let g:llm_agent_log_level=2  " 0=off, 1=basic, 2=verbos
+    endfunction
+    Plug 'CoderCookE/vim-llm-agent', {'on': []}
+    call add(s:ai_plugin_setupt_func, function('<SID>vim_llm_agent_setup'))
+endif
+
+call add(s:ai_plugins, s:ai_plugin_name)
+
 
 call te#feat#register_vim_enter_setting2(s:ai_plugin_setupt_func, s:ai_plugins)
 
