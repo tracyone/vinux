@@ -2,10 +2,6 @@ let s:ai_plugin_name = te#feat#get_key_value('g:ai_plugin_name', 'cur_val')
 let s:ai_plugin_setupt_func = []
 let s:ai_plugins = []
 
-let s:provider_url_mapping = {
-            \  'baidu': "https://qianfan.baidubce.com/v2/chat/completions",
-            \  'aliyun': "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
-            \ }
 
 if s:ai_plugin_name ==# 'copilot.vim'
     if te#feat#get_key_value('g:complete_plugin_type', 'cur_val') ==  'coc.nvim'
@@ -151,8 +147,8 @@ if te#env#SupportPy3()
                     \  "options": {
                     \    "max_tokens": 0,
                     \    "max_completion_tokens": 0,
-                    \    "model": te#feat#get_key_value('g:ai_llm_model_name', 'cur_val'),
-                    \    "endpoint_url": s:provider_url_mapping[te#feat#get_key_value('g:ai_provider_name', 'cur_val')],
+                    \    "model": te#ai#get_model_name(),
+                    \    "endpoint_url": te#ai#get_provider_url(te#feat#get_key_value('g:ai_provider_name', 'cur_val')).'chat/completions',
                     \    "temperature": 0.1,
                     \    "request_timeout": 20,
                     \    "stream": 1,
@@ -177,8 +173,8 @@ if te#env#SupportPy3()
                     \  "options": {
                     \    "max_tokens": 0,
                     \    "max_completion_tokens": 0,
-                    \    "model": te#feat#get_key_value('g:ai_llm_model_name', 'cur_val'),
-                    \    "endpoint_url": s:provider_url_mapping[te#feat#get_key_value('g:ai_provider_name', 'cur_val')],
+                    \    "model": te#ai#get_model_name(),
+                    \    "endpoint_url": te#ai#get_provider_url(te#feat#get_key_value('g:ai_provider_name', 'cur_val')).'chat/completions',
                     \    "temperature": 0.1,
                     \    "request_timeout": 20,
                     \    "stream": 1,
@@ -211,8 +207,8 @@ if te#env#SupportPy3()
                     \  "options": {
                     \    "max_tokens": 0,
                     \    "max_completion_tokens": 0,
-                    \    "model": te#feat#get_key_value('g:ai_llm_model_name', 'cur_val'),
-                    \    "endpoint_url": s:provider_url_mapping[te#feat#get_key_value('g:ai_provider_name', 'cur_val')],
+                    \    "model": te#ai#get_model_name(),
+                    \    "endpoint_url": te#ai#get_provider_url(te#feat#get_key_value('g:ai_provider_name', 'cur_val')).'chat/completions',
                     \    "temperature": 0.1,
                     \    "request_timeout": 20,
                     \    "stream": 1,
@@ -244,8 +240,8 @@ if te#env#SupportPy3()
                     \  "options": {
                     \    "max_tokens": 0,
                     \    "max_completion_tokens": 0,
-                    \    "model": te#feat#get_key_value('g:ai_llm_model_name', 'cur_val'),
-                    \    "endpoint_url": s:provider_url_mapping[te#feat#get_key_value('g:ai_provider_name', 'cur_val')],
+                    \    "model": te#ai#get_model_name(),
+                    \    "endpoint_url": te#ai#get_provider_url(te#feat#get_key_value('g:ai_provider_name', 'cur_val')).'chat/completions',
                     \    "temperature": 0.1,
                     \    "request_timeout": 20,
                     \    "stream": 1,
@@ -349,6 +345,10 @@ if te#env#SupportPy3()
 
     call add(s:ai_plugin_setupt_func, function('<SID>ai_setup'))
     call add(s:ai_plugins, "vim-ai")
+endif
+
+if s:ai_plugin_name ==# 'vim-ollama'
+Plug 'gergap/vim-ollama'
 endif
 
 call te#feat#register_vim_enter_setting2(s:ai_plugin_setupt_func, s:ai_plugins)
