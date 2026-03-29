@@ -9,7 +9,9 @@ function! te#ai#get_provider_url(provider_name) abort
 endfunction
 
 function! te#ai#get_api_key() abort
-    return readfile($HOME.'/.config/'.te#feat#get_key_value('g:ai_provider_name', 'cur_val').'.token')[0]
+    if filereadable($HOME.'/.config/'.te#feat#get_key_value('g:ai_provider_name', 'cur_val').'.token')
+        return readfile($HOME.'/.config/'.te#feat#get_key_value('g:ai_provider_name', 'cur_val').'.token')[0]
+    endif
 endfunction
 
 function! te#ai#get_model_name() abort

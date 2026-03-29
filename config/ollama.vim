@@ -30,7 +30,9 @@ let g:ollama_chat_timeout = 30                  " 增加超时时间
 "let g:ollama_debug = 3
 "let g:ollama_logfile = '/tmp/vim-ollama.log'
 
-let g:ollama_no_maps = 1
+let g:ollama_no_maps = v:true
+let g:ollama_no_tab_map = v:true
+let g:ollama_split_vertically = 0
 inoremap <c-a> <Plug>(ollama-tab-completion)
 inoremap <c-]> <Plug>(ollama-insert-word)
 inoremap <c-l> <Plug>(ollama-insert-line)

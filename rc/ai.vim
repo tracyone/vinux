@@ -348,7 +348,7 @@ if te#env#SupportPy3()
 endif
 
 if s:ai_plugin_name ==# 'vim-ollama'
-Plug 'gergap/vim-ollama'
+    Plug 'gergap/vim-ollama'
 endif
 
 call te#feat#register_vim_enter_setting2(s:ai_plugin_setupt_func, s:ai_plugins)
