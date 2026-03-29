@@ -54,7 +54,7 @@ endfunction
 
 function! s:save_chat_file() abort
     try
-        " Get content and clean
+        stopinsert
         let content = join(getline(2, '$'), '')
         let cleaned = substitute(content, '^[\p{Zs}\t]*', '', '')
 
@@ -75,8 +75,11 @@ function! s:save_chat_file() abort
         call te#utils#EchoWarning('Chat saved to: '.file_path)
 
         " Close buffer
-        :bdelete
-
+        if winnr('$') > 1
+            hide
+        else
+            :bnext
+        endif
     catch /E/
         " Error handling
         call te#utils#EchoWarning('Save failed: '.v:exception)
@@ -85,11 +88,13 @@ endfunction
 
 function! s:vim_ai_chat_buffer_mapping() abort
     inoremap <silent><buffer> <C-j> <C-o>:AIChat<CR>
+    inoremap <silent><buffer> <C-k> <C-o>:AIStopChat<cr>
+
     inoremap <silent><buffer> <C-i> <C-o>:call <SID>ai_include_file()<CR>
     nnoremap <silent><buffer> <C-i> <C-o>:call <SID>ai_include_file()<CR>
-    inoremap <silent><buffer> <C-c> <C-o>:call <SID>save_chat_file()<CR>
-    nnoremap <silent><buffer> <C-c> :call <SID>save_chat_file()<CR>
+
     nnoremap <silent><buffer> q :call <SID>save_chat_file()<CR>
+    nnoremap <silent><buffer> <C-c> :call <SID>save_chat_file()<CR>
 endfunction
 
 function! s:ai_translater()

@@ -78,7 +78,7 @@ if s:ai_plugin_name ==# 'copilot.vim'
             :q
         endfunction
         function! s:copilot_buffer_mapping() abort
-            inoremap <silent><buffer> <C-s> <C-o>:CopilotChatSubmit<CR>
+            inoremap <silent><buffer> <C-j> <C-o>:CopilotChatSubmit<CR>
             inoremap <silent><buffer> q <C-o>:call te#utils#confirm('Save chat ?', ['Yes', 'No'], ["call <SID>copilot_chat_save_quit()", ":q"])<CR>
             nnoremap <silent><buffer> q <C-o>:call te#utils#confirm('Save chat ?', ['Yes', 'No'], ["call <SID>copilot_chat_save_quit()", ":q"])<CR>
         endfunction
