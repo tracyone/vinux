@@ -199,6 +199,15 @@ function! te#project#create_project() abort
         call writefile([getcwd()], ".csdb", "a")
         let l:ret = te#file#copy_file('.csdb', l:project_name)
     endif
+
+    ".aichat
+    let l:aichat_filename = l:name.'.aichat'
+    if filereadable(l:aichat_filename)
+        let l:ret = te#file#copy_file(l:aichat_filename, l:project_name.l:aichat_filename, 0)
+    else
+      call writefile(['>>> user', ''], l:aichat_filename, "a")
+        let l:ret = te#file#copy_file(l:aichat_filename, l:project_name)
+    endif
     "session
     let g:vinux_project.name = l:name
     let g:vinux_project.dir = getcwd()
@@ -228,7 +237,8 @@ function! te#project#edit_project() abort
     endif
     let l:project = input('Please select project: ','','dir')
     execute 'cd '.l:project_root.'/'.l:project
-    let l:file_to_open=['.ycm_extra_conf.py', '.clang-format', '.love.vim', 'compile_commands.json', 'compile_flags.txt', '.csdb']
+    let l:aichat_filename = l:project.'.aichat'
+    let l:file_to_open=['.ycm_extra_conf.py', '.clang-format', '.love.vim', 'compile_commands.json', 'compile_flags.txt', '.csdb', l:aichat_filename]
     for l:file in l:file_to_open
         if filereadable(l:file)
             execute ':tabnew '.l:file

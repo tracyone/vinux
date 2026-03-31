@@ -62,12 +62,19 @@ function! s:save_chat_file() abort
         let filename_part = !empty(cleaned) ? 
                     \ strcharpart(cleaned, 0, 10) : 'untitled'
 
-        " Set up paths
-        let dir_path = $VIMFILES.'/.aichat'
-        if !isdirectory(dir_path)
-            call mkdir(dir_path, 'p')
+        " Check if project is loaded
+        if exists('g:vinux_project') && has_key(g:vinux_project, 'name') && len(g:vinux_project.name)
+            " Save to project directory with project name as filename
+            let dir_path=$VIMFILES.'/.project/'.g:vinux_project.name.'/'
+            let file_path = dir_path.'/'.g:vinux_project.name.'.aichat'
+        else
+            " No project loaded, save to default .aichat directory
+            let dir_path = $VIMFILES.'/.aichat'
+            if !isdirectory(dir_path)
+                call mkdir(dir_path, 'p')
+            endif
+            let file_path = dir_path.'/'.filename_part.'.aichat'
         endif
-        let file_path = dir_path.'/'.filename_part.'.aichat'
 
         " Attempt to write file
         execute 'write! '.fnameescape(file_path)
@@ -124,6 +131,40 @@ function! s:generate_git_commit_message()
                 \  },
                 \}
     call vim_ai#AIEditRun(l:range, l:config, l:prompt)
+endfunction
+
+" Open project aichat file or create new AI chat
+function! s:open_ai_chat() abort
+    " Check if project is loaded and has a name
+    if exists('g:vinux_project') && has_key(g:vinux_project, 'name') && len(g:vinux_project.name)
+      let l:project_name=$VIMFILES.'/.project/'.g:vinux_project.name.'/'
+      let l:aichat_filename = g:vinux_project.name.'.aichat'
+      let l:project_aichat_path = l:project_name.'/'.l:aichat_filename
+        
+        " Check if project aichat file exists in project directory
+        if filereadable(l:project_aichat_path)
+            execute 'edit '.fnameescape(l:project_aichat_path)
+            setlocal filetype=aichat
+            startinsert
+            return
+        endif
+        
+        " Check if project aichat file exists in .project directory
+        let l:project_root = $VIMFILES.'/.project/'.g:vinux_project.name.'/'
+        let l:stored_aichat_path = l:project_root.l:aichat_filename
+        if filereadable(l:stored_aichat_path)
+            " Copy to project directory and open
+            call te#file#copy_file(l:stored_aichat_path, g:vinux_project.dir, 0)
+            execute 'edit '.fnameescape(l:project_aichat_path)
+            setlocal filetype=aichat
+            startinsert
+            return
+        endif
+    endif
+    
+    " No project loaded or no aichat file found, create new AI chat
+    :AIChat
+    :startinsert
 endfunction
 
 function! s:ai_setup() abort
@@ -191,7 +232,7 @@ function! s:ai_setup() abort
                 \}
 
     xnoremap <silent> <leader>au :call <SID>ai_translater()<CR>
-    nnoremap <leader>ai :AIChat<CR>:startinsert<cr>
+    nnoremap <leader>ai :call <SID>open_ai_chat()<CR>
     xnoremap <leader>ai :AIEdit 
 
     if te#feat#get_key_value('g:fuzzysearcher_plugin_name', 'cur_val') ==# 'fzf'
