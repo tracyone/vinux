@@ -137,15 +137,16 @@ endfunction
 function! s:open_ai_chat() abort
     " Check if project is loaded and has a name
     if exists('g:vinux_project') && has_key(g:vinux_project, 'name') && len(g:vinux_project.name)
-      let l:project_name=$VIMFILES.'/.project/'.g:vinux_project.name.'/'
-      let l:aichat_filename = g:vinux_project.name.'.aichat'
-      let l:project_aichat_path = l:project_name.'/'.l:aichat_filename
+        let l:project_name=$VIMFILES.'/.project/'.g:vinux_project.name.'/'
+        let l:aichat_filename = g:vinux_project.name.'.aichat'
+        let l:project_aichat_path = l:project_name.'/'.l:aichat_filename
         
         " Check if project aichat file exists in project directory
         if filereadable(l:project_aichat_path)
             execute 'edit '.fnameescape(l:project_aichat_path)
             setlocal filetype=aichat
-            startinsert
+            normal! G          " 移到最后一行
+            startinsert!       " 使用 startinsert! (A) 在行尾进入插入模式
             return
         endif
         
@@ -157,7 +158,8 @@ function! s:open_ai_chat() abort
             call te#file#copy_file(l:stored_aichat_path, g:vinux_project.dir, 0)
             execute 'edit '.fnameescape(l:project_aichat_path)
             setlocal filetype=aichat
-            startinsert
+            normal! G          " 移到最后一行
+            startinsert!       " 使用 startinsert! (A) 在行尾进入插入模式
             return
         endif
     endif
