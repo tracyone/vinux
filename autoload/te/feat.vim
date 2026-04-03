@@ -275,9 +275,13 @@ function! te#feat#init_all() abort
     call te#feat#init_var('g:file_explorer_plugin', ['nerdtree', 'defx.nvim', 'coc-explorer', 'nvim-tree.lua', 'fern.vim'])
     call te#feat#init_var('g:outline_plugin', ['tagbar', 'vim-taglist', 'vista.vim', 'aerial.nvim'])
     call te#feat#init_var('g:ai_plugin_name', ['copilot.vim', 'windsurf.vim', 'vim-ollama', 'vim-llm-agent'])
+
+    let l:llm_model_list = []
     if filereadable($HOME."/.config/llm_model.list")
         let l:llm_model_list = readfile($HOME."/.config/llm_model.list")
-    else
+        let l:llm_model_list = filter(copy(l:llm_model_list), 'v:val !=# ""')
+    endif
+    if empty(l:llm_model_list)
         let l:llm_model_list = ['ernie-speed-128k']
     endif
     call te#feat#init_var('g:ai_llm_model_name', l:llm_model_list)
