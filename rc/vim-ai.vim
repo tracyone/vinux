@@ -149,7 +149,10 @@ endfunction
 function! s:generate_git_commit_message()
     let l:range = 0
     let l:diff = system('git diff --staged')
-    let l:prompt = "Write commit message (English) with commitizen convention without any comment. Keep the title under 50 characters and wrap message at 72 characters. Folllowing is the diff:\n\n" . l:diff
+    if empty(l:diff)
+        let l:diff = system('git diff HEAD~1 HEAD')
+    endif
+    let l:prompt = "Write commit message (English) with commitizen convention without any comment. Keep the title under 50 characters and wrap message at 72 characters do not wrap it in markdown code block. Folllowing is the diff:\n\n" . l:diff
     let l:config = {
                 \  "options": {
                 \    "initial_prompt": ">>> system\nyou are a code assistant",
