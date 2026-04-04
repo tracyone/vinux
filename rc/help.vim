@@ -83,11 +83,12 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'f': "Open terminal win in a floating window",
                     \ 'v': 'Open terminal win in a vertical split window',
                     \ 'w': 'toggle drawit plugin',
-                    \ 'i': 'Artificial intelligence',
+                    \ 'i': 'Open AI chat window',
                     \ 'u': 'Translate from user input',
                     \ 'y': 'Translate en2ch or ch2en',
                     \ 'z': 'Translate:chinese pinyin',
                     \ 'g': 'Open game center',
+                    \ 'k': 'Ask AI agent',
                     \ }
         let g:which_key_map.b = { 
                     \ 'name' : '+buffer',
@@ -111,6 +112,10 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'u': 'UnCommnet',
                     \ 'y': 'Comment and yank',
                     \ 'h': 'Check the vim health',
+                    \ 'e': 'AI code explain',
+                    \ 'o': 'AI code optimize',
+                    \ 'r': 'AI code refactor',
+                    \ 'g': 'AI code generate test',
                     \ }
         let g:which_key_map.d = { 
                     \ 'name' : '+Do',

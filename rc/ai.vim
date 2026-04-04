@@ -22,26 +22,6 @@ if s:ai_plugin_name ==# 'copilot.vim'
         imap <c-]> <Plug>(copilot-accept-word)
     endfunction
     call add(s:ai_plugin_setupt_func, function('<SID>copilot_setup'))
-endif
-
-if s:ai_plugin_name ==# 'windsurf.vim'
-    Plug 'Exafunction/windsurf.vim', {'on': [], 'branch': 'main' }
-
-    function! s:codeium_setup() abort
-        let g:codeium_disable_bindings = 1
-        let g:codeium_enabled = v:true
-        imap <script><silent><nowait><expr> <C-a> codeium#Accept()
-        imap <script><silent><nowait><expr> <C-]> codeium#AcceptNextWord()
-        imap <script><silent><nowait><expr> <C-l> codeium#AcceptNextLine()
-        call te#meta#map('inoremap', ']', '<Cmd>call codeium#CycleCompletions(1)<CR>')
-        call te#meta#map('inoremap', '[', '<Cmd>call codeium#CycleCompletions(-1)<CR>')
-        nnoremap <silent> <leader>ai :Codeium Chat<CR>
-    endfunction
-
-    call add(s:ai_plugin_setupt_func, function('<SID>codeium_setup'))
-endif
-
-if s:ai_plugin_name ==# 'copilot.vim'
     if te#env#IsNvim() > 0
         Plug 'CopilotC-Nvim/CopilotChat.nvim', {'on': [], 'do':'make tiktoken'}
         call add(s:ai_plugins, "CopilotChat.nvim")
@@ -84,6 +64,23 @@ if s:ai_plugin_name ==# 'copilot.vim'
     endif
 endif
 
+if s:ai_plugin_name ==# 'windsurf.vim'
+    Plug 'Exafunction/windsurf.vim', {'on': [], 'branch': 'main' }
+
+    function! s:codeium_setup() abort
+        let g:codeium_disable_bindings = 1
+        let g:codeium_enabled = v:true
+        imap <script><silent><nowait><expr> <C-a> codeium#Accept()
+        imap <script><silent><nowait><expr> <C-]> codeium#AcceptNextWord()
+        imap <script><silent><nowait><expr> <C-l> codeium#AcceptNextLine()
+        call te#meta#map('inoremap', ']', '<Cmd>call codeium#CycleCompletions(1)<CR>')
+        call te#meta#map('inoremap', '[', '<Cmd>call codeium#CycleCompletions(-1)<CR>')
+        nnoremap <silent> <leader>ai :Codeium Chat<CR>
+    endfunction
+
+    call add(s:ai_plugin_setupt_func, function('<SID>codeium_setup'))
+endif
+
 if te#env#SupportPy3()
     "require python 3.10 or newer
     "pip3 install numpy cffi unwrap
@@ -115,7 +112,7 @@ if te#env#SupportPy3()
         let g:llm_agent_enable_tools=1
         let g:chat_persona='default'
         let g:llm_agent_log_level=2  " 0=off, 1=basic, 2=verbos
-        nnoremap <leader>as :Ask 
+        nnoremap <leader>ak :Ask 
     endfunction
     Plug 'CoderCookE/vim-llm-agent', {'on': []}
     call add(s:ai_plugin_setupt_func, function('<SID>vim_llm_agent_setup'))
