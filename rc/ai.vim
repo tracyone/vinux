@@ -105,12 +105,12 @@ if s:ai_plugin_name ==# 'vim-llm-agent'
         let g:openai_api_key=te#ai#get_api_key()
         let g:openai_base_url=te#ai#get_provider_url(te#feat#get_key_value('g:ai_provider_name', 'cur_val'))
         let g:llm_agent_model=te#ai#get_model_name()
-        let g:llm_agent_max_tokens=2000
+        let g:llm_agent_max_tokens=20000
         let g:llm_agent_session_mode=1
         let g:llm_agent_temperature = 0.7
         let g:llm_agent_lang = 'Chinese'
         let g:llm_agent_split_direction = 'vertical'
-        let g:split_ratio=4
+        let g:split_ratio=2
         let g:llm_agent_enable_tools=1
         let g:chat_persona='default'
         let g:llm_agent_log_level=2  " 0=off, 1=basic, 2=verbos
