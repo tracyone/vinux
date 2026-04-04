@@ -55,6 +55,59 @@ function! NvimConfirmResult()
     call ConfirmResult(l:win_id, line('.'))
 endfunction
 
+" ============================================================================
+" te#utils#confirm - Display a confirmation dialog with customizable options
+" ============================================================================
+" Creates an interactive confirmation dialog that presents the user with a set
+" of choices and executes a callback action based on their selection.
+"
+" Automatically adapts to the editor environment:
+"   - Neovim (>=0.5): Uses floating window with custom keymaps
+"   - Vim 8+: Uses popup menu with filter support
+"   - Older Vim: Falls back to built-in confirm() dialog
+"
+" Parameters:
+"   a:str     (string) The prompt/message to display at the top of the dialog
+"   a:menu_list (list) List of option strings to present to the user
+"                     Each item appears as a selectable choice
+"   a:action  (mixed)  Callback to execute when an option is selected. Can be:
+"                     - A function reference: executed with the selected index (1-based)
+"                     - A string command name: executed directly
+"                     - A list [func, arg]: calls call(func, [arg, selected_index])
+"                     - A dict {func: ..., arg: [...]}: calls call(func, extend(arg, [selected_index]))
+"                     - If omitted or invalid: no callback, returns selection result
+"
+" Returns:
+"   - Neovim/Vim8 async mode: Returns 0 immediately after showing dialog
+"   - Classic confirm mode: Returns the selected menu item string directly
+"
+" Key Bindings (Neovim floating window):
+"   <CR>      - Confirm current selection (line cursor is on)
+"   <C-c>     - Cancel/close without selection
+"   y         - Select first 'y' option (case-insensitive search)
+"   n         - Select first 'n' option (case-insensitive search)
+"
+" Example 1: Using a function callback
+"   function! MyCallback(idx) abort
+"       echo "Selected option " . a:idx
+"   endfunction
+"   call te#utils#confirm("Choose action:", ["Delete", "Copy", "Move"], funcref('MyCallback'))
+"
+" Example 2: Using a command string
+"   call te#utils#confirm("Delete file?", ["Yes", "No"], "delete_confirmation_handler")
+"
+" Example 3: Using a list callback [func, initial_args]
+"   call te#utils#confirm("Apply fix?", ["Auto-fix", "Skip"], ['apply_fix', [l:file_path]])
+"
+" Example 4: Simple yes/no without callback (returns value directly in classic mode)
+"   let l:result = te#utils#confirm("Continue?", ["Yes", "No"], [])
+"
+" Example 5: Using dictionary callback
+"   call te#utils#confirm("Process?", ["Start", "Cancel"], {'func': 'process_data', 'arg': [l:config]})
+"
+" Note: The dialog is centered on screen. In Neovim, it supports keyboard navigation.
+"       The dialog auto-closes after selection. Use <C-c> to cancel in Neovim mode.
+" ============================================================================
 function! te#utils#confirm(str, menu_list, action) abort
     let l:confirm_obj = {}
     let l:block_vim = 1
