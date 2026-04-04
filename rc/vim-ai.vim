@@ -104,23 +104,47 @@ function! s:vim_ai_chat_buffer_mapping() abort
     nnoremap <silent><buffer> <C-c> :call <SID>save_chat_file()<CR>
 endfunction
 
-function! s:ai_translater()
+function! s:ai_translater() abort
     let l:range = 0
-    let l:prompt = "Translate following sentence to Chinese without any comment:\n\n"
-    " Save the current register and selection type
-    let l:save_reg = @"
-    let l:save_regtype = getregtype('"')
-    " Get the visually selected text
-    normal! gv"zy
-    let l:prompt .= @z
+    let l:text = ""
+    let l:prompt = "Translate following selected text to Chinese without any comment:\n\n"
+    let l:system_prompt=""
+
+    if !empty(visualmode())
+        let l:save_reg = @"
+        let l:save_regtype = getregtype('"')
+        normal! gv"zy
+        let l:text = @z
+        call setreg('"', l:save_reg, l:save_regtype)
+
+        if empty(l:text)
+            call te#utils#EchoWarning('No text selected to translate.')
+            return
+        endif
+
+        let l:prompt .= l:text
+
+    else
+        let l:file_path = expand('%:p')
+        
+        if l:file_path ==# '' || !filereadable(l:file_path)
+            call te#utils#EchoWarning('Cannot translate: Buffer is not a readable file.')
+            return
+        endif
+
+        let l:system_prompt=">>> include\n".l:file_path
+
+    endif
 
     let l:config = {
                 \  "options": {
-                \    "initial_prompt": ">>> system\nYou are a AI Translation assistant.",
+                \    "initial_prompt": ">>> system\nYou are a AI Translation assistant.\n".l:system_prompt
                 \  },
                 \}
+    
     call vim_ai#AIChatRun(l:range, l:config, l:prompt)
 endfunction
+
 function! s:generate_git_commit_message()
     let l:range = 0
     let l:diff = system('git diff --staged')
@@ -234,6 +258,7 @@ function! s:ai_setup() abort
                 \}
 
     xnoremap <silent> <leader>au :call <SID>ai_translater()<CR>
+    nnoremap <silent> <leader>au :call <SID>ai_translater()<CR>
     nnoremap <leader>ai :call <SID>open_ai_chat()<CR>
     xnoremap <leader>ai :AIEdit 
 
