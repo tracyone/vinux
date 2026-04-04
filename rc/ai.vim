@@ -97,7 +97,8 @@ if s:ai_plugin_name ==# 'vim-ollama'
     Plug 'gergap/vim-ollama'
 endif
 
-if s:ai_plugin_name ==# 'vim-llm-agent' 
+
+if te#env#SupportPy3()
     function! s:vim_llm_agent_setup() abort
         let $OPENAI_API_KEY=te#ai#get_api_key()
         let $OPENAI_API_BASE=te#ai#get_provider_url(te#feat#get_key_value('g:ai_provider_name', 'cur_val'))
@@ -114,9 +115,11 @@ if s:ai_plugin_name ==# 'vim-llm-agent'
         let g:llm_agent_enable_tools=1
         let g:chat_persona='default'
         let g:llm_agent_log_level=2  " 0=off, 1=basic, 2=verbos
+        nnoremap <leader>as :Ask 
     endfunction
     Plug 'CoderCookE/vim-llm-agent', {'on': []}
     call add(s:ai_plugin_setupt_func, function('<SID>vim_llm_agent_setup'))
+    call add(s:ai_plugins, 'vim-llm-agent')
 endif
 
 call add(s:ai_plugins, s:ai_plugin_name)
