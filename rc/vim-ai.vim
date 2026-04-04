@@ -94,6 +94,7 @@ function! s:save_chat_file() abort
 endfunction
 
 function! s:vim_ai_chat_buffer_mapping() abort
+    setlocal statusline=AI:[%{te#ai#get_provider_name()}/%{te#ai#get_model_name()}]\ %p%%[%l,%v]
     inoremap <silent><buffer> <C-j> <C-o>:AIChat<CR>
     inoremap <silent><buffer> <C-k> <C-o>:AIStopChat<cr>
 
