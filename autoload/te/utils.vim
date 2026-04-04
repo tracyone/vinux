@@ -194,107 +194,124 @@ endfunction
 
 "echo warning messag
 "a:1-->err or warn or info,default is warn
-function! te#utils#EchoWarning(str, ...) abort
-    let l:level = 'vinux_warn'
-    " Process optional arguments to determine message level
-    if a:0 > 0
-        for l:needle in a:000
-            if type(l:needle) == v:t_string
-                if l:needle ==? 'err'
-                    let l:level = 'WarningMsg'
-                elseif l:needle ==? 'warn'
-                    let l:level = 'vinux_warn'
-                elseif l:needle ==? 'info'
-                    let l:level = 'vinux_info'
-                endif
-            endif
-        endfor
-    endif
+" Level mapping for EchoWarning
+let s:level_map = {
+    \ 'err': 'WarningMsg',
+    \ 'warn': 'vinux_warn',
+    \ 'info': 'vinux_info'
+\ }
 
-    " Handle early startup case
+" Calculate window dimensions (ceiling division)
+function! s:calc_dims(str_len, max_width) abort
+    return {
+        \ 'height': (a:str_len + a:max_width - 1) / a:max_width,
+        \ 'width': min([a:str_len, a:max_width])
+    \ }
+endfunction
+
+" Get next window line position
+function! s:next_line() abort
+    return empty(s:win_list) ? 3 : s:win_list[-1].line + 2 + s:win_list[-1].str_width
+endfunction
+
+" Echo message with simple echo
+function! s:echo_simple(str, level) abort
+    redraw!
+    execute 'echohl' a:level | echom ' ' . a:str | echohl None
+endfunction
+
+" Create Neovim floating window
+function! s:nvim_float_win(str, level, delay) abort
+    let l:max_width = &columns / 3
+    let l:str_len = strlen(a:str) + 1
+    let l:dims = s:calc_dims(l:str_len, l:max_width)
+    let l:line = s:next_line()
+
+    let l:bufnr = nvim_create_buf(v:false, v:false)
+    let l:opts = {
+        \ 'relative': 'editor',
+        \ 'width': l:dims.width,
+        \ 'height': l:dims.height,
+        \ 'col': &columns,
+        \ 'row': l:line,
+        \ 'anchor': 'NW',
+        \ 'border': 'single',
+        \ 'style': 'minimal',
+        \ 'zindex': 200
+    \ }
+
+    let l:win = {
+        \ 'id': nvim_open_win(l:bufnr, v:false, l:opts),
+        \ 'line': l:line,
+        \ 'str_width': l:dims.height
+    \ }
+
+    call nvim_buf_set_lines(l:bufnr, 0, -1, v:false, [' ' . a:str])
+    call nvim_set_option_value('winhl', 'Normal:'.a:level.',FloatBorder:vinux_border', {'win': l:win.id})
+    call nvim_set_option_value('buftype', 'nofile', {'buf': l:bufnr})
+    call nvim_set_option_value('winblend', 30, {'win': l:win.id})
+
+    call add(s:win_list, l:win)
+    call timer_start(a:delay, function('<SID>nvim_close_win'), {'repeat': 1})
+endfunction
+
+" Create Vim popup window
+function! s:vim_popup_win(str, level, delay) abort
+    let l:max_width = &columns / 3
+    let l:str_len = strlen(a:str) + 1
+    let l:dims = s:calc_dims(l:str_len, l:max_width)
+    let l:line = s:next_line()
+
+    let l:win = {
+        \ 'id': popup_create(' ' . a:str, {
+            \ 'line': l:line,
+            \ 'col': &columns - l:dims.width - 3,
+            \ 'time': a:delay,
+            \ 'tab': -1,
+            \ 'zindex': 200,
+            \ 'highlight': a:level,
+            \ 'maxwidth': l:max_width,
+            \ 'border': [],
+            \ 'borderchars': ['─', '│', '─', '│', '┌', '┐', '┘', '└'],
+            \ 'borderhighlight': ['vinux_border'],
+            \ 'callback': 'te#utils#close_win'
+        \ }),
+        \ 'line': l:line,
+        \ 'str_width': l:dims.height
+    \ }
+
+    call add(s:win_list, l:win)
+endfunction
+
+" Echo warning message
+" a:1 - level: 'err', 'warn' (default), 'info'
+function! te#utils#EchoWarning(str, ...) abort
+    " Parse level from optional argument
+    let l:level = a:0 > 0 && type(a:1) == v:t_string && has_key(s:level_map, tolower(a:1))
+        \ ? s:level_map[tolower(a:1)]
+        \ : 'vinux_warn'
+
+    " Defer until after startup
     if has('vim_starting')
         call add(s:global_echo_str, a:str)
         return
     endif
 
-    " Immediate display if no delay
-    if g:message_delay_time.cur_val == '0'
-        redraw!
-        execute 'echohl' l:level | echom ' ' . a:str | echohl None
+    let l:delay = str2nr(g:message_delay_time.cur_val)
+
+    " Immediate display
+    if l:delay == 0
+        call s:echo_simple(a:str, l:level)
         return
     endif
 
-    " Neovim floating window implementation
+    " Floating window display
     if te#env#IsNvim() > 0 && te#env#SupportFloatingWindows() == 2
-        let l:str = ' ' . a:str
-        let l:str_len = strlen(l:str)
-        let l:max_width = &columns / 3
-        let l:win = {}
-
-        " Calculate dimensions using ceiling division
-        let l:win.str_width = (l:str_len + l:max_width - 1) / l:max_width
-        let l:opts_width = l:str_len > l:max_width ? l:max_width : l:str_len
-
-        " Window position calculation
-        let l:win.line = empty(s:win_list) ? 3 : s:win_list[-1].line + 2 + s:win_list[-1].str_width
-
-        " Window configuration
-        let l:bufnr = nvim_create_buf(v:false, v:false)
-        let l:opts = {
-            \ 'relative': 'editor',
-            \ 'width': l:opts_width,
-            \ 'height': l:win.str_width,
-            \ 'col': &columns,
-            \ 'row': l:win.line,
-            \ 'anchor': 'NW',
-            \ 'border': 'single',
-            \ 'style': 'minimal',
-            \ 'zindex': 200}
-
-        " Create and configure window
-        let l:win.id = nvim_open_win(l:bufnr, v:false, l:opts)
-        call nvim_buf_set_lines(l:bufnr, 0, -1, v:false, [l:str])
-        call nvim_set_option_value('winhl','Normal:'.l:level.',FloatBorder:vinux_border', {'win': l:win.id})
-        call nvim_set_option_value('buftype','nofile', {'buf': l:bufnr})
-        call nvim_set_option_value('winblend', 30, {'win': l:win.id})
-
-        call add(s:win_list, l:win)
-        call timer_start(str2nr(g:message_delay_time.cur_val), function('<SID>nvim_close_win'), {'repeat': 1})
-
-    " Vim popup implementation
+        call s:nvim_float_win(a:str, l:level, l:delay)
     elseif te#env#SupportFloatingWindows() == 1
-        let l:str = ' ' . a:str
-        let l:str_len = strlen(l:str)
-        let l:max_width = &columns / 3
-        let l:win = {}
-
-        " Calculate dimensions using ceiling division
-        let l:win.str_width = (l:str_len + l:max_width - 1) / l:max_width
-        let l:str_len = l:str_len > l:max_width ? l:max_width : l:str_len
-
-        " Window position calculation
-        let l:win.line = empty(s:win_list) ? 3 : s:win_list[-1].line + 2 + s:win_list[-1].str_width
-
-        " Create popup with unified configuration
-        let l:win.id = popup_create(l:str, {
-            \ 'line': l:win.line,
-            \ 'col': &columns - l:str_len - 3,
-            \ 'time': str2nr(g:message_delay_time.cur_val),
-            \ 'tab': -1,
-            \ 'zindex': 200,
-            \ 'highlight': l:level,
-            \ 'maxwidth': l:max_width,
-            \ 'border': [],
-            \ 'borderchars': ['─', '│', '─', '│', '┌', '┐', '┘', '└'],
-            \ 'borderhighlight': ['vinux_border'],
-            \ 'callback': 'te#utils#close_win'})
-
-        call add(s:win_list, l:win)
-
-    " Fallback to simple echo
+        call s:vim_popup_win(a:str, l:level, l:delay)
     else
-        redraw!
-        execute 'echohl' l:level | echom ' ' . a:str | echohl None
+        call s:echo_simple(a:str, l:level)
     endif
 endfunction
 
