@@ -119,6 +119,9 @@ if te#env#SupportPy3()
     call add(s:ai_plugins, 'vim-llm-agent')
 endif
 
+nnoremap <silent> <leader>ae :call te#utils#confirm("Choose ",['API-KEY', 'LLM Model list'] , function('te#ai#edit_ai_config'))<cr>
+
+
 call add(s:ai_plugins, s:ai_plugin_name)
 
 

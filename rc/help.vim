@@ -74,7 +74,7 @@ if v:version >= 704 && te#env#IsDisplay()
                     \ 'p': 'Preview window',
                     \ 'c': 'Calculator',
                     \ 'd': 'Calendar',
-                    \ 'e': 'Translate:zh2en',
+                    \ 'e': 'Edit ai config file',
                     \ 'l': 'easy align',
                     \ 'r': 'Enter screensaver',
                     \ 's': 'Open terminal win in vim in a split window',
