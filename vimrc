@@ -10,28 +10,16 @@ let $MYVIMRC=fnamemodify(expand('<sfile>'), ':p')
 let $VIMFILES=fnamemodify(expand('<sfile>'), ':p:h')
 set runtimepath^=$VIMFILES
 set runtimepath+=$VIMFILES/after
-if has('win64') || has('win32')
-    set pythonthreedll=$HOME\\AppData\\Local\\Programs\\Python\\Python36\\python36.dll
-    set pythondll=$HOME\\AppData\\Local\\Programs\\Python\\Python27\\python27.dll
-    if !filereadable(&pythondll)
-        set pythondll&
-    endif
-    if !filereadable(&pythonthreedll)
-        set pythonthreedll&
-    endif
-    let $PATH = $VIMFILES.'/bin;'.$PATH
-else
-    "remove default folder from rtp
-    "following global variable is for neovim only
-    "for providing a path of python3 we can speedup start time of neovim
-    let g:loaded_python_provider = 0
-    let g:python3_host_prog = 'python3'
-    if $VIMFILES !=# $HOME.'/.vim'
-        set runtimepath-=$HOME/.vim
-        set runtimepath-=$HOME/.vim/after
-    endif
-    let $PATH = $VIMFILES.'/bin:'.$PATH
+"remove default folder from rtp
+"following global variable is for neovim only
+"for providing a path of python3 we can speedup start time of neovim
+let g:loaded_python_provider = 0
+let g:python3_host_prog = 'python3'
+if $VIMFILES !=# $HOME.'/.vim'
+    set runtimepath-=$HOME/.vim
+    set runtimepath-=$HOME/.vim/after
 endif
+let $PATH = $VIMFILES.'/bin:'.$PATH
 
 call te#feat#init_all()
 call te#feat#source_rc('autocmd.vim')
