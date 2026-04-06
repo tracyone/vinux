@@ -4,8 +4,8 @@ let s:provider_url_mapping = {
             \  'aliyun': "https://dashscope.aliyuncs.com/compatible-mode/v1/",
             \ }
 
-function! te#ai#get_provider_url(provider_name) abort
-    return get(s:provider_url_mapping, a:provider_name, '')
+function! te#ai#get_provider_url() abort
+    return get(s:provider_url_mapping, te#ai#get_provider_name(), '')
 endfunction
 
 function! te#ai#get_provider_name() abort

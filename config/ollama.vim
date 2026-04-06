@@ -9,7 +9,7 @@ let g:ollama_chat_provider = 'openai'
 let g:ollama_edit_provider = 'openai'
 
 " API url
-let g:ollama_openai_baseurl = te#ai#get_provider_url(te#feat#get_key_value('g:ai_provider_name', 'cur_val'))
+let g:ollama_openai_baseurl = te#ai#get_provider_url()
 
 " model select
 let g:ollama_model = te#ai#get_model_name()
