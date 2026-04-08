@@ -109,6 +109,7 @@ if te#env#SupportPy3()
         if te#ai#get_provider_name() ==# 'ollama'
             let g:llm_agent_provider = te#ai#get_provider_name()
             let g:ollama_base_url = te#ai#get_provider_url()
+            let g:llm_agent_ollama_model=te#ai#get_model_name()
         else
             let g:llm_agent_provider = 'openai'
             let $OPENAI_API_KEY=te#ai#get_api_key()
