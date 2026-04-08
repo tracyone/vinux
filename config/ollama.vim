@@ -4,9 +4,16 @@ let g:ollama_use_venv = 0
 let $OPENAI_API_KEY = te#ai#get_api_key()
 let g:ollama_openai_credentialname = te#ai#get_api_key()
 
-let g:ollama_model_provider = 'openai'
-let g:ollama_chat_provider = 'openai'
-let g:ollama_edit_provider = 'openai'
+let g:ollama_host = te#ai#get_provider_url()
+if te#ai#get_provider_name() !=# 'ollama'
+    let g:ollama_model_provider = 'openai'
+    let g:ollama_chat_provider = 'openai'
+    let g:ollama_edit_provider = 'openai'
+else
+    let g:ollama_model_provider = te#ai#get_provider_name()
+    let g:ollama_chat_provider = te#ai#get_provider_name()
+    let g:ollama_edit_provider = te#ai#get_provider_name()
+endif
 
 " API url
 let g:ollama_openai_baseurl = te#ai#get_provider_url()
@@ -36,3 +43,4 @@ let g:ollama_split_vertically = 0
 inoremap <c-a> <Plug>(ollama-tab-completion)
 inoremap <c-]> <Plug>(ollama-insert-word)
 inoremap <c-l> <Plug>(ollama-insert-line)
+

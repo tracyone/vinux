@@ -2,6 +2,8 @@
 let s:provider_url_mapping = {
             \  'baidu': "https://qianfan.baidubce.com/v2/",
             \  'aliyun': "https://dashscope.aliyuncs.com/compatible-mode/v1/",
+            \  'ollama': "http://localhost:11434",
+            \  'llama': "http://127.0.0.1:8080",
             \ }
 
 function! te#ai#get_provider_url() abort

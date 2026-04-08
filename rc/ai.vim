@@ -94,14 +94,29 @@ if s:ai_plugin_name ==# 'vim-ollama'
     Plug 'gergap/vim-ollama'
 endif
 
+if s:ai_plugin_name ==# 'llama.vim'
+    Plug 'ggml-org/llama.vim', {'on': []}
+    let g:llama_config = { 'show_info': 0 }
+    let g:llama_config.keymap_fim_accept_line = "<c-l>"
+    let g:llama_config.keymap_fim_accept_word = "<c-]>"
+    let g:llama_config.endpoint_inst = te#ai#get_provider_url()
+    let g:llama_config.endpoint_fim = te#ai#get_provider_url().'/infill'
+endif
+
 
 if te#env#SupportPy3()
     function! s:vim_llm_agent_setup() abort
-        let $OPENAI_API_KEY=te#ai#get_api_key()
-        let $OPENAI_API_BASE=te#ai#get_provider_url()
-        let g:llm_agent_provider = 'openai'
-        let g:openai_api_key=te#ai#get_api_key()
-        let g:openai_base_url=te#ai#get_provider_url()
+        if te#ai#get_provider_name() ==# 'ollama'
+            let g:llm_agent_provider = te#ai#get_provider_name()
+            let g:ollama_base_url = te#ai#get_provider_url()
+        else
+            let g:llm_agent_provider = 'openai'
+            let $OPENAI_API_KEY=te#ai#get_api_key()
+            let $OPENAI_API_BASE=te#ai#get_provider_url()
+            let g:openai_api_key=te#ai#get_api_key()
+            let g:openai_base_url=te#ai#get_provider_url()
+        endif
+        let g:ollama_model = te#ai#get_model_name()
         let g:llm_agent_model=te#ai#get_model_name()
         let g:llm_agent_max_tokens=20000
         let g:llm_agent_session_mode=1

@@ -274,9 +274,9 @@ function! te#feat#init_all() abort
     call te#feat#init_var('g:message_delay_time', ['5000', '3000', '1000', '500', '0'])
     call te#feat#init_var('g:file_explorer_plugin', ['nerdtree', 'defx.nvim', 'coc-explorer', 'nvim-tree.lua', 'fern.vim'])
     call te#feat#init_var('g:outline_plugin', ['tagbar', 'vim-taglist', 'vista.vim', 'aerial.nvim'])
-    call te#feat#init_var('g:ai_plugin_name', ['copilot.vim', 'windsurf.vim', 'vim-ollama'])
+    call te#feat#init_var('g:ai_plugin_name', ['copilot.vim', 'windsurf.vim', 'vim-ollama', 'llama.vim'])
     call te#feat#init_var('g:ai_llm_model_name', te#ai#get_llm_model_list())
-    call te#feat#init_var('g:ai_provider_name', ['baidu', 'aliyun'])
+    call te#feat#init_var('g:ai_provider_name', ['baidu', 'aliyun', 'ollama', 'llama'])
     if filereadable($VIMFILES.'/feature.vim')
         try
             execute ':source '.$VIMFILES.'/feature.vim'
