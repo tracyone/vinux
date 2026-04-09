@@ -173,8 +173,8 @@ function! s:open_ai_chat() abort
         if filereadable(l:project_aichat_path)
             execute 'edit '.fnameescape(l:project_aichat_path)
             setlocal filetype=aichat
-            normal! G          " 移到最后一行
-            startinsert!       " 使用 startinsert! (A) 在行尾进入插入模式
+            normal! G
+            startinsert!
             return
         endif
         
@@ -186,8 +186,8 @@ function! s:open_ai_chat() abort
             call te#file#copy_file(l:stored_aichat_path, g:vinux_project.dir, 0)
             execute 'edit '.fnameescape(l:project_aichat_path)
             setlocal filetype=aichat
-            normal! G          " 移到最后一行
-            startinsert!       " 使用 startinsert! (A) 在行尾进入插入模式
+            normal! G
+            startinsert!
             return
         endif
     endif

@@ -99,8 +99,10 @@ if s:ai_plugin_name ==# 'llama.vim'
     let g:llama_config = { 'show_info': 0 }
     let g:llama_config.keymap_fim_accept_line = "<c-l>"
     let g:llama_config.keymap_fim_accept_word = "<c-]>"
-    let g:llama_config.endpoint_inst = te#ai#get_provider_url()
+    let g:llama_config.endpoint_inst = te#ai#get_provider_url().'/v1/chat/completions'
     let g:llama_config.endpoint_fim = te#ai#get_provider_url().'/infill'
+    let g:llama_config.keymap_inst_cancel = "<c-c>"
+    let g:llama_config.keymap_inst_accept = ""
 endif
 
 
