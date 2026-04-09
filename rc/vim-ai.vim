@@ -205,6 +205,12 @@ function! s:ai_setup() abort
         If you attach a code block add syntax type after ``` to enable syntax highlighting.
     END
 
+    if te#ai#get_provider_name() ==# 'ollama'
+        let l:provider_url = te#ai#get_provider_url().'/v1/chat/completions'
+        let $OPENAI_API_KEY="OLLAMA_KEY"
+    else
+        let l:provider_url = te#ai#get_provider_url().'chat/completions'
+    endif
 
     call mkdir($VIMFILES.'/.aichat/', 'p')
 
@@ -214,7 +220,7 @@ function! s:ai_setup() abort
                 \    "max_tokens": 0,
                 \    "max_completion_tokens": 0,
                 \    "model": te#ai#get_model_name(),
-                \    "endpoint_url": te#ai#get_provider_url().'chat/completions',
+                \    "endpoint_url": l:provider_url,
                 \    "temperature": 0.1,
                 \    "request_timeout": 20,
                 \    "stream": 1,
@@ -247,7 +253,7 @@ function! s:ai_setup() abort
                 \    "max_tokens": 0,
                 \    "max_completion_tokens": 0,
                 \    "model": te#ai#get_model_name(),
-                \    "endpoint_url": te#ai#get_provider_url().'chat/completions',
+                \    "endpoint_url": l:provider_url,
                 \    "temperature": 0.1,
                 \    "request_timeout": 20,
                 \    "stream": 1,
