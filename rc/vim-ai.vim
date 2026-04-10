@@ -204,17 +204,21 @@ function! s:ai_setup() abort
         You are a general assistant.
         If you attach a code block add syntax type after ``` to enable syntax highlighting.
     END
+    let g:vim_ai_token_file_path = '~/.config/'.te#feat#get_key_value('g:ai_provider_name', 'cur_val').'.token'
 
-    if te#ai#get_provider_name() ==# 'ollama'
+    if !filereadable(g:vim_ai_token_file_path)
+        if (writefile(["YOUR_API_KEY"], fnamemodify(g:vim_ai_token_file_path, ':p')))
+            call te#utils#EchoWarning("Write file fail")
+    endif
+
+    if te#ai#get_provider_name() =~# 'llama\|ollama'
         let l:provider_url = te#ai#get_provider_url().'/v1/chat/completions'
-        let $OPENAI_API_KEY="OLLAMA_KEY"
     else
         let l:provider_url = te#ai#get_provider_url().'chat/completions'
     endif
 
     call mkdir($VIMFILES.'/.aichat/', 'p')
 
-    let g:vim_ai_token_file_path = '~/.config/'.te#feat#get_key_value('g:ai_provider_name', 'cur_val').'.token'
     let g:vim_ai_chat = {
                 \  "options": {
                 \    "max_tokens": 0,
