@@ -95,6 +95,9 @@ endfunction
 
 function! s:vim_ai_chat_buffer_mapping() abort
     setlocal statusline=AI:[%{te#ai#get_provider_name()}/%{te#ai#get_model_name()}]\ %p%%[%l,%v]
+    if get(g:, 'feat_enable_airline') == 1
+        let g:airline_section_c.="AI:[%{te#ai#get_provider_name()}/%{te#ai#get_model_name()}]".g:airline_section_c_sep
+    endif
     inoremap <silent><buffer> <C-j> <C-o>:AIChat<CR>
     inoremap <silent><buffer> <C-k> <C-o>:AIStopChat<cr>
 
