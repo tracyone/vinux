@@ -276,7 +276,7 @@ function! te#feat#init_all() abort
     call te#feat#init_var('g:outline_plugin', ['tagbar', 'vim-taglist', 'vista.vim', 'aerial.nvim'])
     call te#feat#init_var('g:ai_plugin_name', ['copilot.vim', 'windsurf.vim', 'vim-ollama', 'llama.vim'])
     call te#feat#init_var('g:ai_llm_model_name', te#ai#get_llm_model_list())
-    call te#feat#init_var('g:ai_provider_name', ['baidu', 'aliyun', 'ollama', 'llama'])
+    call te#feat#init_var('g:ai_provider_name', te#ai#get_provider_name_list())
     if filereadable($VIMFILES.'/feature.vim')
         try
             execute ':source '.$VIMFILES.'/feature.vim'

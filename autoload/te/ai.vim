@@ -4,6 +4,7 @@ let s:provider_url_mapping = {
             \  'aliyun': "https://dashscope.aliyuncs.com/compatible-mode/v1/",
             \  'ollama': "http://localhost:11434",
             \  'llama': "http://127.0.0.1:8080",
+            \  'omlx': "http://127.0.0.1:8000/v1/",
             \ }
 
 " Get the API URL for the current provider
@@ -74,4 +75,8 @@ function! te#ai#edit_ai_config(type) abort
             execute 'edit' $HOME."/.config/".te#ai#get_provider_name().".token"
         endif
     endif
+endfunction
+
+function! te#ai#get_provider_name_list() abort
+    return keys(s:provider_url_mapping)
 endfunction
