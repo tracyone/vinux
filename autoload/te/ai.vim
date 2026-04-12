@@ -6,24 +6,39 @@ let s:provider_url_mapping = {
             \  'llama': "http://127.0.0.1:8080",
             \ }
 
+" Get the API URL for the current provider
+" Returns: The provider's base URL string
+" Throws: None
 function! te#ai#get_provider_url() abort
     return get(s:provider_url_mapping, te#ai#get_provider_name(), '')
 endfunction
 
+" Get the name of the current AI provider
+" Returns: The provider name string
+" Throws: None
 function! te#ai#get_provider_name() abort
     return te#feat#get_key_value('g:ai_provider_name', 'cur_val')
 endfunction
 
+" Get the API key for the current provider
+" Returns: The API key string or empty string if not found
+" Throws: None
 function! te#ai#get_api_key() abort
     if filereadable($HOME.'/.config/'.te#ai#get_provider_name().'.token')
         return readfile($HOME.'/.config/'.te#ai#get_provider_name().'.token')[0]
     endif
 endfunction
 
+" Get the name of the currently selected LLM model
+" Returns: The model name string
+" Throws: None
 function! te#ai#get_model_name() abort
     return te#feat#get_key_value('g:ai_llm_model_name', 'cur_val')
 endfunction
 
+" Get the list of available LLM models from the config file
+" Returns: A list of model names
+" Throws: None
 function! te#ai#get_llm_model_list() abort
     let l:llm_model_list = []
     if filereadable($HOME."/.config/llm_model.list")
@@ -36,6 +51,11 @@ function! te#ai#get_llm_model_list() abort
     return l:llm_model_list
 endfunction
 
+" Edit the AI configuration file
+" Arguments:
+"   a:type - 2 for model list, otherwise for provider token
+" Returns: None
+" Throws: None
 function! te#ai#edit_ai_config(type) abort
     if a:type ==# 2
         if filereadable($HOME."/.config/llm_model.list")
