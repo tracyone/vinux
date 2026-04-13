@@ -5,6 +5,7 @@ let s:provider_url_mapping = {
             \  'ollama': "http://localhost:11434",
             \  'llama': "http://127.0.0.1:8080",
             \  'omlx': "http://127.0.0.1:8000/v1/",
+            \ 'aw': "http://192.168.201.78:7001/v1/",
             \ }
 
 " Get the API URL for the current provider
