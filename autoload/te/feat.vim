@@ -294,7 +294,7 @@ function! te#feat#init_all() abort
 
 endfunction
 
-function! te#feat#load_lua_modlue(module) abort
+function! te#feat#load_lua_module(module) abort
     return v:lua.require(a:module)
 endfunction
 

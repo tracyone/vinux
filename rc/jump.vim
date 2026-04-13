@@ -17,7 +17,7 @@ elseif g:fuzzysearcher_plugin_name.cur_val ==# 'telescope.nvim'
         Plug 'nvim-lua/plenary.nvim', {'on' : []}
         Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make', 'on' : [] }
         Plug 'nvim-telescope/telescope-file-browser.nvim', {'on': []}
-        call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_modlue("nvim_telescope")'],
+        call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_module("nvim_telescope")'],
                     \ ['plenary.nvim', 'telescope.nvim', 'telescope-fzf-native.nvim', 'telescope-file-browser.nvim'])
     endif
 endif

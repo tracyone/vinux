@@ -42,7 +42,7 @@ if g:file_explorer_plugin.cur_val == 'nvim-tree.lua'
         nnoremap <silent><leader>te :NvimTreeToggle .<cr>
         nnoremap <silent><F12> :NvimTreeToggle .<cr>
         nnoremap <silent><leader>nf :NvimTreeFindFile<cr>
-        call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_modlue("nvim_tree")'], ['nvim-tree.lua'])
+        call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_module("nvim_tree")'], ['nvim-tree.lua'])
         if and(str2nr(g:enable_sexy_mode.cur_val), 0x1)
             call te#tools#register_sexy_command("NvimTreeFocus|wincmd l")
         endif
@@ -79,7 +79,7 @@ endif
 
 if te#env#IsNvim() >= 0.5
     Plug 'williamboman/mason.nvim', {'on': []}
-    call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_modlue("mason_setup")'],
+    call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_module("mason_setup")'],
                 \ ['mason.nvim'])
 endif
 
@@ -139,7 +139,7 @@ if g:outline_plugin.cur_val == 'aerial.nvim'
         let g:outline_plugin.cur_val = 'vim-taglist'
     else
         Plug 'stevearc/aerial.nvim', {'on': []}
-        let s:setup_str = 'call te#feat#load_lua_modlue("aerial_setup")'
+        let s:setup_str = 'call te#feat#load_lua_module("aerial_setup")'
         if and(str2nr(g:enable_sexy_mode.cur_val), 0x2)
             call te#tools#register_sexy_command("AerialOpen!")
         endif

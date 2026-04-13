@@ -1,5 +1,5 @@
 let s:ai_plugin_name = te#feat#get_key_value('g:ai_plugin_name', 'cur_val')
-let s:ai_plugin_setupt_func = []
+let s:ai_plugin_setup_func = []
 let s:ai_plugins = []
 
 
@@ -21,11 +21,11 @@ if s:ai_plugin_name ==# 'copilot.vim'
         imap <c-l> <Plug>(copilot-accept-line)
         imap <c-]> <Plug>(copilot-accept-word)
     endfunction
-    call add(s:ai_plugin_setupt_func, function('<SID>copilot_setup'))
+    call add(s:ai_plugin_setup_func, function('<SID>copilot_setup'))
     if te#env#IsNvim() > 0
         Plug 'CopilotC-Nvim/CopilotChat.nvim', {'on': [], 'do':'make tiktoken'}
         call add(s:ai_plugins, "CopilotChat.nvim")
-        call add(s:ai_plugin_setupt_func, 'call te#feat#load_lua_modlue("copilot_chat_setup")')
+        call add(s:ai_plugin_setup_func, 'call te#feat#load_lua_module("copilot_chat_setup")')
         nnoremap <silent> <leader>ct :CopilotChat<CR>
         vnoremap <silent> <leader>ct :CopilotChat<CR>
 
@@ -78,7 +78,7 @@ if s:ai_plugin_name ==# 'windsurf.vim'
         nnoremap <silent> <leader>ai :Codeium Chat<CR>
     endfunction
 
-    call add(s:ai_plugin_setupt_func, function('<SID>codeium_setup'))
+    call add(s:ai_plugin_setup_func, function('<SID>codeium_setup'))
 endif
 
 if te#env#SupportPy3()
@@ -133,7 +133,7 @@ if te#env#SupportPy3()
         nnoremap <leader>ak :Ask 
     endfunction
     Plug 'CoderCookE/vim-llm-agent', {'on': []}
-    call add(s:ai_plugin_setupt_func, function('<SID>vim_llm_agent_setup'))
+    call add(s:ai_plugin_setup_func, function('<SID>vim_llm_agent_setup'))
     call add(s:ai_plugins, 'vim-llm-agent')
 endif
 
@@ -143,5 +143,5 @@ nnoremap <silent> <leader>ae :call te#utils#confirm("Choose ",['API-KEY', 'LLM M
 call add(s:ai_plugins, s:ai_plugin_name)
 
 
-call te#feat#register_vim_enter_setting2(s:ai_plugin_setupt_func, s:ai_plugins)
+call te#feat#register_vim_enter_setting2(s:ai_plugin_setup_func, s:ai_plugins)
 

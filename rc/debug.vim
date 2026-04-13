@@ -3,7 +3,7 @@ if te#env#IsNvim() >= 0.9
     Plug 'rcarriga/nvim-dap-ui', {'on': []}
     Plug 'jay-babu/mason-nvim-dap.nvim', {'on': []}
     Plug 'theHamsta/nvim-dap-virtual-text', {'on': []}
-    call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_modlue("nvim_dap")'],
+    call te#feat#register_vim_enter_setting2(['call te#feat#load_lua_module("nvim_dap")'],
                 \ ['nvim-dap', 'nvim-dap-ui', 'mason-nvim-dap.nvim',
                 \ 'nvim-dap-virtual-text'])
 endif
