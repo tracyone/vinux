@@ -490,16 +490,20 @@ Following values are the candidates:
 
 - 'baidu'
 - 'aliyun'
+- 'ollama'
+- 'llama'
+- 'omlx'
+- 'aw'
 
 
 Please place your API key in the `~/.config/<provider_name>.token` file.
 
 then choose llm model:
 
-    let g:ai_llm_model.cur_val='deepseek-r1-0528'
+    let g:ai_llm_model_name.cur_val='deepseek-r1-0528'
 
 unlike other options, you can edit your own llm model name list in the
-`~/.config/vinux/ai_llm_model.list` file.
+`~/.config/llm_model.list` file.
 
 The format of this file is: one llm model name occupies one line.
 

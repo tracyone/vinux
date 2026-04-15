@@ -67,6 +67,46 @@ env-api                                                    *env-api*
 util-api                                                    *util-api*
 ==============================================================================
 
+ai-api                                                    *ai-api*
+=============================================================================
+
+tte#ai#get_provider_url()                                 *te#ai#get_provider_url()*
+    Return the base URL string for the current AI provider.
+    This function looks up the provider name via te#ai#get_provider_name()
+    and returns the corresponding URL from s:provider_url_mapping.
+
+
+tte#ai#get_provider_name()                                 *te#ai#get_provider_name()*
+    Return the name of the current AI provider as a string.
+    Retrieves the value of the global variable g:ai_provider_name.cur_val.
+
+
+tte#ai#get_api_key()                                       *te#ai#get_api_key()*
+    Return the API key string for the selected provider.
+    Reads the first line from the token file located at
+    ~/.config/<provider_name>.token.
+
+
+tte#ai#get_model_name()                                    *te#ai#get_model_name()*
+    Return the name of the selected LLM model.
+    Reads the value of g:ai_llm_model_name.cur_val.
+
+
+tte#ai#get_llm_model_list()                               *te#ai#get_llm_model_list()*
+    Return a list of available LLM model names.
+    Reads ~/.config/llm_model.list and returns non‑empty entries.
+
+
+tte#ai#edit_ai_config(type)                               *te#ai#edit_ai_config(type)*
+    Open the configuration file for editing.
+    type==2 opens ~/.config/llm_model.list, otherwise opens
+    ~/.config/<provider_name>.token.
+
+
+tte#ai#get_provider_name_list()                           *te#ai#get_provider_name_list()*
+    Return a list of supported AI provider names.
+    Reads the keys of s:provider_url_mapping.
+
 te#utils#get_reg()                                        *te#utils#get_reg*
     Return a list which include all vim register contents
 
