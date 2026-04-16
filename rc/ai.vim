@@ -130,11 +130,22 @@ if te#env#SupportPy3()
         let g:llm_agent_enable_tools=1
         let g:chat_persona='default'
         let g:llm_agent_log_level=2  " 0=off, 1=basic, 2=verbos
-        nnoremap <leader>ak :Ask 
     endfunction
+
+    function! s:ask_vim_llm_agent() abort
+        if empty(get(g:, 'llm_agent_model'))
+            call te#utils#EchoWarning("Loading vim-llm-agent...")
+            call s:vim_llm_agent_setup()
+            call timer_start(0, {-> plug#load('vim-llm-agent')})
+            call te#utils#EchoWarning("Loading vim-llm-agent finish")
+            call timer_start(10, {-> feedkeys(':Ask ')})
+        else
+            call feedkeys(':Ask ')
+        endif
+    endfunction
+    nnoremap <leader>ak :call <SID>ask_vim_llm_agent()<CR>
+
     Plug 'CoderCookE/vim-llm-agent', {'on': []}
-    call add(s:ai_plugin_setup_func, function('<SID>vim_llm_agent_setup'))
-    call add(s:ai_plugins, 'vim-llm-agent')
 endif
 
 nnoremap <silent> <leader>ae :call te#utils#confirm("Choose ",['API-KEY', 'LLM Model list'] , function('te#ai#edit_ai_config'))<cr>
