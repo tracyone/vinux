@@ -2,10 +2,14 @@ vinux_api.txt	Last change: June 18 2024
 vinux_api - TABLE OF CONTENTS                                      *vinux_api*
 ==============================================================================
 complete-api                                                    |complete-api|
-lsp-api                                                         |lsp-api|
+lsp-api                                                        |lsp-api|
 env-api                                                         |env-api|
 util-api                                                        |util-api|
 ai-api                                                          |ai-api|
+file-api                                                        |file-api|
+compatiable-api                                                 |compatiable-api|
+git-api                                                         |git-api|
+terminal-api                                                    |terminal-api|
 
 
 ==============================================================================
@@ -139,6 +143,119 @@ tte#ai#edit_ai_config(type)                               *te#ai#edit_ai_config(
 
 
 tte#ai#get_provider_name_list()                           *te#ai#get_provider_name_list()*
+
+file-api                                                        *file-api*
+==============================================================================
+
+te#file#copy_file(src, dst, ...) *te#file#copy_file*
+    Copy a file or directory from src to dst. If dst is a directory, the source
+    file name is appended. Supports confirmation and overwrite handling.
+
+te#file#delete(path, confirm) *te#file#delete*
+    Delete a file or directory. If confirm is 1, prompts before deletion.
+
+te#compatiable - COMPATIBILITY HELPERS
+=============================================================================
+
+te#compatiable#writefile(list, fname, ...) *te#compatiable#writefile*
+    Write a list of strings to a file. Supports binary mode.
+
+te#compatiable#systemlist(expr, ...) *te#compatiable#systemlist*
+    Execute a shell command and return the output as a list of lines.
+
+git-api                                                        *git-api*
+==============================================================================
+te#git - GIT HELPERS
+=============================================================================
+
+te#git#get_cur_br_name() *te#git#get_cur_br_name*
+    Return the current local branch name.
+
+te#git#get_status() *te#git#get_status*
+    Return a string summarizing staged, modified, and untracked status.
+
+te#git#GitPush(push_type) *te#git#GitPush*
+    Push current branch to remote. push_type 'head' or 'for'.
+
+te#git#get_latest_sevral_commit(A,L,P) *te#git#get_latest_sevral_commit*
+    Return recent commit messages.
+
+te#git#archive_my_vim_cfg(git_dir, out_name) *te#git#archive_my_vim_cfg*
+    Create a zip archive of the vim config.
+
+te#git#show_log(dir, ...) *te#git#show_log*
+    Show git log in a terminal or use external tools.
+
+te#git#get_url() *te#git#get_url*
+    Return the remote repository URL.
+
+te#git#is_git_repo() *te#git#is_git_repo*
+    Check if current directory is a git repo.
+
+te#git#browse_file(action) *te#git#browse_file*
+    Open file in browser or copy URL.
+
+te#git#git_browse() *te#git#git_browse*
+    Browse git repository in terminal.
+
+te#terminal - TERMINAL HELPERS
+=============================================================================
+
+te#terminal#get_buf_list() *te#terminal#get_buf_list*
+    Return a list of terminal buffer numbers.
+
+te#terminal#get_term_obj(buf) *te#terminal#get_term_obj*
+    Return terminal object for buffer.
+
+te#terminal#get_title(buf) *te#terminal#get_title*
+    Get terminal window title.
+
+te#terminal#set_line(buf, line) *te#terminal#set_line*
+    Set current line number.
+
+te#terminal#get_line(buf) *te#terminal#get_line*
+    Get current line number.
+
+te#terminal#repl() *te#terminal#repl*
+    Open REPL for current filetype.
+
+te#terminal#get_option(buf) *te#terminal#get_option*
+    Get terminal options.
+
+te#terminal#get_pos(buf) *te#terminal#get_pos*
+    Get terminal position string.
+
+te#terminal#send_key(buf, text) *te#terminal#send_key*
+    Send keys to terminal.
+
+te#terminal#send(range, line1, line2, text) *te#terminal#send*
+    Send text to terminal.
+
+te#terminal#get_index(buf) *te#terminal#get_index*
+    Get index of terminal in list.
+
+te#terminal#is_term_buf(bufno) *te#terminal#is_term_buf*
+    Check if buffer is terminal.
+
+te#terminal#rename() *te#terminal#rename*
+    Rename current terminal window.
+
+te#terminal#switch_opener(option) *te#terminal#switch_opener*
+    Switch terminal opener.
+
+te#terminal#open_term(option) *te#terminal#open_term*
+    Open terminal with options.
+
+te#terminal#start_ranger() *te#terminal#start_ranger*
+    Open ranger file picker in terminal.
+
+te#terminal#move_floating_win(pos) *te#terminal#move_floating_win*
+    Move floating terminal window.
+
+te#terminal#jump_to_floating_win(num) *te#terminal#jump_to_floating_win*
+    Jump to terminal window.
+
+vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:
     Return a list of supported AI provider names.
     Reads the keys of s:provider_url_mapping.
 
