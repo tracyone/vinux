@@ -22,7 +22,7 @@ API                                                       |vinux-api|
 Introduction                                           *vinux-introduction*
 ==============================================================================
 
-vinux - Swiss Army Knife，Dark power (neo)vim config.
+vinux - Swiss Army Knife, Dark Power (NeoVim) config.
 
 vinux works in most environments, the philosophy of vinux is customization, it
 does this by modifying features
@@ -31,7 +31,7 @@ Feature:
 - Modular
 - Spacemacs-like keymap
 - Lazyload
-- Compatiable with Vim 7.3
+- Compatible with Vim 7.3
 - Optimize for Linux kernel and uboot development.
  
 Installation                                           *vinux-installation*
@@ -75,7 +75,7 @@ Note: `yourname` is your login name in MS-Window.
 Make sure you have git installed, Then start vim, Press `Space ud`, It will
 update vim to latest release.
 
-If you want to use the lastest developing version，You can cd to  ~/.vim or
+If you want to use the latest developing version, you can cd to ~/.vim or
 /c/Users/yourname/vimfiles(MS-Window),then execute following command
 
     git checkout master
