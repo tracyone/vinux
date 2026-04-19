@@ -22,7 +22,7 @@ API                                                       |vinux-api|
 Introduction                                           *vinux-introduction*
 ==============================================================================
 
-vinux - Swiss Army Knife, Dark Power (NeoVim) config.
+vinux - Swiss Army Knife, Dark Power (neo)vim config.
 
 vinux works in most environments, the philosophy of vinux is customization, it
 does this by modifying features
