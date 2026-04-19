@@ -5,6 +5,7 @@ complete-api                                                    |complete-api|
 lsp-api                                                         |lsp-api|
 env-api                                                         |env-api|
 util-api                                                        |util-api|
+ai-api                                                          |ai-api|
 
 
 ==============================================================================
