@@ -122,14 +122,18 @@ function! te#utils#confirm(str, menu_list, action) abort
     let l:confirm_obj.menu_list = a:menu_list
     let l:confirm_obj.prompt_str = " ".a:str
 
+    " Calculate max height to avoid filling the entire screen
+    let l:max_height = min([len(a:menu_list), &lines / 3, 20])
+    let l:max_height = max([l:max_height, 3])
+
     if te#env#IsNvim() >= 0.5 && l:block_vim  == 0
         let l:bufnr = nvim_create_buf(v:false, v:false)
         call nvim_buf_set_keymap(l:bufnr, 'n', '<CR>', ':call NvimConfirmResult()<cr>', {'silent':v:true })
         call nvim_buf_set_keymap(l:bufnr, 'n', '<C-c>', ':call nvim_win_close(0, v:true)<cr>', {'silent':v:true })
         call nvim_buf_set_keymap(l:bufnr, 'n', 'y', '/\c^y<cr><cr>', {'silent':v:true })
         call nvim_buf_set_keymap(l:bufnr, 'n', 'n', '/\c^n<cr><cr>', {'silent':v:true })
-        let l:opts = {'relative': 'editor', 'width': &columns/6, 'height': len(a:menu_list), 'col': &columns/2-len(l:confirm_obj.prompt_str)/2,
-                    \ 'row': &lines/2 - len(a:menu_list)/2, 'anchor': 'NW', 'border': 'single', 'style': 'minimal',
+        let l:opts = {'relative': 'editor', 'width': &columns/6, 'height': l:max_height, 'col': &columns/2-len(l:confirm_obj.prompt_str)/2,
+                    \ 'row': &lines/2 - l:max_height/2, 'anchor': 'NW', 'border': 'single', 'style': 'minimal',
                     \ 'zindex': len(s:ctx) + 1, 'title':l:confirm_obj.prompt_str, 'focusable': v:true}
         let l:confirm_obj.win_id=nvim_open_win(l:bufnr, v:false,l:opts)
         let l:len = 0
@@ -160,6 +164,7 @@ function! te#utils#confirm(str, menu_list, action) abort
                     \ zindex: len(s:ctx),
                     \ highlight: 'WarningMsg',
                     \ minwidth: &columns/6,
+                    \ maxheight: l:max_height,
                     \ borderchars:['─', '│', '─', '│', '┌', '┐', '┘', '└'],
                     \ borderhighlight:['vinux_warn'],
                     \ })

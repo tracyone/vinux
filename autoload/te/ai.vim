@@ -60,13 +60,14 @@ endfunction
 " Throws: None
 function! te#ai#edit_ai_config(type) abort
     if a:type ==# 2
-        if filereadable($HOME."/.config/llm_model.list")
-            execute 'edit' $HOME."/.config/llm_model.list"
+        call te#utils#EchoWarning("Update llm model list successfully")
+        let l:llm_model_list = te#ai#get_available_models()
+        if !empty(l:llm_model_list)
+            call writefile(l:llm_model_list, $HOME."/.config/llm_model.list")
         else
-            call te#utils#EchoWarning("llm_model.list not found, creating a new one with default model name.")
-            call writefile([], $HOME."/.config/llm_model.list")
             execute 'edit' $HOME."/.config/llm_model.list"
         endif
+        call te#feat#init_var('g:ai_llm_model_name', te#ai#get_llm_model_list())
     else
         if filereadable($HOME."/.config/".te#ai#get_provider_name().".token")
             execute 'edit' $HOME."/.config/".te#ai#get_provider_name().".token"
@@ -80,4 +81,51 @@ endfunction
 
 function! te#ai#get_provider_name_list() abort
     return keys(s:provider_url_mapping)
+endfunction
+
+" Dynamically fetch available models from the current provider's /v1/models endpoint
+" Returns: A list of model IDs
+" Throws: None
+function! te#ai#get_available_models() abort
+    let l:base_url = te#ai#get_provider_url()
+    if empty(l:base_url)
+        call te#utils#EchoWarning('No provider URL configured.')
+        return []
+    endif
+
+    " Ensure URL ends with /v1/ or /v1 for consistent appending
+    let l:models_url = l:base_url
+    if l:models_url !~# '/v1/\?$'
+        let l:models_url .= '/v1/'
+    endif
+    let l:models_url .= 'models'
+
+    let l:api_key = te#ai#get_api_key()
+    let l:cmd = 'curl -s -H "Authorization: Bearer ' . l:api_key . '" "' . l:models_url . '"'
+    
+    try
+        let l:result = system(l:cmd)
+        if v:shell_error != 0
+            call te#utils#EchoWarning('Failed to fetch models: ' . l:result)
+            return []
+        endif
+
+        let l:json = json_decode(l:result)
+        if type(l:json) != g:t_dict || !has_key(l:json, 'data')
+            call te#utils#EchoWarning('Invalid response format from provider.')
+            return []
+        endif
+
+        let l:model_list = []
+        for l:model in l:json['data']
+            if has_key(l:model, 'id')
+                call add(l:model_list, l:model['id'])
+            endif
+        endfor
+
+        return l:model_list
+    catch
+        call te#utils#EchoWarning('Error fetching models: ' . v:exception)
+        return []
+    endtry
 endfunction
