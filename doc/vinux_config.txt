@@ -2,6 +2,7 @@ vinux_config.txt
 TABLE OF CONTENTS                                              *vinux_config*
 ==============================================================================
 Complete feature                                             |vinux-complete|
+Project feature                                              |vinux-project|
 LSP feature                                                  |vinux-lsp|
 Jump feature                                                 |vinux-jump|
   Ctrlp cache type                                           |vinux-ctrlp-cache|
@@ -81,6 +82,41 @@ Keymapping for complete feature please see |vinux-lsp-keymapping|.
                                           [7] https://github.com/ervandew/supertab
                                           [8] https://github.com/hrsh7th/nvim-cmp
                                           [9] https://github.com/neoclide/coc.nvim
+
+Project feature                                           *vinux-project*
+==============================================================================
+
+The project feature provides comprehensive project management capabilities.
+
+To enable project feature:
+
+    let g:feat_enable_project=1
+
+Project feature includes:
+
+1. Session management
+2. Compile flags configuration
+3. Coding style settings
+4. Cscope/gtags integration
+
+Project Directory Structure:
+    $VIMFILES/.project/<project_name>/
+        ├── .ycm_extra_conf.py   - YCM completion config
+        ├── .clang-format         - Clang format style
+        ├── .love.vim             - Session-specific settings
+        ├── compile_commands.json - LSP compile info
+        ├── compile_flags.txt     - Alternative compile info
+        ├── .csdb                 - Cscope database paths
+        └── <project_name>.aichat - AI chat history
+
+Project API:
+    te#project#create_project()   - Create a new project
+    te#project#load_project()     - Load an existing project
+    te#project#delete_project()   - Delete a project
+    te#project#build_project()    - Build the project
+    te#project#edit_project()     - Edit project configuration
+
+Keymapping for project feature see |vinux-project-keymapping|.
 
 LSP feature                                           *vinux-lsp*
 ==============================================================================

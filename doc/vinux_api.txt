@@ -3,13 +3,16 @@ vinux_api - TABLE OF CONTENTS                                      *vinux_api*
 ==============================================================================
 complete-api                                                    |complete-api|
 lsp-api                                                        |lsp-api|
-env-api                                                         |env-api|
+env-api                                                        |env-api|
 util-api                                                        |util-api|
 ai-api                                                          |ai-api|
 file-api                                                        |file-api|
 compatiable-api                                                 |compatiable-api|
 git-api                                                         |git-api|
 terminal-api                                                    |terminal-api|
+project-api                                                     |project-api|
+pg-api                                                          |pg-api|
+tmux-api                                                        |tmux-api|
 
 
 ==============================================================================
@@ -41,7 +44,7 @@ te#lsp#diagnostics_info({type})                             *te#lsp#diagnostics_
     type parameter is string, can be:
     'warning'
     'error'
-  
+
 te#lsp#install_server()                                      *te#lsp#install_server*
     Open a LSP serves installations management window.
 
@@ -66,95 +69,309 @@ te#lsp#get_lsp_server_name({sep})                         *te#lsp#get_lsp_server
 
 
 
-env-api                                                    *env-api*
+env-api                                                        *env-api*
 ==============================================================================
 
-util-api                                                    *util-api*
-==============================================================================
-
-te#utils#get_reg()                                        *te#utils#get_reg*
-    Return a list which include all vim register contents
-
-te#utils#pedit()
-    Preview files that list in quickfix window
-
-te#utils#cd_to_plugin()                                 *te#utils#cd_to_plugin*
-    Prompt vinux's plugins' directories in command line window
-
-te#utils#run_command({command}, [, {callback}] [,{arglist}] [, {flag}])         *te#utils#run_command*
-
-    Run {command} in background. If {command} is a empty string, you can enter
-    the command string in cmdline window.
-    
-    Other parameter:
-    1. {callback} is a function type, it will be called once command finished.
-    Optional.
-    2. arglist is list type, it will be passed to {callback} once command finished. Optional.
-    3. flag is integer type, it specifies whether open quickfix window after
-    {command} finish or not. Optional.
-
-    Example:
-      "run git fetch command in background
-      :call te#utils#run_command('git fetch --all')
-      "run command from user input and open quickfix window after command finisfinished
-      :call te#utils#run_command("", 1)
-      "run make cscope command in background, it will generate cscope
-      database, after finished, te#pg#add_cscope_out will be called with a:path argument.
-      call te#utils#run_command('make O=. ARCH=arm SUBARCH=sunxi COMPILED_SOURCE=1 '.g:tagging_program.cur_val,
-                               \ function('te#pg#add_cscope_out'),[a:path])
-
-te#utils#check_health()                                                     *te#utils#check_health*
-      Show vim health info in a new tabwindow.
-
-ai-api                                                    *ai-api*
+te#env - ENVIRONMENT DETECTION
 =============================================================================
 
-tte#ai#get_provider_url()                                 *te#ai#get_provider_url()*
+te#env#IsVim() *te#env#IsVim*
+    Return Vim version if running in Vim, 0 if running in Neovim.
+
+te#env#IsVim8() *te#env#IsVim8*
+    Return 1 if running Vim 8+, 0 otherwise.
+
+te#env#IsNvim() *te#env#IsNvim*
+    Return Neovim version if running in Neovim, 0 otherwise.
+
+te#env#IsMac() *te#env#IsMac*
+    Return 1 if running on macOS, 0 otherwise.
+
+te#env#IsLinux() *te#env#IsLinux*
+    Return 1 if running on Linux, 0 otherwise.
+
+te#env#IsWindows() *te#env#IsWindows*
+    Return 1 if running on Windows, 0 otherwise.
+
+te#env#IsWin32() *te#env#IsWin32*
+    Return 1 if running on 32-bit Windows, 0 otherwise.
+
+te#env#IsWin64() *te#env#IsWin64*
+    Return 1 if running on 64-bit Windows, 0 otherwise.
+
+te#env#IsGui() *te#env#IsGui*
+    Return 1 if running in GUI mode, 0 otherwise.
+
+te#env#IsMacVim() *te#env#IsMacVim*
+    Return 1 if running MacVim, 0 otherwise.
+
+te#env#IsTmux() *te#env#IsTmux*
+    Return 1 if running inside tmux, 0 otherwise.
+
+te#env#IsUnix() *te#env#IsUnix*
+    Return 1 if running on Unix-like system, 0 otherwise.
+
+te#env#IsDisplay() *te#env#IsDisplay*
+    Return 1 if display is available, 0 otherwise.
+
+te#env#SupportPy2() *te#env#SupportPy2*
+    Return 1 if Vim has Python 2 support, 0 otherwise.
+
+te#env#SupportPy3() *te#env#SupportPy3*
+    Return 1 if Vim has Python 3 support, 0 otherwise.
+
+te#env#SupportPy() *te#env#SupportPy*
+    Return 1 if Vim has Python support (2 or 3), 0 otherwise.
+
+te#env#SupportYcm() *te#env#SupportYcm*
+    Return 1 if system supports YouCompleteMe, 0 otherwise.
+
+te#env#SupportAsync() *te#env#SupportAsync*
+    Return 1 if Vim supports async operations, 0 otherwise.
+
+te#env#SupportCscope() *te#env#SupportCscope*
+    Return 1 if cscope is available, 0 otherwise.
+
+te#env#SupportTimer() *te#env#SupportTimer*
+    Return 1 if Vim has timer support, 0 otherwise.
+
+te#env#SupportTerminal() *te#env#SupportTerminal*
+    Return 1 if Vim has terminal support, 0 otherwise.
+
+te#env#SupportFloatingWindows() *te#env#SupportFloatingWindows*
+    Return 2 if Neovim floating windows supported,
+           1 if Vim popup windows supported,
+           0 if no floating window support.
+
+te#env#SupportFeature(feature_name) *te#env#SupportFeature*
+    Return 1 if feature is available (wraps has()).
+
+te#env#Executable(exe) *te#env#Executable*
+    Return 1 if executable exists in PATH, 0 otherwise.
+
+te#env#check_requirement() *te#env#check_requirement*
+    Return 1 if Vim meets minimum version requirement (7.3.1058+), 0 otherwise.
+
+te#env#IsExuberantCtags() *te#env#IsExuberantCtags*
+    Return 1 if Exuberant ctags is available, 0 otherwise.
+
+
+util-api                                                        *util-api*
+==============================================================================
+
+te#utils - GENERAL UTILITIES
+=============================================================================
+
+te#utils#confirm({str}, {menu_list}, {action})            *te#utils#confirm*
+    Display a confirmation dialog with customizable options.
+    Automatically adapts to the editor environment:
+    - Neovim (>=0.5): Uses floating window with custom keymaps
+    - Vim 8+: Uses popup menu with filter support
+    - Older Vim: Falls back to built-in confirm() dialog
+
+    Parameters:
+    - {str}: The prompt/message to display
+    - {menu_list}: List of option strings to present
+    - {action}: Callback when option is selected. Can be:
+        - A function reference: executed with selected index (1-based)
+        - A string command name: executed directly
+        - A list [func, arg]: calls call(func, [arg, selected_index])
+        - A dict {func: ..., arg: [...]}: calls call(func, extend(arg, [selected_index]))
+        - Empty list []: no callback, returns value directly (classic mode)
+
+    Returns:
+    - Neovim/Vim8 async mode: Returns 0 immediately
+    - Classic confirm mode: Returns the selected menu item string
+
+    Key Bindings (Neovim floating window):
+    <CR>   - Confirm current selection
+    <C-c>  - Cancel/close without selection
+    y      - Select first 'y' option (case-insensitive)
+    n      - Select first 'n' option (case-insensitive)
+
+te#utils#GetError({command}, {err_str})                    *te#utils#GetError*
+    Test if a vim command produces an error.
+    Parameters:
+    - {command}: Vim command (not shell command) to test
+    - {err_str}: Error substring pattern that is expected
+    Returns: 0 if no error exists, -1 if error matches err_str
+
+te#utils#EchoWarning({str}, [{level}])                   *te#utils#EchoWarning*
+    Echo a warning/info message with auto-dismiss.
+    Parameters:
+    - {str}: The message to display
+    - {level}: Optional - 'err', 'warn' (default), or 'info'
+
+    Message is displayed in a floating/popup window and auto-closes
+    after the duration specified by g:message_delay_time.cur_val.
+
+te#utils#echo_info_after()                             *te#utils#echo_info_after*
+    Echo any messages that were deferred during startup.
+    Called after vim_starting is finished.
+
+te#utils#close_all_echo_win()                     *te#utils#close_all_echo_win*
+    Close all floating/popup echo windows.
+
+te#utils#SaveFiles()                                     *te#utils#SaveFiles*
+    Save all files, handling sudo writes when necessary.
+    If file has no name, prompts for filename.
+    Falls back to SudoWrite if permission denied.
+
+te#utils#OptionToggle({opt_str}, {opt_list})          *te#utils#OptionToggle*
+    Toggle a Vim option between two values.
+    Parameters:
+    - {opt_str}: Vim option name (with or without & prefix) or variable
+    - {opt_list}: List of exactly 2 values to toggle between
+    Returns: 0 on success, 1 if invalid arguments, 2 if option not found
+
+te#utils#source_vimrc({path})                         *te#utils#source_vimrc*
+    Source a vimrc file and restore original filetype.
+
+te#utils#goto_cur_file({option})                   *te#utils#goto_cur_file*
+    Change working directory to current file's directory.
+    {option}:
+    - 1: Change using :cd (global)
+    - 2: Change using :cd with resolved path
+    - other: Change using :lcd (local to window)
+
+te#utils#open_url([{url}])                              *te#utils#open_url*
+    Open a URL in the default browser.
+    If {url} is empty, detects URL at cursor position.
+    Supports: http, https, ftp, file://, www
+
+te#utils#nu_toggle()                                     *te#utils#nu_toggle*
+    Toggle between number, relativenumber, and both.
+    Cycles: number+relativenumber -> number only -> relativenumber only -> both
+
+te#utils#find_mannel()                                 *te#utils#find_mannel*
+    Open man page for word under cursor.
+    Supports Vim help, shell commands, C library, and kernel docs.
+
+te#utils#get_buf_info({opt})                         *te#utils#get_buf_info*
+    Get buffer information based on option.
+    {opt}:
+    - 0: Get all listed buffers
+    - 1: Get listed buffers in current tabpage
+    - 2: Get unlisted buffers in current tabpage
+    - 3: Get all buffers (including unlisted)
+    Returns: List of buffer numbers
+
+te#utils#is_listed_buffer()                       *te#utils#is_listed_buffer*
+    Return 1 if current buffer is listed, 0 otherwise.
+
+te#utils#quit_win({all})                               *te#utils#quit_win*
+    Quit current window(s) with smart handling.
+    {all}:
+    - 0: Quit current window, close floating windows first
+    - 1: Quit all windows, confirm if terminal buffers exist
+
+    Automatically handles terminal buffers and prompts for confirmation
+    when closing last listed buffer.
+
+te#utils#tab_buf_switch({num})                   *te#utils#tab_buf_switch*
+    Switch between tabs/buffers.
+    {num}:
+    - 0: Previous tab/buffer
+    - -1: Next tab/buffer
+    - -2: Last opened tab/buffer
+    - -3: Buffer picker
+    - 1-9: Go to specific tab/buffer
+
+te#utils#focus_coding()                             *te#utils#focus_coding*
+    Toggle focus coding mode (distraction-free).
+    Hides: statusline, tabline, line numbers, sign column
+    Also toggles tmux status bar if running in tmux.
+
+te#utils#check_health()                               *te#utils#check_health*
+    Show comprehensive Vim health info in a new tab.
+    Checks: vim version, feature support (lua, perl, ruby, python, etc.),
+    terminal support, job support, YCM support, and more.
+
+te#utils#run_command({command}, [{callback}], [{arglist}], [{flag}])
+                                                        *te#utils#run_command*
+    Run a shell command with optional callback.
+    Parameters:
+    - {command}: Shell command to run (empty string for interactive input)
+    - {callback}: Optional function called when command finishes
+    - {arglist}: Optional list passed to callback
+    - {flag}: Optional flag for quickfix window
+
+    Uses Neomake, tmux, or built-in job system depending on environment.
+
+te#utils#get_plugin_name({A}, {L}, {P})            *te#utils#get_plugin_name*
+    Return list of plugin directories for completion.
+    Used as custom completion function for :cd command.
+
+te#utils#cd_to_plugin([{path}])                   *te#utils#cd_to_plugin*
+    Change directory to a plugin folder.
+    Prompts for plugin directory name with completion.
+    If {path} is provided, starts from that directory.
+
+te#utils#pedit()                                           *te#utils#pedit*
+    Preview file at cursor position in quickfix window.
+    Opens file in a preview window at the correct line.
+
+te#utils#get_reg()                                       *te#utils#get_reg*
+    Return a list of all Vim register contents.
+    Format: "register:content" for each non-empty register.
+
+ai-api                                                          *ai-api*
+=============================================================================
+
+te#ai#get_provider_url()                                 *te#ai#get_provider_url()*
     Return the base URL string for the current AI provider.
     This function looks up the provider name via te#ai#get_provider_name()
     and returns the corresponding URL from s:provider_url_mapping.
 
 
-tte#ai#get_provider_name()                                 *te#ai#get_provider_name()*
+te#ai#get_provider_name()                                 *te#ai#get_provider_name()*
     Return the name of the current AI provider as a string.
     Retrieves the value of the global variable g:ai_provider_name.cur_val.
 
 
-tte#ai#get_api_key()                                       *te#ai#get_api_key()*
+te#ai#get_api_key()                                       *te#ai#get_api_key()*
     Return the API key string for the selected provider.
     Reads the first line from the token file located at
     ~/.config/<provider_name>.token.
 
 
-tte#ai#get_model_name()                                    *te#ai#get_model_name()*
+te#ai#get_model_name()                                    *te#ai#get_model_name()*
     Return the name of the selected LLM model.
     Reads the value of g:ai_llm_model_name.cur_val.
 
 
-tte#ai#get_llm_model_list()                               *te#ai#get_llm_model_list()*
+te#ai#get_llm_model_list()                               *te#ai#get_llm_model_list()*
     Return a list of available LLM model names.
-    Reads ~/.config/llm_model.list and returns non‑empty entries.
+    Reads ~/.config/llm_model.list and returns non-empty entries.
 
 
-tte#ai#edit_ai_config(type)                               *te#ai#edit_ai_config(type)*
+te#ai#edit_ai_config(type)                               *te#ai#edit_ai_config(type)*
     Open the configuration file for editing.
     type==2 opens ~/.config/llm_model.list, otherwise opens
     ~/.config/<provider_name>.token.
 
 
-tte#ai#get_provider_name_list()                           *te#ai#get_provider_name_list()*
+te#ai#get_provider_name_list()                           *te#ai#get_provider_name_list()*
+    Return a list of supported AI provider names.
+    Reads the keys of s:provider_url_mapping.
+
 
 file-api                                                        *file-api*
 ==============================================================================
 
-te#file#copy_file(src, dst, ...) *te#file#copy_file*
-    Copy a file or directory from src to dst. If dst is a directory, the source
-    file name is appended. Supports confirmation and overwrite handling.
+te#file - FILE OPERATIONS
+=============================================================================
+
+te#file#copy_file(src, dst, confirm) *te#file#copy_file*
+    Copy file or directory from src to dst.
+    {confirm} - 1 to prompt before overwrite, 0 to skip confirmation.
 
 te#file#delete(path, confirm) *te#file#delete*
-    Delete a file or directory. If confirm is 1, prompts before deletion.
+    Delete file or directory.
+    {confirm} - 1 to prompt before deletion, 0 to delete directly.
 
-te#compatiable - COMPATIBILITY HELPERS
+
+compatiable-api                                                 *compatiable-api*
 =============================================================================
 
 te#compatiable#writefile(list, fname, ...) *te#compatiable#writefile*
@@ -163,8 +380,9 @@ te#compatiable#writefile(list, fname, ...) *te#compatiable#writefile*
 te#compatiable#systemlist(expr, ...) *te#compatiable#systemlist*
     Execute a shell command and return the output as a list of lines.
 
-git-api                                                        *git-api*
+git-api                                                         *git-api*
 ==============================================================================
+
 te#git - GIT HELPERS
 =============================================================================
 
@@ -197,6 +415,9 @@ te#git#browse_file(action) *te#git#browse_file*
 
 te#git#git_browse() *te#git#git_browse*
     Browse git repository in terminal.
+
+terminal-api                                                    *terminal-api*
+==============================================================================
 
 te#terminal - TERMINAL HELPERS
 =============================================================================
@@ -255,9 +476,130 @@ te#terminal#move_floating_win(pos) *te#terminal#move_floating_win*
 te#terminal#jump_to_floating_win(num) *te#terminal#jump_to_floating_win*
     Jump to terminal window.
 
-vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:
-    Return a list of supported AI provider names.
-    Reads the keys of s:provider_url_mapping.
+te#terminal#shell_pop(options) *te#terminal#shell_pop*
+    Open a floating terminal window.
+    Options is a dictionary with:
+        opener: 0x1=horizontal split, 0x2=vertical split, 0x4=new tab
+        title: window title
+
+te#terminal#hide_popup() *te#terminal#hide_popup*
+    Hide floating terminal window.
+
+te#terminal#get_term_buf_by_title(title) *te#terminal#get_term_buf_by_title*
+    Get terminal buffer number by window title.
+
+
+project-api                                                     *project-api*
+==============================================================================
+
+te#project - PROJECT MANAGEMENT
+=============================================================================
+
+te#project#create_project() *te#project#create_project*
+    Create a new project with session, compile flags, coding style and
+    cscope info. This function guides the user through project creation:
+    1. Prompts for project name
+    2. Asks whether to create a project or session
+    3. Copies YCM config if completion is enabled
+    4. Prompts for build command
+    5. Handles compile_commands.json or compile_flags.txt
+    6. Configures clang-format coding style
+    7. Saves session and creates project directory
+
+te#project#load_project(project_info) *te#project#load_project*
+    Load an existing project.
+    {project_info} is a dictionary with:
+        name: project name
+        type: 1 for project, 2 for session
+        dir: project directory
+
+te#project#delete_project() *te#project#delete_project*
+    Delete a project and all associated files including session,
+    YCM config, clang-format, compile commands and cscope database.
+
+te#project#edit_project() *te#project#edit_project*
+    Edit project configuration files in tabs.
+
+te#project#build_project(in_term) *te#project#build_project*
+    Build the current project using the configured build command.
+    {in_term}: 1 to run in terminal, 0 to run in background
+
+te#project#select_dir() *te#project#select_dir*
+    Select and change to a directory from the project's .csdb file.
+
+te#project#set_indent_options(coding_style) *te#project#set_indent_options*
+    Set indentation options based on coding style.
+    Supported styles: linux, mozilla, google, llvm, chromium
+
+te#project#clang_format(A,L,P) *te#project#clang_format*
+    Return list of available clang-format styles for use with input().
+
+
+pg-api                                                          *pg-api*
+==============================================================================
+
+te#pg - PROGRAMMING TOOLS
+=============================================================================
+
+te#pg#gen_cs_tags(timerid) *te#pg#gen_cs_tags*
+    Generate cscope database and tags file. Supports both cscope and gtags.
+    Automatically detects Linux kernel and U-Boot trees.
+
+te#pg#start_gen_cs_tags_threads() *te#pg#start_gen_cs_tags_threads*
+    Start background thread to generate cscope tags automatically.
+    Runs after 3 seconds and then every 10 minutes.
+
+te#pg#add_cscope_out(path) *te#pg#add_cscope_out*
+    Add cscope database from specified path.
+
+te#pg#add_tags(tag_path) *te#pg#add_tags*
+    Add tags file from specified path.
+
+te#pg#do_cs_tags(dir, option) *te#pg#do_cs_tags*
+    Generate cscope and/or tags for a directory.
+    Option flags:
+        0x01 - generate tags only
+        0x02 - generate cscope only
+        0x03 - generate both
+
+te#pg#do_make() *te#pg#do_make*
+    Build current file or project using make or compiler.
+
+te#pg#find_header() *te#pg#find_header*
+    Find header file for current cursor word using YCM or cscope.
+
+te#pg#cctree() *te#pg#cctree*
+    Load CCTree cross-reference database.
+
+te#pg#top_of_kernel_tree(path) *te#pg#top_of_kernel_tree*
+    Check if path is a Linux kernel source tree.
+
+te#pg#top_of_uboot_tree() *te#pg#top_of_uboot_tree*
+    Check if current directory is a U-Boot source tree.
+
+
+tmux-api                                                        *tmux-api*
+==============================================================================
+
+te#tmux - TMUX INTEGRATION
+=============================================================================
+
+te#tmux#run_command(cmd, flag) *te#tmux#run_command*
+    Run command in a new tmux pane.
+    Flag options:
+        0x1 - horizontal split
+        0x2 - vertical split
+        0x4 - new window
+        0x8 - run in background
+
+te#tmux#rename_win(name) *te#tmux#rename_win*
+    Rename current tmux window.
+
+te#tmux#reg2tmux() *te#tmux#reg2tmux*
+    Copy Vim register to tmux buffer.
+
+te#tmux#tmux2reg() *te#tmux#tmux2reg*
+    Copy tmux buffer to Vim register.
 
 
 vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:

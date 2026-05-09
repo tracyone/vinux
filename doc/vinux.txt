@@ -11,6 +11,7 @@ Installation                                              |vinux-installation|
   RemoveVinux                                             |vinux-remove|
 Config                                                    |vinux-config|
   ConfigDynamically                                       |vinux-DynConfig|
+Core Modules                                              |vinux-core|
 Keymapping                                                |vinux-keymapping|
 PluginsList                                               |vinux-plugins|
 API                                                       |vinux-api|
@@ -161,6 +162,25 @@ keymapping:
 2. `<SPC>fd`: disable feature dynamically.
 
 By default, vinux will use ctrlp to filter the features
+
+Core Modules                                           *vinux-core*
+==============================================================================
+
+Vinux provides a comprehensive API for extension and customization. The core
+modules are located in `autoload/te/`:
+
+- `te#feat#`    - Feature management
+- `te#utils#`   - Utility functions
+- `te#env#`     - Environment detection
+- `te#ai#`      - AI/LLM integration
+- `te#terminal#`- Terminal management
+- `te#project#` - Project management
+- `te#pg#`      - Programming tools (cscope, tags)
+- `te#git#`     - Git integration
+- `te#tmux#`    - Tmux integration
+- `te#file#`    - File operations
+
+See |vinux_api| for detailed API documentation.
 
 Keymapping                                              *vinux-keymapping*
 ==============================================================================
